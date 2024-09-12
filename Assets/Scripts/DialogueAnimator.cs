@@ -13,7 +13,7 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    public bool inDialogue = false; // Is there dialogue on the screen?
+    public bool InDialogue = false; // Is there dialogue on the screen?
     private bool isOutputting = false; // Is currently being written?
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
@@ -33,7 +33,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             dialogueIndex = 0;
 
-            inDialogue = true;
+            InDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
         }
@@ -51,7 +51,7 @@ public class DialogueAnimator : MonoBehaviour
 
     public void SkipDialogue()
     {
-        if (!inDialogue)
+        if (!InDialogue)
             return;
 
         if (isOutputting)
@@ -75,7 +75,7 @@ public class DialogueAnimator : MonoBehaviour
     private void EndDialogue()
     {
         // Close dialogue
-        inDialogue = false;
+        InDialogue = false;
         OnDialogueComplete.Invoke();
     }
 

@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
         // Check for mouse input to skip current dialogue
-        if (Input.GetMouseButtonDown(0) && animator.inDialogue)
+        if (Input.GetMouseButtonDown(0) && animator.InDialogue)
             animator.SkipDialogue();
     }
 
@@ -90,14 +90,14 @@ public class DialogueManager : MonoBehaviour
 
     private void CreatePromptButton()
     {
-        if (recipient.remainingQuestions.Count > 0)
+        if (recipient.RemainingQuestions.Count > 0)
         {
             // Get random question that has not been asked yet
-            int questionIndex = new System.Random().Next(recipient.remainingQuestions.Count);
-            QuestionType buttonType = recipient.remainingQuestions[questionIndex];
+            int questionIndex = new System.Random().Next(recipient.RemainingQuestions.Count);
+            QuestionType buttonType = recipient.RemainingQuestions[questionIndex];
 
             // Remove the question from list of questions to be asked
-            recipient.remainingQuestions.RemoveAt(questionIndex);
+            recipient.RemainingQuestions.RemoveAt(questionIndex);
 
             Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
@@ -133,34 +133,36 @@ public class DialogueManager : MonoBehaviour
     {
         DialogueRecipient dialogueRecipient = new();
 
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Name = "J. Gorbingson";
+
+        dialogueRecipient.Answers.Add(
             QuestionType.Political,
             new List<string> { "I think that political stuff is really stuff", "it really is..." });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.Personality,
             new List<string> { "I'm someone who really stuffs", "I stuff all the time fr", "pluh" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.Hobby,
             new List<string> { "hobby" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.CulturalBackground,
             new List<string> { "the culture" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.Education,
             new List<string> { "edutationasd" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.CoreValues,
             new List<string> { "cor vales" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.ImportantPeople,
             new List<string> { "people be important" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.PositiveTrait,
             new List<string> { "i am just great" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.NegativeTrait,
             new List<string> { "dont have any" });
-        dialogueRecipient.answers.Add(
+        dialogueRecipient.Answers.Add(
             QuestionType.OddTrait,
             new List<string> { "... eeeeeeee ... ee. .. ..." });
 
