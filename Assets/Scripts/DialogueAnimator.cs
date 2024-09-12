@@ -75,10 +75,8 @@ public class DialogueAnimator : MonoBehaviour
     private void EndDialogue()
     {
         // Close dialogue
-        Debug.Log("Dialogue complete in animator");
         inDialogue = false;
         OnDialogueComplete.Invoke();
-
     }
 
     IEnumerator WritingAnimation(string output, int stringIndex)
