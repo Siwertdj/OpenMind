@@ -111,8 +111,10 @@ public class DialogueAnimator : MonoBehaviour
             }
             else
             {
-                yield return new WaitForSeconds(delayAfterSentence);
-                EndDialogue();
+                // NOTE: Uncomment the lines below if we want dialogue to automatically end
+
+                //yield return new WaitForSeconds(delayAfterSentence);
+                //EndDialogue();
             }
         }
     }

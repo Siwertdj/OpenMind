@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,72 +11,50 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private DialogueAnimator animator;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject promptsUIPrefab;
-
-    // private DialoguePrompter prompter;
-    private GameObject promptsUI;
-    private DialogueRecipient recipient = new();
+    
+    private GameObject prompts;
+    private DialogueRecipient recipient;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Generate answers for recipient
+        // TODO: should be done in a different (more versatile) way later
+        recipient = GenerateRecipient();
+
+        // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
 
-        promptsUI = Instantiate(promptsUIPrefab, FindObjectOfType<Canvas>().transform);
+        // Generate first prompts
+        prompts = Instantiate(promptsUIPrefab, FindObjectOfType<Canvas>().transform);
         for (int i = 0; i < 2; i++)
             CreatePromptButton();
-
-        recipient.answers.Add(
-            QuestionType.Political, 
-            new List<string> { "I think that political stuff is really stuff", "it really is..." });
-        recipient.answers.Add(
-            QuestionType.Personality,
-            new List<string> { "I'm someone who really stuffs", "I stuff all the time fr", "pluh" });
-        recipient.answers.Add(
-            QuestionType.Hobby,
-            new List<string> { "hobby" });
-        recipient.answers.Add(
-            QuestionType.CulturalBackground,
-            new List<string> { "the culture" });
-        recipient.answers.Add(
-            QuestionType.Education,
-            new List<string> { "edutationasd" });
-        recipient.answers.Add(
-            QuestionType.CoreValues,
-            new List<string> { "cor vales" });
-        recipient.answers.Add(
-            QuestionType.ImportantPeople,
-            new List<string> { "people be important" });
-        recipient.answers.Add(
-            QuestionType.PositiveTrait,
-            new List<string> { "i am just great" });
-        recipient.answers.Add(
-            QuestionType.NegativeTrait,
-            new List<string> { "dont have any" });
-        recipient.answers.Add(
-            QuestionType.OddTrait,
-            new List<string> { "... eeeeeeee ... ee. .. ..." });
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-            AskQuestion(QuestionType.Political);
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-            AskQuestion(QuestionType.Personality);
-
+        // Check for mouse input to skip current dialogue
         if (Input.GetMouseButtonDown(0) && animator.inDialogue)
             animator.SkipDialogue();
     }
 
     public void OnDialogueComplete()
     {
-        Debug.Log("Dialogue is complete");
         dialogue.SetActive(false);
-        promptsUI.SetActive(true);
+        prompts.SetActive(true);
 
         // Create new prompt
         CreatePromptButton();
+    }
+
+    public void AskQuestion(QuestionType question)
+    {
+        prompts.SetActive(false);
+        dialogue.SetActive(true);
+
+        List<string> answer = recipient.GetAnswer(question);
+        animator.WriteDialogue(answer);
     }
 
     // Unity buttons don't accept enums as parameters in functions, so use this instead
@@ -94,29 +71,18 @@ public class DialogueManager : MonoBehaviour
             case "ImportantPeople": AskQuestion(QuestionType.ImportantPeople); break;
             case "PositiveTrait": AskQuestion(QuestionType.PositiveTrait); break;
             case "NegativeTrait": AskQuestion(QuestionType.NegativeTrait); break;
-            case "OddTrait": AskQuestion(QuestionType.OddTrait); break;            
+            case "OddTrait": AskQuestion(QuestionType.OddTrait); break;
             default: Debug.Log("Invalid question string"); break;
         }
     }
 
-    public void AskQuestion(QuestionType question)
-    {
-        Debug.Log($"Asking question {question}");
-
-        promptsUI.SetActive(false);
-        dialogue.SetActive(true);
-
-        List<string> answer = recipient.GetAnswer(question);
-        animator.WriteDialogue(answer);
-    }
-
-    public void AskQuestion(string question, Button button)
+    public void AskQuestion(QuestionType question, Button button)
     {
         Destroy(button.gameObject);
         AskQuestion(question);
     }
 
-    public void AskQuestion(QuestionType question, Button button)
+    public void AskQuestion(string question, Button button)
     {
         Destroy(button.gameObject);
         AskQuestion(question);
@@ -133,7 +99,7 @@ public class DialogueManager : MonoBehaviour
             // Remove the question from list of questions to be asked
             recipient.remainingQuestions.RemoveAt(questionIndex);
 
-            Button button = Instantiate(buttonPrefab, promptsUI.transform).GetComponent<Button>();
+            Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
             buttonText.text = GetPromptText(buttonType);
@@ -161,6 +127,44 @@ public class DialogueManager : MonoBehaviour
             QuestionType.OddTrait => "Do you have any odd traits?",
             _ => "",
         };
+    }
+
+    private DialogueRecipient GenerateRecipient()
+    {
+        DialogueRecipient dialogueRecipient = new();
+
+        dialogueRecipient.answers.Add(
+            QuestionType.Political,
+            new List<string> { "I think that political stuff is really stuff", "it really is..." });
+        dialogueRecipient.answers.Add(
+            QuestionType.Personality,
+            new List<string> { "I'm someone who really stuffs", "I stuff all the time fr", "pluh" });
+        dialogueRecipient.answers.Add(
+            QuestionType.Hobby,
+            new List<string> { "hobby" });
+        dialogueRecipient.answers.Add(
+            QuestionType.CulturalBackground,
+            new List<string> { "the culture" });
+        dialogueRecipient.answers.Add(
+            QuestionType.Education,
+            new List<string> { "edutationasd" });
+        dialogueRecipient.answers.Add(
+            QuestionType.CoreValues,
+            new List<string> { "cor vales" });
+        dialogueRecipient.answers.Add(
+            QuestionType.ImportantPeople,
+            new List<string> { "people be important" });
+        dialogueRecipient.answers.Add(
+            QuestionType.PositiveTrait,
+            new List<string> { "i am just great" });
+        dialogueRecipient.answers.Add(
+            QuestionType.NegativeTrait,
+            new List<string> { "dont have any" });
+        dialogueRecipient.answers.Add(
+            QuestionType.OddTrait,
+            new List<string> { "... eeeeeeee ... ee. .. ..." });
+
+        return dialogueRecipient;
     }
 }
 
