@@ -106,9 +106,6 @@ public class DialogueManager : MonoBehaviour
         promptsUI.SetActive(false);
         dialogue.SetActive(true);
 
-        // Remove the question from list of questions to be asked
-        recipient.remainingQuestions.Remove(question);
-
         List<string> answer = recipient.GetAnswer(question);
         animator.WriteDialogue(answer);
     }
@@ -127,12 +124,15 @@ public class DialogueManager : MonoBehaviour
 
     private void CreatePromptButton()
     {
-        Button button = Instantiate(buttonPrefab, promptsUI.transform).GetComponent<Button>();
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-
         // Get random question that has not been asked yet
         int questionIndex = new System.Random().Next(recipient.remainingQuestions.Count);
         QuestionType buttonType = recipient.remainingQuestions[questionIndex];
+
+        // Remove the question from list of questions to be asked
+        recipient.remainingQuestions.RemoveAt(questionIndex);
+        
+        Button button = Instantiate(buttonPrefab, promptsUI.transform).GetComponent<Button>();
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = GetPromptText(buttonType);
         button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
