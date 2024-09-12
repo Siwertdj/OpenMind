@@ -124,18 +124,25 @@ public class DialogueManager : MonoBehaviour
 
     private void CreatePromptButton()
     {
-        // Get random question that has not been asked yet
-        int questionIndex = new System.Random().Next(recipient.remainingQuestions.Count);
-        QuestionType buttonType = recipient.remainingQuestions[questionIndex];
+        if (recipient.remainingQuestions.Count > 0)
+        {
+            // Get random question that has not been asked yet
+            int questionIndex = new System.Random().Next(recipient.remainingQuestions.Count);
+            QuestionType buttonType = recipient.remainingQuestions[questionIndex];
 
-        // Remove the question from list of questions to be asked
-        recipient.remainingQuestions.RemoveAt(questionIndex);
-        
-        Button button = Instantiate(buttonPrefab, promptsUI.transform).GetComponent<Button>();
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+            // Remove the question from list of questions to be asked
+            recipient.remainingQuestions.RemoveAt(questionIndex);
 
-        buttonText.text = GetPromptText(buttonType);
-        button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
+            Button button = Instantiate(buttonPrefab, promptsUI.transform).GetComponent<Button>();
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+            buttonText.text = GetPromptText(buttonType);
+            button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
+        }
+        else
+        {
+            Debug.Log("No more questions remaining; prompt not created");
+        }
     }
 
     private string GetPromptText(QuestionType questionType)
