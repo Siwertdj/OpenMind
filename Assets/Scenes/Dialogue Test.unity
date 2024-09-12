@@ -352,6 +352,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayInSeconds: 0.05
   delayAfterSentence: 1
+  inDialogue: 0
   OnDialogueComplete:
     m_PersistentCalls:
       m_Calls: []
@@ -521,6 +522,7 @@ MonoBehaviour:
   prompts: {fileID: 1479023557}
   dialogue: {fileID: 826756115}
   animator: {fileID: 826756117}
+  buttonPrefab: {fileID: 0}
 --- !u!4 &1061845840
 Transform:
   m_ObjectHideFlags: 0

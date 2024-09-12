@@ -13,7 +13,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
 
     // private DialoguePrompter prompter;
-    private DialogueRecipient recipient = ;
+    private DialogueRecipient recipient = new();
 
     List<QuestionType> questions = new();
 
