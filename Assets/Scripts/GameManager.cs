@@ -9,7 +9,7 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private int numberOfCharacters;
+    [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
     private List<Character> currentCharacters;
     
