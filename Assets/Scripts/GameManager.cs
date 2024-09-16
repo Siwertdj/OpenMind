@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
-    private List<Character> currentCharacters;
+    public List<Character> currentCharacters;
 
 
     // Start is called before the first frame update
@@ -105,6 +105,18 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
 
+    public void ToggleNPCSelectScene()
+    {
+        if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("NPCSelectScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+        }
+    }
+    
     public void ToggleDialogueScene()
     {
         if (SceneManager.GetSceneByName("Dialogue Test").isLoaded)
@@ -115,5 +127,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
         }
+    }
+
+    public void StartDialogue(int id) {
+        //var c = currentCharacters.Where(c => c.id == id).FirstOrDefault();
+        ToggleDialogueScene();
     }
 }

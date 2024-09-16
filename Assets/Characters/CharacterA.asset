@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Linda
   id: 1
-  avatar: {fileID: 0}
+  avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
   dialogueList:
   - {fileID: 11400000, guid: 6892525bfdf7c624fa54f6de94c5d268, type: 2}
   - {fileID: 11400000, guid: e1ec643dd843ce54b805171f5a3eb16d, type: 2}
   - {fileID: 11400000, guid: d149d20480f89d4428eb22c0727015df, type: 2}
+  isCulprit: 1
+  isActive: 1

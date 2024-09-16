@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: John
   id: 2
-  avatar: {fileID: 0}
+  avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
   dialogueList:
   - {fileID: 11400000, guid: 77887ac49194c914380b44ddc58c2820, type: 2}
   - {fileID: 11400000, guid: 521ce149d7bc2cc41a7d91262507f486, type: 2}
   - {fileID: 11400000, guid: 7723ec687f77d66409c494db41949784, type: 2}
+  isCulprit: 1
+  isActive: 1
