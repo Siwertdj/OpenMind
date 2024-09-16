@@ -5,13 +5,14 @@ public class ButtonBehaviour : MonoBehaviour
 {
     public void EndGame()
     {
-        Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
+        GameManager.Instance.EndGame();
     }
     public void Restart()
     {
-        Debug.Log("Restart Level.");
-        SceneManager.LoadScene("StoryScene");
+        GameManager.Instance.RestartStoryScene();
+    }
+    public void Retry()
+    {
+        GameManager.Instance.RetryStoryScene();
     }
 }

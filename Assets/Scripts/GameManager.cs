@@ -12,22 +12,34 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
     private List<Character> currentCharacters;
-
+    public static GameManager Instance { get; private set; }
 
     // Start is called before the first frame update
     void Start()
     {
         // Makes this GameManager persistent throughout the scenes.
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        // destroy new GameManager to avoid duplicates
+        if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            // Initialize an empty list of characters
+            currentCharacters = new List<Character>();
+            // Now, populate this list.
+            PopulateCharacters();
+            // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+            Test_CharactersInGame();
 
-        // Initialize an empty list of characters
-        currentCharacters = new List<Character>();
-        // Now, populate this list.
-        PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
-
-        //LoadDialogueScene();
+            //LoadDialogueScene();
+        }
     }
 
     // Update is called once per frame
@@ -36,6 +48,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ToggleDialogueScene();
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ToggleGameOverScene();
         }
     }
 
@@ -115,5 +131,36 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
         }
+    }
+    public void ToggleGameOverScene()
+    {
+        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("GameOverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
+        }
+    }
+    public void EndGame()
+    {
+        Debug.Log("End game.");
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
+    public void RetryStoryScene()
+    {
+        Debug.Log("Start story scene");
+        SceneManager.LoadScene("StoryScene");
+        Test_CharactersInGame();
+    }
+    public void RestartStoryScene()
+    {
+        Debug.Log("Retry story scene");
+        //Remove the gamemanager to start a new game
+        Destroy(gameObject);
+        // Load the story scene
+        SceneManager.LoadScene("StoryScene");
     }
 }
