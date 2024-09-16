@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void PopulateCharacters()
     {
+        // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
+        
         // Create array to remember what indices we have already visited, so we don't get doubles.
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
@@ -67,6 +69,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        
+        // Make sure all the characters are 'active'
+        foreach (var c in currentCharacters)
+            c.isActive = true;
+        // TODO: Test this: Select a culprit
+        currentCharacters[r.Next(0, numberOfCharacters)].isCulprit = true;
     }
 
     private void Test_CharactersInGame()
