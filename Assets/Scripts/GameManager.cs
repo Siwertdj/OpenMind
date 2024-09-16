@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour
         if (!hintsDone)
         {
             //make a character "disappear"
-            Character theUnluckyOne = Disappear();
+            Character theUnluckyOne = GetRandomCharacterNoCulprit();
             currentCharacters = currentCharacters.FindAll(c => c.characterName != theUnluckyOne.characterName).ToList();
             theUnluckyOne.isActive = false;
             
@@ -151,16 +151,6 @@ public class GameManager : MonoBehaviour
         }
         CharactersTalkedTo();
         TalkorEnd();
-    }
-
-    /// <summary>
-    /// Makes a character "disappear"
-    /// This method is simple, but can be changed if we want more advanced mechanics for this in the future
-    /// </summary>
-    /// <returns>The character that "disappeared"</returns>
-    private Character Disappear()
-    {
-        return currentCharacters[random.Next(currentCharacters.Count)];
     }
 
     private void TalkorEnd()
