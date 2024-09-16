@@ -109,11 +109,11 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("Dialogue Test").isLoaded)
         {
-            SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
+            SceneManager.UnloadSceneAsync("Dialogue Test");
         }
         else
         {
-            SceneManager.UnloadSceneAsync("Dialogue Test");
+            SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
         }
     }
 }
