@@ -11,7 +11,14 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
+    
+    /// <summary>
+    /// The current "active" characters, any characters that became inactive should be removed from this list.
+    /// </summary>
     private List<Character> currentCharacters;
+    
+    //random variable is made global so it can be reused
+    public Random random = new Random();
 
 
     // Start is called before the first frame update
@@ -47,7 +54,6 @@ public class GameManager : MonoBehaviour
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
         int[] visitedIndices = new int[numberOfCharacters];
-        Random r = new Random();
 
         // We iterate over a for-loop to find a specific number of characters to populate our game with.
         // We clamp it down to the smallest value, in case numberOfCharacters is more than the number we have generated.
@@ -57,7 +63,7 @@ public class GameManager : MonoBehaviour
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = r.Next(0, numberOfCharacters + 1) + 1; // offset by 1 to check existence
+                int index = random.Next(0, numberOfCharacters + 1) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
                 for (int j = 0; j< visitedIndices.Length; j++)
@@ -86,8 +92,22 @@ public class GameManager : MonoBehaviour
             c.isCulprit = false;
         }
         //Randomly select a culprit
-        currentCharacters[r.Next(0, numberOfCharacters)].isCulprit = true;
+        currentCharacters[random.Next(0, numberOfCharacters)].isCulprit = true;
     }
+
+    /// <summary>
+    /// Returns the culprit, used to give hints for the companion
+    /// Assumes a culprit exists
+    /// </summary>
+    public Character GetCulprit() => currentCharacters.Find(c => c.isCulprit);
+
+    /// <summary>
+    /// Returns a random (non-culprit) character, used to give hints for the companion
+    /// Assumes currentCharacters only contains active characters
+    /// Assumes there is only 1 culprit
+    /// </summary>
+    public Character GetRandomCharacterNoCulprit() =>
+        currentCharacters.FindAll(c => !c.isCulprit)[random.Next(currentCharacters.Count - 1)];
 
     private void Test_CharactersInGame()
     {
@@ -114,6 +134,19 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
+        }
+    }
+    
+    public void ToggleCompanionHintScene()
+    {
+        string sceneName = "Companion Hint";
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+        }
+        else
+        {
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
 }
