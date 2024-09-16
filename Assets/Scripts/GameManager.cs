@@ -129,21 +129,38 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
     
-    /// SUMMARY
+    /// <summary>
     /// The main cycle of the game
     /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to
     /// At that point the cycle ends and the player has 
-    /// SUMMARY
+    /// </summary>
     private void Cycle()
     {
+        
+        
         // Once at the start of the cycle have the assistant give hints
         if (!hintsDone)
         {
+            //make a character "disappear"
+            Character theUnluckyOne = Disappear();
+            currentCharacters = currentCharacters.FindAll(c => c.characterName != theUnluckyOne.characterName).ToList();
+            theUnluckyOne.isActive = false;
+            
             ToggleCompanionHintScene();
             hintsDone = true;
         }
         CharactersTalkedTo();
         TalkorEnd();
+    }
+
+    /// <summary>
+    /// Makes a character "disappear"
+    /// This method is simple, but can be changed if we want more advanced mechanics for this in the future
+    /// </summary>
+    /// <returns>The character that "disappeared"</returns>
+    private Character Disappear()
+    {
+        return currentCharacters[random.Next(currentCharacters.Count)];
     }
 
     private void TalkorEnd()
