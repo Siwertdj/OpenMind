@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Character> characters;
     private List<Character> currentCharacters;
     private int numTalkedTo;
+    /// If the player has already recieved hints from the assistant, should be false at the start of every cycle
+    private bool hintsDone; 
 
 
     // Start is called before the first frame update
@@ -106,10 +108,20 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
     }
-
+    
+    /// SUMMARY
+    /// The main cycle of the game
+    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to
+    /// At that point the cycle ends and the player has 
+    /// SUMMARY
     private void Cycle()
     {
-        // TODO assistant hints
+        // Once at the start of the cycle have the assistant give hints
+        if (!hintsDone)
+        {
+            // TODO assistant hints
+            hintsDone = true;
+        }
         CharactersTalkedTo();
         TalkorEnd();
     }
