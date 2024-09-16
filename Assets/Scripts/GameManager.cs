@@ -143,7 +143,7 @@ public class GameManager : MonoBehaviour
         {
             //make a character "disappear"
             Character theUnluckyOne = GetRandomCharacterNoCulprit();
-            currentCharacters = currentCharacters.FindAll(c => c.characterName != theUnluckyOne.characterName).ToList();
+            currentCharacters = currentCharacters.FindAll(c => c.id != theUnluckyOne.id).ToList();
             theUnluckyOne.isActive = false;
             
             ToggleCompanionHintScene();
