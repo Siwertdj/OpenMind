@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,9 @@ public class GameManager : MonoBehaviour
     
     //random variable is made global so it can be reused
     public Random random = new Random();
+    private int numTalkedTo;
+    /// If the player has already recieved hints from the assistant, should be false at the start of every cycle
+    private bool hintsDone; 
 
 
     // Start is called before the first frame update
@@ -124,6 +128,47 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
     }
+    
+    /// SUMMARY
+    /// The main cycle of the game
+    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to
+    /// At that point the cycle ends and the player has 
+    /// SUMMARY
+    private void Cycle()
+    {
+        // Once at the start of the cycle have the assistant give hints
+        if (!hintsDone)
+        {
+            // TODO assistant hints
+            hintsDone = true;
+        }
+        CharactersTalkedTo();
+        TalkorEnd();
+    }
+
+    private void TalkorEnd()
+    {
+        if (numTalkedTo < 5) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
+        {
+            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+        }
+        else
+        {
+            // Load the scene where the player chooses the culprit
+            // This scene does not exist yet
+        }
+    }
+    private void CharactersTalkedTo()
+    {
+        numTalkedTo = 0;
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].isActive && !characters[i].TalkedTo)
+            {
+                numTalkedTo++;
+            }
+        }
+    }
 
     public void ToggleDialogueScene()
     {
@@ -147,6 +192,18 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        }
+    }
+
+    public void ToggleNPCSelectScene()
+    {
+        if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(("NPCSelectScene"));
+        }
+        else
+        {
+            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
         }
     }
 }
