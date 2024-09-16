@@ -24,15 +24,19 @@ public class Character : ScriptableObject
     /// </summary>
     public string GetRandomTrait(Random random = null)
     {
-        List<string> allTraits = new List<string>();
-        
-        //logic for obtaining traits, can be changed in the future
-        allTraits = dialogueList.Select(dO => dO.answerText).ToList();
-        //endlogic for traits
+        List<string> allTraits = GetAllTraits();
 
         if (random == null)
             random = FindObjectOfType<GameManager>().random;
 
         return allTraits[random.Next(allTraits.Count)];
+    }
+
+    /// <summary>
+    /// Gets all traits of this character, can be modified later if traits are stored differently
+    /// </summary>
+    private List<string> GetAllTraits()
+    {
+        return dialogueList.Select(dO => dO.answerText).ToList();
     }
 }
