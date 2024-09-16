@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
         // Once at the start of the cycle have the assistant give hints
         if (!hintsDone)
         {
-            // TODO assistant hints
+            ToggleCompanionHintScene();
             hintsDone = true;
         }
         CharactersTalkedTo();
