@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b032900dd4568cb48a6aa825b64d46fe, type: 3}
+  m_Name: CharacterC
+  m_EditorClassIdentifier: 
+  characterName: Jane
+  id: 3
+  avatar: {fileID: 0}
+  dialogueList:
+  - {fileID: 11400000, guid: eac58fee20b3b8c429f0955605302c4f, type: 2}
+  - {fileID: 11400000, guid: 0a80add01184f1541a071619a54bff86, type: 2}
+  - {fileID: 11400000, guid: ff39abdbcce19174e9d975423ed93f45, type: 2}
+  isCulprit: 0
+  isActive: 0

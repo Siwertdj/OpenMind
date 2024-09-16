@@ -24,8 +24,8 @@ public class GameManager : MonoBehaviour
         currentCharacters = new List<Character>();
         // Now, populate this list.
         PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game.
-        Test_CharactersInGame();
+        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+        //Test_CharactersInGame();
 
         //LoadDialogueScene();
     }
@@ -57,8 +57,13 @@ public class GameManager : MonoBehaviour
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = r.Next(0, numberOfCharacters) + 1; // offset by 1 to check existence
-                //Debug.Log("Trying index: " + index + "over index-array: " + visitedIndices.ToString());
+                int index = r.Next(0, numberOfCharacters + 1) + 1; // offset by 1 to check existence
+
+                string arrayString = "";
+                for (int j = 0; j< visitedIndices.Length; j++)
+                    arrayString += (visitedIndices[j] + ", ");
+                
+                //Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
                 if (!visitedIndices.Contains(index))
                 {
                     //Debug.Log("Unique index found!");
@@ -67,13 +72,20 @@ public class GameManager : MonoBehaviour
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
                     foundUniqueInt = true; // change the boolean-value to exit the while-loop
                 }
+                else
+                {
+                    //Debug.Log("Index not unique");
+                }
             }
         }
 
         // Make sure all the characters are 'active'
         foreach (var c in currentCharacters)
+        {
             c.isActive = true;
-        // TODO: Test this: Select a culprit
+            c.isCulprit = false;
+        }
+        //Randomly select a culprit
         currentCharacters[r.Next(0, numberOfCharacters)].isCulprit = true;
     }
 
@@ -87,8 +99,10 @@ public class GameManager : MonoBehaviour
                 ? "."
                 : (i + 2 == currentCharacters.Count ? " and " : ", ")));
         }
-
         Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
+        
+        foreach (var c in currentCharacters.Where(c => c.isCulprit))
+            Debug.Log(c.characterName + " is the culprit!");
     }
 
     public void ToggleDialogueScene()
