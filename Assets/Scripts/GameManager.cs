@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
     private List<Character> currentCharacters;
+    private int numTalkedTo;
 
 
     // Start is called before the first frame update
@@ -105,6 +107,37 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
 
+    private void Cycle()
+    {
+        // TODO assistant hints
+        CharactersTalkedTo();
+        TalkorEnd();
+    }
+
+    private void TalkorEnd()
+    {
+        if (numTalkedTo < 5) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
+        {
+            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+        }
+        else
+        {
+            // Load the scene where the player chooses the culprit
+            // This scene does not exist yet
+        }
+    }
+    private void CharactersTalkedTo()
+    {
+        numTalkedTo = 0;
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].isActive && !characters[i].TalkedTo)
+            {
+                numTalkedTo++;
+            }
+        }
+    }
+
     public void ToggleDialogueScene()
     {
         if (SceneManager.GetSceneByName("Dialogue Test").isLoaded)
@@ -114,6 +147,18 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
+        }
+    }
+
+    public void ToggleNPCSelectScene()
+    {
+        if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(("NPCSelectScene"));
+        }
+        else
+        {
+            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
         }
     }
 }
