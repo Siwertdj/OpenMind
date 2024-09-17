@@ -6,6 +6,6 @@ using UnityEngine;
 public class DialogueObject : ScriptableObject
 {
     public int id;
-    public string questionText;
+    public Question questionType;
     public string answerText;
 }

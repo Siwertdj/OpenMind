@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: A_Dialogue1
   m_EditorClassIdentifier: 
   id: 0
-  questionText: How are you?
+  questionType: 2
   answerText: I am fine, thank you.

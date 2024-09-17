@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b032900dd4568cb48a6aa825b64d46fe, type: 3}
-  m_Name: CharacterC
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: Character_B
   m_EditorClassIdentifier: 
   characterName: Jane
-  id: 3
+  id: 0
   avatar: {fileID: 0}
-  dialogueList:
-  - {fileID: 11400000, guid: eac58fee20b3b8c429f0955605302c4f, type: 2}
-  - {fileID: 11400000, guid: 0a80add01184f1541a071619a54bff86, type: 2}
-  - {fileID: 11400000, guid: ff39abdbcce19174e9d975423ed93f45, type: 2}
+  dialogueList: []
+  answers:
+  - question: 3
+    answer:
+    - politikz
   isCulprit: 0
   isActive: 0

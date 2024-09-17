@@ -10,8 +10,8 @@ using Random = System.Random;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public int numberOfCharacters;
-    [SerializeField] private List<Character> characters;
-    private List<Character> currentCharacters;
+    [SerializeField] private List<CharacterData> characters;
+    private List<CharacterData> currentCharacters;
 
 
     // Start is called before the first frame update
@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Initialize an empty list of characters
-        currentCharacters = new List<Character>();
+        currentCharacters = new List<CharacterData>();
         // Now, populate this list.
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING

@@ -5,18 +5,18 @@ using System;
 
 public class DialogueRecipient
 {
-    public Dictionary<QuestionType, List<string>> Answers = new();
+    public Dictionary<Question, List<string>> Answers = new();
 
-    public List<QuestionType> RemainingQuestions = new();
+    public List<Question> RemainingQuestions = new();
 
     public string Name;
 
     public DialogueRecipient()
     {
         // Populate questions list with all question types
-        foreach (QuestionType questionType in Enum.GetValues(typeof(QuestionType)))
+        foreach (Question questionType in Enum.GetValues(typeof(Question)))
             RemainingQuestions.Add(questionType);
     }
 
-    public List<string> GetAnswer(QuestionType question) => Answers[question];
+    public List<string> GetAnswer(Question question) => Answers[question];
 }

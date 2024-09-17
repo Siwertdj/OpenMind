@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: B_Dialogue3
   m_EditorClassIdentifier: 
   id: 0
-  questionText: What is your age?
+  questionType: 1
   answerText: I am 21-years old.
