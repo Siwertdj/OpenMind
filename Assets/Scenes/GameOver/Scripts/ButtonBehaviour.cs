@@ -3,16 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class ButtonBehaviour : MonoBehaviour
 {
+    GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = FindAnyObjectByType<GameManager>();
+    }
+
     public void EndGame()
     {
-        GameManager.Instance.EndGame();
+        gameManager.EndGame();
     }
     public void Restart()
     {
-        GameManager.Instance.RestartStoryScene();
+        gameManager.RestartStoryScene();
     }
     public void Retry()
     {
-        GameManager.Instance.RetryStoryScene();
+        gameManager.RetryStoryScene();
     }
 }

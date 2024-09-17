@@ -12,34 +12,23 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<Character> characters;
     private List<Character> currentCharacters;
-    public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        // Makes this GameManager persistent throughout the scenes.
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Makes this GameManager persistent throughout the scenes.
-        //DontDestroyOnLoad(this.gameObject);
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        // destroy new GameManager to avoid duplicates
-        if (Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Initialize an empty list of characters
-            currentCharacters = new List<Character>();
-            // Now, populate this list.
-            PopulateCharacters();
-            // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-            Test_CharactersInGame();
-
-            //LoadDialogueScene();
-        }
+        // Initialize an empty list of characters
+        currentCharacters = new List<Character>();
+        // Now, populate this list.
+        PopulateCharacters();
+        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+        Test_CharactersInGame();
+        //LoadDialogueScene();
     }
 
     // Update is called once per frame
@@ -151,16 +140,38 @@ public class GameManager : MonoBehaviour
     }
     public void RetryStoryScene()
     {
-        Debug.Log("Start story scene");
-        SceneManager.LoadScene("StoryScene");
+        Debug.Log("Retry story scene");
+
+        // Unload all active scenes except the story scene
+        UnloadAdditiveScenes();
+        // Keep the characters
         Test_CharactersInGame();
     }
     public void RestartStoryScene()
     {
-        Debug.Log("Retry story scene");
+        Debug.Log("Restart story scene");
         //Remove the gamemanager to start a new game
-        Destroy(gameObject);
+        //Destroy(gameObject);
         // Load the story scene
-        SceneManager.LoadScene("StoryScene");
+        //SceneManager.LoadScene("StoryScene");
+
+        //or
+        // unload all scenes except story scene
+        UnloadAdditiveScenes();
+        // create new characters etc
+        Start();
+    }
+
+    private void UnloadAdditiveScenes()
+    {
+        //Get the story scene
+        Scene storyScene = SceneManager.GetSceneByName("StoryScene");
+
+        // Unload all loaded scenes that are not the story scene
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene loadedScene = SceneManager.GetSceneAt(i);
+            if (loadedScene != storyScene) SceneManager.UnloadSceneAsync(loadedScene.name);
+        }
     }
 }
