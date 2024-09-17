@@ -50,6 +50,7 @@ public class DialogueManager : MonoBehaviour
         CreatePromptButton();
     }
 
+    // Starts writing response to the given question to the current character
     public void AskQuestion(Question question)
     {
         prompts.SetActive(false);
