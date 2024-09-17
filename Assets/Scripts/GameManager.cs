@@ -20,8 +20,13 @@ public class GameManager : MonoBehaviour
     
     //random variable is made global so it can be reused
     public Random random = new Random();
+    /// <summary>
+    /// The amount of characters the player has talked to, should be 0 at the start of each cycle
+    /// </summary>
     private int numTalkedTo;
-    /// If the player has already recieved hints from the assistant, should be false at the start of every cycle
+    /// <summary>
+    /// If the player has already received hints from the assistant, should be false at the start of every cycle
+    /// </summary>
     private bool hintsDone; 
 
 
@@ -130,14 +135,12 @@ public class GameManager : MonoBehaviour
     }
     
     /// <summary>
-    /// The main cycle of the game
-    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to
-    /// At that point the cycle ends and the player has 
+    /// The main cycle of the game.
+    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to,
+    /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
     /// </summary>
     private void Cycle()
     {
-        
-        
         // Once at the start of the cycle have the assistant give hints
         if (!hintsDone)
         {
@@ -153,6 +156,9 @@ public class GameManager : MonoBehaviour
         TalkorEnd();
     }
 
+    /// <summary>
+    /// Sends the player to the appropriate scene depending on the ammount of NPCs they have talked to this cycle
+    /// </summary>
     private void TalkorEnd()
     {
         if (numTalkedTo < 5) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
@@ -165,12 +171,15 @@ public class GameManager : MonoBehaviour
             // This scene does not exist yet
         }
     }
+    /// <summary>
+    /// Counts how many characters have been talked to this cycle.
+    /// </summary>
     private void CharactersTalkedTo()
     {
         numTalkedTo = 0;
-        for (int i = 0; i < characters.Count; i++)
+        for (int i = 0; i < currentCharacters.Count; i++)
         {
-            if (characters[i].isActive && !characters[i].TalkedTo)
+            if (currentCharacters[i].isActive && !currentCharacters[i].TalkedTo)
             {
                 numTalkedTo++;
             }
@@ -179,13 +188,14 @@ public class GameManager : MonoBehaviour
 
     public void ToggleDialogueScene()
     {
-        if (SceneManager.GetSceneByName("Dialogue Test").isLoaded)
+        string sceneName = "Dialogue Test";
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
         {
-            SceneManager.UnloadSceneAsync("Dialogue Test");
+            SceneManager.UnloadSceneAsync(sceneName);
         }
         else
         {
-            SceneManager.LoadScene("Dialogue Test", LoadSceneMode.Additive);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
     
@@ -204,13 +214,14 @@ public class GameManager : MonoBehaviour
 
     public void ToggleNPCSelectScene()
     {
-        if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+        string sceneName = "NPCSelectScene";
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
         {
-            SceneManager.UnloadSceneAsync(("NPCSelectScene"));
+            SceneManager.UnloadSceneAsync((sceneName));
         }
         else
         {
-            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
 }
