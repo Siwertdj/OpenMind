@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private bool notebookOn = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -12,7 +14,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         
         
-        LoadDialogueScene();
+        //LoadDialogueScene();
     }
 
     // Update is called once per frame
@@ -32,5 +34,19 @@ public class GameManager : MonoBehaviour
     public void UnloadDialogueScene()
     {
         SceneManager.UnloadSceneAsync("Dialogue Test");
+    }
+
+    public void ToggleNotebookScene()
+    {
+        if (notebookOn)
+        {
+            SceneManager.UnloadSceneAsync("NotebookScene");
+            notebookOn = false;
+        }
+        else
+        {
+            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
+            notebookOn= true;
+        }
     }
 }
