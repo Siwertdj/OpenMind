@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
         
-        ToggleNPCSelectScene();
+        //ToggleNPCSelectScene();
 
         //ToggleCompanionHintScene();
 
