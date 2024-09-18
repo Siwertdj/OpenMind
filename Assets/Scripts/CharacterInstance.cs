@@ -49,19 +49,28 @@ public class CharacterInstance
     /// THis method is used for obtaining hints about the victim and the culprit at the start of each cycle.
     /// </summary>
     public List<string> GetRandomTrait()
-    {
-        List<Question> allTraits = RemainingQuestions;        
-
+    {  
         // NOTE: Sander idk hoe je code werkt maar ik heb het zo voor nu <3
         //if (random == null)
         //    random = FindObjectOfType<GameManager>().random;
 
         //return allTraits[random.Next(allTraits.Count)];
-        int randomInt = new System.Random().Next(allTraits.Count);
-        Question question = RemainingQuestions[randomInt];
-        RemainingQuestions.RemoveAt((randomInt));
-        
-        // TODO: add question-text to the answer that is returned
-        return (Answers[question]);
+
+        if (RemainingQuestions.Count > 0)
+        {
+
+            int randomInt = new System.Random().Next(RemainingQuestions.Count);
+            Question question = RemainingQuestions[randomInt];
+            RemainingQuestions.RemoveAt((randomInt));
+
+            // TODO: add question-text to the answer that is returned
+            return (Answers[question]);
+        }
+        else
+        {
+            List<string> output = new List<string>();
+            output.Add("No clues were found..");
+            return (output);
+        }
     }
 }

@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public CharacterInstance GetRandomVictimNoCulprit()
     {
-        List<CharacterInstance> possibleVictims = currentCharacters.FindAll(c => !c.isCulprit && c.isActive);
+        List<CharacterInstance> possibleVictims = currentCharacters.FindAll(c => !c.isCulprit && c.isActive); 
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
@@ -155,6 +155,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StartCycle()
     {
+        Debug.Log("New cycle started.");
         // Choose a victim, make them inactive, and print the hints to the console.
         ChooseVictim();
         // Reset number of times the player has talked
@@ -165,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     public void EndCycle()
     {
-        Debug.Log("No questions left to ask.");
+        // TODO: FInd a way to unload dialogue scene without crashing due to the invoke
         //UnloadDialogueScene(); // stop dialogue immediately.
         StartCycle();
     }
