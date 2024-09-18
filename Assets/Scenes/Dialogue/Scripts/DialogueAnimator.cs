@@ -107,7 +107,12 @@ public class DialogueAnimator : MonoBehaviour
             if (dialogueIndex < currentDialogue.Count)
             {
                 yield return new WaitForSeconds(delayAfterSentence);
-                WriteSentence(currentDialogue[dialogueIndex]);
+
+                if (dialogueIndex >= currentDialogue.Count)
+                    Debug.Log("Index out of boudns?????");
+
+                if (dialogueIndex < currentDialogue.Count)
+                    WriteSentence(currentDialogue[dialogueIndex]);
             }
             else
             {
