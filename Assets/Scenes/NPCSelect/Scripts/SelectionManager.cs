@@ -23,7 +23,7 @@ public class SelectionManager : MonoBehaviour
         var gm = FindObjectOfType<GameManager>();
 
         int counter = 0;
-        foreach (Character c in gm.currentCharacters)
+        foreach (CharacterInstance c in gm.currentCharacters)
         {
             //float width = characterspace.rect.width;
             //float height = characterspace.rect.height;
@@ -32,7 +32,7 @@ public class SelectionManager : MonoBehaviour
             // TODO: make child of SelectionSpace, so it fits in there correctly
             GameObject newOption = Instantiate(selectionOption);
             newOption.GetComponent<SelectOption>().characterId = c.id;
-            newOption.GetComponent<SelectOption>().avatar.sprite = c.avatar;
+            //newOption.GetComponent<SelectOption>().avatar.sprite = c.avatar;
                 
             
             // not correct yet, this will go out of bounds when there are more than 8 characters.
