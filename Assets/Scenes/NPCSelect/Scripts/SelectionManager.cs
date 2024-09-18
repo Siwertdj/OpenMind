@@ -18,7 +18,6 @@ public class SelectionManager : MonoBehaviour
     private void GenerateOptions()
     {
         int counter = 0;
-
         foreach (CharacterInstance character in GameManager.gm.currentCharacters.Where(c => c.isActive))
         {            
             // TODO: give proper transform?
@@ -39,10 +38,9 @@ public class SelectionManager : MonoBehaviour
     public void ButtonClicked(GameObject option)
     {
         // get the selectoption object
-        SelectOption character = option.GetComponentInChildren<SelectOption>();
+        SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
         
         // TODO: ensure that the correct id is passed based on the button
-        var gm = FindObjectOfType<GameManager>();
-        gm.StartDialogue(character.character);
+        GameManager.gm.StartDialogue(selectOption.character);
     }
 }

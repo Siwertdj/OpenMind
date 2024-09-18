@@ -7,21 +7,19 @@ using Button = UnityEngine.UI.Button;
 
 public class SelectOption : MonoBehaviour
 {
-    public Image avatar;
-    public int characterId;
-    public TMP_Text characterNameText;
-
     public CharacterInstance character;
+
+    private Image avatar;
+    private TMP_Text characterNameText;
     
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         avatar = GetComponentInChildren<Image>();
         avatar.sprite = character.avatar;
 
         characterNameText = GetComponentInChildren<TMP_Text>();
-        characterNameText.text = character.characterName;
-        
+        characterNameText.text = character.characterName;        
     }
 
     private void SetInactive()
