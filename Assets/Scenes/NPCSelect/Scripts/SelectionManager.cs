@@ -1,14 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
 {
     [SerializeField] private GameObject selectionOption;
-
-    // kan vgm wel weg maar ik laat het ff staan
-    public GameObject[] characterTransforms;
     
     public GameObject parent;
     
@@ -20,10 +18,9 @@ public class SelectionManager : MonoBehaviour
     private void GenerateOptions()
     {
         // get number of total characters from Gamemanager
-        var gm = FindObjectOfType<GameManager>();
 
         int counter = 0;
-        foreach (CharacterInstance c in gm.currentCharacters)
+        foreach (CharacterInstance character in GameManager.gm.currentCharacters.Where(c => c.isActive))
         {
             //float width = characterspace.rect.width;
             //float height = characterspace.rect.height;
@@ -31,8 +28,9 @@ public class SelectionManager : MonoBehaviour
             // TODO: give proper transform?
             // TODO: make child of SelectionSpace, so it fits in there correctly
             GameObject newOption = Instantiate(selectionOption);
-            newOption.GetComponent<SelectOption>().characterId = c.id;
-            //newOption.GetComponent<SelectOption>().avatar.sprite = c.avatar;
+            newOption.GetComponent<SelectOption>().characterId = character.id;
+            newOption.GetComponent<SelectOption>().avatar.sprite = character.avatar;
+            //newOption.GetComponent<SelectOption>().avatar.sprite.
                 
             
             // not correct yet, this will go out of bounds when there are more than 8 characters.

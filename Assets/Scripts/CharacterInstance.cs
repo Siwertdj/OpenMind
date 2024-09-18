@@ -12,6 +12,7 @@ public class CharacterInstance
 
     public string characterName;
     public int id;
+    public Sprite avatar;
 
     public bool isCulprit;      // This character's random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
@@ -23,6 +24,7 @@ public class CharacterInstance
 
         characterName = data.characterName;
         id = data.id;
+        avatar = data.avatar;
 
         Debug.Log($"Creating character {data.characterName}");
 
@@ -42,18 +44,24 @@ public class CharacterInstance
     }
 
     /// <summary>
-    /// The logic for obtaining a random trait.
-    /// If the random variable is left null, it will be obtained from gameManager, but it can be provided for slight optimization
+    /// The logic for obtaining a random trait and removing it from the list of available question of that character.
+    /// If the random variable is left null, it will be obtained from gameManager, but it can be provided for slight optimization.
+    /// THis method is used for obtaining hints about the victim and the culprit at the start of each cycle.
     /// </summary>
     public List<string> GetRandomTrait()
     {
-        List<List<string>> allTraits = GetAllTraits();        
+        List<Question> allTraits = RemainingQuestions;        
 
         // NOTE: Sander idk hoe je code werkt maar ik heb het zo voor nu <3
         //if (random == null)
         //    random = FindObjectOfType<GameManager>().random;
 
         //return allTraits[random.Next(allTraits.Count)];
-        return allTraits[new System.Random().Next(allTraits.Count)];
+        int randomInt = new System.Random().Next(allTraits.Count);
+        Question question = RemainingQuestions[randomInt];
+        RemainingQuestions.RemoveAt((randomInt));
+        
+        // TODO: add question-text to the answer that is returned
+        return (Answers[question]);
     }
 }

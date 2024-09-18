@@ -20,10 +20,7 @@ public class DialogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Generate answers for recipient
-        // TODO: should be done in a different (more versatile) way later
-        recipient = GenerateRecipient();
-
+        recipient = GameManager.gm.dialogueRecipient;
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
 
@@ -31,7 +28,8 @@ public class DialogueManager : MonoBehaviour
         prompts = Instantiate(promptsUIPrefab, FindObjectOfType<Canvas>().transform);
         for (int i = 0; i < 2; i++)
             CreatePromptButton();
-    }    
+    }
+    
 
     // Update is called once per frame
     void Update()
@@ -43,11 +41,24 @@ public class DialogueManager : MonoBehaviour
 
     public void OnDialogueComplete()
     {
+        GameManager.gm.numTalked += 1;
+     
         dialogue.SetActive(false);
         prompts.SetActive(true);
-
-        // Create new prompt
-        CreatePromptButton();
+        
+        if (GameManager.gm.HasQuestionsLeft())
+        {
+            // Create new prompt
+            CreatePromptButton();            
+            // TODO: back to home button
+            
+        }
+        else
+        {
+            // TODO: end cycle
+            GameManager.gm.EndCycle();
+        }
+        
     }
 
     // Starts writing response to the given question to the current character
@@ -142,6 +153,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     private CharacterInstance GenerateRecipient() => new(characters[new System.Random().Next(characters.Length)]);
+    
+    private CharacterInstance GetRecipient(int id) => new(characters[id]);
 }
 
 public enum Question

@@ -160,7 +160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 0}
+  m_SizeDelta: {x: 100, y: 510}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &35040657
 MonoBehaviour:
@@ -438,9 +438,9 @@ RectTransform:
   - {fileID: 42692781}
   m_Father: {fileID: 35040656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -255}
   m_SizeDelta: {x: 500, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &440181048
@@ -797,9 +797,9 @@ RectTransform:
   - {fileID: 1494758740}
   m_Father: {fileID: 35040656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -435}
   m_SizeDelta: {x: 500, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1141422495
@@ -1074,11 +1074,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f56704a8f74204419d791747d746c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfCharacters: 2
+  numberOfCharacters: 3
   characters:
   - {fileID: 11400000, guid: 21b31019478993442b0348c346e6e886, type: 2}
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
+  numQuestions: 1
 --- !u!1 &1792579903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,9 +1114,9 @@ RectTransform:
   - {fileID: 786575843}
   m_Father: {fileID: 35040656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -75}
   m_SizeDelta: {x: 500, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1792579905
@@ -1164,7 +1165,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1546507294}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: ToggleDialogueScene
+        m_MethodName: UnloadDialogueScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1230,7 +1231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1890018587
 MonoBehaviour:
   m_ObjectHideFlags: 0

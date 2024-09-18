@@ -8,15 +8,17 @@ public class CompanionDialogue : MonoBehaviour
     void Start()
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
-        Debug.Log(gameManager);
+        //Debug.Log(gameManager);
         CharacterInstance culprit = gameManager.GetCulprit();
-        CharacterInstance randOther = gameManager.GetRandomCharacterNoCulprit();
+        CharacterInstance victim = gameManager.GetRandomCharacterNoCulprit();
 
         List<string> randTraitCulprit = culprit.GetRandomTrait();
-        List<string> randTraitOther = randOther.GetRandomTrait();
+        List<string> randTraitVictim = victim.GetRandomTrait();
         
         //TODO: wait until I have a dialogue box to put this in
         Debug.Log(string.Join(", ", randTraitCulprit)); 
-        Debug.Log(string.Join(", ", randTraitOther));
+        Debug.Log(string.Join(", ", randTraitVictim));
+        
+        
     }
 }

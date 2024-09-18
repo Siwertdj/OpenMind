@@ -10,6 +10,8 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gm;
+    
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
     
@@ -17,20 +19,24 @@ public class GameManager : MonoBehaviour
     /// The current "active" characters, any characters that became inactive should be removed from this list.
     /// </summary>
     public List<CharacterInstance> currentCharacters;
+
+    public CharacterInstance dialogueRecipient;
     
     //random variable is made global so it can be reused
     public Random random = new Random();
     /// <summary>
-    /// The amount of characters the player has talked to, should be 0 at the start of each cycle
+    /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
-    private int numTalkedTo;
+    [NonSerialized] public int numTalked;
+
     /// <summary>
-    /// If the player has already received hints from the assistant, should be false at the start of every cycle
+    /// Amount of times the player can ask a question
     /// </summary>
-    private bool hintsDone; 
+    [SerializeField] private int numQuestions;
 
     private void Awake()
     {
+        gm = this;
         // Makes this GameManager persistent throughout the scenes.
         DontDestroyOnLoad(this.gameObject);
     }
@@ -43,13 +49,9 @@ public class GameManager : MonoBehaviour
         // Now, populate this list.
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
-   
-        //ToggleNPCSelectScene();
-        ToggleCompanionHintScene();
         Test_CharactersInGame();
-        //ToggleCompanionHintScene();
-        //LoadDialogueScene();
+        // On load start cycles.
+        StartCycle();
     }
 
     // Update is called once per frame
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            ToggleDialogueScene();
+            UnloadDialogueScene();
         }
         if (Input.GetKeyDown(KeyCode.F2))
         {
@@ -82,16 +84,16 @@ public class GameManager : MonoBehaviour
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = random.Next(0, numberOfCharacters + 1) + 1; // offset by 1 to check existence
+                int index = random.Next(0, numberOfCharacters) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
                 for (int j = 0; j< visitedIndices.Length; j++)
                     arrayString += (visitedIndices[j] + ", ");
                 
-                //Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
+                Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
                 if (!visitedIndices.Contains(index))
                 {
-                    //Debug.Log("Unique index found!");
+                    Debug.Log("Unique index found!");
                     var toAdd = characters[index - 1]; // correct the offset
                     currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
@@ -149,63 +151,94 @@ public class GameManager : MonoBehaviour
     /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to,
     /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
     /// </summary>
-    private void Cycle()
+    private void StartCycle()
     {
-        // Once at the start of the cycle have the assistant give hints
-        if (!hintsDone)
-        {
-            //make a character "disappear"
-            CharacterInstance theUnluckyOne = GetRandomCharacterNoCulprit();
-            currentCharacters = currentCharacters.FindAll(c => c.id != theUnluckyOne.id).ToList();
-            theUnluckyOne.isActive = false;
-            
-            ToggleCompanionHintScene();
-            hintsDone = true;
-        }
-        CharactersTalkedTo();
-        TalkorEnd();
+        //make a character "disappear"
+        CharacterInstance victim = GetRandomCharacterNoCulprit();
+        // below commented, not necessary, also inefficient
+        //currentCharacters = currentCharacters.FindAll(c => c.id != victim.id).ToList();
+        // this should suffice
+        victim.isActive = false;
+        
+        ChooseVictim();
+        
+        //CharactersTalkedTo();
+        //TalkOrEnd();
+        ToggleNPCSelectScene();
+    }
+
+    public void EndCycle()
+    {
+        Debug.Log("No questions left to ask.");
+        UnloadDialogueScene(); // stop dialogue immediately.
+        StartCycle();
+    }
+
+    private void ChooseVictim()
+    {
+        CharacterInstance culprit = GetCulprit();
+        CharacterInstance victim = GetRandomCharacterNoCulprit();
+
+        // Select a random trait and remove it from the list of available questions
+        List<string> randTraitCulprit = culprit.GetRandomTrait();
+        List<string> randTraitVictim = victim.GetRandomTrait();
+
+        // Victim put on inactive so we cant ask them questions
+        victim.isActive = false;
+        
+        //TODO: wait until I have a dialogue box to put this in
+        Debug.Log(string.Join(", ", randTraitCulprit)); 
+        Debug.Log(string.Join(", ", randTraitVictim));
     }
 
     /// <summary>
     /// Sends the player to the appropriate scene depending on the ammount of NPCs they have talked to this cycle
     /// </summary>
-    private void TalkorEnd()
+    /*private void TalkOrEnd()
     {
-        if (numTalkedTo < 5) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
+        if (HasQuestionsLeft()) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
         {
-            SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+            //SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+            ToggleNPCSelectScene();
         }
         else
         {
-            // Load the scene where the player chooses the culprit
-            // This scene does not exist yet
+            // End cycle.
+            // Remove 1 character
+            // Then, if there are less than X remaining (after the hint-sequence), choose culprit then end
         }
+    }*/
+
+    public bool HasQuestionsLeft()
+    {
+        return numTalked < numQuestions;
     }
+    
     /// <summary>
     /// Counts how many characters have been talked to this cycle.
     /// </summary>
-    private void CharactersTalkedTo()
+    /*private void CharactersTalkedTo()
     {
-        numTalkedTo = 0;
+        numTalked = 0;
         for (int i = 0; i < currentCharacters.Count; i++)
         {
             if (currentCharacters[i].isActive && !currentCharacters[i].TalkedTo)
             {
-                numTalkedTo++;
+                numTalked++;
             }
         }
-    }
+    }*/
 
-    public void ToggleDialogueScene()
+    public void UnloadDialogueScene()
     {
-        string sceneName = "Dialogue Test";
+        string sceneName = "DialogueScene";
         if (SceneManager.GetSceneByName(sceneName).isLoaded)
         {
             SceneManager.UnloadSceneAsync(sceneName);
         }
         else
         {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+            Debug.Log("Dialogue scene not loaded");
         }
     }
     
@@ -236,9 +269,12 @@ public class GameManager : MonoBehaviour
     }
     public void StartDialogue(int id)
     {
-        //var c = currentCharacters.Where(c => c.id == id).FirstOrDefault();
-        ToggleDialogueScene();
+        ToggleNPCSelectScene(); // NPC selected, so unload
+        
+        dialogueRecipient = currentCharacters[id];
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
+    
     public void ToggleGameOverScene()
     {
         if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
