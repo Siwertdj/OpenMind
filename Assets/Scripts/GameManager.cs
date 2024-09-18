@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// The current "active" characters, any characters that became inactive should be removed from this list.
     /// </summary>
-    private List<CharacterInstance> currentCharacters;
+    public List<CharacterInstance> currentCharacters;
     
     //random variable is made global so it can be reused
     public Random random = new Random();
@@ -42,8 +42,10 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
+        
+        ToggleNPCSelectScene();
 
-        ToggleCompanionHintScene();
+        //ToggleCompanionHintScene();
 
         //LoadDialogueScene();
     }
@@ -225,5 +227,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
+    }
+
+    public void StartDialogue(int id) {
+        //var c = currentCharacters.Where(c => c.id == id).FirstOrDefault();
+        ToggleDialogueScene();
     }
 }

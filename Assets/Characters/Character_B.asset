@@ -20,3 +20,5 @@ MonoBehaviour:
   - question: 3
     answer:
     - politikz
+  isCulprit: 0
+  isActive: 1
