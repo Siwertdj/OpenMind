@@ -269,6 +269,15 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
+
+    public void StartDialogue(CharacterInstance character)
+    {
+        ToggleNPCSelectScene();
+
+        dialogueRecipient = character;
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }
+
     public void StartDialogue(int id)
     {
         ToggleNPCSelectScene(); // NPC selected, so unload
