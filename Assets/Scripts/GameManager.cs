@@ -90,10 +90,10 @@ public class GameManager : MonoBehaviour
                 for (int j = 0; j< visitedIndices.Length; j++)
                     arrayString += (visitedIndices[j] + ", ");
                 
-                Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
+                //Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
                 if (!visitedIndices.Contains(index))
                 {
-                    Debug.Log("Unique index found!");
+                    //Debug.Log("Unique index found!");
                     var toAdd = characters[index - 1]; // correct the offset
                     currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
@@ -187,8 +187,8 @@ public class GameManager : MonoBehaviour
         victim.isActive = false;
         
         //TODO: wait until I have a dialogue box to put this in
-        Debug.Log(string.Join(", ", randTraitCulprit)); 
-        Debug.Log(string.Join(", ", randTraitVictim));
+        //Debug.Log(string.Join(", ", randTraitCulprit)); 
+        //Debug.Log(string.Join(", ", randTraitVictim));
     }
 
     /// <summary>
