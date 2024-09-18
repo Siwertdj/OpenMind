@@ -12,7 +12,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
     
+    [Header("Customization/Balancing")]
     [SerializeField] public int numberOfCharacters;
+
+    /// <summary>
+    /// Amount of times the player can ask a question
+    /// </summary>
+    [SerializeField] private int numQuestions;
+
+    [Header("Serializables")]
     [SerializeField] private List<CharacterData> characters;
     
     /// <summary>
@@ -28,11 +36,6 @@ public class GameManager : MonoBehaviour
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
     [NonSerialized] public int numTalked;
-
-    /// <summary>
-    /// Amount of times the player can ask a question
-    /// </summary>
-    [SerializeField] private int numQuestions;
 
     private void Awake()
     {
