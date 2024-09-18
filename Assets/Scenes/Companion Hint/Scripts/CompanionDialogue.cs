@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CompanionDialogue : MonoBehaviour
@@ -8,11 +9,11 @@ public class CompanionDialogue : MonoBehaviour
     {
         GameManager gameManager = FindObjectOfType<GameManager>();
         Debug.Log(gameManager);
-        Character culprit = gameManager.GetCulprit();
-        Character randOther = gameManager.GetRandomCharacterNoCulprit();
+        CharacterInstance culprit = gameManager.GetCulprit();
+        CharacterInstance randOther = gameManager.GetRandomCharacterNoCulprit();
 
-        string randTraitCulprit = culprit.GetRandomTrait(gameManager.random);
-        string randTraitOther = randOther.GetRandomTrait(gameManager.random);
+        List<string> randTraitCulprit = culprit.GetRandomTrait();
+        List<string> randTraitOther = randOther.GetRandomTrait();
         
         //TODO: wait until I have a dialogue box to put this in
         Debug.Log(randTraitCulprit); 

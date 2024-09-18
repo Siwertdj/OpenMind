@@ -11,12 +11,12 @@ using Random = System.Random;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] public int numberOfCharacters;
-    [SerializeField] private List<Character> characters;
+    [SerializeField] private List<CharacterData> characters;
     
     /// <summary>
     /// The current "active" characters, any characters that became inactive should be removed from this list.
     /// </summary>
-    private List<Character> currentCharacters;
+    private List<CharacterInstance> currentCharacters;
     
     //random variable is made global so it can be reused
     public Random random = new Random();
@@ -37,11 +37,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
 
         // Initialize an empty list of characters
-        currentCharacters = new List<CharacterData>();
+        currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
+
+        //ToggleCompanionHintScene();
 
         //LoadDialogueScene();
     }
@@ -83,7 +85,7 @@ public class GameManager : MonoBehaviour
                 {
                     //Debug.Log("Unique index found!");
                     var toAdd = characters[index - 1]; // correct the offset
-                    currentCharacters.Add(toAdd); // add the character we found to the list of current characters
+                    currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
                     foundUniqueInt = true; // change the boolean-value to exit the while-loop
                 }
@@ -108,14 +110,14 @@ public class GameManager : MonoBehaviour
     /// Returns the culprit, used to give hints for the companion
     /// Assumes a culprit exists
     /// </summary>
-    public Character GetCulprit() => currentCharacters.Find(c => c.isCulprit);
+    public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
 
     /// <summary>
     /// Returns a random (non-culprit) character, used to give hints for the companion
     /// Assumes currentCharacters only contains active characters
     /// Assumes there is only 1 culprit
     /// </summary>
-    public Character GetRandomCharacterNoCulprit() =>
+    public CharacterInstance GetRandomCharacterNoCulprit() =>
         currentCharacters.FindAll(c => !c.isCulprit)[random.Next(currentCharacters.Count - 1)];
 
     private void Test_CharactersInGame()
@@ -145,7 +147,7 @@ public class GameManager : MonoBehaviour
         if (!hintsDone)
         {
             //make a character "disappear"
-            Character theUnluckyOne = GetRandomCharacterNoCulprit();
+            CharacterInstance theUnluckyOne = GetRandomCharacterNoCulprit();
             currentCharacters = currentCharacters.FindAll(c => c.id != theUnluckyOne.id).ToList();
             theUnluckyOne.isActive = false;
             
