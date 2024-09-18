@@ -20,7 +20,7 @@ public class SelectionManager : MonoBehaviour
         // get number of total characters from Gamemanager
 
         int counter = 0;
-        foreach (CharacterInstance character in GameManager.gm.currentCharacters.Where(c => c.isActive))
+        foreach (CharacterInstance character in GameManager.gm.currentCharacters)
         {
             //float width = characterspace.rect.width;
             //float height = characterspace.rect.height;
@@ -33,6 +33,10 @@ public class SelectionManager : MonoBehaviour
             newOption.characterNameText.text = character.characterName;
             //newOption.GetComponent<SelectOption>().avatar.sprite.
                 
+            if (!character.isActive)
+            {
+                newOption.Inactive();
+            }
             
             // not correct yet, this will go out of bounds when there are more than 8 characters.
             // sets one of the 8 characterspaces as parent of the selectoption object.

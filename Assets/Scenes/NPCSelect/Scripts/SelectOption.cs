@@ -18,9 +18,9 @@ public class SelectOption : MonoBehaviour
         characterNameText = GetComponentInChildren<TMP_Text>();
     }
 
-    private void Inactive()
+    public void Inactive()
     {
-        avatar.color = new Color(100,100,100,100);
+        avatar.color = new Color(0.6f,0.6f,0.6f,0.6f);
     }
     
 }
