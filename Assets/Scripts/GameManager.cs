@@ -29,13 +29,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private bool hintsDone; 
 
+    private void Awake()
+    {
+        // Makes this GameManager persistent throughout the scenes.
+        DontDestroyOnLoad(this.gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Makes this GameManager persistent throughout the scenes.
-        DontDestroyOnLoad(this.gameObject);
-
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
@@ -44,7 +46,7 @@ public class GameManager : MonoBehaviour
         //Test_CharactersInGame();
 
         ToggleCompanionHintScene();
-
+        Test_CharactersInGame();
         //LoadDialogueScene();
     }
 
@@ -54,6 +56,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ToggleDialogueScene();
+        }
+        if (Input.GetKeyDown(KeyCode.F2))
+        {
+            ToggleGameOverScene();
         }
     }
 
@@ -224,6 +230,59 @@ public class GameManager : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        }
+    }
+    public void ToggleGameOverScene()
+    {
+        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("GameOverScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
+        }
+    }
+    public void EndGame()
+    {
+        Debug.Log("End game.");
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
+    public void RetryStoryScene()
+    {
+        Debug.Log("Retry story scene");
+
+        // Unload all active scenes except the story scene
+        UnloadAdditiveScenes();
+        // Keep the characters
+        Test_CharactersInGame();
+    }
+    public void RestartStoryScene()
+    {
+        Debug.Log("Restart story scene");
+        //Remove the gamemanager to start a new game
+        //Destroy(gameObject);
+        // Load the story scene
+        //SceneManager.LoadScene("StoryScene");
+
+        //or
+        // unload all scenes except story scene
+        UnloadAdditiveScenes();
+        // create new characters etc
+        Start();
+    }
+
+    private void UnloadAdditiveScenes()
+    {
+        //Get the story scene
+        Scene storyScene = SceneManager.GetSceneByName("StoryScene");
+
+        // Unload all loaded scenes that are not the story scene
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene loadedScene = SceneManager.GetSceneAt(i);
+            if (loadedScene != storyScene) SceneManager.UnloadSceneAsync(loadedScene.name);
         }
     }
 }
