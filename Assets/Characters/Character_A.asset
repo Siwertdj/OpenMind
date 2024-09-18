@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: John
   id: 0
-  avatar: {fileID: 0}
+  avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
   dialogueList: []
   answers:
   - question: 0
@@ -33,5 +33,3 @@ MonoBehaviour:
     - im doing soooo goood
     - like realllylyyy
     - absoleutley loveley
-  isCulprit: 0
-  isActive: 0
