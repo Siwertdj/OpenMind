@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: Character_A
+  m_EditorClassIdentifier: 
+  characterName: John
+  id: 0
+  avatar: {fileID: 0}
+  dialogueList: []
+  answers:
+  - question: 0
+    answer:
+    - my name is gongas
+    - gongas gingo
+  - question: 1
+    answer:
+    - uno
+    - dos...
+    - tres!!!
+    - 3 years old :)
+    - can you believe it?
+  - question: 2
+    answer:
+    - im doing soooo goood
+    - like realllylyyy
+    - absoleutley loveley
+  isCulprit: 0
+  isActive: 0

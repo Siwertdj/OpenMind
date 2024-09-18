@@ -9,9 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b7709b1edd205e42b298493fd53eb16, type: 3}
-  m_Name: A_Dialogue1
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: Character_B
   m_EditorClassIdentifier: 
+  characterName: Jane
   id: 0
-  questionType: 2
-  answerText: I am fine, thank you.
+  avatar: {fileID: 0}
+  dialogueList: []
+  answers:
+  - question: 3
+    answer:
+    - politikz
+  isCulprit: 0
+  isActive: 1

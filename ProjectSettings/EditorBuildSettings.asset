@@ -11,4 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NPCSelect/NPCSelectScene.unity
     guid: 4d1c5da303831124483a054353410334
+    path: Assets/Scenes/Story/StoryScene.unity
+    guid: 3fc8acdd13e6c734bafef6554d6fdbcd
+  - enabled: 1
+    path: Assets/Scenes/Companion Hint/Companion Hint.unity
+    guid: ac9e362285535294e99653a509e9f6d3
   m_configObjects: {}
