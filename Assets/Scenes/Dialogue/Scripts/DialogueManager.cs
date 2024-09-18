@@ -68,7 +68,7 @@ public class DialogueManager : MonoBehaviour
         dialogue.SetActive(true);
 
         List<string> answer = recipient.Answers[question];
-        animator.WriteDialogue(answer);
+        animator.WriteDialogue(answer, recipient.pitch);
     }
 
     // Unity buttons don't accept enums as parameters in functions, so use this instead

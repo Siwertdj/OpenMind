@@ -13,6 +13,7 @@ public class CharacterInstance
     public string characterName;
     public int id;
     public Sprite avatar;
+    public float pitch;
 
     public bool isCulprit;      // This character's random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
@@ -25,6 +26,7 @@ public class CharacterInstance
         characterName = data.characterName;
         id = data.id;
         avatar = data.avatar;
+        pitch = data.voicePitch;
 
         Debug.Log($"Creating character {data.characterName}");
 

@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43310ff33057554d84bb2335249366b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayInSeconds: 0.05
+  delayInSeconds: 0.06
   delayAfterSentence: 1
   InDialogue: 0
   OnDialogueComplete:

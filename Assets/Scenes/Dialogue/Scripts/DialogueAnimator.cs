@@ -27,11 +27,13 @@ public class DialogueAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void WriteDialogue(List<string> output)
+    public void WriteDialogue(List<string> output, float pitch = 1)
     {
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
+
+            audioSource.pitch = pitch;
 
             InDialogue = true;
             currentDialogue = output;
@@ -90,7 +92,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Write the current letter
             text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 3 == 0)
+            if (output[stringIndex] != ' ' && stringIndex % 2 == 0)
                 audioSource.Play();
 
             // Wait and continue with next letter

@@ -15,6 +15,7 @@ MonoBehaviour:
   characterName: Jane
   id: 0
   avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
+  voicePitch: 1.4
   dialogueList: []
   answers:
   - question: 3
