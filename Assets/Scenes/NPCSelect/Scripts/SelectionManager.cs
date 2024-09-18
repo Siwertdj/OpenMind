@@ -18,7 +18,7 @@ public class SelectionManager : MonoBehaviour
     private void GenerateOptions()
     {
         int counter = 0;
-        foreach (CharacterInstance character in GameManager.gm.currentCharacters.Where(c => c.isActive))
+        foreach (CharacterInstance character in GameManager.gm.currentCharacters)
         {            
             // TODO: give proper transform?
             // TODO: make child of SelectionSpace, so it fits in there correctly
@@ -30,6 +30,7 @@ public class SelectionManager : MonoBehaviour
             newOption.transform.parent = parent.transform.GetChild(counter);
             // sets the position of the selectoption object to the same position as the parent (characterspace)
             newOption.transform.position = newOption.transform.parent.position;
+
             counter++;            
         }
     }
@@ -38,8 +39,12 @@ public class SelectionManager : MonoBehaviour
     {
         // get the selectoption object
         SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
-        
-        // TODO: ensure that the correct id is passed based on the button
-        GameManager.gm.StartDialogue(selectOption.character);
+
+        // Only active characters can be talked to
+        if (selectOption.character.isActive)
+        {
+            // TODO: ensure that the correct id is passed based on the button
+            GameManager.gm.StartDialogue(selectOption.character);
+        }
     }
 }

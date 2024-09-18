@@ -19,12 +19,16 @@ public class SelectOption : MonoBehaviour
         avatar.sprite = character.avatar;
 
         characterNameText = GetComponentInChildren<TMP_Text>();
-        characterNameText.text = character.characterName;        
+        characterNameText.text = character.characterName;
+
+        if (!character.isActive)
+            SetInactive();
     }
 
     private void SetInactive()
     {
         avatar.color = new Color(0.6f,0.6f,0.6f,0.6f);
+        characterNameText.alpha = 0.6f;
     }
     
 }
