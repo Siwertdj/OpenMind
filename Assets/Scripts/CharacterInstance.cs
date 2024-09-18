@@ -28,11 +28,7 @@ public class CharacterInstance
 
         Debug.Log($"Creating character {data.characterName}");
 
-        foreach (var kvp in data.answers)
-        {
-            Answers[kvp.question] = kvp.answer;
-            RemainingQuestions.Add(kvp.question);
-        }
+        InitializeQuestions();
     }
 
     /// <summary>
@@ -43,6 +39,15 @@ public class CharacterInstance
         return Answers.Values.ToList();
     }
 
+    public void InitializeQuestions()
+    {
+        foreach (var kvp in data.answers)
+        {
+            Answers[kvp.question] = kvp.answer;
+            RemainingQuestions.Add(kvp.question);
+        }
+    }
+    
     /// <summary>
     /// The logic for obtaining a random trait and removing it from the list of available question of that character.
     /// If the random variable is left null, it will be obtained from gameManager, but it can be provided for slight optimization.

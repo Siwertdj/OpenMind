@@ -1075,12 +1075,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfCharacters: 4
-  numQuestions: 2
   characters:
   - {fileID: 11400000, guid: 21b31019478993442b0348c346e6e886, type: 2}
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
+  numQuestions: 2
+  minimumRemaining: 2
 --- !u!1 &1792579903
 GameObject:
   m_ObjectHideFlags: 0

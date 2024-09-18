@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
         // TODO: FInd a way to unload dialogue scene without crashing due to the invoke
         UnloadDialogueScene(); // stop dialogue immediately.
 
-        if (currentCharacters.Count > minimumRemaining)
+        if (currentCharacters.Count(c=>c.isActive) > minimumRemaining)
             StartCycle();
         else 
         {
@@ -312,15 +312,30 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
+    
+    /// <summary>
+    /// Reset game from start with the same characters
+    /// </summary>
     public void RetryStoryScene()
     {
         Debug.Log("Retry story scene");
 
         // Unload all active scenes except the story scene
         UnloadAdditiveScenes();
-        // Keep the characters
-        Test_CharactersInGame();
+        // Reset these characters
+        foreach (CharacterInstance character in currentCharacters)
+        {
+            // Reset the questions and active-status of this character
+            character.isActive = true;
+            character.InitializeQuestions();
+        }
+        //Test_CharactersInGame();
+        StartCycle();
     }
+    
+    /// <summary>
+    /// Restart game from start with new characters
+    /// </summary>
     public void RestartStoryScene()
     {
         Debug.Log("Restart story scene");
@@ -332,8 +347,9 @@ public class GameManager : MonoBehaviour
         //or
         // unload all scenes except story scene
         UnloadAdditiveScenes();
-        // create new characters etc
+        // reset game
         Start();
+        
     }
 
     private void UnloadAdditiveScenes()
