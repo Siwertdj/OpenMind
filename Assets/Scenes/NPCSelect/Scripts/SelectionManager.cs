@@ -34,7 +34,6 @@ public class SelectionManager : MonoBehaviour
         }
     }
     
-    
     public void ButtonClicked(GameObject option)
     {
         // get the selectoption object

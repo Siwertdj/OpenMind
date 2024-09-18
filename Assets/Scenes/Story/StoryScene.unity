@@ -1080,6 +1080,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   numQuestions: 1
+  minimumRemaining: 1
 --- !u!1 &1792579903
 GameObject:
   m_ObjectHideFlags: 0

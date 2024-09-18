@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField] private int numQuestions;
 
+    [SerializeField] private int minimumRemaining;
+    
     private void Awake()
     {
         gm = this;
@@ -164,11 +166,18 @@ public class GameManager : MonoBehaviour
         ToggleNPCSelectScene();
     }
 
-    public void EndCycle()
+    public void EndCycle() 
     {
         // TODO: FInd a way to unload dialogue scene without crashing due to the invoke
-        //UnloadDialogueScene(); // stop dialogue immediately.
-        StartCycle();
+        UnloadDialogueScene(); // stop dialogue immediately.
+
+        if (currentCharacters.Count > minimumRemaining)
+            StartCycle();
+        else 
+        {
+            // TODO: Select culprit to end game
+            ToggleGameOverScene();
+        }
     }
 
     /// <summary>
