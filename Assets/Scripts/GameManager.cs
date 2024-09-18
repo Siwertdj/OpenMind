@@ -152,14 +152,7 @@ public class GameManager : MonoBehaviour
     /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
     /// </summary>
     private void StartCycle()
-    {
-        //make a character "disappear"
-        CharacterInstance victim = GetRandomCharacterNoCulprit();
-        // below commented, not necessary, also inefficient
-        //currentCharacters = currentCharacters.FindAll(c => c.id != victim.id).ToList();
-        // this should suffice
-        victim.isActive = false;
-        
+    {        
         ChooseVictim();
         
         //CharactersTalkedTo();
@@ -267,6 +260,15 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
+
+    public void StartDialogue(CharacterInstance character)
+    {
+        ToggleNPCSelectScene();
+
+        dialogueRecipient = character;
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }
+
     public void StartDialogue(int id)
     {
         ToggleNPCSelectScene(); // NPC selected, so unload
