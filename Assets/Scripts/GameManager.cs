@@ -123,12 +123,14 @@ public class GameManager : MonoBehaviour
     public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
 
     /// <summary>
-    /// Returns a random (non-culprit) character, used to give hints for the companion
-    /// Assumes currentCharacters only contains active characters
+    /// Returns a random (non-culprit and active) character, used to give hints for the companion
     /// Assumes there is only 1 culprit
     /// </summary>
-    public CharacterInstance GetRandomCharacterNoCulprit() =>
-        currentCharacters.FindAll(c => !c.isCulprit)[random.Next(currentCharacters.Count - 1)];
+    public CharacterInstance GetRandomVictimNoCulprit()
+    {
+        List<CharacterInstance> possibleVictims = currentCharacters.FindAll(c => !c.isCulprit && c.isActive);
+        return possibleVictims[random.Next(possibleVictims.Count- 1)];
+    }
 
     private void Test_CharactersInGame()
     {
@@ -153,31 +155,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StartCycle()
     {
-        //make a character "disappear"
-        CharacterInstance victim = GetRandomCharacterNoCulprit();
-        // below commented, not necessary, also inefficient
-        //currentCharacters = currentCharacters.FindAll(c => c.id != victim.id).ToList();
-        // this should suffice
-        victim.isActive = false;
-        
+        // Choose a victim, make them inactive, and print the hints to the console.
         ChooseVictim();
-        
-        //CharactersTalkedTo();
-        //TalkOrEnd();
+        // Reset number of times the player has talked
+        numTalked = 0;
+        // Start the NPC Selection scene
         ToggleNPCSelectScene();
     }
 
     public void EndCycle()
     {
         Debug.Log("No questions left to ask.");
-        UnloadDialogueScene(); // stop dialogue immediately.
+        //UnloadDialogueScene(); // stop dialogue immediately.
         StartCycle();
     }
 
+    /// <summary>
+    /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
+    /// the victim that is removed from their list of questions and prints to to the debuglog
+    /// </summary>
     private void ChooseVictim()
     {
         CharacterInstance culprit = GetCulprit();
-        CharacterInstance victim = GetRandomCharacterNoCulprit();
+        CharacterInstance victim = GetRandomVictimNoCulprit();
 
         // Select a random trait and remove it from the list of available questions
         List<string> randTraitCulprit = culprit.GetRandomTrait();
@@ -211,6 +211,7 @@ public class GameManager : MonoBehaviour
 
     public bool HasQuestionsLeft()
     {
+        Debug.Log("Has questions left: " + (numTalked < numQuestions));
         return numTalked < numQuestions;
     }
     

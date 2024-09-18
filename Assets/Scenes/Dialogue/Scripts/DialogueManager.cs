@@ -128,6 +128,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("No more questions remaining; prompt not created");
+            GameManager.gm.EndCycle();
         }
     }
 

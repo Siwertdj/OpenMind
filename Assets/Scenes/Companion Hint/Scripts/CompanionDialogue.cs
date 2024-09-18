@@ -10,7 +10,7 @@ public class CompanionDialogue : MonoBehaviour
         GameManager gameManager = FindObjectOfType<GameManager>();
         //Debug.Log(gameManager);
         CharacterInstance culprit = gameManager.GetCulprit();
-        CharacterInstance victim = gameManager.GetRandomCharacterNoCulprit();
+        CharacterInstance victim = gameManager.GetRandomVictimNoCulprit();
 
         List<string> randTraitCulprit = culprit.GetRandomTrait();
         List<string> randTraitVictim = victim.GetRandomTrait();

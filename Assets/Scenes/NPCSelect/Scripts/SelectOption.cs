@@ -13,7 +13,6 @@ public class SelectOption : MonoBehaviour
     void Awake()
     {
         avatar = this.gameObject.GetComponentInChildren<Image>();
-        
     }
 
     private void Inactive()
