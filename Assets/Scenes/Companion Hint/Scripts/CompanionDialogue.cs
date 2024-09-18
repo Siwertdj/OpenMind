@@ -16,7 +16,7 @@ public class CompanionDialogue : MonoBehaviour
         List<string> randTraitOther = randOther.GetRandomTrait();
         
         //TODO: wait until I have a dialogue box to put this in
-        Debug.Log(randTraitCulprit); 
-        Debug.Log(randTraitOther);
+        Debug.Log(string.Join(", ", randTraitCulprit)); 
+        Debug.Log(string.Join(", ", randTraitOther));
     }
 }
