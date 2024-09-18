@@ -27,9 +27,10 @@ public class SelectionManager : MonoBehaviour
             
             // TODO: give proper transform?
             // TODO: make child of SelectionSpace, so it fits in there correctly
-            GameObject newOption = Instantiate(selectionOption);
-            newOption.GetComponent<SelectOption>().characterId = character.id;
-            newOption.GetComponent<SelectOption>().avatar.sprite = character.avatar;
+            SelectOption newOption = Instantiate(selectionOption).GetComponent<SelectOption>();
+            newOption.characterId = character.id;
+            newOption.avatar.sprite = character.avatar;
+            newOption.characterNameText.text = character.characterName;
             //newOption.GetComponent<SelectOption>().avatar.sprite.
                 
             
