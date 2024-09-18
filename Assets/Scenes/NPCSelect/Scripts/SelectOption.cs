@@ -24,7 +24,7 @@ public class SelectOption : MonoBehaviour
 
     private void SetInactive()
     {
-        avatar.color = new Color(100,100,100,100);
+        avatar.color = new Color(0.6f,0.6f,0.6f,0.6f);
     }
     
 }
