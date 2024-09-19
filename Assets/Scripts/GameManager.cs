@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
 {
     private bool notebookOn = false;
 
-    // Start is called before the first frame update
-    void Start()
     public static GameManager gm;
     
     [SerializeField] public int numberOfCharacters;
