@@ -48,8 +48,10 @@ public class DialogueManager : MonoBehaviour
         
         if (GameManager.gm.HasQuestionsLeft())
         {
+            CreateContinueButton();
+            CreateBackButton();
             // Create new prompt
-            CreatePromptButton();            
+                       
             // TODO: back to home button
             
         }
@@ -130,6 +132,39 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No more questions to ask this character.");
             GameManager.gm.EndCycle();
         }
+    }
+
+    private void CreateBackButton()
+    {
+        Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+        button.name = "backButton";
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+        buttonText.text = "Talk to someone else";
+        button.onClick.AddListener(() => BacktoNPCScreen(button));
+    }
+
+    private void BacktoNPCScreen(Button button)
+    {
+        Destroy(button.gameObject);
+        GameManager.gm.UnloadDialogueScene();
+        GameManager.gm.ToggleNPCSelectScene();
+    }
+
+    private void CreateContinueButton()
+    {
+        Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+        buttonText.text = "Ask another question";
+        button.onClick.AddListener(() => ContinueTalking(button));
+    }
+
+    private void ContinueTalking(Button button)
+    {
+        Destroy(button.gameObject);
+        Destroy(GameObject.Find("backButton"));
+        CreatePromptButton();
     }
 
     private string GetPromptText(Question questionType)
