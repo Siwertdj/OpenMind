@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4872340799243100129}
   m_Layer: 5
   m_Name: Prompt Button
-  m_TagString: Untagged
+  m_TagString: Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

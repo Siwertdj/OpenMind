@@ -28,6 +28,7 @@ public class DialogueManager : MonoBehaviour
         prompts = Instantiate(promptsUIPrefab, FindObjectOfType<Canvas>().transform);
         for (int i = 0; i < 2; i++)
             CreatePromptButton();
+        CreateBackButton();
     }
     
 
@@ -100,13 +101,13 @@ public class DialogueManager : MonoBehaviour
 
     public void AskQuestion(Question question, Button button)
     {
-        Destroy(button.gameObject);
+        DestroyButtons();
         AskQuestion(question);
     }
 
     public void AskQuestion(string question, Button button)
     {
-        Destroy(button.gameObject);
+        DestroyButtons();
         AskQuestion(question);
     }
 
@@ -122,6 +123,7 @@ public class DialogueManager : MonoBehaviour
             recipient.RemainingQuestions.RemoveAt(questionIndex);
 
             Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+            button.gameObject.tag = "Button";
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
             buttonText.text = GetPromptText(buttonType);
@@ -130,41 +132,76 @@ public class DialogueManager : MonoBehaviour
         else
         {
             Debug.Log("No more questions to ask this character.");
-            GameManager.gm.EndCycle();
+            // TODO: In de selectscene duidelijk maken dat dit character geen vragen meer kan beantwoorden
         }
     }
 
+    /// <summary>
+    /// Creates the button to go back to the NPCSelect screen.
+    /// </summary>
     private void CreateBackButton()
     {
-        Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
-        button.name = "backButton";
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+        Button backbutton = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+        backbutton.name = "backButton";
+        backbutton.gameObject.tag = "Button";
+        TMP_Text buttonText = backbutton.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = "Talk to someone else";
-        button.onClick.AddListener(() => BacktoNPCScreen(button));
+        backbutton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
-    private void BacktoNPCScreen(Button button)
+    /// <summary>
+    /// Helper function for CreateBackButton.
+    /// Sends the player back to the NPCSelect scene
+    /// </summary>
+    private void BacktoNPCScreen()
     {
-        Destroy(button.gameObject);
+        DestroyButtons();
         GameManager.gm.UnloadDialogueScene();
         GameManager.gm.ToggleNPCSelectScene();
     }
 
+    /// <summary>
+    /// Creates the button to ask another question to the same NPC
+    /// </summary>
     private void CreateContinueButton()
     {
         Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+        button.gameObject.tag = "Button";
         TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = "Ask another question";
-        button.onClick.AddListener(() => ContinueTalking(button));
+        button.onClick.AddListener(() => ContinueTalking());
     }
 
-    private void ContinueTalking(Button button)
+    /// <summary>
+    /// Helper function for CreateContinueButton.
+    /// Lets the player ask a question to the NPC
+    /// </summary>
+    private void ContinueTalking()
     {
-        Destroy(button.gameObject);
-        Destroy(GameObject.Find("backButton"));
-        CreatePromptButton();
+        Debug.Log("Continue");
+        DestroyButtons();
+        for (int i = 0; i < 2; i++)
+        {
+            CreatePromptButton();
+            Debug.Log("Create Question");
+        }
+
+        CreateBackButton();
+    }
+
+    /// <summary>
+    /// Destroys all buttons with the "Button" tag currently in the scene.
+    /// If a button should not be destroyed do not give it the "Button" tag .
+    /// </summary>
+    private void DestroyButtons()
+    {
+        var buttons = GameObject.FindGameObjectsWithTag("Button");
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            Destroy(buttons[i]);
+        }
     }
 
     private string GetPromptText(Question questionType)
