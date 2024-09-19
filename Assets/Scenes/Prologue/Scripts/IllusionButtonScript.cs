@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class IllusionButtonScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnClick()
     {
-        
+        //
+        //
     }
 
     // Update is called once per frame
