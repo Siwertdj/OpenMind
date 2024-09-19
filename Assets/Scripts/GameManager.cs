@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField] private int numQuestions;
 
-    [SerializeField] private int minimumRemaining;
+    [SerializeField] public int minimumRemaining;
     
     private void Awake()
     {
@@ -288,12 +288,25 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
+    // Is deze nog nodig? (staat hierboven ook)
     public void StartDialogue(int id)
     {
         ToggleNPCSelectScene(); // NPC selected, so unload
         
         dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }
+    
+    public void ToggleGameWinScene()
+    {
+        if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("GameWinScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
+        }
     }
     
     public void ToggleGameOverScene()

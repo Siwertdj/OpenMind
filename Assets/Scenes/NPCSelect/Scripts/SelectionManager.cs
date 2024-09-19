@@ -9,12 +9,37 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private GameObject selectionOption;
     
     public GameObject parent;
+
+    // Variable which helps to decide whether the npcselect screen should be treated
+    // as dialogue or as for deciding the criminal.
+    // (Weet niet zeker of deze variable verschoven moet worden naar gamemanager of dat je het hier in houdt maar ja)
+    private string scene;
     
     private void Start()
     {
+        setSceneType();
         GenerateOptions();
     }
 
+    // Set the scene variable.
+    // Op het moment als het aantal characters gelijk is aan de minimumremaining,
+    // dan schakelt die over naar de decidecriminal scene.
+    // Maar als er nog vragen moeten worden gesteld voordat je de criminal kiest,
+    // dan moet dit iets anders gedaan worden / moet ergens anders de variable verandert worden.
+    private void setSceneType()
+    {
+        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
+        if (numberOfActiveCharacters > GameManager.gm.minimumRemaining) // <-- verandert naar public, idk of dat private moet blijven.
+        {
+            scene = "dialogue";
+        }
+        else
+        {
+            scene = "decidecriminal";
+        }
+    }
+    
+    // Generates the selectOption objects for the characters.
     private void GenerateOptions()
     {
         int counter = 0;
@@ -35,6 +60,7 @@ public class SelectionManager : MonoBehaviour
         }
     }
     
+    // Event for when a character is selected.
     public void ButtonClicked(GameObject option)
     {
         // get the selectoption object
@@ -43,8 +69,34 @@ public class SelectionManager : MonoBehaviour
         // Only active characters can be talked to
         if (selectOption.character.isActive)
         {
-            // TODO: ensure that the correct id is passed based on the button
-            GameManager.gm.StartDialogue(selectOption.character);
+            // Start the dialogue if a criminal does not need to be decided yet.
+            // (scene variable staat boven, moet nog ergens meegegeven worden wanneer de npcselectscene geladen wordt)
+            if (scene == "dialogue")
+            {
+                // TODO: ensure that the correct id is passed based on the button
+                GameManager.gm.StartDialogue(selectOption.character);
+            }
+            else
+            {
+                // Get the culprit from gamemanager and compare it with the clicked character
+                // If the correct character is clicked, start the GameWin scene, else start the GameOver scene
+                CharacterInstance culprit = GameManager.gm.GetCulprit();
+                if (culprit.characterName == selectOption.character.characterName)
+                {
+                    Debug.Log("win"); // Debug.logs voor testen
+                    GameManager.gm.ToggleNPCSelectScene();
+                    GameManager.gm.ToggleGameWinScene();
+                    
+                }
+                else
+                {
+                    Debug.Log("loss"); // Debug.logs voor testen
+                    GameManager.gm.ToggleNPCSelectScene();
+                    GameManager.gm.ToggleGameOverScene();
+                    
+                }
+            }
+            
         }
     }
 }
