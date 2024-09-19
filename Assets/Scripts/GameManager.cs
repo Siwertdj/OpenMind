@@ -168,7 +168,6 @@ public class GameManager : MonoBehaviour
 
     public void EndCycle() 
     {
-        // TODO: FInd a way to unload dialogue scene without crashing due to the invoke
         UnloadDialogueScene(); // stop dialogue immediately.
 
         if (currentCharacters.Count(c=>c.isActive) > minimumRemaining)
