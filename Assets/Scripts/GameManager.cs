@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if (notebookOn)
         {
+
             SceneManager.UnloadSceneAsync("NotebookScene");
             notebookOn = false;
         }
