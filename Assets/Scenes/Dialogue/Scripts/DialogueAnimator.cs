@@ -13,7 +13,7 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    public bool inDialogue = false; // Is there dialogue on the screen?
+    public bool InDialogue = false; // Is there dialogue on the screen?
     private bool isOutputting = false; // Is currently being written?
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
@@ -27,13 +27,15 @@ public class DialogueAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void WriteDialogue(List<string> output)
+    public void WriteDialogue(List<string> output, float pitch = 1)
     {
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
 
-            inDialogue = true;
+            audioSource.pitch = pitch;
+
+            InDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
         }
@@ -51,7 +53,7 @@ public class DialogueAnimator : MonoBehaviour
 
     public void SkipDialogue()
     {
-        if (!inDialogue)
+        if (!InDialogue)
             return;
 
         if (isOutputting)
@@ -75,7 +77,7 @@ public class DialogueAnimator : MonoBehaviour
     private void EndDialogue()
     {
         // Close dialogue
-        inDialogue = false;
+        InDialogue = false;
         OnDialogueComplete.Invoke();
     }
 
@@ -90,7 +92,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Write the current letter
             text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 3 == 0)
+            if (output[stringIndex] != ' ' && stringIndex % 2 == 0)
                 audioSource.Play();
 
             // Wait and continue with next letter
@@ -107,12 +109,19 @@ public class DialogueAnimator : MonoBehaviour
             if (dialogueIndex < currentDialogue.Count)
             {
                 yield return new WaitForSeconds(delayAfterSentence);
-                WriteSentence(currentDialogue[dialogueIndex]);
+
+                if (dialogueIndex >= currentDialogue.Count)
+                    Debug.Log("Index out of boudns?????");
+
+                if (dialogueIndex < currentDialogue.Count)
+                    WriteSentence(currentDialogue[dialogueIndex]);
             }
             else
             {
-                yield return new WaitForSeconds(delayAfterSentence);
-                EndDialogue();
+                // NOTE: Uncomment the lines below if we want dialogue to automatically end
+
+                //yield return new WaitForSeconds(delayAfterSentence);
+                //EndDialogue();
             }
         }
     }
