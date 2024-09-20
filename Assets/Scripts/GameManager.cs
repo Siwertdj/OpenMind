@@ -48,6 +48,22 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        OpenStartScreen();
+    }
+
+    private void OpenStartScreen()
+    {
+        SceneManager.LoadScene("StartScreen", LoadSceneMode.Additive);
+    }
+
+    // PROBABLY TEMPORARY FUNCTION TO START GAME
+    public void StartGame()
+    {
+        if (SceneManager.GetSceneByName("StartScreen").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("StartScreen");
+        }
+
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
