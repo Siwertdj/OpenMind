@@ -127,6 +127,8 @@ public class DialogueManager : MonoBehaviour
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
             buttonText.text = GetPromptText(buttonType);
+            buttonText.enableAutoSizing = false;
+            buttonText.fontSize = 10;
             button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
         }
         else
@@ -147,6 +149,8 @@ public class DialogueManager : MonoBehaviour
         TMP_Text buttonText = backbutton.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = "Talk to someone else";
+        buttonText.enableAutoSizing = false;
+        buttonText.fontSize = 10;
         backbutton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
@@ -171,6 +175,8 @@ public class DialogueManager : MonoBehaviour
         TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = "Ask another question";
+        buttonText.enableAutoSizing = false;
+        buttonText.fontSize = 10;
         button.onClick.AddListener(() => ContinueTalking());
     }
 
