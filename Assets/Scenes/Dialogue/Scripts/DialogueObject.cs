@@ -4,24 +4,42 @@ using UnityEngine;
 
 public abstract class DialogueObject
 {
-    public abstract DialogueObject Response { get; set; }
+    public abstract List<DialogueObject> Response { get; set; }
 
     public abstract void Execute();
 }
 
 public class SpeakingObject : DialogueObject
 {
-    public override DialogueObject Response { get; set; }
+    public List<string> dialogue;
+
+    private List<DialogueObject> _response = new();
+    public override List<DialogueObject> Response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
+
+    public SpeakingObject(List<string> dialogue)
+    {
+        this.dialogue = dialogue;
+    }
 
     public override void Execute()
     {
-        throw new System.NotImplementedException();
+        DialogueManager.dm.WriteDialogue(dialogue);
     }
 }
 
 public class TerminateDialogueObject : DialogueObject
 {
-    public override DialogueObject Response { get; set; }
+
+    private List<DialogueObject> _response = new();
+    public override List<DialogueObject> Response
+    {
+        get { return _response; }
+        set { _response = value; }
+    }
 
     public TerminateDialogueObject()
     {
@@ -30,6 +48,7 @@ public class TerminateDialogueObject : DialogueObject
 
     public override void Execute()
     {
-        Debug.Log("Ending dialogue");
+        Debug.Log("Executing Terminate Dialogue Object");
+        GameManager.gm.UnloadDialogueScene();
     }
 }

@@ -39,7 +39,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartCharacterDialogue(CharacterInstance character)
     {
-        currentObject = new ResponseObject(character.GetGreeting(), character);
+        Debug.Log($"Talking to {character.characterName}");
+        currentObject = new SpeakingObject(character.GetGreeting());
+        currentObject.Response.Add(new QuestionObject());
         currentObject.Execute();
     }
 
@@ -52,10 +54,9 @@ public class DialogueManager : MonoBehaviour
         if (GameManager.gm.HasQuestionsLeft())
         {
             // TODO: back to home button
-            Debug.Log($"Current dialogue object: {currentObject.GetType()}");
-            currentObject = currentObject.Response;
-            Debug.Log("Updating dialogue object");
-            Debug.Log($"It be {currentObject.GetType()}");
+
+            // Create the next set of questions
+            currentObject = currentObject.Response[0];
             currentObject.Execute();            
         }
         else
@@ -65,6 +66,7 @@ public class DialogueManager : MonoBehaviour
         }        
     }
 
+    // Write given dialogue to the screen
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
         dialogueField.SetActive(true);
@@ -76,49 +78,47 @@ public class DialogueManager : MonoBehaviour
     public void AskQuestion(Question question)
     {
         GameManager.gm.numQuestionsAsked += 1;
-        questionsField.SetActive(false);
 
-        CharacterInstance recipient = GameManager.gm.dialogueRecipient;
-        dialogueField.GetComponentInChildren<TextField>().SetText(recipient.characterName);
+        CharacterInstance character = GameManager.gm.dialogueRecipient;
+        character.RemainingQuestions.Remove(question);
 
-        List<string> answer = recipient.Answers[question];
+        // Adjust the box containing the character's name
+        dialogueField.GetComponentInChildren<TextField>().SetText(character.characterName);
+
+        // Get and write the answer to the question
+        List<string> answer = character.Answers[question];
         WriteDialogue(answer);
     }
 
-    // Unity buttons don't accept enums as parameters in functions, so use this instead
-    public void AskQuestion(string questionType)
+    // Instantiate question buttons
+    public void CreatePromptButtons(QuestionObject questionObject)
     {
-        AskQuestion((Question)Enum.Parse(typeof(Question), questionType));
+        foreach (ResponseObject response in questionObject.Response)
+        {
+            Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+            // Set button text in question form
+            buttonText.text = GameManager.gm.GetPromptText(response.question);
+
+            // Add event when clicking the button
+            button.onClick.AddListener(() => OnButtonClick(response));
+        }
     }
 
-    public void AskQuestion(Question question, Button button)
+    // When a question button is pressed, do things necessary to write dialogue
+    public void OnButtonClick(ResponseObject response)
     {
-        Destroy(button.gameObject);
-        AskQuestion(question);
-    }
+        // Destroy buttons
+        for (int i = 0; i < questionsField.transform.childCount; i++)
+            Destroy(questionsField.transform.GetChild(i).gameObject);
 
-    public void AskQuestion(string question, Button button)
-    {
-        Destroy(button.gameObject);
-        AskQuestion(question);
-    }
+        // Remove questions field
+        questionsField.SetActive(false);
 
-    public void CreatePromptButton(Question question)
-    {
-        Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-
-        buttonText.text = GameManager.gm.GetPromptText(question);
-        button.onClick.AddListener(() => AskQuestion(question, button));
-    }
-
-    public void CreateRandomPromptButton()
-    {
-        // Get random question that has not been asked yet
-        CharacterInstance recipient = GameManager.gm.dialogueRecipient;
-        int questionIndex = new System.Random().Next(recipient.RemainingQuestions.Count);
-        Question question = recipient.RemainingQuestions[questionIndex];
-        CreatePromptButton(question);
+        // Write dialogue when button is pressed
+        currentObject = response;
+        currentObject.Execute();
     }
 }
 

@@ -73,7 +73,7 @@ public class CharacterInstance
 
             int randomInt = new System.Random().Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
-            RemainingQuestions.RemoveAt((randomInt));
+            RemainingQuestions.RemoveAt(randomInt);
 
             // TODO: add question-text to the answer that is returned
             return (Answers[question]);

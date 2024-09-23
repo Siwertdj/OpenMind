@@ -4,29 +4,55 @@ using UnityEngine;
 
 public class QuestionObject : DialogueObject
 {
-    public Question[] questions;
+    public List<Question> questions = new();
 
-    private DialogueObject _response;
-    public override DialogueObject Response
+    private List<DialogueObject> _response = new();
+    public override List<DialogueObject> Response
     {
         get { return _response; }
         set { _response = value; }
     }
 
-    public QuestionObject(Question[] questions)
+    public QuestionObject()
     {
-        this.questions = questions;
+
+    }
+
+    private void GenerateQuestions()
+    {
+        // The number of question options to give the player
+        // (This value should possibly be public and adjustable from the GameManager)
+        int questionsOnScreen = 2;
+
+        Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
+
+        // Generate random list of questions
+        if (GameManager.gm.HasQuestionsLeft())
+        {
+            List<Question> possibleQuestions = new(GameManager.gm.dialogueRecipient.RemainingQuestions);
+            for (int i = 0; i < questionsOnScreen; i++)
+            {
+                if (possibleQuestions.Count <= 0)
+                    continue;
+
+                int questionIndex = new System.Random().Next(possibleQuestions.Count);
+                questions.Add(possibleQuestions[questionIndex]);
+                possibleQuestions.RemoveAt(questionIndex);
+            }
+        }
     }
 
     public override void Execute()
     {
-        Response = new TerminateDialogueObject();
+        Debug.Log("Executing Question Object");
+
+        GenerateQuestions();
+
+        // Add response to each question to list of responses
+        foreach (Question question in questions)
+            Response.Add(new ResponseObject(question));
 
         DialogueManager.dm.SetQuestionsField(true);
-
-        Debug.Log("Creating prompts");
-
-        foreach (var question in questions)
-            DialogueManager.dm.CreatePromptButton(question);
+        DialogueManager.dm.CreatePromptButtons(this);
     }
 }

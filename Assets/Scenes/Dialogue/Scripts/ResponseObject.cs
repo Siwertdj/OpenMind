@@ -4,51 +4,30 @@ using UnityEngine;
 
 public class ResponseObject : DialogueObject
 {
+    public Question question;
     public List<string> dialogue;
 
-    private DialogueObject _response;
-    public override DialogueObject Response
+    private List<DialogueObject> _response = new();
+    public override List<DialogueObject> Response
     {
         get { return _response; }
         set { _response = value; }
     }
 
-    private CharacterInstance character;
-
-    public ResponseObject(List<string> dialogue, CharacterInstance character)
+    public ResponseObject(Question question)
     {
-        this.dialogue = dialogue;
-        this.character = character;
-
-        
+        this.question = question;
     }
 
     public override void Execute()
     {
-        if (GameManager.gm.HasQuestionsLeft())
-        {
-            int questionsOnScreen = 2;
+        Debug.Log("Executing Response Object");
 
-            List<Question> questions = new();
-            List<Question> possibleQuestions = new(character.RemainingQuestions);
-            for (int i = 0; i < questionsOnScreen; i++)
-            {
-                if (possibleQuestions.Count <= 0)
-                    continue;
-
-                int questionIndex = new System.Random().Next(possibleQuestions.Count);
-                questions.Add(possibleQuestions[questionIndex]);
-                possibleQuestions.RemoveAt(questionIndex);
-            }
-
-            Debug.Log($"Questions: {string.Join(", ", questions)}");
-            Response = new QuestionObject(questions.ToArray());
-        }
+        if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
+            Response.Add(new QuestionObject());
         else
-        {
-            Response = new TerminateDialogueObject();
-        }
+            Response.Add(new TerminateDialogueObject());
 
-        DialogueManager.dm.WriteDialogue(dialogue);
+        DialogueManager.dm.AskQuestion(question);
     }   
 }
