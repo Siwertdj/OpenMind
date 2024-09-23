@@ -177,7 +177,8 @@ public class GameManager : MonoBehaviour
         else 
         {
             // TODO: Select culprit to end game
-            ToggleGameOverScene();
+            ToggleNPCSelectScene();
+            //ToggleGameOverScene();
         }
     }
 

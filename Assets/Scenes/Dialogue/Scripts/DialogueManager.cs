@@ -120,7 +120,7 @@ public class DialogueManager : MonoBehaviour
             Question buttonType = recipient.RemainingQuestions[questionIndex];
 
             // Remove the question from list of questions to be asked
-            recipient.RemainingQuestions.RemoveAt(questionIndex);
+            //recipient.RemainingQuestions.RemoveAt(questionIndex);
 
             Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
             button.gameObject.tag = "Button";

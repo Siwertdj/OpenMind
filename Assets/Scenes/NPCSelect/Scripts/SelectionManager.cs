@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
@@ -10,6 +11,9 @@ public class SelectionManager : MonoBehaviour
     
     public GameObject parent;
 
+    // The text at the top
+    public TextMeshProUGUI headerText;
+    
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
     // (Weet niet zeker of deze variable verschoven moet worden naar gamemanager of dat je het hier in houdt maar ja)
@@ -17,25 +21,39 @@ public class SelectionManager : MonoBehaviour
     
     private void Start()
     {
+        Debug.Log("any questions left?:" + GameManager.gm.HasQuestionsLeft());
         setSceneType();
+        
+        //Line for testing decidecriminal.
+        scene = "decidecriminal";
+        
+        setHeaderText(scene);
         GenerateOptions();
     }
 
     // Set the scene variable.
-    // Op het moment als het aantal characters gelijk is aan de minimumremaining,
-    // dan schakelt die over naar de decidecriminal scene.
-    // Maar als er nog vragen moeten worden gesteld voordat je de criminal kiest,
-    // dan moet dit iets anders gedaan worden / moet ergens anders de variable verandert worden.
     private void setSceneType()
     {
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
-        if (numberOfActiveCharacters > GameManager.gm.minimumRemaining) // <-- verandert naar public, idk of dat private moet blijven.
+        
+        // If the number of characters has reached the minimum amount, and the player has no more questions left,
+        // set the scene variable to decidecriminal.
+        if (numberOfActiveCharacters <= GameManager.gm.minimumRemaining && !GameManager.gm.HasQuestionsLeft()) 
         {
-            scene = "dialogue";
+            scene = "decidecriminal";
         }
         else
         {
-            scene = "decidecriminal";
+            scene = "dialogue";
+        }
+    }
+
+    // Change the Header text if the culprit needs to be chosen.
+    private void setHeaderText(string sceneType)
+    {
+        if (sceneType == "decidecriminal")
+        {
+            headerText.text = "Choose the character u think is the culprit";
         }
     }
     
@@ -65,7 +83,6 @@ public class SelectionManager : MonoBehaviour
     {
         // get the selectoption object
         SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
-
         // Only active characters can be talked to
         if (selectOption.character.isActive)
         {
@@ -74,6 +91,7 @@ public class SelectionManager : MonoBehaviour
             if (scene == "dialogue")
             {
                 // TODO: ensure that the correct id is passed based on the button
+                
                 GameManager.gm.StartDialogue(selectOption.character);
             }
             else
