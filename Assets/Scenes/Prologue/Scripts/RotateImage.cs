@@ -29,7 +29,7 @@ public class RotateImage : MonoBehaviour
         }
     }
 
-    // This method is called when clicked on the 'Next' button
+    // This method is called when clicked on the 'Rotate' button
     public void Rotate()
     {
         // By adding this if-statement, nothing happens when the button is pressed during a rotation. 
