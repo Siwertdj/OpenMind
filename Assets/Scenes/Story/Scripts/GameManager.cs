@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = System.Random;
@@ -40,13 +41,10 @@ public class GameManager : MonoBehaviour
     
     private void Awake()
     {
-        gm = this;
-        // Makes this GameManager persistent throughout the scenes.
-        DontDestroyOnLoad(this.gameObject);
+        Load();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
@@ -58,19 +56,23 @@ public class GameManager : MonoBehaviour
         StartCycle();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Creates persistent toolbox of important manager objects, 
+    /// </summary>
+    private void Load()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UnloadDialogueScene();
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ToggleGameOverScene();
-        }
+        gm = this;
+        
+        // Make parentobject persistent, so that all objects in the toolbox remain persistent.
+        // This includes gamemanager, audiomanager, main camera and eventsystem.
+        DontDestroyOnLoad(gameObject.transform.parent);
+        SceneManager.UnloadSceneAsync("Loading");
     }
-
+    
+    /// <summary>
+    /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
+    /// Also makes sure they are all set to 'Active', and selects a random culprit.
+    /// </summary>
     private void PopulateCharacters()
     {
         // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
@@ -136,6 +138,9 @@ public class GameManager : MonoBehaviour
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
+    /// <summary>
+    /// Prints the name of all characters in the current game to the console, for debugging purposes.
+    /// </summary>
     private void Test_CharactersInGame()
     {
         string output = "";
@@ -190,10 +195,6 @@ public class GameManager : MonoBehaviour
         CharacterInstance culprit = GetCulprit();
         CharacterInstance victim = GetRandomVictimNoCulprit();
 
-        // Select a random trait and remove it from the list of available questions
-        List<string> randTraitCulprit = culprit.GetRandomTrait();
-        List<string> randTraitVictim = victim.GetRandomTrait();
-
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
         
@@ -203,44 +204,95 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sends the player to the appropriate scene depending on the ammount of NPCs they have talked to this cycle
+    /// Checks if the player can ask more questions this cycle.
     /// </summary>
-    /*private void TalkOrEnd()
-    {
-        if (HasQuestionsLeft()) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
-        {
-            //SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
-            ToggleNPCSelectScene();
-        }
-        else
-        {
-            // End cycle.
-            // Remove 1 character
-            // Then, if there are less than X remaining (after the hint-sequence), choose culprit then end
-        }
-    }*/
-
+    /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
         Debug.Log("Has questions left: " + (numTalked < numQuestions));
         return numTalked < numQuestions;
     }
     
+    
+    /*
+     ===================================================================================================================
+ 
+  /$$$$$$                                                 /$$$$$$                        /$$                         /$$
+ /$$__  $$                                               /$$__  $$                      | $$                        | $$
+| $$  \__/  /$$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$       | $$  \__/  /$$$$$$  /$$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$ | $$
+|  $$$$$$  /$$_____/ /$$__  $$| $$__  $$ /$$__  $$      | $$       /$$__  $$| $$__  $$|_  $$_/   /$$__  $$ /$$__  $$| $$
+ \____  $$| $$      | $$$$$$$$| $$  \ $$| $$$$$$$$      | $$      | $$  \ $$| $$  \ $$  | $$    | $$  \__/| $$  \ $$| $$
+ /$$  \ $$| $$      | $$_____/| $$  | $$| $$_____/      | $$    $$| $$  | $$| $$  | $$  | $$ /$$| $$      | $$  | $$| $$
+|  $$$$$$/|  $$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$$      |  $$$$$$/|  $$$$$$/| $$  | $$  |  $$$$/| $$      |  $$$$$$/| $$
+ \______/  \_______/ \_______/|__/  |__/ \_______/       \______/  \______/ |__/  |__/   \___/  |__/       \______/ |__/
+    
+    ====================================================================================================================
+    */
+    
     /// <summary>
-    /// Counts how many characters have been talked to this cycle.
+    /// Closes the game.
     /// </summary>
-    /*private void CharactersTalkedTo()
+    public void EndGame()
     {
-        numTalked = 0;
-        for (int i = 0; i < currentCharacters.Count; i++)
-        {
-            if (currentCharacters[i].isActive && !currentCharacters[i].TalkedTo)
-            {
-                numTalked++;
-            }
-        }
-    }*/
+        Debug.Log("End game.");
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
+    
+    
+    /// <summary>
+    /// Reset game from start with the same characters
+    /// </summary>
+    public void RetryStoryScene()
+    {
+        Debug.Log("Retry story scene");
 
+        // Unload all active scenes except the story scene
+        UnloadAdditiveScenes();
+        // Reset these characters
+        foreach (CharacterInstance character in currentCharacters)
+        {
+            // Reset the questions and active-status of this character
+            character.isActive = true;
+            character.InitializeQuestions();
+        }
+        //Test_CharactersInGame();
+        StartCycle();
+    }
+    
+    /// <summary>
+    /// Restart game from start with new characters
+    /// </summary>
+    public void RestartStoryScene()
+    {
+        Debug.Log("Restart story scene");
+        //Remove the gamemanager to start a new game
+        //Destroy(gameObject);
+        // Load the story scene
+        //SceneManager.LoadScene("StoryScene");
+
+        //or
+        // unload all scenes except story scene
+        UnloadAdditiveScenes();
+        // reset game
+        Start();
+        
+    }
+
+    private void UnloadAdditiveScenes()
+    {
+        //Get the story scene
+        Scene loadingScene = SceneManager.GetSceneByName("Loading");
+
+        // Unload all loaded scenes that are not the story scene
+        for (int i = 0; i < SceneManager.sceneCount; i++)
+        {
+            Scene loadedScene = SceneManager.GetSceneAt(i);
+            if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
+        }
+    }
+    
+    
     public void UnloadDialogueScene()
     {
         string sceneName = "DialogueScene";
@@ -307,64 +359,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
         }
     }
-    public void EndGame()
-    {
-        Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
-        Application.Quit();
-    }
     
-    /// <summary>
-    /// Reset game from start with the same characters
-    /// </summary>
-    public void RetryStoryScene()
-    {
-        Debug.Log("Retry story scene");
-
-        // Unload all active scenes except the story scene
-        UnloadAdditiveScenes();
-        // Reset these characters
-        foreach (CharacterInstance character in currentCharacters)
-        {
-            // Reset the questions and active-status of this character
-            character.isActive = true;
-            character.InitializeQuestions();
-        }
-        //Test_CharactersInGame();
-        StartCycle();
-    }
-    
-    /// <summary>
-    /// Restart game from start with new characters
-    /// </summary>
-    public void RestartStoryScene()
-    {
-        Debug.Log("Restart story scene");
-        //Remove the gamemanager to start a new game
-        //Destroy(gameObject);
-        // Load the story scene
-        //SceneManager.LoadScene("StoryScene");
-
-        //or
-        // unload all scenes except story scene
-        UnloadAdditiveScenes();
-        // reset game
-        Start();
-        
-    }
-
-    private void UnloadAdditiveScenes()
-    {
-        //Get the story scene
-        Scene storyScene = SceneManager.GetSceneByName("StoryScene");
-
-        // Unload all loaded scenes that are not the story scene
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Scene loadedScene = SceneManager.GetSceneAt(i);
-            if (loadedScene != storyScene) SceneManager.UnloadSceneAsync(loadedScene.name);
-        }
-    }
 
     public void ToggleNotebookScene()
     {
