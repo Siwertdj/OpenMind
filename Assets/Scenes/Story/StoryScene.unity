@@ -813,7 +813,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
-  numQuestions: 2
+  numQuestions: 4
   minimumRemaining: 2
 --- !u!1 &1792579903
 GameObject:
