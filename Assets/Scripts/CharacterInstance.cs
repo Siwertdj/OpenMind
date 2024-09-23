@@ -33,6 +33,11 @@ public class CharacterInstance
         InitializeQuestions();
     }
 
+    public List<string> GetGreeting()
+    {
+        return new() { "Hello" };
+    }
+
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>

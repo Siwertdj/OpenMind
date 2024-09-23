@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
-    [NonSerialized] public int numTalked;
+    [NonSerialized] public int numQuestionsAsked;
 
     /// <summary>
     /// Amount of times the player can ask a question
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
         // Choose a victim, make them inactive, and print the hints to the console.
         ChooseVictim();
         // Reset number of times the player has talked
-        numTalked = 0;
+        numQuestionsAsked = 0;
         // Start the NPC Selection scene
         ToggleNPCSelectScene();
     }
@@ -222,8 +222,8 @@ public class GameManager : MonoBehaviour
 
     public bool HasQuestionsLeft()
     {
-        Debug.Log("Has questions left: " + (numTalked < numQuestions));
-        return numTalked < numQuestions;
+        Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
+        return numQuestionsAsked < numQuestions;
     }
     
     /// <summary>
@@ -379,5 +379,26 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
             notebookOn= true;
         }
+    }
+
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
     }
 }
