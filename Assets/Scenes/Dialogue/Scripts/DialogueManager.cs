@@ -9,7 +9,10 @@ using System;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private GameObject dialogue;
+    [SerializeField] private GameObject characterName;
     [SerializeField] private DialogueAnimator animator;
+
+
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject promptsUIPrefab;
     [SerializeField] private CharacterData[] characters;
@@ -66,6 +69,7 @@ public class DialogueManager : MonoBehaviour
     {
         prompts.SetActive(false);
         dialogue.SetActive(true);
+        dialogue.GetComponentInChildren<TextField>().SetText(recipient.characterName);
 
         List<string> answer = recipient.Answers[question];
         animator.WriteDialogue(answer, recipient.pitch);
