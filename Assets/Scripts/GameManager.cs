@@ -10,6 +10,8 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
+    private bool notebookOn = false;
+
     public static GameManager gm;
     
     [SerializeField] public int numberOfCharacters;
@@ -361,6 +363,21 @@ public class GameManager : MonoBehaviour
         {
             Scene loadedScene = SceneManager.GetSceneAt(i);
             if (loadedScene != storyScene) SceneManager.UnloadSceneAsync(loadedScene.name);
+        }
+    }
+
+    public void ToggleNotebookScene()
+    {
+        if (notebookOn)
+        {
+
+            SceneManager.UnloadSceneAsync("NotebookScene");
+            notebookOn = false;
+        }
+        else
+        {
+            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
+            notebookOn= true;
         }
     }
 }
