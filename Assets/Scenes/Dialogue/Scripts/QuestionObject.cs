@@ -2,20 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A child of DialogueObject. Executing this object places questions on the screen, with ResponseObjects as responses.
+/// </summary>
 public class QuestionObject : DialogueObject
 {
     public List<Question> questions = new();
 
-    private List<DialogueObject> _response = new();
-    public override List<DialogueObject> Response
+    private List<DialogueObject> _responses = new();
+    public override List<DialogueObject> Responses
     {
-        get { return _response; }
-        set { _response = value; }
+        get { return _responses; }
+        set { _responses = value; }
     }
 
-    public QuestionObject()
+    public override void Execute()
     {
+        Debug.Log("Executing Question Object");
 
+        GenerateQuestions();
+
+        // Add response to each question to list of responses
+        foreach (Question question in questions)
+            Responses.Add(new ResponseObject(question));
+
+        DialogueManager.dm.SetQuestionsField(true);
+        DialogueManager.dm.CreatePromptButtons(this);
     }
 
     private void GenerateQuestions()
@@ -40,19 +52,5 @@ public class QuestionObject : DialogueObject
                 possibleQuestions.RemoveAt(questionIndex);
             }
         }
-    }
-
-    public override void Execute()
-    {
-        Debug.Log("Executing Question Object");
-
-        GenerateQuestions();
-
-        // Add response to each question to list of responses
-        foreach (Question question in questions)
-            Response.Add(new ResponseObject(question));
-
-        DialogueManager.dm.SetQuestionsField(true);
-        DialogueManager.dm.CreatePromptButtons(this);
     }
 }

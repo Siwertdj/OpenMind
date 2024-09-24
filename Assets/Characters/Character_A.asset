@@ -16,7 +16,6 @@ MonoBehaviour:
   id: 0
   avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
   voicePitch: 2
-  dialogueList: []
   answers:
   - question: 0
     answer:
@@ -34,3 +33,16 @@ MonoBehaviour:
     - im doing soooo goood
     - like realllylyyy
     - absoleutley loveley
+  - question: 9
+    answer:
+    - my mom :) :)
+    - and my dad!!! <3
+  - question: 11
+    answer:
+    - uummmmm...
+    - hmmmm...
+    - sorry but
+    - what's a negative???
+  - question: 6
+    answer:
+    - what is "egitation"?? :) :)

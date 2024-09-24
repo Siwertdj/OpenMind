@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A child of DialogueObject. Executing this object writes a response to the given question to the screen.
+/// A response can be either a new QuestionObject, or a TerminateDialogueObject if there are no more questions available.
+/// </summary>
 public class ResponseObject : DialogueObject
 {
     public Question question;
     public List<string> dialogue;
 
-    private List<DialogueObject> _response = new();
-    public override List<DialogueObject> Response
+    private List<DialogueObject> _responses = new();
+    public override List<DialogueObject> Responses
     {
-        get { return _response; }
-        set { _response = value; }
+        get { return _responses; }
+        set { _responses = value; }
     }
 
     public ResponseObject(Question question)
@@ -23,11 +27,25 @@ public class ResponseObject : DialogueObject
     {
         Debug.Log("Executing Response Object");
 
-        if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
-            Response.Add(new QuestionObject());
-        else
-            Response.Add(new TerminateDialogueObject());
+        List<string> answer = GetQuestionResponse(question);
 
-        DialogueManager.dm.AskQuestion(question);
-    }   
+        if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
+            Responses.Add(new QuestionObject());
+        else
+            Responses.Add(new TerminateDialogueObject());
+
+        DialogueManager.dm.WriteDialogue(answer);
+    }
+
+    // Gets character's response to the given question
+    private List<string> GetQuestionResponse(Question question)
+    {
+        GameManager.gm.numQuestionsAsked += 1;
+
+        CharacterInstance character = GameManager.gm.dialogueRecipient;
+        character.RemainingQuestions.Remove(question);
+
+        // Return answer to the question
+        return character.Answers[question];
+    }
 }

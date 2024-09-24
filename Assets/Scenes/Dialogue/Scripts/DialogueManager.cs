@@ -41,7 +41,7 @@ public class DialogueManager : MonoBehaviour
     {
         Debug.Log($"Talking to {character.characterName}");
         currentObject = new SpeakingObject(character.GetGreeting());
-        currentObject.Response.Add(new QuestionObject());
+        currentObject.Responses.Add(new QuestionObject());
         currentObject.Execute();
     }
 
@@ -49,21 +49,12 @@ public class DialogueManager : MonoBehaviour
 
     public void OnDialogueComplete()
     {
+        // Close dialogue field
         dialogueField.SetActive(false);
-        
-        if (GameManager.gm.HasQuestionsLeft())
-        {
-            // TODO: back to home button
 
-            // Create the next set of questions
-            currentObject = currentObject.Response[0];
-            currentObject.Execute();            
-        }
-        else
-        {
-            // TODO: end cycle
-            GameManager.gm.EndCycle();
-        }        
+        // Execute next dialogue object
+        currentObject = currentObject.Responses[0];
+        currentObject.Execute();
     }
 
     // Write given dialogue to the screen
@@ -71,29 +62,16 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueField.SetActive(true);
 
-        animator.WriteDialogue(dialogue, pitch);
-    }
-
-    // Starts writing response to the given question to the current character
-    public void AskQuestion(Question question)
-    {
-        GameManager.gm.numQuestionsAsked += 1;
-
-        CharacterInstance character = GameManager.gm.dialogueRecipient;
-        character.RemainingQuestions.Remove(question);
-
         // Adjust the box containing the character's name
-        dialogueField.GetComponentInChildren<TextField>().SetText(character.characterName);
+        dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
 
-        // Get and write the answer to the question
-        List<string> answer = character.Answers[question];
-        WriteDialogue(answer);
+        animator.WriteDialogue(dialogue, pitch);
     }
 
     // Instantiate question buttons
     public void CreatePromptButtons(QuestionObject questionObject)
     {
-        foreach (ResponseObject response in questionObject.Response)
+        foreach (ResponseObject response in questionObject.Responses)
         {
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
