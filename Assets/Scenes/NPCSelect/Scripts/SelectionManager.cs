@@ -23,7 +23,7 @@ public class SelectionManager : MonoBehaviour
         setSceneType();
         
         //Line for testing decidecriminal.
-        scene = "decidecriminal";
+        //scene = "decidecriminal";
         
         setHeaderText(scene);
         GenerateOptions();
