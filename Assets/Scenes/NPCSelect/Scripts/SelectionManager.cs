@@ -16,12 +16,10 @@ public class SelectionManager : MonoBehaviour
     
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
-    // (Weet niet zeker of deze variable verschoven moet worden naar gamemanager of dat je het hier in houdt maar ja)
     private string scene;
     
     private void Start()
     {
-        Debug.Log("any questions left?:" + GameManager.gm.HasQuestionsLeft());
         setSceneType();
         
         //Line for testing decidecriminal.
@@ -34,6 +32,7 @@ public class SelectionManager : MonoBehaviour
     // Set the scene variable.
     private void setSceneType()
     {
+        // TODO: perhaps move to gamemanager.
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
         
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
@@ -81,13 +80,12 @@ public class SelectionManager : MonoBehaviour
     // Event for when a character is selected.
     public void ButtonClicked(GameObject option)
     {
-        // get the selectoption object
+        // Get the selectoption object
         SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
         // Only active characters can be talked to
         if (selectOption.character.isActive)
         {
             // Start the dialogue if a criminal does not need to be decided yet.
-            // (scene variable staat boven, moet nog ergens meegegeven worden wanneer de npcselectscene geladen wordt)
             if (scene == "dialogue")
             {
                 // TODO: ensure that the correct id is passed based on the button
@@ -101,17 +99,13 @@ public class SelectionManager : MonoBehaviour
                 CharacterInstance culprit = GameManager.gm.GetCulprit();
                 if (culprit.characterName == selectOption.character.characterName)
                 {
-                    Debug.Log("win"); // Debug.logs voor testen
                     GameManager.gm.ToggleNPCSelectScene();
                     GameManager.gm.ToggleGameWinScene();
-                    
                 }
                 else
                 {
-                    Debug.Log("loss"); // Debug.logs voor testen
                     GameManager.gm.ToggleNPCSelectScene();
                     GameManager.gm.ToggleGameOverScene();
-                    
                 }
             }
             
