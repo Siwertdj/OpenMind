@@ -26,7 +26,8 @@ public class DialogueManager : MonoBehaviour
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
 
-        StartCharacterDialogue(GameManager.gm.dialogueRecipient);
+        currentObject = GameManager.gm.dialogueObject;
+        currentObject.Execute();
     }
 
     // Update is called once per frame
@@ -39,10 +40,6 @@ public class DialogueManager : MonoBehaviour
 
     public void StartCharacterDialogue(CharacterInstance character)
     {
-        Debug.Log($"Talking to {character.characterName}");
-        currentObject = new SpeakingObject(character.GetGreeting());
-        currentObject.Responses.Add(new QuestionObject());
-        currentObject.Execute();
     }
 
     public void SetQuestionsField(bool active) => questionsField.SetActive(active);

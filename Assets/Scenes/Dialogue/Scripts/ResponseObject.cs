@@ -25,7 +25,7 @@ public class ResponseObject : DialogueObject
 
     public override void Execute()
     {
-        Debug.Log("Executing Response Object");
+        var dm = DialogueManager.dm;
 
         List<string> answer = GetQuestionResponse(question);
 
@@ -34,7 +34,7 @@ public class ResponseObject : DialogueObject
         else
             Responses.Add(new TerminateDialogueObject());
 
-        DialogueManager.dm.WriteDialogue(answer);
+        dm.WriteDialogue(answer);
     }
 
     // Gets character's response to the given question

@@ -18,7 +18,7 @@ public class QuestionObject : DialogueObject
 
     public override void Execute()
     {
-        Debug.Log("Executing Question Object");
+        var dm = DialogueManager.dm;
 
         GenerateQuestions();
 
@@ -26,8 +26,8 @@ public class QuestionObject : DialogueObject
         foreach (Question question in questions)
             Responses.Add(new ResponseObject(question));
 
-        DialogueManager.dm.SetQuestionsField(true);
-        DialogueManager.dm.CreatePromptButtons(this);
+        dm.SetQuestionsField(true);
+        dm.CreatePromptButtons(this);
     }
 
     private void GenerateQuestions()

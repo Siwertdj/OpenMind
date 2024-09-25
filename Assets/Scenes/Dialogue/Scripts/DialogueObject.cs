@@ -15,7 +15,7 @@ public abstract class DialogueObject
 
 /// <summary>
 /// A child of DialogueObject. Executing this object simply writes its text to the screen.
-/// A response must be set manually, otherwise the response is simply a TerminateDialogueObject.
+/// A response must be set manually, otherwise the response is a TerminateDialogueObject.
 /// </summary>
 public class SpeakingObject : DialogueObject
 {
@@ -35,7 +35,8 @@ public class SpeakingObject : DialogueObject
 
     public override void Execute()
     {
-        DialogueManager.dm.WriteDialogue(dialogue);
+        var dm = DialogueManager.dm;
+        dm.WriteDialogue(dialogue);
 
         // If no response is given, terminate dialogue
         if (Responses.Count <= 0)
@@ -57,7 +58,7 @@ public class TerminateDialogueObject : DialogueObject
 
     public override void Execute()
     {
-        Debug.Log("Executing Terminate Dialogue Object");
+        var dm = DialogueManager.dm;
 
         // TODO: This should just close the dialogue scene and open the next one, but that doesn't exist yet...
         GameManager.gm.EndCycle();

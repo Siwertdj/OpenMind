@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public List<CharacterInstance> currentCharacters;
 
     public CharacterInstance dialogueRecipient;
+    public DialogueObject dialogueObject;
     
     //random variable is made global so it can be reused
     public Random random = new Random();
@@ -285,6 +286,9 @@ public class GameManager : MonoBehaviour
         ToggleNPCSelectScene();
 
         dialogueRecipient = character;
+
+        dialogueObject = new SpeakingObject(dialogueRecipient.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
