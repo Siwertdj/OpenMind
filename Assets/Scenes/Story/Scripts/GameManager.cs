@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining;
+    [SerializeField] private bool immediateVictim;
     
     // The current "active" characters, any characters that became inactive should be removed from this list.
     public List<CharacterInstance> currentCharacters; 
@@ -50,8 +51,11 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         Test_CharactersInGame();
-        // On load start cycles.
-        StartCycle();
+        // On load start cycle, depending on whether we want an immediate victim or not.
+        if (immediateVictim)
+            StartCycle();
+        else
+            FirstCycle();
     }
 
     /// <summary>
@@ -160,6 +164,15 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
     }
+
+    // IF we want to start the first cycle without casualties, we use this instead.
+    private void FirstCycle()
+    {
+        // Reset number of times the player has talked
+        numQuestionsAsked = 0;
+        // Start the NPC Selection scene
+        SceneController.sc.ToggleNPCSelectScene();
+    }
     
     /// <summary>
     /// The main cycle of the game.
@@ -168,9 +181,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StartCycle()
     {
-        Debug.Log("New cycle started.");
         // Choose a victim, make them inactive, and print the hints to the console.
-        ChooseVictim();
+        string victimName = ChooseVictim();
+        // Transition
+        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the NPC Selection scene
@@ -194,7 +208,7 @@ public class GameManager : MonoBehaviour
     /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
     /// the victim that is removed from their list of questions and prints to to the debuglog
     /// </summary>
-    private void ChooseVictim()
+    private string ChooseVictim()
     {
         CharacterInstance culprit = GetCulprit();
         CharacterInstance victim = GetRandomVictimNoCulprit();
@@ -205,6 +219,7 @@ public class GameManager : MonoBehaviour
         //TODO: wait until I have a dialogue box to put this in
         //Debug.Log(string.Join(", ", randTraitCulprit)); 
         //Debug.Log(string.Join(", ", randTraitVictim));
+        return victim.characterName;
     }
 
     /// <summary>
@@ -264,7 +279,10 @@ public class GameManager : MonoBehaviour
             character.InitializeQuestions();
         }
         //Test_CharactersInGame();
-        StartCycle();
+        if (immediateVictim)
+            StartCycle();
+        else
+            FirstCycle();
     }
     
     /// <summary>
