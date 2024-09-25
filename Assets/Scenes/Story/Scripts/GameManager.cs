@@ -24,8 +24,6 @@ public class GameManager : MonoBehaviour
     public CharacterInstance dialogueRecipient;
     public DialogueObject dialogueObject;
     
-    //random variable is made global so it can be reused
-    public Random random = new Random();
     /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
@@ -34,9 +32,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Amount of times the player can ask a question
     /// </summary>
-    [SerializeField] private int numQuestions;
 
-    [SerializeField] public int minimumRemaining;
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
 
@@ -130,6 +126,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
 
+    public bool EnoughCharactersRemaining()
+    {
+        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
+        return numberOfActiveCharacters <= GameManager.gm.minimumRemaining;
+    }
+
     /// <summary>
     /// Returns a random (non-culprit and active) character, used to give hints for the companion
     /// Assumes there is only 1 culprit
@@ -214,24 +216,27 @@ public class GameManager : MonoBehaviour
         Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
         return numQuestionsAsked < numQuestions;
     }
-    
-    
-    /*
-     ===================================================================================================================
- 
-  /$$$$$$                                                 /$$$$$$                        /$$                         /$$
- /$$__  $$                                               /$$__  $$                      | $$                        | $$
-| $$  \__/  /$$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$       | $$  \__/  /$$$$$$  /$$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$ | $$
-|  $$$$$$  /$$_____/ /$$__  $$| $$__  $$ /$$__  $$      | $$       /$$__  $$| $$__  $$|_  $$_/   /$$__  $$ /$$__  $$| $$
- \____  $$| $$      | $$$$$$$$| $$  \ $$| $$$$$$$$      | $$      | $$  \ $$| $$  \ $$  | $$    | $$  \__/| $$  \ $$| $$
- /$$  \ $$| $$      | $$_____/| $$  | $$| $$_____/      | $$    $$| $$  | $$| $$  | $$  | $$ /$$| $$      | $$  | $$| $$
-|  $$$$$$/|  $$$$$$$|  $$$$$$$| $$  | $$|  $$$$$$$      |  $$$$$$/|  $$$$$$/| $$  | $$  |  $$$$/| $$      |  $$$$$$/| $$
- \______/  \_______/ \_______/|__/  |__/ \_______/       \______/  \______/ |__/  |__/   \___/  |__/       \______/ |__/
-    
-    ====================================================================================================================
-    */
-    
-    
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
+    }
+
     /// <summary>
     /// Closes the game.
     /// </summary>
@@ -286,6 +291,8 @@ public class GameManager : MonoBehaviour
         SceneController.sc.ToggleNPCSelectScene();
 
         dialogueRecipient = character;
+        dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 

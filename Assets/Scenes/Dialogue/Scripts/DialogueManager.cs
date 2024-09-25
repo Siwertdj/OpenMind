@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
         // Check for mouse input to skip current dialogue
-        if (Input.GetMouseButtonDown(0) && animator.InDialogue)
+        if (Input.GetMouseButtonDown(0) && animator.InDialogue && !EventSystem.current.IsPointerOverGameObject())
             animator.SkipDialogue();
     }
 

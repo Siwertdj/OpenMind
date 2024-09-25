@@ -79,7 +79,17 @@ public class SceneController : MonoBehaviour
             SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
         }
     }
-    
+    public void ToggleGameWinScene()
+    {
+        if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("GameWinScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
+        }
+    }
 
     public void ToggleNotebookScene()
     {

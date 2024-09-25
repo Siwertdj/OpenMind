@@ -31,13 +31,10 @@ public class SelectionManager : MonoBehaviour
 
     // Set the scene variable.
     private void setSceneType()
-    {
-        // TODO: perhaps move to gamemanager.
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
-        
+    {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
         // set the scene variable to decidecriminal.
-        if (numberOfActiveCharacters <= GameManager.gm.minimumRemaining && !GameManager.gm.HasQuestionsLeft()) 
+        if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
         {
             scene = "decidecriminal";
         }
@@ -99,13 +96,13 @@ public class SelectionManager : MonoBehaviour
                 CharacterInstance culprit = GameManager.gm.GetCulprit();
                 if (culprit.characterName == selectOption.character.characterName)
                 {
-                    GameManager.gm.ToggleNPCSelectScene();
-                    GameManager.gm.ToggleGameWinScene();
+                    SceneController.sc.ToggleNPCSelectScene();
+                    SceneController.sc.ToggleGameWinScene();
                 }
                 else
                 {
-                    GameManager.gm.ToggleNPCSelectScene();
-                    GameManager.gm.ToggleGameOverScene();
+                    SceneController.sc.ToggleNPCSelectScene();
+                    SceneController.sc.ToggleGameOverScene();
                 }
             }
             

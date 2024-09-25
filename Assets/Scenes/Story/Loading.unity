@@ -500,7 +500,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -810.91656, y: -768.3549, z: -1.1162872}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2058,7 +2058,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
-  numQuestions: 1
+  numQuestions: 3
   minimumRemaining: 2
 --- !u!114 &1546507295
 MonoBehaviour:
@@ -2382,8 +2382,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1546507293}
-  - {fileID: 519420032}
   - {fileID: 236390286}
+  - {fileID: 519420032}
   - {fileID: 1447988414}
   - {fileID: 1032335813}
   - {fileID: 342585762}
