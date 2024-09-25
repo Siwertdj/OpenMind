@@ -11,33 +11,28 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    private bool notebookOn = false;
-
-    public static GameManager gm;
     
+    [Header("UI Settings")] 
+    [SerializeField] private GameObject gameMenu;
+    [SerializeField] private GameObject gameButtons;
+    
+    [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
+    [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
+    [SerializeField] private int numQuestions; // Amount of times the player can ask a question
+    [SerializeField] private int minimumRemaining;
     
-    /// <summary>
-    /// The current "active" characters, any characters that became inactive should be removed from this list.
-    /// </summary>
-    public List<CharacterInstance> currentCharacters;
-
+    // The current "active" characters, any characters that became inactive should be removed from this list.
+    public List<CharacterInstance> currentCharacters; 
+    // Target of the current dialogue
     public CharacterInstance dialogueRecipient;
     
-    //random variable is made global so it can be reused
-    public Random random = new Random();
-    /// <summary>
-    /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    /// </summary>
-    [NonSerialized] public int numTalked;
+    public Random random = new Random(); //random variable is made global so it can be reused
+    private bool notebookOn = false;
+    public static GameManager gm;       // static instance of the gamemanager
+    
 
-    /// <summary>
-    /// Amount of times the player can ask a question
-    /// </summary>
-    [SerializeField] private int numQuestions;
-
-    [SerializeField] private int minimumRemaining;
     
     private void Awake()
     {
@@ -238,7 +233,28 @@ public class GameManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
-    
+
+    /// <summary>
+    /// Opens the menu of the game, hides the UI buttons
+    /// </summary>
+    public void OpenMenu()
+    {
+        // Hide buttoncanvas
+        // Reveal menucanvas
+        gameButtons.SetActive(false);
+        gameMenu.SetActive(true);
+    }
+
+    /// <summary>
+    /// Closes the menu of the game, reveals the UI buttons
+    /// </summary>
+    public void CloseMenu()
+    {
+        // Reveal buttoncanvas
+        // Hide menucanvas
+        gameButtons.SetActive(true);
+        gameMenu.SetActive(false);
+    }
     
     /// <summary>
     /// Reset game from start with the same characters
