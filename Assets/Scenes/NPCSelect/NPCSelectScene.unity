@@ -1948,6 +1948,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectionOption: {fileID: 3812014761830931731, guid: 1fb297297f6b7fa458a2320916ed9a51, type: 3}
   parent: {fileID: 741079411}
+  headerText: {fileID: 1951431983}
 --- !u!4 &1659958912
 Transform:
   m_ObjectHideFlags: 0
@@ -2410,8 +2411,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 62
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
