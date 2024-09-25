@@ -28,11 +28,6 @@ public class DialogueManager : MonoBehaviour
 
         currentObject = GameManager.gm.dialogueObject;
         currentObject.Execute();
-        // Generate first prompts
-        prompts = Instantiate(promptsUIPrefab, FindObjectOfType<Canvas>().transform);
-        for (int i = 0; i < 2; i++)
-            CreatePromptButton();
-        CreateBackButton();
     }
 
     // Update is called once per frame
@@ -41,10 +36,6 @@ public class DialogueManager : MonoBehaviour
         // Check for mouse input to skip current dialogue
         if (Input.GetMouseButtonDown(0) && animator.InDialogue)
             animator.SkipDialogue();
-    }
-
-    public void StartCharacterDialogue(CharacterInstance character)
-    {
     }
 
     public void SetQuestionsField(bool active) => questionsField.SetActive(active);
@@ -80,96 +71,31 @@ public class DialogueManager : MonoBehaviour
 
             // Set button text in question form
             buttonText.text = GameManager.gm.GetPromptText(response.question);
+            buttonText.enableAutoSizing = false;
+            buttonText.fontSize = 40;
 
             // Add event when clicking the button
             button.onClick.AddListener(() => OnButtonClick(response));
-            CreateContinueButton();
-            CreateBackButton();
-            // Create new prompt
-                       
+            //CreateContinueButton();
+
             // TODO: back to home button
-            
         }
-        else
-        {
-            // TODO: end cycle
-            GameManager.gm.EndCycle();
-        }
-        
+        CreateBackButton();
     }
 
-    // Starts writing response to the given question to the current character
-    public void AskQuestion(Question question)
+    // When a question button is pressed, do things necessary to write dialogue
+    public void OnButtonClick(ResponseObject response)
     {
-        prompts.SetActive(false);
-        dialogue.SetActive(true);
+        // Destroy buttons
+        for (int i = 0; i < questionsField.transform.childCount; i++)
+            Destroy(questionsField.transform.GetChild(i).gameObject);
 
-        List<string> answer = recipient.Answers[question];
-        animator.WriteDialogue(answer, recipient.pitch);
-    }
+        // Remove questions field
+        questionsField.SetActive(false);
 
-    // Unity buttons don't accept enums as parameters in functions, so use this instead
-    public void AskQuestion(string questionType)
-    {
-        AskQuestion((Question)Enum.Parse(typeof(Question), questionType));
-
-        // NOTE: Below is an old version of the code above, I just have it here in case the code above breaks :)
-        //switch (questionType)
-        //{
-        //    case "Name": AskQuestion(Question.Name); break;
-        //    case "Age": AskQuestion(Question.Age); break;
-        //    case "Wellbeing": AskQuestion(Question.Wellbeing); break;
-        //    case "Political": AskQuestion(Question.Political); break;
-        //    case "Personality": AskQuestion(Question.Personality); break;
-        //    case "Hobby": AskQuestion(Question.Hobby); break;
-        //    case "CulturalBackground": AskQuestion(Question.CulturalBackground); break;
-        //    case "Education": AskQuestion(Question.Education); break;
-        //    case "CoreValues": AskQuestion(Question.CoreValues); break;
-        //    case "ImportantPeople": AskQuestion(Question.ImportantPeople); break;
-        //    case "PositiveTrait": AskQuestion(Question.PositiveTrait); break;
-        //    case "NegativeTrait": AskQuestion(Question.NegativeTrait); break;
-        //    case "OddTrait": AskQuestion(Question.OddTrait); break;
-        //    default: Debug.Log("Invalid question string"); break;
-        //}
-    }
-
-    public void AskQuestion(Question question, Button button)
-    {
-        DestroyButtons();
-        AskQuestion(question);
-    }
-
-    public void AskQuestion(string question, Button button)
-    {
-        DestroyButtons();
-        AskQuestion(question);
-    }
-
-    private void CreatePromptButton()
-    {
-        if (recipient.RemainingQuestions.Count > 0)
-        {
-            // Get random question that has not been asked yet
-            int questionIndex = new System.Random().Next(recipient.RemainingQuestions.Count);
-            Question buttonType = recipient.RemainingQuestions[questionIndex];
-
-            // Remove the question from list of questions to be asked
-            //recipient.RemainingQuestions.RemoveAt(questionIndex);
-
-            Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
-            button.gameObject.tag = "Button";
-            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-
-            buttonText.text = GetPromptText(buttonType);
-            buttonText.enableAutoSizing = false;
-            buttonText.fontSize = 40;
-            button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
-        }
-        else
-        {
-            Debug.Log("No more questions to ask this character.");
-            // TODO: In de selectscene duidelijk maken dat dit character geen vragen meer kan beantwoorden
-        }
+        // Write dialogue when button is pressed
+        currentObject = response;
+        currentObject.Execute();
     }
 
     /// <summary>
@@ -177,15 +103,15 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void CreateBackButton()
     {
-        Button backbutton = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
-        backbutton.name = "backButton";
-        backbutton.gameObject.tag = "Button";
-        TMP_Text buttonText = backbutton.GetComponentInChildren<TMP_Text>();
+        Button backButton = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
+        backButton.name = "backButton";
+        backButton.gameObject.tag = "Button";
+        TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
 
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
         buttonText.fontSize = 40;
-        backbutton.onClick.AddListener(() => BacktoNPCScreen());
+        backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
     /// <summary>
@@ -204,7 +130,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void CreateContinueButton()
     {
-        Button button = Instantiate(buttonPrefab, prompts.transform).GetComponent<Button>();
+        Button button = Instantiate(buttonPrefab, dialogueField.transform).GetComponent<Button>();
         button.gameObject.tag = "Button";
         TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
 
@@ -224,8 +150,7 @@ public class DialogueManager : MonoBehaviour
         DestroyButtons();
         for (int i = 0; i < 2; i++)
         {
-            CreatePromptButton();
-            Debug.Log("Create Question");
+            currentObject.Execute();
         }
 
         CreateBackButton();
@@ -242,21 +167,6 @@ public class DialogueManager : MonoBehaviour
         {
             Destroy(buttons[i]);
         }
-    }
-
-    // When a question button is pressed, do things necessary to write dialogue
-    public void OnButtonClick(ResponseObject response)
-    {
-        // Destroy buttons
-        for (int i = 0; i < questionsField.transform.childCount; i++)
-            Destroy(questionsField.transform.GetChild(i).gameObject);
-
-        // Remove questions field
-        questionsField.SetActive(false);
-
-        // Write dialogue when button is pressed
-        currentObject = response;
-        currentObject.Execute();
     }
 }
 
