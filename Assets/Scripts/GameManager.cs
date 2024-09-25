@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
             SceneManager.UnloadSceneAsync("StartScreen");
         }
 
+        Debug.Log("New Game!");
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.

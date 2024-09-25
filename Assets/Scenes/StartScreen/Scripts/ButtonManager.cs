@@ -25,6 +25,6 @@ public class ButtonManager : MonoBehaviour
     // The "New Game"-button just uses GameManager.Start to start a new game
     public void NewGameButtonClick()
     {
-        GameManager.gm.RestartStoryScene();
+        GameManager.gm.StartGame();
     }
 }
