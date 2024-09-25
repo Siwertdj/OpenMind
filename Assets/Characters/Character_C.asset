@@ -16,7 +16,6 @@ MonoBehaviour:
   id: 0
   avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
   voicePitch: 1.2
-  dialogueList: []
   answers:
   - question: 4
     answer:
@@ -27,6 +26,18 @@ MonoBehaviour:
     - be stuffin all over
     - things are stuff
   - question: 6
+    answer:
+    - be stuffin all over
+    - things are stuff
+  - question: 7
+    answer:
+    - be stuffin all over
+    - things are stuff
+  - question: 11
+    answer:
+    - be stuffin all over
+    - things are stuff
+  - question: 8
     answer:
     - be stuffin all over
     - things are stuff

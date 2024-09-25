@@ -33,6 +33,11 @@ public class CharacterInstance
         InitializeQuestions();
     }
 
+    public List<string> GetGreeting()
+    {
+        return new() { "Hello" };
+    }
+
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
@@ -68,7 +73,7 @@ public class CharacterInstance
 
             int randomInt = new System.Random().Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
-            RemainingQuestions.RemoveAt((randomInt));
+            RemainingQuestions.RemoveAt(randomInt);
 
             // TODO: add question-text to the answer that is returned
             return (Answers[question]);
