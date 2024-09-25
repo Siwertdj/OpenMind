@@ -171,17 +171,32 @@ public class GameManager : MonoBehaviour
         Debug.Log("New cycle started.");
         // Choose a victim, make them inactive, and print the hints to the console.
         ChooseVictim();
+        dialogueRecipient = GetCulprit();
+        dialogueObject = new SpeakingObject(GetCulprit().GetRandomTrait());
+        dialogueObject.Responses.Add(new TerminateDialogueObject(ResetCycleVars));
+        SceneController.sc.ToggleDialogueScene();
+    }
+
+    private void ResetCycleVars()
+    {
+        Debug.Log("Resetting Cycle");
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
+
         // Start the NPC Selection scene
         SceneController.sc.ToggleNPCSelectScene();
     }
 
+    public void CheckEndCycle()
+    {
+        Debug.Log("Checking end cycle");
+        if (!HasQuestionsLeft())
+            EndCycle();
+    }
+
     public void EndCycle() 
     {
-        SceneController.sc.UnloadDialogueScene(); // stop dialogue immediately.
-
-        if (currentCharacters.Count(c=>c.isActive) > minimumRemaining)
+        if (EnoughCharactersRemaining())
             StartCycle();
         else 
         {
