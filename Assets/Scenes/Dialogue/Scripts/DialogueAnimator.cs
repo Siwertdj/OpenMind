@@ -25,7 +25,7 @@ public class DialogueAnimator : MonoBehaviour
     {
         text = GetComponentInChildren<TMP_Text>();
         text.enableAutoSizing = false;
-        text.fontSize = 10;
+        text.fontSize = 40;
         audioSource = GetComponent<AudioSource>();
     }
 

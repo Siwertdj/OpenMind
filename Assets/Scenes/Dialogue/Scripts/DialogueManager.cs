@@ -128,7 +128,7 @@ public class DialogueManager : MonoBehaviour
 
             buttonText.text = GetPromptText(buttonType);
             buttonText.enableAutoSizing = false;
-            buttonText.fontSize = 10;
+            buttonText.fontSize = 40;
             button.onClick.AddListener(() => AskQuestion(buttonType.ToString(), button));
         }
         else
@@ -150,7 +150,7 @@ public class DialogueManager : MonoBehaviour
 
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 10;
+        buttonText.fontSize = 40;
         backbutton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
@@ -176,7 +176,7 @@ public class DialogueManager : MonoBehaviour
 
         buttonText.text = "Ask another question";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 10;
+        buttonText.fontSize = 40;
         button.onClick.AddListener(() => ContinueTalking());
     }
 
