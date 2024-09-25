@@ -24,6 +24,8 @@ public class DialogueAnimator : MonoBehaviour
     void Awake()
     {
         text = GetComponentInChildren<TMP_Text>();
+        text.enableAutoSizing = false;
+        text.fontSize = 10;
         audioSource = GetComponent<AudioSource>();
     }
 
