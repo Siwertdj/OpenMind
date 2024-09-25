@@ -8,8 +8,14 @@ using UnityEngine;
 /// </summary>
 public abstract class DialogueObject
 {
+    /// <summary>
+    /// The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object)
+    /// </summary>
     public abstract List<DialogueObject> Responses { get; set; }
 
+    /// <summary>
+    /// Executes the logic of the given dialogue object
+    /// </summary>
     public abstract void Execute();
 }
 

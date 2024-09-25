@@ -38,8 +38,15 @@ public class DialogueManager : MonoBehaviour
             animator.SkipDialogue();
     }
 
+    /// <summary>
+    /// Sets prompts to parameter value.
+    /// </summary>
+    /// <param name="active"></param>
     public void SetQuestionsField(bool active) => questionsField.SetActive(active);
 
+    /// <summary>
+    /// Executed when the dialogue animator has finished writing the dialogue.
+    /// </summary>
     public void OnDialogueComplete()
     {
         // Close dialogue field
@@ -50,45 +57,56 @@ public class DialogueManager : MonoBehaviour
         currentObject.Execute();
     }
 
-    // Write given dialogue to the screen
+    /// <summary>
+    /// Write the given dialogue to the screen using the dialogue animator.
+    /// </summary>
+    /// <param name="dialogue"></param>
+    /// <param name="pitch"></param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
+        // Enable the dialogue field
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
         dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
 
+        // Animator write dialogue to the screen.
         animator.WriteDialogue(dialogue, pitch);
     }
 
-    // Instantiate question buttons
+    /// <summary>
+    /// Instantiates question (and return) buttons to the screen.
+    /// </summary>
+    /// <param name="questionObject"></param>
     public void CreatePromptButtons(QuestionObject questionObject)
     {
         foreach (ResponseObject response in questionObject.Responses)
         {
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
-            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+            button.name = "questionButton";
+            button.gameObject.tag = "Button";
 
             // Set button text in question form
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
             buttonText.text = GameManager.gm.GetPromptText(response.question);
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
             // Add event when clicking the button
             button.onClick.AddListener(() => OnButtonClick(response));
-            //CreateContinueButton();
-
-            // TODO: back to home button
         }
+
+        // Add the button to return to the other characters
         CreateBackButton();
     }
 
-    // When a question button is pressed, do things necessary to write dialogue
+    /// <summary>
+    /// Executed when a question button is pressed.
+    /// </summary>
+    /// <param name="response"></param>
     public void OnButtonClick(ResponseObject response)
     {
-        // Destroy buttons
-        for (int i = 0; i < questionsField.transform.childCount; i++)
-            Destroy(questionsField.transform.GetChild(i).gameObject);
+        DestroyButtons();
 
         // Remove questions field
         questionsField.SetActive(false);
@@ -106,8 +124,8 @@ public class DialogueManager : MonoBehaviour
         Button backButton = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
         backButton.name = "backButton";
         backButton.gameObject.tag = "Button";
-        TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
 
+        TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
         buttonText.fontSize = 40;
@@ -164,12 +182,13 @@ public class DialogueManager : MonoBehaviour
     {
         var buttons = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < buttons.Length; i++)
-        {
             Destroy(buttons[i]);
-        }
     }
 }
 
+/// <summary>
+/// An enum containing all possible questions in the game.
+/// </summary>
 public enum Question
 {
     Name,
