@@ -186,7 +186,7 @@ public class GameManager : MonoBehaviour
         else 
         {
             // TODO: Select culprit to end game
-            SceneController.sc.ToggleGameOverScene();
+            SceneController.sc.ToggleNPCSelectScene();
         }
     }
 
