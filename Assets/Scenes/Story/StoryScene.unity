@@ -154,7 +154,6 @@ RectTransform:
   m_Children:
   - {fileID: 1792579904}
   - {fileID: 440181047}
-  - {fileID: 1141422494}
   m_Father: {fileID: 1890018590}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -366,7 +365,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 995917851}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -813,7 +812,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
-  numQuestions: 2
+  numQuestions: 4
   minimumRemaining: 2
 --- !u!1 &1792579903
 GameObject:
@@ -845,8 +844,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 786575843}
+  m_Children: []
   m_Father: {fileID: 35040656}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -1057,3 +1055,5 @@ SceneRoots:
   - {fileID: 1546507293}
   - {fileID: 519420032}
   - {fileID: 236390286}
+  - {fileID: 94543440}
+  - {fileID: 1890018590}
