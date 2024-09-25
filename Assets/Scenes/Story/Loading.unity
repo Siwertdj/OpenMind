@@ -589,8 +589,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546507294}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1546507295}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: OpenMenu
         m_Mode: 1
         m_Arguments:
@@ -1822,8 +1822,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546507294}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1546507296}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: ToggleNotebookScene
         m_Mode: 1
         m_Arguments:
@@ -2016,6 +2016,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1546507293}
   - component: {fileID: 1546507294}
+  - component: {fileID: 1546507296}
+  - component: {fileID: 1546507295}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2050,8 +2052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f56704a8f74204419d791747d746c8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMenu: {fileID: 1032335812}
-  gameButtons: {fileID: 342585761}
   numberOfCharacters: 4
   characters:
   - {fileID: 11400000, guid: 21b31019478993442b0348c346e6e886, type: 2}
@@ -2060,6 +2060,32 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   numQuestions: 1
   minimumRemaining: 2
+--- !u!114 &1546507295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546507292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371503f0094b8fa43b59b3f1ac410bbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMenu: {fileID: 1032335812}
+  gameButtons: {fileID: 342585761}
+--- !u!114 &1546507296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546507292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ce89810a2c0a04499ae881aa3575d53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1753542996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,8 +2302,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546507294}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1546507295}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
         m_MethodName: CloseMenu
         m_Mode: 1
         m_Arguments:

@@ -11,11 +11,6 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    
-    [Header("UI Settings")] 
-    [SerializeField] private GameObject gameMenu;
-    [SerializeField] private GameObject gameButtons;
-    
     [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
@@ -29,9 +24,7 @@ public class GameManager : MonoBehaviour
     public CharacterInstance dialogueRecipient;
     
     public Random random = new Random(); //random variable is made global so it can be reused
-    private bool notebookOn = false;
     public static GameManager gm;       // static instance of the gamemanager
-    
 
     
     private void Awake()
@@ -165,19 +158,19 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numTalked = 0;
         // Start the NPC Selection scene
-        ToggleNPCSelectScene();
+        SceneController.sc.ToggleNPCSelectScene();
     }
 
     public void EndCycle() 
     {
-        UnloadDialogueScene(); // stop dialogue immediately.
+        SceneController.sc.UnloadDialogueScene(); // stop dialogue immediately.
 
         if (currentCharacters.Count(c=>c.isActive) > minimumRemaining)
             StartCycle();
         else 
         {
             // TODO: Select culprit to end game
-            ToggleGameOverScene();
+            SceneController.sc.ToggleGameOverScene();
         }
     }
 
@@ -224,6 +217,7 @@ public class GameManager : MonoBehaviour
     ====================================================================================================================
     */
     
+    
     /// <summary>
     /// Closes the game.
     /// </summary>
@@ -232,28 +226,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("End game.");
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
-    }
-
-    /// <summary>
-    /// Opens the menu of the game, hides the UI buttons
-    /// </summary>
-    public void OpenMenu()
-    {
-        // Hide buttoncanvas
-        // Reveal menucanvas
-        gameButtons.SetActive(false);
-        gameMenu.SetActive(true);
-    }
-
-    /// <summary>
-    /// Closes the menu of the game, reveals the UI buttons
-    /// </summary>
-    public void CloseMenu()
-    {
-        // Reveal buttoncanvas
-        // Hide menucanvas
-        gameButtons.SetActive(true);
-        gameMenu.SetActive(false);
     }
     
     /// <summary>
@@ -264,7 +236,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Retry story scene");
 
         // Unload all active scenes except the story scene
-        UnloadAdditiveScenes();
+        SceneController.sc.UnloadAdditiveScenes();
         // Reset these characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -289,68 +261,16 @@ public class GameManager : MonoBehaviour
 
         //or
         // unload all scenes except story scene
-        UnloadAdditiveScenes();
+        SceneController.sc.UnloadAdditiveScenes();
         // reset game
         Start();
         
     }
 
-    private void UnloadAdditiveScenes()
-    {
-        //Get the story scene
-        Scene loadingScene = SceneManager.GetSceneByName("Loading");
-
-        // Unload all loaded scenes that are not the story scene
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Scene loadedScene = SceneManager.GetSceneAt(i);
-            if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
-        }
-    }
     
-    
-    public void UnloadDialogueScene()
-    {
-        string sceneName = "DialogueScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            Debug.Log("Dialogue scene not loaded");
-        }
-    }
-    
-    public void ToggleCompanionHintScene()
-    {
-        string sceneName = "Companion Hint";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
-    public void ToggleNPCSelectScene()
-    {
-        string sceneName = "NPCSelectScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync((sceneName));
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
     public void StartDialogue(CharacterInstance character)
     {
-        ToggleNPCSelectScene();
+        SceneController.sc.ToggleNPCSelectScene();
 
         dialogueRecipient = character;
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
@@ -358,37 +278,10 @@ public class GameManager : MonoBehaviour
 
     public void StartDialogue(int id)
     {
-        ToggleNPCSelectScene(); // NPC selected, so unload
+        SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload
         
         dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
     
-    public void ToggleGameOverScene()
-    {
-        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameOverScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
-        }
-    }
-    
-
-    public void ToggleNotebookScene()
-    {
-        if (notebookOn)
-        {
-
-            SceneManager.UnloadSceneAsync("NotebookScene");
-            notebookOn = false;
-        }
-        else
-        {
-            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
-            notebookOn= true;
-        }
-    }
 }

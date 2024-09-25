@@ -157,8 +157,8 @@ public class DialogueManager : MonoBehaviour
     private void BacktoNPCScreen()
     {
         DestroyButtons();
-        GameManager.gm.UnloadDialogueScene();
-        GameManager.gm.ToggleNPCSelectScene();
+        SceneController.sc.UnloadDialogueScene();
+        SceneController.sc.ToggleNPCSelectScene();
     }
 
     /// <summary>
