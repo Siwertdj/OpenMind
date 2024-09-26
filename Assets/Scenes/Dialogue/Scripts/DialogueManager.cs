@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
-using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -17,10 +16,6 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject buttonPrefab;
 
-    public GameObject background;
-
-    public UnityEvent OnEndDialogue;
-
     public DialogueObject currentObject;
 
     // Start is called before the first frame update
@@ -30,8 +25,6 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-
-        OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
 
         currentObject = GameManager.gm.dialogueObject;
         currentObject.Execute();
@@ -75,8 +68,7 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (GameManager.gm.dialogueObject != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
+        dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
 
         // Animator write dialogue to the screen.
         animator.WriteDialogue(dialogue, pitch);
@@ -147,8 +139,8 @@ public class DialogueManager : MonoBehaviour
     private void BacktoNPCScreen()
     {
         DestroyButtons();
-        currentObject = new TerminateDialogueObject(SceneController.sc.ToggleNPCSelectScene);
-        currentObject.Execute();
+        SceneController.sc.UnloadDialogueScene();
+        SceneController.sc.ToggleNPCSelectScene();
     }
 
     /// <summary>

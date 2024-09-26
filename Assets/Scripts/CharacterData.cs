@@ -14,7 +14,7 @@ public class CharacterData : ScriptableObject
     [Range(0.5f, 2f)] public float voicePitch = 1;
 
     // TODO: Potentially auto-fill the dialogueList automatically based on the content of each character's respective folder.
-    public List<DialogueObject> DialogueList;
+    public List<DialogueObject> dialogueList;
 
     [SerializeField]
     public KeyValuePair[] answers;
