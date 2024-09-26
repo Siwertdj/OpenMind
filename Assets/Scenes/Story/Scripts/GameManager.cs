@@ -191,15 +191,21 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Checking end cycle");
         if (!HasQuestionsLeft())
+        {
+            Debug.Log("No questions remaining");
             EndCycle();
+        }
     }
 
     public void EndCycle() 
     {
         if (EnoughCharactersRemaining())
-            StartCycle();
-        else 
         {
+            StartCycle();
+        }
+        else
+        {
+            Debug.Log("Ending cycle: not enough characters remaining");
             // TODO: Select culprit to end game
             SceneController.sc.ToggleNPCSelectScene();
         }
@@ -228,7 +234,6 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
         return numQuestionsAsked < numQuestions;
     }
     public string GetPromptText(Question questionType)
