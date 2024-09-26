@@ -9,6 +9,9 @@ public class SceneController : MonoBehaviour
     public static SceneController sc;
     private bool notebookOn = false;
 
+    // possibly a bad solution
+    public AsyncOperation DialogueSceneOp;
+
     public void Awake()
     {
         sc = this;
@@ -27,20 +30,6 @@ public class SceneController : MonoBehaviour
         }
     }
     
-    
-    public void UnloadDialogueScene()
-    {
-        string sceneName = "DialogueScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            Debug.Log("Dialogue scene not loaded");
-        }
-    }
-    
     public void ToggleCompanionHintScene()
     {
         string sceneName = "Companion Hint";
@@ -51,6 +40,20 @@ public class SceneController : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        }
+    }
+
+    public void ToggleDialogueScene()
+    {
+        string sceneName = "DialogueScene";
+
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+        }
+        else
+        {
+            DialogueSceneOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
     }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,11 +63,22 @@ public class TerminateDialogueObject : DialogueObject
         set { _responses = value; }
     }
 
+    Action post;
+
+    public TerminateDialogueObject() { }
+
+    public TerminateDialogueObject(Action post)
+    {
+        this.post = post;
+    }
+
     public override void Execute()
     {
-        var dm = DialogueManager.dm;
+        Debug.Log("Terminating dialogue");
+        DialogueManager.dm.OnEndDialogue.Invoke();
+        SceneController.sc.ToggleDialogueScene();
 
-        // TODO: This should just close the dialogue scene and open the next one, but that doesn't exist yet...
-        GameManager.gm.EndCycle();
+        // Invoke post function if given
+        post?.Invoke();
     }
 }
