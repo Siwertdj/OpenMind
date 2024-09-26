@@ -71,7 +71,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //TODO: characterInstance.id appears to be always 0, this can cause problems in the future.
     private void PopulateCharacters()
     {
         // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
@@ -137,12 +136,6 @@ public class GameManager : MonoBehaviour
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
-    /// <summary>
-    /// Gets the amount of questions remaining. Since I have no idea what "minimumRemaining" is, because it isn't documented anywhere
-    /// I have no idea if this function is correct.
-    /// </summary>
-    public int GetQuestionsRemaining() => minimumRemaining;
-    
     private void Test_CharactersInGame()
     {
         string output = "";

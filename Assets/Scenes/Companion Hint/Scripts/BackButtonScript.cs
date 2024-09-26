@@ -7,5 +7,5 @@ public class BackButtonScript : MonoBehaviour
     /// <summary>
     /// Hides the companion scene
     /// </summary>
-    public void GoBack() => FindObjectOfType<GameManager>().ToggleCompanionHintScene();
+    public void GoBack() => FindObjectOfType<SceneController>().ToggleCompanionHintScene();
 }
