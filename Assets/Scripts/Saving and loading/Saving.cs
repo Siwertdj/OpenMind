@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,27 +31,8 @@ public class Saving : MonoBehaviour
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
-        string notebookLocation = Application.dataPath + FilePathConstants.notebookFilePath;
-        string noteBookData;
-        try
-        {
-            noteBookData = File.ReadAllText(notebookLocation);
-        }
-        catch (DirectoryNotFoundException e)
-        {
-            Debug.LogError($"A specified directory does not exist when accessing notebook content in filepath {notebookLocation}, got error: {e}.\nSaving failed");
-            return;
-        }
-        catch (FileNotFoundException e)
-        {
-            Debug.LogError($"Couldn't find the notebook content with filepath {notebookLocation}, got error: {e}.\nSaving failed");
-            return;
-        }
-        catch (IOException e)
-        {
-            Debug.LogError($"Something went wrong when opening and reading the notebook content, got error: {e}.\nSaving failed");
-            return;
-        }
+        string noteBookData =
+            FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook");
         
         List<Question>[] remaingQuestions = active.Select(a => a.RemainingQuestions).ToArray();
         
@@ -67,8 +47,8 @@ public class Saving : MonoBehaviour
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
-        string directoryLocation = Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + FilePathConstants.playerSaveDataFileName;
-        string fileLocation = directoryLocation + @"\" + FilePathConstants.playerSaveDataFolderName;
+        string directoryLocation = FilePathConstants.GetSaveFileDirectory();
+        string fileLocation = FilePathConstants.GetSaveFileLocation();
         
         if (!Directory.Exists(directoryLocation))
             Directory.CreateDirectory(directoryLocation);
