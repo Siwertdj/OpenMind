@@ -17,8 +17,6 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private GameObject buttonPrefab;
 
-    [SerializeField] private SpriteRenderer avatar;
-
     public GameObject background;
 
     public UnityEvent OnEndDialogue;
@@ -35,7 +33,6 @@ public class DialogueManager : MonoBehaviour
 
         OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
 
-        avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
         currentObject = GameManager.gm.dialogueObject;
         currentObject.Execute();
     }
