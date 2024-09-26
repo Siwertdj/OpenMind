@@ -24,14 +24,34 @@ public class Saving : MonoBehaviour
         }
         catch (NullReferenceException)
         {
-            Debug.LogWarning("Cannot save data when the gamemanger is not loaded.");
+            Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
             return;
         }
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
-        string notebookLocation = Application.dataPath + @"notebook\" + FilePathConstants.notebookFilePath;
-
+        string notebookLocation = Application.dataPath + FilePathConstants.notebookFilePath;
+        string noteBookData;
+        try
+        {
+            noteBookData = File.ReadAllText(notebookLocation);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Debug.LogError($"A specified directory does not exist in filepath {notebookLocation}, got error: {e}.\nSaving failed");
+            return;
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogError($"Couldn't find the file with filepath {notebookLocation}, got error: {e}.\nSaving failed");
+            return;
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Something went wrong when opening the file, got error: {e}.\nSaving failed");
+            return;
+        }
+        
         List<Question>[] remaingQuestions = active.Select(a => a.RemainingQuestions).ToArray();
         
         SaveData saveData = new SaveData
@@ -41,7 +61,7 @@ public class Saving : MonoBehaviour
             culprit = gameManager.GetCulprit().id,
             questionsRemaining = gameManager.GetQuestionsRemaining(),
             remainingQuestions = remaingQuestions,
-            noteBookData = File.ReadAllText(FilePathConstants.notebookFilePath)
+            noteBookData = noteBookData
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
