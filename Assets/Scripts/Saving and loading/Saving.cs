@@ -11,8 +11,10 @@ public class Saving : MonoBehaviour
     /// <summary>
     /// Saves data to a file.
     /// All data saved to a file is stored in <see cref="SaveData"/>>.
+    /// When accessing the notebook file, all relevant exceptions are caught and result in an error in the debug console and results in nothing being saved.
+    /// When the specified directory and or file to save to cannot be found, these will be created anew.
     ///
-    /// This method results in a warning if the gamemanager is not loaded, after which it will exit the function.
+    /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
     /// </summary>
     public void Save()
     {
@@ -38,17 +40,17 @@ public class Saving : MonoBehaviour
         }
         catch (DirectoryNotFoundException e)
         {
-            Debug.LogError($"A specified directory does not exist in filepath {notebookLocation}, got error: {e}.\nSaving failed");
+            Debug.LogError($"A specified directory does not exist when accessing notebook content in filepath {notebookLocation}, got error: {e}.\nSaving failed");
             return;
         }
         catch (FileNotFoundException e)
         {
-            Debug.LogError($"Couldn't find the file with filepath {notebookLocation}, got error: {e}.\nSaving failed");
+            Debug.LogError($"Couldn't find the notebook content with filepath {notebookLocation}, got error: {e}.\nSaving failed");
             return;
         }
         catch (IOException e)
         {
-            Debug.LogError($"Something went wrong when opening the file, got error: {e}.\nSaving failed");
+            Debug.LogError($"Something went wrong when opening and reading the notebook content, got error: {e}.\nSaving failed");
             return;
         }
         
