@@ -128,8 +128,8 @@ public class GameManager : MonoBehaviour
 
     public bool EnoughCharactersRemaining()
     {
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Where(c => c.isActive).Count();
-        return numberOfActiveCharacters <= GameManager.gm.minimumRemaining;
+        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        return numberOfActiveCharacters > minimumRemaining;
     }
 
     /// <summary>
@@ -171,10 +171,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("New cycle started.");
         // Choose a victim, make them inactive, and print the hints to the console.
         ChooseVictim();
-        dialogueRecipient = GetCulprit();
+        /*dialogueRecipient = GetCulprit();
         dialogueObject = new SpeakingObject(GetCulprit().GetRandomTrait());
         dialogueObject.Responses.Add(new TerminateDialogueObject(ResetCycleVars));
-        SceneController.sc.ToggleDialogueScene();
+        SceneController.sc.ToggleDialogueScene();*/
+        numQuestionsAsked = 0;
+        SceneController.sc.ToggleNPCSelectScene();
     }
 
     private void ResetCycleVars()
