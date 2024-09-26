@@ -17,9 +17,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
     
-    /// <summary>
-    /// The current "active" characters, any characters that became inactive should be removed from this list.
-    /// </summary>
     public List<CharacterInstance> currentCharacters;
 
     public CharacterInstance dialogueRecipient;
@@ -136,6 +133,11 @@ public class GameManager : MonoBehaviour
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
+    public int AmountOfQuestionsRemaining() => numQuestions - numTalked;
+
+    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
+        numTalked = numQuestions - questionsRemaining;
+    
     private void Test_CharactersInGame()
     {
         string output = "";

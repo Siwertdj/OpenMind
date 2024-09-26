@@ -17,31 +17,37 @@ public class Saving : MonoBehaviour
     /// </summary>
     public void Save()
     {
-        
-        GameManager gameManager;
-        try
-        {
-            gameManager = FindObjectOfType<GameManager>();
-        }
-        catch (NullReferenceException)
-        {
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        //check if the gamemanger is loaded
+        if (gameManager is null)    
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
+
+        //check if all characters have a unique id
+        bool allUniqueID = true;
+        for (int i = 0; i < gameManager.currentCharacters.Count; i++)
+            for (int j = i+1; j < gameManager.currentCharacters.Count; j++)
+                if (gameManager.currentCharacters[i].id == gameManager.currentCharacters[j].id)
+                    allUniqueID = false;
+
+        if (!allUniqueID)
+        {
+            Debug.LogError("Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
             return;
         }
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         string noteBookData =
-            FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook");
+            FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook", "Saving");
         
-        List<Question>[] remaingQuestions = active.Select(a => a.RemainingQuestions).ToArray();
+        (int, List<Question>)[] remaingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
         
         SaveData saveData = new SaveData
         {
             activeCharacters = active.Select(c =>c.id).ToArray(),
             inactiveCharacters = inactive.Select(c =>c.id).ToArray(),
             culprit = gameManager.GetCulprit().id,
-            questionsRemaining = gameManager.GetQuestionsRemaining(),
+            questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
             remainingQuestions = remaingQuestions,
             noteBookData = noteBookData
         };

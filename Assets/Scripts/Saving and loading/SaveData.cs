@@ -11,7 +11,7 @@ public class SaveData
     public int[] inactiveCharacters;
     public int culprit;
     public int questionsRemaining;
-    public List<Question>[] remainingQuestions;
+    public (int, List<Question>)[] remainingQuestions;
     public string noteBookData;
 }
 
@@ -52,7 +52,11 @@ public static class FilePathConstants
     /// </summary>
     public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFolderName;
 
-    public static string GetSafeFileContents(string fileLocation, string typeOfContent)
+    /// <summary>
+    /// A safe way to read files that handles a bunch of exceptions.
+    /// </summary>
+    /// <returns>File contents if no exception is thrown, otherwise null.</returns>
+    public static string GetSafeFileContents(string fileLocation, string typeOfContent, string typeOfAction)
     {
         string fileContents;
         try
@@ -61,17 +65,17 @@ public static class FilePathConstants
         }
         catch (DirectoryNotFoundException e)
         {
-            Debug.LogError($"A specified directory does not exist when accessing {typeOfContent} content in filepath {fileLocation}, got error: {e}.\nSaving failed");
+            Debug.LogError($"A specified directory does not exist when accessing {typeOfContent} content in filepath {fileLocation}, got error: {e}.\n{typeOfAction} failed");
             return null;
         }
         catch (FileNotFoundException e)
         {
-            Debug.LogError($"Couldn't find the {typeOfContent} content with filepath {fileLocation}, got error: {e}.\nSaving failed");
+            Debug.LogError($"Couldn't find the {typeOfContent} content with filepath {fileLocation}, got error: {e}.\n{typeOfAction} failed");
             return null;
         }
         catch (IOException e)
         {
-            Debug.LogError($"Something went wrong when opening and reading the {typeOfContent} content, got error: {e}.\nSaving failed");
+            Debug.LogError($"Something went wrong when opening and reading the {typeOfContent} content, got error: {e}.\n{typeOfAction} failed");
             return null;
         }
 
