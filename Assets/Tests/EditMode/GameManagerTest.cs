@@ -6,13 +6,13 @@ using UnityEngine.TestTools;
 
 public class GameManagerTest
 {
-    // A Test behaves as an ordinary method
-    [Test]
-    public void Test_Test()
+    [TestCase(1)]
+    public void Test(int x)
     {
-        GameManager gm = new GameManager();
-        int x = 1;
-        int res = gm.TestFunction(1);
-        Assert.AreEqual(x + 1, res);
+        GameObject g = new GameObject("GameManager");
+        GameManager gm = g.AddComponent<GameManager>();
+        int actual = gm.AddOne(x);
+        int expected = x + 1;
+        Assert.AreEqual(expected, actual);
     }
 }

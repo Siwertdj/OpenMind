@@ -330,7 +330,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
-    public int TestFunction(int x)
+    public int AddOne(int x)
     {
         return x + 1;
     }
