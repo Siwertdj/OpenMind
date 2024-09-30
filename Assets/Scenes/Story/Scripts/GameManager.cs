@@ -312,7 +312,11 @@ public class GameManager : MonoBehaviour
         
     }
     
-    public void StartDialogue(CharacterInstance character)
+    /// <summary>
+    /// Opens the dialogue scene to talk to the given character.
+    /// </summary>
+    /// <param name="character">The character the player will talk to</param>
+    public void StartCharacterDialogue(CharacterInstance character)
     {
         SceneController.sc.ToggleNPCSelectScene();
 
@@ -322,6 +326,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
+    /// <summary>
+    /// <i>Deprecated</i>, this function only remains in case we want to do something with it later.
+    /// </summary>
+    /// <param name="id"></param>
     public void StartDialogue(int id)
     {
         SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload

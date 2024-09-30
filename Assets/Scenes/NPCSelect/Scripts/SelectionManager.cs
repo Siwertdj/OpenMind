@@ -87,7 +87,7 @@ public class SelectionManager : MonoBehaviour
             {
                 // TODO: ensure that the correct id is passed based on the button
                 
-                GameManager.gm.StartDialogue(selectOption.character);
+                GameManager.gm.StartCharacterDialogue(selectOption.character);
             }
             else
             {
