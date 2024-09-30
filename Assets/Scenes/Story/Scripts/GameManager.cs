@@ -24,6 +24,10 @@ public class GameManager : MonoBehaviour
     // Target of the current dialogue
     public CharacterInstance dialogueRecipient;
     public DialogueObject dialogueObject;
+
+    [Header("Background Prefabs")]
+    [SerializeField] private GameObject avatarPrefab;
+    [SerializeField] private GameObject[] backgroundPrefabs;
     
     /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
@@ -321,9 +325,35 @@ public class GameManager : MonoBehaviour
         SceneController.sc.ToggleNPCSelectScene();
 
         dialogueRecipient = character;
-        dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
+        GameObject[] background = GetRandomBackground(character);
+
+        dialogueObject = new SpeakingObject(
+            character.GetGreeting(),
+            background);
+        dialogueObject.Responses.Add(new QuestionObject(background));
+
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }
+
+    private GameObject[] GetRandomBackground(CharacterInstance character = null)
+    {
+        List<GameObject> background = new();
+        background.Add(backgroundPrefabs[random.Next(backgroundPrefabs.Length)]);
+
+        if (character != null)
+        {
+            avatarPrefab.GetComponent<SpriteRenderer>().sprite = dialogueRecipient.avatar;
+            background.Add(avatarPrefab);
+        }
+
+        return background.ToArray();
+    }
+
+    public void StartDialogue(List<string> dialogue, GameObject[] background)
+    {
+        dialogueObject = new SpeakingObject(dialogue, background);
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        
     }
 
     /// <summary>

@@ -2307,6 +2307,9 @@ MonoBehaviour:
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0
+  avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
+  backgroundPrefabs:
+  - {fileID: 8536317093880419543, guid: bf81f915444e06949a72303843cb9e1d, type: 3}
 --- !u!114 &1546507295
 MonoBehaviour:
   m_ObjectHideFlags: 0

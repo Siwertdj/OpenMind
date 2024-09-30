@@ -9,7 +9,7 @@ using UnityEngine;
 public class ResponseObject : DialogueObject
 {
     public Question question;
-    public List<string> dialogue;
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
@@ -18,19 +18,21 @@ public class ResponseObject : DialogueObject
         set { _responses = value; }
     }
 
-    public ResponseObject(Question question)
+    public ResponseObject(Question question, GameObject[] background)
     {
         this.question = question;
+        this.background = background;
     }
 
     public override void Execute()
     {
         var dm = DialogueManager.dm;
+        dm.ReplaceBackground(background);
 
         List<string> answer = GetQuestionResponse(question);
 
         if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
-            Responses.Add(new QuestionObject());
+            Responses.Add(new QuestionObject(background));
         else
             Responses.Add(new TerminateDialogueObject());
 

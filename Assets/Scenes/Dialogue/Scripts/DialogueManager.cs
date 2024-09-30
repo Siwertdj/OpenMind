@@ -11,15 +11,18 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager dm;
 
-    [SerializeField] private GameObject dialogueField;
-    [SerializeField] private GameObject questionsField;
     [SerializeField] private DialogueAnimator animator;
 
+    [Header("Fields")]
+    [SerializeField] private GameObject dialogueField;
+    [SerializeField] private GameObject questionsField;
+    [SerializeField] private GameObject backgroundField;
+
+    [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
+    [Header("Visuals")]
     [SerializeField] private SpriteRenderer avatar;
-
-    public GameObject background;
 
     public UnityEvent OnEndDialogue;
 
@@ -83,6 +86,24 @@ public class DialogueManager : MonoBehaviour
 
         // Animator write dialogue to the screen.
         animator.WriteDialogue(dialogue, pitch);
+    }
+
+    /// <summary>
+    /// Replaces the current dialogue background with the given background.
+    /// </summary>
+    /// <param name="newBackground"></param>
+    public void ReplaceBackground(GameObject[] newBackground)
+    {
+        Transform parent = backgroundField.transform;
+
+        // Remove old background
+        foreach (Transform child in parent)
+            Destroy(child.gameObject);
+
+        // Instantiate new background
+        foreach (GameObject element in newBackground)
+            Instantiate(element).transform.parent = parent;
+
     }
 
     /// <summary>

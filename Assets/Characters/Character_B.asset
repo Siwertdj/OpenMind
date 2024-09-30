@@ -21,24 +21,36 @@ MonoBehaviour:
     answer:
     - I am a democrat.
     - I will be voting for joe biden.
+    trait: []
   - question: 1
     answer:
     - I was in 1987.
     - I am 37 years old.
+    trait: []
   - question: 7
     answer:
     - The most important core value to me is happiness.
     - It doesn't matter how much money u have
     - or how famous u are if u cannot be happy.
+    trait: []
   - question: 8
     answer:
     - I consider myself to be kind.
     - I am also quite shy.
+    trait: []
   - question: 4
     answer:
     - My hobby is drawing.
     - I like drawing animals.
+    trait: []
   - question: 5
     answer:
     - I was born in the Netherlands,
     - However my parents are both german.
+    trait: []
+  greetings:
+  - lines:
+    - Hello there
+  - lines:
+    - Oh, hey
+    - Good to see you again

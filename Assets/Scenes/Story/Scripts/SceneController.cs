@@ -9,9 +9,6 @@ public class SceneController : MonoBehaviour
     public static SceneController sc;
     private bool notebookOn = false;
 
-    // possibly a bad solution
-    public AsyncOperation DialogueSceneOp;
-
     public void Awake()
     {
         sc = this;
@@ -46,14 +43,15 @@ public class SceneController : MonoBehaviour
     public void ToggleDialogueScene()
     {
         string sceneName = "DialogueScene";
+        Scene scene = SceneManager.GetSceneByName(sceneName);
 
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+        if (scene.isLoaded)
         {
             SceneManager.UnloadSceneAsync(sceneName);
         }
         else
         {
-            DialogueSceneOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
     }
 
