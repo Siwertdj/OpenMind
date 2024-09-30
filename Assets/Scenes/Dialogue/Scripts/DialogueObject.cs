@@ -47,7 +47,7 @@ public class SpeakingObject : DialogueObject
         var dm = DialogueManager.dm;
         dm.ReplaceBackground(background);
 
-        dm.WriteDialogue(dialogue);
+        dm.WriteDialogue(dialogue, GameManager.gm.dialogueRecipient.pitch);
 
         // If no response is given, terminate dialogue
         if (Responses.Count <= 0)
