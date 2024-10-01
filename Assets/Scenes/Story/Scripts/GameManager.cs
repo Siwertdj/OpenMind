@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -22,20 +23,17 @@ public class GameManager : MonoBehaviour
     // The current "active" characters, any characters that became inactive should be removed from this list.
     public List<CharacterInstance> currentCharacters; 
     // Target of the current dialogue
+    // TODO: Deze hieruit en naar dialoguemanager
     public CharacterInstance dialogueRecipient;
     public DialogueObject dialogueObject;
     
-    /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    /// </summary>
     [NonSerialized] public int numQuestionsAsked;
 
-    /// <summary>
     /// Amount of times the player can ask a question
-    /// </summary>
-
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
+    private SceneController sc;
 
     
     private void Awake()
@@ -45,17 +43,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sc = SceneController.sc;
+        
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        Test_CharactersInGame();
+        //Test_CharactersInGame();
         // On load start cycle, depending on whether we want an immediate victim or not.
-        if (immediateVictim)
-            StartCycle();
-        else
-            FirstCycle();
+        FirstCycle();
     }
 
     /// <summary>
@@ -68,10 +65,86 @@ public class GameManager : MonoBehaviour
         // Make parentobject persistent, so that all objects in the toolbox remain persistent.
         // This includes gamemanager, audiomanager, main camera and eventsystem.
         DontDestroyOnLoad(gameObject.transform.parent);
-        SceneManager.UnloadSceneAsync("Loading");
+    }
+    
+    // IF we want to start the first cycle without casualties, we use this instead.
+    private void FirstCycle()
+    {
+        if (immediateVictim)
+        {
+            // Choose a victim, make them inactive, and print the hints to the console.
+            string victimName = ChooseVictim();
+            // Transition-effect
+            gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+        }
+        // Reset number of times the player has talked
+        numQuestionsAsked = 0;
+        // Start the game at the first scene; the NPC Selection scene
+        sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
     
     /// <summary>
+    /// The main cycle of the game.
+    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to,
+    /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
+    /// </summary>
+    private void StartCycle()
+    {
+        // Choose a victim, make them inactive, and print the hints to the console.
+        string victimName = ChooseVictim();
+        // Transition
+        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+        // Reset number of times the player has talked
+        numQuestionsAsked = 0;
+        // Start the NPC Selection scene
+        //SceneController.sc.ToggleNPCSelectScene();
+        sc.TransitionScene(
+            SceneController.SceneName.Loading, 
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.TransitionType.Additive);
+    }
+
+    public void EndCycle() 
+    {
+        if (EnoughCharactersRemaining())
+            StartCycle();
+        else
+        {
+            Debug.Log("Select the Culprit");
+            SceneController.sc.ToggleNPCSelectScene();
+            //sc.TransitionScene();
+        }
+    }
+
+    public void CheckEndCycle()
+    {
+        Debug.Log("Checking end Cycle");
+        if (!HasQuestionsLeft())
+        {
+            Debug.Log("No questions remaining");
+            EndCycle();
+        }
+    }
+    
+    /// <summary>
+    /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
+    /// the victim that is removed from their list of questions and prints to to the debuglog
+    /// </summary>
+    private string ChooseVictim()
+    {
+        CharacterInstance culprit = GetCulprit();
+        CharacterInstance victim = GetRandomVictimNoCulprit();
+
+        // Victim put on inactive so we cant ask them questions
+        victim.isActive = false;
+        
+        //TODO: wait until I have a dialogue box to put this in
+        //Debug.Log(string.Join(", ", randTraitCulprit)); 
+        //Debug.Log(string.Join(", ", randTraitVictim));
+        return victim.characterName;
+    }
+    
+        /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
     /// Also makes sure they are all set to 'Active', and selects a random culprit.
     /// </summary>
@@ -165,70 +238,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
 
-    // IF we want to start the first cycle without casualties, we use this instead.
-    private void FirstCycle()
-    {
-        // Reset number of times the player has talked
-        numQuestionsAsked = 0;
-        // Start the NPC Selection scene
-        SceneController.sc.ToggleNPCSelectScene();
-    }
-    
-    /// <summary>
-    /// The main cycle of the game.
-    /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to,
-    /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
-    /// </summary>
-    private void StartCycle()
-    {
-        // Choose a victim, make them inactive, and print the hints to the console.
-        string victimName = ChooseVictim();
-        // Transition
-        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
-        // Reset number of times the player has talked
-        numQuestionsAsked = 0;
-        // Start the NPC Selection scene
-        SceneController.sc.ToggleNPCSelectScene();
-    }
-
-    public void EndCycle() 
-    {
-        if (EnoughCharactersRemaining())
-            StartCycle();
-        else
-        {
-            Debug.Log("Ending cycle: not enough characters remaining");
-            SceneController.sc.ToggleNPCSelectScene();
-        }
-    }
-
-    public void CheckEndCycle()
-    {
-        Debug.Log("Checking end Cycle");
-        if (!HasQuestionsLeft())
-        {
-            Debug.Log("No questions remaining");
-            EndCycle();
-        }
-    }
-    
-    /// <summary>
-    /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
-    /// the victim that is removed from their list of questions and prints to to the debuglog
-    /// </summary>
-    private string ChooseVictim()
-    {
-        CharacterInstance culprit = GetCulprit();
-        CharacterInstance victim = GetRandomVictimNoCulprit();
-
-        // Victim put on inactive so we cant ask them questions
-        victim.isActive = false;
-        
-        //TODO: wait until I have a dialogue box to put this in
-        //Debug.Log(string.Join(", ", randTraitCulprit)); 
-        //Debug.Log(string.Join(", ", randTraitVictim));
-        return victim.characterName;
-    }
 
     /// <summary>
     /// Checks if the player can ask more questions this cycle.
@@ -236,7 +245,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
+        //Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
         return numQuestionsAsked < numQuestions;
     }
     public string GetPromptText(Question questionType)
@@ -311,22 +320,30 @@ public class GameManager : MonoBehaviour
         Start();
         
     }
-    
+
     public void StartDialogue(CharacterInstance character)
     {
-        SceneController.sc.ToggleNPCSelectScene();
-
         dialogueRecipient = character;
         dialogueObject = new SpeakingObject(character.GetGreeting());
         dialogueObject.Responses.Add(new QuestionObject());
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
     }
 
+    
+    // TODO: Use this instead (see selectionmanager)
     public void StartDialogue(int id)
     {
-        SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload
-        
-        dialogueRecipient = currentCharacters[id];
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        CharacterInstance character = currentCharacters[id];
+        dialogueRecipient = character;
+        dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
+        // Transition the scene
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
     }    
 }

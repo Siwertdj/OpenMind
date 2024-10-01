@@ -32,7 +32,6 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-
         OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
 
         avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
@@ -150,6 +149,7 @@ public class DialogueManager : MonoBehaviour
     private void BacktoNPCScreen()
     {
         DestroyButtons();
+        // TODO: Combineer met het unloaden van Dialoguescene
         currentObject = new TerminateDialogueObject(SceneController.sc.ToggleNPCSelectScene);
         currentObject.Execute();
     }

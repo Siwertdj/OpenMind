@@ -36,7 +36,7 @@ public class QuestionObject : DialogueObject
         // (This value should possibly be public and adjustable from the GameManager)
         int questionsOnScreen = 2;
 
-        Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
+        //Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
 
         // Generate random list of questions
         if (GameManager.gm.HasQuestionsLeft())
