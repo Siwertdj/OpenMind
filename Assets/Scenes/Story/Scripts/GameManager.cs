@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -22,20 +23,17 @@ public class GameManager : MonoBehaviour
     // The current "active" characters, any characters that became inactive should be removed from this list.
     public List<CharacterInstance> currentCharacters; 
     // Target of the current dialogue
+    // TODO: Deze hieruit en naar dialoguemanager
     public CharacterInstance dialogueRecipient;
     public DialogueObject dialogueObject;
     
-    /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    /// </summary>
     [NonSerialized] public int numQuestionsAsked;
 
-    /// <summary>
     /// Amount of times the player can ask a question
-    /// </summary>
-
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
+    private SceneController sc;
 
     
     private void Awake()
@@ -45,6 +43,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sc = SceneController.sc;
+        
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
@@ -171,7 +171,11 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the NPC Selection scene
-        SceneController.sc.ToggleNPCSelectScene();
+        //SceneController.sc.ToggleNPCSelectScene();
+        sc.TransitionScene(
+            SceneController.SceneName.Loading, 
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.TransitionType.Additive);
     }
     
     /// <summary>
@@ -188,7 +192,11 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the NPC Selection scene
-        SceneController.sc.ToggleNPCSelectScene();
+        //SceneController.sc.ToggleNPCSelectScene();
+        sc.TransitionScene(
+            SceneController.SceneName.Loading, 
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.TransitionType.Additive);
     }
 
     public void EndCycle() 
@@ -197,8 +205,9 @@ public class GameManager : MonoBehaviour
             StartCycle();
         else
         {
-            Debug.Log("Ending cycle: not enough characters remaining");
+            Debug.Log("Select the Culprit");
             SceneController.sc.ToggleNPCSelectScene();
+            //sc.TransitionScene();
         }
     }
 
@@ -311,22 +320,30 @@ public class GameManager : MonoBehaviour
         Start();
         
     }
-    
+
     public void StartDialogue(CharacterInstance character)
     {
-        SceneController.sc.ToggleNPCSelectScene();
-
         dialogueRecipient = character;
         dialogueObject = new SpeakingObject(character.GetGreeting());
         dialogueObject.Responses.Add(new QuestionObject());
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
     }
 
+    
+    // TODO: Use this instead (see selectionmanager)
     public void StartDialogue(int id)
     {
-        SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload
-        
-        dialogueRecipient = currentCharacters[id];
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        CharacterInstance character = currentCharacters[id];
+        dialogueRecipient = character;
+        dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
+        // Transition the scene
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
     }    
 }

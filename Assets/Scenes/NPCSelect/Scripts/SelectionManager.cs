@@ -13,34 +13,39 @@ public class SelectionManager : MonoBehaviour
 
     // The text at the top
     public TextMeshProUGUI headerText;
+
+    private SceneController sc;
     
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
-    private string scene;
+    // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
+    private string selectionType;
     
     private void Start()
     {
+        sc = SceneController.sc;
+        
         setSceneType();
         
         //Line for testing decidecriminal.
-        //scene = "decidecriminal";
+        //selectionType = "decidecriminal";
         
-        setHeaderText(scene);
+        setHeaderText(selectionType);
         GenerateOptions();
     }
 
-    // Set the scene variable.
+    // Set the selectionType variable.
     private void setSceneType()
     {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
-        // set the scene variable to decidecriminal.
+        // set the selectionType variable to decidecriminal.
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
         {
-            scene = "decidecriminal";
+            selectionType = "decidecriminal";
         }
         else
         {
-            scene = "dialogue";
+            selectionType = "dialogue";
         }
     }
 
@@ -83,27 +88,27 @@ public class SelectionManager : MonoBehaviour
         if (selectOption.character.isActive)
         {
             // Start the dialogue if a criminal does not need to be decided yet.
-            if (scene == "dialogue")
+            if (selectionType == "dialogue")
             {
-                // TODO: ensure that the correct id is passed based on the button
-                
+                // TODO: ensure that the correct id is passed based on the button 
                 GameManager.gm.StartDialogue(selectOption.character);
             }
             else
             {
                 // Get the culprit from gamemanager and compare it with the clicked character
-                // If the correct character is clicked, start the GameWin scene, else start the GameOver scene
+                // If the correct character is clicked, start the GameWin selectionType, else start the GameOver selectionType
                 CharacterInstance culprit = GameManager.gm.GetCulprit();
-                if (culprit.characterName == selectOption.character.characterName)
-                {
-                    SceneController.sc.ToggleNPCSelectScene();
-                    SceneController.sc.ToggleGameWinScene();
-                }
-                else
-                {
-                    SceneController.sc.ToggleNPCSelectScene();
-                    SceneController.sc.ToggleGameOverScene();
-                }
+                // If the player chose the right target, the targetscene is 'GameWin', else 'GameOver'.
+                SceneController.SceneName targetScene =
+                    culprit.characterName == selectOption.character.characterName
+                        ? SceneController.SceneName.GameWinScene
+                        : SceneController.SceneName.GameOverScene;
+                
+                // Transition to the right scene.
+                sc.TransitionScene(
+                    SceneController.SceneName.NPCSelectScene,
+                    targetScene, 
+                    SceneController.TransitionType.Transition);
             }
             
         }

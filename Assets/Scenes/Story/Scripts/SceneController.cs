@@ -88,17 +88,15 @@ public class SceneController : MonoBehaviour
         //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
         
         //checks, does currentScene point to nextScene in the graph?
-        int currentSceneID = sceneToID[currentScene];
+        /*
+         int currentSceneID = sceneToID[currentScene];
         int targetSceneID = sceneToID[targetScene];
         if (!sceneGraph[currentSceneID].Contains((targetSceneID, transitionType)))
             //invalid transition
             throw new Exception();
+            */
         
-        //if it's an unload (the target scene is loaded), check if the target scene is the parent scene of this scene
-        //otherwise with unloading a scene, a scene can be selected in a such a way as to always allow an unload.
-        if (SceneManager.GetSceneByName(targetScene).isLoaded &&
-            SceneManager.GetSceneAt(SceneManager.sceneCount - 2).name != targetScene)
-            throw new Exception();
+     
         
         loadCode(currentScene, targetScene, transitionType);
     }
@@ -119,23 +117,7 @@ public class SceneController : MonoBehaviour
     
     #region obsolete
     
-    // possibly a bad solution
-    public AsyncOperation DialogueSceneOp;
-    private bool notebookOn = false;
     
-    public void ToggleCompanionHintScene()
-    {
-        string sceneName = "Companion Hint";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
     public void ToggleDialogueScene()
     {
         string sceneName = "DialogueScene";
@@ -146,7 +128,7 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            DialogueSceneOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
         }
     }
 
@@ -163,42 +145,17 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    
-    public void ToggleGameOverScene()
-    {
-        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameOverScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
-        }
-    }
-    public void ToggleGameWinScene()
-    {
-        if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameWinScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
-        }
-    }
-
     public void ToggleNotebookScene()
     {
-        if (notebookOn)
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
-
-            SceneManager.UnloadSceneAsync("NotebookScene");
-            notebookOn = false;
+            TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            //SceneManager.UnloadSceneAsync("NotebookScene");
         }
         else
         {
-            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
-            notebookOn= true;
+            TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         }
     }
     #endregion

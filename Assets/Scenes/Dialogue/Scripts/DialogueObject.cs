@@ -80,5 +80,6 @@ public class TerminateDialogueObject : DialogueObject
 
         // Invoke post function if given
         post?.Invoke();
+        // TODO: The post always has the ToggleNPCSelect on, right? So It should always transition directly from Dialogue to NPCSelect?
     }
 }
