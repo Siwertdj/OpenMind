@@ -12,25 +12,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
   m_Name: Character_A
   m_EditorClassIdentifier: 
-  characterName: Gongas
+  characterName: Daan
   id: 0
-  avatar: {fileID: 21300000, guid: 3f56cd8109907ed41bd4bfda95b6ca9d, type: 3}
+  avatar: {fileID: 21300000, guid: 00e1c43e71a7feb448f69949e208e9bf, type: 3}
   voicePitch: 2
-  dialogueList: []
   answers:
-  - question: 0
+  - question: 3
     answer:
-    - my name is gongas
-    - gongas gingo
+    - I am a republican.
+    - I will be voting for Donald Trump.
   - question: 1
     answer:
-    - uno
-    - dos...
-    - tres!!!
-    - 3 years old :)
-    - can you believe it?
+    - I was born in 1989
+    - I am 35 years old
   - question: 2
     answer:
-    - im doing soooo goood
-    - like realllylyyy
-    - absoleutley loveley
+    - Thank u for asking!
+    - I recently bought a new car.
+    - Today, i drove to the reunion and it was awesome.
+    - So i am feeling great today.
+  - question: 9
+    answer:
+    - 'The most important people in my life are '
+    - my son and my wife.
+    - They mean so much to me
+    - and i would do everything for them.
+  - question: 11
+    answer:
+    - 'A bad trait i have is that i am too long. '
+    - 'I can barely fit through most doors, '
+    - which means i have to crouch a lot.
+  - question: 6
+    answer:
+    - I have a bachelor's degree in psychology
+    - I have not gotten a master's degree.
