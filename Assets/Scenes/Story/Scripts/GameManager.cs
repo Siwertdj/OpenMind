@@ -4,46 +4,46 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    private bool notebookOn = false;
-
-    public static GameManager gm;
-    
+    [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
+    [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
+    [SerializeField] private int numQuestions; // Amount of times the player can ask a question
+    [SerializeField] private int minimumRemaining;
+    [SerializeField] private bool immediateVictim;
     
-    public List<CharacterInstance> currentCharacters;
-
+    // The current "active" characters, any characters that became inactive should be removed from this list.
+    public List<CharacterInstance> currentCharacters; 
+    // Target of the current dialogue
     public CharacterInstance dialogueRecipient;
+    public DialogueObject dialogueObject;
     
-    //random variable is made global so it can be reused
-    public Random random = new Random();
     /// <summary>
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
-    [NonSerialized] public int numTalked;
+    [NonSerialized] public int numQuestionsAsked;
 
     /// <summary>
     /// Amount of times the player can ask a question
     /// </summary>
-    [SerializeField] private int numQuestions;
 
-    [SerializeField] private int minimumRemaining;
+    public Random random = new Random(); //random variable is made global so it can be reused
+    public static GameManager gm;       // static instance of the gamemanager
+
     
     private void Awake()
     {
-        gm = this;
-        // Makes this GameManager persistent throughout the scenes.
-        DontDestroyOnLoad(this.gameObject);
+        Load();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
@@ -51,23 +51,30 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         Test_CharactersInGame();
-        // On load start cycles.
-        StartCycle();
+        // On load start cycle, depending on whether we want an immediate victim or not.
+        if (immediateVictim)
+            StartCycle();
+        else
+            FirstCycle();
     }
 
-    // Update is called once per frame
-    void Update()
+    /// <summary>
+    /// Creates persistent toolbox of important manager objects, 
+    /// </summary>
+    private void Load()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UnloadDialogueScene();
-        }
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            ToggleGameOverScene();
-        }
+        gm = this;
+        
+        // Make parentobject persistent, so that all objects in the toolbox remain persistent.
+        // This includes gamemanager, audiomanager, main camera and eventsystem.
+        DontDestroyOnLoad(gameObject.transform.parent);
+        SceneManager.UnloadSceneAsync("Loading");
     }
-
+    
+    /// <summary>
+    /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
+    /// Also makes sure they are all set to 'Active', and selects a random culprit.
+    /// </summary>
     private void PopulateCharacters()
     {
         // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
@@ -123,6 +130,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
 
+    public bool EnoughCharactersRemaining()
+    {
+        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
+    }
+
     /// <summary>
     /// Returns a random (non-culprit and active) character, used to give hints for the companion
     /// Assumes there is only 1 culprit
@@ -133,11 +146,9 @@ public class GameManager : MonoBehaviour
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
-    public int AmountOfQuestionsRemaining() => numQuestions - numTalked;
-
-    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
-        numTalked = numQuestions - questionsRemaining;
-    
+    /// <summary>
+    /// Prints the name of all characters in the current game to the console, for debugging purposes.
+    /// </summary>
     private void Test_CharactersInGame()
     {
         string output = "";
@@ -153,6 +164,15 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
     }
+
+    // IF we want to start the first cycle without casualties, we use this instead.
+    private void FirstCycle()
+    {
+        // Reset number of times the player has talked
+        numQuestionsAsked = 0;
+        // Start the NPC Selection scene
+        SceneController.sc.ToggleNPCSelectScene();
+    }
     
     /// <summary>
     /// The main cycle of the game.
@@ -161,40 +181,45 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void StartCycle()
     {
-        Debug.Log("New cycle started.");
         // Choose a victim, make them inactive, and print the hints to the console.
-        ChooseVictim();
+        string victimName = ChooseVictim();
+        // Transition
+        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
         // Reset number of times the player has talked
-        numTalked = 0;
+        numQuestionsAsked = 0;
         // Start the NPC Selection scene
-        ToggleNPCSelectScene();
+        SceneController.sc.ToggleNPCSelectScene();
     }
 
     public void EndCycle() 
     {
-        UnloadDialogueScene(); // stop dialogue immediately.
-
-        if (currentCharacters.Count(c=>c.isActive) > minimumRemaining)
+        if (EnoughCharactersRemaining())
             StartCycle();
-        else 
+        else
         {
-            // TODO: Select culprit to end game
-            ToggleGameOverScene();
+            Debug.Log("Ending cycle: not enough characters remaining");
+            SceneController.sc.ToggleNPCSelectScene();
         }
     }
 
+    public void CheckEndCycle()
+    {
+        Debug.Log("Checking end Cycle");
+        if (!HasQuestionsLeft())
+        {
+            Debug.Log("No questions remaining");
+            EndCycle();
+        }
+    }
+    
     /// <summary>
     /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
     /// the victim that is removed from their list of questions and prints to to the debuglog
     /// </summary>
-    private void ChooseVictim()
+    private string ChooseVictim()
     {
         CharacterInstance culprit = GetCulprit();
         CharacterInstance victim = GetRandomVictimNoCulprit();
-
-        // Select a random trait and remove it from the list of available questions
-        List<string> randTraitCulprit = culprit.GetRandomTrait();
-        List<string> randTraitVictim = victim.GetRandomTrait();
 
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
@@ -202,113 +227,42 @@ public class GameManager : MonoBehaviour
         //TODO: wait until I have a dialogue box to put this in
         //Debug.Log(string.Join(", ", randTraitCulprit)); 
         //Debug.Log(string.Join(", ", randTraitVictim));
+        return victim.characterName;
     }
 
     /// <summary>
-    /// Sends the player to the appropriate scene depending on the ammount of NPCs they have talked to this cycle
+    /// Checks if the player can ask more questions this cycle.
     /// </summary>
-    /*private void TalkOrEnd()
-    {
-        if (HasQuestionsLeft()) // Placeholder value, not decided how many NPCs the player can talk to in one cycle
-        {
-            //SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
-            ToggleNPCSelectScene();
-        }
-        else
-        {
-            // End cycle.
-            // Remove 1 character
-            // Then, if there are less than X remaining (after the hint-sequence), choose culprit then end
-        }
-    }*/
-
+    /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        Debug.Log("Has questions left: " + (numTalked < numQuestions));
-        return numTalked < numQuestions;
+        Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
+        return numQuestionsAsked < numQuestions;
     }
-    
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
+    }
+
     /// <summary>
-    /// Counts how many characters have been talked to this cycle.
+    /// Closes the game.
     /// </summary>
-    /*private void CharactersTalkedTo()
-    {
-        numTalked = 0;
-        for (int i = 0; i < currentCharacters.Count; i++)
-        {
-            if (currentCharacters[i].isActive && !currentCharacters[i].TalkedTo)
-            {
-                numTalked++;
-            }
-        }
-    }*/
-
-    public void UnloadDialogueScene()
-    {
-        string sceneName = "DialogueScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            Debug.Log("Dialogue scene not loaded");
-        }
-    }
-    
-    public void ToggleCompanionHintScene()
-    {
-        string sceneName = "Companion Hint";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
-    public void ToggleNPCSelectScene()
-    {
-        string sceneName = "NPCSelectScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync((sceneName));
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
-    public void StartDialogue(CharacterInstance character)
-    {
-        ToggleNPCSelectScene();
-
-        dialogueRecipient = character;
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
-    }
-
-    public void StartDialogue(int id)
-    {
-        ToggleNPCSelectScene(); // NPC selected, so unload
-        
-        dialogueRecipient = currentCharacters[id];
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
-    }
-    
-    public void ToggleGameOverScene()
-    {
-        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameOverScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
-        }
-    }
     public void EndGame()
     {
         Debug.Log("End game.");
@@ -324,7 +278,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Retry story scene");
 
         // Unload all active scenes except the story scene
-        UnloadAdditiveScenes();
+        SceneController.sc.UnloadAdditiveScenes();
         // Reset these characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -333,7 +287,10 @@ public class GameManager : MonoBehaviour
             character.InitializeQuestions();
         }
         //Test_CharactersInGame();
-        StartCycle();
+        if (immediateVictim)
+            StartCycle();
+        else
+            FirstCycle();
     }
     
     /// <summary>
@@ -349,37 +306,27 @@ public class GameManager : MonoBehaviour
 
         //or
         // unload all scenes except story scene
-        UnloadAdditiveScenes();
+        SceneController.sc.UnloadAdditiveScenes();
         // reset game
         Start();
         
     }
-
-    private void UnloadAdditiveScenes()
+    
+    public void StartDialogue(CharacterInstance character)
     {
-        //Get the story scene
-        Scene storyScene = SceneManager.GetSceneByName("StoryScene");
+        SceneController.sc.ToggleNPCSelectScene();
 
-        // Unload all loaded scenes that are not the story scene
-        for (int i = 0; i < SceneManager.sceneCount; i++)
-        {
-            Scene loadedScene = SceneManager.GetSceneAt(i);
-            if (loadedScene != storyScene) SceneManager.UnloadSceneAsync(loadedScene.name);
-        }
+        dialogueRecipient = character;
+        dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
-    public void ToggleNotebookScene()
+    public void StartDialogue(int id)
     {
-        if (notebookOn)
-        {
-
-            SceneManager.UnloadSceneAsync("NotebookScene");
-            notebookOn = false;
-        }
-        else
-        {
-            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
-            notebookOn= true;
-        }
-    }
+        SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload
+        
+        dialogueRecipient = currentCharacters[id];
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }    
 }
