@@ -6,11 +6,30 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    public static SceneController sc;
-    private bool notebookOn = false;
+    public enum SceneName
+    {
+        NPCSelectScene,
+        DialogueScene,
+        GameOverScene,
+        GameWinScene,
+        Loading,
+        NotebookScene
+    }
 
-    // possibly a bad solution
-    public AsyncOperation DialogueSceneOp;
+    public enum TransitionType
+    {
+        Transition,
+        Additive,
+        Unload
+    }
+    
+    public static SceneController sc;
+    
+    //read from a file
+    private List<List<(int, TransitionType)>> sceneGraph;
+
+    //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
+    private Dictionary<string, int> sceneToID;
 
     public void Awake()
     {
@@ -29,6 +48,80 @@ public class SceneController : MonoBehaviour
             if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
         }
     }
+
+    //read the scene graph from the file and assign both vars described above
+    private void ReadSceneGraph()
+    {
+        //some file reading code
+    }
+
+    //transitions to a new scene
+    //conditions: current = true, means current is loaded. current = false, means current is unloaded
+    //pre conditions: current
+    //post conditions: current = !target_pre && target_post
+    private void Transitioning(string currentScene, string targetScene, TransitionType transitionType)
+    {
+        switch (transitionType)
+        {
+            case TransitionType.Additive:
+                SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
+                break;
+            
+            case TransitionType.Unload:
+                SceneManager.UnloadSceneAsync(currentScene);
+                break;
+            
+            case TransitionType.Transition:
+                SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
+                SceneManager.UnloadSceneAsync(currentScene);
+                break;
+        }
+    }
+    
+    //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
+    public void TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Action<string, string, TransitionType> loadCode)
+    {
+        string currentScene = from.ToString();
+        string targetScene = to.ToString();
+        
+        //some extra checks will be made about the validity of the variables and the file contents
+        //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
+        
+        //checks, does currentScene point to nextScene in the graph?
+        int currentSceneID = sceneToID[currentScene];
+        int targetSceneID = sceneToID[targetScene];
+        if (!sceneGraph[currentSceneID].Contains((targetSceneID, transitionType)))
+            //invalid transition
+            throw new Exception();
+        
+        //if it's an unload (the target scene is loaded), check if the target scene is the parent scene of this scene
+        //otherwise with unloading a scene, a scene can be selected in a such a way as to always allow an unload.
+        if (SceneManager.GetSceneByName(targetScene).isLoaded &&
+            SceneManager.GetSceneAt(SceneManager.sceneCount - 2).name != targetScene)
+            throw new Exception();
+        
+        loadCode(currentScene, targetScene, transitionType);
+    }
+
+    
+    //args is the data to transfer
+    public void TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => TransitionScene(from, to, transitionType, Transitioning);
+
+    
+    //the function to be called when loading the first cycle
+    public void StartScene(SceneName start)
+    {
+        ReadSceneGraph();
+
+        string currentScene = start.ToString();
+        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+    }
+    
+    #region obsolete
+    
+    // possibly a bad solution
+    public AsyncOperation DialogueSceneOp;
+    private bool notebookOn = false;
     
     public void ToggleCompanionHintScene()
     {
@@ -108,116 +201,113 @@ public class SceneController : MonoBehaviour
             notebookOn= true;
         }
     }
+    #endregion
 }
 
-public abstract class AbstractScene : MonoBehaviour
-{
-    //read from a file
-    private static List<List<int>> sceneGraph;
-
-    //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
-    private static Dictionary<string, int> sceneToID;
-
-    //the scene which loaded the current scene
-    private AbstractScene parentScene = null;
-    
-    
-    //an abstract method so the scene can receive variables, this can be left empty when override if a scene doesn't need variables
-    protected abstract void GetVariables(params object[] args);
-
-    //read the scene graph from the file and assign both vars described above
-    private void ReadSceneGraph()
-    {
-        //some file reading code
-    }
-
-    //transitions to a new scene
-    //conditions: current = true, means current is loaded. current = false, means current is unloaded
-    //pre conditions: current
-    //post conditions: current = !target_pre && target_post
-    private void Transitioning(string currentScene, string targetScene)
-    {
-        //target scene is loaded, meaning we want to unload the current scene
-        if (SceneManager.GetSceneByName(targetScene).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(currentScene);
-        }
-        else
-        {
-            SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
-        }
-    }
-    
-    //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
-    protected void TransitionScene<T1, T2>(Action<string, string> loadCode, params object[] args)
-        where T1 : AbstractScene
-        where T2 : AbstractScene
-    {
-        string currentScene = typeof(T1).Name;
-        string targetScene = typeof(T2).Name;
-        
-        //some extra checks will be made about the validity of the variables and the file contents
-        //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
-        
-        //checks, does currentScene point to nextScene in the graph?
-        int currentSceneID = sceneToID[currentScene];
-        int targetSceneID = sceneToID[targetScene];
-        if (!sceneGraph[currentSceneID].Contains(targetSceneID))
-            //invalid transition
-            throw new Exception();
-        
-        //if it's an unload (the target scene is loaded), check if the target scene is the parent scene of this scene
-        //otherwise with unloading a scene, a scene can be selected in a such a way as to always allow an unload.
-        if (SceneManager.GetSceneByName(targetScene).isLoaded &&
-            SceneManager.GetSceneAt(SceneManager.sceneCount - 2).name != targetScene)
-            throw new Exception();
-        
-        loadCode(currentScene, targetScene);
-        //assign variables to the target scene
-        FindObjectOfType<T2>().GetVariables(args);
-    }
-
-    
-    //args is the data to transfer
-    protected void TransitionScene<T1, T2>(params object[] args)
-        where T1 : AbstractScene
-        where T2 : AbstractScene
-        => TransitionScene<T1, T2>(Transitioning, args);
-
-    
-    //the function to be called when loading the first cycle
-    public void StartScene<T>(params object[] args) where T : AbstractScene
-    {
-        ReadSceneGraph();
-        
-        string currentScene = typeof(T).Name;
-        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
-        GetVariables(args);
-    }
-}
-
-//an example of a scene class below:
-public class DialogueScene : AbstractScene
-{
-    private string characterToTalkTo;
-    //this scene should get a variable about who to talk to
-    protected override void GetVariables(params object[] args)
-    {
-        //assign variables
-        characterToTalkTo = args[0].ToString();
-    }
-
-    //a method that loads a new scene with some variables, assuming CompanionHint is currently unloaded
-    private void SomeMethod1()
-    {
-        TransitionScene<DialogueScene, CompanionHint>(1, 2);
-    }
-}
-
-public class CompanionHint : AbstractScene
-{
-    protected override void GetVariables(params object[] args)
-    {
-        
-    }
-}
+// public abstract class AbstractScene : MonoBehaviour
+// {
+//     //read from a file
+//     private static List<List<int>> sceneGraph;
+//
+//     //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
+//     private static Dictionary<string, int> sceneToID;
+//     
+//     //an abstract method so the scene can receive variables, this can be left empty when override if a scene doesn't need variables
+//     protected abstract void GetVariables(params object[] args);
+//
+//     //read the scene graph from the file and assign both vars described above
+//     private void ReadSceneGraph()
+//     {
+//         //some file reading code
+//     }
+//
+//     //transitions to a new scene
+//     //conditions: current = true, means current is loaded. current = false, means current is unloaded
+//     //pre conditions: current
+//     //post conditions: current = !target_pre && target_post
+//     private void Transitioning(string currentScene, string targetScene)
+//     {
+//         //target scene is loaded, meaning we want to unload the current scene
+//         if (SceneManager.GetSceneByName(targetScene).isLoaded)
+//         {
+//             SceneManager.UnloadSceneAsync(currentScene);
+//         }
+//         else
+//         {
+//             SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
+//         }
+//     }
+//     
+//     //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
+//     protected void TransitionScene<T1, T2>(Action<string, string> loadCode, params object[] args)
+//         where T1 : AbstractScene
+//         where T2 : AbstractScene
+//     {
+//         string currentScene = typeof(T1).Name;
+//         string targetScene = typeof(T2).Name;
+//         
+//         //some extra checks will be made about the validity of the variables and the file contents
+//         //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
+//         
+//         //checks, does currentScene point to nextScene in the graph?
+//         int currentSceneID = sceneToID[currentScene];
+//         int targetSceneID = sceneToID[targetScene];
+//         if (!sceneGraph[currentSceneID].Contains(targetSceneID))
+//             //invalid transition
+//             throw new Exception();
+//         
+//         //if it's an unload (the target scene is loaded), check if the target scene is the parent scene of this scene
+//         //otherwise with unloading a scene, a scene can be selected in a such a way as to always allow an unload.
+//         if (SceneManager.GetSceneByName(targetScene).isLoaded &&
+//             SceneManager.GetSceneAt(SceneManager.sceneCount - 2).name != targetScene)
+//             throw new Exception();
+//         
+//         loadCode(currentScene, targetScene);
+//         //assign variables to the target scene
+//         FindObjectOfType<T2>().GetVariables(args);
+//     }
+//
+//     
+//     //args is the data to transfer
+//     protected void TransitionScene<T1, T2>(params object[] args)
+//         where T1 : AbstractScene
+//         where T2 : AbstractScene
+//         => TransitionScene<T1, T2>(Transitioning, args);
+//
+//     
+//     //the function to be called when loading the first cycle
+//     public void StartScene<T>(params object[] args) where T : AbstractScene
+//     {
+//         ReadSceneGraph();
+//         
+//         string currentScene = typeof(T).Name;
+//         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+//         GetVariables(args);
+//     }
+// }
+//
+// //an example of a scene class below:
+// public class DialogueScene : AbstractScene
+// {
+//     private string characterToTalkTo;
+//     //this scene should get a variable about who to talk to
+//     protected override void GetVariables(params object[] args)
+//     {
+//         //assign variables
+//         characterToTalkTo = args[0].ToString();
+//     }
+//
+//     //a method that loads a new scene with some variables, assuming CompanionHint is currently unloaded
+//     private void SomeMethod1()
+//     {
+//         TransitionScene<DialogueScene, CompanionHint>(1, 2);
+//     }
+// }
+//
+// public class CompanionHint : AbstractScene
+// {
+//     protected override void GetVariables(params object[] args)
+//     {
+//         
+//     }
+// }
