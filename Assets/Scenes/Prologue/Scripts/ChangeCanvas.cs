@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; 
 
-public class CanvasSwitcher : MonoBehaviour
+public class ChangeCanvas : MonoBehaviour
 {
     // Array that stores all the canvases that are part of the prologue. 
     public GameObject[] Canvases;
@@ -13,7 +13,7 @@ public class CanvasSwitcher : MonoBehaviour
     /// off, except for the canvas at location index. 
     /// </summary>
     /// <param name="index"></param>
-    public void SwitchCanvas(int index)
+    public void Change(int index)
     {
         foreach (GameObject canvas in Canvases)
         {
