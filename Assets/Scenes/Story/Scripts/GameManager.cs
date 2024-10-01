@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
-    [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
+
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining;
     [SerializeField] private bool immediateVictim;
@@ -259,6 +259,11 @@ public class GameManager : MonoBehaviour
             _ => "",
         };
     }
+
+    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
+
+    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
+        numQuestionsAsked = numQuestions - questionsRemaining;
 
     /// <summary>
     /// Closes the game.
