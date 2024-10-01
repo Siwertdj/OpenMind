@@ -1,8 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
+using File = System.IO.File;
 
 public class SceneController : MonoBehaviour
 {
@@ -31,6 +35,9 @@ public class SceneController : MonoBehaviour
     //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
     private Dictionary<string, int> sceneToID;
 
+    private const string TransitionGraphLocation = "Transition Graph/Transition Graph.txt";
+    private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../") + TransitionGraphLocation;
+
     public void Awake()
     {
         sc = this;
@@ -52,7 +59,41 @@ public class SceneController : MonoBehaviour
     //read the scene graph from the file and assign both vars described above
     private void ReadSceneGraph()
     {
-        //some file reading code
+        //first check if the file exists
+        if (!File.Exists(GetTransitionGraphFilePath()))
+        {
+            Debug.LogError($"Couldn't read the scene graph, the file on filepath {GetTransitionGraphFilePath()} was not found.");
+            return;
+        }
+
+        string[] fileGraphContentLines = File.ReadAllLines(GetTransitionGraphFilePath());
+        sceneGraph = new List<List<(int, TransitionType)>>(fileGraphContentLines.Length);
+        sceneToID = new Dictionary<string, int>();
+        
+        //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWonScene(T)
+        const string arrowSeparator = "-->";
+        const string sceneSeparator = ", ";
+        foreach(string fileGraphContentLine in fileGraphContentLines)
+            sceneToID.Add(fileGraphContentLine.Split(arrowSeparator)[0], sceneToID.Count);
+        
+        for (int i = 0; i < fileGraphContentLines.Length; i++)
+        {
+            string[] fromTo = fileGraphContentLines[i].Split(arrowSeparator);
+            string[] tos = fromTo[1].Split(sceneSeparator);
+            
+            sceneGraph.Add(new List<(int, TransitionType)>());
+
+            foreach (string to in tos)
+            {
+                string toScene = to.Substring(0, to.Length - 3);
+                foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
+                    if (enumValue.ToString()[0] == to[^2])
+                    {
+                        sceneGraph[i].Add((sceneToID[toScene], enumValue));
+                        break;
+                    }
+            }
+        }
     }
 
     //transitions to a new scene

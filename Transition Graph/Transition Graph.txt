@@ -1,0 +1,6 @@
+Loading --> NPCSelectScene(A)
+NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWonScene(T)
+DialogueScene --> NPCSelectScene(T), NotebookScene(A)
+NotebookScene --> NPCSelectScene(U), DialogueScene(U)
+GameOverScene --> NPCSelectScene(T)
+GameWonScene --> NPCSelectScene(T)
