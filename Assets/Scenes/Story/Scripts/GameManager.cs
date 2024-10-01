@@ -329,9 +329,4 @@ public class GameManager : MonoBehaviour
         dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
-
-    public int AddOne(int x)
-    {
-        return x + 1;
-    }
 }
