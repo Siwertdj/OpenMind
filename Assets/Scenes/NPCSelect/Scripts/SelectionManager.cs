@@ -75,6 +75,7 @@ public class SelectionManager : MonoBehaviour
     /// Event for when a character is selected.
     /// </summary>
     /// <param name="option"> The character space on which has been clicked on. </param>
+    /// TODO: Add an intermediate choice for the culprit. (if everyone agrees with the storyline epilogue)
     public void ButtonClicked(GameObject option)
     {
         // Get the SelectOption object from the character space.
@@ -90,19 +91,18 @@ public class SelectionManager : MonoBehaviour
             else
             {
                 // Get the culprit from GameManager and compare it with the clicked character.
-                // TODO: this behaviour will change once epilogue gets added.
-                // If the correct character is clicked, start the GameWin scene, else start the GameOver scene.
                 CharacterInstance culprit = GameManager.gm.GetCulprit();
+                // Set the FinalChosenCulprit variable to the chosen character in GameManager.
+                GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
                 if (culprit.characterName == selectOption.character.characterName)
-                {
-                    SceneController.sc.ToggleNPCSelectScene();
-                    SceneController.sc.ToggleGameWinScene();
-                }
+                    GameManager.gm.hasWon = true;
                 else
-                {
-                    SceneController.sc.ToggleNPCSelectScene();
-                    SceneController.sc.ToggleGameOverScene();
-                }
+                    GameManager.gm.hasWon = false;
+                
+                // Load the epilogue scene.
+                SceneController.sc.ToggleNPCSelectScene();
+                SceneController.sc.ToggleEpilogueScene();
             }
         }
     }

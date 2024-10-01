@@ -108,4 +108,16 @@ public class SceneController : MonoBehaviour
             notebookOn= true;
         }
     }
+
+    public void ToggleEpilogueScene()
+    {
+        if (SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+        {
+            SceneManager.UnloadSceneAsync("EpilogueScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("EpilogueScene", LoadSceneMode.Additive);
+        }
+    }
 }

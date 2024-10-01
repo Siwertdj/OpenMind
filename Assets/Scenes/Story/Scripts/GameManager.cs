@@ -30,6 +30,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [NonSerialized] public int numQuestionsAsked;
 
+    // Set this bool to true if the correct character has been chosen at the end, else false.
+    public bool hasWon;
+
+    // Save the character that has been chosen during the intermediate choice moment.
+    public CharacterInstance IntermediateChosenCuplrit;
+    
+    // Save the character that has been chosen at the end of the game.
+    public CharacterInstance FinalChosenCuplrit;
+
     /// <summary>
     /// Amount of times the player can ask a question
     /// </summary>
