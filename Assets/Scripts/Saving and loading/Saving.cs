@@ -17,7 +17,7 @@ public class Saving : MonoBehaviour
     /// </summary>
     public void Save()
     {
-        GameManager gameManager = FindObjectOfType<GameManager>();
+        GameManager gameManager = GameManager.gm;
         //check if the gamemanger is loaded
         if (gameManager is null)    
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
@@ -40,15 +40,15 @@ public class Saving : MonoBehaviour
         string noteBookData =
             FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook", "Saving");
         
-        (int, List<Question>)[] remaingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
+        (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
         
         SaveData saveData = new SaveData
         {
-            activeCharacters = active.Select(c =>c.id).ToArray(),
-            inactiveCharacters = inactive.Select(c =>c.id).ToArray(),
+            activeCharacters = active.Select(c => c.id).ToArray(),
+            inactiveCharacters = inactive.Select(c => c.id).ToArray(),
             culprit = gameManager.GetCulprit().id,
             questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
-            remainingQuestions = remaingQuestions,
+            remainingQuestions = remainingQuestions,
             noteBookData = noteBookData
         };
 

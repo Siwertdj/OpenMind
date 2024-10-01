@@ -40,7 +40,7 @@ public static class FilePathConstants
     /// <summary>
     /// Gets the location to the notebook file.
     /// </summary>
-    public static string GetNoteBookLocation() => Application.dataPath + notebookFilePath;
+    public static string GetNoteBookLocation() => Application.dataPath + "/Scenes/" + notebookFilePath;
     
     /// <summary>
     /// Gets the location to the directory when the save file is stored.
