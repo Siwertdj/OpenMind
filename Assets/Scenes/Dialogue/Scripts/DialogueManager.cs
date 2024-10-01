@@ -32,7 +32,7 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-        OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
+        OnEndDialogue.AddListener(GameManager.gm.EndDialogue);
 
         avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
         currentObject = GameManager.gm.dialogueObject;
@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
 
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-            buttonText.text = GameManager.gm.GetPromptText(response.question);
+            buttonText.text = GetPromptText(response.question);
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
@@ -150,7 +150,7 @@ public class DialogueManager : MonoBehaviour
     {
         DestroyButtons();
         // TODO: Combineer met het unloaden van Dialoguescene
-        currentObject = new TerminateDialogueObject(SceneController.sc.ToggleNPCSelectScene);
+        currentObject = new TerminateDialogueObject();
         currentObject.Execute();
     }
 
@@ -194,6 +194,27 @@ public class DialogueManager : MonoBehaviour
         var buttons = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
+    }
+    
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
     }
 }
 

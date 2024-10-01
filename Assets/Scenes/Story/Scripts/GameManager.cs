@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -30,12 +29,12 @@ public class GameManager : MonoBehaviour
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     [NonSerialized] public int numQuestionsAsked;
 
-    /// Amount of times the player can ask a question
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
 
     
+    // Called when this script instance is being loaded
     private void Awake()
     {
         Load();
@@ -63,11 +62,15 @@ public class GameManager : MonoBehaviour
         gm = this;
         
         // Make parentobject persistent, so that all objects in the toolbox remain persistent.
-        // This includes gamemanager, audiomanager, main camera and eventsystem.
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
-    // IF we want to start the first cycle without casualties, we use this instead.
+    // This region contains methods that start or end the cycles.
+    #region Cycles
+    /// <summary>
+    /// Works like StartCycle, but can optionally skip the immediate victim.
+    /// This method starts the game with a special SceneTransition-invocation for the first scene of the game.
+    /// </summary>
     private void FirstCycle()
     {
         if (immediateVictim)
@@ -99,11 +102,16 @@ public class GameManager : MonoBehaviour
         // Start the NPC Selection scene
         //SceneController.sc.ToggleNPCSelectScene();
         sc.TransitionScene(
-            SceneController.SceneName.Loading, 
+            SceneController.SceneName.DialogueScene, 
             SceneController.SceneName.NPCSelectScene, 
-            SceneController.TransitionType.Additive);
+            SceneController.TransitionType.Transition);
     }
 
+    /// <summary>
+    /// Ends the cycle when all questions have been asked.
+    /// If we have too few characters remaining, we must select the culprit,
+    /// otherwise we start a new cycle.
+    /// </summary>
     public void EndCycle() 
     {
         if (EnoughCharactersRemaining())
@@ -111,40 +119,16 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Select the Culprit");
-            SceneController.sc.ToggleNPCSelectScene();
-            //sc.TransitionScene();
+            sc.TransitionScene(
+                SceneController.SceneName.DialogueScene, 
+                SceneController.SceneName.NPCSelectScene, 
+                SceneController.TransitionType.Transition);
         }
     }
-
-    public void CheckEndCycle()
-    {
-        Debug.Log("Checking end Cycle");
-        if (!HasQuestionsLeft())
-        {
-            Debug.Log("No questions remaining");
-            EndCycle();
-        }
-    }
+    #endregion
     
+    #region InstantiateGameOrCycles
     /// <summary>
-    /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
-    /// the victim that is removed from their list of questions and prints to to the debuglog
-    /// </summary>
-    private string ChooseVictim()
-    {
-        CharacterInstance culprit = GetCulprit();
-        CharacterInstance victim = GetRandomVictimNoCulprit();
-
-        // Victim put on inactive so we cant ask them questions
-        victim.isActive = false;
-        
-        //TODO: wait until I have a dialogue box to put this in
-        //Debug.Log(string.Join(", ", randTraitCulprit)); 
-        //Debug.Log(string.Join(", ", randTraitVictim));
-        return victim.characterName;
-    }
-    
-        /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
     /// Also makes sure they are all set to 'Active', and selects a random culprit.
     /// </summary>
@@ -196,18 +180,30 @@ public class GameManager : MonoBehaviour
         //Randomly select a culprit
         currentCharacters[random.Next(0, numberOfCharacters)].isCulprit = true;
     }
+    
+    /// <summary>
+    /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
+    /// the victim that is removed from their list of questions and prints to to the debuglog
+    /// </summary>
+    private string ChooseVictim()
+    {
+        CharacterInstance culprit = GetCulprit();
+        CharacterInstance victim = GetRandomVictimNoCulprit();
 
+        // Victim put on inactive so we cant ask them questions
+        victim.isActive = false;
+        
+        //TODO: wait until I have a dialogue box to put this in
+        //Debug.Log(string.Join(", ", randTraitCulprit)); 
+        //Debug.Log(string.Join(", ", randTraitVictim));
+        return victim.characterName;
+    }
+    
     /// <summary>
     /// Returns the culprit, used to give hints for the companion
     /// Assumes a culprit exists
     /// </summary>
     public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
-
-    public bool EnoughCharactersRemaining()
-    {
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
-        return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
-    }
 
     /// <summary>
     /// Returns a random (non-culprit and active) character, used to give hints for the companion
@@ -219,56 +215,10 @@ public class GameManager : MonoBehaviour
         return possibleVictims[random.Next(possibleVictims.Count- 1)];
     }
 
-    /// <summary>
-    /// Prints the name of all characters in the current game to the console, for debugging purposes.
-    /// </summary>
-    private void Test_CharactersInGame()
-    {
-        string output = "";
-        for (int i = 0; i < currentCharacters.Count; i++)
-        {
-            // If its the second last, surfix is "and", if its the last, there is no surfix. If its any other, its ", "
-            output += (currentCharacters[i].characterName + (i + 1 == currentCharacters.Count
-                ? "."
-                : (i + 2 == currentCharacters.Count ? " and " : ", ")));
-        }
-        Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
-        
-        foreach (var c in currentCharacters.Where(c => c.isCulprit))
-            Debug.Log(c.characterName + " is the culprit!");
-    }
-
-
-    /// <summary>
-    /// Checks if the player can ask more questions this cycle.
-    /// </summary>
-    /// <returns>True if player can ask more questions, otherwise false.</returns>
-    public bool HasQuestionsLeft()
-    {
-        //Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
-        return numQuestionsAsked < numQuestions;
-    }
-    public string GetPromptText(Question questionType)
-    {
-        return questionType switch
-        {
-            Question.Name => "What is your name?",
-            Question.Age => "How old are you?",
-            Question.Wellbeing => "How are you doing?",
-            Question.Political => "What are your political thoughts?",
-            Question.Personality => "Can you describe what your personality is like?",
-            Question.Hobby => "What are some of your hobbies?",
-            Question.CulturalBackground => "What is your cultural background?",
-            Question.Education => "What is your education level?",
-            Question.CoreValues => "What core values are the most important to you?",
-            Question.ImportantPeople => "Who are the most important people in your life?",
-            Question.PositiveTrait => "What do you think is your best trait?",
-            Question.NegativeTrait => "What is a bad trait you may have?",
-            Question.OddTrait => "Do you have any odd traits?",
-            _ => "",
-        };
-    }
-
+    #endregion
+    
+    // This region contains methods that directly change the Game State.
+    #region ChangeGameState
     /// <summary>
     /// Closes the game.
     /// </summary>
@@ -320,20 +270,62 @@ public class GameManager : MonoBehaviour
         Start();
         
     }
-
+    
+    /// <summary>
+    /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
+    /// This toggles-off the NPCSelectScene,
+    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
+    /// Then, it loads the DialogueScene.
+    /// </summary>
+    /// <param name="character"></param>
     public void StartDialogue(CharacterInstance character)
     {
         dialogueRecipient = character;
         dialogueObject = new SpeakingObject(character.GetGreeting());
         dialogueObject.Responses.Add(new QuestionObject());
-        SceneController.sc.TransitionScene(
+        sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene, 
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
     }
+    
+    
+    /// <summary>
+    /// Called by DialogueManager when dialogue is ended, by execution of a TerminateDialogueObject.
+    /// Checks if questions are remaining:
+    /// .. if no, end cycle.
+    /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
+    /// </summary>
+    /// TODO: Check naming convention for events and listeners, if this is right
+    public void EndDialogue()
+    {
+        //Debug.Log("Checking end Cycle");
+        if (!HasQuestionsLeft())
+        {
+            // No questions left, so we end the cycle 
+            //Debug.Log("No questions remaining");
+            EndCycle();
+        }
+        else
+        {
+            // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
+            sc.TransitionScene(
+                SceneController.SceneName.DialogueScene, 
+                SceneController.SceneName.NPCSelectScene, 
+                SceneController.TransitionType.Transition);
+        }
+    }
 
     
     // TODO: Use this instead (see selectionmanager)
+    /// <summary>
+    /// Can be called to start Dialogue with a specific character, taking an ID(int) of a CharacterInstance as
+    /// parameter.
+    /// This toggles-off the NPCSelectScene,
+    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
+    /// Then, it loads the DialogueScene.
+    /// </summary>
+    /// <param name="character"></param>
     public void StartDialogue(int id)
     {
         CharacterInstance character = currentCharacters[id];
@@ -346,4 +338,55 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
     }    
+    #endregion
+
+    // This region contains methods that check certain properties that affect the Game State.
+    #region CheckProperties
+    /// <summary>
+    /// Checks if the number of characters
+    /// ..in the currently active game (selected in the 'currentCharacters'-list)
+    /// ..that are also 'active' (the isActive-bool of these CharacterInstances)
+    /// is more than the gamemanager variable 'numberOfActiveCharacters', which is the minimum amount of characters
+    /// that should be remaining until we transition into selecting a culprit.
+    /// </summary>
+    /// <returns></returns>
+    public bool EnoughCharactersRemaining()
+    {
+        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
+    }
+    
+    
+    /// <summary>
+    /// Checks if the player can ask more questions this cycle.
+    /// </summary>
+    /// <returns>True if player can ask more questions, otherwise false.</returns>
+    public bool HasQuestionsLeft()
+    {
+        //Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
+        return numQuestionsAsked < numQuestions;
+    }
+    #endregion
+
+    // This region contains methods necessary purely for debugging-purposes.
+    #region DebuggingMethods
+    /// <summary>
+    /// Prints the name of all characters in the current game to the console, for debugging purposes.
+    /// </summary>
+    private void Test_CharactersInGame()
+    {
+        string output = "";
+        for (int i = 0; i < currentCharacters.Count; i++)
+        {
+            // If its the second last, surfix is "and", if its the last, there is no surfix. If its any other, its ", "
+            output += (currentCharacters[i].characterName + (i + 1 == currentCharacters.Count
+                ? "."
+                : (i + 2 == currentCharacters.Count ? " and " : ", ")));
+        }
+        Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
+        
+        foreach (var c in currentCharacters.Where(c => c.isCulprit))
+            Debug.Log(c.characterName + " is the culprit!");
+    }
+    #endregion
 }
