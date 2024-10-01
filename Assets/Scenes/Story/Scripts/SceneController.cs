@@ -135,12 +135,6 @@ public class SceneController : MonoBehaviour
             //invalid transition
             throw new Exception();
         
-        //if it's an unload (the target scene is loaded), check if the target scene is the parent scene of this scene
-        //otherwise with unloading a scene, a scene can be selected in a such a way as to always allow an unload.
-        if (SceneManager.GetSceneByName(targetScene).isLoaded &&
-            SceneManager.GetSceneAt(SceneManager.sceneCount - 2).name != targetScene)
-            throw new Exception();
-        
         loadCode(currentScene, targetScene, transitionType);
     }
 
