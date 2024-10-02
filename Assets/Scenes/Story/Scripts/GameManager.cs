@@ -391,7 +391,7 @@ public class GameManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public void StartEpilogueDialogue(CharacterInstance character)
     {
-        SceneController.sc.ToggleNPCSelectScene();
+        SceneController.sc.ToggleEpilogueScene();
 
         // Assign the dialogue needed for the conversation in the epilogue.
         if (hasWon)
@@ -405,12 +405,6 @@ public class GameManager : MonoBehaviour
             speakingObjectText = remainingDialogueScenario[0];
         // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
         remainingDialogueScenario.RemoveAt(0);
-
-        int i = 1;
-        foreach (string s in speakingObjectText)
-        {
-            Debug.Log(i + " " + s);
-        }
         
         // Create a SpeakingObject with the given List<string>
         dialogueObject = new SpeakingObject(speakingObjectText);

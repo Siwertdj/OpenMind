@@ -44,13 +44,16 @@ public class CharacterInstance
     /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
     public List<List<string>> EpilogueWinScenario()
     {
+        // TODO: change the 6th sentence based on if their intermediate and final choice are different.
         List<string> speakingText1 = new List<string>()
         {
             "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
             "I was indeed the one who kept sending u messages",
             "and in fact, I knew that you did not know who",
             "was sending the messages. I also got hold of",
-            "the results of the intermediate test."
+            "the results of the intermediate test. You managed",
+            "to guess correctly, and so i wanted to ask you the following:", // this one is the 6th sentence
+            "Why did u change ur choice compared to the intermediate decision?"
         };
         List<string> speakingText2 = new List<string>(){ "worst" };
         List<string> speakingText3 = new List<string>(){ "ham" };
