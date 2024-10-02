@@ -15,7 +15,7 @@ public class NotebookManager : MonoBehaviour
     private GameManager gameManager;
     public GameObject nameButtons;
     private List<CharacterInstance> characters;
-    private Dictionary<Button, CharacterInstance> ButChar = new();
+    private Dictionary<Button, CharacterInstance> ButtonToCharacter = new();
 
     // Start is called before the first frame update
     void Start()
@@ -26,28 +26,75 @@ public class NotebookManager : MonoBehaviour
         Debug.Log("Fetched notes: " + fetchedNotes);
         inputField.GetComponent<TMP_InputField>().text = fetchedNotes;  // Put said notes into the inputfield
         
-        // close characternotes
+        // close character notes
         characterNotes.SetActive(false);
-        gameManager = FindAnyObjectByType<GameManager>();
         
         // get all buttons
         List<Button> buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
+        
         // get characters
+        gameManager = FindAnyObjectByType<GameManager>();
         characters = gameManager.currentCharacters;
-        ButChar = buttons.Zip(characters, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
         
-        // assign character names to buttons
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = characters[i].characterName;
-        //}
-        
-        foreach (Button b in ButChar.Keys)
+        // Combine buttons and characters
+        ButtonToCharacter = buttons.Zip(characters, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
+
+        // Assign character names to the buttons
+        foreach (Button b in ButtonToCharacter.Keys)
         {
-            b.GetComponentInChildren<TextMeshProUGUI>().text = ButChar[b].characterName;
+            b.GetComponentInChildren<TextMeshProUGUI>().text = ButtonToCharacter[b].characterName;
         }
     }
+    
+    public void CharacterTab(Button thisButton)
+    {
+        // Deactivate the personal notes tab
+        inputField.SetActive(false);
+        // Activate character tab
+        characterNotes.SetActive(true);
+        
+        // Get the character
+        CharacterInstance currentCharacter = ButtonToCharacter[thisButton];
+        
+        // Get the string to display in the notebook
+        string answerNotes;
+        
+        if (currentCharacter.AnsweredQuestions.Count > 0)
+        {
+            answerNotes = GetCollectedInfo(currentCharacter);
+        }
+        else
+        {
+            answerNotes = "You have not asked " + currentCharacter.characterName + " any questions.";
+        }
+        // Write the notes to the notebook tab
+        characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = answerNotes;
+    }
 
+    private string GetCollectedInfo(CharacterInstance character)
+    {
+        string output = "";
+
+        foreach (Question q in character.AnsweredQuestions)
+        {
+            output += q + "\n";
+            foreach (string s in character.Answers[q])
+            {
+                output += s + " ";
+            }
+            output += "\n \n";
+        }
+        return output;
+    }
+
+    public void OpenPersonalNotes()
+    {
+        // activate input thing
+        inputField.SetActive(true);
+        //deactivate character thing
+        characterNotes.SetActive(false);
+    }
+    
     public void SaveNotes()
     {
         Debug.Log("Saving...");
@@ -59,31 +106,5 @@ public class NotebookManager : MonoBehaviour
         }
 
         Debug.Log("Saved notes: " + savedNotes);
-    }
-
-    public void CharacterTab(Button thisButton)
-    {
-        // deactivate the other text
-        inputField.SetActive(false);
-        //activate character thing
-        characterNotes.SetActive(true);
-
-        string answerNotes = "Your notes on " + ButChar[thisButton].characterName + ".\n";
-        answerNotes += GetQuestions(ButChar[thisButton]);
-        
-        characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = answerNotes;
-    }
-
-    private string GetQuestions(CharacterInstance character)
-    {
-        return "";
-    }
-
-    public void OpenPersonalNotes()
-    {
-        // activate input thing
-        inputField.SetActive(true);
-        //deactivate character thing
-        characterNotes.SetActive(false);
     }
 }

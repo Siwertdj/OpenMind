@@ -9,9 +9,9 @@ using UnityEngine;
 public class ResponseObject : DialogueObject
 {
     public Question question;
-    public List<string> dialogue;
+    private List<string> dialogue;
 
-    private List<DialogueObject> _responses = new();
+    public List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
     {
         get { return _responses; }
@@ -44,6 +44,9 @@ public class ResponseObject : DialogueObject
 
         CharacterInstance character = GameManager.gm.dialogueRecipient;
         character.RemainingQuestions.Remove(question);
+        
+        // Write answers to notebook
+        character.AnsweredQuestions.Add(question);
 
         // Return answer to the question
         return character.Answers[question];

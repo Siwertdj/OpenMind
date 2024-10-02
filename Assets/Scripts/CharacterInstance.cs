@@ -9,7 +9,8 @@ public class CharacterInstance
 
     public Dictionary<Question, List<string>> Answers = new();
     public List<Question> RemainingQuestions = new();
-
+    public List<Question> AnsweredQuestions = new();
+    
     public string characterName;
     public int id;
     public Sprite avatar;
