@@ -77,7 +77,7 @@ public class CanvasManager : MonoBehaviour
                     buttonText.text = "Show again";
                     break;
                 case 6:
-                    PrologueTextRectTransform.sizeDelta = new Vector2(PrologueTextRectTransform.sizeDelta.x, 70f);
+                    PrologueTextRectTransform.sizeDelta = new Vector2(PrologueTextRectTransform.sizeDelta.x, 900f);
                     PrologueText.text =
                         "By adding a grid of colored lines, your brain makes you believe the image is actually in color.";
                     buttonText.text = "Next";
