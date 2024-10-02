@@ -75,8 +75,8 @@ public class TerminateDialogueObject : DialogueObject
     public override void Execute()
     {
         Debug.Log("Terminating dialogue");
+        // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect
         DialogueManager.dm.OnEndDialogue.Invoke();
-        SceneController.sc.ToggleDialogueScene();
 
         // Invoke post function if given
         post?.Invoke();
