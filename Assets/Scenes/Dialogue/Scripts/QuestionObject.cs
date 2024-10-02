@@ -48,7 +48,7 @@ public class QuestionObject : DialogueObject
         // Generate random list of questions
         if (GameManager.gm.HasQuestionsLeft())
         {
-            List<Question> possibleQuestions = new(DialogueManager.dm.dialogueRecipient.RemainingQuestions);
+            List<Question> possibleQuestions = new(DialogueManager.dm.currentRecipient.RemainingQuestions);
             for (int i = 0; i < questionsOnScreen; i++)
             {
                 if (possibleQuestions.Count <= 0)

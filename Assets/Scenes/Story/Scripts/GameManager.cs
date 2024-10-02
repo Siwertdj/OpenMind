@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
-    [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
+
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining;
     [SerializeField] private bool immediateVictim;
@@ -28,12 +28,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] backgroundPrefabs;
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    [NonSerialized] public int numQuestionsAsked;
+    [NonSerialized] private int numQuestionsAsked;
 
+    // Game Events
+    public GameEvent onDialogueStart;
+    
+    // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
-
     
     // Called when this script instance is being loaded
     private void Awake()
@@ -101,7 +104,6 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the NPC Selection scene
-        //SceneController.sc.ToggleNPCSelectScene();
         sc.TransitionScene(
             SceneController.SceneName.DialogueScene, 
             SceneController.SceneName.NPCSelectScene, 
@@ -115,11 +117,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndCycle() 
     {
-        if (EnoughCharactersRemaining())
+        // Start Cycle as normal
+        if (EnoughCharactersRemaining())    
             StartCycle();
+        // Select the Culprit
         else
         {
-            Debug.Log("Select the Culprit");
             sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
@@ -156,18 +159,12 @@ public class GameManager : MonoBehaviour
                 for (int j = 0; j< visitedIndices.Length; j++)
                     arrayString += (visitedIndices[j] + ", ");
                 
-                //Debug.Log("Trying index: " + index + " over index-array: [" + arrayString + "]");
                 if (!visitedIndices.Contains(index))
                 {
-                    //Debug.Log("Unique index found!");
                     var toAdd = characters[index - 1]; // correct the offset
                     currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
                     foundUniqueInt = true; // change the boolean-value to exit the while-loop
-                }
-                else
-                {
-                    //Debug.Log("Index not unique");
                 }
             }
         }
@@ -246,7 +243,6 @@ public class GameManager : MonoBehaviour
             character.isActive = true;
             character.InitializeQuestions();
         }
-        //Test_CharactersInGame();
         if (immediateVictim)
             StartCycle();
         else
@@ -258,25 +254,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RestartStoryScene()
     {
-        Debug.Log("Restart story scene");
-        //Remove the gamemanager to start a new game
-        //Destroy(gameObject);
-        // Load the story scene
-        //SceneManager.LoadScene("StoryScene");
-
-        //or
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
         Start();        
     }
-    #endregion
-
-    #region Dialogue
-    /// <summary>
-    /// Is invoked when the DialogueManager is instantiated
-    /// </summary>
-    public UnityEvent OnDialogueLoaded;
 
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
@@ -285,7 +267,8 @@ public class GameManager : MonoBehaviour
     /// Then, it loads the DialogueScene.
     /// </summary>
     /// <param name="character"></param>
-    public void StartDialogue(CharacterInstance character)
+    ///  TODO: Should use the id of a character instead of the CharacterInstance.
+    public async void StartDialogue(CharacterInstance character)
     {
         GameObject[] background = GetRandomBackground(character);
 
@@ -295,13 +278,23 @@ public class GameManager : MonoBehaviour
         
         dialogueObject.Responses.Add(new QuestionObject(background));
 
-        sc.TransitionScene(
+        // Transition to dialogue scene and await the loading operation
+        await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
 
-        OnDialogueLoaded.AddListener(() => ExecuteDialogue(dialogueObject, character));
-    }
+        // Until DialogueManager gets its information, it shouldnt do anything there.
+        var dialogueRecipient = character;
+        var dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
+
+        // The gameevent here should pass the information to Dialoguemanager
+        // ..at which point dialoguemanager will start.
+        Debug.Log("Raising event to pass data to DialogueManager.");
+        onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
+    }    
+    
 
     private void ExecuteDialogue(DialogueObject startingObject, CharacterInstance dialogueRecipient)
     {
@@ -336,11 +329,9 @@ public class GameManager : MonoBehaviour
     /// TODO: Check naming convention for events and listeners, if this is right
     public void EndDialogue()
     {
-        //Debug.Log("Checking end Cycle");
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
-            //Debug.Log("No questions remaining");
             EndCycle();
         }
         else
@@ -352,31 +343,6 @@ public class GameManager : MonoBehaviour
                 SceneController.TransitionType.Transition);
         }
     }
-
-    
-    // TODO: Use this instead (see selectionmanager)
-    /// <summary>
-    /// Can be called to start Dialogue with a specific character, taking an ID(int) of a CharacterInstance as
-    /// parameter.
-    /// This toggles-off the NPCSelectScene,
-    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
-    /// Then, it loads the DialogueScene.
-    /// </summary>
-    /// <param name="character"></param>
-    public void StartDialogue(int characterId, GameObject[] background)
-    {
-        CharacterInstance character = currentCharacters[characterId];
-        var dialogueObject = new SpeakingObject(character.GetGreeting(), background);
-        dialogueObject.Responses.Add(new QuestionObject(background));
-
-        // Transition the scene
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
-
-        OnDialogueLoaded.AddListener(() => ExecuteDialogue(dialogueObject, character));
-    }    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
@@ -394,7 +360,21 @@ public class GameManager : MonoBehaviour
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
         return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
     }
+
+    /// <summary>
+    /// Fetches the amount of questions remaining
+    /// TODO: MAKE THIS A GETTER
+    /// </summary>
+    /// <returns></returns>
+    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
     
+    /// <summary>
+    /// Assigns the amount of questions that are remaining, for purposed of loading a savefile.
+    /// TODO: MAKE THIS A SETTER
+    /// </summary>
+    /// <param name="questionsRemaining"></param>
+    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
+        numQuestionsAsked = numQuestions - questionsRemaining;
     
     /// <summary>
     /// Checks if the player can ask more questions this cycle.
@@ -402,7 +382,6 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        //Debug.Log("Has questions left: " + (numQuestionsAsked < numQuestions));
         return numQuestionsAsked < numQuestions;
     }
     #endregion

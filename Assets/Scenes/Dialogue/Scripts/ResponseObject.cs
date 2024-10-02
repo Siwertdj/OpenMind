@@ -31,7 +31,7 @@ public class ResponseObject : DialogueObject
 
         List<string> answer = GetQuestionResponse(question);
 
-        if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.dialogueRecipient.RemainingQuestions.Count > 0)
+        if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionObject(background));
         else
             Responses.Add(new TerminateDialogueObject());
@@ -42,9 +42,9 @@ public class ResponseObject : DialogueObject
     // Gets character's response to the given question
     private List<string> GetQuestionResponse(Question question)
     {
-        GameManager.gm.numQuestionsAsked += 1;
+        GameManager.gm.AssignAmountOfQuestionsRemaining(GameManager.gm.AmountOfQuestionsRemaining() - 1);
 
-        CharacterInstance character = DialogueManager.dm.dialogueRecipient;
+        CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
 
         // Return answer to the question
