@@ -27,9 +27,13 @@ public class DialogueManager : MonoBehaviour
     public DialogueObject currentObject;
     
     // Start is called before the first frame update
-    public void StartDialogue(Component sender, Tuple<CharacterInstance, DialogueObject> data)
+    public void StartDialogue(Component sender, params object[] data)
     {
-        (currentRecipient, currentObject) = data;
+        Debug.Log("StartDialogue called.");
+        Debug.Log($"Recipient's name is {((CharacterInstance)data[0]).characterName}");
+        Debug.Log($"Recipient's name is {((DialogueObject)data[1]).ToString()}");
+        currentRecipient = (CharacterInstance)data[0];
+        currentObject = (DialogueObject)data[1];
         dm = this;
 
         // Add event listener to check when dialogue is complete

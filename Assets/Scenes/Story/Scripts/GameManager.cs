@@ -290,6 +290,7 @@ public class GameManager : MonoBehaviour
     {
         // TODO: Pass to DialogueManager through event as soon as it is loaded
         // We load DialogueManager first through the scenetransition.
+        Debug.Log("Transitioning Scene to start Dialogue");
         sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
@@ -300,6 +301,7 @@ public class GameManager : MonoBehaviour
         dialogueObject.Responses.Add(new QuestionObject());
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
+        Debug.Log("Raising event to pass data to DialogueManager.");
         onDialogueStart.Raise(this, dialogueRecipient,dialogueObject);
     }
     

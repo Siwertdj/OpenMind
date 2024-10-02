@@ -11,6 +11,7 @@ public class GameEvent : ScriptableObject
 
    public void Raise(Component sender, params object[] data)
    {
+      Debug.Log("GameEvent raised");
       for (int i = 0; i < listeners.Count; i++)
       {
          listeners[i].OnEventRaised(sender, data);
@@ -25,7 +26,7 @@ public class GameEvent : ScriptableObject
          listeners.Add(listener);
    }
    
-   public void UnegisterListener(GameEventListener listener)
+   public void UnregisterListener(GameEventListener listener)
    {
       if (listeners.Contains(listener))
          listeners.Remove(listener);
