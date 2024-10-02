@@ -2388,6 +2388,7 @@ MonoBehaviour:
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0
+  onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
 --- !u!114 &1546507295
 MonoBehaviour:
   m_ObjectHideFlags: 0

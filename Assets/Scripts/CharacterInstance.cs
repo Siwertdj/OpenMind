@@ -28,7 +28,7 @@ public class CharacterInstance
         avatar = data.avatar;
         pitch = data.voicePitch;
 
-        Debug.Log($"Creating character {data.characterName}");
+        //Debug.Log($"Creating character {data.characterName}");
 
         InitializeQuestions();
     }
