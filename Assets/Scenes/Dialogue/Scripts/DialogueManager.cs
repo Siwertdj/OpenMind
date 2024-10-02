@@ -27,19 +27,19 @@ public class DialogueManager : MonoBehaviour
     public UnityEvent OnEndDialogue;
 
     public DialogueObject currentObject;
+    public CharacterInstance dialogueRecipient;
 
     // Start is called before the first frame update
     void Start()
     {
         dm = this;
 
+        // Tell the GameManager that the scene has finished loading
+        GameManager.gm.OnDialogueLoaded.Invoke();
+
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
         OnEndDialogue.AddListener(GameManager.gm.EndDialogue);
-
-        avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
-        currentObject = GameManager.gm.dialogueObject;
-        currentObject.Execute();
     }
 
     // Update is called once per frame
@@ -80,11 +80,11 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (GameManager.gm.dialogueObject != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
+        if (currentObject != null)
+            dialogueField.GetComponentInChildren<TextField>().SetText(dialogueRecipient.characterName);
 
         // Animator write dialogue to the screen.
-        animator.WriteDialogue(dialogue, pitch);
+        animator.WriteDialogue(dialogue, dialogueRecipient.pitch);
     }
 
     /// <summary>

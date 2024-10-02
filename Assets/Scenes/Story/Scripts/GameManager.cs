@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -20,11 +21,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool immediateVictim;
     
     // The current "active" characters, any characters that became inactive should be removed from this list.
-    public List<CharacterInstance> currentCharacters; 
-    // Target of the current dialogue
-    // TODO: Deze hieruit en naar dialoguemanager
-    public CharacterInstance dialogueRecipient;
-    public DialogueObject dialogueObject;
+    public List<CharacterInstance> currentCharacters;
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab;
@@ -271,10 +268,17 @@ public class GameManager : MonoBehaviour
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
-        Start();
-        
+        Start();        
     }
+    #endregion
 
+    #region Dialogue
+    /// <summary>
+    /// Is invoked when the DialogueManager is instantiated
+    /// </summary>
+    public UnityEvent OnDialogueLoaded;
+
+    /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
     /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
@@ -283,10 +287,9 @@ public class GameManager : MonoBehaviour
     /// <param name="character"></param>
     public void StartDialogue(CharacterInstance character)
     {
-        dialogueRecipient = character;
         GameObject[] background = GetRandomBackground(character);
 
-        dialogueObject = new SpeakingObject(
+        var dialogueObject = new SpeakingObject(
             character.GetGreeting(),
             background);
         
@@ -296,6 +299,18 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
+
+        OnDialogueLoaded.AddListener(() => ExecuteDialogue(dialogueObject, character));
+    }
+
+    private void ExecuteDialogue(DialogueObject startingObject, CharacterInstance dialogueRecipient)
+    {
+        DialogueManager.dm.currentObject = startingObject;
+        DialogueManager.dm.dialogueRecipient = dialogueRecipient;
+        DialogueManager.dm.currentObject.Execute();
+
+        // NOTE: This might not work
+        OnDialogueLoaded.RemoveListener(() => ExecuteDialogue(startingObject, dialogueRecipient));
     }
 
     private GameObject[] GetRandomBackground(CharacterInstance character = null)
@@ -305,7 +320,7 @@ public class GameManager : MonoBehaviour
 
         if (character != null)
         {
-            avatarPrefab.GetComponent<SpriteRenderer>().sprite = dialogueRecipient.avatar;
+            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
             background.Add(avatarPrefab);
         }
 
@@ -351,8 +366,7 @@ public class GameManager : MonoBehaviour
     public void StartDialogue(int characterId, GameObject[] background)
     {
         CharacterInstance character = currentCharacters[characterId];
-        dialogueRecipient = character;
-        dialogueObject = new SpeakingObject(character.GetGreeting(), background);
+        var dialogueObject = new SpeakingObject(character.GetGreeting(), background);
         dialogueObject.Responses.Add(new QuestionObject(background));
 
         // Transition the scene
@@ -360,6 +374,8 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.NPCSelectScene, 
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
+
+        OnDialogueLoaded.AddListener(() => ExecuteDialogue(dialogueObject, character));
     }    
     #endregion
 

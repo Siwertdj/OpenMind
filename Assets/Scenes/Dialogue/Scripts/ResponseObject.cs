@@ -31,12 +31,12 @@ public class ResponseObject : DialogueObject
 
         List<string> answer = GetQuestionResponse(question);
 
-        if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
+        if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.dialogueRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionObject(background));
         else
             Responses.Add(new TerminateDialogueObject());
 
-        dm.WriteDialogue(answer, GameManager.gm.dialogueRecipient.pitch);
+        dm.WriteDialogue(answer, DialogueManager.dm.dialogueRecipient.pitch);
     }
 
     // Gets character's response to the given question
@@ -44,7 +44,7 @@ public class ResponseObject : DialogueObject
     {
         GameManager.gm.numQuestionsAsked += 1;
 
-        CharacterInstance character = GameManager.gm.dialogueRecipient;
+        CharacterInstance character = DialogueManager.dm.dialogueRecipient;
         character.RemainingQuestions.Remove(question);
 
         // Return answer to the question
