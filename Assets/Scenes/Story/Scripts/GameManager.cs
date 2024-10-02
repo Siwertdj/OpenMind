@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public List<CharacterInstance> currentCharacters; 
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    [NonSerialized] public int numQuestionsAsked;
+    [NonSerialized] private int numQuestionsAsked;
 
     // Game Events
     public GameEvent onDialogueStart;
@@ -327,13 +327,14 @@ public class GameManager : MonoBehaviour
 
     /// <summary>
     /// Fetches the amount of questions remaining
+    /// TODO: MAKE THIS A GETTER
     /// </summary>
     /// <returns></returns>
     public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
     
     /// <summary>
     /// Assigns the amount of questions that are remaining, for purposed of loading a savefile.
-    /// TODO: Apply this to the code that decreases it in dialogue
+    /// TODO: MAKE THIS A SETTER
     /// </summary>
     /// <param name="questionsRemaining"></param>
     public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
