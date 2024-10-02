@@ -39,8 +39,7 @@ public class DialogueManager : MonoBehaviour
         currentObject = (DialogueObject)data[1];
         dm = this;
 
-        // Tell the GameManager that the scene has finished loading
-        GameManager.gm.OnDialogueLoaded.Invoke();
+        currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
@@ -89,7 +88,7 @@ public class DialogueManager : MonoBehaviour
             dialogueField.GetComponentInChildren<TextField>().SetText(currentRecipient.characterName);
 
         // Animator write dialogue to the screen.
-        animator.WriteDialogue(dialogue, dialogueRecipient.pitch);
+        animator.WriteDialogue(dialogue, currentRecipient.pitch);
     }
 
     /// <summary>

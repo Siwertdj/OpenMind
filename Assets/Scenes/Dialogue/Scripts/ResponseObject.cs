@@ -36,7 +36,7 @@ public class ResponseObject : DialogueObject
         else
             Responses.Add(new TerminateDialogueObject());
 
-        dm.WriteDialogue(answer, DialogueManager.dm.dialogueRecipient.pitch);
+        dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
     }
 
     // Gets character's response to the given question
