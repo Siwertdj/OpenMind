@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterInstance
 {
-    private CharacterData data;
+    public CharacterData data;
 
     public Dictionary<Question, List<string>> Answers = new();
     public List<Question> RemainingQuestions = new();
@@ -18,7 +18,7 @@ public class CharacterInstance
     public bool isCulprit;      // This character's random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
     public bool TalkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
-
+    
     public CharacterInstance(CharacterData data)
     {
         this.data = data;
@@ -70,9 +70,9 @@ public class CharacterInstance
 
         if (RemainingQuestions.Count > 0)
         {
-
             int randomInt = new System.Random().Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
+            Debug.Log("THis code yeeeeh");
             RemainingQuestions.RemoveAt(randomInt);
 
             // TODO: add question-text to the answer that is returned
