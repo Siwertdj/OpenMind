@@ -45,12 +45,12 @@ public static class FilePathConstants
     /// <summary>
     /// Gets the location to the directory when the save file is stored.
     /// </summary>
-    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFileName;
+    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFolderName;
     
     /// <summary>
     /// Gets the location to the save file.
     /// </summary>
-    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFolderName;
+    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFileName;
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.
