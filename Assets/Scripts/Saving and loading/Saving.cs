@@ -45,9 +45,9 @@ public class Saving : MonoBehaviour
 
         
         //saves the scene stack, excluding the loading scene
-        string[] sceneStack = new string[SceneManager.sceneCount];
-        for (int i = 1; i < sceneStack.Length; i++)
-            sceneStack[i-1] = SceneManager.GetSceneAt(i).name;
+        string[] sceneStack = new string[SceneManager.sceneCount-1];
+        for (int i = 0; i < sceneStack.Length; i++)
+            sceneStack[i] = SceneManager.GetSceneAt(i+1).name;
 
         SaveData saveData = new SaveData
         {
