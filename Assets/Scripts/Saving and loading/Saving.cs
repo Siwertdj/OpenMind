@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class Saving : MonoBehaviour
 {
@@ -41,7 +42,13 @@ public class Saving : MonoBehaviour
             FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook", "Saving");
         
         (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
+
         
+        //saves the scene stack, excluding the loading scene
+        string[] sceneStack = new string[SceneManager.sceneCount];
+        for (int i = 1; i < sceneStack.Length; i++)
+            sceneStack[i-1] = SceneManager.GetSceneAt(i).name;
+
         SaveData saveData = new SaveData
         {
             activeCharacters = active.Select(c => c.id).ToArray(),
@@ -49,7 +56,8 @@ public class Saving : MonoBehaviour
             culprit = gameManager.GetCulprit().id,
             questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
             remainingQuestions = remainingQuestions,
-            noteBookData = noteBookData
+            noteBookData = noteBookData,
+            sceneStack = sceneStack
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
