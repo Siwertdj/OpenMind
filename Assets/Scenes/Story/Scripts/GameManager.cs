@@ -324,7 +324,20 @@ public class GameManager : MonoBehaviour
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
         return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
     }
+
+    /// <summary>
+    /// Fetches the amount of questions remaining
+    /// </summary>
+    /// <returns></returns>
+    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
     
+    /// <summary>
+    /// Assigns the amount of questions that are remaining, for purposed of loading a savefile.
+    /// TODO: Apply this to the code that decreases it in dialogue
+    /// </summary>
+    /// <param name="questionsRemaining"></param>
+    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
+        numQuestionsAsked = numQuestions - questionsRemaining;
     
     /// <summary>
     /// Checks if the player can ask more questions this cycle.

@@ -39,9 +39,15 @@ public class Loading : MonoBehaviour
         
         gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
         File.WriteAllText(FilePathConstants.GetNoteBookLocation(), saveData.noteBookData);
-        
-        SceneController.sc.ToggleNPCSelectScene();
-        SceneController.sc.ToggleNPCSelectScene();
+
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.Loading,
+            SceneController.TransitionType.Unload);
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.Loading, 
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.TransitionType.Additive);
     }
     
     private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)
