@@ -8,15 +8,16 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController sc;
     private bool notebookOn = false;
-
-    // possibly a bad solution
-    public AsyncOperation DialogueSceneOp;
-
+    
     public void Awake()
     {
+        // Initializes static instance of SceneController.
         sc = this;
     }
 
+    /// <summary>
+    /// Unloads all scenes(as all are opened additively), other than the 'Loading' scene.
+    /// </summary>
     public void UnloadAdditiveScenes()
     {
         //Get the story scene
@@ -53,7 +54,7 @@ public class SceneController : MonoBehaviour
         }
         else
         {
-            DialogueSceneOp = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
     }
 

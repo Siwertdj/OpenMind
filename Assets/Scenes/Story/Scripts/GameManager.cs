@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Settings")]
     [SerializeField] public int numberOfCharacters;
     [SerializeField] private List<CharacterData> characters;
-    [NonSerialized] public int numTalked; // The amount of times  the player has talked, should be 0 at the start of each cycle
+
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining;
     [SerializeField] private bool immediateVictim;
@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;       // static instance of the gamemanager
 
     
+    // Called when this script instance is being loaded
     private void Awake()
     {
         Load();
@@ -139,6 +140,14 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public CharacterInstance GetCulprit() => currentCharacters.Find(c => c.isCulprit);
 
+    /// <summary>
+    /// Checks if the number of characters
+    /// ..in the currently active game (selected in the 'currentCharacters'-list)
+    /// ..that are also 'active' (the isActive-bool of these CharacterInstances)
+    /// is more than the gamemanager variable 'numberOfActiveCharacters', which is the minimum amount of characters
+    /// that should be remaining until we transition into selecting a culprit.
+    /// </summary>
+    /// <returns></returns>
     public bool EnoughCharactersRemaining()
     {
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
@@ -173,8 +182,12 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
     }
-
-    // IF we want to start the first cycle without casualties, we use this instead.
+    
+    /// <summary>
+    /// IF we want to start the first cycle without casualties, we use this instead.
+    /// It works just like StartCycle, but it skips the selection of a Victim, etc.
+    /// We have a separate method so we don't need an if-statement check every time StartCycle would be called
+    /// </summary>
     private void FirstCycle()
     {
         // Reset number of times the player has talked
@@ -200,6 +213,12 @@ public class GameManager : MonoBehaviour
         SceneController.sc.ToggleNPCSelectScene();
     }
 
+    /// <summary>
+    /// If we still have enough active characters (characterInstance.isActive = true) in the game,
+    /// we start a new cycle as usual.
+    /// Otherwise, we don't start a new cycle, but have the player select a culprit in the
+    /// 'ToggleNPCSelectScene'.
+    /// </summary>
     public void EndCycle() 
     {
         if (EnoughCharactersRemaining())
@@ -211,6 +230,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// If there are no question left to ask (HasQuestionsLeft == false), we call the 'EndCycle'-method.
+    /// This method can be called after having asked a question, to see if the player can ask more questions,
+    /// or if we should end the current cycle if not.
+    /// </summary>
     public void CheckEndCycle()
     {
         Debug.Log("Checking end Cycle");
@@ -269,6 +293,11 @@ public class GameManager : MonoBehaviour
         };
     }
 
+    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
+
+    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
+        numQuestionsAsked = numQuestions - questionsRemaining;
+
     /// <summary>
     /// Closes the game.
     /// </summary>
@@ -321,6 +350,13 @@ public class GameManager : MonoBehaviour
         
     }
     
+    /// <summary>
+    /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
+    /// This toggles-off the NPCSelectScene,
+    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
+    /// Then, it loads the DialogueScene.
+    /// </summary>
+    /// <param name="character"></param>
     public void StartDialogue(CharacterInstance character)
     {
         SceneController.sc.ToggleNPCSelectScene();
@@ -331,6 +367,14 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }
 
+    /// <summary>
+    /// Can be called to start Dialogue with a specific character, taking an ID(int) of a CharacterInstance as
+    /// parameter.
+    /// This toggles-off the NPCSelectScene,
+    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
+    /// Then, it loads the DialogueScene.
+    /// </summary>
+    /// <param name="character"></param>
     public void StartDialogue(int id)
     {
         SceneController.sc.ToggleNPCSelectScene(); // NPC selected, so unload
