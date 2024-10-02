@@ -13,19 +13,19 @@ using Random = System.Random;
 public class GameManager : MonoBehaviour
 {
     [Header("Game Settings")]
-    [SerializeField] public int numberOfCharacters;
-    [SerializeField] private List<CharacterData> characters;
+    [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
 
+    [SerializeField] public int numberOfCharacters; // How many characters each session should have
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
-    [SerializeField] private int minimumRemaining;
-    [SerializeField] private bool immediateVictim;
+    [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
+    [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
     
-    // The current "active" characters, any characters that became inactive should be removed from this list.
+    // The list of the characters in the current game. This includes both active and inactive characters
     public List<CharacterInstance> currentCharacters;
 
     [Header("Background Prefabs")]
-    [SerializeField] private GameObject avatarPrefab;
-    [SerializeField] private GameObject[] backgroundPrefabs;
+    [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
+    [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     [NonSerialized] private int numQuestionsAsked;
@@ -260,7 +260,10 @@ public class GameManager : MonoBehaviour
         // reset game
         Start();        
     }
+    #endregion
 
+    // This region contains methods regarding dialogue
+    #region Dialogue
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
@@ -290,7 +293,6 @@ public class GameManager : MonoBehaviour
 
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        Debug.Log("Raising event to pass data to DialogueManager.");
         onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
     }
 
