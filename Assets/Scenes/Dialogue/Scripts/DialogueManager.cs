@@ -9,8 +9,7 @@ using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager dm;
-
+    [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
 
     [Header("Fields")]
@@ -24,21 +23,39 @@ public class DialogueManager : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private SpriteRenderer avatar;
 
-    public UnityEvent OnEndDialogue;
+    [NonSerialized] public static DialogueManager dm;
+    [NonSerialized] public CharacterInstance currentRecipient;
+    [NonSerialized] public DialogueObject currentObject;
 
-    public CharacterInstance currentRecipient;
-    public DialogueObject currentObject;
+    public UnityEvent OnEndDialogue;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// Sets DialogueManager variables and executes the starting DialogueObject.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
+    /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
     {
-        Debug.Log("StartDialogue called.");
-        Debug.Log($"Recipient's name is {((CharacterInstance)data[0]).characterName}");
-        Debug.Log($"Recipient's name is {((DialogueObject)data[1]).ToString()}");
-        currentRecipient = (CharacterInstance)data[0];
-        currentObject = (DialogueObject)data[1];
+        // Set static DialogueManager instance
         dm = this;
 
+        Debug.Log("StartDialogue called.");
+
+        // Retrieve and set the dialogue recipient
+        if (data[0] is CharacterInstance recipient)
+        {
+            Debug.Log($"Recipient's name is {recipient.characterName}");
+            currentRecipient = recipient;
+        }
+        // Retrieve and set the dialogue object
+        if (data[1] is DialogueObject dialogueObject)
+        {
+            Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
+            currentObject = dialogueObject;
+        }
+
+        // Execute the starting object
         currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
