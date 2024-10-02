@@ -399,6 +399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 217989642}
   - component: {fileID: 217989643}
+  - component: {fileID: 217989644}
   m_Layer: 0
   m_Name: ButtonBehaviour
   m_TagString: Untagged
@@ -435,6 +436,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savesPresent: 0
   ContinueButton: {fileID: 2019508185}
+--- !u!114 &217989644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217989641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c9267baa22829840abc1c71ef3ea299, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &709119423
 GameObject:
   m_ObjectHideFlags: 0
@@ -966,9 +979,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 217989643}
-        m_TargetAssemblyTypeName: ButtonManager, Assembly-CSharp
-        m_MethodName: ContinueButtonClick
+      - m_Target: {fileID: 217989644}
+        m_TargetAssemblyTypeName: Loading, Assembly-CSharp
+        m_MethodName: Load
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
