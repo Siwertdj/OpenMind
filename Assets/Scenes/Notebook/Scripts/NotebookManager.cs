@@ -83,7 +83,7 @@ public class NotebookManager : MonoBehaviour
 
         foreach (Question q in character.AnsweredQuestions)
         {
-            output += q + "\n";
+            output += GetQuestionText(q).ToUpper() + "\n";
             foreach (string s in character.Answers[q])
             {
                 output += s + " ";
@@ -112,5 +112,26 @@ public class NotebookManager : MonoBehaviour
         inputField.SetActive(true);
         //deactivate character thing
         characterNotes.SetActive(false);
+    }
+    
+    private string GetQuestionText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "Name",
+            Question.Age => "Age",
+            Question.Wellbeing => "Wellbeing",
+            Question.Political => "Political ideology",
+            Question.Personality => "Personality",
+            Question.Hobby => "Hobbies",
+            Question.CulturalBackground => "Cultural background",
+            Question.Education => "Education level",
+            Question.CoreValues => "Core values",
+            Question.ImportantPeople => "Most important people",
+            Question.PositiveTrait => "Positive trait",
+            Question.NegativeTrait => "Bad trait",
+            Question.OddTrait => "Odd trait",
+            _ => "",
+        };
     }
 }
