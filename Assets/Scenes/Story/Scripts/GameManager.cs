@@ -21,18 +21,25 @@ public class GameManager : MonoBehaviour
     
     // The current "active" characters, any characters that became inactive should be removed from this list.
     public List<CharacterInstance> currentCharacters; 
-    // Target of the current dialogue
-    // TODO: Deze hieruit en naar dialoguemanager
-    public CharacterInstance dialogueRecipient;
-    public DialogueObject dialogueObject;
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     [NonSerialized] public int numQuestionsAsked;
 
+    // Game Events
+    public GameEvent onDialogueStart;
+    
+    // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
 
+    
+    
+    // TODO: Deze hieruit en naar dialoguemanager
+    // Target of the current dialogue
+    /*public CharacterInstance dialogueRecipient;
+    public DialogueObject dialogueObject;*/
+    
     
     // Called when this script instance is being loaded
     private void Awake()
@@ -270,7 +277,7 @@ public class GameManager : MonoBehaviour
         Start();
         
     }
-    
+
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
@@ -278,15 +285,22 @@ public class GameManager : MonoBehaviour
     /// Then, it loads the DialogueScene.
     /// </summary>
     /// <param name="character"></param>
+    ///  TODO: Should use the id of a character instead of the CharacterInstance.
     public void StartDialogue(CharacterInstance character)
     {
-        dialogueRecipient = character;
-        dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
+        // TODO: Pass to DialogueManager through event as soon as it is loaded
+        // We load DialogueManager first through the scenetransition.
         sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene, 
+            SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
+        // Until DialogueManager gets its information, it shouldnt do anything there.
+        var dialogueRecipient = character;
+        var dialogueObject = new SpeakingObject(character.GetGreeting());
+        dialogueObject.Responses.Add(new QuestionObject());
+        // The gameevent here should pass the information to Dialoguemanager
+        // ..at which point dialoguemanager will start.
+        onDialogueStart.Raise(this, dialogueRecipient,dialogueObject);
     }
     
     
@@ -315,29 +329,6 @@ public class GameManager : MonoBehaviour
                 SceneController.TransitionType.Transition);
         }
     }
-
-    
-    // TODO: Use this instead (see selectionmanager)
-    /// <summary>
-    /// Can be called to start Dialogue with a specific character, taking an ID(int) of a CharacterInstance as
-    /// parameter.
-    /// This toggles-off the NPCSelectScene,
-    /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
-    /// Then, it loads the DialogueScene.
-    /// </summary>
-    /// <param name="character"></param>
-    public void StartDialogue(int id)
-    {
-        CharacterInstance character = currentCharacters[id];
-        dialogueRecipient = character;
-        dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
-        // Transition the scene
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
-    }    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
