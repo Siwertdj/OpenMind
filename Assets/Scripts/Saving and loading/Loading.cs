@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// This class is responsible for loading all the <see cref="SaveData"/> from the save file.
@@ -27,6 +28,20 @@ public class Loading : MonoBehaviour
             return;
         
         //actual loading happens here, this is where the game data is modified and all checks should've been done before this point.
+        //first unload all scenes
+        SceneController.sc.UnloadAdditiveScenes();
+        //TODO: fix it so loading the dialoguescene works
+        // foreach (var t in saveData.sceneStack)
+        // {
+        //     Debug.Log(t);
+        //     SceneManager.LoadScene(t, LoadSceneMode.Additive);
+        // }
+        //temp solution:
+        SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
+        if (saveData.sceneStack.Length == 2)
+            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
+
+        //then load all the data
         gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacters.Contains(c.id);
@@ -39,15 +54,6 @@ public class Loading : MonoBehaviour
         
         gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
         File.WriteAllText(FilePathConstants.GetNoteBookLocation(), saveData.noteBookData);
-
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.SceneName.Loading,
-            SceneController.TransitionType.Unload);
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.Loading, 
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.TransitionType.Additive);
     }
     
     private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)

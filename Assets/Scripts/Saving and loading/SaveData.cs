@@ -13,6 +13,7 @@ public class SaveData
     public int questionsRemaining;
     public (int, List<Question>)[] remainingQuestions;
     public string noteBookData;
+    public string[] sceneStack;
 }
 
 /// <summary>
@@ -25,7 +26,7 @@ public static class FilePathConstants
     /// The folder from the root folder where the save file resides.
     /// So if the asset folder had the path root/Assets, the save file would be saved in root/<see cref="folderName"/>>.
     /// </summary>
-    private const string playerSaveDataFolderName = "PlayerSaveData";
+    private const string playerSaveDataFolderName = "Assets/Data";
     
     /// <summary>
     /// The name of the save file of the player save data.
