@@ -274,12 +274,7 @@ public class GameManager : MonoBehaviour
         Start();
         
     }
-    
-    /// <summary>
-    /// Opens the dialogue scene to talk to the given character.
-    /// </summary>
-    /// <param name="character">The character the player will talk to</param>
-    public void StartCharacterDialogue(CharacterInstance character)
+
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
     /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
@@ -294,9 +289,13 @@ public class GameManager : MonoBehaviour
         dialogueObject = new SpeakingObject(
             character.GetGreeting(),
             background);
+        
         dialogueObject.Responses.Add(new QuestionObject(background));
 
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
     }
 
     private GameObject[] GetRandomBackground(CharacterInstance character = null)
@@ -312,26 +311,6 @@ public class GameManager : MonoBehaviour
 
         return background.ToArray();
     }
-
-    public void StartDialogue(List<string> dialogue, GameObject[] background)
-    {
-        dialogueObject = new SpeakingObject(dialogue, background);
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
-        
-    }
-
-    /// <summary>
-    /// <i>Deprecated</i>, this function only remains in case we want to do something with it later.
-    /// </summary>
-    /// <param name="id"></param>
-        dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
-        sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
-    }
-    
     
     /// <summary>
     /// Called by DialogueManager when dialogue is ended, by execution of a TerminateDialogueObject.
@@ -369,12 +348,13 @@ public class GameManager : MonoBehaviour
     /// Then, it loads the DialogueScene.
     /// </summary>
     /// <param name="character"></param>
-    public void StartDialogue(int id)
+    public void StartDialogue(int characterId, GameObject[] background)
     {
-        CharacterInstance character = currentCharacters[id];
+        CharacterInstance character = currentCharacters[characterId];
         dialogueRecipient = character;
-        dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
+        dialogueObject = new SpeakingObject(character.GetGreeting(), background);
+        dialogueObject.Responses.Add(new QuestionObject(background));
+
         // Transition the scene
         SceneController.sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene, 
