@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -317,7 +316,7 @@ public class GameManager : MonoBehaviour
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
     /// TODO: Check naming convention for events and listeners, if this is right
-    public void EndDialogue()
+    public void EndDialogue(Component sender, params object[] data)
     {
         if (!HasQuestionsLeft())
         {

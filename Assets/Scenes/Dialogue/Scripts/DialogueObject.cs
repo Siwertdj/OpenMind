@@ -80,7 +80,7 @@ public class TerminateDialogueObject : DialogueObject
     {
         Debug.Log("Terminating dialogue");
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect
-        DialogueManager.dm.OnEndDialogue.Invoke();
+        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm);
 
         // Invoke post function if given
         post?.Invoke();

@@ -23,11 +23,12 @@ public class DialogueManager : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private SpriteRenderer avatar;
 
+    [Header("Events")]
+    public GameEvent onEndDialogue;
+
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;
-
-    public UnityEvent OnEndDialogue;
     
     /// <summary>
     /// Sets DialogueManager variables and executes the starting DialogueObject.
@@ -60,7 +61,6 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-        OnEndDialogue.AddListener(GameManager.gm.EndDialogue);
     }
 
     // Update is called once per frame
