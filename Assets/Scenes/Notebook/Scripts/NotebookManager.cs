@@ -15,7 +15,6 @@ public class NotebookManager : MonoBehaviour
     private GameManager gameManager;
     public GameObject nameButtons;
     private List<CharacterInstance> characters;
-    private Dictionary<Button, CharacterInstance> ButChar = new();
 
     // Start is called before the first frame update
     void Start()
@@ -24,27 +23,32 @@ public class NotebookManager : MonoBehaviour
         using StreamReader reader = new(notesFilePath + "notes.txt");
         string fetchedNotes = reader.ReadToEnd();
         Debug.Log("Fetched notes: " + fetchedNotes);
-        inputField.GetComponent<TMP_InputField>().text = fetchedNotes;  // Put said notes into the inputfield
-        
-        // close characternotes
+        inputField.GetComponent<TMP_InputField>().text = fetchedNotes; // Put said notes into the inputfield
+
+        // close character notes
         characterNotes.SetActive(false);
         gameManager = FindAnyObjectByType<GameManager>();
         
-        // get all buttons
-        List<Button> buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
         // get characters
         characters = gameManager.currentCharacters;
-        ButChar = buttons.Zip(characters, (k, v) => new { k, v }).ToDictionary(x => x.k, x => x.v);
-        
+
         // assign character names to buttons
-        //for (int i = 0; i < characters.Count; i++)
-        //{
-        //    buttons[i].GetComponentInChildren<TextMeshProUGUI>().text = characters[i].characterName;
-        //}
-        
-        foreach (Button b in ButChar.Keys)
+        InitializeCharacterButtons();
+    }
+
+    private void InitializeCharacterButtons()
+    {
+        // get all buttons
+        List<Button> buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
+        // create button events and name text
+        for (int i = 0; i < characters.Count; i++)
         {
-            b.GetComponentInChildren<TextMeshProUGUI>().text = ButChar[b].characterName;
+            int characterIndex = i;
+            Button button = buttons[characterIndex];
+            buttons[characterIndex].GetComponentInChildren<TextMeshProUGUI>().text = 
+                characters[characterIndex].characterName;
+            
+            button.onClick.AddListener(()=>CharacterTab(characterIndex));
         }
     }
 
@@ -61,15 +65,15 @@ public class NotebookManager : MonoBehaviour
         Debug.Log("Saved notes: " + savedNotes);
     }
 
-    public void CharacterTab(Button thisButton)
+    private void CharacterTab(int buttonIndex)
     {
         // deactivate the other text
         inputField.SetActive(false);
         //activate character thing
         characterNotes.SetActive(true);
 
-        string answerNotes = "Your notes on " + ButChar[thisButton].characterName + ".\n";
-        answerNotes += GetQuestions(ButChar[thisButton]);
+        string answerNotes = "Your notes on " + characters[buttonIndex].characterName + ".\n";
+        answerNotes += GetQuestions(characters[buttonIndex]);
         
         characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = answerNotes;
     }
