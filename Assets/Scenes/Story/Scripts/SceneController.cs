@@ -8,12 +8,16 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController sc;
     private bool notebookOn = false;
-
+    
     public void Awake()
     {
+        // Initializes static instance of SceneController.
         sc = this;
     }
 
+    /// <summary>
+    /// Unloads all scenes(as all are opened additively), other than the 'Loading' scene.
+    /// </summary>
     public void UnloadAdditiveScenes()
     {
         //Get the story scene
@@ -27,20 +31,6 @@ public class SceneController : MonoBehaviour
         }
     }
     
-    
-    public void UnloadDialogueScene()
-    {
-        string sceneName = "DialogueScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            Debug.Log("Dialogue scene not loaded");
-        }
-    }
-    
     public void ToggleCompanionHintScene()
     {
         string sceneName = "Companion Hint";
@@ -51,6 +41,20 @@ public class SceneController : MonoBehaviour
         else
         {
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
+        }
+    }
+
+    public void ToggleDialogueScene()
+    {
+        string sceneName = "DialogueScene";
+
+        if (SceneManager.GetSceneByName(sceneName).isLoaded)
+        {
+            SceneManager.UnloadSceneAsync(sceneName);
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         }
     }
 

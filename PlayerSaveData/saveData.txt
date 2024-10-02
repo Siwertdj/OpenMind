@@ -1,1 +1,0 @@
-{"activeCharacters":[0,0,0],"inactiveCharacters":[0],"culprit":0,"questionsRemaining":0,"remainingQuestions":[[0],[4,5,6],[2]],"noteBookFilePath":"C:/Users/sande/RiderProjects/OpenMind/Assetsnotebook\\notes"}

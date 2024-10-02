@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 
 /// <summary>
 /// Contains all data that is saved to a file
@@ -9,7 +11,7 @@ public class SaveData
     public int[] inactiveCharacters;
     public int culprit;
     public int questionsRemaining;
-    public List<Question>[] remainingQuestions;
+    public (int, List<Question>)[] remainingQuestions;
     public string noteBookData;
 }
 
@@ -23,15 +25,60 @@ public static class FilePathConstants
     /// The folder from the root folder where the save file resides.
     /// So if the asset folder had the path root/Assets, the save file would be saved in root/<see cref="folderName"/>>.
     /// </summary>
-    public const string playerSaveDataFolderName = "PlayerSaveData";
+    private const string playerSaveDataFolderName = "PlayerSaveData";
     
     /// <summary>
     /// The name of the save file of the player save data.
     /// </summary>
-    public const string playerSaveDataFileName = "saveData.txt";
+    private const string playerSaveDataFileName = "saveData.txt";
 
     /// <summary>
     /// The filepath to where the notebook data is stored. The "root" of this filepath is Assets.
     /// </summary>
-    public const string notebookFilePath = "Notebook/notes.txt";
+    private const string notebookFilePath = "Notebook/notes.txt";
+    
+    /// <summary>
+    /// Gets the location to the notebook file.
+    /// </summary>
+    public static string GetNoteBookLocation() => Application.dataPath + "/Scenes/" + notebookFilePath;
+    
+    /// <summary>
+    /// Gets the location to the directory when the save file is stored.
+    /// </summary>
+    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFileName;
+    
+    /// <summary>
+    /// Gets the location to the save file.
+    /// </summary>
+    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFolderName;
+
+    /// <summary>
+    /// A safe way to read files that handles a bunch of exceptions.
+    /// </summary>
+    /// <returns>File contents if no exception is thrown, otherwise null.</returns>
+    public static string GetSafeFileContents(string fileLocation, string typeOfContent, string typeOfAction)
+    {
+        string fileContents;
+        try
+        {
+            fileContents = File.ReadAllText(fileLocation);
+        }
+        catch (DirectoryNotFoundException e)
+        {
+            Debug.LogError($"A specified directory does not exist when accessing {typeOfContent} content in filepath {fileLocation}, got error: {e}.\n{typeOfAction} failed");
+            return null;
+        }
+        catch (FileNotFoundException e)
+        {
+            Debug.LogError($"Couldn't find the {typeOfContent} content with filepath {fileLocation}, got error: {e}.\n{typeOfAction} failed");
+            return null;
+        }
+        catch (IOException e)
+        {
+            Debug.LogError($"Something went wrong when opening and reading the {typeOfContent} content, got error: {e}.\n{typeOfAction} failed");
+            return null;
+        }
+
+        return fileContents;
+    }
 }

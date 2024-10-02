@@ -34,7 +34,7 @@ public class SelectionManager : MonoBehaviour
     {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
         // set the scene variable to decidecriminal.
-        if (GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
+        if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
         {
             scene = "decidecriminal";
         }
