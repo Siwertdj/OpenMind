@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -104,12 +105,12 @@ public class SceneController : MonoBehaviour
     //conditions: current = true, means current is loaded. current = false, means current is unloaded
     //pre conditions: current
     //post conditions: current = !target_pre && target_post
-    private void Transitioning(string currentScene, string targetScene, TransitionType transitionType)
+    private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
     {
         switch (transitionType)
         {
             case TransitionType.Additive:
-                SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
+                await LoadScene(targetScene);
                 break;
             
             case TransitionType.Unload:
@@ -117,14 +118,52 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                SceneManager.LoadScene(targetScene, LoadSceneMode.Additive);
                 SceneManager.UnloadSceneAsync(currentScene);
+                await LoadScene(targetScene);
                 break;
         }
     }
-    
+
+    #region Async Scene Loading Helper Functions
+    /// <summary>
+    /// Converts SceneManager.LoadSceneAsync() from an AsyncOperation to a Task so that it is awaitable.
+    /// </summary>
+    /// <param name="targetScene">The name of the scene to be loaded.</param>
+    /// <returns></returns>
+    private Task LoadScene(string targetScene)
+    {
+        // Create a TaskCompletionSource to return as a Task
+        // TaskCompletionSource is used to define when an "await" is finished
+        var tcs = new TaskCompletionSource<bool>();
+
+        // Start the coroutine
+        StartCoroutine(LoadSceneCoroutine(targetScene, tcs));
+
+        // Return the task that will complete when the coroutine ends
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Uses a coroutine to load a scene and wait for it to finish loading.
+    /// </summary>
+    /// <param name="targetScene">The name of the scene to be loaded.</param>
+    /// <param name="tcs">A reference to the TaskCompletionSource.</param>
+    private IEnumerator LoadSceneCoroutine(string targetScene, TaskCompletionSource<bool> tcs)
+    {
+        // The async operation which loads the scene, we can wait for this to complete
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
+
+        // Wait until the scene is fully loaded
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        // Mark the TaskCompletionSource as completed
+        tcs.SetResult(true);
+    }
+    #endregion
+
     //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
-    public void TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Action<string, string, TransitionType> loadCode)
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Func<string, string, TransitionType, Task> loadCode)
     {
         string currentScene = from.ToString();
         string targetScene = to.ToString();
@@ -139,12 +178,12 @@ public class SceneController : MonoBehaviour
             //invalid transition
             throw new Exception($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
         
-        loadCode(currentScene, targetScene, transitionType);
+        await loadCode(currentScene, targetScene, transitionType);
     }
 
     
     //args is the data to transfer
-    public void TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => TransitionScene(from, to, transitionType, Transitioning);
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
 
     
     //the function to be called when loading the first cycle

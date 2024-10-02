@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -286,25 +286,24 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="character"></param>
     ///  TODO: Should use the id of a character instead of the CharacterInstance.
-    public void StartDialogue(CharacterInstance character)
+    public async void StartDialogue(CharacterInstance character)
     {
-        // TODO: Pass to DialogueManager through event as soon as it is loaded
-        // We load DialogueManager first through the scenetransition.
-        Debug.Log("Transitioning Scene to start Dialogue");
-        sc.TransitionScene(
+        // Transition to dialogue scene and await the loading operation
+        await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
+
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
         var dialogueObject = new SpeakingObject(character.GetGreeting());
         dialogueObject.Responses.Add(new QuestionObject());
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         Debug.Log("Raising event to pass data to DialogueManager.");
-        onDialogueStart.Raise(this, dialogueRecipient,dialogueObject);
-    }
-    
+        onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
+    }    
     
     /// <summary>
     /// Called by DialogueManager when dialogue is ended, by execution of a TerminateDialogueObject.
