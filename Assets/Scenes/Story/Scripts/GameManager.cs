@@ -38,6 +38,9 @@ public class GameManager : MonoBehaviour
     
     // Save the character that has been chosen at the end of the game.
     public CharacterInstance FinalChosenCuplrit;
+    
+    // Holds the remainder of the conversation in the epilogue.
+    public List<List<string>> remainingDialogueScenario;
 
     /// <summary>
     /// Amount of times the player can ask a question
@@ -382,4 +385,36 @@ public class GameManager : MonoBehaviour
         dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }    
+    /// <summary>
+    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
+    /// </summary>
+    /// <param name="character"> The character which has been chosen. </param>
+    public void StartEpilogueDialogue(CharacterInstance character)
+    {
+        SceneController.sc.ToggleNPCSelectScene();
+
+        // Assign the dialogue needed for the conversation in the epilogue.
+        if (hasWon)
+            remainingDialogueScenario = character.EpilogueWinScenario();
+        else
+            remainingDialogueScenario = character.EpilogueLoseScenario();
+        
+        List<string> speakingObjectText = new List<string>();
+        // Assign the first element of the list to speakingObjectText
+        if (remainingDialogueScenario.Count > 0)
+            speakingObjectText = remainingDialogueScenario[0];
+        // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
+        remainingDialogueScenario.RemoveAt(0);
+
+        int i = 1;
+        foreach (string s in speakingObjectText)
+        {
+            Debug.Log(i + " " + s);
+        }
+        
+        // Create a SpeakingObject with the given List<string>
+        dialogueObject = new SpeakingObject(speakingObjectText);
+        dialogueObject.Responses.Add(new OpenResponseObject());
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }
 }

@@ -144,6 +144,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Creates the text field in which the player can answer an open question.
+    /// </summary>
+    private void CreateTextField()
+    {
+        
+    }
+    /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
     /// </summary>

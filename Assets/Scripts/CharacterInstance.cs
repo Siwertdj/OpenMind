@@ -39,6 +39,41 @@ public class CharacterInstance
     }
 
     /// <summary>
+    /// Scenario for when the player guesses the culprit.
+    /// </summary>
+    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
+    public List<List<string>> EpilogueWinScenario()
+    {
+        List<string> speakingText1 = new List<string>()
+        {
+            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
+            "I was indeed the one who kept sending u messages",
+            "and in fact, I knew that you did not know who",
+            "was sending the messages. I also got hold of",
+            "the results of the intermediate test."
+        };
+        List<string> speakingText2 = new List<string>(){ "worst" };
+        List<string> speakingText3 = new List<string>(){ "ham" };
+        // List of lists, where in between each list a DialogueObject can be called.
+        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
+        return retval;
+    }
+
+    /// <summary>
+    /// Scenario for when the player does not guess the correct culprit
+    /// </summary>
+    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
+    public List<List<string>> EpilogueLoseScenario()
+    {
+        List<string> speakingText1 = new List<string>(){ "kaas" };
+        List<string> speakingText2 = new List<string>(){ "worst" };
+        List<string> speakingText3 = new List<string>(){ "ham" };
+        // List of lists, where in between each list a DialogueObject can be called.
+        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
+        return retval;
+    }
+
+    /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
     private List<List<string>> GetAllTraits()

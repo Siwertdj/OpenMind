@@ -94,11 +94,15 @@ public class SelectionManager : MonoBehaviour
                 CharacterInstance culprit = GameManager.gm.GetCulprit();
                 // Set the FinalChosenCulprit variable to the chosen character in GameManager.
                 GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                // Set the dialogueRecipient to the chosen character in GameManager.
+                GameManager.gm.dialogueRecipient = selectOption.character;
+                
                 // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
                 if (culprit.characterName == selectOption.character.characterName)
                     GameManager.gm.hasWon = true;
                 else
                     GameManager.gm.hasWon = false;
+                
                 
                 // Load the epilogue scene.
                 SceneController.sc.ToggleNPCSelectScene();
