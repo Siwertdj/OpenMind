@@ -22,16 +22,14 @@ public class NotebookManager : MonoBehaviour
         // Read notes previously saved to notes.txt
         using StreamReader reader = new(notesFilePath + "notes.txt");
         string fetchedNotes = reader.ReadToEnd();
-        Debug.Log("Fetched notes: " + fetchedNotes);
+        //Debug.Log("Fetched notes: " + fetchedNotes);
         inputField.GetComponent<TMP_InputField>().text = fetchedNotes; // Put said notes into the inputfield
         
         // close character notes
         characterNotes.SetActive(false);
-
         // get characters
         gameManager = FindAnyObjectByType<GameManager>();
         characters = gameManager.currentCharacters;
-        
         // assign character names to buttons
         InitializeCharacterButtons();
     }

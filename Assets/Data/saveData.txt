@@ -1,0 +1,1 @@
+{"activeCharacters":[3,2],"inactiveCharacters":[0,1],"culprit":2,"questionsRemaining":1,"remainingQuestions":[{"Item1":3,"Item2":[1,11,7,4,6]},{"Item1":2,"Item2":[5,4,6,1,10,9]}],"noteBookData":"Testing notebook\r\n","sceneStack":["NPCSelectScene"]}

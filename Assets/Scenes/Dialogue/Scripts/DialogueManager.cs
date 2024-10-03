@@ -9,35 +9,58 @@ using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager dm;
-
-    [SerializeField] private GameObject dialogueField;
-    [SerializeField] private GameObject questionsField;
+    [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
 
+    [Header("Fields")]
+    [SerializeField] private GameObject dialogueField;
+    [SerializeField] private GameObject questionsField;
+    [SerializeField] private GameObject backgroundField;
+
+    [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
+    [Header("Visuals")]
     [SerializeField] private SpriteRenderer avatar;
 
-    public GameObject background;
+    [Header("Events")]
+    public GameEvent onEndDialogue;
 
-    public UnityEvent OnEndDialogue;
-
-    public DialogueObject currentObject;
-
-    // Start is called before the first frame update
-    void Start()
+    [NonSerialized] public static DialogueManager dm;
+    [NonSerialized] public CharacterInstance currentRecipient;
+    [NonSerialized] public DialogueObject currentObject;
+    
+    /// <summary>
+    /// Sets DialogueManager variables and executes the starting DialogueObject.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
+    /// and element 1 is the starting dialogue object.</param>
+    public void StartDialogue(Component sender, params object[] data)
     {
+        // Set static DialogueManager instance
         dm = this;
+
+        Debug.Log("StartDialogue called.");
+
+        // Retrieve and set the dialogue recipient
+        if (data[0] is CharacterInstance recipient)
+        {
+            Debug.Log($"Recipient's name is {recipient.characterName}");
+            currentRecipient = recipient;
+        }
+        // Retrieve and set the dialogue object
+        if (data[1] is DialogueObject dialogueObject)
+        {
+            Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
+            currentObject = dialogueObject;
+        }
+
+        // Execute the starting object
+        currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-
-        OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
-
-        avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
-        currentObject = GameManager.gm.dialogueObject;
-        currentObject.Execute();
     }
 
     // Update is called once per frame
@@ -78,11 +101,29 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (GameManager.gm.dialogueObject != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
+        if (currentObject != null)
+            dialogueField.GetComponentInChildren<TextField>().SetText(currentRecipient.characterName);
 
         // Animator write dialogue to the screen.
-        animator.WriteDialogue(dialogue, pitch);
+        animator.WriteDialogue(dialogue, currentRecipient.pitch);
+    }
+
+    /// <summary>
+    /// Replaces the current dialogue background with the given background.
+    /// </summary>
+    /// <param name="newBackground"></param>
+    public void ReplaceBackground(GameObject[] newBackground)
+    {
+        Transform parent = backgroundField.transform;
+
+        // Remove old background
+        foreach (Transform child in parent)
+            Destroy(child.gameObject);
+
+        // Instantiate new background
+        foreach (GameObject element in newBackground)
+            Instantiate(element).transform.parent = parent;
+
     }
 
     /// <summary>
@@ -99,7 +140,7 @@ public class DialogueManager : MonoBehaviour
 
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-            buttonText.text = GameManager.gm.GetPromptText(response.question);
+            buttonText.text = GetPromptText(response.question);
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
@@ -150,7 +191,8 @@ public class DialogueManager : MonoBehaviour
     private void BacktoNPCScreen()
     {
         DestroyButtons();
-        currentObject = new TerminateDialogueObject(SceneController.sc.ToggleNPCSelectScene);
+        // TODO: Combineer met het unloaden van Dialoguescene
+        currentObject = new TerminateDialogueObject();
         currentObject.Execute();
     }
 
@@ -194,6 +236,27 @@ public class DialogueManager : MonoBehaviour
         var buttons = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
+    }
+    
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
     }
 }
 
