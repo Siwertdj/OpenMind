@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,20 +12,25 @@ using Random = System.Random;
 public class GameManager : MonoBehaviour
 {
     [Header("Game Settings")]
-    [SerializeField] public int numberOfCharacters;
-    [SerializeField] private List<CharacterData> characters;
+    [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
 
+    [SerializeField] public int numberOfCharacters; // How many characters each session should have
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
-    [SerializeField] private int minimumRemaining;
-    [SerializeField] private bool immediateVictim;
+    [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
+    [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
     
-    // The current "active" characters, any characters that became inactive should be removed from this list.
-    public List<CharacterInstance> currentCharacters; 
+    // The list of the characters in the current game. This includes both active and inactive characters
+    public List<CharacterInstance> currentCharacters;
+
+    [Header("Background Prefabs")]
+    [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
+    [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     [NonSerialized] private int numQuestionsAsked;
 
     // Game Events
+    [Header("Events")]
     public GameEvent onDialogueStart;
     
     // Instances
@@ -272,10 +276,12 @@ public class GameManager : MonoBehaviour
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
-        Start();
-        
+        Start();        
     }
+    #endregion
 
+    // This region contains methods regarding dialogue
+    #region Dialogue
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
@@ -286,22 +292,41 @@ public class GameManager : MonoBehaviour
     ///  TODO: Should use the id of a character instead of the CharacterInstance.
     public async void StartDialogue(CharacterInstance character)
     {
+        GameObject[] background = GetRandomBackground(character);
+
+        var dialogueObject = new SpeakingObject(
+            character.GetGreeting(),
+            background);
+        
+        dialogueObject.Responses.Add(new QuestionObject(background));
+
+        // Until DialogueManager gets its information, it shouldnt do anything there.
+        var dialogueRecipient = character;
+
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
 
-        // Until DialogueManager gets its information, it shouldnt do anything there.
-        var dialogueRecipient = character;
-        var dialogueObject = new SpeakingObject(character.GetGreeting());
-        dialogueObject.Responses.Add(new QuestionObject());
-
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        Debug.Log("Raising event to pass data to DialogueManager.");
         onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
-    }    
+    }
+
+    private GameObject[] GetRandomBackground(CharacterInstance character = null)
+    {
+        List<GameObject> background = new();
+        background.Add(backgroundPrefabs[random.Next(backgroundPrefabs.Length)]);
+
+        if (character != null)
+        {
+            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
+            background.Add(avatarPrefab);
+        }
+
+        return background.ToArray();
+    }
     
     /// <summary>
     /// Called by DialogueManager when dialogue is ended, by execution of a TerminateDialogueObject.
@@ -310,7 +335,7 @@ public class GameManager : MonoBehaviour
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
     /// TODO: Check naming convention for events and listeners, if this is right
-    public void EndDialogue()
+    public void EndDialogue(Component sender, params object[] data)
     {
         if (!HasQuestionsLeft())
         {

@@ -90,7 +90,8 @@ public class SelectionManager : MonoBehaviour
             // Start the dialogue if a criminal does not need to be decided yet.
             if (selectionType == "dialogue")
             {
-                // TODO: ensure that the correct id is passed based on the button 
+                // TODO: ensure that the correct id is passed based on the button
+                
                 GameManager.gm.StartDialogue(selectOption.character);
             }
             else

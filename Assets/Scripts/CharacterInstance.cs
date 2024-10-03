@@ -8,7 +8,10 @@ public class CharacterInstance
     private CharacterData data;
 
     public Dictionary<Question, List<string>> Answers = new();
+    public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
+
+    public List<string>[] greetings;
 
     public string characterName;
     public int id;
@@ -21,6 +24,8 @@ public class CharacterInstance
 
     public CharacterInstance(CharacterData data)
     {
+        Debug.Log($"Creating character {data.characterName}");
+
         this.data = data;
 
         characterName = data.characterName;
@@ -33,8 +38,20 @@ public class CharacterInstance
         InitializeQuestions();
     }
 
+    /// <summary>
+    /// Get a random greeting from the character's list of greetings.
+    /// </summary>
+    /// <returns>A greeting in the form of dialogue lines.</returns>
     public List<string> GetGreeting()
     {
+        // Pick random greeting from data list
+        if (data.greetings != null && data.greetings.Length > 0)
+        {
+            int randomInt = new System.Random().Next(data.greetings.Length);
+            return data.greetings[randomInt].lines;
+        }
+
+        // If no greeting was found, return default greeting
         return new() { "Hello" };
     }
 
@@ -43,14 +60,18 @@ public class CharacterInstance
     /// </summary>
     private List<List<string>> GetAllTraits()
     {
-        return Answers.Values.ToList();
+        return Traits.Values.ToList();
     }
 
+    /// <summary>
+    /// Places character data (answers & traits) in their respective dictionaries.
+    /// </summary>
     public void InitializeQuestions()
     {
         foreach (var kvp in data.answers)
         {
             Answers[kvp.question] = kvp.answer;
+            Traits[kvp.question] = kvp.trait;
             RemainingQuestions.Add(kvp.question);
         }
     }
@@ -70,19 +91,17 @@ public class CharacterInstance
 
         if (RemainingQuestions.Count > 0)
         {
-
             int randomInt = new System.Random().Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
             RemainingQuestions.RemoveAt(randomInt);
 
-            // TODO: add question-text to the answer that is returned
-            return (Answers[question]);
+            return Traits[question];
         }
         else
         {
-            List<string> output = new List<string>();
-            output.Add("No clues were found..");
-            return (output);
+            List<string> output = new();
+            output.Add("No traits were found...");
+            return output;
         }
     }
 }

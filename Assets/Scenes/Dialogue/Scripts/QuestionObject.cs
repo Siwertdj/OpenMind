@@ -8,6 +8,7 @@ using UnityEngine;
 public class QuestionObject : DialogueObject
 {
     public List<Question> questions = new();
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
@@ -16,15 +17,21 @@ public class QuestionObject : DialogueObject
         set { _responses = value; }
     }
 
+    public QuestionObject(GameObject[] background)
+    {
+        this.background = background;
+    }
+
     public override void Execute()
     {
         var dm = DialogueManager.dm;
+        dm.ReplaceBackground(background);
 
         GenerateQuestions();
 
         // Add response to each question to list of responses
         foreach (Question question in questions)
-            Responses.Add(new ResponseObject(question));
+            Responses.Add(new ResponseObject(question, background));
 
         dm.SetQuestionsField(true);
         dm.CreatePromptButtons(this);
