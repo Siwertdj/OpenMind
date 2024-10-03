@@ -43,17 +43,17 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log("StartDialogue called.");
 
-        // Retrieve and set the dialogue recipient
-        if (data[0] is CharacterInstance recipient)
-        {
-            Debug.Log($"Recipient's name is {recipient.characterName}");
-            currentRecipient = recipient;
-        }
         // Retrieve and set the dialogue object
-        if (data[1] is DialogueObject dialogueObject)
+        if (data[0] is DialogueObject dialogueObject)
         {
             Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
             currentObject = dialogueObject;
+        }
+        // Retrieve and set the dialogue recipient
+        if (data.Length > 1 && data[1] is CharacterInstance recipient)
+        {
+            Debug.Log($"Recipient's name is {recipient.characterName}");
+            currentRecipient = recipient;
         }
 
         // Execute the starting object
@@ -101,11 +101,12 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (currentObject != null)
+        if (currentRecipient != null)
             dialogueField.GetComponentInChildren<TextField>().SetText(currentRecipient.characterName);
 
         // Animator write dialogue to the screen.
-        animator.WriteDialogue(dialogue, currentRecipient.pitch);
+        pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
+        animator.WriteDialogue(dialogue, pitch);
     }
 
     /// <summary>

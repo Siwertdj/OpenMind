@@ -289,13 +289,24 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(DialogueObject dialogueObject)
     {
         // Transition to dialogue scene and await the loading operation
-        await sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
+        if (gameState == GameState.NpcSelect)
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.NPCSelectScene,
+                SceneController.SceneName.DialogueScene,
+                SceneController.TransitionType.Transition);
+        }
+        else if (gameState == GameState.NpcDialogue)
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.DialogueScene,
+                SceneController.SceneName.DialogueScene,
+                SceneController.TransitionType.Transition);
+        }
 
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
+        gameState = GameState.HintDialogue;
         onDialogueStart.Raise(this, dialogueObject);
     }
 
@@ -326,9 +337,11 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
 
+        gameState = GameState.NpcDialogue;
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
+        onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
 
     private GameObject[] GetRandomBackground(CharacterInstance character = null)
@@ -352,7 +365,7 @@ public class GameManager : MonoBehaviour
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
     /// TODO: Check naming convention for events and listeners, if this is right
-    public void EndDialogue(Component sender, params object[] data)
+    public async void EndDialogue(Component sender, params object[] data)
     {
 
         if (!HasQuestionsLeft())
@@ -363,10 +376,11 @@ public class GameManager : MonoBehaviour
         else
         {
             // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            sc.TransitionScene(
-                SceneController.SceneName.DialogueScene, 
-                SceneController.SceneName.NPCSelectScene, 
-                SceneController.TransitionType.Transition);
+            await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.TransitionType.Transition);
+            gameState = GameState.NpcSelect;
         }
     }
     #endregion
@@ -433,10 +447,4 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
     #endregion
-
-}
-
-public enum GameState
-{
-
 }
