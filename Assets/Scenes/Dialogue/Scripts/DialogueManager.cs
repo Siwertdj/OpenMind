@@ -14,6 +14,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueField;
     [SerializeField] private GameObject questionsField;
     [SerializeField] private DialogueAnimator animator;
+    [SerializeField] private GameObject inputField;
 
     [SerializeField] private GameObject buttonPrefab;
 
@@ -24,6 +25,8 @@ public class DialogueManager : MonoBehaviour
     public UnityEvent OnEndDialogue;
 
     public DialogueObject currentObject;
+
+    public string inputText;
 
     // Start is called before the first frame update
     void Start()
@@ -62,6 +65,9 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
 
+        if (GameManager.gm.isEpilogue)
+            CreateOpenQuestion();
+        
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
@@ -76,7 +82,7 @@ public class DialogueManager : MonoBehaviour
     {
         // Enable the dialogue field
         dialogueField.SetActive(true);
-
+        
         // Adjust the box containing the character's name
         if (GameManager.gm.dialogueObject != null)
             dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
@@ -128,6 +134,26 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Creates the buttons and the text field for the open questions.
+    /// </summary>
+    private void CreateOpenQuestion()
+    {
+        // Enable the input field.
+        inputField.SetActive(true);
+        
+        // Create the enter button.
+        Button enterButton = Instantiate(buttonPrefab, inputField.transform).GetComponent<Button>();
+        enterButton.name = "enterButton";
+        enterButton.gameObject.tag = "Button";
+
+        TMP_Text buttonText = enterButton.GetComponentInChildren<TMP_Text>();
+        buttonText.text = "Enter";
+        buttonText.enableAutoSizing = false;
+        buttonText.fontSize = 40;
+        enterButton.onClick.AddListener(() => AnswerOpenQuestion());
+    }
+    
+    /// <summary>
     /// Creates the button to go back to the NPCSelect screen.
     /// </summary>
     private void CreateBackButton()
@@ -144,11 +170,25 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Creates the text field in which the player can answer an open question.
+    /// Continues the dialogue after answering the open question.
     /// </summary>
-    private void CreateTextField()
+    private void AnswerOpenQuestion()
     {
+        DestroyButtons();
         
+        // Assign the text from the inputField to inputText.
+        // TODO: can write the answers from the open questions to somewhere.
+        inputText = inputField.GetComponent<TMP_InputField>().text;
+        
+        // Disable the input field.
+        inputField.SetActive(false);
+        
+        // Reset the text from the input field.
+        inputField.GetComponentInChildren<TMP_InputField>().text = "";
+        
+        // Go to the next part of the dialogue.
+        currentObject = currentObject.Responses[0];
+        currentObject.Execute();
     }
     /// <summary>
     /// Helper function for CreateBackButton.

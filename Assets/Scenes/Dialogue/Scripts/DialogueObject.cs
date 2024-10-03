@@ -78,6 +78,19 @@ public class TerminateDialogueObject : DialogueObject
         DialogueManager.dm.OnEndDialogue.Invoke();
         SceneController.sc.ToggleDialogueScene();
 
+        // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
+        if (GameManager.gm.isEpilogue)
+        {
+            if (GameManager.gm.hasWon)
+            {
+                SceneController.sc.ToggleGameWinScene();
+            }
+            else
+            {
+                SceneController.sc.ToggleGameOverScene();
+            }
+        }
+        
         // Invoke post function if given
         post?.Invoke();
     }

@@ -8,7 +8,7 @@ using UnityEngine;
 public class OpenResponseObject : DialogueObject
 {
     // The answer of the open question.
-    private string answer = "";
+    public string answer = "";
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses

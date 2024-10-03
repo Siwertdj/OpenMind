@@ -7,8 +7,7 @@ public class EpilogueManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager gm = GameManager.gm;
-        gm.StartEpilogueDialogue(gm.FinalChosenCuplrit);
+        
     }
 
     // Update is called once per frame

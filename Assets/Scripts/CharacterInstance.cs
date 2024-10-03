@@ -48,15 +48,26 @@ public class CharacterInstance
         List<string> speakingText1 = new List<string>()
         {
             "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-            "I was indeed the one who kept sending u messages",
+            "I was indeed the one who kept sending u messages.",
             "and in fact, I knew that you did not know who",
             "was sending the messages. I also got hold of",
             "the results of the intermediate test. You managed",
             "to guess correctly, and so i wanted to ask you the following:", // this one is the 6th sentence
             "Why did u change ur choice compared to the intermediate decision?"
         };
-        List<string> speakingText2 = new List<string>(){ "worst" };
-        List<string> speakingText3 = new List<string>(){ "ham" };
+        List<string> speakingText2 = new List<string>()
+        {
+            "Okay, thats very interesting!",
+            "Seems like getting more information really does change ur choice.",
+            "bibidibop."
+        };
+        List<string> speakingText3 = new List<string>()
+        {
+            "alright very cool.",
+            "I have to go now.",
+            "I do not want to miss the bus.",
+            "Goodbye."
+        };
         // List of lists, where in between each list a DialogueObject can be called.
         List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
         return retval;
@@ -68,9 +79,29 @@ public class CharacterInstance
     /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
     public List<List<string>> EpilogueLoseScenario()
     {
-        List<string> speakingText1 = new List<string>(){ "kaas" };
-        List<string> speakingText2 = new List<string>(){ "worst" };
-        List<string> speakingText3 = new List<string>(){ "ham" };
+        List<string> speakingText1 = new List<string>()
+        { 
+            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
+            "I was indeed the one who kept sending u messages.",
+            "and in fact, I knew that you did not know who",
+            "was sending the messages. I also got hold of",
+            "the results of the intermediate test. You managed",
+            "to guess correctly, and so i wanted to ask you the following:", // this one is the 6th sentence
+            "Why did u change ur choice compared to the intermediate decision?" 
+        };
+        List<string> speakingText2 = new List<string>()
+        { 
+            "Okay, thats very interesting!",
+            "Seems like getting more information really does change ur choice.",
+            "bibidibop." 
+        };
+        List<string> speakingText3 = new List<string>()
+        { 
+            "alright very cool.",
+            "I have to go now.",
+            "I do not want to miss the bus.",
+            "Goodbye." 
+        };
         // List of lists, where in between each list a DialogueObject can be called.
         List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
         return retval;

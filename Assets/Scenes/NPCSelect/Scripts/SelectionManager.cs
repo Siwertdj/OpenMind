@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -103,10 +104,8 @@ public class SelectionManager : MonoBehaviour
                 else
                     GameManager.gm.hasWon = false;
                 
-                
                 // Load the epilogue scene.
-                SceneController.sc.ToggleNPCSelectScene();
-                SceneController.sc.ToggleEpilogueScene();
+                GameManager.gm.StartEpilogueDialogue(selectOption.character);
             }
         }
     }

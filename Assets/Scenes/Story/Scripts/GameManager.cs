@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
     // Save the character that has been chosen at the end of the game.
     public CharacterInstance FinalChosenCuplrit;
     
+    // Bool used the check if we are in the epilogue.
+    public bool isEpilogue;
+    
     // Holds the remainder of the conversation in the epilogue.
     public List<List<string>> remainingDialogueScenario;
 
@@ -391,8 +394,10 @@ public class GameManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public void StartEpilogueDialogue(CharacterInstance character)
     {
-        SceneController.sc.ToggleEpilogueScene();
+        SceneController.sc.ToggleNPCSelectScene();
 
+        isEpilogue = true;
+        
         // Assign the dialogue needed for the conversation in the epilogue.
         if (hasWon)
             remainingDialogueScenario = character.EpilogueWinScenario();
