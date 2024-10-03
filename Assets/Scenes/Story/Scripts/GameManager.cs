@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
 
         var dialogue = new List<string> {
             $"{victimName} has disappeared.",
-            "The culprit has said the following:",
+            "There is some new information about the culprit:",
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
 
