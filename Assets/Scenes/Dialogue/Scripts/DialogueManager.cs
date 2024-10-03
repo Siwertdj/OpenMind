@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueField;
     [SerializeField] private GameObject questionsField;
     [SerializeField] private GameObject backgroundField;
+    [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
@@ -31,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public DialogueObject currentObject;
     
     /// <summary>
-    /// Sets DialogueManager variables and executes the starting DialogueObject.
+    /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
@@ -49,11 +50,18 @@ public class DialogueManager : MonoBehaviour
             Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
             currentObject = dialogueObject;
         }
-        // Retrieve and set the dialogue recipient
+        // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
             Debug.Log($"Recipient's name is {recipient.characterName}");
             currentRecipient = recipient;
+            characterNameField.SetActive(true);
+        } 
+        else
+        {
+            // No dialogue recipient given, so we remove the character name field
+            Debug.Log("No dialogue recipient given");
+            characterNameField.SetActive(false);
         }
 
         // Execute the starting object
@@ -84,6 +92,7 @@ public class DialogueManager : MonoBehaviour
     {
         // Close dialogue field
         dialogueField.SetActive(false);
+        characterNameField.SetActive(false);
 
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
@@ -102,7 +111,10 @@ public class DialogueManager : MonoBehaviour
 
         // Adjust the box containing the character's name
         if (currentRecipient != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(currentRecipient.characterName);
+        {
+            characterNameField.SetActive(true);
+            characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
+        }
 
         // Animator write dialogue to the screen.
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
