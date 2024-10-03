@@ -15,7 +15,7 @@ public class NotebookManager : MonoBehaviour
         // Read notes previously saved to notes.txt
         using StreamReader reader = new(notesFilePath + "notes.txt");
         string fetchedNotes = reader.ReadToEnd();
-        Debug.Log("Fetched notes: " + fetchedNotes);
+        //Debug.Log("Fetched notes: " + fetchedNotes);
         inputField.GetComponent<TMP_InputField>().text = fetchedNotes;  // Put said notes into the inputfield
     }
 

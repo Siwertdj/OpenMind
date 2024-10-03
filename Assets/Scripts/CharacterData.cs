@@ -13,13 +13,14 @@ public class CharacterData : ScriptableObject
     public Sprite avatar;
     [Range(0.5f, 2f)] public float voicePitch = 1;
 
-    // TODO: Potentially auto-fill the dialogueList automatically based on the content of each character's respective folder.
-    public List<DialogueObject> DialogueList;
-
     [SerializeField]
     public KeyValuePair[] answers;
+
+    [SerializeField]
+    public DialogueLines[] greetings;
 }
 
+// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
 [Serializable]
 public struct KeyValuePair
 {
@@ -27,4 +28,13 @@ public struct KeyValuePair
     public Question question;
     [SerializeField]
     public List<string> answer;
+    [SerializeField]
+    public List<string> trait;
+}
+
+[Serializable]
+public struct DialogueLines
+{
+    [SerializeField]
+    public List<string> lines;
 }
