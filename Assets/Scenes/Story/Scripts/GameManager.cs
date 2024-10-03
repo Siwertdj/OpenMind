@@ -44,6 +44,13 @@ public class GameManager : MonoBehaviour
     {
         sc = SceneController.sc;
         
+        // Initialize an empty list of characters
+        currentCharacters = new List<CharacterInstance>();
+        // Now, populate this list.
+        PopulateCharacters();
+        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+        //Test_CharactersInGame();
+        
         OpenStartScreen();
     }
 
@@ -61,12 +68,7 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("New Game!");
-        // Initialize an empty list of characters
-        currentCharacters = new List<CharacterInstance>();
-        // Now, populate this list.
-        PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
+        
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
