@@ -196,6 +196,7 @@ public class DialogueManager : MonoBehaviour
         currentObject.Execute();
     }
 
+    #region [DEPRECATED] Continue Button
     /// <summary>
     /// Creates the button to ask another question to the same NPC
     /// </summary>
@@ -226,6 +227,7 @@ public class DialogueManager : MonoBehaviour
 
         CreateBackButton();
     }
+    #endregion
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.

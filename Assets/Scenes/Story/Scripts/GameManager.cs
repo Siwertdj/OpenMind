@@ -103,11 +103,22 @@ public class GameManager : MonoBehaviour
         gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
-        // Start the NPC Selection scene
-        sc.TransitionScene(
-            SceneController.SceneName.DialogueScene, 
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.TransitionType.Transition);
+
+        var dialogue = new List<string> {
+            $"{victimName} has disappeared.",
+            "The culprit has said the following:",
+        };
+        dialogue.AddRange(GetCulprit().GetRandomTrait());
+
+        var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
+
+        StartDialogue(dialogueObject);
+
+        //// Start the NPC Selection scene
+        //sc.TransitionScene(
+        //    SceneController.SceneName.DialogueScene, 
+        //    SceneController.SceneName.NPCSelectScene, 
+        //    SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -263,6 +274,19 @@ public class GameManager : MonoBehaviour
 
     // This region contains methods regarding dialogue
     #region Dialogue
+    public async void StartDialogue(DialogueObject dialogueObject)
+    {
+        // Transition to dialogue scene and await the loading operation
+        await sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
+
+        // The gameevent here should pass the information to Dialoguemanager
+        // ..at which point dialoguemanager will start.
+        onDialogueStart.Raise(this, dialogueObject);
+    }
+
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
@@ -318,6 +342,7 @@ public class GameManager : MonoBehaviour
     /// TODO: Check naming convention for events and listeners, if this is right
     public void EndDialogue(Component sender, params object[] data)
     {
+
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
@@ -396,4 +421,9 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
     }
     #endregion
+}
+
+public enum GameState
+{
+
 }
