@@ -14,8 +14,8 @@ public class CutsceneController : MonoBehaviour
 
     private void Start()
     {
-        imageToggler.onValueChanged.AddListener(OnToggleValueChanged);
-        imageToggler.gameObject.SetActive(false);
+        //imageToggler.onValueChanged.AddListener(OnToggleValueChanged);
+       //imageToggler.gameObject.SetActive(false);
     }
 
     public void PauseTimeline()
