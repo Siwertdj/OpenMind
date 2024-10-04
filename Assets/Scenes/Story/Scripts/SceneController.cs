@@ -221,14 +221,35 @@ public class SceneController : MonoBehaviour
         
         //some extra checks will be made about the validity of the variables and the file contents
         //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
+        if (!sceneToID.ContainsKey(currentScene))
+        {
+            Debug.LogError($"The scene with the name {currentScene} cannot be found in the transition graph. Please add it to the transition graph.");
+            return;
+        }
+        
+        if (!sceneToID.ContainsKey(targetScene))
+        {
+            Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. Please add it to the transition graph.");
+            return;
+        }
+        
+        //cannot load from an unloaded scene
+        if (!SceneManager.GetSceneByName(currentScene).isLoaded)
+        {
+            Debug.LogError($"Cannot make a transition from the scene {currentScene}, since it's not loaded.");
+            return;
+        }
         
         //checks, does currentScene point to nextScene in the graph?
         int currentSceneID = sceneToID[currentScene];
         int targetSceneID = sceneToID[targetScene];
         if (!sceneGraph[currentSceneID].Contains((targetSceneID, transitionType)))
+        {
             //invalid transition
-            throw new Exception($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
-        
+            Debug.LogError($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
+            return;
+        }
+
         await loadCode(currentScene, targetScene, transitionType);
     }
 
