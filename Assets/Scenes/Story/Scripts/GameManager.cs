@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         gm = this;
         
         // Make parentobject persistent, so that all objects in the toolbox remain persistent.
+        Debug.Log(gameObject.transform.parent);
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
