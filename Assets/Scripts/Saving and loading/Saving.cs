@@ -38,12 +38,11 @@ public class Saving : MonoBehaviour
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
-        string noteBookData =
-            FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook", "Saving");
         
         (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
-
-        
+        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
+        // notebook per character
+        (int, string)[] characterNotes = gameManager.notebookData.GetAllNotes();
         //saves the scene stack, excluding the loading scene
         string[] sceneStack = new string[SceneManager.sceneCount-1];
         for (int i = 0; i < sceneStack.Length; i++)
@@ -56,8 +55,10 @@ public class Saving : MonoBehaviour
             culprit = gameManager.GetCulprit().id,
             questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
             remainingQuestions = remainingQuestions,
-            noteBookData = noteBookData,
-            sceneStack = sceneStack
+            sceneStack = sceneStack,
+            personalNotes = gameManager.notebookData.GetPersonalNotes(),
+            characterNotes = characterNotes,
+            askedQuestions = askedQuestions
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);

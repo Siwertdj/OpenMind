@@ -552,6 +552,7 @@ MonoBehaviour:
   inputFieldCharacters: {fileID: 907044250}
   characterNotes: {fileID: 1668492905}
   nameButtons: {fileID: 316353421}
+  personalButton: {fileID: 1758625905}
 --- !u!224 &610071054 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}

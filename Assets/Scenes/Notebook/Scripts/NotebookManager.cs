@@ -15,52 +15,52 @@ public class NotebookManager : MonoBehaviour
     public GameObject characterNotes;
     //private string notesFilePath = "Assets\\Scenes\\Notebook\\";
     public GameObject nameButtons;
-    private List<CharacterInstance> characters;
+    public Button personalButton;
     [NonSerialized] public NotebookData notebookData;
     private CharacterInstance currentCharacter;
+    private List<Button> buttons;
+    private Button selectedButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        // Read notes previously saved to notes.txt
-        using StreamReader reader = new(notesFilePath + "notes.txt");
-        string fetchedNotes = reader.ReadToEnd();
-        //Debug.Log("Fetched notes: " + fetchedNotes);
-        inputField.GetComponent<TMP_InputField>().text = fetchedNotes; // Put said notes into the inputfield
-        */
-        
         // close character notes
         characterNotes.SetActive(false);
         inputFieldCharacters.SetActive(false);
         // Open personal notes
         inputField.SetActive(true);
-        // get characters
-        characters = GameManager.gm.currentCharacters;
         // assign character names to buttons
         InitializeCharacterButtons();
         // get notebookdata
-        notebookData = GameManager.notebookData;
+        notebookData = GameManager.gm.notebookData;
         inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        selectedButton = personalButton;
+        personalButton.interactable = false;
     }
 
-    private void InitializeCharacterButtons()
+    public void InitializeCharacterButtons()
     {
         // get all buttons
-        List<Button> buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
-        // create button events and name text
-        for (int i = 0; i < characters.Count; i++)
+        buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
+        for (int i = 0; i < buttons.Count; i++)
         {
-            int characterIndex = i;
-            Button button = buttons[characterIndex];
-            buttons[characterIndex].GetComponentInChildren<TextMeshProUGUI>().text = 
-                characters[characterIndex].characterName;
-            
-            button.onClick.AddListener(()=>CharacterTab(characterIndex));
+            int id = i;
+            Button button = buttons[id];
+            button.GetComponentInChildren<TextMeshProUGUI>().text = 
+                GameManager.gm.currentCharacters[id].characterName + id.ToString();
+            button.onClick.AddListener(()=>CharacterTab(id));
         }
+        /*
+        foreach(CharacterInstance character in GameManager.gm.currentCharacters)
+        {
+            int id = character.id;
+            Button button = buttons[id];
+            button.GetComponentInChildren<TextMeshProUGUI>().text = character.characterName + id.ToString();
+            button.onClick.AddListener(()=>CharacterTab(id));
+        }*/
     }
     
-    private void CharacterTab(int characterIndex)
+    private void CharacterTab(int id)
     {
         // Deactivate the personal notes tab, save text
         if (inputField.activeInHierarchy)
@@ -80,18 +80,18 @@ public class NotebookManager : MonoBehaviour
         inputFieldCharacters.SetActive(true);
         
         // Get the character
-        currentCharacter = characters[characterIndex];
-        
-        // Get the string to display in the notebook
-        string answerNotes;
-        
-        answerNotes = notebookData.GetAnswers(currentCharacter);
+        currentCharacter = GameManager.gm.currentCharacters[id];
         
         // Write the notes to the notebook tab
-        characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = answerNotes;
+        characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
         
         // Write text to notebook
         inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetPage(currentCharacter);
+        
+        // Make button clickable
+        selectedButton.interactable = true;
+        selectedButton = buttons[id];
+        selectedButton.interactable = false;
     }
 
     public void ToggleCharacterInfo()
@@ -109,22 +109,16 @@ public class NotebookManager : MonoBehaviour
     
     public void SaveNotes()
     {
-        /*
-        Debug.Log("Saving...");
-        // Write written notes from the TMP input field to notes.txt to save notes after closing scene
-        string savedNotes = inputField.GetComponent<TMP_InputField>().text;
-        using (StreamWriter writer = new (notesFilePath + "notes.txt"))
+        if (inputField.activeInHierarchy)
         {
-            writer.WriteLine(savedNotes);
+            notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
         }
-
-        Debug.Log("Saved notes: " + savedNotes);*/
-        
-        // Save the written text to the notebook data
-        notebookData.UpdateNotes(currentCharacter, 
-            inputFieldCharacters.GetComponent<TMP_InputField>().text);
-        
-        notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
+        else
+        {
+            // Save the written text to the notebook data
+            notebookData.UpdateNotes(currentCharacter, 
+                inputFieldCharacters.GetComponent<TMP_InputField>().text);
+        }
     }
 
     public void OpenPersonalNotes()
@@ -138,5 +132,10 @@ public class NotebookManager : MonoBehaviour
             inputFieldCharacters.GetComponent<TMP_InputField>().text);
         // Close the inputfield
         inputFieldCharacters.SetActive(false);
+        
+        // Make button clickable
+        selectedButton.interactable = true;
+        selectedButton = personalButton;
+        selectedButton.interactable = false;
     }
 }

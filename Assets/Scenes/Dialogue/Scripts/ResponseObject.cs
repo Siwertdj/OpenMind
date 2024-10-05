@@ -48,7 +48,7 @@ public class ResponseObject : DialogueObject
         character.RemainingQuestions.Remove(question);
         
         // Write answers to notebook
-        GameManager.notebookData.UpdateQuestions(character, question);
+        character.AskedQuestions.Add(question);
         
         // Return answer to the question
         return character.Answers[question];

@@ -6,36 +6,29 @@ public class NotebookPage
     private readonly CharacterInstance _character;
     private string _notes;
     //private Vector2 drawing;
-    private List<Question> _answeredQuestions;
 
     public NotebookPage(CharacterInstance character)
     {
-        this._character = character;
+        _character = character;
         _notes = "Notes on " + character.characterName + ".\n";
         //drawing = Vector2.zero;
-        _answeredQuestions = new List<Question>();
-    }
-
-    public void AddQuestion(Question question)
-    {
-        _answeredQuestions.Add(question);
     }
     
     public string GetNotes()
     {
-        return _notes;
+        return _notes + _character.id;
     }
 
     public void SetNotes(string input)
     {
-        this._notes = input;
+        _notes = input;
     }
     
     public string QuestionText()
     {
         string output = "\n";
 
-        foreach (Question q in _answeredQuestions)
+        foreach (Question q in _character.AskedQuestions)
         {
             output += GetQuestionText(q).ToUpper() + "\n";
             foreach (string s in _character.Answers[q])
@@ -49,7 +42,7 @@ public class NotebookPage
 
     public string Intro()
     {
-        if (_answeredQuestions.Count > 0)
+        if (_character.AskedQuestions.Count > 0)
         {
             return "Your info on " + _character.characterName + ".\n";
         }

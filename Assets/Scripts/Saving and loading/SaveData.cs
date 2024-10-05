@@ -12,8 +12,12 @@ public class SaveData
     public int culprit;
     public int questionsRemaining;
     public (int, List<Question>)[] remainingQuestions;
-    public string noteBookData;
     public string[] sceneStack;
+    // notebook
+    public string personalNotes;
+    public (int, string)[] characterNotes;
+    public (int, List<Question>)[] askedQuestions;
+    
 }
 
 /// <summary>
@@ -32,16 +36,6 @@ public static class FilePathConstants
     /// The name of the save file of the player save data.
     /// </summary>
     private const string playerSaveDataFileName = "saveData.txt";
-
-    /// <summary>
-    /// The filepath to where the notebook data is stored. The "root" of this filepath is Assets.
-    /// </summary>
-    private const string notebookFilePath = "Notebook/notes.txt";
-    
-    /// <summary>
-    /// Gets the location to the notebook file.
-    /// </summary>
-    public static string GetNoteBookLocation() => Application.dataPath + "/Scenes/" + notebookFilePath;
     
     /// <summary>
     /// Gets the location to the directory when the save file is stored.

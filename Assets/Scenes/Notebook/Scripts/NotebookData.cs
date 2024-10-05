@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using Vector2 = UnityEngine.Vector2;
 
 public class NotebookData
 {
-    private readonly Dictionary<CharacterInstance, NotebookPage> _pages = 
+    private Dictionary<CharacterInstance, NotebookPage> _pages = 
         new Dictionary<CharacterInstance, NotebookPage>();
 
     private string _personalNotes;
@@ -19,13 +20,7 @@ public class NotebookData
             _pages[character] = page;
         }
         
-        // Should load save, else
-        _personalNotes = "This note is a text";
-    }
-
-    public void UpdateQuestions(CharacterInstance character, Question question)
-    {
-        _pages[character].AddQuestion(question);
+        _personalNotes = "Write down your thoughts.";
     }
 
     public string GetPage(CharacterInstance character)
@@ -45,11 +40,26 @@ public class NotebookData
 
     public void UpdatePersonalNotes(string input)
     {
-        this._personalNotes = input;
+        _personalNotes = input;
     }
     
     public string GetPersonalNotes()
     {
         return _personalNotes;
+    }
+
+    public (int, string)[] GetAllNotes()
+    {   
+        (int, string)[] allNotes = GameManager.gm.currentCharacters
+            .Select(c => (c.id, _pages[c].GetNotes())).ToArray();
+        return allNotes;
+    }
+
+    public void LoadAllNotes((int, string)[] notes)
+    {
+        foreach ((int, string) note in notes)
+        {
+            _pages[GameManager.gm.currentCharacters[note.Item1]].SetNotes(note.Item2);
+        }
     }
 }

@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
-    public static NotebookData notebookData;
+    public NotebookData notebookData;
     
     // Called when this script instance is being loaded
     private void Awake()

@@ -10,6 +10,7 @@ public class CharacterInstance
     public Dictionary<Question, List<string>> Answers = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
+    public List<Question> AskedQuestions = new();
     
     public List<string>[] greetings;
     
@@ -93,7 +94,6 @@ public class CharacterInstance
         {
             int randomInt = new System.Random().Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
-            Debug.Log("THis code yeeeeh");
             RemainingQuestions.RemoveAt(randomInt);
 
             return Traits[question];
