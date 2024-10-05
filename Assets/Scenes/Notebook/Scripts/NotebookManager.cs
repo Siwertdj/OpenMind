@@ -12,9 +12,9 @@ public class NotebookManager : MonoBehaviour
     public GameObject inputField;
     public GameObject characterNotes;
     private string notesFilePath = "Assets\\Scenes\\Notebook\\";
-    private GameManager gameManager;
     public GameObject nameButtons;
     private List<CharacterInstance> characters;
+    public NotebookData notebookData;
 
     // Start is called before the first frame update
     void Start()
@@ -28,10 +28,13 @@ public class NotebookManager : MonoBehaviour
         // close character notes
         characterNotes.SetActive(false);
         // get characters
-        gameManager = FindAnyObjectByType<GameManager>();
-        characters = gameManager.currentCharacters;
+        characters = GameManager.gm.currentCharacters;
         // assign character names to buttons
         InitializeCharacterButtons();
+        
+        // notebook data
+        //notebookData = new NotebookData(characters);
+        notebookData = GameManager.notebookData;
     }
 
     private void InitializeCharacterButtons()
@@ -63,32 +66,10 @@ public class NotebookManager : MonoBehaviour
         // Get the string to display in the notebook
         string answerNotes;
         
-        if (currentCharacter.AnsweredQuestions.Count > 0)
-        {
-            answerNotes = GetCollectedInfo(currentCharacter);
-        }
-        else
-        {
-            answerNotes = "You have not asked " + currentCharacter.characterName + " any questions.";
-        }
+        answerNotes = notebookData.GetAnswers(currentCharacter);
+        
         // Write the notes to the notebook tab
         characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = answerNotes;
-    }
-
-    private string GetCollectedInfo(CharacterInstance character)
-    {
-        string output = "";
-
-        foreach (Question q in character.AnsweredQuestions)
-        {
-            output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in character.Answers[q])
-            {
-                output += s + " ";
-            }
-            output += "\n \n";
-        }
-        return output;
     }
     
     public void SaveNotes()
@@ -110,26 +91,5 @@ public class NotebookManager : MonoBehaviour
         inputField.SetActive(true);
         //deactivate character thing
         characterNotes.SetActive(false);
-    }
-    
-    private string GetQuestionText(Question questionType)
-    {
-        return questionType switch
-        {
-            Question.Name => "Name",
-            Question.Age => "Age",
-            Question.Wellbeing => "Wellbeing",
-            Question.Political => "Political ideology",
-            Question.Personality => "Personality",
-            Question.Hobby => "Hobbies",
-            Question.CulturalBackground => "Cultural background",
-            Question.Education => "Education level",
-            Question.CoreValues => "Core values",
-            Question.ImportantPeople => "Most important people",
-            Question.PositiveTrait => "Positive trait",
-            Question.NegativeTrait => "Bad trait",
-            Question.OddTrait => "Odd trait",
-            _ => "",
-        };
     }
 }

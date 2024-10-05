@@ -10,8 +10,7 @@ public class CharacterInstance
     public Dictionary<Question, List<string>> Answers = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
-    public List<Question> AnsweredQuestions = new();
-
+    
     public List<string>[] greetings;
     
     public string characterName;

@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
+    public static NotebookData notebookData;
     
     // Called when this script instance is being loaded
     private void Awake()
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
+        notebookData = new NotebookData(currentCharacters);
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
