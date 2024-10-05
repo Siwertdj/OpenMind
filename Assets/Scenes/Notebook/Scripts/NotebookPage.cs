@@ -1,39 +1,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NotebookPage : MonoBehaviour
+public class NotebookPage
 {
-    private CharacterInstance character;
-    private string notes;
-    private Vector2 drawing;
-    public List<Question> AnsweredQuestions = new();
+    private readonly CharacterInstance _character;
+    private string _notes;
+    //private Vector2 drawing;
+    private List<Question> _answeredQuestions;
 
     public NotebookPage(CharacterInstance character)
     {
-        this.character = character;
-        notes = "hi, i am " + character.characterName;
-        drawing = Vector2.zero;
-        AnsweredQuestions = new List<Question>();
+        this._character = character;
+        _notes = "Notes on " + character.characterName + ".\n";
+        //drawing = Vector2.zero;
+        _answeredQuestions = new List<Question>();
+    }
+
+    public void AddQuestion(Question question)
+    {
+        _answeredQuestions.Add(question);
     }
     
     public string GetNotes()
     {
-        return notes;
+        return _notes;
     }
 
-    public void SetNotes(string notes)
+    public void SetNotes(string input)
     {
-        this.notes = notes;
+        this._notes = input;
     }
     
     public string QuestionText()
     {
         string output = "\n";
 
-        foreach (Question q in AnsweredQuestions)
+        foreach (Question q in _answeredQuestions)
         {
             output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in character.Answers[q])
+            foreach (string s in _character.Answers[q])
             {
                 output += s + " ";
             }
@@ -44,13 +49,13 @@ public class NotebookPage : MonoBehaviour
 
     public string Intro()
     {
-        if (AnsweredQuestions.Count > 0)
+        if (_answeredQuestions.Count > 0)
         {
-            return "Your info on " + character.characterName + " .\n";
+            return "Your info on " + _character.characterName + ".\n";
         }
         else
         {
-            return "You have not asked " + character.characterName + " any questions.\n";
+            return "You have not asked " + _character.characterName + " any questions.\n";
         }
     }
     

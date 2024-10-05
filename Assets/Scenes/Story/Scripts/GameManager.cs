@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
-        notebookData = new NotebookData(currentCharacters);
+        notebookData = new NotebookData();
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
@@ -268,6 +268,7 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
+    /// 
     /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
     /// Then, it loads the DialogueScene.
     /// </summary>
