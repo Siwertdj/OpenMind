@@ -38,8 +38,8 @@ public class Loading : MonoBehaviour
         // }
         //temp solution:
         SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
-        //if (saveData.sceneStack.Length == 2)
-            //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
+        if (saveData.sceneStack.Length == 2)
+            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
 
         //then load all the data
         gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>

@@ -47,17 +47,9 @@ public class NotebookManager : MonoBehaviour
             int id = i;
             Button button = buttons[id];
             button.GetComponentInChildren<TextMeshProUGUI>().text = 
-                GameManager.gm.currentCharacters[id].characterName + id.ToString();
+                GameManager.gm.currentCharacters[i].characterName;
             button.onClick.AddListener(()=>CharacterTab(id));
         }
-        /*
-        foreach(CharacterInstance character in GameManager.gm.currentCharacters)
-        {
-            int id = character.id;
-            Button button = buttons[id];
-            button.GetComponentInChildren<TextMeshProUGUI>().text = character.characterName + id.ToString();
-            button.onClick.AddListener(()=>CharacterTab(id));
-        }*/
     }
     
     private void CharacterTab(int id)

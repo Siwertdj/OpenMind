@@ -48,18 +48,20 @@ public class NotebookData
         return _personalNotes;
     }
 
-    public (int, string)[] GetAllNotes()
+    public (string, string)[] GetAllNotes()
     {   
-        (int, string)[] allNotes = GameManager.gm.currentCharacters
-            .Select(c => (c.id, _pages[c].GetNotes())).ToArray();
+        (string, string)[] allNotes = GameManager.gm.currentCharacters
+            .Select(c => (c.characterName, _pages[c].GetNotes())).ToArray();
         return allNotes;
     }
 
-    public void LoadAllNotes((int, string)[] notes)
+    public void LoadAllNotes((string, string)[] notes)
     {
-        foreach ((int, string) note in notes)
+        foreach ((string, string) note in notes)
         {
-            _pages[GameManager.gm.currentCharacters[note.Item1]].SetNotes(note.Item2);
+            CharacterInstance character = 
+                GameManager.gm.currentCharacters.First(c => c.characterName == note.Item1);
+            _pages[character].SetNotes(note.Item2);
         }
     }
 }

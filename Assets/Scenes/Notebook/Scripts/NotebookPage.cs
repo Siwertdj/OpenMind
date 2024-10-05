@@ -16,7 +16,7 @@ public class NotebookPage
     
     public string GetNotes()
     {
-        return _notes + _character.id;
+        return _notes;
     }
 
     public void SetNotes(string input)
