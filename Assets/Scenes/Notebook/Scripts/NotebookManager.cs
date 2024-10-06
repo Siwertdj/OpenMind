@@ -6,13 +6,14 @@ using TMPro;
 using System.IO;
 using System.Linq;
 using System.Net.Mime;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class NotebookManager : MonoBehaviour
 {
     public GameObject inputField;
     public GameObject inputFieldCharacters;
-    public GameObject characterNotes;
+    public GameObject characterInfo;
     public GameObject nameButtons;
     public Button personalButton;
     [NonSerialized] public NotebookData notebookData;
@@ -24,7 +25,7 @@ public class NotebookManager : MonoBehaviour
     void Start()
     {
         // close character notes
-        characterNotes.SetActive(false);
+        characterInfo.SetActive(false);
         inputFieldCharacters.SetActive(false);
         // Open personal notes
         inputField.SetActive(true);
@@ -51,50 +52,59 @@ public class NotebookManager : MonoBehaviour
         }
     }
     
+    public void OpenPersonalNotes()
+    {
+        // Save character notes
+        SaveNotes();
+        // Close the character inputfield
+        inputFieldCharacters.SetActive(false);
+        
+        // activate input
+        inputField.SetActive(true);
+        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+
+        // Make button clickable
+        ChangeButtons(personalButton);
+    }
+    
     private void CharacterTab(int id)
     {
-        // Deactivate the personal notes tab, save text
+        // Save notes
+        SaveNotes();
+        
+        // Deactivate the personal notes tab if it's opened
         if (inputField.activeInHierarchy)
         {
             inputField.SetActive(false);
-            notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
-            // Activate character tab
-            characterNotes.SetActive(false);
+            characterInfo.SetActive(false);
         }
-        else
-        {
-            // Save the written text to the notebook data
-            notebookData.UpdateNotes(currentCharacter, 
-                inputFieldCharacters.GetComponent<TMP_InputField>().text);
-        }
-        // Deactivate written character notes
+        
+        // Activate written character notes
         inputFieldCharacters.SetActive(true);
         
         // Get the character
         currentCharacter = GameManager.gm.currentCharacters[id];
         
         // Write the notes to the notebook tab
-        characterNotes.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
+        characterInfo.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
         
         // Write text to notebook
-        inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetPage(currentCharacter);
+        inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
         
         // Make button clickable
-        selectedButton.interactable = true;
-        selectedButton = buttons[id];
-        selectedButton.interactable = false;
+        ChangeButtons(buttons[id]);
     }
-
+    
     public void ToggleCharacterInfo()
     {
         // Toggle character tab
-        if (characterNotes.activeInHierarchy)
+        if (characterInfo.activeInHierarchy)
         {
-            characterNotes.SetActive(false);
+            characterInfo.SetActive(false);
         }
         else
         {
-            characterNotes.SetActive(true);
+            characterInfo.SetActive(true);
         }
     }
     
@@ -102,31 +112,21 @@ public class NotebookManager : MonoBehaviour
     {
         if (inputField.activeInHierarchy)
         {
+            // Save the written personal text to the notebook data
             notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
-            // Save the written text to the notebook data
-            notebookData.UpdateNotes(currentCharacter, 
+            // Save the written character text to the notebook data
+            notebookData.UpdateCharacterNotes(currentCharacter, 
                 inputFieldCharacters.GetComponent<TMP_InputField>().text);
         }
     }
 
-    public void OpenPersonalNotes()
+    private void ChangeButtons(Button clickedButton)
     {
-        // activate input thing
-        inputField.SetActive(true);
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-
-        // Save the written text to the notebook data
-        notebookData.UpdateNotes(currentCharacter, 
-            inputFieldCharacters.GetComponent<TMP_InputField>().text);
-        // Close the inputfield
-        inputFieldCharacters.SetActive(false);
-        
-        // Make button clickable
         selectedButton.interactable = true;
-        selectedButton = personalButton;
+        selectedButton = clickedButton;
         selectedButton.interactable = false;
     }
 }

@@ -23,7 +23,7 @@ public class NotebookData
         _personalNotes = "Write down your thoughts.";
     }
 
-    public string GetPage(CharacterInstance character)
+    public string GetCharacterNotes(CharacterInstance character)
     {
         return _pages[character].GetNotes();
     }
@@ -33,7 +33,7 @@ public class NotebookData
         return _pages[character].Intro() + _pages[character].QuestionText();
     }
 
-    public void UpdateNotes(CharacterInstance character, string notes)
+    public void UpdateCharacterNotes(CharacterInstance character, string notes)
     {
         _pages[character].SetNotes(notes);
     }
@@ -46,12 +46,5 @@ public class NotebookData
     public string GetPersonalNotes()
     {
         return _personalNotes;
-    }
-    
-    public (int, string)[] GetAllNotes()
-    {   
-        (int, string)[] allNotes = GameManager.gm.currentCharacters
-            .Select(c => (c.id, _pages[c].GetNotes())).ToArray();
-        return allNotes;
     }
 }

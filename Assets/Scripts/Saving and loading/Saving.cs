@@ -41,7 +41,8 @@ public class Saving : MonoBehaviour
         
         (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
         (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
-        (int, string)[] characterNotes = gameManager.notebookData.GetAllNotes();
+        (int, string)[] characterNotes = GameManager.gm.currentCharacters
+            .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
         //saves the scene stack, excluding the loading scene
         string[] sceneStack = new string[SceneManager.sceneCount-1];
         for (int i = 0; i < sceneStack.Length; i++)
