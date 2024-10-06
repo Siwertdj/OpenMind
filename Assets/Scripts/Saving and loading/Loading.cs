@@ -51,12 +51,12 @@ public class Loading : MonoBehaviour
                 c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             }
             c.AskedQuestions = saveData.askedQuestions.First(qs => qs.Item1 == c.id).Item2;
+            gameManager.notebookData.UpdateNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
             return c;
         }).ToList();
         
         gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
         gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
-        gameManager.notebookData.LoadAllNotes(saveData.characterNotes);
     }
     
     private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)

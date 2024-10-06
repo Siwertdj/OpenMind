@@ -15,9 +15,8 @@ public class SaveData
     public string[] sceneStack;
     // notebook
     public string personalNotes;
-    public (string, string)[] characterNotes;
+    public (int, string)[] characterNotes;
     public (int, List<Question>)[] askedQuestions;
-    
 }
 
 /// <summary>

@@ -13,7 +13,6 @@ public class NotebookManager : MonoBehaviour
     public GameObject inputField;
     public GameObject inputFieldCharacters;
     public GameObject characterNotes;
-    //private string notesFilePath = "Assets\\Scenes\\Notebook\\";
     public GameObject nameButtons;
     public Button personalButton;
     [NonSerialized] public NotebookData notebookData;

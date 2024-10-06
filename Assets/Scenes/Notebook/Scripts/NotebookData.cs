@@ -47,21 +47,11 @@ public class NotebookData
     {
         return _personalNotes;
     }
-
-    public (string, string)[] GetAllNotes()
+    
+    public (int, string)[] GetAllNotes()
     {   
-        (string, string)[] allNotes = GameManager.gm.currentCharacters
-            .Select(c => (c.characterName, _pages[c].GetNotes())).ToArray();
+        (int, string)[] allNotes = GameManager.gm.currentCharacters
+            .Select(c => (c.id, _pages[c].GetNotes())).ToArray();
         return allNotes;
-    }
-
-    public void LoadAllNotes((string, string)[] notes)
-    {
-        foreach ((string, string) note in notes)
-        {
-            CharacterInstance character = 
-                GameManager.gm.currentCharacters.First(c => c.characterName == note.Item1);
-            _pages[character].SetNotes(note.Item2);
-        }
     }
 }
