@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Events;
 
 public class CutsceneController : MonoBehaviour
 {
@@ -11,7 +13,6 @@ public class CutsceneController : MonoBehaviour
     public GameObject imageWithGrid;                 
     public GameObject imageWithoutGrid;
     public Toggle imageToggler;
-
     private void Start()
     {
         //imageToggler.onValueChanged.AddListener(OnToggleValueChanged);
@@ -34,4 +35,5 @@ public class CutsceneController : MonoBehaviour
         imageWithoutGrid.SetActive(!isOn);
         imageWithGrid.SetActive(isOn);
     }
+    
 }
