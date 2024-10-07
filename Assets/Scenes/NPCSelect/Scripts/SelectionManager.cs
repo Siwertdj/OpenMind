@@ -43,9 +43,9 @@ public class SelectionManager : MonoBehaviour
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
         // set the selectionType variable to decidecriminal.
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
-            scene = "decidecriminal";
+            selectionType = "decidecriminal";
         else
-            scene = "dialogue";
+            selectionType = "dialogue";
     }
     
     /// <summary>
@@ -105,7 +105,7 @@ public class SelectionManager : MonoBehaviour
                 //GameManager.gm.dialogueRecipient = selectOption.character;
                 
                 // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-                if (culprit.characterName == selectOption.character.characterName)
+                if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
                     GameManager.gm.hasWon = true;
                 else
                     GameManager.gm.hasWon = false;

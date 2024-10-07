@@ -320,6 +320,7 @@ public class GameManager : MonoBehaviour
                 SceneController.SceneName.DialogueScene,
                 SceneController.TransitionType.Transition);
         }
+        else if (gameState == )
 
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
@@ -394,9 +395,10 @@ public class GameManager : MonoBehaviour
         {
             // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
             await sc.TransitionScene(
-            SceneController.SceneName.DialogueScene,
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.TransitionType.Transition);
+                SceneController.SceneName.DialogueScene,
+                SceneController.SceneName.NPCSelectScene,
+                SceneController.TransitionType.Transition);
+            
             gameState = GameState.NpcSelect;
         }
     }
