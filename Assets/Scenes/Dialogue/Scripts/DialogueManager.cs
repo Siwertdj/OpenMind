@@ -80,12 +80,6 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets prompts to parameter value.
-    /// </summary>
-    /// <param name="active"></param>
-    public void SetQuestionsField(bool active) => questionsField.SetActive(active);
-
-    /// <summary>
     /// Executed when the dialogue animator has finished writing the dialogue.
     /// </summary>
     public void OnDialogueComplete()
@@ -143,17 +137,23 @@ public class DialogueManager : MonoBehaviour
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
     /// <param name="questionObject"></param>
-    public void CreatePromptButtons(QuestionObject questionObject)
+    public void InstantiatePromptButtons(QuestionObject questionObject)
     {
+        // Instantiate button containing each response
         foreach (ResponseObject response in questionObject.Responses)
         {
+            // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
+
+            // Set Unity inspector values
             button.name = "questionButton";
             button.gameObject.tag = "Button";
 
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
             buttonText.text = GetPromptText(response.question);
+
+            // Set styling for button
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
@@ -163,6 +163,9 @@ public class DialogueManager : MonoBehaviour
 
         // Add the button to return to the other characters
         CreateBackButton();
+
+        // Set the buttons to be visible
+        questionsField.SetActive(true);
     }
 
     /// <summary>
