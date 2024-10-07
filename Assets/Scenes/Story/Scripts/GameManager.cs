@@ -423,6 +423,44 @@ public class GameManager : MonoBehaviour
             gameState = GameState.NpcSelect;
         }
     }
+    
+    /// <summary>
+    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
+    /// </summary>
+    /// <param name="character"> The character which has been chosen. </param>
+    public async void StartEpilogueDialogue(CharacterInstance character)
+    {
+        gameState = GameState.Epilogue;
+        
+        // Assign the dialogue needed for the conversation in the epilogue.
+        if (hasWon)
+            remainingDialogueScenario = character.EpilogueWinScenario();
+        else
+            remainingDialogueScenario = character.EpilogueLoseScenario();
+        
+        List<string> speakingObjectText = new List<string>();
+        
+        
+        // Assign the first element of the list to speakingObjectText
+        if (remainingDialogueScenario.Count > 0)
+            speakingObjectText = remainingDialogueScenario[0];
+        // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
+        remainingDialogueScenario.RemoveAt(0);
+
+        // Create a SpeakingObject with the given List<string>
+        var background = GetRandomBackground(character);
+        var dialogueObject = new SpeakingObject(speakingObjectText, background);
+        dialogueObject.Responses.Add(new OpenResponseObject(background));
+        
+        await SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
+        
+        onDialogueStart.Raise(this, dialogueObject, character);
+    }
+    
+    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
@@ -487,38 +525,6 @@ public class GameManager : MonoBehaviour
         //dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }    
-    /// <summary>
-    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
-    /// </summary>
-    /// <param name="character"> The character which has been chosen. </param>
-    public async void StartEpilogueDialogue(CharacterInstance character)
-    {
-        gameState = GameState.Epilogue;
-        
-        // Assign the dialogue needed for the conversation in the epilogue.
-        if (hasWon)
-            remainingDialogueScenario = character.EpilogueWinScenario();
-        else
-            remainingDialogueScenario = character.EpilogueLoseScenario();
-        
-        List<string> speakingObjectText = new List<string>();
-        // Assign the first element of the list to speakingObjectText
-        if (remainingDialogueScenario.Count > 0)
-            speakingObjectText = remainingDialogueScenario[0];
-        // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
-        remainingDialogueScenario.RemoveAt(0);
-
-        // Create a SpeakingObject with the given List<string>
-        var background = GetRandomBackground(character);
-        var dialogueObject = new SpeakingObject(speakingObjectText, background);
-        dialogueObject.Responses.Add(new OpenResponseObject(background));
-        
-        await SceneController.sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
-        
-        onDialogueStart.Raise(this, dialogueObject, character);
-    }
+    
     #endregion
 }

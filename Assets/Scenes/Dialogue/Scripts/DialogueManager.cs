@@ -200,6 +200,7 @@ public class DialogueManager : MonoBehaviour
         Button enterButton = Instantiate(buttonPrefab, inputField.transform).GetComponent<Button>();
         enterButton.name = "enterButton";
         enterButton.gameObject.tag = "Button";
+        enterButton.transform.position = inputField.transform.position + new Vector3(0f, -300f, 0f);
 
         TMP_Text buttonText = enterButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Enter";
