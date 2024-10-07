@@ -127,9 +127,9 @@ public class CharacterInstance
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
-    private List<List<string>> GetAllTraits()
+    private List<string>[] GetAllTraits()
     {
-        return Traits.Values.ToList();
+        return Traits.Values.ToArray();
     }
 
     /// <summary>
@@ -146,31 +146,33 @@ public class CharacterInstance
     }
     
     /// <summary>
-    /// The logic for obtaining a random trait and removing it from the list of available question of that character.
+    /// The logic for obtaining a random trait and removing it from the list of available questions for all characters.
     /// If the random variable is left null, it will be obtained from gameManager, but it can be provided for slight optimization.
-    /// THis method is used for obtaining hints about the victim and the culprit at the start of each cycle.
+    /// This method is used for obtaining hints about the victim and the culprit at the start of each cycle.
     /// </summary>
+    /// <returns>A List of strings containing a random trait of this character.</returns>
     public List<string> GetRandomTrait()
-    {  
-        // NOTE: Sander idk hoe je code werkt maar ik heb het zo voor nu <3
-        //if (random == null)
-        //    random = FindObjectOfType<GameManager>().random;
-
-        //return allTraits[random.Next(allTraits.Count)];
-
+    {
+        // If there are any questions remaining
         if (RemainingQuestions.Count > 0)
         {
-            int randomInt = new System.Random().Next(RemainingQuestions.Count);
+            // Find a random question
+            int randomInt = GameManager.gm.random.Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
-            RemainingQuestions.RemoveAt(randomInt);
 
+            // Remove question from all characters so that it can not be asked to anyone
+            foreach (CharacterInstance character in GameManager.gm.currentCharacters)
+                character.RemainingQuestions.Remove(question);
+
+            // Return the answer to the question in trait form
             return Traits[question];
         }
         else
         {
-            List<string> output = new();
-            output.Add("No traits were found...");
-            return output;
+            // In a normal game loop, this should never occur
+            Debug.LogError("GetRandomTrait(), but there are no more traits remaining");
+
+            return null;
         }
     }
 }

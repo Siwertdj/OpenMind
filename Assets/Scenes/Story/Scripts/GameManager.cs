@@ -13,14 +13,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("Game Settings")]
     [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
-
     [SerializeField] public int numberOfCharacters; // How many characters each session should have
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
     [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
-    
-    // The list of the characters in the current game. This includes both active and inactive characters
-    public List<CharacterInstance> currentCharacters;
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
@@ -44,10 +40,11 @@ public class GameManager : MonoBehaviour
     
     // Holds the remainder of the conversation in the epilogue.
     public List<List<string>> remainingDialogueScenario;
-
-    /// <summary>
-    /// Amount of times the player can ask a question
-    /// </summary>
+    
+    // The list of the characters in the current game. This includes both active and inactive characters
+    public List<CharacterInstance> currentCharacters;
+    // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
+    [NonSerialized] public GameState gameState;
 
     // Game Events
     [Header("Events")]
@@ -57,6 +54,18 @@ public class GameManager : MonoBehaviour
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
+
+    public enum GameState
+    {
+        // Is there a gamestate for when the game is loading in?
+        Loading,        //      --> NPCSelect, HintDialogue(immediate victim)
+        NpcSelect,      //      --> NpcDialogue
+        CulpritSelect,  //      --> GameWon, GameLoss
+        NpcDialogue,    //      --> NpcSelect, CulpritSelect
+        HintDialogue,   //      --> NpcSelect
+        GameLoss,       //      --> Loading (restart/retry)
+        GameWon         //      --> Loading (restart/retry)
+    }
     
     // Called when this script instance is being loaded
     private void Awake()
@@ -123,11 +132,22 @@ public class GameManager : MonoBehaviour
         gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
-        // Start the NPC Selection scene
-        sc.TransitionScene(
-            SceneController.SceneName.DialogueScene, 
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.TransitionType.Transition);
+
+        var dialogue = new List<string> {
+            $"{victimName} has disappeared.",
+            "There is some new information about the culprit:",
+        };
+        dialogue.AddRange(GetCulprit().GetRandomTrait());
+
+        var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
+
+        StartDialogue(dialogueObject);
+
+        //// Start the NPC Selection scene
+        //sc.TransitionScene(
+        //    SceneController.SceneName.DialogueScene, 
+        //    SceneController.SceneName.NPCSelectScene, 
+        //    SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -283,6 +303,30 @@ public class GameManager : MonoBehaviour
 
     // This region contains methods regarding dialogue
     #region Dialogue
+    public async void StartDialogue(DialogueObject dialogueObject)
+    {
+        // Transition to dialogue scene and await the loading operation
+        if (gameState == GameState.NpcSelect)
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.NPCSelectScene,
+                SceneController.SceneName.DialogueScene,
+                SceneController.TransitionType.Transition);
+        }
+        else if (gameState == GameState.NpcDialogue)
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.DialogueScene,
+                SceneController.SceneName.DialogueScene,
+                SceneController.TransitionType.Transition);
+        }
+
+        // The gameevent here should pass the information to Dialoguemanager
+        // ..at which point dialoguemanager will start.
+        gameState = GameState.HintDialogue;
+        onDialogueStart.Raise(this, dialogueObject);
+    }
+
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
@@ -310,9 +354,11 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
 
+        gameState = GameState.NpcDialogue;
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        onDialogueStart.Raise(this, dialogueRecipient, dialogueObject);
+        onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
 
     private GameObject[] GetRandomBackground(CharacterInstance character = null)
@@ -336,8 +382,9 @@ public class GameManager : MonoBehaviour
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
     /// TODO: Check naming convention for events and listeners, if this is right
-    public void EndDialogue(Component sender, params object[] data)
+    public async void EndDialogue(Component sender, params object[] data)
     {
+
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
@@ -346,10 +393,11 @@ public class GameManager : MonoBehaviour
         else
         {
             // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            sc.TransitionScene(
-                SceneController.SceneName.DialogueScene, 
-                SceneController.SceneName.NPCSelectScene, 
-                SceneController.TransitionType.Transition);
+            await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.TransitionType.Transition);
+            gameState = GameState.NpcSelect;
         }
     }
     #endregion

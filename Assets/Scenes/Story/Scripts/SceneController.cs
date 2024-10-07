@@ -108,6 +108,8 @@ public class SceneController : MonoBehaviour
     //post conditions: current = !target_pre && target_post
     private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
     {
+        Debug.Log($"Transitioning from {currentScene} to {targetScene}");
+
         switch (transitionType)
         {
             case TransitionType.Additive:
