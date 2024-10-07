@@ -16,25 +16,32 @@ public class SelectionManager : MonoBehaviour
 
     // The header text at the top of the character selection screen.
     public TextMeshProUGUI headerText;
+
+    private SceneController sc;
     
-    // Variable which helps to decide whether the character selection screen 
-    // should be treated as dialogue or as for deciding the criminal.
-    private string scene;
+    // Variable which helps to decide whether the npcselect screen should be treated
+    // as dialogue or as for deciding the criminal.
+    // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
+    private string selectionType;
     
     private void Start()
     {
+        sc = SceneController.sc;
+        
         SetSceneType();
-        SetHeaderText(scene);
+        
+        //Line for testing decidecriminal.
+        //selectionType = "decidecriminal";
+        
+        SetHeaderText(selectionType);
         GenerateOptions();
     }
-    
-    /// <summary>
-    /// Sets the scene variable.
-    /// </summary>
+
+    // Set the selectionType variable.
     private void SetSceneType()
     {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
-        // set the scene variable to decidecriminal.
+        // set the selectionType variable to decidecriminal.
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
             scene = "decidecriminal";
         else
@@ -85,18 +92,17 @@ public class SelectionManager : MonoBehaviour
         if (selectOption.character.isActive)
         {
             // Start the dialogue if a criminal does not need to be decided yet.
-            if (scene == "dialogue")
+            if (selectionType == "dialogue")
             {
                 GameManager.gm.StartDialogue(selectOption.character);
             }
             else
             {
-                // Get the culprit from GameManager and compare it with the clicked character.
-                CharacterInstance culprit = GameManager.gm.GetCulprit();
+            
                 // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-                GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                //GameManager.gm.FinalChosenCuplrit = selectOption.character;
                 // Set the dialogueRecipient to the chosen character in GameManager.
-                GameManager.gm.dialogueRecipient = selectOption.character;
+                //GameManager.gm.dialogueRecipient = selectOption.character;
                 
                 // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
                 if (culprit.characterName == selectOption.character.characterName)

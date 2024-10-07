@@ -9,7 +9,7 @@ using UnityEngine;
 public class ResponseObject : DialogueObject
 {
     public Question question;
-    public List<string> dialogue;
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
@@ -18,31 +18,33 @@ public class ResponseObject : DialogueObject
         set { _responses = value; }
     }
 
-    public ResponseObject(Question question)
+    public ResponseObject(Question question, GameObject[] background)
     {
         this.question = question;
+        this.background = background;
     }
 
     public override void Execute()
     {
         var dm = DialogueManager.dm;
+        dm.ReplaceBackground(background);
 
         List<string> answer = GetQuestionResponse(question);
 
-        if (GameManager.gm.HasQuestionsLeft() && GameManager.gm.dialogueRecipient.RemainingQuestions.Count > 0)
-            Responses.Add(new QuestionObject());
+        if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
+            Responses.Add(new QuestionObject(background));
         else
             Responses.Add(new TerminateDialogueObject());
 
-        dm.WriteDialogue(answer);
+        dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
     }
 
     // Gets character's response to the given question
     private List<string> GetQuestionResponse(Question question)
     {
-        GameManager.gm.numQuestionsAsked += 1;
+        GameManager.gm.AssignAmountOfQuestionsRemaining(GameManager.gm.AmountOfQuestionsRemaining() - 1);
 
-        CharacterInstance character = GameManager.gm.dialogueRecipient;
+        CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
 
         // Return answer to the question

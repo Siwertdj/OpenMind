@@ -13,6 +13,7 @@ public class SaveData
     public int questionsRemaining;
     public (int, List<Question>)[] remainingQuestions;
     public string noteBookData;
+    public string[] sceneStack;
 }
 
 /// <summary>
@@ -25,7 +26,7 @@ public static class FilePathConstants
     /// The folder from the root folder where the save file resides.
     /// So if the asset folder had the path root/Assets, the save file would be saved in root/<see cref="folderName"/>>.
     /// </summary>
-    private const string playerSaveDataFolderName = "PlayerSaveData";
+    private const string playerSaveDataFolderName = "Assets/Data";
     
     /// <summary>
     /// The name of the save file of the player save data.
@@ -45,12 +46,12 @@ public static class FilePathConstants
     /// <summary>
     /// Gets the location to the directory when the save file is stored.
     /// </summary>
-    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFileName;
+    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFolderName;
     
     /// <summary>
     /// Gets the location to the save file.
     /// </summary>
-    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFolderName;
+    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFileName;
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.
