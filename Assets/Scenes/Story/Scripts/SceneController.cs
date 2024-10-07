@@ -18,7 +18,8 @@ public class SceneController : MonoBehaviour
         GameOverScene,
         GameWinScene,
         Loading,
-        NotebookScene
+        NotebookScene,
+        EpilogueScene
     }
 
     public enum TransitionType

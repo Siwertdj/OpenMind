@@ -23,11 +23,19 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     void LoadEndScreen()
     {
-        SceneController.sc.ToggleEpilogueScene();
-        // Load the GameWinScene if hasWon = true, else load the GameOverScene
-        if (GameManager.gm.hasWon)
-            SceneController.sc.ToggleGameWinScene();
-        else
-            SceneController.sc.ToggleGameOverScene();
+        // If the player has won, start the GameWin selectionType, else start the GameOver selectionType
+        CharacterInstance culprit = GameManager.gm.GetCulprit();
+        
+        // If the player has won, the target scene is 'GameWin', else 'GameOver'.
+        SceneController.SceneName targetScene =
+            GameManager.gm.hasWon
+                ? SceneController.SceneName.GameWinScene
+                : SceneController.SceneName.GameOverScene;
+                
+        // Transition to the right scene.
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.EpilogueScene,
+            targetScene, 
+            SceneController.TransitionType.Transition);
     }
 }

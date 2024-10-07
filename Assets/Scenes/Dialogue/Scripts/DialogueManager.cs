@@ -30,7 +30,6 @@ public class DialogueManager : MonoBehaviour
     public string inputText;
 
     // Start is called before the first frame update
-    void Start()
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;

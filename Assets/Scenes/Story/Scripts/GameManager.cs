@@ -415,17 +415,15 @@ public class GameManager : MonoBehaviour
         foreach (var c in currentCharacters.Where(c => c.isCulprit))
             Debug.Log(c.characterName + " is the culprit!");
         
-        dialogueRecipient = currentCharacters[id];
+        //dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }    
     /// <summary>
     /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
     /// </summary>
     /// <param name="character"> The character which has been chosen. </param>
-    public void StartEpilogueDialogue(CharacterInstance character)
+    public async void StartEpilogueDialogue(CharacterInstance character)
     {
-        SceneController.sc.ToggleNPCSelectScene();
-
         isEpilogue = true;
         
         // Assign the dialogue needed for the conversation in the epilogue.
@@ -442,9 +440,15 @@ public class GameManager : MonoBehaviour
         remainingDialogueScenario.RemoveAt(0);
         
         // Create a SpeakingObject with the given List<string>
-        dialogueObject = new SpeakingObject(speakingObjectText);
+        var dialogueObject = new SpeakingObject(speakingObjectText, GetRandomBackground(character));
         dialogueObject.Responses.Add(new OpenResponseObject());
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        
+        await SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Additive);
+        
+        onDialogueStart.Raise(this, dialogueObject, character);
     }
     #endregion
 }
