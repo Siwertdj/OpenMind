@@ -35,9 +35,6 @@ public class GameManager : MonoBehaviour
     // Save the character that has been chosen at the end of the game.
     public CharacterInstance FinalChosenCuplrit;
     
-    // Bool used the check if we are in the epilogue.
-    public bool isEpilogue;
-    
     // Holds the remainder of the conversation in the epilogue.
     public List<List<string>> remainingDialogueScenario;
     
@@ -64,7 +61,8 @@ public class GameManager : MonoBehaviour
         NpcDialogue,    //      --> NpcSelect, CulpritSelect
         HintDialogue,   //      --> NpcSelect
         GameLoss,       //      --> Loading (restart/retry)
-        GameWon         //      --> Loading (restart/retry)
+        GameWon,        //      --> Loading (restart/retry)
+        Epilogue
     }
     
     // Called when this script instance is being loaded
@@ -115,6 +113,11 @@ public class GameManager : MonoBehaviour
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
+
+        // Print culprit name for debug purposes
+        foreach (var c in currentCharacters.Where(c => c.isCulprit))
+            Debug.Log(c.characterName + " is the culprit!");
+
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -320,11 +323,10 @@ public class GameManager : MonoBehaviour
                 SceneController.SceneName.DialogueScene,
                 SceneController.TransitionType.Transition);
         }
-        else if (gameState == )
 
+        gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        gameState = GameState.HintDialogue;
         onDialogueStart.Raise(this, dialogueObject);
     }
 
@@ -385,6 +387,25 @@ public class GameManager : MonoBehaviour
     /// TODO: Check naming convention for events and listeners, if this is right
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
+        if (gameState == GameState.Epilogue)
+        {
+            Debug.Log($"Epilogue is over, player hasWon: {hasWon}");
+            if (hasWon)
+            {
+                await SceneController.sc.TransitionScene(
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.SceneName.GameWinScene,
+                    SceneController.TransitionType.Transition);
+            }
+            else
+            {
+                await SceneController.sc.TransitionScene(
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.SceneName.GameOverScene,
+                    SceneController.TransitionType.Transition);
+            }
+        }
 
         if (!HasQuestionsLeft())
         {
@@ -398,7 +419,7 @@ public class GameManager : MonoBehaviour
                 SceneController.SceneName.DialogueScene,
                 SceneController.SceneName.NPCSelectScene,
                 SceneController.TransitionType.Transition);
-            
+
             gameState = GameState.NpcSelect;
         }
     }
@@ -462,8 +483,6 @@ public class GameManager : MonoBehaviour
         }
         Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
 
-        foreach (var c in currentCharacters.Where(c => c.isCulprit))
-            Debug.Log(c.characterName + " is the culprit!");
         
         //dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
@@ -474,7 +493,7 @@ public class GameManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
-        isEpilogue = true;
+        gameState = GameState.Epilogue;
         
         // Assign the dialogue needed for the conversation in the epilogue.
         if (hasWon)
@@ -488,15 +507,16 @@ public class GameManager : MonoBehaviour
             speakingObjectText = remainingDialogueScenario[0];
         // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
         remainingDialogueScenario.RemoveAt(0);
-        
+
         // Create a SpeakingObject with the given List<string>
-        var dialogueObject = new SpeakingObject(speakingObjectText, GetRandomBackground(character));
-        dialogueObject.Responses.Add(new OpenResponseObject());
+        var background = GetRandomBackground(character);
+        var dialogueObject = new SpeakingObject(speakingObjectText, background);
+        dialogueObject.Responses.Add(new OpenResponseObject(background));
         
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Additive);
+            SceneController.TransitionType.Transition);
         
         onDialogueStart.Raise(this, dialogueObject, character);
     }

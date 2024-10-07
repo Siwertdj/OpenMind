@@ -9,6 +9,7 @@ public class OpenResponseObject : DialogueObject
 {
     // The answer of the open question.
     public string answer = "";
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
@@ -16,11 +17,16 @@ public class OpenResponseObject : DialogueObject
         get { return _responses; }
         set { _responses = value; }
     }
+
+    public OpenResponseObject(GameObject[] background)
+    {
+        this.background = background;
+    }
+
     public override void Execute()
     {
         GameManager gm = GameManager.gm;
 
-        Debug.Log("openresponse");
         // Bool which ensures that an OpenResponseObject as response only gets added if there is more than 1 speakingObjectText remaining.
         // (The epilogue should not end with the open question and then go straight to the GameWin/GameOver scene)
         if (gm.remainingDialogueScenario.Count > 1)
@@ -34,14 +40,14 @@ public class OpenResponseObject : DialogueObject
             
             // Create the DialogueObject to add as response for the current object
             // and add another OpenResponseObject as response for the SpeakingObject.
-            DialogueObject next = new SpeakingObject(speakingObjectText);
-            next.Responses.Add(new OpenResponseObject());
+            DialogueObject next = new SpeakingObject(speakingObjectText, background);
+            next.Responses.Add(new OpenResponseObject(background));
             Responses.Add(next);
         }
         else
         {
             // Add a SpeakingObject with the last part of the dialogue as parameter.
-            Responses.Add(new SpeakingObject(gm.remainingDialogueScenario[0]));
+            Responses.Add(new SpeakingObject(gm.remainingDialogueScenario[0], background));
         }
     }
 }

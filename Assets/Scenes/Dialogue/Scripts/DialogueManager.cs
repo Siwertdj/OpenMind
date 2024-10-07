@@ -51,20 +51,17 @@ public class DialogueManager : MonoBehaviour
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
         {
-            Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
             currentObject = dialogueObject;
         }
         // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
-            Debug.Log($"Recipient's name is {recipient.characterName}");
             currentRecipient = recipient;
             characterNameField.SetActive(true);
         } 
         else
         {
             // No dialogue recipient given, so we remove the character name field
-            Debug.Log("No dialogue recipient given");
             characterNameField.SetActive(false);
         }
 
@@ -92,7 +89,7 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
 
-        if (GameManager.gm.isEpilogue)
+        if (GameManager.gm.gameState == GameManager.GameState.Epilogue)
             CreateOpenQuestion();
         
         // Execute next dialogue object

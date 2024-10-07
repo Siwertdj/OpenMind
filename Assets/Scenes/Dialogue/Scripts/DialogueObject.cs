@@ -81,19 +81,6 @@ public class TerminateDialogueObject : DialogueObject
         Debug.Log("Terminating dialogue");
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect
         DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm);
-
-        // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
-        if (GameManager.gm.isEpilogue)
-        {
-            if (GameManager.gm.hasWon)
-            {
-                SceneController.sc.ToggleGameWinScene();
-            }
-            else
-            {
-                SceneController.sc.ToggleGameOverScene();
-            }
-        }
         
         // Invoke post function if given
         post?.Invoke();

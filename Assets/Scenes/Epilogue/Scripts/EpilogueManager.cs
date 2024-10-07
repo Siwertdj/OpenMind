@@ -4,19 +4,10 @@ using UnityEngine;
 
 public class EpilogueManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void StartEpilogue(Component sender, params object[] data)
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
-
-    
 
     /// <summary>
     /// Load the GameWinScene or GameOverScene depending on the choice the player made.

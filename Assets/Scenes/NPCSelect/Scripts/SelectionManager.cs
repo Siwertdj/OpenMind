@@ -100,7 +100,7 @@ public class SelectionManager : MonoBehaviour
             {
             
                 // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-                //GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                GameManager.gm.FinalChosenCuplrit = selectOption.character;
                 // Set the dialogueRecipient to the chosen character in GameManager.
                 //GameManager.gm.dialogueRecipient = selectOption.character;
                 

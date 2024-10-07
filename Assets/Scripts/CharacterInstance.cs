@@ -99,7 +99,7 @@ public class CharacterInstance
         List<string> speakingText1 = new List<string>()
         { 
             "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-            "I was indeed the one who kept sending u messages.",
+            "I was not the one who kept sending u messages, but I will talk like I was :).",
             "and in fact, I knew that you did not know who",
             "was sending the messages. I also got hold of",
             "the results of the intermediate test. You managed",
