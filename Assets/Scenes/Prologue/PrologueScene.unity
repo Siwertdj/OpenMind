@@ -1061,7 +1061,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 146.95525, y: -473.3203}
+  m_AnchoredPosition: {x: 151, y: -447}
   m_SizeDelta: {x: 852.94, y: 1182.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &519990381
@@ -1821,6 +1821,7 @@ Transform:
   - {fileID: 793682869}
   - {fileID: 1841924726}
   - {fileID: 370452184}
+  - {fileID: 2083291146}
   m_Father: {fileID: 903298825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &813133449
@@ -2069,7 +2070,6 @@ RectTransform:
   - {fileID: 1585218006}
   - {fileID: 1750157626}
   - {fileID: 1216014415}
-  - {fileID: 2083291146}
   - {fileID: 797617505}
   - {fileID: 1400844306}
   - {fileID: 1014078859}
@@ -2907,7 +2907,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: My name is Suus. How are you?
+  m_text: 'Before I will lead you to the others, I would like you to answer some
+    questions. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3255,8 +3256,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Before I will lead you to the others, I would like you to answer some questions.
-    Walk with me?
+  m_text: Walk with me?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3654,7 +3654,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 146.95525, y: -473.3203}
+  m_AnchoredPosition: {x: 151, y: -447}
   m_SizeDelta: {x: 852.94, y: 1182.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1279535017
@@ -4902,7 +4902,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1937756968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4962,7 +4962,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!224 &1937756969
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4981,7 +4981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 111, y: -193.21326}
+  m_AnchoredPosition: {x: 111, y: -204}
   m_SizeDelta: {x: 120.27, y: 23.282}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1947413339
@@ -5084,8 +5084,8 @@ Transform:
   m_GameObject: {fileID: 2083291145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.054457, y: 156.72156, z: -19.317936}
-  m_LocalScale: {x: 2.7071824, y: 2.7071824, z: 2.7071824}
+  m_LocalPosition: {x: 12.13822, y: 19.001724, z: 0.3282659}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1818580837}
@@ -5093,7 +5093,7 @@ Transform:
   - {fileID: 391621540}
   - {fileID: 616989683}
   - {fileID: 813133450}
-  m_Father: {fileID: 903298825}
+  m_Father: {fileID: 797617505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2090685806
 GameObject:
@@ -5411,7 +5411,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "By adding a grid of colored lines, your brain makes you believe the image
-    is  in color.\r"
+    is in color.\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5605,7 +5605,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: I'm going to show you an image
+  m_text: I'm going to show you an image.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5905,7 +5905,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2579901291904146670, guid: c11d0d866c485d047831c2d57aff658e, type: 3}
       propertyPath: m_text
-      value: 'Hi! You'' re here for the university''s reunion, right? '
+      value: 'Hi! You''re here for the university''s reunion, right? '
       objectReference: {fileID: 0}
     - target: {fileID: 2579901291904146670, guid: c11d0d866c485d047831c2d57aff658e, type: 3}
       propertyPath: m_margin.y
