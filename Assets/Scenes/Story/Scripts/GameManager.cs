@@ -400,6 +400,7 @@ public class GameManager : MonoBehaviour
             DialogueManager dm = (DialogueManager)sender;
             var backgroundculprit = GetRandomBackground(culprit);
             dm.ReplaceBackground(backgroundculprit);
+            // If the TerminateDialogueObject has a SpeakingObject in the Responses list, start dialogue with a different person.
             if (currentObject.Responses.Count > 0)
             {
                 // Transition to dialogue with a different person.
