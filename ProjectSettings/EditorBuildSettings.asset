@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Notebook/NotebookScene.unity
     guid: 12d23fbdf4908e94dbc6cfeed553a5c8
   - enabled: 1
-    path: Assets/Scenes/StartScreen/StartScreen.unity
+    path: Assets/Scenes/StartScreen/StartScreenScene.unity
     guid: d8e697686f5ae364fb4b301ab6b4e63f
   - enabled: 1
     path: Assets/Scenes/GameWin/GameWinScene.unity

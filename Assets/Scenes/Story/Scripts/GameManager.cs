@@ -55,20 +55,13 @@ public class GameManager : MonoBehaviour
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
         
+        // Open start screen, "New Game will call StartGame()
         sc.StartScene(SceneController.SceneName.StartScreenScene);
-        //OpenStartScreen();
-    }
-
-    private void OpenStartScreen()
-    {
-        SceneManager.LoadScene("StartScreen", LoadSceneMode.Additive);
     }
 
     // PROBABLY TEMPORARY FUNCTION TO START GAME
     public void StartGame()
     {
-        
-
         Debug.Log("New Game!");
         
         // On load start cycle, depending on whether we want an immediate victim or not.
