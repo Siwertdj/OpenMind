@@ -27,7 +27,6 @@ public class ResponseObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-        dm.ReplaceBackground(background);
 
         List<string> answer = GetQuestionResponse(question);
 
@@ -36,6 +35,7 @@ public class ResponseObject : DialogueObject
         else
             Responses.Add(new TerminateDialogueObject());
 
+        dm.ReplaceBackground(background);
         dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
     }
 
