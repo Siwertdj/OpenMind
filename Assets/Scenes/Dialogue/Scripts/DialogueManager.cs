@@ -64,7 +64,7 @@ public class DialogueManager : MonoBehaviour
             // No dialogue recipient given, so we remove the character name field
             characterNameField.SetActive(false);
         }
-
+        
         // Execute the starting object
         currentObject.Execute();
 
@@ -88,8 +88,9 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-
-        if (GameManager.gm.gameState == GameManager.GameState.Epilogue)
+        
+        // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
+        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
             CreateOpenQuestion();
         
         // Execute next dialogue object

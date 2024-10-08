@@ -11,8 +11,9 @@ public class EpilogueManager : MonoBehaviour
 
     /// <summary>
     /// Load the GameWinScene or GameOverScene depending on the choice the player made.
+    /// TODO: currently never used, since this is done in GameManager.EndDialogue().
     /// </summary>
-    void LoadEndScreen()
+    public void LoadEndScreen()
     {
         // If the player has won, start the GameWin selectionType, else start the GameOver selectionType
         CharacterInstance culprit = GameManager.gm.GetCulprit();

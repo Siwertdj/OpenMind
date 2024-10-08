@@ -390,37 +390,71 @@ public class GameManager : MonoBehaviour
         // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
         if (gameState == GameState.Epilogue)
         {
-            Debug.Log($"Epilogue is over, player hasWon: {hasWon}");
-            if (hasWon)
+            // If we want to start a dialogue with a different person, and do not want to end
+            // the epilogue scene, the responses list should be non-empty.
+            DialogueObject currentObject = (DialogueObject)data[0];
+            CharacterInstance culprit = GetCulprit();
+            
+            // change the character of the dialogue.
+            // TODO: misschien moet het veranderd worden dat de background vastgebonden zit aan de character.
+            DialogueManager dm = (DialogueManager)sender;
+            var backgroundculprit = GetRandomBackground(culprit);
+            dm.ReplaceBackground(backgroundculprit);
+            if (currentObject.Responses.Count > 0)
             {
-                await SceneController.sc.TransitionScene(
+                // Transition to dialogue with a different person.
+                await sc.TransitionScene(
                     SceneController.SceneName.DialogueScene,
-                    SceneController.SceneName.GameWinScene,
+                    SceneController.SceneName.DialogueScene,
                     SceneController.TransitionType.Transition);
+                
+                // If we want to start dialogue with a different person in the epilogue,
+                // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
+                // which will be used for the dialogue for dialogue with the next person.
+                
+                onDialogueStart.Raise(this, currentObject.Responses[0], culprit);
             }
             else
             {
-                await SceneController.sc.TransitionScene(
-                    SceneController.SceneName.DialogueScene,
-                    SceneController.SceneName.GameOverScene,
-                    SceneController.TransitionType.Transition);
-            }
-        }
+                if (hasWon)
+                {
+                    // Transition to the GameWinScene and set the gameState to GameWon.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameWinScene,
+                        SceneController.TransitionType.Transition);
 
-        if (!HasQuestionsLeft())
-        {
-            // No questions left, so we end the cycle 
-            EndCycle();
+                    gameState = GameState.GameWon;
+                }
+                else
+                {
+                    // Transition to the GameOverScene and set the gameState to GameLoss.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameOverScene,
+                        SceneController.TransitionType.Transition);
+                
+                    gameState = GameState.GameLoss;
+                }
+            }
         }
         else
         {
-            // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            await sc.TransitionScene(
-                SceneController.SceneName.DialogueScene,
-                SceneController.SceneName.NPCSelectScene,
-                SceneController.TransitionType.Transition);
-
-            gameState = GameState.NpcSelect;
+            if (!HasQuestionsLeft())
+            {
+                // No questions left, so we end the cycle 
+                EndCycle();
+            }
+            else
+            {
+                // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
+                await sc.TransitionScene(
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.SceneName.NPCSelectScene,
+                    SceneController.TransitionType.Transition);
+            
+                gameState = GameState.NpcSelect;
+            }
         }
     }
     
@@ -431,27 +465,15 @@ public class GameManager : MonoBehaviour
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
         gameState = GameState.Epilogue;
-        
-        // Assign the dialogue needed for the conversation in the epilogue.
-        if (hasWon)
-            remainingDialogueScenario = character.EpilogueWinScenario();
-        else
-            remainingDialogueScenario = character.EpilogueLoseScenario();
-        
-        List<string> speakingObjectText = new List<string>();
-        
-        
-        // Assign the first element of the list to speakingObjectText
-        if (remainingDialogueScenario.Count > 0)
-            speakingObjectText = remainingDialogueScenario[0];
-        // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseObject).
-        remainingDialogueScenario.RemoveAt(0);
 
-        // Create a SpeakingObject with the given List<string>
+        // Get the epilogue dialogue.
+        remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+
+        // Create the DialogueObject and corresponding children.
         var background = GetRandomBackground(character);
-        var dialogueObject = new SpeakingObject(speakingObjectText, background);
-        dialogueObject.Responses.Add(new OpenResponseObject(background));
+        var dialogueObject = GetEpilogueStart(background);
         
+        // Transition to the dialogue scene.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
@@ -459,7 +481,38 @@ public class GameManager : MonoBehaviour
         
         onDialogueStart.Raise(this, dialogueObject, character);
     }
-    
+
+    /// <summary>
+    /// Method which returns the DialogueObjects that need to be used at the start of the epilogue.
+    /// </summary>
+    /// <returns></returns>
+    DialogueObject GetEpilogueStart(GameObject[] background)
+    {
+        var dialogueObject = new SpeakingObject(remainingDialogueScenario[0], background);
+        // Remove the first element of the list.
+        remainingDialogueScenario.RemoveAt(0);
+        if (!hasWon)
+        {
+            // If the player loses, the dialogue with the wrong person should end,
+            // and a new dialogue with the culprit should start.
+            // note: SpeakingObject gets again gets the list at index 0, since the previous
+            // dialogue at index 0 gets removed at line 490.
+            TerminateDialogueObject endDialogue = new TerminateDialogueObject();
+            dialogueObject.Responses.Add(endDialogue);
+            
+            SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
+            // Remove the first element of the list.
+            remainingDialogueScenario.RemoveAt(0);
+            endDialogue.Responses.Add(nextDialogue);
+            
+            nextDialogue.Responses.Add(new OpenResponseObject(background));
+        }
+        else
+        {
+            dialogueObject.Responses.Add(new OpenResponseObject(background));
+        }
+        return dialogueObject;
+    }
     
     #endregion
 
