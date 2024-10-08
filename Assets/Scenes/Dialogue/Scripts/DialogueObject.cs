@@ -45,8 +45,8 @@ public class SpeakingObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-        dm.ReplaceBackground(background);
 
+        dm.ReplaceBackground(background);
         dm.WriteDialogue(dialogue);
 
         // If no response is given, terminate dialogue
