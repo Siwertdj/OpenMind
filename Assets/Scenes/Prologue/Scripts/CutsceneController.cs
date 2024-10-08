@@ -24,7 +24,7 @@ public class CutsceneController : MonoBehaviour
     {
         playableDirector.Pause();
         continueButton.gameObject.SetActive(true);
-        //imageToggler.gameObject.SetActive(true);
+        //continueButton.interactable = true; 
     }
 
     public void ContinueTimeline()
@@ -35,6 +35,7 @@ public class CutsceneController : MonoBehaviour
         // Disable button
         continueButton.gameObject.SetActive(false);
         // Resume timeline.
+        Debug.Log("button is pressed");
         playableDirector.Play();
     }
     
