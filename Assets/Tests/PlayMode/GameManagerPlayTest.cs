@@ -16,8 +16,7 @@ public class GameManagerPlayTest
     {
         // Load scene
         SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
+
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -26,10 +25,10 @@ public class GameManagerPlayTest
         var expected = gm.numQuestionsAsked <= 1;
         var actual = gm.HasQuestionsLeft();
 
-        yield return new WaitForSeconds(1);
-
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        yield return null;
     }
 
     /// <summary>
@@ -50,10 +49,10 @@ public class GameManagerPlayTest
         var expected = gm.currentCharacters.Find(c => c.isCulprit);
         var actual = gm.GetCulprit();
 
-        yield return new WaitForSeconds(1);
-        
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        yield return null;
     }
 
     /// <summary>
@@ -74,10 +73,10 @@ public class GameManagerPlayTest
         var expected = gm.currentCharacters.Count(c => c.isActive) > 2;
         var actual = gm.EnoughCharactersRemaining();
 
-        yield return new WaitForSeconds(1);
-        
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        yield return null;
     }
 
     /// <summary>
@@ -99,12 +98,12 @@ public class GameManagerPlayTest
         // Set up actual value
         var actual = gm.currentCharacters.Count(c => c.isActive) == gm.currentCharacters.Count();
 
-        yield return new WaitForSeconds(1);
-
         // Check if it holds
         Assert.IsTrue(actual);
+        
+        yield return null;
     }
-    
+
     /// <summary>
     /// Checks if the "GetRandomVictimNoCulprit" method works.
     /// </summary>
@@ -114,7 +113,7 @@ public class GameManagerPlayTest
         // Load scene
         SceneManager.LoadScene("Loading");
         yield return new WaitForSeconds(3); // Wait for it to load
-        
+
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -122,9 +121,64 @@ public class GameManagerPlayTest
         // Get victim
         var victim = gm.GetRandomVictimNoCulprit();
 
-        yield return new WaitForSeconds(1);
-
         // Check if it actually returned a victim
         Assert.IsTrue(victim != null);
+        
+        yield return null;
+    }
+
+    /// <summary>
+    /// Checks if the "EndCycle" method works.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndCycleTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for it to load
+
+        // Get "GameManager" object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // End cycle
+        gm.EndCycle();
+        
+        // Get current scene
+        var scene = SceneManager.GetActiveScene().name;
+
+        // See if it's still equal to the "main" scene of the game
+        // No scene should be switched, because it's an additive scene
+        Assert.AreEqual("Loading", scene);
+        
+        yield return null;
+    }
+
+    /// <summary>
+    /// Checks if the "StartDialogue" method works.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator StartDialogueTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for it to load
+
+        // Get "GameManager" object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Get character to start dialogue with
+        var character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+
+        // Get current scene
+        var scene = SceneManager.GetActiveScene().name;
+
+        // See if it's still equal to the "main" scene of the game
+        // No scene should be switched, because it's an additive scene
+        Assert.AreEqual("Loading", scene);
+        
+        yield return null;
     }
 }
