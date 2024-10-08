@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject dialogueField;
     [SerializeField] private GameObject questionsField;
     [SerializeField] private GameObject backgroundField;
+    [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
@@ -31,7 +32,7 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public DialogueObject currentObject;
     
     /// <summary>
-    /// Sets DialogueManager variables and executes the starting DialogueObject.
+    /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
@@ -43,17 +44,24 @@ public class DialogueManager : MonoBehaviour
 
         Debug.Log("StartDialogue called.");
 
-        // Retrieve and set the dialogue recipient
-        if (data[0] is CharacterInstance recipient)
-        {
-            Debug.Log($"Recipient's name is {recipient.characterName}");
-            currentRecipient = recipient;
-        }
         // Retrieve and set the dialogue object
-        if (data[1] is DialogueObject dialogueObject)
+        if (data[0] is DialogueObject dialogueObject)
         {
             Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
             currentObject = dialogueObject;
+        }
+        // Retrieve and set the dialogue recipient (if given)
+        if (data.Length > 1 && data[1] is CharacterInstance recipient)
+        {
+            Debug.Log($"Recipient's name is {recipient.characterName}");
+            currentRecipient = recipient;
+            characterNameField.SetActive(true);
+        } 
+        else
+        {
+            // No dialogue recipient given, so we remove the character name field
+            Debug.Log("No dialogue recipient given");
+            characterNameField.SetActive(false);
         }
 
         // Execute the starting object
@@ -72,18 +80,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets prompts to parameter value.
-    /// </summary>
-    /// <param name="active"></param>
-    public void SetQuestionsField(bool active) => questionsField.SetActive(active);
-
-    /// <summary>
     /// Executed when the dialogue animator has finished writing the dialogue.
     /// </summary>
     public void OnDialogueComplete()
     {
         // Close dialogue field
         dialogueField.SetActive(false);
+        characterNameField.SetActive(false);
 
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
@@ -101,11 +104,15 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (currentObject != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(currentRecipient.characterName);
+        if (currentRecipient != null)
+        {
+            characterNameField.SetActive(true);
+            characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
+        }
 
         // Animator write dialogue to the screen.
-        animator.WriteDialogue(dialogue, currentRecipient.pitch);
+        pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
+        animator.WriteDialogue(dialogue, pitch);
     }
 
     /// <summary>
@@ -130,17 +137,23 @@ public class DialogueManager : MonoBehaviour
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
     /// <param name="questionObject"></param>
-    public void CreatePromptButtons(QuestionObject questionObject)
+    public void InstantiatePromptButtons(QuestionObject questionObject)
     {
+        // Instantiate button containing each response
         foreach (ResponseObject response in questionObject.Responses)
         {
+            // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
+
+            // Set Unity inspector values
             button.name = "questionButton";
             button.gameObject.tag = "Button";
 
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
             buttonText.text = GetPromptText(response.question);
+
+            // Set styling for button
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
@@ -150,6 +163,9 @@ public class DialogueManager : MonoBehaviour
 
         // Add the button to return to the other characters
         CreateBackButton();
+
+        // Set the buttons to be visible
+        questionsField.SetActive(true);
     }
 
     /// <summary>
@@ -196,6 +212,7 @@ public class DialogueManager : MonoBehaviour
         currentObject.Execute();
     }
 
+    #region [DEPRECATED] Continue Button
     /// <summary>
     /// Creates the button to ask another question to the same NPC
     /// </summary>
@@ -226,6 +243,7 @@ public class DialogueManager : MonoBehaviour
 
         CreateBackButton();
     }
+    #endregion
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.

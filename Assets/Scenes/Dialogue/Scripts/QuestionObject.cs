@@ -25,7 +25,6 @@ public class QuestionObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-        dm.ReplaceBackground(background);
 
         GenerateQuestions();
 
@@ -33,8 +32,8 @@ public class QuestionObject : DialogueObject
         foreach (Question question in questions)
             Responses.Add(new ResponseObject(question, background));
 
-        dm.SetQuestionsField(true);
-        dm.CreatePromptButtons(this);
+        dm.ReplaceBackground(background);
+        dm.InstantiatePromptButtons(this);
     }
 
     private void GenerateQuestions()
