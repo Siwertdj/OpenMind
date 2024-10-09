@@ -83,6 +83,18 @@ public class GameManager : MonoBehaviour
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
         notebookData = new NotebookData();
+
+        Debug.Log("Starting...");
+
+        // Open start screen, "New Game" will call StartGame()
+        sc.StartScene(SceneController.SceneName.StartScreenScene);
+    }
+
+    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
+    public void StartGame()
+    {
+        Debug.Log("New Game!");
+
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
@@ -93,8 +105,17 @@ public class GameManager : MonoBehaviour
     private void Load()
     {
         gm = this;
-        
+
         // Make parentobject persistent, so that all objects in the toolbox remain persistent.
+        if (gameObject is null) Debug.Log("gameobject is null");
+        else Debug.Log("gameObject is not null");
+
+        if (gameObject.transform is null) Debug.Log("transform is null");
+        else Debug.Log("transform is not null");
+
+        if (gameObject.transform.parent is null) Debug.Log("parent is null");
+        else Debug.Log("parent is not null");
+
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
@@ -106,6 +127,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FirstCycle()
     {
+        Debug.Log("Yuh! I'm first cycle...");
+        
         if (immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
@@ -121,7 +144,11 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
 
         // Start the game at the first scene; the NPC Selection scene
-        sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        sc.TransitionScene(
+            SceneController.SceneName.StartScreenScene, 
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.TransitionType.Transition);
+        //sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
     
     /// <summary>

@@ -6,6 +6,7 @@ public class NotesButton : MonoBehaviour
 {
     public void toggleNotes()
     {
+        // Use the gamemanager to toggle the notebook scene
         FindObjectOfType<SceneController>().ToggleNotebookScene();
     }
 }
