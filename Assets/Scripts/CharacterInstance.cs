@@ -56,6 +56,94 @@ public class CharacterInstance
     }
 
     /// <summary>
+    /// Get the epilogue dialogue depending on whether the player has chosen the correct character or not.
+    /// </summary>
+    /// <param name="hasWon"></param>
+    /// <returns></returns>
+    public List<List<string>> GetEpilogueDialogue(bool hasWon)
+    {
+        if (hasWon)
+            return EpilogueWinScenario();
+        else
+            return EpilogueLoseScenario();
+    }
+
+    /// <summary>
+    /// Scenario for when the player guesses the culprit.
+    /// </summary>
+    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
+    private List<List<string>> EpilogueWinScenario()
+    {
+        List<string> speakingText1 = new List<string>()
+        {
+            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
+            "I was indeed the one who kept sending u messages.",
+            "and in fact, I knew that you did not know who",
+            "was sending the messages.",
+            "You managed to guess correctly, and so i wanted to ask you the following:",
+            "Why did u think I was the one who kept sending u messages?"
+        };
+        List<string> speakingText2 = new List<string>()
+        {
+            "Okay, thats very interesting!",
+            "Now I have another question for you:",
+            "Which characteristics of the character resemble with urself?"
+        };
+        List<string> speakingText3 = new List<string>()
+        {
+            "alright very cool.",
+            "I have to go now.",
+            "I do not want to miss the bus.",
+            "Goodbye."
+        };
+        // List of lists, where in between each list an OpenResponseObject will be called.
+        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
+        return retval;
+    }
+
+    /// <summary>
+    /// Scenario for when the player does not guess the correct culprit
+    /// </summary>
+    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
+    private List<List<string>> EpilogueLoseScenario()
+    {
+        List<string> speakingText1 = new List<string>()
+        { 
+            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
+            "You are asking me if I was sending u messages?",
+            "I am sorry but i do not know what u are talking about.",
+            "I have to go now, bye."
+        };
+        List<string> speakingText2 = new List<string>()
+        { 
+            "Well that was pretty awkward, wasn't it?",
+            "I'm " + GameManager.gm.GetCulprit().characterName,
+            "I am the one who kept sending u messages.",
+            "and in fact, I knew that you did not know who",
+            "was sending the messages.",
+            "You did not guess correctly unfortunately.",
+            "Despite that, I still wanted to to ask you the following:",
+            "Why did u think I was the one who kept sending u messages?"
+        };
+        List<string> speakingText3 = new List<string>()
+        { 
+            "Okay, thats very interesting!",
+            "Now I have another question for you:",
+            "Which characteristics of the character resemble with urself?"
+        };
+        List<string> speakingText4 = new List<string>()
+        { 
+            "alright very cool.",
+            "I have to go now.",
+            "I do not want to miss the bus.",
+            "Goodbye." 
+        };
+        // List of lists, where in between each list an OpenResponseObject will be called.
+        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3, speakingText4};
+        return retval;
+    }
+
+    /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
     private List<string>[] GetAllTraits()

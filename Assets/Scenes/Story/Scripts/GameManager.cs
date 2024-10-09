@@ -23,7 +23,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    private int numQuestionsAsked;
+    /// </summary>
+    [NonSerialized] public int numQuestionsAsked;
+
+    // Set this bool to true if the correct character has been chosen at the end, else false.
+    public bool hasWon;
+
+    // Save the character that has been chosen during the intermediate choice moment.
+    public CharacterInstance IntermediateChosenCuplrit;
+    
+    // Save the character that has been chosen at the end of the game.
+    public CharacterInstance FinalChosenCuplrit;
+    
+    // Holds the remainder of the conversation in the epilogue.
+    public List<List<string>> remainingDialogueScenario;
+    
     // The list of the characters in the current game. This includes both active and inactive characters
     public List<CharacterInstance> currentCharacters;
     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
@@ -47,7 +61,8 @@ public class GameManager : MonoBehaviour
         NpcDialogue,    //      --> NpcSelect, CulpritSelect
         HintDialogue,   //      --> NpcSelect
         GameLoss,       //      --> Loading (restart/retry)
-        GameWon         //      --> Loading (restart/retry)
+        GameWon,        //      --> Loading (restart/retry)
+        Epilogue
     }
     
     // Called when this script instance is being loaded
@@ -121,6 +136,11 @@ public class GameManager : MonoBehaviour
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
+
+        // Print culprit name for debug purposes
+        foreach (var c in currentCharacters.Where(c => c.isCulprit))
+            Debug.Log(c.characterName + " is the culprit!");
+
         // Start the game at the first scene; the NPC Selection scene
         sc.TransitionScene(
             SceneController.SceneName.StartScreenScene, 
@@ -152,12 +172,6 @@ public class GameManager : MonoBehaviour
         var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
 
         StartDialogue(dialogueObject);
-
-        //// Start the NPC Selection scene
-        //sc.TransitionScene(
-        //    SceneController.SceneName.DialogueScene, 
-        //    SceneController.SceneName.NPCSelectScene, 
-        //    SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -286,6 +300,7 @@ public class GameManager : MonoBehaviour
 
         // Unload all active scenes except the story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
         // Reset these characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -293,10 +308,9 @@ public class GameManager : MonoBehaviour
             character.isActive = true;
             character.InitializeQuestions();
         }
-        if (immediateVictim)
-            StartCycle();
-        else
-            FirstCycle();
+        
+        // Start the game again
+        FirstCycle();
     }
     
     /// <summary>
@@ -331,9 +345,9 @@ public class GameManager : MonoBehaviour
                 SceneController.TransitionType.Transition);
         }
 
+        gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        gameState = GameState.HintDialogue;
         onDialogueStart.Raise(this, dialogueObject);
     }
 
@@ -394,23 +408,145 @@ public class GameManager : MonoBehaviour
     /// TODO: Check naming convention for events and listeners, if this is right
     public async void EndDialogue(Component sender, params object[] data)
     {
-        Debug.Log("Dialogue end debug");
-        
-        if (!HasQuestionsLeft())
+        // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
+        if (gameState == GameState.Epilogue)
         {
-            // No questions left, so we end the cycle 
-            EndCycle();
+            // If we want to start a dialogue with a different person, and do not want to end
+            // the epilogue scene, the responses list should be non-empty.
+            DialogueObject currentObject = (DialogueObject)data[0];
+            CharacterInstance culprit = GetCulprit();
+            
+            // change the character of the dialogue.
+            // TODO: misschien moet het veranderd worden dat de background vastgebonden zit aan de character.
+            DialogueManager dm = (DialogueManager)sender;
+            var backgroundculprit = GetRandomBackground(culprit);
+            dm.ReplaceBackground(backgroundculprit);
+            // If the TerminateDialogueObject has a SpeakingObject in the Responses list, start dialogue with a different person.
+            if (currentObject.Responses.Count > 0)
+            {
+                // Transition to dialogue with a different person.
+                await sc.TransitionScene(
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.TransitionType.Transition);
+                
+                // If we want to start dialogue with a different person in the epilogue,
+                // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
+                // which will be used for the dialogue for dialogue with the next person.
+                
+                onDialogueStart.Raise(this, currentObject.Responses[0], culprit);
+            }
+            else
+            {
+                if (hasWon)
+                {
+                    // Transition to the GameWinScene and set the gameState to GameWon.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameWinScene,
+                        SceneController.TransitionType.Transition);
+
+                    gameState = GameState.GameWon;
+                }
+                else
+                {
+                    // Transition to the GameOverScene and set the gameState to GameLoss.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameOverScene,
+                        SceneController.TransitionType.Transition);
+                
+                    gameState = GameState.GameLoss;
+                }
+            }
         }
         else
         {
-            // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            await sc.TransitionScene(
-            SceneController.SceneName.DialogueScene,
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.TransitionType.Transition);
-            gameState = GameState.NpcSelect;
+            if (!HasQuestionsLeft())
+            {
+                // No questions left, so we end the cycle 
+                EndCycle();
+            }
+            else
+            {
+                // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
+                if (gameState == GameState.GameLoss)
+                {
+                    Debug.Log("transition from game loss to npcselect");
+                    await sc.TransitionScene(
+                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
+                }
+                else
+                {
+                    await sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
+                }
+            
+                gameState = GameState.NpcSelect;
+            }
         }
     }
+    
+    /// <summary>
+    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
+    /// </summary>
+    /// <param name="character"> The character which has been chosen. </param>
+    public async void StartEpilogueDialogue(CharacterInstance character)
+    {
+        gameState = GameState.Epilogue;
+
+        // Get the epilogue dialogue.
+        remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+
+        // Create the DialogueObject and corresponding children.
+        var background = GetRandomBackground(character);
+        var dialogueObject = GetEpilogueStart(background);
+        
+        // Transition to the dialogue scene.
+        await SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
+        
+        onDialogueStart.Raise(this, dialogueObject, character);
+    }
+
+    /// <summary>
+    /// Method which returns the DialogueObjects that need to be used at the start of the epilogue.
+    /// </summary>
+    /// <returns></returns>
+    DialogueObject GetEpilogueStart(GameObject[] background)
+    {
+        var dialogueObject = new SpeakingObject(remainingDialogueScenario[0], background);
+        // Remove the first element of the list.
+        remainingDialogueScenario.RemoveAt(0);
+        if (!hasWon)
+        {
+            // If the player loses, the dialogue with the wrong person should end,
+            // and a new dialogue with the culprit should start.
+            // note: SpeakingObject gets again gets the list at index 0, since the previous
+            // dialogue at index 0 gets removed at line 490.
+            TerminateDialogueObject endDialogue = new TerminateDialogueObject();
+            dialogueObject.Responses.Add(endDialogue);
+            
+            SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
+            // Remove the first element of the list.
+            remainingDialogueScenario.RemoveAt(0);
+            endDialogue.Responses.Add(nextDialogue);
+            
+            nextDialogue.Responses.Add(new OpenResponseObject(background));
+        }
+        else
+        {
+            dialogueObject.Responses.Add(new OpenResponseObject(background));
+        }
+        return dialogueObject;
+    }
+    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
@@ -470,9 +606,11 @@ public class GameManager : MonoBehaviour
                 : (i + 2 == currentCharacters.Count ? " and " : ", ")));
         }
         Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
+
         
-        foreach (var c in currentCharacters.Where(c => c.isCulprit))
-            Debug.Log(c.characterName + " is the culprit!");
-    }
+        //dialogueRecipient = currentCharacters[id];
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }    
+    
     #endregion
 }

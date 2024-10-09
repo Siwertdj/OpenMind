@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectionManager : MonoBehaviour
 {
+    // Prefab which is used to create SelectOption objects.
     [SerializeField] private GameObject selectionOption;
     
+    // The SelectionSpace object, which has character spaces as children.
     public GameObject parent;
 
-    // The text at the top
+    // The header text at the top of the character selection screen.
     public TextMeshProUGUI headerText;
 
     private SceneController sc;
@@ -25,93 +28,91 @@ public class SelectionManager : MonoBehaviour
     {
         sc = SceneController.sc;
         
-        setSceneType();
+        SetSceneType();
         
         //Line for testing decidecriminal.
         //selectionType = "decidecriminal";
         
-        setHeaderText(selectionType);
+        SetHeaderText(selectionType);
         GenerateOptions();
     }
 
     // Set the selectionType variable.
-    private void setSceneType()
+    private void SetSceneType()
     {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
         // set the selectionType variable to decidecriminal.
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
-        {
             selectionType = "decidecriminal";
-        }
         else
-        {
             selectionType = "dialogue";
-        }
-    }
-
-    // Change the Header text if the culprit needs to be chosen.
-    private void setHeaderText(string sceneType)
-    {
-        if (sceneType == "decidecriminal")
-        {
-            headerText.text = "Choose the character u think is the culprit";
-        }
     }
     
-    // Generates the selectOption objects for the characters.
+    /// <summary>
+    /// Change the Header text if the culprit needs to be chosen.
+    /// </summary>
+    /// <param name="sceneType"> Can take "dialogue" or "decidecriminal" as value. </param>
+    private void SetHeaderText(string sceneType)
+    {
+        if (sceneType == "decidecriminal")
+            headerText.text = "Choose the character u think is the culprit";
+    }
+    
+    /// <summary>
+    /// Generates the selectOption objects for the characters.
+    /// </summary>
     private void GenerateOptions()
     {
+        // Create a SelectOption object for every character in currentCharacters.
         int counter = 0;
         foreach (CharacterInstance character in GameManager.gm.currentCharacters)
-        {            
-            // TODO: give proper transform?
-            // TODO: make child of SelectionSpace, so it fits in there correctly
+        {
+            // Create a new SelectOption object.
             SelectOption newOption = Instantiate(selectionOption).GetComponent<SelectOption>();
             newOption.character = character;                
-            
-            // not correct yet, this will go out of bounds when there are more than 8 characters.
-            // sets one of the 8 characterspaces as parent of the selectoption object.
+            // TODO: not correct yet, this will go out of bounds when there are more than 8 characters.
+            // Sets one of the 8 character spaces as parent of the SelectOption object.
             newOption.transform.parent = parent.transform.GetChild(counter);
-            // sets the position of the selectoption object to the same position as the parent (characterspace)
+            // Sets the position of the SelectOption object to the same position as the parent (character space).
             newOption.transform.position = newOption.transform.parent.position;
-
             counter++;            
         }
     }
     
-    // Event for when a character is selected.
+    /// <summary>
+    /// Event for when a character is selected.
+    /// </summary>
+    /// <param name="option"> The character space on which has been clicked on. </param>
+    /// TODO: Add an intermediate choice for the culprit. (if everyone agrees with the storyline epilogue)
     public void ButtonClicked(GameObject option)
     {
-        // Get the selectoption object
+        // Get the SelectOption object from the character space.
         SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
-        // Only active characters can be talked to
+        // Only active characters can be talked to.
         if (selectOption.character.isActive)
         {
             // Start the dialogue if a criminal does not need to be decided yet.
             if (selectionType == "dialogue")
             {
-                // TODO: ensure that the correct id is passed based on the button
-                
                 GameManager.gm.StartDialogue(selectOption.character);
             }
             else
             {
-                // Get the culprit from gamemanager and compare it with the clicked character
-                // If the correct character is clicked, start the GameWin selectionType, else start the GameOver selectionType
-                CharacterInstance culprit = GameManager.gm.GetCulprit();
-                // If the player chose the right target, the targetscene is 'GameWin', else 'GameOver'.
-                SceneController.SceneName targetScene =
-                    culprit.characterName == selectOption.character.characterName
-                        ? SceneController.SceneName.GameWinScene
-                        : SceneController.SceneName.GameOverScene;
-                
-                // Transition to the right scene.
-                sc.TransitionScene(
-                    SceneController.SceneName.NPCSelectScene,
-                    targetScene, 
-                    SceneController.TransitionType.Transition);
-            }
             
+                // Set the FinalChosenCulprit variable to the chosen character in GameManager.
+                GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                // Set the dialogueRecipient to the chosen character in GameManager.
+                //GameManager.gm.dialogueRecipient = selectOption.character;
+                
+                // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
+                if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
+                    GameManager.gm.hasWon = true;
+                else
+                    GameManager.gm.hasWon = false;
+                
+                // Load the epilogue scene.
+                GameManager.gm.StartEpilogueDialogue(selectOption.character);
+            }
         }
     }
 }
