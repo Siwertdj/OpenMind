@@ -10,8 +10,8 @@ public class ResponseObject : DialogueObject
 {
     public Question question;
     public GameObject[] background;
-
-    private List<DialogueObject> _responses = new();
+    
+    public List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
     {
         get { return _responses; }
@@ -46,7 +46,10 @@ public class ResponseObject : DialogueObject
 
         CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
-
+        
+        // Write answers to notebook
+        character.AskedQuestions.Add(question);
+        
         // Return answer to the question
         return character.Answers[question];
     }
