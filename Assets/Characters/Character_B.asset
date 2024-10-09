@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_B
   m_EditorClassIdentifier: 
   characterName: Maud
-  id: 0
+  id: 1
   avatar: {fileID: 21300000, guid: 44c45de16ee02e6418d2df439c7dc262, type: 3}
   voicePitch: 1.4
   answers:
@@ -21,24 +21,42 @@ MonoBehaviour:
     answer:
     - I am a democrat.
     - I will be voting for joe biden.
+    trait:
+    - bemograt
   - question: 1
     answer:
     - I was in 1987.
     - I am 37 years old.
+    trait:
+    - bobn 1987
   - question: 7
     answer:
     - The most important core value to me is happiness.
     - It doesn't matter how much money u have
     - or how famous u are if u cannot be happy.
+    trait:
+    - big munney
   - question: 8
     answer:
     - I consider myself to be kind.
     - I am also quite shy.
+    trait:
+    - shy guy (mario)
   - question: 4
     answer:
     - My hobby is drawing.
     - I like drawing animals.
+    trait:
+    - draw animal
   - question: 5
     answer:
     - I was born in the Netherlands,
     - However my parents are both german.
+    trait:
+    - bobn nebetrlands
+  greetings:
+  - lines:
+    - Hello there
+  - lines:
+    - Oh, hey
+    - Good to see you again

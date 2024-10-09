@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_C
   m_EditorClassIdentifier: 
   characterName: Fatima
-  id: 0
+  id: 2
   avatar: {fileID: 21300000, guid: bcda24061dd8336488702411d21f66b9, type: 3}
   voicePitch: 1.2
   answers:
@@ -22,23 +22,36 @@ MonoBehaviour:
     - I was born in Turkey.
     - My parents are also turkish.
     - We are all muslims.
+    trait:
+    - YALLA TURKIYE #1
   - question: 4
     answer:
     - My hobby is cooking.
     - I love cooking turkish food.
+    trait:
+    - cook turkiye food, baklava doner
   - question: 6
     answer:
     - I have a master's degree in applied geophyics.
+    trait:
+    - masters degbree
   - question: 1
     answer:
     - I was born in 1981.
     - I am 43 years old.
+    trait:
+    - 43 years bodledsa
   - question: 10
     answer:
     - A positive trait is
     - ' that i can speak multiple languages:'
     - Dutch, Turkish, English, Arabic and French.
+    trait:
+    - man languesages :)
   - question: 9
     answer:
     - The most important people to me are my parents.
     - They are always there for me.
+    trait:
+    - famaerlrs
+  greetings: []

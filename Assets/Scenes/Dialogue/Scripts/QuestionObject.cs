@@ -8,12 +8,18 @@ using UnityEngine;
 public class QuestionObject : DialogueObject
 {
     public List<Question> questions = new();
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
     {
         get { return _responses; }
         set { _responses = value; }
+    }
+
+    public QuestionObject(GameObject[] background)
+    {
+        this.background = background;
     }
 
     public override void Execute()
@@ -24,10 +30,10 @@ public class QuestionObject : DialogueObject
 
         // Add response to each question to list of responses
         foreach (Question question in questions)
-            Responses.Add(new ResponseObject(question));
+            Responses.Add(new ResponseObject(question, background));
 
-        dm.SetQuestionsField(true);
-        dm.CreatePromptButtons(this);
+        dm.ReplaceBackground(background);
+        dm.InstantiatePromptButtons(this);
     }
 
     private void GenerateQuestions()
@@ -36,12 +42,12 @@ public class QuestionObject : DialogueObject
         // (This value should possibly be public and adjustable from the GameManager)
         int questionsOnScreen = 2;
 
-        Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
+        //Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
 
         // Generate random list of questions
         if (GameManager.gm.HasQuestionsLeft())
         {
-            List<Question> possibleQuestions = new(GameManager.gm.dialogueRecipient.RemainingQuestions);
+            List<Question> possibleQuestions = new(DialogueManager.dm.currentRecipient.RemainingQuestions);
             for (int i = 0; i < questionsOnScreen; i++)
             {
                 if (possibleQuestions.Count <= 0)
