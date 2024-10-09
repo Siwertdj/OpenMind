@@ -27,6 +27,7 @@ public abstract class DialogueObject
 public class SpeakingObject : DialogueObject
 {
     public List<string> dialogue;
+    public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
@@ -35,14 +36,17 @@ public class SpeakingObject : DialogueObject
         set { _responses = value; }
     }
 
-    public SpeakingObject(List<string> dialogue)
+    public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
+        this.background = background;
     }
 
     public override void Execute()
     {
         var dm = DialogueManager.dm;
+
+        dm.ReplaceBackground(background);
         dm.WriteDialogue(dialogue);
 
         // If no response is given, terminate dialogue
@@ -75,8 +79,8 @@ public class TerminateDialogueObject : DialogueObject
     public override void Execute()
     {
         Debug.Log("Terminating dialogue");
-        DialogueManager.dm.OnEndDialogue.Invoke();
-        SceneController.sc.ToggleDialogueScene();
+        // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect
+        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm);
 
         // Invoke post function if given
         post?.Invoke();

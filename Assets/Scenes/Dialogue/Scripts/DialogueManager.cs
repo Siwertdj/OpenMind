@@ -9,35 +9,66 @@ using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager dm;
-
-    [SerializeField] private GameObject dialogueField;
-    [SerializeField] private GameObject questionsField;
+    [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
 
+    [Header("Fields")]
+    [SerializeField] private GameObject dialogueField;
+    [SerializeField] private GameObject questionsField;
+    [SerializeField] private GameObject backgroundField;
+    [SerializeField] private GameObject characterNameField;
+
+    [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
+    [Header("Visuals")]
     [SerializeField] private SpriteRenderer avatar;
 
-    public GameObject background;
+    [Header("Events")]
+    public GameEvent onEndDialogue;
 
-    public UnityEvent OnEndDialogue;
-
-    public DialogueObject currentObject;
-
-    // Start is called before the first frame update
-    void Start()
+    [NonSerialized] public static DialogueManager dm;
+    [NonSerialized] public CharacterInstance currentRecipient;
+    [NonSerialized] public DialogueObject currentObject;
+    
+    /// <summary>
+    /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
+    /// and element 1 is the starting dialogue object.</param>
+    public void StartDialogue(Component sender, params object[] data)
     {
+        // Set static DialogueManager instance
         dm = this;
+
+        Debug.Log("StartDialogue called.");
+
+        // Retrieve and set the dialogue object
+        if (data[0] is DialogueObject dialogueObject)
+        {
+            Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
+            currentObject = dialogueObject;
+        }
+        // Retrieve and set the dialogue recipient (if given)
+        if (data.Length > 1 && data[1] is CharacterInstance recipient)
+        {
+            Debug.Log($"Recipient's name is {recipient.characterName}");
+            currentRecipient = recipient;
+            characterNameField.SetActive(true);
+        } 
+        else
+        {
+            // No dialogue recipient given, so we remove the character name field
+            Debug.Log("No dialogue recipient given");
+            characterNameField.SetActive(false);
+        }
+
+        // Execute the starting object
+        currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-
-        OnEndDialogue.AddListener(GameManager.gm.CheckEndCycle);
-
-        avatar.sprite = GameManager.gm.dialogueRecipient.avatar;
-        currentObject = GameManager.gm.dialogueObject;
-        currentObject.Execute();
     }
 
     // Update is called once per frame
@@ -49,18 +80,13 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Sets prompts to parameter value.
-    /// </summary>
-    /// <param name="active"></param>
-    public void SetQuestionsField(bool active) => questionsField.SetActive(active);
-
-    /// <summary>
     /// Executed when the dialogue animator has finished writing the dialogue.
     /// </summary>
     public void OnDialogueComplete()
     {
         // Close dialogue field
         dialogueField.SetActive(false);
+        characterNameField.SetActive(false);
 
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
@@ -78,28 +104,56 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(true);
 
         // Adjust the box containing the character's name
-        if (GameManager.gm.dialogueObject != null)
-            dialogueField.GetComponentInChildren<TextField>().SetText(GameManager.gm.dialogueRecipient.characterName);
+        if (currentRecipient != null)
+        {
+            characterNameField.SetActive(true);
+            characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
+        }
 
         // Animator write dialogue to the screen.
+        pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
         animator.WriteDialogue(dialogue, pitch);
+    }
+
+    /// <summary>
+    /// Replaces the current dialogue background with the given background.
+    /// </summary>
+    /// <param name="newBackground"></param>
+    public void ReplaceBackground(GameObject[] newBackground)
+    {
+        Transform parent = backgroundField.transform;
+
+        // Remove old background
+        foreach (Transform child in parent)
+            Destroy(child.gameObject);
+
+        // Instantiate new background
+        foreach (GameObject element in newBackground)
+            Instantiate(element).transform.parent = parent;
+
     }
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
     /// <param name="questionObject"></param>
-    public void CreatePromptButtons(QuestionObject questionObject)
+    public void InstantiatePromptButtons(QuestionObject questionObject)
     {
+        // Instantiate button containing each response
         foreach (ResponseObject response in questionObject.Responses)
         {
+            // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
+
+            // Set Unity inspector values
             button.name = "questionButton";
             button.gameObject.tag = "Button";
 
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-            buttonText.text = GameManager.gm.GetPromptText(response.question);
+            buttonText.text = GetPromptText(response.question);
+
+            // Set styling for button
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = 40;
 
@@ -109,6 +163,9 @@ public class DialogueManager : MonoBehaviour
 
         // Add the button to return to the other characters
         CreateBackButton();
+
+        // Set the buttons to be visible
+        questionsField.SetActive(true);
     }
 
     /// <summary>
@@ -150,10 +207,12 @@ public class DialogueManager : MonoBehaviour
     private void BacktoNPCScreen()
     {
         DestroyButtons();
-        currentObject = new TerminateDialogueObject(SceneController.sc.ToggleNPCSelectScene);
+        // TODO: Combineer met het unloaden van Dialoguescene
+        currentObject = new TerminateDialogueObject();
         currentObject.Execute();
     }
 
+    #region [DEPRECATED] Continue Button
     /// <summary>
     /// Creates the button to ask another question to the same NPC
     /// </summary>
@@ -184,6 +243,7 @@ public class DialogueManager : MonoBehaviour
 
         CreateBackButton();
     }
+    #endregion
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.
@@ -194,6 +254,27 @@ public class DialogueManager : MonoBehaviour
         var buttons = GameObject.FindGameObjectsWithTag("Button");
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
+    }
+    
+    public string GetPromptText(Question questionType)
+    {
+        return questionType switch
+        {
+            Question.Name => "What is your name?",
+            Question.Age => "How old are you?",
+            Question.Wellbeing => "How are you doing?",
+            Question.Political => "What are your political thoughts?",
+            Question.Personality => "Can you describe what your personality is like?",
+            Question.Hobby => "What are some of your hobbies?",
+            Question.CulturalBackground => "What is your cultural background?",
+            Question.Education => "What is your education level?",
+            Question.CoreValues => "What core values are the most important to you?",
+            Question.ImportantPeople => "Who are the most important people in your life?",
+            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.NegativeTrait => "What is a bad trait you may have?",
+            Question.OddTrait => "Do you have any odd traits?",
+            _ => "",
+        };
     }
 }
 

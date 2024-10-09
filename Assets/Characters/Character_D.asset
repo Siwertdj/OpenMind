@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Character_D
   m_EditorClassIdentifier: 
   characterName: David
-  id: 0
+  id: 3
   avatar: {fileID: 21300000, guid: 7453c415a721a8040a3af3e629408cc0, type: 3}
   voicePitch: 0.6
   answers:
@@ -21,26 +21,39 @@ MonoBehaviour:
     answer:
     - I was born in 1979.
     - I am 45 years old.
+    trait:
+    - 45445
   - question: 11
     answer:
     - A negative trait i have is that i am short-tempered.
     - Maybe this is the case because
     - I do not sleep very well.
+    trait:
+    - very zzzzz
   - question: 7
     answer:
     - The most important thing to me is money.
     - You can do everything,
     - as long as u have money.
+    trait:
+    - biggnf muneyyyy
   - question: 4
     answer:
     - My hobby is bowling.
     - I always score atleast 1 strike per game.
+    trait:
+    - boaling
   - question: 6
     answer:
     - I have a master's degree in
     - business administration.
+    trait:
+    - master bibness
   - question: 5
     answer:
     - I am an atheist.
     - I was born in England
     - and my parents are also English.
+    trait:
+    - engluudndndn CAM ON ENGLERIDALND
+  greetings: []

@@ -1,14 +1,44 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
+using File = System.IO.File;
 
 public class SceneController : MonoBehaviour
 {
-    public static SceneController sc;
-    private bool notebookOn = false;
+    public enum SceneName
+    {
+        NPCSelectScene,
+        DialogueScene,
+        GameOverScene,
+        GameWinScene,
+        Loading,
+        NotebookScene
+    }
+
+    public enum TransitionType
+    {
+        Transition,
+        Additive,
+        Unload
+    }
     
+    public static SceneController sc;
+    
+    //read from a file
+    private List<List<(int, TransitionType)>> sceneGraph;
+
+    //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
+    private Dictionary<string, int> sceneToID;
+
+    private const string TransitionGraphLocation = "Transition Graph/Transition Graph.txt";
+    private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../") + TransitionGraphLocation;
+
     public void Awake()
     {
         // Initializes static instance of SceneController.
@@ -30,83 +60,154 @@ public class SceneController : MonoBehaviour
             if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
         }
     }
+
+    //read the scene graph from the file and assign both vars described above
+    private void ReadSceneGraph()
+    {
+        //first check if the file exists
+        if (!File.Exists(GetTransitionGraphFilePath()))
+        {
+            Debug.LogError($"Couldn't read the scene graph, the file on filepath {GetTransitionGraphFilePath()} was not found.");
+            return;
+        }
+
+        string[] fileGraphContentLines = File.ReadAllLines(GetTransitionGraphFilePath());
+        sceneGraph = new List<List<(int, TransitionType)>>(fileGraphContentLines.Length);
+        sceneToID = new Dictionary<string, int>();
+        
+        //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWonScene(T)
+        const string arrowSeparator = " --> ";
+        const string sceneSeparator = ", ";
+        foreach(string fileGraphContentLine in fileGraphContentLines)
+            sceneToID.Add(fileGraphContentLine.Split(arrowSeparator)[0], sceneToID.Count);
+        
+        for (int i = 0; i < fileGraphContentLines.Length; i++)
+        {
+            string[] fromTo = fileGraphContentLines[i].Split(arrowSeparator);
+            string[] tos = fromTo[1].Split(sceneSeparator);
+            
+            sceneGraph.Add(new List<(int, TransitionType)>());
+
+            foreach (string to in tos)
+            {
+                string toScene = to.Substring(0, to.Length - 3);
+                foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
+                    if (enumValue.ToString()[0] == to[^2])
+                    {
+                        sceneGraph[i].Add((sceneToID[toScene], enumValue));
+                        break;
+                    }
+            }
+        }
+    }
+
+    //transitions to a new scene
+    //conditions: current = true, means current is loaded. current = false, means current is unloaded
+    //pre conditions: current
+    //post conditions: current = !target_pre && target_post
+    private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
+    {
+        Debug.Log($"Transitioning from {currentScene} to {targetScene}");
+
+        switch (transitionType)
+        {
+            case TransitionType.Additive:
+                await LoadScene(targetScene);
+                break;
+            
+            case TransitionType.Unload:
+                SceneManager.UnloadSceneAsync(currentScene);
+                break;
+            
+            case TransitionType.Transition:
+                SceneManager.UnloadSceneAsync(currentScene);
+                await LoadScene(targetScene);
+                break;
+        }
+    }
+
+    #region Async Scene Loading Helper Functions
+    /// <summary>
+    /// Converts SceneManager.LoadSceneAsync() from an AsyncOperation to a Task so that it is awaitable.
+    /// </summary>
+    /// <param name="targetScene">The name of the scene to be loaded.</param>
+    /// <returns></returns>
+    private Task LoadScene(string targetScene)
+    {
+        // Create a TaskCompletionSource to return as a Task
+        // TaskCompletionSource is used to define when an "await" is finished
+        var tcs = new TaskCompletionSource<bool>();
+
+        // Start the coroutine
+        StartCoroutine(LoadSceneCoroutine(targetScene, tcs));
+
+        // Return the task that will complete when the coroutine ends
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Uses a coroutine to load a scene and wait for it to finish loading.
+    /// </summary>
+    /// <param name="targetScene">The name of the scene to be loaded.</param>
+    /// <param name="tcs">A reference to the TaskCompletionSource.</param>
+    private IEnumerator LoadSceneCoroutine(string targetScene, TaskCompletionSource<bool> tcs)
+    {
+        // The async operation which loads the scene, we can wait for this to complete
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Additive);
+
+        // Wait until the scene is fully loaded
+        while (!asyncLoad.isDone)
+            yield return null;
+
+        // Mark the TaskCompletionSource as completed
+        tcs.SetResult(true);
+    }
+    #endregion
+
+    //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Func<string, string, TransitionType, Task> loadCode)
+    {
+        string currentScene = from.ToString();
+        string targetScene = to.ToString();
+        
+        //some extra checks will be made about the validity of the variables and the file contents
+        //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
+        
+        //checks, does currentScene point to nextScene in the graph?
+        int currentSceneID = sceneToID[currentScene];
+        int targetSceneID = sceneToID[targetScene];
+        if (!sceneGraph[currentSceneID].Contains((targetSceneID, transitionType)))
+            //invalid transition
+            throw new Exception($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
+        
+        await loadCode(currentScene, targetScene, transitionType);
+    }
+
     
-    public void ToggleCompanionHintScene()
-    {
-        string sceneName = "Companion Hint";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
-    public void ToggleDialogueScene()
-    {
-        string sceneName = "DialogueScene";
-
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync(sceneName);
-        }
-        else
-        {
-            SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        }
-    }
-
-    public void ToggleNPCSelectScene()
-    {
-        string sceneName = "NPCSelectScene";
-        if (SceneManager.GetSceneByName(sceneName).isLoaded)
-        {
-            SceneManager.UnloadSceneAsync((sceneName));
-        }
-        else
-        {
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
-        }
-    }
+    //args is the data to transfer
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
 
     
-    public void ToggleGameOverScene()
+    //the function to be called when loading the first cycle
+    public void StartScene(SceneName start)
     {
-        if (SceneManager.GetSceneByName("GameOverScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameOverScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOverScene", LoadSceneMode.Additive);
-        }
-    }
-    public void ToggleGameWinScene()
-    {
-        if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
-        {
-            SceneManager.UnloadSceneAsync("GameWinScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
-        }
-    }
+        ReadSceneGraph();
 
+        string currentScene = start.ToString();
+        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+    }
+    
     public void ToggleNotebookScene()
     {
-        if (notebookOn)
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
-
-            SceneManager.UnloadSceneAsync("NotebookScene");
-            notebookOn = false;
+            TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            //SceneManager.UnloadSceneAsync("NotebookScene");
         }
         else
         {
-            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
-            notebookOn= true;
+            TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         }
     }
 }
