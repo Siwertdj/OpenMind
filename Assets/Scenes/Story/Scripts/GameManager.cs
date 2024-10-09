@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
         
-        // Open start screen, "New Game will call StartGame()
+        // Open start screen, "New Game" will call StartGame()
         sc.StartScene(SceneController.SceneName.StartScreenScene);
     }
 
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("New Game!");
-        
+
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
@@ -86,8 +86,17 @@ public class GameManager : MonoBehaviour
     private void Load()
     {
         gm = this;
-        
+
         // Make parentobject persistent, so that all objects in the toolbox remain persistent.
+        if (gameObject is null) Debug.Log("gameobject is null");
+        else Debug.Log("gameObject is not null");
+
+        if (gameObject.transform is null) Debug.Log("transform is null");
+        else Debug.Log("transform is not null");
+
+        if (gameObject.transform.parent is null) Debug.Log("parent is null");
+        else Debug.Log("parent is not null");
+
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
@@ -109,7 +118,8 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
-        sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        sc.TransitionScene(SceneController.SceneName.StartScreenScene, SceneController.SceneName.NPCSelectScene, SceneController.TransitionType.Unload);
+        //sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
     
     /// <summary>
