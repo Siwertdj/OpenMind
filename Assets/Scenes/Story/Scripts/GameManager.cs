@@ -66,12 +66,14 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
-        
+
+        Debug.Log("Starting...");
+
         // Open start screen, "New Game" will call StartGame()
         sc.StartScene(SceneController.SceneName.StartScreenScene);
     }
 
-    // PROBABLY TEMPORARY FUNCTION TO START GAME
+    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
     public void StartGame()
     {
         Debug.Log("New Game!");
@@ -108,6 +110,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FirstCycle()
     {
+        Debug.Log("Yuh! I'm first cycle...");
+        
         if (immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
@@ -118,7 +122,10 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
-        sc.TransitionScene(SceneController.SceneName.StartScreenScene, SceneController.SceneName.NPCSelectScene, SceneController.TransitionType.Unload);
+        sc.TransitionScene(
+            SceneController.SceneName.StartScreenScene, 
+            SceneController.SceneName.NPCSelectScene, 
+            SceneController.TransitionType.Transition);
         //sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
     
@@ -387,7 +394,8 @@ public class GameManager : MonoBehaviour
     /// TODO: Check naming convention for events and listeners, if this is right
     public async void EndDialogue(Component sender, params object[] data)
     {
-
+        Debug.Log("Dialogue end debug");
+        
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
