@@ -52,7 +52,7 @@ public class NotebookPage
         }
         else
         {
-            return "You have not asked " + _character.characterName + " any questions.\n";
+            return "You have not asked " + _character.characterName + "\nany questions.\n";
         }
     }
     
