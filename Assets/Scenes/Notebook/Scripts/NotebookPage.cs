@@ -5,13 +5,11 @@ public class NotebookPage
 {
     private readonly CharacterInstance _character;
     private string _notes;
-    //private Vector2 drawing;
 
     public NotebookPage(CharacterInstance character)
     {
         _character = character;
         _notes = "Notes on " + character.characterName + ".\n";
-        //drawing = Vector2.zero;
     }
     
     public string GetNotes()
@@ -24,6 +22,9 @@ public class NotebookPage
         _notes = input;
     }
     
+    /// <summary>
+    /// Add the title and question text together for each questions that has been asked.
+    /// </summary>
     public string QuestionText()
     {
         string output = "\n";
@@ -39,7 +40,10 @@ public class NotebookPage
         }
         return output;
     }
-
+    
+    /// <summary>
+    /// Starting text for the character log.
+    /// </summary>
     public string Intro()
     {
         if (_character.AskedQuestions.Count > 0)

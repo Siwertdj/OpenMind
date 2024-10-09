@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using Vector2 = UnityEngine.Vector2;
 
 public class NotebookData
 {
@@ -23,26 +22,41 @@ public class NotebookData
         _personalNotes = "Write down your thoughts.";
     }
 
+    /// <summary>
+    /// Get the notes the player has written about a character.
+    /// </summary>
     public string GetCharacterNotes(CharacterInstance character)
     {
         return _pages[character].GetNotes();
     }
-
+    
+    /// <summary>
+    /// Get the answers the player has obtained from a character.
+    /// </summary>
     public string GetAnswers(CharacterInstance character)
     {
         return _pages[character].Intro() + _pages[character].QuestionText();
     }
-
+    
+    /// <summary>
+    /// Save the text that the player has written about a character to the notebookpage.
+    /// </summary>
     public void UpdateCharacterNotes(CharacterInstance character, string notes)
     {
         _pages[character].SetNotes(notes);
     }
-
+    
+    /// <summary>
+    /// Write the player's personal notes to the notebookdata.
+    /// </summary>
     public void UpdatePersonalNotes(string input)
     {
         _personalNotes = input;
     }
     
+    /// <summary>
+    /// Get the player's written personal notes from the notebookdata.
+    /// </summary>
     public string GetPersonalNotes()
     {
         return _personalNotes;

@@ -37,7 +37,10 @@ public class NotebookManager : MonoBehaviour
         selectedButton = personalButton;
         personalButton.interactable = false;
     }
-
+    
+    /// <summary>
+    /// Initialize the character buttons, use their names as the button text and add the button event.
+    /// </summary>
     public void InitializeCharacterButtons()
     {
         // get all buttons
@@ -52,6 +55,9 @@ public class NotebookManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Open the personal notes tab and load the notes.
+    /// </summary>
     public void OpenPersonalNotes()
     {
         // Save character notes
@@ -67,6 +73,9 @@ public class NotebookManager : MonoBehaviour
         ChangeButtons(personalButton);
     }
     
+    /// <summary>
+    /// Open a character tab and load and display the notes on that character.
+    /// </summary>
     private void CharacterTab(int id)
     {
         // Save notes
@@ -95,19 +104,18 @@ public class NotebookManager : MonoBehaviour
         ChangeButtons(buttons[id]);
     }
     
+    /// <summary>
+    /// Make the character log visible or not.
+    /// </summary>
     public void ToggleCharacterInfo()
     {
         // Toggle character tab
-        if (characterInfo.activeInHierarchy)
-        {
-            characterInfo.SetActive(false);
-        }
-        else
-        {
-            characterInfo.SetActive(true);
-        }
+        characterInfo.SetActive(!characterInfo.activeInHierarchy);
     }
     
+    /// <summary>
+    /// Save the notes on the (character) inputfield to the notebookdata.
+    /// </summary>
     public void SaveNotes()
     {
         if (inputField.activeInHierarchy)
@@ -122,7 +130,10 @@ public class NotebookManager : MonoBehaviour
                 inputFieldCharacters.GetComponent<TMP_InputField>().text);
         }
     }
-
+    
+    /// <summary>
+    /// Make the clicked button non-interactable and make the last clicked buttons interactable again.
+    /// </summary>
     private void ChangeButtons(Button clickedButton)
     {
         selectedButton.interactable = true;

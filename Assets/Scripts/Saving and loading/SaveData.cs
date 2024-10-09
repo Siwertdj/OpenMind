@@ -13,7 +13,6 @@ public class SaveData
     public int questionsRemaining;
     public (int, List<Question>)[] remainingQuestions;
     public string[] sceneStack;
-    // notebook
     public string personalNotes;
     public (int, string)[] characterNotes;
     public (int, List<Question>)[] askedQuestions;
