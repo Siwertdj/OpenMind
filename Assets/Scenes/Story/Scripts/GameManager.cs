@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour
         HintDialogue,   //      --> NpcSelect
         GameLoss,       //      --> Loading (restart/retry)
         GameWon,        //      --> Loading (restart/retry)
+        Prologue,
         Epilogue
     }
     
@@ -96,7 +97,6 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("New Game!");
-
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
 
         // Start the game at the first scene; the NPC Selection scene
         sc.TransitionScene(
-            SceneController.SceneName.StartScreenScene, 
+            SceneController.SceneName.PrologueScene, 
             SceneController.SceneName.NPCSelectScene, 
             SceneController.TransitionType.Transition);
         //sc.StartScene(SceneController.SceneName.NPCSelectScene);

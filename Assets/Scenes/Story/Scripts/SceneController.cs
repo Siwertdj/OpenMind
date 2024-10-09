@@ -20,6 +20,7 @@ public class SceneController : MonoBehaviour
         GameWinScene,
         Loading,
         NotebookScene,
+        PrologueScene,
         EpilogueScene
     }
 

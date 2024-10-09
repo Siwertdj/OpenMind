@@ -17,6 +17,10 @@ public class ButtonManager : MonoBehaviour
     
     public void NewGameButtonClick()
     {
-        GameManager.gm.StartGame();
+        SceneController.sc.TransitionScene(
+            SceneController.SceneName.StartScreenScene,
+            SceneController.SceneName.PrologueScene,
+            SceneController.TransitionType.Transition);
+        //GameManager.gm.StartGame();
     }
 }
