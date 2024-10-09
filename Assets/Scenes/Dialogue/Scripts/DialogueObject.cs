@@ -45,8 +45,8 @@ public class SpeakingObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-        dm.ReplaceBackground(background);
 
+        dm.ReplaceBackground(background);
         dm.WriteDialogue(dialogue);
 
         // If no response is given, terminate dialogue
@@ -79,9 +79,10 @@ public class TerminateDialogueObject : DialogueObject
     public override void Execute()
     {
         Debug.Log("Terminating dialogue");
-        // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect
-        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm);
-
+        // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
+        // Also pass along the currentObject, which is used for the Epilogue scene.
+        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);
+        
         // Invoke post function if given
         post?.Invoke();
     }
