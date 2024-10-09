@@ -145,12 +145,6 @@ public class GameManager : MonoBehaviour
         var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
 
         StartDialogue(dialogueObject);
-
-        //// Start the NPC Selection scene
-        //sc.TransitionScene(
-        //    SceneController.SceneName.DialogueScene, 
-        //    SceneController.SceneName.NPCSelectScene, 
-        //    SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -279,6 +273,7 @@ public class GameManager : MonoBehaviour
 
         // Unload all active scenes except the story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
         // Reset these characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -286,10 +281,9 @@ public class GameManager : MonoBehaviour
             character.isActive = true;
             character.InitializeQuestions();
         }
-        if (immediateVictim)
-            StartCycle();
-        else
-            FirstCycle();
+        
+        // Start the game again
+        FirstCycle();
     }
     
     /// <summary>
@@ -449,10 +443,21 @@ public class GameManager : MonoBehaviour
             else
             {
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-                await sc.TransitionScene(
-                    SceneController.SceneName.DialogueScene,
-                    SceneController.SceneName.NPCSelectScene,
-                    SceneController.TransitionType.Transition);
+                if (gameState == GameState.GameLoss)
+                {
+                    Debug.Log("transition from game loss to npcselect");
+                    await sc.TransitionScene(
+                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
+                }
+                else
+                {
+                    await sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
+                }
             
                 gameState = GameState.NpcSelect;
             }
