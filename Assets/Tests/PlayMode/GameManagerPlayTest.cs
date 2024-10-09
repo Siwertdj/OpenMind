@@ -9,6 +9,78 @@ using UnityEngine.SceneManagement;
 public class GameManagerPlayTest
 {
     /// <summary>
+    /// Checks if the character list gets populated.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator PopulateCharactersTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for scene to load
+
+        // Get GameManager object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Set up expected and actual values
+        var expected = gm.currentCharacters.Count;
+        var actual = gm.numberOfCharacters;
+
+        // Check if they are equal
+        Assert.AreEqual(expected, actual);
+        
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the characters all get set to active during populating
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ActiveCharactersTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for scene to load
+
+        // Get GameManager object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Set up expected and actual values
+        var expected = gm.currentCharacters.Count(c => c.isActive);
+        var actual = gm.numberOfCharacters;
+
+        // Check if they are equal
+        Assert.AreEqual(expected, actual);
+        
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if one culprit gets chosen during populating
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ChooseCulpritTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for scene to load
+
+        // Get GameManager object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Set up expected and actual values
+        var expected = gm.currentCharacters.Count(c => c.isCulprit);
+        var actual = 1;
+
+        // Check if they are equal
+        Assert.AreEqual(expected, actual);
+        
+        yield return null;
+    }
+    
+    /// <summary>
     /// Checks if the "HasQuestionsLeft" method works.
     /// </summary>
     [UnityTest]
@@ -22,7 +94,7 @@ public class GameManagerPlayTest
         var gm = g.GetComponent<GameManager>();
 
         // Set up expected and actual values
-        var expected = gm.numQuestionsAsked <= 1;
+        var expected = gm.AmountOfQuestionsRemaining() >= 1;
         var actual = gm.HasQuestionsLeft();
 
         // Check if they are equal
@@ -127,11 +199,13 @@ public class GameManagerPlayTest
         yield return null;
     }
 
+    static bool[] bools = new bool[] { true, false };
+
     /// <summary>
     /// Checks if the "EndCycle" method works.
     /// </summary>
     [UnityTest]
-    public IEnumerator EndCycleTest()
+    public IEnumerator EndCycleTest([ValueSource(nameof(bools))] bool enoughCharacters)
     {
         // Load scene
         SceneManager.LoadScene("Loading");
@@ -141,11 +215,31 @@ public class GameManagerPlayTest
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
 
+        if (!enoughCharacters)
+        {
+            var remaining = gm.currentCharacters.Count(c => c.isActive);
+
+            foreach (CharacterInstance c in gm.currentCharacters)
+            {
+                if (remaining > 2)
+                {
+                    if (c.isActive)
+                    {
+                        c.isActive = false;
+                        remaining++;
+                    }
+                }
+                else break;
+            }
+        }
+        
         // End cycle
         gm.EndCycle();
         
         // Get current scene
         var scene = SceneManager.GetActiveScene().name;
+        
+        Debug.Log(scene);
 
         // See if it's still equal to the "main" scene of the game
         // No scene should be switched, because it's an additive scene
