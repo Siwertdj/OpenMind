@@ -289,7 +289,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
     
