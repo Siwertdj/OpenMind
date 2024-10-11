@@ -6,6 +6,8 @@ public class ButtonManager : MonoBehaviour
 {
     public bool savesPresent;
     public GameObject ContinueButton;
+    public GameObject StartScreenButtons;
+    public GameObject ChooseStoryButtons;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +18,22 @@ public class ButtonManager : MonoBehaviour
     }
     
     public void NewGameButtonClick()
+    {
+        StartScreenButtons.SetActive(false);
+        ChooseStoryButtons.SetActive(true);
+    }
+    
+    public void Story1ButtonClick()
+    {
+        GameManager.gm.StartGame();
+    }
+    
+    public void Story2ButtonClick()
+    {
+        GameManager.gm.StartGame();
+    }
+    
+    public void Story3ButtonClick()
     {
         GameManager.gm.StartGame();
     }
