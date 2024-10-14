@@ -17,12 +17,22 @@ public class ButtonManager : MonoBehaviour
         if (!savesPresent) ContinueButton.SetActive(false);
     }
     
+    /// <summary>
+    /// Deactivates the buttons on the startscreen and activates a new set of buttons that let the player choose which story they want to play.
+    /// </summary>
     public void NewGameButtonClick()
     {
         StartScreenButtons.SetActive(false);
         ChooseStoryButtons.SetActive(true);
     }
     
+    
+    // TODO: Meegeven welke story is gekozen, nog niet duidelijk hoe we dat opslaan
+    // TODO: Heeft de gekozen story invloed op de prologue, prologue afspelen voor of na het kiezen van een story?
+    
+    
+    // The onclick methods for the three story buttons
+    // Calls the startgame method of gm and tells it which story has been picked
     public void Story1ButtonClick()
     {
         GameManager.gm.StartGame();
