@@ -62,11 +62,11 @@ public class Saving : MonoBehaviour
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
-        string directoryLocation = FilePathConstants.GetSaveFileDirectory();
+        //string directoryLocation = FilePathConstants.GetSaveFileDirectory();
         string fileLocation = FilePathConstants.GetSaveFileLocation();
         
-        if (!Directory.Exists(directoryLocation))
-            Directory.CreateDirectory(directoryLocation);
+        //if (!Directory.Exists(directoryLocation))
+        //    Directory.CreateDirectory(directoryLocation);
         
         File.WriteAllText(fileLocation,jsonString);
     }

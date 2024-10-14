@@ -13,10 +13,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameButtons;
     [SerializeField] private GameObject transitionCanvas;
     [SerializeField] private TextMeshProUGUI transitionText;
-    private Coroutine transitionCoroutine;
     [SerializeField] private float transitionDuration = 1f;
     [SerializeField] private float fadeTime = 0.5f;
-    
+
+    private Coroutine transitionCoroutine;
+
     /// <summary>
     /// Opens the menu of the game, hides the UI buttons
     /// </summary>
