@@ -41,8 +41,9 @@ public class GameManager : MonoBehaviour
     // The list of the characters in the current game. This includes both active and inactive characters
     public List<CharacterInstance> currentCharacters;
     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
+    [NonSerialized] private GameStory gameStory;
     [NonSerialized] public GameState gameState;
-
+    
     // Game Events
     [Header("Events")]
     public GameEvent onDialogueStart;
@@ -81,55 +82,62 @@ public class GameManager : MonoBehaviour
     // Called when this script instance is being loaded
     private void Awake()
     {
-        Load();
-    }
-
-    private void Start()
-    {
-        /*
-         sc = SceneController.sc;
-        
-        // Initialize an empty list of characters
-        currentCharacters = new List<CharacterInstance>();
-        // Now, populate this list.
-        PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
-        notebookData = new NotebookData();
-
-        Debug.Log("Starting...");
-
-        // Open start screen, "New Game" will call StartGame()
-        sc.StartScene(SceneController.SceneName.StartScreenScene);
-        */
-    }
-
-    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
-    public void StartGame()
-    {
-        sc = SceneController.sc;
-        
-        // Initialize an empty list of characters
-        currentCharacters = new List<CharacterInstance>();
-        // Now, populate this list.
-        PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
-        notebookData = new NotebookData();
-
-        FirstCycle();
-    }
-
-    /// <summary>
-    /// Creates persistent toolbox of important manager objects, 
-    /// </summary>
-    private void Load()
-    {
+        // make GameManager static, so it can be easily reached
         gm = this;
 
         // Make parentobject (the toolbox) persistent, so that all objects in the toolbox remain persistent.
         DontDestroyOnLoad(gameObject.transform.parent);
     }
+    
+    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
+    public void StartGame(Component sender, params object[] data)
+    {
+        // Set reference to static SceneController
+        sc = SceneController.sc;
+
+        // Set the gamestory based on the data we passed
+        if (data[0] is GameStory story)
+            gameStory = story;
+        
+        // Initialize a new game
+        InitializeNewGame();
+    }
+
+    /// <summary>
+    /// This private method initializes a new game.
+    /// </summary>
+    private void InitializeNewGame()
+    {
+        // Set certain variables based on gameStory
+        // TODO: See what else would be useful
+        // * dialogue background?
+        // * introduction-text?
+        switch (gameStory)
+        {
+            case GameStory.Phone:
+                immediateVictim = false;
+                break;
+            case GameStory.Psychic:
+                immediateVictim = false;
+                break;
+            case GameStory.AI:
+                immediateVictim = true;
+                break;
+        }
+        
+        // Now, populate this list.
+        PopulateCharacters();
+        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+        //Test_CharactersInGame();
+        notebookData = new NotebookData();
+        
+        // TODO: Instead of First Cycle, we go into a Dialogue that explains the story.
+        // Perhaps we can do this through timelines, like in the Prologue.
+        // After that, we can go into the FirstCycle.
+        // Eventually, we do the same for Epilogue.
+        FirstCycle();
+    }
+    
     
     // This region contains methods that start or end the cycles.
     #region Cycles
@@ -146,7 +154,7 @@ public class GameManager : MonoBehaviour
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
             // Transition-effect
-            gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+            CycleTransition(victimName);
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
@@ -169,7 +177,7 @@ public class GameManager : MonoBehaviour
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
         // Transition
-        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+        CycleTransition(victimName);
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
@@ -212,8 +220,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void PopulateCharacters()
     {
-        // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
-
+        // Empty the list of current characters
+        currentCharacters = new List<CharacterInstance>();
+        
         // Create array to remember what indices we have already visited, so we don't get doubles.
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
@@ -331,8 +340,32 @@ public class GameManager : MonoBehaviour
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
-        Start();        
+        InitializeNewGame();     
     }
+
+    /// <summary>
+    /// Performs a visual fade-in/out when called,
+    /// displaying the victim's name and their fate, depending on the Story we are currently in.
+    /// </summary>
+    /// <param name="victimName"></param>
+    private void CycleTransition(string victimName)
+    {
+        string victimFate = "";
+        switch (gameStory)
+        {
+            case GameStory.Phone:
+                victimFate = "disappeared..";
+                break;
+            case GameStory.Psychic:
+                victimFate = "said goodbye..";
+                break;
+            case GameStory.AI:
+                victimFate = "went home..";
+                break;
+        }
+        gameObject.GetComponent<UIManager>().Transition(victimName + victimFate);
+    }
+    
     #endregion
 
     // This region contains methods regarding dialogue

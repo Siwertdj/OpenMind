@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class ButtonManager : MonoBehaviour
+public class StartMenuManager : MonoBehaviour
 {
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
@@ -19,6 +20,8 @@ public class ButtonManager : MonoBehaviour
     
     public void NewGameButtonClick()
     {
-        GameManager.gm.StartGame();
+        // Load the Story Selection-scene
+        // TODO: We can do this in Async and put a fade-in/out inbetween for smoother transition
+        SceneManager.LoadScene("StorySelectScene");
     }
 }
