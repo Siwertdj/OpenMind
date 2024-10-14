@@ -47,5 +47,11 @@ public class CutsceneController : MonoBehaviour
         checkmarkTransform.GameObject().SetActive(isOn);
         imageWithGrid.SetActive(isOn);
     }
+
+    public void StartGame()
+    {
+        Debug.Log("prologue end");
+        GameManager.gm.StartGame();
+    }
     
 }

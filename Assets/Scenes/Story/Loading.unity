@@ -342,7 +342,7 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1960}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -745,8 +745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 150, y: -100}
-  m_SizeDelta: {x: 300, y: 150}
+  m_AnchoredPosition: {x: 140, y: -100}
+  m_SizeDelta: {x: 280, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541437696
 MonoBehaviour:
@@ -1321,7 +1321,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1960}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1896,12 +1896,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1960}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -2102,8 +2102,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -150, y: -100}
-  m_SizeDelta: {x: 300, y: 150}
+  m_AnchoredPosition: {x: -140, y: -100}
+  m_SizeDelta: {x: 280, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1452397063
 MonoBehaviour:
@@ -2387,11 +2387,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   numberOfCharacters: 4
   numQuestions: 1
-  minimumRemaining: 2
-  immediateVictim: 0
+  minimumRemaining: 4
+  immediateVictim: 1
   avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
   backgroundPrefabs:
-  - {fileID: 8536317093880419543, guid: bf81f915444e06949a72303843cb9e1d, type: 3}
+  - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
+  - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
+  - {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
 --- !u!114 &1546507295
 MonoBehaviour:

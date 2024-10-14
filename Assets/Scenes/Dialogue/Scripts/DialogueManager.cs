@@ -11,6 +11,7 @@ public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
+    [SerializeField] private GameObject inputField;
 
     [Header("Fields")]
     [SerializeField] private GameObject dialogueField;
@@ -27,6 +28,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
 
+    public string inputText;
+
+    // Start is called before the first frame update
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;
@@ -47,23 +51,20 @@ public class DialogueManager : MonoBehaviour
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
         {
-            Debug.Log($"Dialogue object type is {dialogueObject.GetType()}");
             currentObject = dialogueObject;
         }
         // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
-            Debug.Log($"Recipient's name is {recipient.characterName}");
             currentRecipient = recipient;
             characterNameField.SetActive(true);
         } 
         else
         {
             // No dialogue recipient given, so we remove the character name field
-            Debug.Log("No dialogue recipient given");
             characterNameField.SetActive(false);
         }
-
+        
         // Execute the starting object
         currentObject.Execute();
 
@@ -87,7 +88,11 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-
+        
+        // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
+        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
+            CreateOpenQuestion();
+        
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
@@ -102,7 +107,7 @@ public class DialogueManager : MonoBehaviour
     {
         // Enable the dialogue field
         dialogueField.SetActive(true);
-
+        
         // Adjust the box containing the character's name
         if (currentRecipient != null)
         {
@@ -185,6 +190,27 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Creates the buttons and the text field for the open questions.
+    /// </summary>
+    private void CreateOpenQuestion()
+    {
+        // Enable the input field.
+        inputField.SetActive(true);
+        
+        // Create the enter button.
+        Button enterButton = Instantiate(buttonPrefab, inputField.transform).GetComponent<Button>();
+        enterButton.name = "enterButton";
+        enterButton.gameObject.tag = "Button";
+        enterButton.transform.position = inputField.transform.position + new Vector3(0f, -300f, 0f);
+
+        TMP_Text buttonText = enterButton.GetComponentInChildren<TMP_Text>();
+        buttonText.text = "Enter";
+        buttonText.enableAutoSizing = false;
+        buttonText.fontSize = 40;
+        enterButton.onClick.AddListener(() => AnswerOpenQuestion());
+    }
+    
+    /// <summary>
     /// Creates the button to go back to the NPCSelect screen.
     /// </summary>
     private void CreateBackButton()
@@ -200,6 +226,27 @@ public class DialogueManager : MonoBehaviour
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
+    /// <summary>
+    /// Continues the dialogue after answering the open question.
+    /// </summary>
+    private void AnswerOpenQuestion()
+    {
+        DestroyButtons();
+        
+        // Assign the text from the inputField to inputText.
+        // TODO: can write the answers from the open questions to somewhere.
+        inputText = inputField.GetComponent<TMP_InputField>().text;
+        
+        // Disable the input field.
+        inputField.SetActive(false);
+        
+        // Reset the text from the input field.
+        inputField.GetComponentInChildren<TMP_InputField>().text = "";
+        
+        // Go to the next part of the dialogue.
+        currentObject = currentObject.Responses[0];
+        currentObject.Execute();
+    }
     /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
