@@ -53,6 +53,17 @@ public class GameManager : MonoBehaviour
     private SceneController sc;
     public NotebookData notebookData;
 
+    // Enumerations
+    #region Enumerations
+    // This enumeration defines each story for the game.
+    public enum GameStory
+    {
+        Phone,
+        Psychic,
+        AI
+    }
+    
+    // This enumeration defines all the possible GameStates, which we can use to test correct behavior
     public enum GameState
     {
         // Is there a gamestate for when the game is loading in?
@@ -65,6 +76,7 @@ public class GameManager : MonoBehaviour
         GameWon,        //      --> Loading (restart/retry)
         Epilogue
     }
+    #endregion
     
     // Called when this script instance is being loaded
     private void Awake()
@@ -74,7 +86,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        sc = SceneController.sc;
+        /*
+         sc = SceneController.sc;
         
         // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
@@ -88,14 +101,22 @@ public class GameManager : MonoBehaviour
 
         // Open start screen, "New Game" will call StartGame()
         sc.StartScene(SceneController.SceneName.StartScreenScene);
+        */
     }
 
     // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
     public void StartGame()
     {
-        Debug.Log("New Game!");
+        sc = SceneController.sc;
+        
+        // Initialize an empty list of characters
+        currentCharacters = new List<CharacterInstance>();
+        // Now, populate this list.
+        PopulateCharacters();
+        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
+        //Test_CharactersInGame();
+        notebookData = new NotebookData();
 
-        // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
 
@@ -106,16 +127,7 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
 
-        // Make parentobject persistent, so that all objects in the toolbox remain persistent.
-        if (gameObject is null) Debug.Log("gameobject is null");
-        else Debug.Log("gameObject is not null");
-
-        if (gameObject.transform is null) Debug.Log("transform is null");
-        else Debug.Log("transform is not null");
-
-        if (gameObject.transform.parent is null) Debug.Log("parent is null");
-        else Debug.Log("parent is not null");
-
+        // Make parentobject (the toolbox) persistent, so that all objects in the toolbox remain persistent.
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
@@ -144,11 +156,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(c.characterName + " is the culprit!");
 
         // Start the game at the first scene; the NPC Selection scene
-        sc.TransitionScene(
-            SceneController.SceneName.StartScreenScene, 
-            SceneController.SceneName.NPCSelectScene, 
-            SceneController.TransitionType.Transition);
-        //sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
     
     /// <summary>

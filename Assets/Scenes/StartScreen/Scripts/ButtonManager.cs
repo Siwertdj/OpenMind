@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
+    //TODO: The name of this script is too generic. It only applies to the Start-menu.
+    //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public bool savesPresent;
     public GameObject ContinueButton;
 
