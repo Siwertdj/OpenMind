@@ -14,7 +14,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject transitionCanvas;
     [SerializeField] private TextMeshProUGUI transitionText;
     private Coroutine transitionCoroutine;
-    [SerializeField] private float transitionDuration;
+    [SerializeField] private float transitionDuration = 1f;
+    [SerializeField] private float fadeTime = 0.5f;
     
     /// <summary>
     /// Opens the menu of the game, hides the UI buttons
@@ -62,20 +63,27 @@ public class UIManager : MonoBehaviour
     {
         //TODO: Magick numbers
         transitionCanvas.SetActive(true);
-        Image panel = transitionCanvas.GetComponentInChildren<Image>();
+
+        // Use a canvas group to adjust alpha value of all children
+        CanvasGroup canvasGroup = transitionCanvas.GetComponent<CanvasGroup>();
+
+        // Fade to black
         for (float alpha = 0f; alpha < 1; alpha += 0.01f)
         {
-            panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, alpha);
-            yield return (transitionDuration/100);
-
+            canvasGroup.alpha = alpha;
+            yield return new WaitForSeconds(fadeTime * Time.deltaTime);
         }
+
+        // Mid-point
         yield return new WaitForSeconds(transitionDuration);
+
+        // Fade back to game
         for (float alpha = 1f; alpha >= 0; alpha -= 0.01f)
         {
-            panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, alpha);
-            yield return (transitionDuration/100);
-
+            canvasGroup.alpha = alpha;
+            yield return new WaitForSeconds(fadeTime * Time.deltaTime);
         }
+
         transitionCanvas.SetActive(false);
     }
 

@@ -1839,6 +1839,7 @@ GameObject:
   - component: {fileID: 1408522170}
   - component: {fileID: 1408522169}
   - component: {fileID: 1408522172}
+  - component: {fileID: 1408522173}
   m_Layer: 0
   m_Name: TransitionCanvas
   m_TagString: Untagged
@@ -1938,6 +1939,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408522167}
   m_CullTransparentMesh: 1
+--- !u!225 &1408522173
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408522167}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1447988413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,7 +2407,6 @@ MonoBehaviour:
   - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
   - {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
-  hasWon: 0
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
 --- !u!114 &1546507295
 MonoBehaviour:
@@ -2413,6 +2425,7 @@ MonoBehaviour:
   transitionCanvas: {fileID: 1408522167}
   transitionText: {fileID: 229965983}
   transitionDuration: 2
+  fadeTime: 0
 --- !u!114 &1546507296
 MonoBehaviour:
   m_ObjectHideFlags: 0
