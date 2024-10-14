@@ -68,21 +68,27 @@ public class UIManager : MonoBehaviour
         CanvasGroup canvasGroup = transitionCanvas.GetComponent<CanvasGroup>();
 
         // Fade to black
-        for (float alpha = 0f; alpha < 1; alpha += 0.01f)
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
         {
-            canvasGroup.alpha = alpha;
-            yield return new WaitForSeconds(fadeTime * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null; // this waits for a single frame
         }
+        canvasGroup.alpha = 1f;
 
         // Mid-point
         yield return new WaitForSeconds(transitionDuration);
 
-        // Fade back to game
-        for (float alpha = 1f; alpha >= 0; alpha -= 0.01f)
+        // Fade back to the game
+        elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
         {
-            canvasGroup.alpha = alpha;
-            yield return new WaitForSeconds(fadeTime * Time.deltaTime);
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        canvasGroup.alpha = 0f;
 
         transitionCanvas.SetActive(false);
     }

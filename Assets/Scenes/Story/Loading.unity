@@ -2425,7 +2425,7 @@ MonoBehaviour:
   transitionCanvas: {fileID: 1408522167}
   transitionText: {fileID: 229965983}
   transitionDuration: 2
-  fadeTime: 0
+  fadeTime: 0.5
 --- !u!114 &1546507296
 MonoBehaviour:
   m_ObjectHideFlags: 0
