@@ -38,3 +38,19 @@ public struct DialogueLines
     [SerializeField]
     public List<string> lines;
 }
+
+[Serializable]
+public struct DialogueLine
+{
+    [SerializeField]
+    public Emotion emotion;
+    [SerializeField]
+    public string line;
+
+}
+
+public enum Emotion
+{
+    Happy,
+    Neutral
+}
