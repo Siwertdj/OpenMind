@@ -15,8 +15,8 @@ public class CutsceneController : MonoBehaviour
     public GameObject imageWithoutGrid;
     public Toggle imageToggler;
     public Button continueButton;
-    private Transform checkmarkTransform; 
     
+    private Transform checkmarkTransform; 
     private void Start()
     {
         // Access the Checkmark GameObject via the Toggle's hierarchy
@@ -48,10 +48,11 @@ public class CutsceneController : MonoBehaviour
         imageWithGrid.SetActive(isOn);
     }
 
-    public void StartGame()
+    public void StartIntro()
     {
-        Debug.Log("prologue end");
-        GameManager.gm.StartGame();
+        // load StoryIntroductionScene
     }
+
+    
     
 }
