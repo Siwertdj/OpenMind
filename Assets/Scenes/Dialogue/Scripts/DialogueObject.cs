@@ -26,7 +26,7 @@ public abstract class DialogueObject
 /// </summary>
 public class SpeakingObject : DialogueObject
 {
-    public List<string> dialogue;
+    public List<DialogueLine> dialogue;
     public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
@@ -36,7 +36,7 @@ public class SpeakingObject : DialogueObject
         set { _responses = value; }
     }
 
-    public SpeakingObject(List<string> dialogue, GameObject[] background)
+    public SpeakingObject(List<DialogueLine> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
         this.background = background;

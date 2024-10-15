@@ -32,9 +32,9 @@ public class NotebookPage
         foreach (Question q in _character.AskedQuestions)
         {
             output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in _character.Answers[q])
+            foreach (DialogueLine l in _character.Traits[q])
             {
-                output += s + " ";
+                output += l.line + " ";
             }
             output += "\n \n";
         }

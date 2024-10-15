@@ -7,8 +7,8 @@ public class CharacterInstance
 {
     public CharacterData data;
 
-    public Dictionary<Question, List<string>> Answers = new();
-    public Dictionary<Question, List<string>> Traits = new();
+    public Dictionary<Question, DialogueLine[]> Answers = new();
+    public Dictionary<Question, DialogueLine[]> Traits = new();
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();
     
@@ -43,17 +43,17 @@ public class CharacterInstance
     /// Get a random greeting from the character's list of greetings.
     /// </summary>
     /// <returns>A greeting in the form of dialogue lines.</returns>
-    public List<string> GetGreeting()
+    public DialogueLine[] GetGreeting()
     {
         // Pick random greeting from data list
         if (data.greetings != null && data.greetings.Length > 0)
         {
             int randomInt = new System.Random().Next(data.greetings.Length);
-            return data.greetings[randomInt].lines;
+            return data.greetings[randomInt];
         }
 
         // If no greeting was found, return default greeting
-        return new() { "Hello" };
+        return new DialogueLine[]{ new DialogueLine("Hello", Emotion.Neutral)};
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public class CharacterInstance
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
-    private List<string>[] GetAllTraits()
+    private List<DialogueLine>[] GetAllTraits()
     {
         return Traits.Values.ToArray();
     }
@@ -163,6 +163,11 @@ public class CharacterInstance
             Traits[kvp.question] = kvp.trait;
             RemainingQuestions.Add(kvp.question);
         }
+    }
+
+    public List<string> GetLines(DialogueLine[] lines)
+    {
+        return lines.Select(d => d.line).ToList();
     }
     
     /// <summary>
@@ -185,7 +190,7 @@ public class CharacterInstance
                 character.RemainingQuestions.Remove(question);
 
             // Return the answer to the question in trait form
-            return Traits[question];
+            return Traits[question].Select(d => d.line).ToList();
         }
         else
         {

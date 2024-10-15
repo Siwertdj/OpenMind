@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.Linq;
 using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
@@ -103,7 +104,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     /// <param name="dialogue"></param>
     /// <param name="pitch"></param>
-    public void WriteDialogue(List<string> dialogue, float pitch = 1)
+    public void WriteDialogue(List<DialogueLine> dialogue, float pitch = 1)
     {
         // Enable the dialogue field
         dialogueField.SetActive(true);
@@ -115,9 +116,11 @@ public class DialogueManager : MonoBehaviour
             characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
         }
 
-        // Animator write dialogue to the screen.
+        // If no pitch is given, set speaking pitch to 1
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, pitch);
+
+        // Animator write dialogue to the screen.
+        animator.WriteDialogue(dialogue.Select(d => d.line).ToList(), pitch);
     }
 
     /// <summary>

@@ -14,27 +14,72 @@ public class CharacterData : ScriptableObject
     [Range(0.5f, 2f)] public float voicePitch = 1;
 
     [SerializeField]
-    public KeyValuePair[] answers;
+    public AnswerTuple[] answers;
 
     [SerializeField]
-    public DialogueLines[] greetings;
+    public DialogueLine[][] greetings;
 }
 
 // KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
 [Serializable]
-public struct KeyValuePair
+public struct AnswerTuple
 {
     [SerializeField]
     public Question question;
     [SerializeField]
-    public List<string> answer;
+    public DialogueLine[] answer;
     [SerializeField]
-    public List<string> trait;
+    public DialogueLine[] trait;
 }
 
 [Serializable]
-public struct DialogueLines
+public class DialogueLines
 {
+    private DialogueLine[] _lines;
+
+    private 
+}
+
+//[Serializable]
+//public struct DialogueLines
+//{
+//    public List<string> strings { get lines.Select(x => x.line); } }
+
+//    public DialogueLines(DialogueLine[] lines)
+//    {
+//        this.lines = lines;
+//    }
+
+//    [SerializeField]
+//    public DialogueLine[] lines;
+//}
+
+[Serializable]
+public class DialogueLine
+{
+    private string name = "Line";
+
+    public DialogueLine(string line, Emotion emotion)
+    {
+        this.line = line;
+        this.emotion = emotion;
+    }
+
+    public DialogueLine(string line)
+    {
+        this.line = line;
+    }
+
     [SerializeField]
-    public List<string> lines;
+    public string line;
+    [SerializeField]
+    public Emotion emotion;
+}
+
+public enum Emotion
+{
+    Neutral,
+    Happy,
+    Sad,
+    Angry
 }
