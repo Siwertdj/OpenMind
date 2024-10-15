@@ -132,9 +132,8 @@ public class GameManager : MonoBehaviour
         notebookData = new NotebookData();
         
         // TODO: Instead of First Cycle, we go into a Dialogue that explains the story.
-        // Perhaps we can do this through timelines, like in the Prologue.
+        // So we start (sc.Startscene) in NPCDialogue, and feed it a DialogueObject that introduces this story.
         // After that, we can go into the FirstCycle.
-        // Eventually, we do the same for Epilogue.
         FirstCycle();
     }
     
@@ -524,11 +523,11 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    await sc.TransitionScene(
-                        SceneController.SceneName.DialogueScene, 
-                        SceneController.SceneName.NPCSelectScene, 
-                        SceneController.TransitionType.Transition);
-                }
+                        await sc.TransitionScene(
+                            SceneController.SceneName.DialogueScene, 
+                            SceneController.SceneName.NPCSelectScene, 
+                            SceneController.TransitionType.Transition);
+                    }
             
                 gameState = GameState.NpcSelect;
             }
