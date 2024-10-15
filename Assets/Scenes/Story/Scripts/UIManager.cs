@@ -13,9 +13,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameButtons;
     [SerializeField] private GameObject transitionCanvas;
     [SerializeField] private TextMeshProUGUI transitionText;
+    [SerializeField] private float transitionDuration = 1f;
+    [SerializeField] private float fadeTime = 0.5f;
+
     private Coroutine transitionCoroutine;
-    [SerializeField] private float transitionDuration;
-    
+
     /// <summary>
     /// Opens the menu of the game, hides the UI buttons
     /// </summary>
@@ -62,20 +64,33 @@ public class UIManager : MonoBehaviour
     {
         //TODO: Magick numbers
         transitionCanvas.SetActive(true);
-        Image panel = transitionCanvas.GetComponentInChildren<Image>();
-        for (float alpha = 0f; alpha < 1; alpha += 0.01f)
-        {
-            panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, alpha);
-            yield return (transitionDuration/100);
 
+        // Use a canvas group to adjust alpha value of all children
+        CanvasGroup canvasGroup = transitionCanvas.GetComponent<CanvasGroup>();
+
+        // Fade to black
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(0f, 1f, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null; // this waits for a single frame
         }
+        canvasGroup.alpha = 1f;
+
+        // Mid-point
         yield return new WaitForSeconds(transitionDuration);
-        for (float alpha = 1f; alpha >= 0; alpha -= 0.01f)
-        {
-            panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, alpha);
-            yield return (transitionDuration/100);
 
+        // Fade back to the game
+        elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
+        {
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+        canvasGroup.alpha = 0f;
+
         transitionCanvas.SetActive(false);
     }
 

@@ -832,7 +832,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 741079412}
-  - component: {fileID: 741079415}
   - component: {fileID: 741079416}
   m_Layer: 5
   m_Name: SelectionSpace
@@ -864,19 +863,6 @@ RectTransform:
   m_AnchoredPosition: {x: 3.4537354, y: -100}
   m_SizeDelta: {x: 1478.6, y: 1734}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &741079415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 741079411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39064f54d42cf94429c76cab56aba19f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selection: {fileID: 741079411}
 --- !u!114 &741079416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,7 +1466,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1872964030}
-  - component: {fileID: 1872964032}
   - component: {fileID: 1872964031}
   m_Layer: 5
   m_Name: SelectionSpacescrollviewtest
@@ -1529,18 +1514,6 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &1872964032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1872964029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbaa05b4014d0dc4492a2f95a3ef2fb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1883821829
 GameObject:
   m_ObjectHideFlags: 0

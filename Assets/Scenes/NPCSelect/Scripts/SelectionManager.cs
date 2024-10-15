@@ -72,7 +72,7 @@ public class SelectionManager : MonoBehaviour
             newOption.character = character;                
             // TODO: not correct yet, this will go out of bounds when there are more than 8 characters.
             // Sets one of the 8 character spaces as parent of the SelectOption object.
-            newOption.transform.parent = parent.transform.GetChild(counter);
+            newOption.transform.SetParent(parent.transform.GetChild(counter), false);
             // Sets the position of the SelectOption object to the same position as the parent (character space).
             newOption.transform.position = newOption.transform.parent.position;
             counter++;            

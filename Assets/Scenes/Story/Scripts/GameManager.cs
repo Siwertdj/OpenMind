@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;
 
     // Set this bool to true if the correct character has been chosen at the end, else false.
-    public bool hasWon;
+    [NonSerialized] public bool hasWon;
 
     // Save the character that has been chosen during the intermediate choice moment.
     public CharacterInstance IntermediateChosenCuplrit;
@@ -291,7 +291,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
     
