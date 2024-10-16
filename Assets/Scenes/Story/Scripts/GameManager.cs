@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
     [NonSerialized] public int numQuestionsAsked;
-
+    
     // Set this bool to true if the correct character has been chosen at the end, else false.
     [NonSerialized] public bool hasWon;
 
