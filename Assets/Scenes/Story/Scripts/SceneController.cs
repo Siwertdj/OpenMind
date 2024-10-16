@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,12 +14,14 @@ public class SceneController : MonoBehaviour
 {
     public enum SceneName
     {
+        StartScreenScene,
         NPCSelectScene,
         DialogueScene,
         GameOverScene,
         GameWinScene,
         Loading,
-        NotebookScene
+        NotebookScene,
+        EpilogueScene
     }
 
     public enum TransitionType
@@ -36,8 +39,8 @@ public class SceneController : MonoBehaviour
     //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
     private Dictionary<string, int> sceneToID;
 
-    private const string TransitionGraphLocation = "Transition Graph/Transition Graph.txt";
-    private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../") + TransitionGraphLocation;
+    private const string TransitionGraphLocation = "Transition Graph/Transition Graph";
+    private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../Assets/Resources/") + TransitionGraphLocation;
 
     public void Awake()
     {
@@ -64,14 +67,20 @@ public class SceneController : MonoBehaviour
     //read the scene graph from the file and assign both vars described above
     private void ReadSceneGraph()
     {
-        //first check if the file exists
-        if (!File.Exists(GetTransitionGraphFilePath()))
+        // Load the scene graph file
+        TextAsset file = (TextAsset)Resources.Load(TransitionGraphLocation);
+
+        // Check if the file exists
+        if (file == null)
         {
-            Debug.LogError($"Couldn't read the scene graph, the file on filepath {GetTransitionGraphFilePath()} was not found.");
+            Debug.LogError("Couldn't read the scene graph, the file on filepath " +
+                $"Assets/Resources/{TransitionGraphLocation} was not found.");
             return;
         }
 
-        string[] fileGraphContentLines = File.ReadAllLines(GetTransitionGraphFilePath());
+        // Split into lines
+        string[] fileGraphContentLines = Regex.Split(file.text, "\r\n|\r|\n");
+
         sceneGraph = new List<List<(int, TransitionType)>>(fileGraphContentLines.Length);
         sceneToID = new Dictionary<string, int>();
         

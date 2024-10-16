@@ -47,27 +47,22 @@ public class Loading : MonoBehaviour
             c.isActive = saveData.activeCharacters.Contains(c.id);
             c.isCulprit = saveData.culprit == c.id;
             if (c.isActive)
+            {
                 c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            
+            }
+            c.AskedQuestions = saveData.askedQuestions.First(qs => qs.Item1 == c.id).Item2;
+            gameManager.notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
             return c;
         }).ToList();
         
         gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
-        File.WriteAllText(FilePathConstants.GetNoteBookLocation(), saveData.noteBookData);
+        gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
     }
     
     private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)
     {
         if (saveFileJsonContents is null)
             return false;
-        
-        //check if the notebook file exists, if not, stop the loading
-        //otherwise the loading process cannot write the notebook contents to the right location
-        if (!File.Exists(FilePathConstants.GetNoteBookLocation()))
-        {
-            Debug.LogError($"Cannot find the notebook file at {FilePathConstants.GetNoteBookLocation()}.\nLoading failed.");
-            return false;
-        }
         
         //check if the gamemanger is loaded
         //otherwise no character data can be assigned
