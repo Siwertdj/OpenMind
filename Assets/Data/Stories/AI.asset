@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: AI
   m_EditorClassIdentifier: 
   storyName: the Paper Pariah
-  introDialogue:
-    lines: []
   introBackground: {fileID: 0}
-  epilogueDialogue:
-    lines: []
   epilogueBackground: {fileID: 0}
   dialogueBackground: {fileID: 0}
-  victimDialogue: 
-  hintDialogue: 
-  numberOfCharacters: 0
-  numQuestions: 0
-  minimumRemaining: 0
+  victimDialogue: went home..
+  hintDialogue: The computer calculated new data about the culprit..
+  numberOfCharacters: 4
+  numQuestions: 1
+  minimumRemaining: 2
   immediateVictim: 0

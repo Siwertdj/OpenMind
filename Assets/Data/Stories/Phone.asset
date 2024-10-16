@@ -13,16 +13,12 @@ MonoBehaviour:
   m_Name: Phone
   m_EditorClassIdentifier: 
   storyName: New Phone, who dis?
-  introDialogue:
-    lines: []
   introBackground: {fileID: 0}
-  epilogueDialogue:
-    lines: []
   epilogueBackground: {fileID: 0}
   dialogueBackground: {fileID: 0}
-  victimDialogue: 
-  hintDialogue: 
-  numberOfCharacters: 0
-  numQuestions: 0
-  minimumRemaining: 0
+  victimDialogue: went home..
+  hintDialogue: '*beep beep* You got a new message!'
+  numberOfCharacters: 4
+  numQuestions: 1
+  minimumRemaining: 2
   immediateVictim: 0

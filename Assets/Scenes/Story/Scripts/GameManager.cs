@@ -11,43 +11,31 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    // GAME SETTINGS
-    private List<CharacterData> characters; // The full list of characters in the game
-    //public int numberOfCharacters; // How many characters each session should have
-    private int numQuestions; // Amount of times the player can ask a question
-    private int minimumRemaining; // The amount of active characters at which the session should end
-    private bool immediateVictim; // Start the first round with an inactive characters
+    [Header("Game Resources")]
+    [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
-    /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    /// </summary>
-    [NonSerialized] public int numQuestionsAsked;
-
-    // Set this bool to true if the correct character has been chosen at the end, else false.
-    public bool hasWon;
-
-    // Save the character that has been chosen during the intermediate choice moment.
-    public CharacterInstance IntermediateChosenCuplrit;
-    
-    // Save the character that has been chosen at the end of the game.
-    public CharacterInstance FinalChosenCuplrit;
-    
-    // Holds the remainder of the conversation in the epilogue.
-    public List<List<string>> remainingDialogueScenario;
-    
-    // The list of the characters in the current game. This includes both active and inactive characters
-    public List<CharacterInstance> currentCharacters;
-    // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    [NonSerialized] public GameState gameState;
-
-    private StoryObject story;
-    
-    // Game Events
     [Header("Events")]
     public GameEvent onDialogueStart;
+    
+    // GAME VARIABLES
+    private int numberOfCharacters; // How many characters each session should have
+    private int numQuestions; // Amount of times the player can ask a question
+    private int minimumRemaining; // The amount of active characters at which the session should end
+    private bool immediateVictim; // Start the first round with an inactive characters
+    [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
+    public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
+    [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
+    private StoryObject story;      // Contains information about the current game pertaining to the story
+    
+    // EPILOGUE VARIABLES
+    public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
+    public CharacterInstance IntermediateChosenCuplrit; // Save the character that has been chosen during the intermediate choice moment.
+    public CharacterInstance FinalChosenCuplrit;    // Save the character that has been chosen at the end of the game.
+    public List<List<string>> remainingDialogueScenario; // Holds the remainder of the conversation in the epilogue.
     
     // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
@@ -91,8 +79,10 @@ public class GameManager : MonoBehaviour
         // Set the gamestory based on the data we passed
         if (data[0] is StoryObject storyObject)
         {
+            // Set the story object
+            story = storyObject;
             // Initialize a new game
-            NewGame(storyObject);
+            NewGame();
         }
         else if (data[0] is SaveData saveData)
         {
@@ -102,49 +92,27 @@ public class GameManager : MonoBehaviour
 
     private void LoadGame(SaveData saveData)
     {
-        // TODO: Load game
-        /*
-         gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
-        {
-            c.isActive = saveData.activeCharacters.Contains(c.id);
-            c.isCulprit = saveData.culprit == c.id;
-            if (c.isActive)
-            {
-                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            }
-            c.AskedQuestions = saveData.askedQuestions.First(qs => qs.Item1 == c.id).Item2;
-            gameManager.notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
-            return c;
-        }).ToList();
-        
-        gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
-        gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
-         */
+        // TODO: Load game using the savedata
+        // set all the variables to what they should be
+        // Set the story as well
+        // Then, "StartCycle".
     }
 
     /// <summary>
     /// This private method initializes a new game.
     /// </summary>
-    private void NewGame(StoryObject storyObject)
+    private void NewGame()
     {
-        // Set certain variables based on gameStory
-        // TODO: Parse settings from story to initialize the game properly.
-        
+        // put data from story into variables.
+        numberOfCharacters = story.numberOfCharacters;
+        // Empty the lsit of current characters
+        currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
-        PopulateCharacters(storyObject.numberOfCharacters);
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
+        PopulateCharacters();
+        // Empty notebook data
         notebookData = new NotebookData();
-        
-        // TODO: Instead of First Cycle, we go into a Dialogue that explains the story.
-        // So we start (sc.StartScene) in Dialogue, and feed it a DialogueObject that introduces this story.
-        // After that, we can go into the FirstCycle.
-        List<string> dialogue = new List<string>();
-        dialogue.Add("guh");
-        DialogueObject dialogueObject = new SpeakingObject(dialogue,null);
 
-
-        //FirstCycle();
+        FirstCycle();
     }
     
     
@@ -165,10 +133,6 @@ public class GameManager : MonoBehaviour
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
-
-        // Print culprit name for debug purposes
-        foreach (var c in currentCharacters.Where(c => c.isCulprit))
-            Debug.Log(c.characterName + " is the culprit!");
 
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
@@ -221,15 +185,15 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region InstantiateGameOrCycles
+
     /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
     /// Also makes sure they are all set to 'Active', and selects a random culprit.
     /// </summary>
-    private void PopulateCharacters(int numberOfCharacters)
+    private void PopulateCharacters()
     {
-        // Empty the list of current characters
-        currentCharacters = new List<CharacterInstance>();
-        
+        // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
+
         // Create array to remember what indices we have already visited, so we don't get doubles.
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
@@ -246,13 +210,14 @@ public class GameManager : MonoBehaviour
                 int index = random.Next(0, numberOfCharacters) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
-                for (int j = 0; j< visitedIndices.Length; j++)
+                for (int j = 0; j < visitedIndices.Length; j++)
                     arrayString += (visitedIndices[j] + ", ");
-                
+
                 if (!visitedIndices.Contains(index))
                 {
                     var toAdd = characters[index - 1]; // correct the offset
-                    currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
+                    currentCharacters.Add(
+                        new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
                     foundUniqueInt = true; // change the boolean-value to exit the while-loop
                 }
@@ -268,7 +233,7 @@ public class GameManager : MonoBehaviour
         //Randomly select a culprit
         currentCharacters[random.Next(0, numberOfCharacters)].isCulprit = true;
     }
-    
+
     /// <summary>
     /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
     /// the victim that is removed from their list of questions and prints to to the debuglog
@@ -347,7 +312,7 @@ public class GameManager : MonoBehaviour
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
-        NewGame(StoryObject);     
+        NewGame();     
     }
 
     /// <summary>
@@ -357,7 +322,7 @@ public class GameManager : MonoBehaviour
     /// <param name="victimName"></param>
     private void CycleTransition(string victimName)
     {
-        string victimFate = story.VictimDialogue;
+        string victimFate = story.victimDialogue;
         gameObject.GetComponent<UIManager>().Transition(victimName + victimFate);
     }
     

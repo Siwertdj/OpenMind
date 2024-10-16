@@ -10,27 +10,19 @@ public class StoryObject : ScriptableObject
 
     [SerializeField] private string storyName;
     
-    [Header("Story Assets")] 
-    // Introduction Dialogue
-    [SerializeField] private DialogueLines introDialogue;
+    [Header("Story Assets")]
     [SerializeField] private GameObject introBackground;
-    // Epilogue Dialogue
-    [SerializeField] private DialogueLines epilogueDialogue;
     [SerializeField] private GameObject epilogueBackground;
-    // NPC Dialogue Background
-    public GameObject DialogueBackground { get; private set; }
-    // Victim Dialogue
-    public string VictimDialogue { get; private set; }
-    // Hint Dialogue
-    public string GintDialogue { get; private set; }
+    [SerializeField] public GameObject dialogueBackground;
 
     [Header("Game Settings")] 
+    [SerializeField] public string victimDialogue;
+    [SerializeField] public string hintDialogue;
+    [SerializeField] public int numberOfCharacters;            // How many characters each session should have
     [SerializeField] private int numQuestions; // Amount of times the player can ask a question
     [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
     [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
     
-    public int numberOfCharacters { get; private set; } // How many characters each session should have
-    public DialogueObject IntroDialogueObject { get; private set; }
-    public DialogueObject EpilogueDialogueObject { get; private set; }
+   
 
 }
