@@ -139,6 +139,7 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    #region Transition Animation Functions
     private Task FadeTransition()
     {
         var tcs = new TaskCompletionSource<bool>();
@@ -149,9 +150,13 @@ public class SceneController : MonoBehaviour
     private IEnumerator FadeCoroutine(TaskCompletionSource<bool> tcs)
     {
         transitionAnimator.SetTrigger("SceneLoading");
-        yield return new WaitForSeconds(1);
+
+        // Await the length of the animation
+        yield return new WaitForSeconds(transitionAnimator.GetCurrentAnimatorClipInfo(0).Length);
+
         tcs.SetResult(true);
     }
+    #endregion
 
     #region Async Scene Loading Helper Functions
     /// <summary>
