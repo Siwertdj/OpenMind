@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 using Random = System.Random;
 
 public class GameManager : MonoBehaviour
@@ -109,7 +111,7 @@ public class GameManager : MonoBehaviour
         minimumRemaining = story.minimumRemaining;
         immediateVictim = story.immediateVictim;*/
         
-        // Empty the lsit of current characters
+        // Initialize an empty list of characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
         PopulateCharacters();
@@ -190,7 +192,6 @@ public class GameManager : MonoBehaviour
     #endregion
     
     #region InstantiateGameOrCycles
-
     /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
     /// Also makes sure they are all set to 'Active', and selects a random culprit.
@@ -283,7 +284,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
     

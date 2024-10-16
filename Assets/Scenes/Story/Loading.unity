@@ -312,7 +312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: .... went home.
+  m_text: '.... went home.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1839,6 +1839,7 @@ GameObject:
   - component: {fileID: 1408522170}
   - component: {fileID: 1408522169}
   - component: {fileID: 1408522172}
+  - component: {fileID: 1408522173}
   m_Layer: 0
   m_Name: TransitionCanvas
   m_TagString: Untagged
@@ -1938,6 +1939,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408522167}
   m_CullTransparentMesh: 1
+--- !u!225 &1408522173
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408522167}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1447988413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2387,10 +2400,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   numberOfCharacters: 4
-  numQuestions: 1
+  numQuestions: 2
   minimumRemaining: 2
   immediateVictim: 0
-  avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
+  avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9,
+    type: 3}
   backgroundPrefabs:
   - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
@@ -2414,6 +2428,7 @@ MonoBehaviour:
   transitionCanvas: {fileID: 1408522167}
   transitionText: {fileID: 229965983}
   transitionDuration: 2
+  fadeTime: 0.5
 --- !u!114 &1546507296
 MonoBehaviour:
   m_ObjectHideFlags: 0
