@@ -11,17 +11,17 @@ public class StoryObject : ScriptableObject
     [SerializeField] private string storyName;
     
     [Header("Story Assets")]
-    [SerializeField] private GameObject introBackground;
-    [SerializeField] private GameObject epilogueBackground;
+    [SerializeField] public GameObject introBackground;
+    [SerializeField] public GameObject epilogueBackground;
     [SerializeField] public GameObject dialogueBackground;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;
     [SerializeField] public string hintDialogue;
     [SerializeField] public int numberOfCharacters;            // How many characters each session should have
-    [SerializeField] private int numQuestions; // Amount of times the player can ask a question
-    [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
-    [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
+    [SerializeField] public int numQuestions; // Amount of times the player can ask a question
+    [SerializeField] public int minimumRemaining; // The amount of active characters at which the session should end
+    [SerializeField] public bool immediateVictim; // Start the first round with an inactive characters
     
    
 

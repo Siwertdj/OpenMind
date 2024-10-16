@@ -105,6 +105,10 @@ public class GameManager : MonoBehaviour
     {
         // put data from story into variables.
         numberOfCharacters = story.numberOfCharacters;
+        numQuestions = story.numQuestions;
+        minimumRemaining = story.minimumRemaining;
+        immediateVictim = story.immediateVictim;
+        
         // Empty the lsit of current characters
         currentCharacters = new List<CharacterInstance>();
         // Now, populate this list.
