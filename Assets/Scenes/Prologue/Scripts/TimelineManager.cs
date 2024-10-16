@@ -17,7 +17,7 @@ public class TimelineManager : MonoBehaviour
     private void Start()
     {
         // depending on the chosen storyline, play the intro to the story
-        currentTimeline = introStoryA; 
+        currentTimeline = introStoryC; 
         currentTimeline.Play();
     }
 
