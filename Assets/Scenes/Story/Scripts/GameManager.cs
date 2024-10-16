@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour
     private void CycleTransition(string victimName)
     {
         string victimFate = story.victimDialogue;
-        gameObject.GetComponent<UIManager>().Transition(victimName + victimFate);
+        gameObject.GetComponent<UIManager>().Transition(victimName + " " + victimFate);
     }
     
     #endregion
