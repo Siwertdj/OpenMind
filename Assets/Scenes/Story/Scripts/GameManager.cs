@@ -22,10 +22,10 @@ public class GameManager : MonoBehaviour
     public GameEvent onDialogueStart;
     
     // GAME VARIABLES
-    private int numberOfCharacters; // How many characters each session should have
+    /*private int numberOfCharacters; // How many characters each session should have
     private int numQuestions; // Amount of times the player can ask a question
     private int minimumRemaining; // The amount of active characters at which the session should end
-    private bool immediateVictim; // Start the first round with an inactive characters
+    private bool immediateVictim; // Start the first round with an inactive characters*/
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
@@ -104,10 +104,10 @@ public class GameManager : MonoBehaviour
     private void NewGame()
     {
         // put data from story into variables.
-        numberOfCharacters = story.numberOfCharacters;
+        /*numberOfCharacters = story.numberOfCharacters;
         numQuestions = story.numQuestions;
         minimumRemaining = story.minimumRemaining;
-        immediateVictim = story.immediateVictim;
+        immediateVictim = story.immediateVictim;*/
         
         // Empty the lsit of current characters
         currentCharacters = new List<CharacterInstance>();
@@ -128,7 +128,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FirstCycle()
     {
-        if (immediateVictim)
+        if (story.immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
@@ -201,17 +201,17 @@ public class GameManager : MonoBehaviour
         // Create array to remember what indices we have already visited, so we don't get doubles.
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
-        int[] visitedIndices = new int[numberOfCharacters];
+        int[] visitedIndices = new int[story.numberOfCharacters];
 
         // We iterate over a for-loop to find a specific number of characters to populate our game with.
         // We clamp it down to the smallest value, in case numberOfCharacters is more than the number we have generated.
-        numberOfCharacters = Math.Min(characters.Count, numberOfCharacters);
-        for (int i = 0; i < numberOfCharacters; i++)
+        story.numberOfCharacters = Math.Min(characters.Count, story.numberOfCharacters);
+        for (int i = 0; i < story.numberOfCharacters; i++)
         {
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = random.Next(0, numberOfCharacters) + 1; // offset by 1 to check existence
+                int index = random.Next(0, story.numberOfCharacters) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
                 for (int j = 0; j < visitedIndices.Length; j++)
@@ -235,7 +235,7 @@ public class GameManager : MonoBehaviour
             c.isCulprit = false;
         }
         //Randomly select a culprit
-        currentCharacters[random.Next(0, numberOfCharacters)].isCulprit = true;
+        currentCharacters[random.Next(0, story.numberOfCharacters)].isCulprit = true;
     }
 
     /// <summary>
@@ -570,7 +570,7 @@ public class GameManager : MonoBehaviour
     public bool EnoughCharactersRemaining()
     {
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
-        return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
+        return numberOfActiveCharacters > story.minimumRemaining;
     }
 
     /// <summary>
@@ -578,7 +578,7 @@ public class GameManager : MonoBehaviour
     /// TODO: MAKE THIS A GETTER
     /// </summary>
     /// <returns></returns>
-    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
+    public int AmountOfQuestionsRemaining() => story.numQuestions - numQuestionsAsked;
     
     /// <summary>
     /// Assigns the amount of questions that are remaining, for purposed of loading a savefile.
@@ -586,7 +586,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="questionsRemaining"></param>
     public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
-        numQuestionsAsked = numQuestions - questionsRemaining;
+        numQuestionsAsked = story.numQuestions - questionsRemaining;
     
     /// <summary>
     /// Checks if the player can ask more questions this cycle.
@@ -594,7 +594,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        return numQuestionsAsked < numQuestions;
+        return numQuestionsAsked < story.numQuestions;
     }
     #endregion
 
