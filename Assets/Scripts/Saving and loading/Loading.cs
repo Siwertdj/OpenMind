@@ -20,7 +20,7 @@ public class Loading : MonoBehaviour
         SaveData saveData;
         string saveFileLocation = FilePathConstants.GetSaveFileLocation();
         string saveFileJsonContents = FilePathConstants.GetSafeFileContents(saveFileLocation, "Save Data", "Loading");
-        GameManager gameManager = FindObjectOfType<GameManager>();
+        GameManager gameManager = FindObjectOfType<GameManager>(); // TODO: try to do this another way
         saveData = JsonConvert.DeserializeObject<SaveData>(saveFileJsonContents);
 
         //do checks to make sure everything works correctly
@@ -42,6 +42,7 @@ public class Loading : MonoBehaviour
             SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
 
         //then load all the data
+        // TODO: Load 'Loading'-scene, wait for the signal that its done, then raise the event and pass the savedata
         gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacters.Contains(c.id);

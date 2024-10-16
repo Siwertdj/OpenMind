@@ -11,12 +11,12 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Game Settings")]
-    [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
-    [SerializeField] public int numberOfCharacters; // How many characters each session should have
-    [SerializeField] private int numQuestions; // Amount of times the player can ask a question
-    [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
-    [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
+    // GAME SETTINGS
+    private List<CharacterData> characters; // The full list of characters in the game
+    //public int numberOfCharacters; // How many characters each session should have
+    private int numQuestions; // Amount of times the player can ask a question
+    private int minimumRemaining; // The amount of active characters at which the session should end
+    private bool immediateVictim; // Start the first round with an inactive characters
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
@@ -41,8 +41,9 @@ public class GameManager : MonoBehaviour
     // The list of the characters in the current game. This includes both active and inactive characters
     public List<CharacterInstance> currentCharacters;
     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    [NonSerialized] private GameStory gameStory;
     [NonSerialized] public GameState gameState;
+
+    private StoryObject story;
     
     // Game Events
     [Header("Events")]
@@ -56,14 +57,6 @@ public class GameManager : MonoBehaviour
 
     // Enumerations
     #region Enumerations
-    // This enumeration defines each story for the game.
-    public enum GameStory
-    {
-        Phone,
-        Psychic,
-        AI
-    }
-    
     // This enumeration defines all the possible GameStates, which we can use to test correct behavior
     public enum GameState
     {
@@ -96,45 +89,62 @@ public class GameManager : MonoBehaviour
         sc = SceneController.sc;
 
         // Set the gamestory based on the data we passed
-        if (data[0] is GameStory story)
-            gameStory = story;
+        if (data[0] is StoryObject storyObject)
+        {
+            // Initialize a new game
+            NewGame(storyObject);
+        }
+        else if (data[0] is SaveData saveData)
+        {
+            LoadGame(saveData);
+        }
+    }
+
+    private void LoadGame(SaveData saveData)
+    {
+        // TODO: Load game
+        /*
+         gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
+        {
+            c.isActive = saveData.activeCharacters.Contains(c.id);
+            c.isCulprit = saveData.culprit == c.id;
+            if (c.isActive)
+            {
+                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            }
+            c.AskedQuestions = saveData.askedQuestions.First(qs => qs.Item1 == c.id).Item2;
+            gameManager.notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
+            return c;
+        }).ToList();
         
-        // Initialize a new game
-        InitializeNewGame();
+        gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
+        gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
+         */
     }
 
     /// <summary>
     /// This private method initializes a new game.
     /// </summary>
-    private void InitializeNewGame()
+    private void NewGame(StoryObject storyObject)
     {
         // Set certain variables based on gameStory
-        // TODO: See what else would be useful
-        // * dialogue background?
-        // * introduction-text?
-        switch (gameStory)
-        {
-            case GameStory.Phone:
-                immediateVictim = false;
-                break;
-            case GameStory.Psychic:
-                immediateVictim = false;
-                break;
-            case GameStory.AI:
-                immediateVictim = true;
-                break;
-        }
+        // TODO: Parse settings from story to initialize the game properly.
         
         // Now, populate this list.
-        PopulateCharacters();
+        PopulateCharacters(storyObject.numberOfCharacters);
         // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
         //Test_CharactersInGame();
         notebookData = new NotebookData();
         
         // TODO: Instead of First Cycle, we go into a Dialogue that explains the story.
-        // So we start (sc.Startscene) in NPCDialogue, and feed it a DialogueObject that introduces this story.
+        // So we start (sc.StartScene) in Dialogue, and feed it a DialogueObject that introduces this story.
         // After that, we can go into the FirstCycle.
-        FirstCycle();
+        List<string> dialogue = new List<string>();
+        dialogue.Add("guh");
+        DialogueObject dialogueObject = new SpeakingObject(dialogue,null);
+
+
+        //FirstCycle();
     }
     
     
@@ -146,8 +156,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FirstCycle()
     {
-        Debug.Log("Yuh! I'm first cycle...");
-        
         if (immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
@@ -217,7 +225,7 @@ public class GameManager : MonoBehaviour
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
     /// Also makes sure they are all set to 'Active', and selects a random culprit.
     /// </summary>
-    private void PopulateCharacters()
+    private void PopulateCharacters(int numberOfCharacters)
     {
         // Empty the list of current characters
         currentCharacters = new List<CharacterInstance>();
@@ -339,7 +347,7 @@ public class GameManager : MonoBehaviour
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
         // reset game
-        InitializeNewGame();     
+        NewGame(StoryObject);     
     }
 
     /// <summary>
@@ -349,19 +357,7 @@ public class GameManager : MonoBehaviour
     /// <param name="victimName"></param>
     private void CycleTransition(string victimName)
     {
-        string victimFate = "";
-        switch (gameStory)
-        {
-            case GameStory.Phone:
-                victimFate = "disappeared..";
-                break;
-            case GameStory.Psychic:
-                victimFate = "said goodbye..";
-                break;
-            case GameStory.AI:
-                victimFate = "went home..";
-                break;
-        }
+        string victimFate = story.VictimDialogue;
         gameObject.GetComponent<UIManager>().Transition(victimName + victimFate);
     }
     

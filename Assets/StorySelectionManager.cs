@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class StorySelectionManager : MonoBehaviour
 {
+    [Header("Data")] 
+    [SerializeField] private StoryObject[] stories;
+    
     // Game Events
     [Header("Events")]
     public GameEvent onGameLoaded;
@@ -31,10 +34,10 @@ public class StorySelectionManager : MonoBehaviour
     {
         // Based on the passed storyid, we start the game in different ways.
         // First we do all the behavior as normal, such as initiating the Story:
-        StartCoroutine(GameLoader(storyid));
+        StartCoroutine(GameLoader(stories[0]));
     }
 
-    IEnumerator GameLoader(int storyid)
+    IEnumerator GameLoader(StoryObject story)
     {
         // The Application loads the Scene in the background as the current Scene runs. 
         // This way, we can pass on information to that next scene.
@@ -48,8 +51,10 @@ public class StorySelectionManager : MonoBehaviour
             yield return null;
         }
         
-        // TODO: Double check if this is the right place to perform our operations AFTER the scene is loaded
+        onGameLoaded.Raise(this, story);  // pass correct story via event
+        SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
         
+        /*
         // When the GameManager is loaded, we now raise the proper event to pass our data along.
         switch (storyid)
         {
@@ -70,6 +75,6 @@ public class StorySelectionManager : MonoBehaviour
                 SceneManager.UnloadSceneAsync("Loading");  // unload this scene; no longer necessary
                 Destroy(GameObject.FindGameObjectWithTag("Toolbox"));  // TODO: Test this
                 break;
-        }
+        }*/
     }
 }
