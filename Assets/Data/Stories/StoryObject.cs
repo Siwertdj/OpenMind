@@ -11,9 +11,9 @@ public class StoryObject : ScriptableObject
     [SerializeField] private string storyName;
     
     [Header("Story Assets")]
-    [SerializeField] public GameObject introBackground;
-    [SerializeField] public GameObject epilogueBackground;
     [SerializeField] public GameObject dialogueBackground;
+    [SerializeField] public GameObject hintBackground;
+    [SerializeField] public GameObject epilogueBackground;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Psychic
   m_EditorClassIdentifier: 
   storyName: Nnnenenenene ~(( O _ O ))~
-  introBackground: {fileID: 0}
-  epilogueBackground: {fileID: 0}
-  dialogueBackground: {fileID: 0}
+  dialogueBackground: {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
+  hintBackground: {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
+  epilogueBackground: {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   victimDialogue: went home..
   hintDialogue: Hmm.. I am seeing something..
   numberOfCharacters: 4

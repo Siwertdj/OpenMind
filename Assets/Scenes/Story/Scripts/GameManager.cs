@@ -162,7 +162,8 @@ public class GameManager : MonoBehaviour
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
 
-        var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
+        // Creates Dialogue that says who disappeared and provides a new hint.
+        var dialogueObject = new SpeakingObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
 
         StartDialogue(dialogueObject);
     }
@@ -369,7 +370,7 @@ public class GameManager : MonoBehaviour
     ///  TODO: Should use the id of a character instead of the CharacterInstance.
     public async void StartDialogue(CharacterInstance character)
     {
-        GameObject[] background = GetRandomBackground(character);
+        GameObject[] background = CreateDialogueBackground(character, story.dialogueBackground);
 
         var dialogueObject = new SpeakingObject(
             character.GetGreeting(),
@@ -393,18 +394,19 @@ public class GameManager : MonoBehaviour
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
 
-    private GameObject[] GetRandomBackground(CharacterInstance character = null)
+    private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
-        List<GameObject> background = new();
-        background.Add(backgroundPrefabs[random.Next(backgroundPrefabs.Length)]);
+        List<GameObject> background_ = new();
+        // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
+        background_.Add(background == null ? story.dialogueBackground : background);
 
         if (character != null)
         {
             avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
-            background.Add(avatarPrefab);
+            background_.Add(avatarPrefab);
         }
 
-        return background.ToArray();
+        return background_.ToArray();
     }
     
     /// <summary>
@@ -413,9 +415,9 @@ public class GameManager : MonoBehaviour
     /// .. if no, end cycle.
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
-    /// TODO: Check naming convention for events and listeners, if this is right
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // TODO: Refactor this.
         // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
         if (gameState == GameState.Epilogue)
         {
@@ -427,8 +429,8 @@ public class GameManager : MonoBehaviour
             // change the character of the dialogue.
             // TODO: misschien moet het veranderd worden dat de background vastgebonden zit aan de character.
             DialogueManager dm = (DialogueManager)sender;
-            var backgroundculprit = GetRandomBackground(culprit);
-            dm.ReplaceBackground(backgroundculprit);
+            var backgroundCulprit = CreateDialogueBackground(culprit, story.epilogueBackground);
+            dm.ReplaceBackground(backgroundCulprit);
             // If the TerminateDialogueObject has a SpeakingObject in the Responses list, start dialogue with a different person.
             if (currentObject.Responses.Count > 0)
             {
@@ -511,7 +513,8 @@ public class GameManager : MonoBehaviour
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
 
         // Create the DialogueObject and corresponding children.
-        var background = GetRandomBackground(character);
+        // This background displays the suspected culprit over the Dialogue-background
+        var background = CreateDialogueBackground(character, story.dialogueBackground);
         var dialogueObject = GetEpilogueStart(background);
         
         // Transition to the dialogue scene.
