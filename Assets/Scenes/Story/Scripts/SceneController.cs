@@ -32,7 +32,9 @@ public class SceneController : MonoBehaviour
     }
     
     public static SceneController sc;
-    
+
+    public Animator transitionAnimator;
+
     //read from a file
     private List<List<(int, TransitionType)>> sceneGraph;
 
@@ -129,10 +131,26 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
+                await FadeTransition(); // Wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene);
                 await LoadScene(targetScene);
+                transitionAnimator.SetTrigger("SceneLoaded");
                 break;
         }
+    }
+
+    private Task FadeTransition()
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(FadeCoroutine(tcs));
+        return tcs.Task;
+    }
+
+    private IEnumerator FadeCoroutine(TaskCompletionSource<bool> tcs)
+    {
+        transitionAnimator.SetTrigger("SceneLoading");
+        yield return new WaitForSeconds(1);
+        tcs.SetResult(true);
     }
 
     #region Async Scene Loading Helper Functions
