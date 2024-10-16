@@ -19,6 +19,7 @@ public class Loading : MonoBehaviour
     {
         SaveData saveData;
         string saveFileLocation = FilePathConstants.GetSaveFileLocation();
+        Debug.Log(saveFileLocation);
         string saveFileJsonContents = FilePathConstants.GetSafeFileContents(saveFileLocation, "Save Data", "Loading");
         GameManager gameManager = FindObjectOfType<GameManager>(); // TODO: try to do this another way
         saveData = JsonConvert.DeserializeObject<SaveData>(saveFileJsonContents);
