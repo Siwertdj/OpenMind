@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 using Random = System.Random;
 
 public class GameManager : MonoBehaviour
@@ -25,7 +27,7 @@ public class GameManager : MonoBehaviour
     /// The amount of times  the player has talked, should be 0 at the start of each cycle
     /// </summary>
     [NonSerialized] public int numQuestionsAsked;
-
+    
     // Set this bool to true if the correct character has been chosen at the end, else false.
     [NonSerialized] public bool hasWon;
 
@@ -63,6 +65,7 @@ public class GameManager : MonoBehaviour
         HintDialogue,   //      --> NpcSelect
         GameLoss,       //      --> Loading (restart/retry)
         GameWon,        //      --> Loading (restart/retry)
+        Prologue,
         Epilogue
     }
     
@@ -94,7 +97,6 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         Debug.Log("New Game!");
-
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
     }
@@ -145,7 +147,7 @@ public class GameManager : MonoBehaviour
 
         // Start the game at the first scene; the NPC Selection scene
         sc.TransitionScene(
-            SceneController.SceneName.StartScreenScene, 
+            SceneController.SceneName.PrologueScene, 
             SceneController.SceneName.NPCSelectScene, 
             SceneController.TransitionType.Transition);
         //sc.StartScene(SceneController.SceneName.NPCSelectScene);

@@ -5,10 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UnityEditor;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 using File = System.IO.File;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public class SceneController : MonoBehaviour
 {
@@ -21,6 +24,7 @@ public class SceneController : MonoBehaviour
         GameWinScene,
         Loading,
         NotebookScene,
+        PrologueScene,
         EpilogueScene
     }
 
@@ -86,12 +90,35 @@ public class SceneController : MonoBehaviour
         sceneGraph = new List<List<(int, TransitionType)>>(fileGraphContentLines.Length);
         sceneToID = new Dictionary<string, int>();
         
-        //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWonScene(T)
+        //check if all scenes are correctly written into the file
+        List<string> buildScenes = new List<string>();
+        for (int i = 0; i < SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneName = scenePath.Split("/").Last().Split(".").First();
+            buildScenes.Add(sceneName);
+        }
+        
+        //check if the file is valid, if not, sceneGraph and sceneToID will be emptied
+        bool validReading = true;
+        
+        //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWinScene(T)
         const string arrowSeparator = " --> ";
         const string sceneSeparator = ", ";
-        foreach(string fileGraphContentLine in fileGraphContentLines)
-            sceneToID.Add(fileGraphContentLine.Split(arrowSeparator)[0], sceneToID.Count);
-        
+        for(int i = 0; i < fileGraphContentLines.Length; i++)
+        {
+            string sceneName = fileGraphContentLines[i].Split(arrowSeparator)[0];
+            //check if the scene name is correctly written
+            if (!buildScenes.Contains(sceneName))
+            {
+                Debug.LogError($"The scene with the name {sceneName} on line {i} of the scene graph file does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                validReading = false;
+                fileGraphContentLines = Array.Empty<string>();
+                break;
+            }
+            sceneToID.Add(sceneName, sceneToID.Count);
+        }
+
         for (int i = 0; i < fileGraphContentLines.Length; i++)
         {
             string[] fromTo = fileGraphContentLines[i].Split(arrowSeparator);
@@ -102,13 +129,38 @@ public class SceneController : MonoBehaviour
             foreach (string to in tos)
             {
                 string toScene = to.Substring(0, to.Length - 3);
+                //check if the scene name is correctly written
+                if (!buildScenes.Contains(toScene))
+                {
+                    Debug.LogError($"The scene with the name {toScene} on line {i} of the scene graph file after the arrow does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                    validReading = false;
+                    break;
+                }
+
+                bool found = false;
+                char trans = to[^2];
                 foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
-                    if (enumValue.ToString()[0] == to[^2])
+                {
+                    if (enumValue.ToString()[0] == trans)
                     {
                         sceneGraph[i].Add((sceneToID[toScene], enumValue));
+                        found = true;
                         break;
                     }
+                }
+
+                if (!found)
+                {
+                    Debug.LogError($"The transition with the letter {trans} on line {i} of the scene graph file belonging to the scene transition {fromTo[0]} --> {toScene} does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                    validReading = false;
+                }
             }
+        }
+
+        if (!validReading)
+        {
+            sceneGraph = new List<List<(int, TransitionType)>>();
+            sceneToID = new Dictionary<string, int>();
         }
     }
 
@@ -214,14 +266,35 @@ public class SceneController : MonoBehaviour
         
         //some extra checks will be made about the validity of the variables and the file contents
         //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
+        if (!sceneToID.ContainsKey(currentScene))
+        {
+            Debug.LogError($"The scene with the name {currentScene} cannot be found in the transition graph. Please add it to the transition graph.");
+            return;
+        }
+        
+        if (!sceneToID.ContainsKey(targetScene))
+        {
+            Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. Please add it to the transition graph.");
+            return;
+        }
+        
+        //cannot load from an unloaded scene
+        if (!SceneManager.GetSceneByName(currentScene).isLoaded)
+        {
+            Debug.LogError($"Cannot make a transition from the scene {currentScene}, since it's not loaded.");
+            return;
+        }
         
         //checks, does currentScene point to nextScene in the graph?
         int currentSceneID = sceneToID[currentScene];
         int targetSceneID = sceneToID[targetScene];
         if (!sceneGraph[currentSceneID].Contains((targetSceneID, transitionType)))
+        {
             //invalid transition
-            throw new Exception($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
-        
+            Debug.LogError($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
+            return;
+        }
+
         await loadCode(currentScene, targetScene, transitionType);
     }
 
