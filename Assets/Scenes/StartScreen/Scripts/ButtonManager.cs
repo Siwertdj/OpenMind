@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class ButtonManager : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ButtonManager : MonoBehaviour
         // Continue button is only clickable when there are saves to be loaded
         // If there are no saves, disable the button
         if (!savesPresent) ContinueButton.SetActive(false);
+        Debug.Log("hi");
+        throw new Exception();
     }
     
     public void NewGameButtonClick()

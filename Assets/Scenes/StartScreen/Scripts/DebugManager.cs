@@ -47,7 +47,23 @@ public class DebugManager : MonoBehaviour
         
         string output = process.StandardOutput.ReadToEnd();
         string branchName = output.Split("\n")[^3];
-        Debug.Log(branchName);
-        
+        IsDebug = branchName != "main";
+        Debug.unityLogger.logEnabled = IsDebug;
+    }
+    
+    void OnEnable()
+    {
+        Application.logMessageReceived += LogCallback;
+    }
+    
+    //Called when there is an exception
+    void LogCallback(string condition, string stackTrace, LogType type)
+    {
+        //TODO: add handling of messages
+    }
+    
+    void OnDisable()
+    {
+        Application.logMessageReceived -= LogCallback;
     }
 }
