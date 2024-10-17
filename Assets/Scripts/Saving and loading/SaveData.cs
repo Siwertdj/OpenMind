@@ -3,19 +3,19 @@ using System.IO;
 using UnityEngine;
 
 /// <summary>
-/// Contains all data that is saved to a file
+/// Contains data that can be saved to a file.
 /// </summary>
 public class SaveData
 {
-    public int[] activeCharacters;
-    public int[] inactiveCharacters;
-    public int culprit;
-    public int questionsRemaining;
-    public (int, List<Question>)[] remainingQuestions;
-    public string[] sceneStack;
-    public string personalNotes;
-    public (int, string)[] characterNotes;
-    public (int, List<Question>)[] askedQuestions;
+    public int[] activeCharacters;                      // A list of the active characters.
+    public int[] inactiveCharacters;                    // A list of the inactive characters.
+    public int culprit;                                 // The culprit.
+    public int questionsRemaining;                      // The amount of questions remaining for this cycle.
+    public (int, List<Question>)[] remainingQuestions;  // The questions that are still available.
+    public string[] sceneStack;                         // All scenes that are loaded.
+    public string personalNotes;                        // The notes the player has made.
+    public (int, string)[] characterNotes;              // The notes the player has made of the .
+    public (int, List<Question>)[] askedQuestions;      // The questions that have already been asked by the player.
 }
 
 /// <summary>

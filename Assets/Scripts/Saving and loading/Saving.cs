@@ -6,14 +6,14 @@ using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Saves data to a file.
+/// All data saved to a file is stored in <see cref="SaveData"/>>.
+/// </summary>
 public class Saving : MonoBehaviour
 {
     /// <summary>
-    /// Saves data to a file.
-    /// All data saved to a file is stored in <see cref="SaveData"/>>.
-    /// When accessing the notebook file, all relevant exceptions are caught and result in an error in the debug console and results in nothing being saved.
-    /// When the specified directory and or file to save to cannot be found, these will be created anew.
-    ///
+    /// The method which saves data to a file.
     /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
     /// </summary>
     public void Save()
@@ -29,13 +29,13 @@ public class Saving : MonoBehaviour
             for (int j = i+1; j < gameManager.currentCharacters.Count; j++)
                 if (gameManager.currentCharacters[i].id == gameManager.currentCharacters[j].id)
                     allUniqueID = false;
-
         if (!allUniqueID)
         {
             Debug.LogError("Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
             return;
         }
-
+        
+        // Gets all data that needs to be saved.
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         
@@ -47,7 +47,8 @@ public class Saving : MonoBehaviour
         string[] sceneStack = new string[SceneManager.sceneCount-1];
         for (int i = 0; i < sceneStack.Length; i++)
             sceneStack[i] = SceneManager.GetSceneAt(i+1).name;
-
+        
+        // Save all data to SaveData.
         SaveData saveData = new SaveData
         {
             activeCharacters = active.Select(c => c.id).ToArray(),
@@ -60,10 +61,12 @@ public class Saving : MonoBehaviour
             characterNotes = characterNotes,
             askedQuestions = askedQuestions,
         };
-
+        
+        // Converts the data in SaveData to Json.
         string jsonString = JsonConvert.SerializeObject(saveData);
         string fileLocation = FilePathConstants.GetSaveFileLocation();
         
+        // Saves the data to a file.
         File.WriteAllText(fileLocation,jsonString);
     }
 }
