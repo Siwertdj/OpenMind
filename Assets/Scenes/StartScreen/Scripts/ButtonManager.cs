@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,12 +15,22 @@ public class ButtonManager : MonoBehaviour
         if (!savesPresent) ContinueButton.SetActive(false);
     }
     
-    public void NewGameButtonClick()
+    public async void NewGameButtonClick()
     {
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.StartScreenScene,
-            SceneController.SceneName.PrologueScene,
-            SceneController.TransitionType.Transition);
-        //GameManager.gm.StartGame();
+        if (!GameManager.gm.skipPrologue)
+        {
+            SceneController.sc.TransitionScene(
+                SceneController.SceneName.StartScreenScene,
+                SceneController.SceneName.PrologueScene,
+                SceneController.TransitionType.Transition);
+        }
+        else
+        {
+            await SceneController.sc.TransitionScene(
+                SceneController.SceneName.StartScreenScene,
+                SceneController.SceneName.PrologueScene,
+                SceneController.TransitionType.Transition);
+            GameManager.gm.StartGame();
+        }
     }
 }

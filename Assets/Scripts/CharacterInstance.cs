@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -25,16 +25,12 @@ public class CharacterInstance
     
     public CharacterInstance(CharacterData data)
     {
-        Debug.Log($"Creating character {data.characterName}");
-
         this.data = data;
 
         characterName = data.characterName;
         id = data.id;
         avatar = data.avatar;
         pitch = data.voicePitch;
-
-        //Debug.Log($"Creating character {data.characterName}");
 
         InitializeQuestions();
     }

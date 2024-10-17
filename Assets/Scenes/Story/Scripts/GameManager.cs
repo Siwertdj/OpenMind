@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +13,9 @@ using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Debug settings")]
+    [SerializeField] public bool skipPrologue = false;
+
     [Header("Game Settings")]
     [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
     [SerializeField] public int numberOfCharacters; // How many characters each session should have
@@ -128,9 +131,7 @@ public class GameManager : MonoBehaviour
     /// This method starts the game with a special SceneTransition-invocation for the first scene of the game.
     /// </summary>
     private void FirstCycle()
-    {
-        Debug.Log("Yuh! I'm first cycle...");
-        
+    {        
         if (immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
