@@ -436,6 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   savesPresent: 1
   ContinueButton: {fileID: 2019508185}
+  skipPrologue: 1
 --- !u!114 &217989644
 MonoBehaviour:
   m_ObjectHideFlags: 0

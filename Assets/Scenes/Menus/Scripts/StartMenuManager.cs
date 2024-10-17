@@ -9,6 +9,7 @@ public class StartMenuManager : MonoBehaviour
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public bool savesPresent;
     public GameObject ContinueButton;
+    [SerializeField] private bool skipPrologue;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,9 @@ public class StartMenuManager : MonoBehaviour
     {
         // Load the Story Selection-scene
         // TODO: We can do this in Async and put a fade-in/out inbetween for smoother transition
-        SceneManager.LoadScene("PrologueScene");
+        if (!skipPrologue)
+            SceneManager.LoadScene("PrologueScene");
+        else
+            SceneManager.LoadScene("StorySelectScene");
     }
 }
