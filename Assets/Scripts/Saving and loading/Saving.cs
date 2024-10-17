@@ -53,12 +53,12 @@ public class Saving : MonoBehaviour
             activeCharacters = active.Select(c => c.id).ToArray(),
             inactiveCharacters = inactive.Select(c => c.id).ToArray(),
             culprit = gameManager.GetCulprit().id,
-            questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
             remainingQuestions = remainingQuestions,
             sceneStack = sceneStack,
             personalNotes = gameManager.notebookData.GetPersonalNotes(),
             characterNotes = characterNotes,
-            askedQuestions = askedQuestions,
+            askedQuestionsPerCharacter = askedQuestions,
+            storyObject = gameManager.story
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
