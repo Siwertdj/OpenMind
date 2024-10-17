@@ -69,9 +69,9 @@ public class CutsceneController : MonoBehaviour
     /// This method is called when the timeline reaches the end of the prologue.
     /// Then the introduction to the story can be loaded. 
     /// </summary>
-    public void StartIntro()
+    public void LoadChooseStory()
     {
-        // load StoryIntroductionScene
+        Debug.Log("load next scene");
     }
 
     
