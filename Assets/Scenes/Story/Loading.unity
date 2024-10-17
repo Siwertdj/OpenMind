@@ -2059,8 +2059,8 @@ CanvasGroup:
   m_GameObject: {fileID: 1408522167}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1 &1447988413
 GameObject:
@@ -2510,7 +2510,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   numberOfCharacters: 4
-  numQuestions: 2
+  numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0
   avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}

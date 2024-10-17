@@ -131,23 +131,33 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                await FadeTransition(); // Wait for animation to complete
-                SceneManager.UnloadSceneAsync(currentScene);
-                await LoadScene(targetScene);
-                transitionAnimator.SetTrigger("SceneLoaded");
+                Debug.Log("Transition called!");
+                await FadeAnimation(); // Fade out and wait for animation to complete
+                SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
+                await LoadScene(targetScene); // Load new scene
+                transitionAnimator.SetTrigger("SceneLoaded"); // Fade back into game
                 break;
         }
     }
 
     #region Transition Animation Functions
-    private Task FadeTransition()
+    /// <summary>
+    /// The function that should be called to start the fade animation.
+    /// Only fades to black.
+    /// Can be awaited.
+    /// </summary>
+    private Task FadeAnimation()
     {
         var tcs = new TaskCompletionSource<bool>();
-        StartCoroutine(FadeCoroutine(tcs));
+        StartCoroutine(AnimationCoroutine(tcs));
         return tcs.Task;
     }
 
-    private IEnumerator FadeCoroutine(TaskCompletionSource<bool> tcs)
+    /// <summary>
+    /// Helper coroutine for the fade animation.
+    /// </summary>
+    /// <param name="tcs"></param>
+    private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
     {
         transitionAnimator.SetTrigger("SceneLoading");
 

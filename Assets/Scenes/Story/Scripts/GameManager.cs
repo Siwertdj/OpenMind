@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
             // Transition-effect
-            gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+            //gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
@@ -160,8 +160,7 @@ public class GameManager : MonoBehaviour
     {
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
-        // Transition
-        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
