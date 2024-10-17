@@ -9,6 +9,7 @@ public class StoryObject : ScriptableObject
     // This ScriptableObject contains the settings pertaining to a Story-type.
 
     [SerializeField] private string storyName;
+    [SerializeField] public int storyID;
     
     [Header("Story Assets")]
     [SerializeField] public GameObject dialogueBackground;

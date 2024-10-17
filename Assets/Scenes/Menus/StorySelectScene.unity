@@ -304,7 +304,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ffe1c93089342ec4898ecab9b2a64f7d, type: 2}
   - {fileID: 11400000, guid: 935b7b4f6f655264695941ac0baa8444, type: 2}
   - {fileID: 11400000, guid: 730e998b0730e884fb9a53057bfbd35f, type: 2}
-  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
+  onIntroLoaded: {fileID: 11400000, guid: c4e8baea898550048b5dc023820bc26d, type: 2}
 --- !u!1 &222882684
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +386,7 @@ GameObject:
   - component: {fileID: 834273491}
   - component: {fileID: 834273490}
   m_Layer: 5
-  m_Name: StoryButton2
+  m_Name: StoryB_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,7 +458,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StorySelectionManager, Assembly-CSharp
-        m_MethodName: Story2Selected
+        m_MethodName: StoryBSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -594,7 +594,7 @@ GameObject:
   - component: {fileID: 1028174427}
   - component: {fileID: 1028174426}
   m_Layer: 5
-  m_Name: StoryButton3
+  m_Name: StoryC_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -666,7 +666,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StorySelectionManager, Assembly-CSharp
-        m_MethodName: Story3Selected
+        m_MethodName: StoryCSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1235,7 +1235,7 @@ GameObject:
   - component: {fileID: 2019508188}
   - component: {fileID: 2019508187}
   m_Layer: 5
-  m_Name: StoryButton1
+  m_Name: StoryA_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1307,7 +1307,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StorySelectionManager, Assembly-CSharp
-        m_MethodName: Story1Selected
+        m_MethodName: StoryASelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

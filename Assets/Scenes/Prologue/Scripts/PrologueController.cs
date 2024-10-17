@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CutsceneController : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void LoadChooseStory()
     {
-        Debug.Log("load next scene");
+        SceneManager.LoadScene("StorySelectScene");
     }
 
     

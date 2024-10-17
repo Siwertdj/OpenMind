@@ -224,6 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1187182885}
   - component: {fileID: 1187182886}
+  - component: {fileID: 1187182887}
   m_Layer: 0
   m_Name: TimelineManager
   m_TagString: Untagged
@@ -262,6 +263,35 @@ MonoBehaviour:
   introStoryB: {fileID: 1537715174}
   introStoryC: {fileID: 1522464293}
   objectiveText: {fileID: 1835178958}
+  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
+--- !u!114 &1187182887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187182883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695fe1054f3d05b48a694753bc4b62e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: c4e8baea898550048b5dc023820bc26d, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1187182886}
+        m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
+        m_MethodName: StartIntro
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1238301441
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,10 +781,10 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 383186580}
-  - {fileID: 1238301442}
-  - {fileID: 1645848853}
   - {fileID: 1187182885}
+  - {fileID: 383186580}
+  - {fileID: 1645848853}
+  - {fileID: 1238301442}
   - {fileID: 1239055692}
   - {fileID: 1537715175}
   - {fileID: 1522464294}

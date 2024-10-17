@@ -10,71 +10,47 @@ public class StorySelectionManager : MonoBehaviour
     
     // Game Events
     [Header("Events")]
-    public GameEvent onGameLoaded;
+    public GameEvent onIntroLoaded;
     
-    public void Story1Selected()
+    public void StoryASelected()
     {
-        Debug.Log("Button 1 clicked");
-        StartStory(1);
+        Debug.Log("Button A clicked");
+        StartIntro(0);
     }
     
-    public void Story2Selected()
+    public void StoryBSelected()
     {
-        Debug.Log("Button 2 clicked");
-        StartStory(2);
+        Debug.Log("Button B clicked");
+        StartIntro(1);
     }
     
-    public void Story3Selected()
+    public void StoryCSelected()
     {
-        Debug.Log("Button 3 clicked");
-        StartStory(3);
+        Debug.Log("Button C clicked");
+        StartIntro(2);
     }
 
-    void StartStory(int storyid)
+    void StartIntro(int storyid)
     {
-        // Based on the passed storyid, we start the game in different ways.
-        // First we do all the behavior as normal, such as initiating the Story:
-        StartCoroutine(GameLoader(stories[0]));
-    }
-
-    IEnumerator GameLoader(StoryObject story)
-    {
-        // The Application loads the Scene in the background as the current Scene runs. 
-        // This way, we can pass on information to that next scene.
         
-        // We load the scene as an AsyncOperation
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
+        StartCoroutine(LoadIntro(storyid));
+        
+    }
+    
+    IEnumerator LoadIntro(int storyid)
+    {
+        // Start the loadscene-operation
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IntroStoryScene", LoadSceneMode.Additive);
         
         // Within this while-loop, we wait until the scene is done loading. We check this every frame
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
+        onIntroLoaded.Raise(this, stories[storyid]);
         
-        onGameLoaded.Raise(this, story);  // pass correct story via event
+        // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
-        
-        /*
-        // When the GameManager is loaded, we now raise the proper event to pass our data along.
-        switch (storyid)
-        {
-            case 1:
-                onGameLoaded.Raise(this, GameManager.GameStory.Phone);  // pass correct story via event
-                SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
-                break;
-            case 2:
-                onGameLoaded.Raise(this, GameManager.GameStory.Phone);  // pass correct story via event
-                SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
-                break;
-            case 3:
-                onGameLoaded.Raise(this, GameManager.GameStory.Phone);  // pass correct story via event
-                SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
-                break;
-            default:
-                Debug.LogError($"Couldn't load the story, Story-ID {storyid} was not found. Try another option.");
-                SceneManager.UnloadSceneAsync("Loading");  // unload this scene; no longer necessary
-                Destroy(GameObject.FindGameObjectWithTag("Toolbox"));  // TODO: Test this
-                break;
-        }*/
     }
+    
 }

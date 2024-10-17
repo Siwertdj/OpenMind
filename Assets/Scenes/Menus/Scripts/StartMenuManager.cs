@@ -22,6 +22,6 @@ public class StartMenuManager : MonoBehaviour
     {
         // Load the Story Selection-scene
         // TODO: We can do this in Async and put a fade-in/out inbetween for smoother transition
-        SceneManager.LoadScene("StorySelectScene");
+        SceneManager.LoadScene("PrologueScene");
     }
 }
