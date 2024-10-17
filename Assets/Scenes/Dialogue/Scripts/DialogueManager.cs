@@ -251,7 +251,7 @@ public class DialogueManager : MonoBehaviour
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
     /// </summary>
-    private void BacktoNPCScreen()
+    public void BacktoNPCScreen()
     {
         DestroyButtons();
         // TODO: Combineer met het unloaden van Dialoguescene
