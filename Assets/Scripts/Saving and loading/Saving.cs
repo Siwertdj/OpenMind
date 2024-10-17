@@ -15,6 +15,7 @@ public class Saving : MonoBehaviour
     /// When the specified directory and or file to save to cannot be found, these will be created anew.
     ///
     /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
+    /// </emoji name = "smile">
     /// </summary>
     public void Save()
     {
@@ -39,10 +40,10 @@ public class Saving : MonoBehaviour
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         
-        (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
-        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
-        (int, string)[] characterNotes = GameManager.gm.currentCharacters
-            .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
+        Tuple<int, List<Question>>[] remainingQuestions = active.Select(a => new Tuple<int, List<Question>>(a.id, a.RemainingQuestions)).ToArray();
+        Tuple<int, List<Question>>[] askedQuestions = gameManager.currentCharacters.Select(a => new Tuple<int, List<Question>>(a.id, a.AskedQuestions)).ToArray();
+        Tuple<int, string>[] characterNotes = GameManager.gm.currentCharacters
+            .Select(c => new Tuple<int, string>(c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
         //saves the scene stack, excluding the loading scene
         string[] sceneStack = new string[SceneManager.sceneCount-1];
         for (int i = 0; i < sceneStack.Length; i++)

@@ -1,0 +1,215 @@
+\doxysection{Game\+Manager Class Reference}
+\label{class_game_manager}\index{GameManager@{GameManager}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_game_manager_a809dec58b5681fc1ebcc22eb428a914c} 
+enum {\bfseries Game\+State} \{ \newline
+{\bfseries Loading}
+, {\bfseries Npc\+Select}
+, {\bfseries Culprit\+Select}
+, {\bfseries Npc\+Dialogue}
+, \newline
+{\bfseries Hint\+Dialogue}
+, {\bfseries Game\+Loss}
+, {\bfseries Game\+Won}
+, {\bfseries Prologue}
+, \newline
+{\bfseries Epilogue}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_game_manager_a9193c24424f6a10c7d9df407264ed4fa} 
+void {\bfseries Start\+Game} ()
+\item 
+\label{class_game_manager_ae6086ba77a34c2b59da862919da1a8a6} 
+void {\bfseries End\+Cycle} ()
+\begin{DoxyCompactList}\small\item\em Ends the cycle when all questions have been asked. If we have too few characters remaining, we must select the culprit, otherwise we start a new cycle. \end{DoxyCompactList}\item 
+\label{class_game_manager_ae8775f68a5dd9fb3580aa4d0ff393313} 
+\textbf{ Character\+Instance} {\bfseries Get\+Culprit} ()
+\begin{DoxyCompactList}\small\item\em Returns the culprit, used to give hints for the companion Assumes a culprit exists. \end{DoxyCompactList}\item 
+\label{class_game_manager_a1284acc7b431d386c4d69360caa48f64} 
+\textbf{ Character\+Instance} {\bfseries Get\+Random\+Victim\+No\+Culprit} ()
+\begin{DoxyCompactList}\small\item\em Returns a random (non-\/culprit and active) character, used to give hints for the companion Assumes there is only 1 culprit. \end{DoxyCompactList}\item 
+\label{class_game_manager_a0c10b4d89c6e37a4433a54a5b7b04500} 
+void {\bfseries End\+Game} ()
+\begin{DoxyCompactList}\small\item\em Closes the game. \end{DoxyCompactList}\item 
+\label{class_game_manager_a3bf26a7e60970c59ff66d22e334cfdc3} 
+void {\bfseries Retry\+Story\+Scene} ()
+\begin{DoxyCompactList}\small\item\em Reset game from start with the same characters. \end{DoxyCompactList}\item 
+\label{class_game_manager_a348fc6fd4410fe58257b99875de92a14} 
+void {\bfseries Restart\+Story\+Scene} ()
+\begin{DoxyCompactList}\small\item\em Restart game from start with new characters. \end{DoxyCompactList}\item 
+\label{class_game_manager_abe564ff57be6994dd7d7137c2a6d445c} 
+async void {\bfseries Start\+Dialogue} (\textbf{ Dialogue\+Object} dialogue\+Object)
+\item 
+async void \textbf{ Start\+Dialogue} (\textbf{ Character\+Instance} character)
+\begin{DoxyCompactList}\small\item\em Can be called to start Dialogue with a specific character, taking a \doxyref{Character\+Instance}{p.}{class_character_instance} as parameter. This toggles-\/off the NPCSelect\+Scene,. \end{DoxyCompactList}\item 
+async void \textbf{ End\+Dialogue} (Component sender, params object[$\,$] data)
+\begin{DoxyCompactList}\small\item\em Called by \doxyref{Dialogue\+Manager}{p.}{class_dialogue_manager} when dialogue is ended, by execution of a \doxyref{Terminate\+Dialogue\+Object}{p.}{class_terminate_dialogue_object}. Checks if questions are remaining\+: .. if no, end cycle. .. if yes, \textquotesingle{}back to NPCSelect\textquotesingle{}-\/button was clicked, so don\textquotesingle{}t end cycle. \end{DoxyCompactList}\item 
+async void \textbf{ Start\+Epilogue\+Dialogue} (\textbf{ Character\+Instance} character)
+\begin{DoxyCompactList}\small\item\em Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice). \end{DoxyCompactList}\item 
+bool \textbf{ Enough\+Characters\+Remaining} ()
+\begin{DoxyCompactList}\small\item\em Checks if the number of characters ..in the currently active game (selected in the \textquotesingle{}current\+Characters\textquotesingle{}-\/list) ..that are also \textquotesingle{}active\textquotesingle{} (the is\+Active-\/bool of these Character\+Instances) is more than the gamemanager variable \textquotesingle{}number\+Of\+Active\+Characters\textquotesingle{}, which is the minimum amount of characters that should be remaining until we transition into selecting a culprit. \end{DoxyCompactList}\item 
+int \textbf{ Amount\+Of\+Questions\+Remaining} ()
+\begin{DoxyCompactList}\small\item\em Fetches the amount of questions remaining TODO\+: MAKE THIS A GETTER. \end{DoxyCompactList}\item 
+void \textbf{ Assign\+Amount\+Of\+Questions\+Remaining} (int questions\+Remaining)
+\begin{DoxyCompactList}\small\item\em Assigns the amount of questions that are remaining, for purposed of loading a savefile. TODO\+: MAKE THIS A SETTER. \end{DoxyCompactList}\item 
+bool \textbf{ Has\+Questions\+Left} ()
+\begin{DoxyCompactList}\small\item\em Checks if the player can ask more questions this cycle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_game_manager_a1bd6a7b3170239fa0005c0930b05dce4} 
+int {\bfseries number\+Of\+Characters}
+\item 
+int \textbf{ num\+Questions\+Asked}
+\item 
+\label{class_game_manager_a9ea772016ec0d88eb123ae2a3ee0f371} 
+bool {\bfseries has\+Won}
+\item 
+\label{class_game_manager_a53e7cb392e84c8ecd8792b52636e229f} 
+\textbf{ Character\+Instance} {\bfseries Intermediate\+Chosen\+Cuplrit}
+\item 
+\label{class_game_manager_ac585e84c001da05b267ccc04bd0da1e1} 
+\textbf{ Character\+Instance} {\bfseries Final\+Chosen\+Cuplrit}
+\item 
+\label{class_game_manager_abae0a20af36ecbc246916cde4d5a7e0b} 
+List$<$ List$<$ string $>$ $>$ {\bfseries remaining\+Dialogue\+Scenario}
+\item 
+\label{class_game_manager_a032a919fcb75d971b17586a064084b01} 
+List$<$ \textbf{ Character\+Instance} $>$ {\bfseries current\+Characters}
+\item 
+\label{class_game_manager_aaabd1864e2bf399452e4cbe0d341ca18} 
+Game\+State {\bfseries game\+State}
+\item 
+\label{class_game_manager_a8ad3dbf17637945daf62cd446ba6d15d} 
+\textbf{ Game\+Event} {\bfseries on\+Dialogue\+Start}
+\item 
+\label{class_game_manager_adff22c6c1da5c386bf2d7f0f16e46140} 
+Random {\bfseries random} = new Random()
+\item 
+\label{class_game_manager_ae65817df2e62178f4227cc6e1ddf5834} 
+\textbf{ Notebook\+Data} {\bfseries notebook\+Data}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_game_manager_a8acd187102c47dc95bc529ba35683a14} 
+static \textbf{ Game\+Manager} {\bfseries gm}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\index{GameManager@{GameManager}!AmountOfQuestionsRemaining@{AmountOfQuestionsRemaining}}
+\index{AmountOfQuestionsRemaining@{AmountOfQuestionsRemaining}!GameManager@{GameManager}}
+\doxysubsubsection{AmountOfQuestionsRemaining()}
+{\footnotesize\ttfamily \label{class_game_manager_a59ea206678a3443c6e8255628f0bc97e} 
+int Game\+Manager.\+Amount\+Of\+Questions\+Remaining (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Fetches the amount of questions remaining TODO\+: MAKE THIS A GETTER. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{GameManager@{GameManager}!AssignAmountOfQuestionsRemaining@{AssignAmountOfQuestionsRemaining}}
+\index{AssignAmountOfQuestionsRemaining@{AssignAmountOfQuestionsRemaining}!GameManager@{GameManager}}
+\doxysubsubsection{AssignAmountOfQuestionsRemaining()}
+{\footnotesize\ttfamily \label{class_game_manager_a32cc779d9656549d6d3c525ad96eec16} 
+void Game\+Manager.\+Assign\+Amount\+Of\+Questions\+Remaining (\begin{DoxyParamCaption}\item[{int}]{questions\+Remaining}{}\end{DoxyParamCaption})}
+
+
+
+Assigns the amount of questions that are remaining, for purposed of loading a savefile. TODO\+: MAKE THIS A SETTER. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em questions\+Remaining} & \\
+\hline
+\end{DoxyParams}
+\index{GameManager@{GameManager}!EndDialogue@{EndDialogue}}
+\index{EndDialogue@{EndDialogue}!GameManager@{GameManager}}
+\doxysubsubsection{EndDialogue()}
+{\footnotesize\ttfamily \label{class_game_manager_abd7444b7a79966c56af61de16ae3fd75} 
+async void Game\+Manager.\+End\+Dialogue (\begin{DoxyParamCaption}\item[{Component}]{sender}{, }\item[{params object[$\,$]}]{data}{}\end{DoxyParamCaption})}
+
+
+
+Called by \doxyref{Dialogue\+Manager}{p.}{class_dialogue_manager} when dialogue is ended, by execution of a \doxyref{Terminate\+Dialogue\+Object}{p.}{class_terminate_dialogue_object}. Checks if questions are remaining\+: .. if no, end cycle. .. if yes, \textquotesingle{}back to NPCSelect\textquotesingle{}-\/button was clicked, so don\textquotesingle{}t end cycle. 
+
+TODO\+: Check naming convention for events and listeners, if this is right \index{GameManager@{GameManager}!EnoughCharactersRemaining@{EnoughCharactersRemaining}}
+\index{EnoughCharactersRemaining@{EnoughCharactersRemaining}!GameManager@{GameManager}}
+\doxysubsubsection{EnoughCharactersRemaining()}
+{\footnotesize\ttfamily \label{class_game_manager_a4d79f33e1ecb977c578db38960217dd1} 
+bool Game\+Manager.\+Enough\+Characters\+Remaining (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Checks if the number of characters ..in the currently active game (selected in the \textquotesingle{}current\+Characters\textquotesingle{}-\/list) ..that are also \textquotesingle{}active\textquotesingle{} (the is\+Active-\/bool of these Character\+Instances) is more than the gamemanager variable \textquotesingle{}number\+Of\+Active\+Characters\textquotesingle{}, which is the minimum amount of characters that should be remaining until we transition into selecting a culprit. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{GameManager@{GameManager}!HasQuestionsLeft@{HasQuestionsLeft}}
+\index{HasQuestionsLeft@{HasQuestionsLeft}!GameManager@{GameManager}}
+\doxysubsubsection{HasQuestionsLeft()}
+{\footnotesize\ttfamily \label{class_game_manager_ab461bd19286e78b6c1bcfb267809e65e} 
+bool Game\+Manager.\+Has\+Questions\+Left (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Checks if the player can ask more questions this cycle. 
+
+\begin{DoxyReturn}{Returns}
+True if player can ask more questions, otherwise false.
+\end{DoxyReturn}
+\index{GameManager@{GameManager}!StartDialogue@{StartDialogue}}
+\index{StartDialogue@{StartDialogue}!GameManager@{GameManager}}
+\doxysubsubsection{StartDialogue()}
+{\footnotesize\ttfamily \label{class_game_manager_a1cdd75ff0254229d6709046cda1d782e} 
+async void Game\+Manager.\+Start\+Dialogue (\begin{DoxyParamCaption}\item[{\textbf{ Character\+Instance}}]{character}{}\end{DoxyParamCaption})}
+
+
+
+Can be called to start Dialogue with a specific character, taking a \doxyref{Character\+Instance}{p.}{class_character_instance} as parameter. This toggles-\/off the NPCSelect\+Scene,. 
+
+and switches the dialogue\+Recipient-\/variable to the character\+Instance that is passed as a parameter. Then, it loads the Dialogue\+Scene.
+
+
+\begin{DoxyParams}{Parameters}
+{\em character} & \\
+\hline
+\end{DoxyParams}
+TODO\+: Should use the id of a character instead of the \doxyref{Character\+Instance}{p.}{class_character_instance}. \index{GameManager@{GameManager}!StartEpilogueDialogue@{StartEpilogueDialogue}}
+\index{StartEpilogueDialogue@{StartEpilogueDialogue}!GameManager@{GameManager}}
+\doxysubsubsection{StartEpilogueDialogue()}
+{\footnotesize\ttfamily \label{class_game_manager_a502cb7661291d11d37ed9fb1e8f63e91} 
+async void Game\+Manager.\+Start\+Epilogue\+Dialogue (\begin{DoxyParamCaption}\item[{\textbf{ Character\+Instance}}]{character}{}\end{DoxyParamCaption})}
+
+
+
+Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em character} & The character which has been chosen. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\index{GameManager@{GameManager}!numQuestionsAsked@{numQuestionsAsked}}
+\index{numQuestionsAsked@{numQuestionsAsked}!GameManager@{GameManager}}
+\doxysubsubsection{numQuestionsAsked}
+{\footnotesize\ttfamily \label{class_game_manager_a3a53f25bde001b9155ab9cba1327b89c} 
+int Game\+Manager.\+num\+Questions\+Asked}
+
+The amount of times the player has talked, should be 0 at the start of each cycle 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scenes/\+Story/\+Scripts/Game\+Manager.\+cs\end{DoxyCompactItemize}

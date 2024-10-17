@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -7,15 +8,15 @@ using UnityEngine;
 /// </summary>
 public class SaveData
 {
-    public int[] activeCharacters;
-    public int[] inactiveCharacters;
-    public int culprit;
-    public int questionsRemaining;
-    public (int, List<Question>)[] remainingQuestions;
-    public string[] sceneStack;
-    public string personalNotes;
-    public (int, string)[] characterNotes;
-    public (int, List<Question>)[] askedQuestions;
+    public int[]                        activeCharacters;
+    public int[]                        inactiveCharacters;
+    public int                          culprit;
+    public int                          questionsRemaining;
+    public Tuple<int, List<Question>>[] remainingQuestions;
+    public string[]                     sceneStack;
+    public string                       personalNotes;
+    public Tuple<int, string>[]              characterNotes;
+    public Tuple<int, List<Question>>[]      askedQuestions;
 }
 
 /// <summary>

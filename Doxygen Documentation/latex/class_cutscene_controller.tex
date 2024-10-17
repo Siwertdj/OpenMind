@@ -1,0 +1,40 @@
+\doxysection{Cutscene\+Controller Class Reference}
+\label{class_cutscene_controller}\index{CutsceneController@{CutsceneController}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_cutscene_controller_a6fa346b709dc75f9e8d79dd7f7ad9ea5} 
+void {\bfseries Pause\+Timeline} ()
+\begin{DoxyCompactList}\small\item\em This method is called via a signal emitter when the timeline encounters a point where it has to be paused in order to wait for user interaction. This method also activates the continuebutton with which the timeline can be resumed. \end{DoxyCompactList}\item 
+\label{class_cutscene_controller_aaa3b7c765271afae505d43754e0491cb} 
+void {\bfseries Continue\+Timeline} ()
+\begin{DoxyCompactList}\small\item\em This method is called via a signal receiver when continue\+Button is clicked and the timeline has to be resumed. \end{DoxyCompactList}\item 
+\label{class_cutscene_controller_a92b61004cbad935341f6bff2f69d3426} 
+void {\bfseries On\+Toggle\+Value\+Changed} (bool is\+On)
+\begin{DoxyCompactList}\small\item\em This method is called when the toggler is clicked. Depending on the value of the toggler, is\+On, a different image is shown. \end{DoxyCompactList}\item 
+\label{class_cutscene_controller_a220c71570538d56e8f11263ccc89930d} 
+void {\bfseries Start\+Intro} ()
+\begin{DoxyCompactList}\small\item\em This method is called when the timeline reaches the end of the prologue. Then the introduction to the story can be loaded. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_cutscene_controller_a879a8d235721f93ef736ccb26b4f9f4e} 
+Playable\+Director {\bfseries playable\+Director}
+\item 
+\label{class_cutscene_controller_a5a231f63b610531dfa74de419c2182bd} 
+Game\+Object {\bfseries image\+With\+Grid}
+\item 
+\label{class_cutscene_controller_a72d70a649feff622e7045de10d5080f8} 
+Game\+Object {\bfseries image\+Without\+Grid}
+\item 
+\label{class_cutscene_controller_aedc8520cbe62282cac66c21cf4375aba} 
+Toggle {\bfseries image\+Toggler}
+\item 
+\label{class_cutscene_controller_ae35b5edb01bb151dea9a45cfeac50c35} 
+Button {\bfseries continue\+Button}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scenes/\+Prologue/\+Scripts/Prologue\+Controller.\+cs\end{DoxyCompactItemize}

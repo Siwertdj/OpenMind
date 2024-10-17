@@ -1,0 +1,111 @@
+\doxysection{Character\+Instance Class Reference}
+\label{class_character_instance}\index{CharacterInstance@{CharacterInstance}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_character_instance_aced72f3c0760acb5e2f8986e2e018eeb} 
+{\bfseries Character\+Instance} (\textbf{ Character\+Data} data)
+\item 
+List$<$ string $>$ \textbf{ Get\+Greeting} ()
+\begin{DoxyCompactList}\small\item\em Get a random greeting from the character\textquotesingle{}s list of greetings. \end{DoxyCompactList}\item 
+List$<$ List$<$ string $>$ $>$ \textbf{ Get\+Epilogue\+Dialogue} (bool has\+Won)
+\begin{DoxyCompactList}\small\item\em Get the epilogue dialogue depending on whether the player has chosen the correct character or not. \end{DoxyCompactList}\item 
+\label{class_character_instance_a62e9d08da3ca90fe996212476092aefd} 
+void {\bfseries Initialize\+Questions} ()
+\begin{DoxyCompactList}\small\item\em Places character data (answers \& traits) in their respective dictionaries. \end{DoxyCompactList}\item 
+List$<$ string $>$ \textbf{ Get\+Random\+Trait} ()
+\begin{DoxyCompactList}\small\item\em The logic for obtaining a random trait and removing it from the list of available questions for all characters. If the random variable is left null, it will be obtained from game\+Manager, but it can be provided for slight optimization. This method is used for obtaining hints about the victim and the culprit at the start of each cycle. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_character_instance_a6f48951cb56728beb802729ebf88d141} 
+\textbf{ Character\+Data} {\bfseries data}
+\item 
+\label{class_character_instance_ab5c6c5daf45865b38734e541c15f98e3} 
+Dictionary$<$ Question, List$<$ string $>$ $>$ {\bfseries Answers} = new()
+\item 
+\label{class_character_instance_ae9c75007c35fa45ff0e96c0161edc4b4} 
+Dictionary$<$ Question, List$<$ string $>$ $>$ {\bfseries Traits} = new()
+\item 
+\label{class_character_instance_af18692b68cc4b80ee0e6a03fc7f2d1c8} 
+List$<$ Question $>$ {\bfseries Remaining\+Questions} = new()
+\item 
+\label{class_character_instance_ae796888a7f55eb5d2d450b82e8abc687} 
+List$<$ Question $>$ {\bfseries Asked\+Questions} = new()
+\item 
+\label{class_character_instance_af1fc2b005b1378ff23900873a9c7197c} 
+List$<$ string $>$[$\,$] {\bfseries greetings}
+\item 
+\label{class_character_instance_a3609c3596037cf54dca9ba3a0133fdee} 
+string {\bfseries character\+Name}
+\item 
+\label{class_character_instance_a3238a398fc31d4d107bb3088f6b5f6fa} 
+int {\bfseries id}
+\item 
+\label{class_character_instance_a6b9c14bc0fd2e483c7f8f8ce184cec6f} 
+Sprite {\bfseries avatar}
+\item 
+\label{class_character_instance_a1e420a3e59eae127f26e080f10d455a7} 
+float {\bfseries pitch}
+\item 
+\label{class_character_instance_a3d0eb3c2538025e43c5fd34988d6f8e3} 
+bool {\bfseries is\+Culprit}
+\item 
+\label{class_character_instance_ab64e4f0df1b2cada0d05c970ce9d1891} 
+bool {\bfseries is\+Active}
+\item 
+\label{class_character_instance_a6b85951e0013e870a965e23571ebce74} 
+bool {\bfseries Talked\+To}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\index{CharacterInstance@{CharacterInstance}!GetEpilogueDialogue@{GetEpilogueDialogue}}
+\index{GetEpilogueDialogue@{GetEpilogueDialogue}!CharacterInstance@{CharacterInstance}}
+\doxysubsubsection{GetEpilogueDialogue()}
+{\footnotesize\ttfamily \label{class_character_instance_a87a7ca2ea632de8ffcf6176267fc4910} 
+List$<$ List$<$ string $>$ $>$ Character\+Instance.\+Get\+Epilogue\+Dialogue (\begin{DoxyParamCaption}\item[{bool}]{has\+Won}{}\end{DoxyParamCaption})}
+
+
+
+Get the epilogue dialogue depending on whether the player has chosen the correct character or not. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em has\+Won} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\index{CharacterInstance@{CharacterInstance}!GetGreeting@{GetGreeting}}
+\index{GetGreeting@{GetGreeting}!CharacterInstance@{CharacterInstance}}
+\doxysubsubsection{GetGreeting()}
+{\footnotesize\ttfamily \label{class_character_instance_adc519ed027a8b3c4f667b78307a7e961} 
+List$<$ string $>$ Character\+Instance.\+Get\+Greeting (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+Get a random greeting from the character\textquotesingle{}s list of greetings. 
+
+\begin{DoxyReturn}{Returns}
+A greeting in the form of dialogue lines.
+\end{DoxyReturn}
+\index{CharacterInstance@{CharacterInstance}!GetRandomTrait@{GetRandomTrait}}
+\index{GetRandomTrait@{GetRandomTrait}!CharacterInstance@{CharacterInstance}}
+\doxysubsubsection{GetRandomTrait()}
+{\footnotesize\ttfamily \label{class_character_instance_ad9aa2d27ea62006e2c09ef55dc6dd56f} 
+List$<$ string $>$ Character\+Instance.\+Get\+Random\+Trait (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+The logic for obtaining a random trait and removing it from the list of available questions for all characters. If the random variable is left null, it will be obtained from game\+Manager, but it can be provided for slight optimization. This method is used for obtaining hints about the victim and the culprit at the start of each cycle. 
+
+\begin{DoxyReturn}{Returns}
+A List of strings containing a random trait of this character.
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scripts/Character\+Instance.\+cs\end{DoxyCompactItemize}

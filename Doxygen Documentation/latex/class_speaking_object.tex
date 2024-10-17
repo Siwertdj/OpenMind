@@ -1,0 +1,49 @@
+\doxysection{Speaking\+Object Class Reference}
+\label{class_speaking_object}\index{SpeakingObject@{SpeakingObject}}
+
+
+A child of \doxyref{Dialogue\+Object}{p.}{class_dialogue_object}. Executing this object simply writes its text to the screen. A response must be set manually, otherwise the response is a \doxyref{Terminate\+Dialogue\+Object}{p.}{class_terminate_dialogue_object}.  
+
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_speaking_object_a871e16bc4ec2c39b385d9ea8838a5f9d} 
+{\bfseries Speaking\+Object} (List$<$ string $>$ dialogue, Game\+Object[$\,$] background)
+\item 
+\label{class_speaking_object_ad7708201262ad77b67aad3c4bc1b28ab} 
+override void {\bfseries Execute} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \textbf{ Dialogue\+Object}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries Execute} ()
+\begin{DoxyCompactList}\small\item\em Executes the logic of the given dialogue object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_speaking_object_ab1a8c8824ff83fe1aaadd0c918ffb300} 
+List$<$ string $>$ {\bfseries dialogue}
+\item 
+\label{class_speaking_object_a47ae7bd3fdaf1435d8c45665ad734478} 
+Game\+Object[$\,$] {\bfseries background}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_speaking_object_a5929e845baccf502c859727cbce6a015} 
+override List$<$ \textbf{ Dialogue\+Object} $>$ {\bfseries Responses}\hspace{0.3cm}{\ttfamily  [get, set]}
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties inherited from \textbf{ Dialogue\+Object}}
+\begin{DoxyCompactItemize}
+\item 
+List$<$ \textbf{ Dialogue\+Object} $>$ {\bfseries Responses}\hspace{0.3cm}{\ttfamily  [get, set]}
+\begin{DoxyCompactList}\small\item\em The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A child of \doxyref{Dialogue\+Object}{p.}{class_dialogue_object}. Executing this object simply writes its text to the screen. A response must be set manually, otherwise the response is a \doxyref{Terminate\+Dialogue\+Object}{p.}{class_terminate_dialogue_object}. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scenes/\+Dialogue/\+Scripts/Dialogue\+Object.\+cs\end{DoxyCompactItemize}

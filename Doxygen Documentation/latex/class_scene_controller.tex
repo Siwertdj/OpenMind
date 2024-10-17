@@ -1,0 +1,58 @@
+\doxysection{Scene\+Controller Class Reference}
+\label{class_scene_controller}\index{SceneController@{SceneController}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_scene_controller_a106a2661ff7b984ba0626699ca733078} 
+enum {\bfseries Scene\+Name} \{ \newline
+{\bfseries Start\+Screen\+Scene}
+, {\bfseries NPCSelect\+Scene}
+, {\bfseries Dialogue\+Scene}
+, {\bfseries Game\+Over\+Scene}
+, \newline
+{\bfseries Game\+Win\+Scene}
+, {\bfseries Loading}
+, {\bfseries Notebook\+Scene}
+, {\bfseries Prologue\+Scene}
+, \newline
+{\bfseries Epilogue\+Scene}
+ \}
+\item 
+\label{class_scene_controller_a54407d7caeef06ce864602241195e8d1} 
+enum {\bfseries Transition\+Type} \{ {\bfseries Transition}
+, {\bfseries Additive}
+, {\bfseries Unload}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_scene_controller_a9757c396c158689c379467d22cebb49f} 
+void {\bfseries Awake} ()
+\item 
+\label{class_scene_controller_a99c4e8c0b66815fbd1f710deea4fd857} 
+void {\bfseries Unload\+Additive\+Scenes} ()
+\begin{DoxyCompactList}\small\item\em Unloads all scenes(as all are opened additively), other than the \textquotesingle{}\doxyref{Loading}{p.}{class_loading}\textquotesingle{} scene. \end{DoxyCompactList}\item 
+\label{class_scene_controller_ace56faf58d214c72d6274a140b214ed6} 
+async Task {\bfseries Transition\+Scene} (Scene\+Name from, Scene\+Name to, Transition\+Type transition\+Type, Func$<$ string, string, Transition\+Type, Task $>$ load\+Code)
+\item 
+\label{class_scene_controller_a865c3149b8b8d8978e0aea04087e5aea} 
+async Task {\bfseries Transition\+Scene} (Scene\+Name from, Scene\+Name to, Transition\+Type transition\+Type)
+\item 
+\label{class_scene_controller_ae475ea119baf65134ab3e391faef11de} 
+void {\bfseries Start\+Scene} (Scene\+Name start)
+\item 
+\label{class_scene_controller_a2844a0372e170c33979da432e9ac97c8} 
+void {\bfseries Toggle\+Notebook\+Scene} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\label{class_scene_controller_a685cb4a00f476b6fac2dde29660b26be} 
+static \textbf{ Scene\+Controller} {\bfseries sc}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Assets/\+Scenes/\+Story/\+Scripts/Scene\+Controller.\+cs\end{DoxyCompactItemize}
