@@ -11,8 +11,8 @@ using Object = UnityEngine.Object;
 public class TimelineManager : MonoBehaviour
 {
     public PlayableDirector introStoryA;
-    public PlayableDirector introStoryB;
-    public PlayableDirector introStoryC;
+    /*public PlayableDirector introStoryB;
+    public PlayableDirector introStoryC;*/
     //public Button continueButton;
     public TMP_Text objectiveText;
     
@@ -35,13 +35,14 @@ public class TimelineManager : MonoBehaviour
                 case 0:
                     currentTimeline = introStoryA;
                     break;
-                case 1:
+                /*case 1:
                     currentTimeline = introStoryB;
                     break;
                 case 2:
                     currentTimeline = introStoryC;
-                    break;
+                    break;*/
                 default:
+                    currentTimeline = introStoryA;
                     break;
             }
         }
@@ -53,6 +54,7 @@ public class TimelineManager : MonoBehaviour
         }
         
         objectiveText.text = "Objective of story A:";
+        Debug.LogError("timeline is played");
         currentTimeline.Play();
     }
 
@@ -68,9 +70,9 @@ public class TimelineManager : MonoBehaviour
         //continueButton.gameObject.SetActive(false);
     }
 
-    void StartGame()
+    public void StartGame()
     {
-        
+        Debug.Log("game is started");
         StartCoroutine(LoadGame());
         
     }
@@ -78,7 +80,7 @@ public class TimelineManager : MonoBehaviour
     IEnumerator LoadGame()
     {
         // Start the loadscene-operation
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("IntroStoryScene", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
         
         // Within this while-loop, we wait until the scene is done loading. We check this every frame
         while (!asyncLoad.isDone)
@@ -89,6 +91,6 @@ public class TimelineManager : MonoBehaviour
         onGameLoaded.Raise(this, story);
         
         // Finally, when the data has been sent, we then unload our currentscene
-        SceneManager.UnloadSceneAsync("StorySelectScene");  // unload this scene; no longer necessary
+        SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary
     }
 }
