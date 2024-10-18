@@ -33,10 +33,10 @@ public class TimelineManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    currentTimeline = introStoryA;
+                    currentTimeline = introStoryB;
                     break;
                 case 1:
-                    currentTimeline = introStoryB;
+                    currentTimeline = introStoryA;
                     break;
                 case 2:
                     currentTimeline = introStoryC;
