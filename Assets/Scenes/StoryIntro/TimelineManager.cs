@@ -11,8 +11,8 @@ using Object = UnityEngine.Object;
 public class TimelineManager : MonoBehaviour
 {
     public PlayableDirector introStoryA;
-    /*public PlayableDirector introStoryB;
-    public PlayableDirector introStoryC;*/
+    public PlayableDirector introStoryB;
+    //public PlayableDirector introStoryC;
     //public Button continueButton;
     public TMP_Text objectiveText;
     
@@ -35,10 +35,10 @@ public class TimelineManager : MonoBehaviour
                 case 0:
                     currentTimeline = introStoryA;
                     break;
-                /*case 1:
+                case 1:
                     currentTimeline = introStoryB;
                     break;
-                case 2:
+                /*case 2:
                     currentTimeline = introStoryC;
                     break;*/
                 default:
@@ -53,7 +53,7 @@ public class TimelineManager : MonoBehaviour
             SceneManager.LoadScene("StorySelectScene");
         }
         
-        objectiveText.text = "Objective of story A:";
+        //objectiveText.text = "Objective of story A:";
         Debug.LogError("timeline is played");
         currentTimeline.Play();
     }
