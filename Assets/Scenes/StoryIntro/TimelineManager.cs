@@ -12,7 +12,7 @@ public class TimelineManager : MonoBehaviour
 {
     public PlayableDirector introStoryA;
     public PlayableDirector introStoryB;
-    //public PlayableDirector introStoryC;
+    public PlayableDirector introStoryC;
     //public Button continueButton;
     public TMP_Text objectiveText;
     
@@ -38,9 +38,9 @@ public class TimelineManager : MonoBehaviour
                 case 1:
                     currentTimeline = introStoryB;
                     break;
-                /*case 2:
+                case 2:
                     currentTimeline = introStoryC;
-                    break;*/
+                    break;
                 default:
                     currentTimeline = introStoryA;
                     break;
