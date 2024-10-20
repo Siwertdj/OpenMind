@@ -286,6 +286,7 @@ public class GameManagerPlayTest
         
         // Get current scene
         var scene = SceneManager.GetActiveScene().name;
+        
         // See if it's still equal to the "main" scene of the game
         // No scene should be switched, because it's an additive scene
         Assert.AreEqual("Loading", scene);
@@ -326,7 +327,6 @@ public class GameManagerPlayTest
 
     /// <summary>
     /// Check whether the transition between culprit selection and epilogue works as intended.
-    /// TODO: check if we are in the dialogue scene.
     /// </summary>
     [UnityTest]
     public IEnumerator CulpritEpilogueTransition()
@@ -398,16 +398,18 @@ public class GameManagerPlayTest
         
         yield return new WaitForSeconds(2); // Wait for it to load
         
-        // Check whether the hasWon variable is set to true and if the gameState is switched to epilogue.
+        // Check whether the hasWon variable is set to true, if the gameState is switched to epilogue
+        // and if the dialogue scene is loaded.
         Assert.IsTrue(gm.hasWon);
         Assert.AreEqual(gm.gameState, GameManager.GameState.Epilogue);
+        bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
+        Assert.AreEqual(inDialogue, true);
         
         yield return null;
     }
     
     /// <summary>
     /// Check whether the transition between culprit selection and epilogue works as intended.
-    /// TODO: check if we are in the dialogue scene.
     /// </summary>
     [UnityTest]
     public IEnumerator InnocentEpilogueTransition()
@@ -480,9 +482,12 @@ public class GameManagerPlayTest
         
         yield return new WaitForSeconds(2); // Wait for it to load
         
-        // Check whether the hasWon variable is set to true and if the gameState is switched to epilogue.
+        // Check whether the hasWon variable is set to true, if the gameState is switched to epilogue
+        // and if the dialogue scene is loaded.
         Assert.IsFalse(gm.hasWon);
         Assert.AreEqual(gm.gameState, GameManager.GameState.Epilogue);
+        bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
+        Assert.AreEqual(inDialogue, true);
         
         yield return null;
     }
