@@ -177,13 +177,15 @@ public class GameManagerPlayTest
         gm.RestartStoryScene();
         yield return new WaitForSeconds(3); // Wait for it to load
         
-        // Check if we are in the Loading gameState and if only 3 scenes exist,
-        // namely Loading, StartScreenScene and DontDestroyOnLoad.
+        // Check if we are in the Loading gameState and if only 2 scenes exist,
+        // namely Loading and StartScreenScene
         Assert.AreEqual(gm.gameState, GameManager.GameState.Loading);
-        Assert.AreEqual(SceneManager.loadedSceneCount, 3);
+        Assert.AreEqual(SceneManager.loadedSceneCount, 2);
         Assert.AreEqual(SceneManager.GetSceneByName("Loading").isLoaded, true);
         Assert.AreEqual(SceneManager.GetSceneByName("StartScreenScene").isLoaded, true);
-        Assert.AreEqual(SceneManager.GetSceneByName("DontDestroyOnLoad").isLoaded, true);
+        
+        // End the game
+        gm.EndGame();
         
         yield return null;
     }
@@ -235,9 +237,6 @@ public class GameManagerPlayTest
         
         yield return null;
     }
-
-    
-    
     
     static bool[] bools = new bool[] { true, false };
 
