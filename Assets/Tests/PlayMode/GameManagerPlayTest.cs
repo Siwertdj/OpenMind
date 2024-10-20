@@ -209,8 +209,8 @@ public class GameManagerPlayTest
     {
         // Load scene
         SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(3); // Wait for it to load
-
+        yield return new WaitForSeconds(2); // Wait for it to load
+        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -235,14 +235,31 @@ public class GameManagerPlayTest
             }
         }
         
-        // Variable which counts the number of characters before calling EndCycle.
-        int nCharactersPrior = gm.currentCharacters.Count;
+        // Start the game cycle.
+        gm.StartGame();
+        yield return new WaitForSeconds(2); // Wait for it to load
         
-        // End cycle
-        gm.EndCycle();
+        // Variable which counts the number of characters before calling EndCycle.
+        int nCharactersPrior = gm.currentCharacters.Count(c => c.isActive);
+        
+        // Set this to maxValue in order to make sure that no more questions can be asked.
+        // This will cause the EndCycle method to be called once the dialogue ends.
+        gm.numQuestionsAsked = int.MaxValue;
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitForSeconds(2); // Wait for it to load
+        
+        // Get "DialogueManager" object
+        var d = GameObject.Find("DialogueManager");
+        var dm = d.GetComponent<DialogueManager>();
+        // Return to the NpcSelect scene, this will cause EndCycle to be called.
+        dm.BacktoNPCScreen();
+        yield return new WaitForSeconds(2); // Wait for it to load
         
         // Variable which counts the number of characters after calling EndCycle.
-        int nCharactersPosterior = gm.currentCharacters.Count;
+        int nCharactersPosterior = gm.currentCharacters.Count(c => c.isActive);
         
         // We test whether a character disappears when EndCycle is called and there are enough characters.
         // If there are not enough characters, then we test if we transition to the culpritSelect gameState
@@ -252,7 +269,10 @@ public class GameManagerPlayTest
         {
             // Check if only 1 character has disappeared.
             Assert.AreEqual(nCharactersPrior - 1, nCharactersPosterior);
-            // TODO: close the scenes after each test (else crash :( ).
+            // Check if we go to the HintDialogue gameState.
+            Assert.AreEqual(gm.gameState, GameManager.GameState.HintDialogue);
+            
+            // TODO: close the scenes after each test (else crash when running all tests :( ).
         }
         else
         {
@@ -262,21 +282,17 @@ public class GameManagerPlayTest
             // TODO: In the current version, the gameState "culpritSelect" is never used, which should be used.
             //Assert.AreEqual(gm.gameState, GameManager.GameState.CulpritSelect);
         }
+        yield return new WaitForSeconds(2); // Wait for it to load
         
         // Get current scene
-        //var scene = SceneManager.GetActiveScene().name;
-        
-        //Debug.Log(scene);
-
+        var scene = SceneManager.GetActiveScene().name;
         // See if it's still equal to the "main" scene of the game
         // No scene should be switched, because it's an additive scene
-        //Assert.AreEqual("Loading", scene);
+        Assert.AreEqual("Loading", scene);
         
-        
-        
-        
-        
-        
+        // End the game.
+        gm.EndGame();
+       
         yield return null;
     }
 
@@ -342,17 +358,19 @@ public class GameManagerPlayTest
         // Start the game cycle with not enough characters remaining.
         gm.StartGame();
         yield return new WaitForSeconds(2); // Wait for it to load
+        
         // Set this to maxValue in order to make sure that no more questions can be asked.
         gm.numQuestionsAsked = int.MaxValue;
-        // Start dialogue with a character, then go back to NpcSelect scene in order to apply
-        // the changes of the variables.
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
         CharacterInstance character = gm.currentCharacters[0];
         gm.StartDialogue(character);
         yield return new WaitForSeconds(2); // Wait for it to load
         
-        // Get "DialogueManager" object
+        // Get "DialogueManager" object.
         var d = GameObject.Find("DialogueManager");
         var dm = d.GetComponent<DialogueManager>();
+        // Return to the NpcSelect scene.
         dm.BacktoNPCScreen();
         yield return new WaitForSeconds(2); // Wait for it to load
         
@@ -421,10 +439,11 @@ public class GameManagerPlayTest
         // Start the game cycle with not enough characters remaining.
         gm.StartGame();
         yield return new WaitForSeconds(2); // Wait for it to load
+        
         // Set this to maxValue in order to make sure that no more questions can be asked.
         gm.numQuestionsAsked = int.MaxValue;
-        // Start dialogue with a character, then go back to NpcSelect scene in order to apply
-        // the changes of the variables.
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
         CharacterInstance character = gm.currentCharacters[0];
         gm.StartDialogue(character);
         yield return new WaitForSeconds(2); // Wait for it to load
@@ -432,6 +451,7 @@ public class GameManagerPlayTest
         // Get "DialogueManager" object
         var d = GameObject.Find("DialogueManager");
         var dm = d.GetComponent<DialogueManager>();
+        // Return to the NpcSelect scene.
         dm.BacktoNPCScreen();
         yield return new WaitForSeconds(2); // Wait for it to load
         
