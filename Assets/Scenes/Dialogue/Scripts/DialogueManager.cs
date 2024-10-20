@@ -7,6 +7,7 @@ using TMPro;
 using System;
 using System.Linq;
 using UnityEngine.Events;
+using System.Resources;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -89,7 +90,8 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-        
+       
+
         // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
         if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
             CreateOpenQuestion();
@@ -97,6 +99,8 @@ public class DialogueManager : MonoBehaviour
         // Execute next dialogue object
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
+
+
     }
 
     /// <summary>
@@ -118,9 +122,15 @@ public class DialogueManager : MonoBehaviour
 
         // If no pitch is given, set speaking pitch to 1
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
+<<<<<<< Updated upstream
 
         // Animator write dialogue to the screen.
         animator.WriteDialogue(dialogue.Select(d => d.line).ToList(), pitch);
+=======
+        animator.WriteDialogue(dialogue, pitch);
+
+
+>>>>>>> Stashed changes
     }
 
     /// <summary>
@@ -137,8 +147,31 @@ public class DialogueManager : MonoBehaviour
 
         // Instantiate new background
         foreach (GameObject element in newBackground)
+        {
             Instantiate(element).transform.parent = parent;
 
+            // Change player sprite to set mood to dialogueObject (nog geen idee hoe )
+            if (element.CompareTag("Player"))
+            {
+                switch (currentObject.mood)
+                {
+                    case DialogueObject.Mood.Neutral:
+                        Debug.Log("Feeling neutral");
+                        break;
+                    case DialogueObject.Mood.Happy:
+                        Debug.Log("Feeling happy");
+                        break;
+                    case DialogueObject.Mood.Sad:
+                        Debug.Log("Feeling sad");
+                        break;
+                    case DialogueObject.Mood.Angry:
+                        Debug.Log("Feeling angry");
+                        break;
+                }
+                        
+            }
+            
+        }
     }
 
     /// <summary>

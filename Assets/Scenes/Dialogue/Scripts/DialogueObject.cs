@@ -9,6 +9,16 @@ using UnityEngine;
 /// </summary>
 public abstract class DialogueObject
 {
+
+    public enum Mood
+    {
+        Neutral,
+        Happy,
+        Sad,
+        Angry
+    }
+
+    public Mood mood = Mood.Neutral;
     /// <summary>
     /// The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object)
     /// </summary>
@@ -28,6 +38,8 @@ public class SpeakingObject : DialogueObject
 {
     public List<DialogueLine> dialogue;
     public GameObject[] background;
+
+   
 
     private List<DialogueObject> _responses = new();
     public override List<DialogueObject> Responses
