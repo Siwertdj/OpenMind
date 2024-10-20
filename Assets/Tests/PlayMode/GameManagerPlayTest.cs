@@ -152,6 +152,43 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
+    /// Checks if the "RestartStoryScene" method works.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator RestartStoryTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Get "GameManager" object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+        
+        // Start the game cycle.
+        gm.StartGame();
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Start dialogue.
+        gm.StartDialogue(gm.currentCharacters[0]);
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Call RestartStoryScene to check if values get reset
+        gm.RestartStoryScene();
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Check if we are in the Loading gameState and if only 3 scenes exist,
+        // namely Loading, StartScreenScene and DontDestroyOnLoad.
+        Assert.AreEqual(gm.gameState, GameManager.GameState.Loading);
+        Assert.AreEqual(SceneManager.loadedSceneCount, 3);
+        Assert.AreEqual(SceneManager.GetSceneByName("Loading").isLoaded, true);
+        Assert.AreEqual(SceneManager.GetSceneByName("StartScreenScene").isLoaded, true);
+        Assert.AreEqual(SceneManager.GetSceneByName("DontDestroyOnLoad").isLoaded, true);
+        
+        yield return null;
+    }
+    
+    /// <summary>
     /// Checks if the "RetryStoryScene" method works.
     /// </summary>
     [UnityTest]
@@ -199,6 +236,9 @@ public class GameManagerPlayTest
         yield return null;
     }
 
+    
+    
+    
     static bool[] bools = new bool[] { true, false };
 
     /// <summary>
