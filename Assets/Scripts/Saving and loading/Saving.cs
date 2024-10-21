@@ -69,7 +69,6 @@ public class Saving : MonoBehaviour
             personalNotes = gameManager.notebookData.GetPersonalNotes(),
             characterNotes = characterNotes,
             askedQuestionsPerCharacter = askedQuestions,
-            storyObject = gameManager.story,
             numQuestionsAsked = gameManager.numQuestionsAsked
         };
 

@@ -15,8 +15,7 @@ public class SaveData
     public string                  personalNotes;
     public (int, string)[]         characterNotes;
     public (int, List<Question>)[] askedQuestionsPerCharacter;
-    public StoryObject             storyObject;
-    public int numQuestionsAsked;
+    public int                     numQuestionsAsked;
 }
 
 /// <summary>

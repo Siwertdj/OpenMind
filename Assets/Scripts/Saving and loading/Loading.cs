@@ -47,21 +47,9 @@ public class Loading : MonoBehaviour
 
         //then load all the data
         // TODO: Load 'Loading'-scene, wait for the signal that its done, then raise the event and pass the savedata
-        gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
-        {
-            c.isActive = saveData.activeCharacters.Contains(c.id);
-            c.isCulprit = saveData.culprit == c.id;
-            if (c.isActive)
-            {
-                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            }
-            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
-            gameManager.notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
-            return c;
-        }).ToList();
+        //Note: this is a temporary solution for testing
         
-        gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
-        gameManager.story = saveData.storyObject;
+        gameManager.StartGame(null, saveData);
     }
     
     private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)

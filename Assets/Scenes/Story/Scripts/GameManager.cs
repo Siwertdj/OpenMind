@@ -94,10 +94,20 @@ public class GameManager : MonoBehaviour
 
     private void LoadGame(SaveData saveData)
     {
-        // TODO: Load game using the savedata
-        // set all the variables to what they should be
-        // Set the story as well
-        // Then, "StartCycle".
+        currentCharacters = currentCharacters.Select(c =>
+        {
+            c.isActive = saveData.activeCharacters.Contains(c.id);
+            c.isCulprit = saveData.culprit == c.id;
+            if (c.isActive)
+            {
+                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            }
+            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
+            notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
+            return c;
+        }).ToList();
+        
+        notebookData.UpdatePersonalNotes(saveData.personalNotes);
     }
 
     /// <summary>
