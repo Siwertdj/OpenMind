@@ -16,8 +16,19 @@ public class CutsceneController : MonoBehaviour
     public GameObject imageWithoutGrid;
     public Toggle imageToggler;
     public Button continueButton;
+    public TMP_Text spokenText;
+    public TMP_Text introText;
+    public TMP_Text nameBoxText;
+    public Image textBubbleImage;
+    public Image backgroundImage;
+
+    public Sprite[] backgrounds; 
+    public string[] receptionistText;
     
-    private Transform checkmarkTransform; 
+    private int speakIndex;
+    private int backgroundIndex; 
+    private Transform checkmarkTransform;
+    private bool inDialog; 
     
     /// <summary>
     /// This method is called when the GameObject this script belongs to is activated. 
@@ -26,6 +37,57 @@ public class CutsceneController : MonoBehaviour
     {
         // Access the Checkmark GameObject via the Toggle's hierarchy
        checkmarkTransform = imageToggler.transform.Find("Background/Checkmark");
+       speakIndex = -1;
+       backgroundIndex = 0;
+       inDialog = false; 
+    }
+
+    public void updateIntroText()
+    {
+        introText.text = "Not everything is as it seems...";
+    }
+
+    public void changeBackground()
+    {
+        backgroundIndex++;
+        try
+        {
+            backgroundImage.sprite = backgrounds[backgroundIndex];
+        }
+        catch
+        {
+            backgroundImage.sprite = backgrounds[0];
+        }
+    }
+    
+    public void activateDialog()
+    {
+        textBubbleImage.gameObject.SetActive(true);
+        nameBoxText.gameObject.SetActive(true);
+        spokenText.gameObject.SetActive(true);
+        changeReceptionistText();
+        PauseTimeline();
+    }
+
+    public void changeReceptionistText()
+    {
+        speakIndex++;
+        try
+        {
+            spokenText.text = receptionistText[speakIndex];
+        }
+        catch
+        {
+            spokenText.text = "no text";
+        }
+    }
+    
+    public void deactivateDialog()
+    {
+        textBubbleImage.gameObject.SetActive(false);
+        nameBoxText.gameObject.SetActive(false);
+        spokenText.gameObject.SetActive(false);
+        inDialog = false; 
     }
 
     /// <summary>
@@ -53,7 +115,12 @@ public class CutsceneController : MonoBehaviour
         // Resume timeline.
         playableDirector.Play();
     }
-    
+
+    public void activateGridIllusion()
+    {
+        imageToggler.gameObject.SetActive(true);
+    }
+
     /// <summary>
     /// This method is called when the toggler is clicked. Depending on the value of the
     /// toggler, isOn, a different image is shown. 
