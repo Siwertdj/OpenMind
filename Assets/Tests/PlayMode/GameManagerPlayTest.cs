@@ -491,18 +491,3 @@ public class GameManagerPlayTest
         yield return null;
     }
 }
-
-/// <summary>
-/// Simulate a mouse click.
-/// </summary>
-public class TestInputModule : StandaloneInputModule
-{
-    public void ClickSimulation(float x, float y)
-    {
-        Input.simulateMouseWithTouches = true;
-        Touch touch = new Touch();
-        touch.position = new Vector2(x, y);
-        var pointerData = GetTouchPointerEventData(touch, out bool b, out bool bb);
-        ProcessTouchPress(pointerData, true, true);
-    }
-}
