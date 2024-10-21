@@ -1,6 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Script containing methods to be used on button click in the gameover scene.
+/// Each method calls a method from <see cref="GameManager"/>.
+/// </summary>
 public class ButtonBehaviour : MonoBehaviour
 {
     GameManager gameManager;
@@ -10,14 +13,25 @@ public class ButtonBehaviour : MonoBehaviour
         gameManager = FindAnyObjectByType<GameManager>();
     }
 
+    /// <summary>
+    /// Calls <see cref="GameManager.EndGame"/>
+    /// </summary>
     public void EndGame()
     {
         gameManager.EndGame();
     }
+    
+    /// <summary>
+    /// Calls <see cref="GameManager.RestartStoryScene"/>
+    /// </summary>
     public void Restart()
     {
         gameManager.RestartStoryScene();
     }
+    
+    /// <summary>
+    /// Calls <see cref="GameManager.RetryStoryScene"/>
+    /// </summary>
     public void Retry()
     {
         gameManager.RetryStoryScene();
