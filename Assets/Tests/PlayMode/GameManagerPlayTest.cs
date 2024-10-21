@@ -363,12 +363,12 @@ public class GameManagerPlayTest
         
         yield return null;
     }
-
+    
     /// <summary>
     /// Check whether the transition between culprit selection and epilogue works as intended.
     /// </summary>
     [UnityTest]
-    public IEnumerator CulpritEpilogueTransition()
+    public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
     {
         // Load scene
         SceneManager.LoadScene("Loading");
@@ -417,118 +417,61 @@ public class GameManagerPlayTest
         var s = GameObject.Find("SelectionManager");
         var sm = s.GetComponent<SelectionManager>();
         
-        bool culpritGameObjectFound = false;
-        int counter = 1;
-        // Find the GameObject that corresponds with the culprit.
-        while (!culpritGameObjectFound)
+        if (hasChosenCulprit)
         {
-            string path = "characterspace " + counter;
-            GameObject go = GameObject.Find(path);
-            SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
-            if (selectOption.character.characterName == gm.GetCulprit().characterName)
+            bool culpritGameObjectFound = false;
+            int counter = 1;
+            // Find the GameObject that corresponds with the culprit.
+            while (!culpritGameObjectFound)
             {
-                culpritGameObjectFound = true;
-                GameObject culpritObject = go;
-                // Simulate choosing the culprit.
-                sm.ButtonClicked(culpritObject);
-            }
-            counter++;
-        }
-        
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Check whether the hasWon variable is set to true, if the gameState is switched to epilogue
-        // and if the dialogue scene is loaded.
-        Assert.IsTrue(gm.hasWon);
-        Assert.AreEqual(gm.gameState, GameManager.GameState.Epilogue);
-        bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
-        Assert.AreEqual(inDialogue, true);
-        
-        yield return null;
-    }
-    
-    /// <summary>
-    /// Check whether the transition between culprit selection and epilogue works as intended.
-    /// </summary>
-    [UnityTest]
-    public IEnumerator InnocentEpilogueTransition()
-    {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Get "GameManager" object
-        var g = GameObject.Find("GameManager");
-        var gm = g.GetComponent<GameManager>();
-        
-        // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
-        while (gm.EnoughCharactersRemaining())
-        {
-            // Set this bool to true once a character has been removed.
-            bool removedCharacter = false;
-            foreach (CharacterInstance c in gm.currentCharacters)
-            {
-                // Set a character to not active if it is not a culprit, is active and the bool removedCharacter is false.
-                if (!c.isCulprit && c.isActive && !removedCharacter)
+                string path = "characterspace " + counter;
+                GameObject go = GameObject.Find(path);
+                SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
+                if (selectOption.character.characterName == gm.GetCulprit().characterName)
                 {
-                    c.isActive = false;
-                    removedCharacter = true;
+                    culpritGameObjectFound = true;
+                    GameObject culpritObject = go;
+                    // Simulate choosing the culprit.
+                    sm.ButtonClicked(culpritObject);
                 }
+                counter++;
             }
+            
+            // Check if the hasWon variable is set to true.
+            Assert.IsTrue(gm.hasWon);
         }
-        
-        // Start the game cycle with not enough characters remaining.
-        gm.StartGame();
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Set this to maxValue in order to make sure that no more questions can be asked.
-        gm.numQuestionsAsked = int.MaxValue;
-        
-        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
-        CharacterInstance character = gm.currentCharacters[0];
-        gm.StartDialogue(character);
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Get "DialogueManager" object
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
-        // Return to the NpcSelect scene.
-        dm.BacktoNPCScreen();
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Get "SelectionManager" object.
-        var s = GameObject.Find("SelectionManager");
-        var sm = s.GetComponent<SelectionManager>();
-        
-        bool innocentGameObjectFound = false;
-        int counter = 1;
-        // Find the GameObject that corresponds with an innocent person.
-        while (!innocentGameObjectFound)
+        else
         {
-            string path = "characterspace " + counter;
-            GameObject go = GameObject.Find(path);
-            SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
-            // Choose an innocent person that is not dead and is not the culprit.
-            if (selectOption.character.characterName != gm.GetCulprit().characterName && selectOption.character.isActive)
+            bool innocentGameObjectFound = false;
+            int counter = 1;
+            // Find the GameObject that corresponds with an innocent person.
+            while (!innocentGameObjectFound)
             {
-                innocentGameObjectFound = true;
-                GameObject innocentObject = go;
-                // Simulate choosing the culprit.
-                sm.ButtonClicked(innocentObject);
+                string path = "characterspace " + counter;
+                GameObject go = GameObject.Find(path);
+                SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
+                // Choose an innocent person that is not dead and is not the culprit.
+                if (selectOption.character.characterName != gm.GetCulprit().characterName && selectOption.character.isActive)
+                {
+                    innocentGameObjectFound = true;
+                    GameObject innocentObject = go;
+                    // Simulate choosing an innocent person.
+                    sm.ButtonClicked(innocentObject);
+                }
+                counter++;
             }
-            counter++;
+            
+            // Check if the hasWon variable is set to false.
+            Assert.IsFalse(gm.hasWon);
         }
         
         yield return new WaitForSeconds(2); // Wait for it to load
         
-        // Check whether the hasWon variable is set to true, if the gameState is switched to epilogue
-        // and if the dialogue scene is loaded.
-        Assert.IsFalse(gm.hasWon);
+        // Check if the gameState is switched to epilogue and if the dialogue scene is loaded.
         Assert.AreEqual(gm.gameState, GameManager.GameState.Epilogue);
         bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
         Assert.AreEqual(inDialogue, true);
         
         yield return null;
     }
-    
 }
