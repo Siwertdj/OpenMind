@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class GameManagerPlayTest
 {
@@ -293,8 +296,14 @@ public class GameManagerPlayTest
         // Get "DialogueManager" object
         var d = GameObject.Find("DialogueManager");
         var dm = d.GetComponent<DialogueManager>();
+        
+        // Finish the dialogue.
+        dm.OnDialogueComplete();
+        yield return new WaitForSeconds(2); // Wait for it to load
+        
         // Return to the NpcSelect scene, this will cause EndCycle to be called.
-        dm.BacktoNPCScreen();
+        Button backButton = GameObject.Find("backButton").GetComponent<Button>();
+        backButton.onClick.Invoke();
         yield return new WaitForSeconds(2); // Wait for it to load
         
         // Variable which counts the number of characters after calling EndCycle.
@@ -409,8 +418,15 @@ public class GameManagerPlayTest
         // Get "DialogueManager" object.
         var d = GameObject.Find("DialogueManager");
         var dm = d.GetComponent<DialogueManager>();
+        
+        // Finish the dialogue.
+        dm.OnDialogueComplete();
+        yield return new WaitForSeconds(2); // Wait for it to load
+        
         // Return to the NpcSelect scene.
-        dm.BacktoNPCScreen();
+        Button backButton = GameObject.Find("backButton").GetComponent<Button>();
+        backButton.onClick.Invoke();
+        
         yield return new WaitForSeconds(2); // Wait for it to load
         
         // Get "SelectionManager" object.
@@ -473,5 +489,20 @@ public class GameManagerPlayTest
         Assert.AreEqual(inDialogue, true);
         
         yield return null;
+    }
+}
+
+/// <summary>
+/// Simulate a mouse click.
+/// </summary>
+public class TestInputModule : StandaloneInputModule
+{
+    public void ClickSimulation(float x, float y)
+    {
+        Input.simulateMouseWithTouches = true;
+        Touch touch = new Touch();
+        touch.position = new Vector2(x, y);
+        var pointerData = GetTouchPointerEventData(touch, out bool b, out bool bb);
+        ProcessTouchPress(pointerData, true, true);
     }
 }
