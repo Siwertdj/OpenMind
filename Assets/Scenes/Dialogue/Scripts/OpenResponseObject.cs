@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A child of DialogueObject. Executing this object places a text field on the screen, so that the player can answer an open question.
+/// A child of DialogueObject.
+/// Executing this object places a text field on the screen, so that the player can answer an open question.
 /// </summary>
 public class OpenResponseObject : DialogueObject
 {
@@ -18,11 +19,18 @@ public class OpenResponseObject : DialogueObject
         set { _responses = value; }
     }
 
+    /// <summary>
+    /// The constructor.
+    /// </summary>
+    /// <param name="background">The background</param>
     public OpenResponseObject(GameObject[] background)
     {
         this.background = background;
     }
 
+    /// <summary>
+    /// Creates on open text field in which the player can type their response
+    /// </summary>
     public override void Execute()
     {
         GameManager gm = GameManager.gm;

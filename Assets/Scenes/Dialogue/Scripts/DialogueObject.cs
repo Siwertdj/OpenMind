@@ -36,12 +36,20 @@ public class SpeakingObject : DialogueObject
         set { _responses = value; }
     }
 
+    /// <summary>
+    /// The constructor for <see cref="SpeakingObject"/>.
+    /// </summary>
+    /// <param name="dialogue">The text</param>
+    /// <param name="background">The background</param>
     public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
         this.background = background;
     }
 
+    /// <summary>
+    /// Writes the text to the screen
+    /// </summary>
     public override void Execute()
     {
         var dm = DialogueManager.dm;
@@ -76,9 +84,11 @@ public class TerminateDialogueObject : DialogueObject
         this.post = post;
     }
 
+    /// <summary>
+    /// Unloads the scene and loads NPCSelect
+    /// </summary>
     public override void Execute()
     {
-        Debug.Log("Terminating dialogue");
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
         // Also pass along the currentObject, which is used for the Epilogue scene.
         DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);

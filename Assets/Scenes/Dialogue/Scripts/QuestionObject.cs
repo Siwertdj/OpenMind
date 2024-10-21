@@ -17,11 +17,18 @@ public class QuestionObject : DialogueObject
         set { _responses = value; }
     }
 
+    /// <summary>
+    /// The constructor.
+    /// </summary>
+    /// <param name="background">The background</param>
     public QuestionObject(GameObject[] background)
     {
         this.background = background;
     }
 
+    /// <summary>
+    /// Creates the question buttons and adds their responses
+    /// </summary>
     public override void Execute()
     {
         var dm = DialogueManager.dm;
@@ -36,13 +43,14 @@ public class QuestionObject : DialogueObject
         dm.InstantiatePromptButtons(this);
     }
 
+    /// <summary>
+    /// Helper function for <see cref="Execute"/>. Generates a random list of questions 
+    /// </summary>
     private void GenerateQuestions()
     {
         // The number of question options to give the player
         // (This value should possibly be public and adjustable from the GameManager)
         int questionsOnScreen = 2;
-
-        //Debug.Log(string.Join(", ", GameManager.gm.dialogueRecipient.RemainingQuestions));
 
         // Generate random list of questions
         if (GameManager.gm.HasQuestionsLeft())
