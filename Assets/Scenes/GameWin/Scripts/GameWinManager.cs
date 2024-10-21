@@ -1,15 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script containing methods to be used on button click in the gamewin scene.
+/// Each method calls a method from <see cref="GameManager"/>.
+/// </summary>
 public class GameWinManager : MonoBehaviour
 {
+    /// <summary>
+    /// Calls <see cref="GameManager.RestartStoryScene"/>
+    /// </summary>
     public void Restart()
     {
         GameManager.gm.RestartStoryScene();
     }
 
+    /// <summary>
+    /// Calls <see cref="GameManager.EndGame"/>
+    /// </summary>
     public void Quit()
     {
         GameManager.gm.EndGame();
