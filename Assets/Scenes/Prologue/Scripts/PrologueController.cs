@@ -12,8 +12,6 @@ using UnityEngine.SceneManagement;
 public class CutsceneController : MonoBehaviour
 {
     public PlayableDirector playableDirector;
-    public GameObject imageWithGrid;                 
-    public GameObject imageWithoutGrid;
     public Toggle imageToggler;
     public Button continueButton;
     public TMP_Text spokenText;
@@ -21,14 +19,15 @@ public class CutsceneController : MonoBehaviour
     public TMP_Text nameBoxText;
     public Image textBubbleImage;
     public Image backgroundImage;
-
+    public Image illusionImage; 
+    
     public Sprite[] backgrounds; 
     public string[] receptionistText;
+    public Sprite[] illusions; 
     
     private int speakIndex;
     private int backgroundIndex; 
     private Transform checkmarkTransform;
-    private bool inDialog; 
     
     /// <summary>
     /// This method is called when the GameObject this script belongs to is activated. 
@@ -39,7 +38,6 @@ public class CutsceneController : MonoBehaviour
        checkmarkTransform = imageToggler.transform.Find("Background/Checkmark");
        speakIndex = -1;
        backgroundIndex = 0;
-       inDialog = false; 
     }
 
     public void updateIntroText()
@@ -87,7 +85,6 @@ public class CutsceneController : MonoBehaviour
         textBubbleImage.gameObject.SetActive(false);
         nameBoxText.gameObject.SetActive(false);
         spokenText.gameObject.SetActive(false);
-        inDialog = false; 
     }
 
     /// <summary>
@@ -107,13 +104,17 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void ContinueTimeline()
     {
-        // Make sure both images are removed from the screen. 
-        imageWithoutGrid.SetActive(false);
-        imageWithGrid.SetActive(false);
+        // Make sure toggler is removed from the screen. 
+        imageToggler.gameObject.SetActive(false);
         // Disable continuebutton
         continueButton.gameObject.SetActive(false);
         // Resume timeline.
         playableDirector.Play();
+    }
+
+    public void activateCloudIllusion()
+    {
+        illusionImage.sprite = illusions[2];
     }
 
     public void activateGridIllusion()
@@ -127,10 +128,13 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void OnToggleValueChanged(bool isOn)
     {
-        imageWithoutGrid.SetActive(!isOn); // Either show or hide the image without grid
-        imageToggler.isOn = isOn; // Change the value of the toggler
-        checkmarkTransform.GameObject().SetActive(isOn); // Make sure the checkmark (dis)appears at the right time. 
-        imageWithGrid.SetActive(isOn); // Either show or hide the image with grid
+        imageToggler.isOn = isOn;  
+        checkmarkTransform.GameObject().SetActive(isOn);
+        if (isOn) illusionImage.sprite = illusions[0];
+        else
+        {
+            illusionImage.sprite = illusions[1];
+        }
     }
 
     /// <summary>
