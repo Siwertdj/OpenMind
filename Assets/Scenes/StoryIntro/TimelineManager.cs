@@ -52,9 +52,6 @@ public class TimelineManager : MonoBehaviour
             // Return to StorySelectScene adn try again.
             SceneManager.LoadScene("StorySelectScene");
         }
-        
-        //objectiveText.text = "Objective of story A:";
-        Debug.LogError("timeline is played");
         currentTimeline.Play();
     }
 
