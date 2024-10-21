@@ -7,15 +7,16 @@ using UnityEngine;
 /// </summary>
 public class SaveData
 {
-    public int[] activeCharacters;
-    public int[] inactiveCharacters;
-    public int culprit;
-    public int questionsRemaining;
+    public int[]                   activeCharacters;
+    public int[]                   inactiveCharacters;
+    public int                     culprit;
     public (int, List<Question>)[] remainingQuestions;
-    public string[] sceneStack;
-    public string personalNotes;
-    public (int, string)[] characterNotes;
-    public (int, List<Question>)[] askedQuestions;
+    public string[]                sceneStack;
+    public string                  personalNotes;
+    public (int, string)[]         characterNotes;
+    public (int, List<Question>)[] askedQuestionsPerCharacter;
+    public StoryObject             storyObject;
+    public int numQuestionsAsked;
 }
 
 /// <summary>
@@ -33,7 +34,12 @@ public static class FilePathConstants
     /// Gets the location to the save file.
     /// Uses "Application.persistentDataPath", which is the standard directory for save data.
     /// </summary>
-    public static string GetSaveFileLocation() => Path.Combine(Application.persistentDataPath, playerSaveDataFileName);
+    public static string GetSaveFileLocation() => Path.Combine(Application.persistentDataPath + "/SaveData/", playerSaveDataFileName);
+
+    /// <summary>
+    /// Checks if the save file exists.
+    /// </summary>
+    public static bool DoesSaveFileLocationExist() => File.Exists(GetSaveFileLocation());
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.
