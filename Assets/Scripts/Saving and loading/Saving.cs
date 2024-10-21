@@ -20,8 +20,19 @@ public class Saving : MonoBehaviour
     {
         GameManager gameManager = GameManager.gm;
         //check if the gamemanger is loaded
-        if (gameManager is null)    
+        if (gameManager is null)
+        {
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
+            return;
+        }
+
+        //check if current Characters have been assigned
+        if (gameManager.currentCharacters is null)
+        {
+            Debug.LogError(
+                "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
+            return;
+        }
 
         //check if all characters have a unique id
         bool allUniqueID = true;

@@ -34,7 +34,12 @@ public static class FilePathConstants
     /// Gets the location to the save file.
     /// Uses "Application.persistentDataPath", which is the standard directory for save data.
     /// </summary>
-    public static string GetSaveFileLocation() => Path.Combine(Application.persistentDataPath, playerSaveDataFileName);
+    public static string GetSaveFileLocation() => Path.Combine(Application.persistentDataPath + "/SaveData/", playerSaveDataFileName);
+
+    /// <summary>
+    /// Checks if the save file exists.
+    /// </summary>
+    public static bool DoesSaveFileLocationExist() => File.Exists(GetSaveFileLocation());
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.

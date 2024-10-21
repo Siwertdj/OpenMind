@@ -7,7 +7,6 @@ public class StartMenuManager : MonoBehaviour
 {
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
-    public bool savesPresent;
     public GameObject ContinueButton;
     
     [Header("Canvases")] 
@@ -19,7 +18,7 @@ public class StartMenuManager : MonoBehaviour
     {
         // Continue button is only clickable when there are saves to be loaded
         // If there are no saves, disable the button
-        if (!savesPresent) ContinueButton.SetActive(false);
+        if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
     }
     
