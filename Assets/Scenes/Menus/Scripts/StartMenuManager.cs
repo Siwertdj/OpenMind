@@ -13,6 +13,9 @@ public class StartMenuManager : MonoBehaviour
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
     
+    [Header("Events")]
+    public GameEvent onGameLoaded;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +31,29 @@ public class StartMenuManager : MonoBehaviour
         mainMenuCanvas.SetActive(false);
         skipPrologueCanvas.SetActive(true);
         
+    }
+
+    public void ContinueGame()
+    {
+        SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
+        StartCoroutine(LoadGame(saveData));
+    }
+    
+    IEnumerator LoadGame(SaveData saveData)
+    {
+        // Start the loadscene-operation
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
+        
+        // Within this while-loop, we wait until the scene is done loading. We check this every frame
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+        
+        onGameLoaded.Raise(this, saveData);
+        
+        // Finally, when the data has been sent, we then unload our currentscene
+        SceneManager.UnloadSceneAsync("StartScreenScene");  // unload this scene; no longer necessary
     }
 
     public void StartPrologue()

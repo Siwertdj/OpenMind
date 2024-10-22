@@ -27,6 +27,12 @@ public class NotebookData
         _personalNotes = "Write down your thoughts.";
     }
 
+    public NotebookData(Dictionary<CharacterInstance, NotebookPage> pages, string personalNotes)
+    {
+        _pages = pages;
+        _personalNotes = personalNotes;
+    }
+
     /// <summary>
     /// Get the notes the player has written about a character.
     /// </summary>

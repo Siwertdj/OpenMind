@@ -34,7 +34,7 @@ public class Saving : MonoBehaviour
             return;
         }
 
-        //check if all characters have a unique id
+        //check if all characters have a unique id. note: this check is obsolete at this point
         bool allUniqueID = true;
         for (int i = 0; i < gameManager.currentCharacters.Count; i++)
             for (int j = i+1; j < gameManager.currentCharacters.Count; j++)
@@ -54,10 +54,6 @@ public class Saving : MonoBehaviour
         (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
-        //saves the scene stack, excluding the loading scene
-        string[] sceneStack = new string[SceneManager.sceneCount-1];
-        for (int i = 0; i < sceneStack.Length; i++)
-            sceneStack[i] = SceneManager.GetSceneAt(i+1).name;
 
         SaveData saveData = new SaveData
         {
@@ -66,7 +62,6 @@ public class Saving : MonoBehaviour
             inactiveCharacterIds = inactive.Select(c => c.id).ToArray(),
             culpritId = gameManager.GetCulprit().id,
             remainingQuestions = remainingQuestions,
-            sceneStack = sceneStack,
             personalNotes = gameManager.notebookData.GetPersonalNotes(),
             characterNotes = characterNotes,
             askedQuestionsPerCharacter = askedQuestions,
@@ -74,14 +69,11 @@ public class Saving : MonoBehaviour
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
+        string folderLocation = FilePathConstants.GetSaveFolderLocation();
         string fileLocation = FilePathConstants.GetSaveFileLocation();
         
-        //string fileLocation = Application.persistentDataPath;
-        string directoryLocation = fileLocation.Replace("/saveData.txt", "");
-        if (!System.IO.Directory.Exists(directoryLocation))
-        {
-            System.IO.Directory.CreateDirectory(directoryLocation);
-        }
+        if (!Directory.Exists(folderLocation))
+            Directory.CreateDirectory(folderLocation);
         
         File.WriteAllText(fileLocation,jsonString);
     }

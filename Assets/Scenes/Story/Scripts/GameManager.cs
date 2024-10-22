@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
@@ -95,52 +96,48 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LoadGame(SaveData saveData)
+    public void LoadGame(SaveData saveData)
     {
         // Fetch all storyobjects from the Resources/Stories-folder
-        var stories = Resources.LoadAll<StoryObject>("Stories");
+        StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
         // Set this game's story to the storyobject (which we fetched) which the correct ID (as per the SaveData)
-        story = stories.Where(s =>  s.storyID == saveData.storyId).ToList()[0];
+        story = stories.First(s => s.storyID == saveData.storyId);
 
-        // TODO: Create a method that does this, in parallel to 'PopulateCharacters' (perhaps as an overloaded method?)
-        // For all characters..
-        foreach (var c in characters)
+        //assign numQuestionsAsked
+        numQuestionsAsked = saveData.numQuestionsAsked;
+        
+        //clear all current characters
+        currentCharacters.Clear();
+        
+        //create all current characters
+        currentCharacters.AddRange(characters.FindAll(c => 
+            saveData.activeCharacterIds.Contains(c.id) ||
+            saveData.inactiveCharacterIds.Contains(c.id)).
+                Select(c => new CharacterInstance(c)));
+
+        //assign all data to the current characters
+        currentCharacters = currentCharacters.Select(c =>
         {
-            Debug.Log($"active characters contains {saveData.activeCharacterIds.Length} characters");
-            Debug.Log($"inactive characters contains {saveData.inactiveCharacterIds.Length} characters");
-            // If their character-ID is in savedata's conjunctioned list of inactive and active characters..
-            if (saveData.activeCharacterIds.Contains(c.id) || saveData.inactiveCharacterIds.Contains(c.id))
-            {
-                // Create a new characterinstance
-                CharacterInstance loadedCharacter = new CharacterInstance(c);
-                // set 'isActive' based on presence in either of the two lists
-                loadedCharacter.isActive = saveData.activeCharacterIds.Contains(c.id);  
-                // set this character to be the culprit, if this character's id is the same as the culprit's id
-                loadedCharacter.isCulprit = saveData.culpritId == c.id;
-                // Set all the remaining questions, if the character is still active
-                if (loadedCharacter.isActive)
-                {
-                    loadedCharacter.RemainingQuestions =
-                        saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-                }
-                // set all the asked questions
-                loadedCharacter.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
-                
-                // TODO: character-specific Notebook-data should be loaded as well (currently switched off)
-                // set the notebookdata based on the notes made per character
-                //notebookData.UpdateCharacterNotes(loadedCharacter, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
-
-                // Lastly, add the now completed character to the list of current characters
-                currentCharacters.Add(loadedCharacter);
-            }
-        }
+            c.isActive = saveData.activeCharacterIds.Contains(c.id);
+            c.isCulprit = saveData.culpritId == c.id;
+            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : null;
+            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
+            return c;
+        }).ToList();
         
-        //notebookData = new NotebookData();
+        //assign notebook data
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
+        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        {
+            CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
+            return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
+        }));
+        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
-        // Refill the notebook with old data
-        //notebookData.UpdatePersonalNotes(saveData.personalNotes);
+        //unload all scenes
+        SceneController.sc.UnloadAdditiveScenes();
         
-        // Now, load the game on the correct scene (by default NPCSelectScene)
+        //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
 
