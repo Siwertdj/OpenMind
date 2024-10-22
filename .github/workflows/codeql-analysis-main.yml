@@ -33,5 +33,5 @@ jobs:
         uses: github/codeql-action/analyze@v2
         with:
           queries: |
-            ./codeql/queries-main
-            ./codeql/queries-development
+            ./codeql/QueriesMain
+            ./codeql/QueriesDev
