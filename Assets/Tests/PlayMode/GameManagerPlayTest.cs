@@ -25,7 +25,7 @@ public class GameManagerPlayTest
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
-
+        
         // Set up expected and actual values
         var expected = gm.currentCharacters.Count;
         var actual = gm.numberOfCharacters;
@@ -52,7 +52,7 @@ public class GameManagerPlayTest
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
-
+        
         // Set up expected and actual values
         var expected = gm.currentCharacters.Count(c => c.isActive);
         var actual = gm.numberOfCharacters;
@@ -79,7 +79,7 @@ public class GameManagerPlayTest
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
-
+        
         // Set up expected and actual values
         var expected = gm.currentCharacters.Count(c => c.isCulprit);
         var actual = 1;
@@ -101,11 +101,12 @@ public class GameManagerPlayTest
     {
         // Load scene
         SceneManager.LoadScene("Loading");
-
+        yield return new WaitForSeconds(3); // Wait for scene to load
+        
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
-
+        
         // Set up expected and actual values
         var expected = gm.AmountOfQuestionsRemaining() >= 1;
         var actual = gm.HasQuestionsLeft();
@@ -201,10 +202,10 @@ public class GameManagerPlayTest
         
         // Check if we are in the Loading gameState and if only 2 scenes exist,
         // namely Loading and StartScreenScene
-        Assert.AreEqual(gm.gameState, GameManager.GameState.Loading);
-        Assert.AreEqual(SceneManager.loadedSceneCount, 2);
-        Assert.AreEqual(SceneManager.GetSceneByName("Loading").isLoaded, true);
-        Assert.AreEqual(SceneManager.GetSceneByName("StartScreenScene").isLoaded, true);
+        Assert.AreEqual(GameManager.GameState.Loading, gm.gameState);
+        Assert.AreEqual(2, SceneManager.loadedSceneCount);
+        Assert.IsTrue(SceneManager.GetSceneByName("Loading").isLoaded);
+        Assert.IsTrue(SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
         // End the game
         gm.EndGame();
@@ -233,7 +234,7 @@ public class GameManagerPlayTest
 
         // Check if it holds
         Assert.IsTrue(actual);
-        
+        yield return new WaitForSeconds(3); // Wait for it to load
         // End the game
         gm.EndGame();
         
@@ -285,9 +286,13 @@ public class GameManagerPlayTest
         // If we do not want to have enough characters.
         if (!enoughCharacters)
         {
+            int counter = 0;
             // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
-            while (gm.EnoughCharactersRemaining())
+            while (gm.EnoughCharactersRemaining() && counter < 10)
             {
+                Debug.Log(gm.EnoughCharactersRemaining());
+                Debug.Log("numberofchar = " + gm.numberOfCharacters);
+                Debug.Log("cheese from the bacon");
                 // Set this bool to true once a character has been removed.
                 bool removedCharacter = false;
                 foreach (CharacterInstance c in gm.currentCharacters)
@@ -299,6 +304,7 @@ public class GameManagerPlayTest
                         removedCharacter = true;
                     }
                 }
+                counter++;
             }
         }
         
@@ -337,14 +343,12 @@ public class GameManagerPlayTest
         // We test whether a character disappears when EndCycle is called and there are enough characters.
         // If there are not enough characters, then we test if we transition to the culpritSelect gameState
         // and if a character does not disappear.
-        // TODO: check if we are in the correct scene (NpcSelect).
         if (enoughCharacters)
         {
             // Check if only 1 character has disappeared.
             Assert.AreEqual(nCharactersPrior - 1, nCharactersPosterior);
             // Check if we go to the HintDialogue gameState.
-            Assert.AreEqual(gm.gameState, GameManager.GameState.HintDialogue);
-            
+            Assert.AreEqual(GameManager.GameState.HintDialogue, gm.gameState);
             // TODO: close the scenes after each test (else crash when running all tests :( ).
         }
         else
@@ -353,7 +357,7 @@ public class GameManagerPlayTest
             Assert.AreEqual(nCharactersPrior, nCharactersPosterior);
             // Check if the gameState transitions to culpritSelect.
             // TODO: In the current version, the gameState "culpritSelect" is never used, which should be used.
-            //Assert.AreEqual(gm.gameState, GameManager.GameState.CulpritSelect);
+            //Assert.AreEqual(GameManager.GameState.CulpritSelect, gm.gameState);
         }
         yield return new WaitForSeconds(2); // Wait for it to load
         
@@ -512,9 +516,9 @@ public class GameManagerPlayTest
         yield return new WaitForSeconds(2); // Wait for it to load
         
         // Check if the gameState is switched to epilogue and if the dialogue scene is loaded.
-        Assert.AreEqual(gm.gameState, GameManager.GameState.Epilogue);
-        bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
-        Assert.AreEqual(inDialogue, true);
+        Assert.AreEqual(GameManager.GameState.Epilogue, gm.gameState);
+        bool inDialogueScene = SceneManager.GetSceneByName("DialogueScene").isLoaded;
+        Assert.IsTrue(inDialogueScene);
         
         // End the game
         gm.EndGame();
@@ -535,10 +539,6 @@ public class GameManagerPlayTest
             SceneManager.UnloadScene(loadedScenes[i]);
         }*/
         
-        bool inLoading = SceneManager.GetSceneByName("Loading").isLoaded;
-        Debug.Log("is in loading: = " + inLoading);
-        
-        yield return new WaitForSeconds(2); // Wait for it to load
         yield return null;
     }
 }
