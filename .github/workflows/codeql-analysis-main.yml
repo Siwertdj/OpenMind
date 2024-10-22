@@ -35,3 +35,7 @@ jobs:
           queries: |
             ./codeql/QueriesMain
             ./codeql/QueriesDev
+
+      - name: Fail if warnings found
+        if: failure() || success() && steps.analyze.outputs.alerts && steps.analyze.outputs.alerts > 0
+        run: exit 1
