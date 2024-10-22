@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
@@ -32,6 +33,9 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
+        // End the game
+        gm.EndGame();
+        
         yield return null;
     }
     
@@ -55,6 +59,9 @@ public class GameManagerPlayTest
 
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        // End the game
+        gm.EndGame();
         
         yield return null;
     }
@@ -80,6 +87,9 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
+        // End the game
+        gm.EndGame();
+        
         yield return null;
     }
     
@@ -102,6 +112,9 @@ public class GameManagerPlayTest
 
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        // End the game
+        gm.EndGame();
         
         yield return null;
     }
@@ -127,6 +140,9 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
+        // End the game
+        gm.EndGame();
+        
         yield return null;
     }
 
@@ -150,6 +166,9 @@ public class GameManagerPlayTest
 
         // Check if they are equal
         Assert.AreEqual(expected, actual);
+        
+        // End the game
+        gm.EndGame();
         
         yield return null;
     }
@@ -215,6 +234,9 @@ public class GameManagerPlayTest
         // Check if it holds
         Assert.IsTrue(actual);
         
+        // End the game
+        gm.EndGame();
+        
         yield return null;
     }
 
@@ -237,6 +259,9 @@ public class GameManagerPlayTest
 
         // Check if it actually returned a victim
         Assert.IsTrue(victim != null);
+        
+        // End the game
+        gm.EndGame();
         
         yield return null;
     }
@@ -370,6 +395,9 @@ public class GameManagerPlayTest
         // No scene should be switched, because it's an additive scene
         Assert.AreEqual("Loading", scene);
         
+        // End the game
+        gm.EndGame();
+        
         yield return null;
     }
     
@@ -488,6 +516,29 @@ public class GameManagerPlayTest
         bool inDialogue = SceneManager.GetSceneByName("DialogueScene").isLoaded;
         Assert.AreEqual(inDialogue, true);
         
+        // End the game
+        gm.EndGame();
+        //UnityEditor.EditorApplication.isPlaying = false;
+        yield return new WaitForSeconds(2); // Wait for it to load
+        /*
+        // Get all active scene and unload them.
+        int activeSceneCount = SceneManager.sceneCount;
+        UnityEngine.SceneManagement.Scene[] loadedScenes = new UnityEngine.SceneManagement.Scene[activeSceneCount];
+        for (int i = 0; i < activeSceneCount; i++)
+        {
+            loadedScenes[i] = SceneManager.GetSceneAt(i);
+            Debug.Log(loadedScenes[i].name);
+        }
+
+        for (int i = 0; i < activeSceneCount; i++)
+        {
+            SceneManager.UnloadScene(loadedScenes[i]);
+        }*/
+        
+        bool inLoading = SceneManager.GetSceneByName("Loading").isLoaded;
+        Debug.Log("is in loading: = " + inLoading);
+        
+        yield return new WaitForSeconds(2); // Wait for it to load
         yield return null;
     }
 }
