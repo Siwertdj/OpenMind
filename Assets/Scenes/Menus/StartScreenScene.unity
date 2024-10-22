@@ -816,9 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fa05e9fef2db548bc59c429f7ca5c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savesPresent: 1
   ContinueButton: {fileID: 2019508185}
-  skipPrologue: 1
   mainMenuCanvas: {fileID: 803739610}
   skipPrologueCanvas: {fileID: 152492394}
 --- !u!114 &217989644
@@ -833,6 +831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9267baa22829840abc1c71ef3ea299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
 --- !u!1 &437585440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,8 +1128,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 50864548}
   - {fileID: 2019508186}
+  - {fileID: 50864548}
   m_Father: {fileID: 1657206210}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

@@ -33,10 +33,10 @@ public class TimelineManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    currentTimeline = introStoryB;
+                    currentTimeline = introStoryA;
                     break;
                 case 1:
-                    currentTimeline = introStoryA;
+                    currentTimeline = introStoryB;
                     break;
                 case 2:
                     currentTimeline = introStoryC;
@@ -69,11 +69,12 @@ public class TimelineManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("game is started");
         StartCoroutine(LoadGame());
         
     }
     
+    
+    // TODO: This is duplicate code, also found in Loading.cs. Make this a global thing?
     IEnumerator LoadGame()
     {
         // Start the loadscene-operation

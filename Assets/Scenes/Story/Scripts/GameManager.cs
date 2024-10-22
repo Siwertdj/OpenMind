@@ -78,6 +78,9 @@ public class GameManager : MonoBehaviour
         // Set reference to static SceneController
         sc = SceneController.sc;
 
+        // Empty some variables so they can be initialized later.
+        currentCharacters = new List<CharacterInstance>();
+        
         // Set the gamestory based on the data we passed
         if (data[0] is StoryObject storyObject)
         {
@@ -94,20 +97,51 @@ public class GameManager : MonoBehaviour
 
     private void LoadGame(SaveData saveData)
     {
-        currentCharacters = currentCharacters.Select(c =>
+        // Fetch all storyobjects from the Resources/Stories-folder
+        var stories = Resources.LoadAll<StoryObject>("Stories");
+        // Set this game's story to the storyobject (which we fetched) which the correct ID (as per the SaveData)
+        story = stories.Where(s =>  s.storyID == saveData.storyId).ToList()[0];
+
+        // TODO: Create a method that does this, in parallel to 'PopulateCharacters' (perhaps as an overloaded method?)
+        // For all characters..
+        foreach (var c in characters)
         {
-            c.isActive = saveData.activeCharacters.Contains(c.id);
-            c.isCulprit = saveData.culprit == c.id;
-            if (c.isActive)
+            Debug.Log($"active characters contains {saveData.activeCharacterIds.Length} characters");
+            Debug.Log($"inactive characters contains {saveData.inactiveCharacterIds.Length} characters");
+            // If their character-ID is in savedata's conjunctioned list of inactive and active characters..
+            if (saveData.activeCharacterIds.Contains(c.id) || saveData.inactiveCharacterIds.Contains(c.id))
             {
-                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+                // Create a new characterinstance
+                CharacterInstance loadedCharacter = new CharacterInstance(c);
+                // set 'isActive' based on presence in either of the two lists
+                loadedCharacter.isActive = saveData.activeCharacterIds.Contains(c.id);  
+                // set this character to be the culprit, if this character's id is the same as the culprit's id
+                loadedCharacter.isCulprit = saveData.culpritId == c.id;
+                // Set all the remaining questions, if the character is still active
+                if (loadedCharacter.isActive)
+                {
+                    loadedCharacter.RemainingQuestions =
+                        saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+                }
+                // set all the asked questions
+                loadedCharacter.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
+                
+                // TODO: character-specific Notebook-data should be loaded as well (currently switched off)
+                // set the notebookdata based on the notes made per character
+                //notebookData.UpdateCharacterNotes(loadedCharacter, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
+
+                // Lastly, add the now completed character to the list of current characters
+                currentCharacters.Add(loadedCharacter);
             }
-            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
-            notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
-            return c;
-        }).ToList();
+        }
         
-        notebookData.UpdatePersonalNotes(saveData.personalNotes);
+        //notebookData = new NotebookData();
+        
+        // Refill the notebook with old data
+        //notebookData.UpdatePersonalNotes(saveData.personalNotes);
+        
+        // Now, load the game on the correct scene (by default NPCSelectScene)
+        sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
 
     /// <summary>
@@ -115,17 +149,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void NewGame()
     {
-        // put data from story into variables.
-        /*numberOfCharacters = story.numberOfCharacters;
-        numQuestions = story.numQuestions;
-        minimumRemaining = story.minimumRemaining;
-        immediateVictim = story.immediateVictim;*/
-        
-        // Initialize an empty list of characters
-        currentCharacters = new List<CharacterInstance>();
-        // Now, populate this list.
+        // Populate the list of characters
         PopulateCharacters();
-        // Empty notebook data
+        
+        // Create new notebook
         notebookData = new NotebookData();
 
         FirstCycle();
@@ -208,6 +235,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void PopulateCharacters()
     {
+        // Start by emptying the list
+        currentCharacters = new List<CharacterInstance>();
+        
         // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
 
         // Create array to remember what indices we have already visited, so we don't get doubles.
@@ -326,6 +356,7 @@ public class GameManager : MonoBehaviour
     {
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
         // reset game
         NewGame();     
     }

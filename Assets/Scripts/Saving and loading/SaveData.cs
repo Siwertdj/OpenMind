@@ -7,9 +7,10 @@ using UnityEngine;
 /// </summary>
 public class SaveData
 {
-    public int[]                   activeCharacters;
-    public int[]                   inactiveCharacters;
-    public int                     culprit;
+    public int                     storyId;
+    public int[]                   activeCharacterIds;
+    public int[]                   inactiveCharacterIds;
+    public int                     culpritId;
     public (int, List<Question>)[] remainingQuestions;
     public string[]                sceneStack;
     public string                  personalNotes;

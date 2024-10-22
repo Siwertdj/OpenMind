@@ -13,6 +13,11 @@ public class NotebookData
 
     public NotebookData()
     {
+        // Empty all pages when we create new notebookdata
+        _pages = new Dictionary<CharacterInstance, NotebookPage>();
+        
+        // TODO: create a method that lets us fill it up based on the characters, instead of hiding it in the constructor
+        // TODO: Or create checks for this, in case there are no characters yet
         foreach (CharacterInstance character in GameManager.gm.currentCharacters)
         {
             NotebookPage page = new NotebookPage(character);

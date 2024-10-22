@@ -301,8 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stories:
-  - {fileID: 11400000, guid: ffe1c93089342ec4898ecab9b2a64f7d, type: 2}
   - {fileID: 11400000, guid: 935b7b4f6f655264695941ac0baa8444, type: 2}
+  - {fileID: 11400000, guid: ffe1c93089342ec4898ecab9b2a64f7d, type: 2}
   - {fileID: 11400000, guid: 730e998b0730e884fb9a53057bfbd35f, type: 2}
   onIntroLoaded: {fileID: 11400000, guid: c4e8baea898550048b5dc023820bc26d, type: 2}
 --- !u!1 &222882684

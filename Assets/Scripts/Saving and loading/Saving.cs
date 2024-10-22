@@ -61,9 +61,10 @@ public class Saving : MonoBehaviour
 
         SaveData saveData = new SaveData
         {
-            activeCharacters = active.Select(c => c.id).ToArray(),
-            inactiveCharacters = inactive.Select(c => c.id).ToArray(),
-            culprit = gameManager.GetCulprit().id,
+            storyId = gameManager.story.storyID,
+            activeCharacterIds = active.Select(c => c.id).ToArray(),
+            inactiveCharacterIds = inactive.Select(c => c.id).ToArray(),
+            culpritId = gameManager.GetCulprit().id,
             remainingQuestions = remainingQuestions,
             sceneStack = sceneStack,
             personalNotes = gameManager.notebookData.GetPersonalNotes(),
@@ -74,6 +75,13 @@ public class Saving : MonoBehaviour
 
         string jsonString = JsonConvert.SerializeObject(saveData);
         string fileLocation = FilePathConstants.GetSaveFileLocation();
+        
+        //string fileLocation = Application.persistentDataPath;
+        string directoryLocation = fileLocation.Replace("/saveData.txt", "");
+        if (!System.IO.Directory.Exists(directoryLocation))
+        {
+            System.IO.Directory.CreateDirectory(directoryLocation);
+        }
         
         File.WriteAllText(fileLocation,jsonString);
     }
