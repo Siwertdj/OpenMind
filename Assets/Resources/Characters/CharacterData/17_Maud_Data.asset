@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Maud
   id: 17
-  avatar: {fileID: 21300000, guid: 44c45de16ee02e6418d2df439c7dc262, type: 3}
+  avatar: {fileID: 21300000, guid: 3b74707e22c91414cb65ffc4b6911812, type: 3}
   voicePitch: 1.4
   answers:
   - question: 3

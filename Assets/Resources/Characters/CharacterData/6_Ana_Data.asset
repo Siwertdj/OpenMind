@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Ana
   id: 6
-  avatar: {fileID: 21300000, guid: dd6454f8e1387164e94b5b70b695e549, type: 3}
+  avatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
   voicePitch: 1
   answers:
   - question: 0
