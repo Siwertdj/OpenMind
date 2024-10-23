@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -170,7 +169,7 @@ public class GameManager : MonoBehaviour
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
             // Transition-effect
-            CycleTransition(victimName);
+            //CycleTransition(victimName);
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
@@ -189,7 +188,7 @@ public class GameManager : MonoBehaviour
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
         // Transition
-        CycleTransition(victimName);
+        //CycleTransition(victimName);
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
