@@ -62,4 +62,28 @@ MonoBehaviour:
     - but I don't really like to talk about that.
     trait:
     - I enjoy activities with my friends, and I used to enjoy social media.
+  - question: 6
+    answer:
+    - No, I'm not religious.
+    - 'Genereally I have no problem with '
+    - religions and their ideas
+    - but I think the execution is problematic in may cases.
+    trait:
+    - I am not religioues
+  - question: 6
+    answer:
+    - No, I'm not religious.
+    - 'Genereally I have no problem with '
+    - religions and their ideas
+    - but I think the execution is problematic in may cases.
+    trait:
+    - I am not religious.
+  - question: 11
+    answer:
+    - I think my best trait is that I'm a very chill
+    - go-with-the-flow kind of person.
+    - Though sometimes I can be a little too chill
+    - to the point I just don't do things I don't feel like doing
+    trait:
+    - I am very chill person, but sometimes too chill.
   greetings: []
