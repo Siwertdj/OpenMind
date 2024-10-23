@@ -33,6 +33,7 @@ jobs:
         uses: github/codeql-action/analyze@v2
         with:
           queries: ./codeql/QueriesDev
+          additional-inputs: --strict
 
       - name: Fail if warnings found
         if: failure() || success() && steps.analyze.outputs.alerts && steps.analyze.outputs.alerts > 0
