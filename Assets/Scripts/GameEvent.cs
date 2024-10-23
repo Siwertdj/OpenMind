@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [CreateAssetMenu(menuName = "GameEvent")]
 public class GameEvent : ScriptableObject
@@ -8,10 +9,8 @@ public class GameEvent : ScriptableObject
    public List<GameEventListener> listeners = new List<GameEventListener>();
    
    //Raise event through different methods signatures
-
    public void Raise(Component sender, params object[] data)
    {
-      Debug.Log("GameEvent raised");
       for (int i = 0; i < listeners.Count; i++)
       {
          listeners[i].OnEventRaised(sender, data);
@@ -19,7 +18,6 @@ public class GameEvent : ScriptableObject
    }
    
    // Manage Listeners
-
    public void RegisterListener(GameEventListener listener)
    {
       if (!listeners.Contains(listener))

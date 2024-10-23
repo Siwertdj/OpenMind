@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -36,7 +35,9 @@ public class SceneController : MonoBehaviour
     }
     
     public static SceneController sc;
-    
+
+    public Animator transitionAnimator;
+
     //read from a file
     private List<List<(int, TransitionType)>> sceneGraph;
 
@@ -168,8 +169,6 @@ public class SceneController : MonoBehaviour
     //post conditions: current = !target_pre && target_post
     private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
     {
-        Debug.Log($"Transitioning from {currentScene} to {targetScene}");
-
         switch (transitionType)
         {
             case TransitionType.Additive:
@@ -181,11 +180,42 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                SceneManager.UnloadSceneAsync(currentScene);
-                await LoadScene(targetScene);
+                await FadeAnimation(); // Fade out and wait for animation to complete
+                SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
+                await LoadScene(targetScene); // Load new scene
+                transitionAnimator.SetTrigger("SceneLoaded"); // Fade back into game
                 break;
         }
     }
+
+    #region Transition Animation Functions
+    /// <summary>
+    /// The function that should be called to start the fade animation.
+    /// Only fades to black.
+    /// Can be awaited.
+    /// </summary>
+    private Task FadeAnimation()
+    {
+        var tcs = new TaskCompletionSource<bool>();
+        StartCoroutine(AnimationCoroutine(tcs));
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// Helper coroutine for the fade animation.
+    /// </summary>
+    /// <param name="tcs"></param>
+    private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
+    {
+        transitionAnimator.SetTrigger("SceneLoading");
+        yield return null; // Wait for the animator to update clip
+
+        // Await the length of the animation
+        yield return new WaitForSeconds(transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+
+        tcs.SetResult(true);
+    }
+    #endregion
 
     #region Async Scene Loading Helper Functions
     /// <summary>
