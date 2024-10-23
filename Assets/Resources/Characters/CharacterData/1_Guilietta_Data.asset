@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 1_Guilietta_Data
+  m_EditorClassIdentifier: 
+  characterName: GiulIetta
+  id: 1
+  avatar: {fileID: 0}
+  voicePitch: 1.3
+  answers:
+  - question: 10
+    answer:
+    - I would say my biggest negative trait...
+    - ... is that I'm very chaotic.
+    - But I think it's also kind of a positive trait...
+    - ... my friends say it makes me really refreshing.
+    - And I think it make me more spontaneous and playful!
+    trait:
+    - My biggest negative trait is that I'm very chaotic, but it also has its positive
+      side.
+  - question: 4
+    answer:
+    - I really like music.
+    - I like listening but I love to sing!
+    - When I have time I also like to...
+    - ...write my own music.
+    trait:
+    - I love to listen to and write music.
+  - question: 7
+    answer:
+    - I think the most important thing right now is equality.
+    - There's so much hate towards women...
+    - ...and minorities like people of color and trans people.
+    trait:
+    - Equality is very important to me.
+  - question: 3
+    answer:
+    - I think the growth of right-wing parties...
+    - in so many countries right now is very scary.
+    - That's one of the reasons why I have...
+    - ... a lot of respect for AOC in the US.
+    trait:
+    - I think the growth of right-wing parties is very scary.
+  greetings:
+  - lines:
+    - Oh, hi!
