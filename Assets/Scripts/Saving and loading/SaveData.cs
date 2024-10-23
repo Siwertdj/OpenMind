@@ -7,15 +7,15 @@ using UnityEngine;
 /// </summary>
 public class SaveData
 {
-    public int[] activeCharacters;                      // A list of the active characters.
-    public int[] inactiveCharacters;                    // A list of the inactive characters.
-    public int culprit;                                 // The culprit.
-    public int questionsRemaining;                      // The amount of questions remaining for this cycle.
-    public (int, List<Question>)[] remainingQuestions;  // The questions that are still available.
-    public string[] sceneStack;                         // All scenes that are loaded.
-    public string personalNotes;                        // The notes the player has made.
-    public (int, string)[] characterNotes;              // The notes the player has made of the .
-    public (int, List<Question>)[] askedQuestions;      // The questions that have already been asked by the player.
+    public int                     storyId;
+    public int[]                   activeCharacterIds;
+    public int[]                   inactiveCharacterIds;
+    public int                     culpritId;
+    public (int, List<Question>)[] remainingQuestions;
+    public string                  personalNotes;
+    public (int, string)[]         characterNotes;
+    public (int, List<Question>)[] askedQuestionsPerCharacter;
+    public int                     numQuestionsAsked;
 }
 
 /// <summary>
@@ -30,10 +30,20 @@ public static class FilePathConstants
     private const string playerSaveDataFileName = "saveData.txt";
 
     /// <summary>
+    /// Gets the location of the folder where the save file should be stored. This is used for checking if this folder exists
+    /// </summary>
+    public static string GetSaveFolderLocation() => Path.Combine(Application.persistentDataPath, "SaveData");
+    
+    /// <summary>
     /// Gets the location to the save file.
     /// Uses "Application.persistentDataPath", which is the standard directory for save data.
     /// </summary>
-    public static string GetSaveFileLocation() => Path.Combine(Application.persistentDataPath, playerSaveDataFileName);
+    public static string GetSaveFileLocation() => Path.Combine(GetSaveFolderLocation(), playerSaveDataFileName);
+
+    /// <summary>
+    /// Checks if the save file exists.
+    /// </summary>
+    public static bool DoesSaveFileLocationExist() => File.Exists(GetSaveFileLocation());
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.

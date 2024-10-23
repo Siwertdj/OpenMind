@@ -605,6 +605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c9267baa22829840abc1c71ef3ea299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
 --- !u!114 &344524767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2359,6 +2360,7 @@ GameObject:
   - component: {fileID: 1546507296}
   - component: {fileID: 1546507295}
   - component: {fileID: 1546507297}
+  - component: {fileID: 1546507298}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2398,16 +2400,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
   - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
-  numberOfCharacters: 4
-  numQuestions: 2
-  minimumRemaining: 2
-  immediateVictim: 0
   avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
   backgroundPrefabs:
   - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
   - {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
+  story: {fileID: 0}
+  hasWon: 0
 --- !u!114 &1546507295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2457,6 +2457,34 @@ MonoBehaviour:
       - m_Target: {fileID: 1546507294}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: EndDialogue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1546507298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1546507292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695fe1054f3d05b48a694753bc4b62e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1546507294}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2743,7 +2771,7 @@ GameObject:
   - component: {fileID: 1877919526}
   m_Layer: 0
   m_Name: Toolbox
-  m_TagString: Untagged
+  m_TagString: Toolbox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

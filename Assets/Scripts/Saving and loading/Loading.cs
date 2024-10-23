@@ -15,104 +15,34 @@ using UnityEngine.SceneManagement;
 public class Loading : MonoBehaviour
 {
     /// <summary>
-    /// Loads savedata from the save file.
+    /// Loads the game by retrieving savedata, by reloading the game in Gamemanager and passing the savedata.
     /// </summary>
     public void Load()
     {
-        // An instance of the SaveData class
-        SaveData saveData;
-        
-        // The filepath of the save file
-        string saveFileLocation = FilePathConstants.GetSaveFileLocation();
-        
-        // The contents of the save file in Json format
-        string saveFileJsonContents = FilePathConstants.GetSafeFileContents(saveFileLocation, "Save Data", "Loading");
-        
-        // and instance of the GameManager class
-        GameManager gameManager = FindObjectOfType<GameManager>();
-        
-        // Start loading the game
-        // Convert the contents of the save file to SaveData
-        saveData = JsonConvert.DeserializeObject<SaveData>(saveFileJsonContents);
-
-        // Do checks to make sure loading is possible
-        if (!DoChecks(saveFileJsonContents, gameManager, saveData))
+        // retrieve savedata, if there is any.
+        SaveData saveData = GetSaveData();
+        if (saveData is null)
             return;
         
-        // Actual loading happens here, this is where the game data is modified and all checks should've been done before this point.
-        // First unload all scenes
-        SceneController.sc.UnloadAdditiveScenes();
-        
-        // Then load the correct scene according to the scenestack
-        // TODO: fix it so loading the dialoguescene works
-        SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
-        if (saveData.sceneStack.Length == 2)
-            SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
-
-        // Then load all the data and save it in saveData and gameManager
-        gameManager.currentCharacters = gameManager.currentCharacters.Select(c =>
+        if (GameManager.gm is null)
         {
-            c.isActive = saveData.activeCharacters.Contains(c.id);
-            c.isCulprit = saveData.culprit == c.id;
-            if (c.isActive)
-            {
-                c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            }
-            c.AskedQuestions = saveData.askedQuestions.First(qs => qs.Item1 == c.id).Item2;
-            gameManager.notebookData.UpdateCharacterNotes(c, saveData.characterNotes.First(note => note.Item1 == c.id).Item2);
-            return c;
-        }).ToList();
-        gameManager.AssignAmountOfQuestionsRemaining(saveData.questionsRemaining);
-        gameManager.notebookData.UpdatePersonalNotes(saveData.personalNotes);
+            Debug.LogError("Please activate the gamemanager before loading a game");
+            return;
+        }
+        
+        GameManager.gm.LoadGame(saveData);
     }
-    
+
     /// <summary>
-    /// Performs 5 checks to see if loading savedata is possible. If any of the checks fails loading is not posible and an exception will occur.
+    /// Gets a <see cref="SaveData"/> object from the save file contents
     /// </summary>
-    /// <param name="saveFileJsonContents">The savedata in Json format. </param>
-    /// <param name="gameManager">The gameManager.</param>
-    /// <param name="saveData">A class that contains savedata in variables.
-    /// The information from <see cref="saveFileJsonContents"/> is saved in this class.</param>
-    /// <returns>true if none of the checks fail otherwise returns false.</returns>
-    private bool DoChecks(string saveFileJsonContents, GameManager gameManager, SaveData saveData)
+    public SaveData GetSaveData()
     {
+        string saveFileLocation = FilePathConstants.GetSaveFileLocation();
+        string saveFileJsonContents = FilePathConstants.GetSafeFileContents(saveFileLocation, "Save Data", "Loading");
         if (saveFileJsonContents is null)
-            return false;
+            return null;    
         
-        // Check if the gamemanger is loaded
-        // Otherwise no character data can be assigned
-        if (gameManager is null)
-        {
-            Debug.LogError("Cannot load data when the gamemanger is not loaded.\nLoading failed");
-            return false;
-        }
-        
-        // Check if all ids in the gamemanager.currentCharacters list are found in the saveData
-        // Otherwise some characters cannot have a valid isActive value, since they don't belong to the active characters group in the saveData, nor in the inactive characters group
-        if (!gameManager.currentCharacters.All(c =>
-                saveData.activeCharacters.Contains(c.id) || saveData.inactiveCharacters.Contains(c.id)))
-        {
-            Debug.LogError($"Not all ids in the gamemanger.currentCharacters appear in the saveData. There are more characters now in the gamemanger than were in the gamemanager when the game was saved, thus making this save file invalid.\nLoading failed.");
-            return false;
-        }
-        
-        // Check if all ids in the saveData of active characters are found in gamemanager.currentCharacters
-        // Otherwise some remaining questions stored in the saveData cannot be assigned to a character
-        if (!saveData.activeCharacters.All(ac => gameManager.currentCharacters.Any(c => c.id == ac)))
-        {
-            Debug.LogError($"Some saved active character to not appear in gamemanager.currentCharacters. There are less characters now than were when this file was saved.\nLoading failed.");
-            return false;
-        }
-        
-        // Check if the id of the culprit exists in gamemanager.currentCharacters
-        // Otherwise no culprit can be assigned
-        if (gameManager.currentCharacters.All(c => saveData.culprit != c.id))
-        {
-            Debug.LogError($"The culprit that was saved into the save file does not appear in gamemanager.currentCharacters.\nLoading failed.");
-            return false;
-        }
-        
-        // Return true if none of the checks failed
-        return true;
+        return JsonConvert.DeserializeObject<SaveData>(saveFileJsonContents);
     }
 }
