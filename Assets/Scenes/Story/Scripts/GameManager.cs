@@ -250,7 +250,7 @@ public class GameManager : MonoBehaviour
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = random.Next(0, story.numberOfCharacters) + 1; // offset by 1 to check existence
+                int index = random.Next(0, characters.Count) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
                 for (int j = 0; j < visitedIndices.Length; j++)
