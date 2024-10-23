@@ -99,6 +99,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("New Game!");
         // On load start cycle, depending on whether we want an immediate victim or not.
         FirstCycle();
+        throw new Exception();
     }
 
     /// <summary>

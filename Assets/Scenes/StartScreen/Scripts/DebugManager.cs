@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using static UnityEditor.EditorUtility;
 
 /// <summary>
 /// Manages all debug options. Every debug message and error handling should go through this class
@@ -19,36 +20,10 @@ public class DebugManager : MonoBehaviour
     
     private void Awake()
     {
+        #if DEBUG
         DontDestroyOnLoad(gameObject);
-        string root = @"cd\";
-        string cdCommand = $@"cd C:\Users\sande\RiderProjects\OpenMind";
-        string gitCommand = "git rev-parse --abbrev-ref HEAD";
-        
-        Process process = new Process();
-        ProcessStartInfo info = new ProcessStartInfo();
-        
-        info.FileName = "cmd.exe";
-        info.RedirectStandardInput = true;
-        info.RedirectStandardOutput = true;
-        info.UseShellExecute = false;
-        
-        process.StartInfo = info;
-        process.Start();
-        
-        using (StreamWriter sw = process.StandardInput)
-        {
-            if (sw.BaseStream.CanWrite)
-            {
-                sw.WriteLine(root);
-                sw.WriteLine(cdCommand);
-                sw.WriteLine(gitCommand);
-            }
-        }
-        
-        string output = process.StandardOutput.ReadToEnd();
-        string branchName = output.Split("\n")[^3];
-        IsDebug = branchName != "main";
         Debug.unityLogger.logEnabled = IsDebug;
+        #endif
     }
     
     void OnEnable()
@@ -59,7 +34,9 @@ public class DebugManager : MonoBehaviour
     //Called when there is an exception
     void LogCallback(string condition, string stackTrace, LogType type)
     {
-        //TODO: add handling of messages
+        if (type == LogType.Error || type == LogType.Exception)
+            DisplayDialog(type.ToString(), $"Condition: {condition}\nStacktrace:\n{stackTrace}",
+                "OK");
     }
     
     void OnDisable()
