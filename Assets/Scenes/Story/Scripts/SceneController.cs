@@ -36,8 +36,6 @@ public class SceneController : MonoBehaviour
     
     public static SceneController sc;
 
-    public Animator transitionAnimator;
-
     //read from a file
     private List<List<(int, TransitionType)>> sceneGraph;
 
@@ -180,42 +178,13 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                await FadeAnimation(); // Fade out and wait for animation to complete
+                await TransitionAnimator.i.PlayStartAnimation(); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
                 await LoadScene(targetScene); // Load new scene
-                transitionAnimator.SetTrigger("SceneLoaded"); // Fade back into game
+                _ = TransitionAnimator.i.PlayEndAnimation(); // Fade back into game
                 break;
         }
     }
-
-    #region Transition Animation Functions
-    /// <summary>
-    /// The function that should be called to start the fade animation.
-    /// Only fades to black.
-    /// Can be awaited.
-    /// </summary>
-    private Task FadeAnimation()
-    {
-        var tcs = new TaskCompletionSource<bool>();
-        StartCoroutine(AnimationCoroutine(tcs));
-        return tcs.Task;
-    }
-
-    /// <summary>
-    /// Helper coroutine for the fade animation.
-    /// </summary>
-    /// <param name="tcs"></param>
-    private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
-    {
-        transitionAnimator.SetTrigger("SceneLoading");
-        yield return null; // Wait for the animator to update clip
-
-        // Await the length of the animation
-        yield return new WaitForSeconds(transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-
-        tcs.SetResult(true);
-    }
-    #endregion
 
     #region Async Scene Loading Helper Functions
     /// <summary>
@@ -294,15 +263,14 @@ public class SceneController : MonoBehaviour
 
         await loadCode(currentScene, targetScene, transitionType);
     }
-
     
     //args is the data to transfer
     public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
-
-    
+        
     //the function to be called when loading the first cycle
     public void StartScene(SceneName start)
     {
+        TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.5f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
@@ -313,12 +281,12 @@ public class SceneController : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
-            TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
             //SceneManager.UnloadSceneAsync("NotebookScene");
         }
         else
         {
-            TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
             //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         }
     }
