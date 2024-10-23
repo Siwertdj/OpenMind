@@ -17,31 +17,31 @@ MonoBehaviour:
   avatar: {fileID: 0}
   voicePitch: 1
   answers:
-  - question: 11
+  - question: 13
     answer:
     - 'I am Christian, so the most important person to me '
     - is Jesus Christ.
     - It's my goal to be as much like him as possible.
     trait:
     - Jesus Christ is the most important person in my life.
-  - question: 1
+  - question: 3
     answer:
     - Sifan Hassan is very inspiring to me.
     - "I think it's great that we\u2019re giving women a chance"
     - "and that she\u2019s really going for it."
     trait:
     - My parents say I am enthusiastic fot the future and I think I am great at listening.
-  - question: 7
+  - question: 9
     answer:
     - Yes, I am Christian.
-    - Religion to me is who I think God is, and who God wants to be to me.
+    - Religion to me is who I think God is, and who God wants to be, to me.
     - I think God created a beautiful world but things happened
-    - ' that made it not beautiful anymore but that I am loved and that my purpose
-      is'
+    - that made it not beautiful anymore but that I am loved and that my purpose
+      is
     - 'to contribute to make it beautiful again. '
     trait:
     - I am a Christian and I believe I am loved by God.
-  - question: 0
+  - question: 2
     answer:
     - Life is and has been great.
     - I have a ton of friends, old and new and I love my family and my girlfriend.
@@ -60,7 +60,7 @@ MonoBehaviour:
     - 'which actually makes me a worse listener.  '
     trait:
     - My parents say I am enthusiastic fot the future and I think I am great at listening.
-  - question: 4
+  - question: 6
     answer:
     - "I think we\u2019re going in the wrong direction."
     - "We\u2019re listening to each other less and less and that means it is becoming
@@ -71,4 +71,6 @@ MonoBehaviour:
     trait:
     - I am worried about the political climate because we're listening to each other
       less and less.
-  greetings: []
+  greetings:
+  - lines:
+    - Hello there!

@@ -17,56 +17,56 @@ MonoBehaviour:
   avatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
   voicePitch: 1
   answers:
-  - question: 0
+  - question: 2
     answer:
     - I am doing really well!
-    - ' I am currently living in a rented studio apartment,'
+    - I am currently living in a rented studio apartment,
     - 'I love my job and colleagues and I have a great work/life balance.  '
     trait:
     - My life is going great, I have a great job with great colleagues.
-  - question: 1
+  - question: 3
     answer:
     - I have a lot of respect for Cristiano Ronaldo.
     - He worked so hard so that he can be where is today.
     - I also look up to Angelina Jolie for all that
-    - ' she does for Unicef and other humanitarian rights associations.'
+    - she does for Unicef and other humanitarian rights associations.
     trait:
     - I have a lot of respect for Cristiano Ronaldo and Angelina Jolie.
-  - question: 4
+  - question: 6
     answer:
     - I think it is concerning that so many countries are
-    - ' trying to get rid of immigrants and expats,'
-    - ' that they are viewing these people as a threat when they are not.'
-    - ' I feel like history is repeating itself.  '
+    - trying to get rid of immigrants and expats,
+    - that they are viewing these people as a threat when they are not.
+    - 'I feel like history is repeating itself.  '
     trait:
-    - It is concerning that couries viewing immigrants and expats as a threat.
-  - question: 5
+    - It is concerning that countries are viewing immigrants and expats as a threat.
+  - question: 7
     answer:
     - 'I really enjoy going to the gym, hanging out with friends '
-    - ' and I love to travel.'
+    - and I love to travel.
     - 'Mexico is my favorite country that I have visited. '
     - "It was super sunny, there\u2019s a lot of nature,"
     - 'the people are great and the food is amazing. '
     trait:
     - I love travelling, hanging out with friends and going to the gym.
-  - question: 6
+  - question: 8
     answer:
     - I am from Portugal. My parents taught me that it's important to
     - keep a tidy home and to be close and love your family.
     - 'They pushed how important family is and I totally agree with them. '
     trait:
     - My parents taught me love my family and to keep my home tidy.
-  - question: 9
+  - question: 11
     answer:
     - I think social equality is super, super important.
-    - keep I find it important that in countries that are not so well developeda
-      tidy home and to be close and love your family.
-    - ' that women should have the same rights as men and '
+    - I find it important that in countries that are not so well developed
+    - 'that women should have the same rights as men and '
     - that they can be who they want to be.
-    - "I think it\u2019s also important that they have access to health care like
-      abortion"
+    - "I think it\u2019s also important that they have abortion rights"
     - 'and that they can get a divorce if they want to. '
     trait:
     - Social equality is very important to me, I think a lot of developing countries
       are lacking that.
-  greetings: []
+  greetings:
+  - lines:
+    - Hi!
