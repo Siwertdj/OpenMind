@@ -120,7 +120,8 @@ public class GameManager : MonoBehaviour
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : null;
+            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
+            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();

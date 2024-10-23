@@ -25,8 +25,6 @@ public class CharacterInstance
     
     public CharacterInstance(CharacterData data)
     {
-        Debug.Log($"Creating character {data.characterName}");
-
         this.data = data;
 
         characterName = data.characterName;
@@ -179,10 +177,15 @@ public class CharacterInstance
             // Find a random question
             int randomInt = GameManager.gm.random.Next(RemainingQuestions.Count);
             Question question = RemainingQuestions[randomInt];
-
-            // Remove question from all characters so that it can not be asked to anyone
+            
+            // Remove question from all characters so that it can not be asked to anyone, if RemainingQuestions contains it.
             foreach (CharacterInstance character in GameManager.gm.currentCharacters)
-                character.RemainingQuestions.Remove(question);
+            {
+                if (character.RemainingQuestions.Contains(question))
+                {
+                    character.RemainingQuestions.Remove(question);
+                }
+            }
 
             // Return the answer to the question in trait form
             return Traits[question];

@@ -46,8 +46,6 @@ public class DialogueManager : MonoBehaviour
         // Set static DialogueManager instance
         dm = this;
 
-        Debug.Log("StartDialogue called.");
-
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
         {

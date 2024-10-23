@@ -15,20 +15,23 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class Loading : MonoBehaviour
 {
+    /// <summary>
+    /// Loads the game by retrieving savedata, by reloading the game in Gamemanager and passing the savedata.
+    /// </summary>
     public void Load()
     {
+        // retrieve savedata, if there is any.
         SaveData saveData = GetSaveData();
         if (saveData is null)
             return;
         
-        GameManager gameManager = GameManager.gm;
-        if (gameManager is null)
+        if (GameManager.gm is null)
         {
             Debug.LogError("Please activate the gamemanager before loading a game");
             return;
         }
         
-        gameManager.LoadGame(saveData);
+        GameManager.gm.LoadGame(saveData);
     }
 
     /// <summary>
