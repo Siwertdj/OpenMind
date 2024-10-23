@@ -282,17 +282,13 @@ public class GameManagerPlayTest
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
-
+        
         // If we do not want to have enough characters.
         if (!enoughCharacters)
         {
-            int counter = 0;
             // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
-            while (gm.EnoughCharactersRemaining() && counter < 10)
+            while (gm.EnoughCharactersRemaining())
             {
-                Debug.Log(gm.EnoughCharactersRemaining());
-                Debug.Log("numberofchar = " + gm.numberOfCharacters);
-                Debug.Log("cheese from the bacon");
                 // Set this bool to true once a character has been removed.
                 bool removedCharacter = false;
                 foreach (CharacterInstance c in gm.currentCharacters)
@@ -304,7 +300,6 @@ public class GameManagerPlayTest
                         removedCharacter = true;
                     }
                 }
-                counter++;
             }
         }
         
@@ -370,7 +365,7 @@ public class GameManagerPlayTest
         
         // End the game.
         gm.EndGame();
-       
+        
         yield return null;
     }
 
