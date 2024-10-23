@@ -14,38 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Fatima
   id: 0
-  avatar: {fileID: 21300000, guid: bcda24061dd8336488702411d21f66b9, type: 3}
+  avatar: {fileID: 21300000, guid: 05e5217918ea6fa43afa962761914251, type: 3}
   voicePitch: 1.5
   answers:
-  - question: 5
+  - question: 8
     answer:
     - I was born in Morocco, but we moved to the Netherlands when I was still quite
-      young
+      young.
     - I am muslim, but I only recently started wearing a hijab
     trait:
     - I was born in Morocco and I'm muslim.
-  - question: 4
+  - question: 7
     answer:
-    - I really, really love reading and listening to books
-    - It is so easy to lose mysel in them...
-    - ...and it just is so relaxing.
+    - I really, really love reading books and listening to audiobooks.
+    - It is so easy to lose myself in them
+    - and it is just is so relaxing.
     trait:
     - My biggest hobby is reading books and listening to audiobooks.
-  - question: 6
-    answer:
-    - I have a master's degree in applied geophyics.
-    - And now I actually teach at the university I studied at.
-    trait:
-    - I got a master's degree in applied geophysics at the university I teach at.
   - question: 10
     answer:
-    - 'My friends and my family would '
-    - describe me as funny and kind.
-    - I agree with them...
+    - I have a master's degree
+    - and now I actually teach at the university I studied at.
+    trait:
+    - I got a master's degree at the university I now teach at.
+  - question: 12
+    answer:
+    - My friends and my family would describe me as funny and kind.
+    - I agree with them,
     - I think I'm pretty funny aswell.
     trait:
     - I am kind and funny.
-  - question: 9
+  - question: 13
     answer:
     - To me, the most important people
     - are my husband and my daughter

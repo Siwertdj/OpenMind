@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Aiden
   id: 4
-  avatar: {fileID: 0}
+  avatar: {fileID: 21300000, guid: e291aeb01b382904bb035048eafebf06, type: 3}
   voicePitch: 1
   answers:
-  - question: 0
+  - question: 2
     answer:
     - Yes, I am living the dream!
     - I have a lot of ambitious friends and nice colleagues.
     - I own a gym, I like training there so I can eat whatever I want.
-    - I do stay away from ultra processed foods.
+    - Oh, but I do stay away from ultra processed foods.
     - 'I do still live with my parents though, I wish I could get a place of my own. '
     trait:
     - I love my life! I love my friend and going to the gym.
-  - question: 5
+  - question: 7
     answer:
     - I really enjoy exercising, like cardio and strength training.
     - In my gym of course.
-    - 'I also enjoy reading, cooking and especially eating Italian food.  '
+    - 'I also enjoy reading, cooking and, especially, eating Italian food.  '
     trait:
     - I love my life! I love my friend and going to the gym.
-  - question: 4
+  - question: 6
     answer:
     - "I think what we\u2019re doing for the climate is almost pointless,"
     - I get that we serve as an example for the rest of the world

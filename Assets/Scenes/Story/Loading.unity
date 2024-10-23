@@ -2595,17 +2595,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 11400000, guid: 21b31019478993442b0348c346e6e886, type: 2}
-  - {fileID: 11400000, guid: 3a422e54de2bf9244aca8d20d6a070b3, type: 2}
-  - {fileID: 11400000, guid: cc829470b4227c8448b9543e30bb6334, type: 2}
-  - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
+  - {fileID: 11400000, guid: a089875b5c4e45544868c9f340aa4a65, type: 2}
+  - {fileID: 11400000, guid: aab7d5f5a9eb39c43bc785d6168c9b47, type: 2}
+  - {fileID: 11400000, guid: 77f7ee3ee38f32d4180ca1e60b838469, type: 2}
+  - {fileID: 11400000, guid: 0b57ec22b508c4648adbabf604078cea, type: 2}
+  - {fileID: 11400000, guid: 3b8f65c29c7c3f64386fe4d98471b496, type: 2}
+  - {fileID: 11400000, guid: 9b81968a8db27604986baa3c479c2745, type: 2}
+  - {fileID: 11400000, guid: fcc91b6ad4ec1a84785909eac06bab23, type: 2}
   avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
   backgroundPrefabs:
   - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
   - {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
-  time: 0
   story: {fileID: 0}
   hasWon: 0
 --- !u!114 &1546507295

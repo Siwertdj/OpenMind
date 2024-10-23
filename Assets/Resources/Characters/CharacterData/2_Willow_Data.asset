@@ -17,7 +17,7 @@ MonoBehaviour:
   avatar: {fileID: 0}
   voicePitch: 1
   answers:
-  - question: 1
+  - question: 4
     answer:
     - I am pansexual.
     - Recently, I have also been thinking about maybe experimenting with polyamory.
@@ -42,43 +42,33 @@ MonoBehaviour:
     - and just issues I can't control in general.
     trait:
     - My life is going great but I am worried about racism and inequality.
-  - question: 4
+  - question: 7
     answer:
-    - I really doing things with friends, could be anything
-    - Partying, going out to eat, going on a vacation or doing some arts and crafts.
+    - I really like doing things with friends, could be anything
+    - partying, going out to eat, going on a vacation or doing some arts and crafts.
     - If it's with my friends, it's a good time.
     - I also used to be on social media a lot but recently it has lessened
     - because of some heavy things that have been happening lately,
     - but I don't really like to talk about that.
     trait:
     - I enjoy activities with my friends, and I used to enjoy social media.
-  - question: 0
+  - question: 2
     answer:
     - It's good. I just got my bachelor's degree a couple weeks ago
-    - and right now I'm working as a freelancer
-    - If it's with my friends, it's a good time.
-    - I also used to be on social media a lot but recently it has lessened
-    - because of some heavy things that have been happening lately,
-    - but I don't really like to talk about that.
+    - and right now I'm working as a freelancer.
+    - I still live at home with my dad and my dog.
+    - I have a lot of friends but not like a group of friends.
+    - "I\u2019m also very close with my family."
     trait:
     - I enjoy activities with my friends, and I used to enjoy social media.
-  - question: 6
+  - question: 9
     answer:
     - No, I'm not religious.
-    - 'Genereally I have no problem with '
-    - religions and their ideas
+    - Generally I have no problem with religions and their ideas
     - but I think the execution is problematic in may cases.
     trait:
     - I am not religioues
-  - question: 6
-    answer:
-    - No, I'm not religious.
-    - 'Genereally I have no problem with '
-    - religions and their ideas
-    - but I think the execution is problematic in may cases.
-    trait:
-    - I am not religious.
-  - question: 11
+  - question: 14
     answer:
     - I think my best trait is that I'm a very chill
     - go-with-the-flow kind of person.
@@ -86,4 +76,6 @@ MonoBehaviour:
     - to the point I just don't do things I don't feel like doing
     trait:
     - I am very chill person, but sometimes too chill.
-  greetings: []
+  greetings:
+  - lines:
+    - Hi
