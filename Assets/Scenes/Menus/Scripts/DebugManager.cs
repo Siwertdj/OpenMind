@@ -21,7 +21,12 @@ public class DebugManager : MonoBehaviour
     /// <summary>
     /// A list of all conditions to be ignored.
     /// </summary>
-    private HashSet<string> _ignores = new HashSet<string>(); 
+    private HashSet<string> ignores = new HashSet<string>();
+    
+    /// <summary>
+    /// A bool that determines whether pops are disabled
+    /// </summary>
+    private bool DisablePopups = false;
     
     private void Awake()
     {
@@ -41,13 +46,16 @@ public class DebugManager : MonoBehaviour
     //Called when there is an exception
     void LogCallback(string condition, string stackTrace, LogType type)
     {
-        if (!(_ignores.Contains(condition) || type == LogType.Log))
+        if (!(DisablePopups || ignores.Contains(condition) || type == LogType.Log))
         {
-            if (!DisplayDialog(type.ToString(), $"Condition: {condition}\nStacktrace:\n{stackTrace}",
-                    "OK", "Ignore this message from now on."))
-            {
-                _ignores.Add(condition);
-            }
+            int result = DisplayDialogComplex(type.ToString(),
+                $"Condition: {condition}\nStacktrace:\n{stackTrace}",
+                "OK", "Ignore this message from now on.", "Disable all pop-ups");
+            
+            if (result == 1)
+                ignores.Add(condition);
+            else if (result == 2)
+                DisablePopups = true;
         }
     }
     
