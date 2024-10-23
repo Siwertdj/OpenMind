@@ -1660,7 +1660,19 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 344524766}
         m_TargetAssemblyTypeName: Loading, Assembly-CSharp
-        m_MethodName: Load
+        m_MethodName: LoadButtonPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1546507295}
+        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+        m_MethodName: CloseMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1990,6 +2002,7 @@ GameObject:
   - component: {fileID: 1408522169}
   - component: {fileID: 1408522172}
   - component: {fileID: 1408522173}
+  - component: {fileID: 1408522175}
   - component: {fileID: 1408522174}
   m_Layer: 0
   m_Name: TransitionCanvas
@@ -2125,6 +2138,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1408522175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408522167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a27c94c4595f284fb4969afb1eae490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1408522174}
 --- !u!1 &1447988413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2579,6 +2605,7 @@ MonoBehaviour:
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
   - {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
+  time: 0
   story: {fileID: 0}
   hasWon: 0
 --- !u!114 &1546507295
@@ -2611,7 +2638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce89810a2c0a04499ae881aa3575d53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transitionAnimator: {fileID: 1408522174}
 --- !u!114 &1546507297
 MonoBehaviour:
   m_ObjectHideFlags: 0
