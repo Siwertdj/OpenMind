@@ -16,5 +16,50 @@ MonoBehaviour:
   id: 2
   avatar: {fileID: 0}
   voicePitch: 1
-  answers: []
+  answers:
+  - question: 1
+    answer:
+    - I am pansexual.
+    - Recently, I have also been thinking about maybe experimenting with polyamory.
+    - I think it's close-minded to think that everyone is looking
+    - for a monogamous relationship.
+    - I think it would be pretty claustrophobic to spend
+    - the rest of your life with only one person
+    - 'but I would also prefer to be someone''s top priority '
+    - and have them be my top priority.
+    trait:
+    - I am pansexual and I think I am monogamous but I'm not sure yet.
+  - question: 2
+    answer:
+    - I'm doing great!
+    - I am very proud of who I am right now
+    - and I have also still have the freedom to make irresponsible,
+    - and to enjoy them.
+    - Oh, there is one thing that worries me.
+    - The current growth of racism and inequality,
+    - but I don't really like to talk about that.
+    - I like to have fun to distract me from those problems
+    - and just issues I can't control in general.
+    trait:
+    - My life is going great but I am worried about racism and inequality.
+  - question: 4
+    answer:
+    - I really doing things with friends, could be anything
+    - Partying, going out to eat, going on a vacation or doing some arts and crafts.
+    - If it's with my friends, it's a good time.
+    - I also used to be on social media a lot but recently it has lessened
+    - because of some heavy things that have been happening lately,
+    - but I don't really like to talk about that.
+    trait:
+    - I enjoy activities with my friends, and I used to enjoy social media.
+  - question: 0
+    answer:
+    - It's good. I just got my bachelor's degree a couple weeks ago
+    - and right now I'm working as a freelancer
+    - If it's with my friends, it's a good time.
+    - I also used to be on social media a lot but recently it has lessened
+    - because of some heavy things that have been happening lately,
+    - but I don't really like to talk about that.
+    trait:
+    - I enjoy activities with my friends, and I used to enjoy social media.
   greetings: []
