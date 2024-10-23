@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Button
+  - Toolbox
   layers:
   - Default
   - TransparentFX

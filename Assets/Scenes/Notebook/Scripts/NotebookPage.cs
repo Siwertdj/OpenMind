@@ -11,6 +11,12 @@ public class NotebookPage
         _character = character;
         _notes = "Notes on " + character.characterName + ".\n";
     }
+
+    public NotebookPage(string notes, CharacterInstance character)
+    {
+        _character = character;
+        _notes = notes;
+    }
     
     public string GetNotes()
     {
