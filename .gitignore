@@ -10,7 +10,8 @@
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 /[Pp]layerSaveData/
-/[Dd]oxygen Documentation/
+/[Dd]oxygen Documentation/[Hh]tml
+/[Dd]oxygen Documentation/[Ll]atex
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
