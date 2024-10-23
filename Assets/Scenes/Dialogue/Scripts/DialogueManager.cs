@@ -305,13 +305,17 @@ public class DialogueManager : MonoBehaviour
     {
         return questionType switch
         {
-            Question.Name => "What is your name?",
+            Question.Name => "What's your name?",
             Question.Age => "How old are you?",
+            Question.LifeGeneral => "How's life?",
+            Question.Inspiration => "Is there anyone that inspires you?",
+            Question.Sexuality => "What is your sexual orientation?",
             Question.Wellbeing => "How are you doing?",
             Question.Political => "What are your political thoughts?",
             Question.Personality => "Can you describe what your personality is like?",
             Question.Hobby => "What are some of your hobbies?",
             Question.CulturalBackground => "What is your cultural background?",
+            Question.Religion => "Are you religious?",
             Question.Education => "What is your education level?",
             Question.CoreValues => "What core values are the most important to you?",
             Question.ImportantPeople => "Who are the most important people in your life?",
@@ -330,10 +334,14 @@ public enum Question
 {
     Name,
     Age,
+    LifeGeneral,
+    Inspiration,
+    Sexuality,
     Wellbeing,
     Political,
     Hobby,
     CulturalBackground,
+    Religion,
     Education,
     CoreValues,
     Personality,
