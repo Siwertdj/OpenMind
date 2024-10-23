@@ -289,9 +289,6 @@ public class GameManager : MonoBehaviour
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
         
-        //TODO: wait until I have a dialogue box to put this in
-        //Debug.Log(string.Join(", ", randTraitCulprit)); 
-        //Debug.Log(string.Join(", ", randTraitVictim));
         return victim.characterName;
     }
     

@@ -29,11 +29,7 @@ public class TransitionAnimator : MonoBehaviour
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        animator.SetTrigger("SceneLoading");
-        animator.SetInteger("AnimationType", (int)type); // Set animation type
-        animator.speed = timeScale;
-
-        StartCoroutine(AnimationCoroutine(tcs));
+        PlayAnimation("SceneLoading", type, timeScale, tcs);
 
         return tcs.Task;
     }
@@ -42,12 +38,20 @@ public class TransitionAnimator : MonoBehaviour
     {
         var tcs = new TaskCompletionSource<bool>();
 
-        animator.SetTrigger("SceneLoaded"); // Set trigger
+        PlayAnimation("SceneLoaded", type, timeScale, tcs);
+
+        return tcs.Task;
+    }
+
+    private Task PlayAnimation(string trigger, AnimationType type, float timeScale, TaskCompletionSource<bool> tcs)
+    {
+        // Set animator vars
+        animator.SetTrigger(trigger); // Set trigger
         animator.SetInteger("AnimationType", (int)type); // Set animation type
-        animator.speed = timeScale;
+        animator.speed = timeScale; // Set speed
 
+        // Wait for animation to finish & return completion
         StartCoroutine(AnimationCoroutine(tcs));
-
         return tcs.Task;
     }
 

@@ -178,10 +178,10 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                await TransitionAnimator.i.PlayStartAnimation(); // Fade out and wait for animation to complete
+                await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
                 await LoadScene(targetScene); // Load new scene
-                _ = TransitionAnimator.i.PlayEndAnimation(); // Fade back into game
+                _ = TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade back into game
                 break;
         }
     }
@@ -270,7 +270,7 @@ public class SceneController : MonoBehaviour
     //the function to be called when loading the first cycle
     public void StartScene(SceneName start)
     {
-        TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.5f);
+        TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
