@@ -3,7 +3,7 @@ name: Doxygen GitHub Pages Deploy Action
 on:
   push:
     branches:
-      - main
+      - docs/126-Documentation-in-github
   workflow_dispatch:
 
 jobs:
@@ -16,6 +16,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: docs/html
+          folder: ./html
           config_file: Doxyfile
           doxygen_version: 1.9.6
