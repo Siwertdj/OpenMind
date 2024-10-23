@@ -14,19 +14,16 @@ public class StorySelectionManager : MonoBehaviour
     
     public void StoryASelected()
     {
-        Debug.Log("Button A clicked");
         StartIntro(0);
     }
     
     public void StoryBSelected()
     {
-        Debug.Log("Button B clicked");
         StartIntro(1);
     }
     
     public void StoryCSelected()
     {
-        Debug.Log("Button C clicked");
         StartIntro(2);
     }
 
