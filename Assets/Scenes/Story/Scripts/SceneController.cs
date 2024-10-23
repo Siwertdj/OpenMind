@@ -183,7 +183,6 @@ public class SceneController : MonoBehaviour
                 await FadeAnimation(); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
                 await LoadScene(targetScene); // Load new scene
-                Debug.Log($"Animation before loaded: {transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
                 transitionAnimator.SetTrigger("SceneLoaded"); // Fade back into game
                 break;
         }
@@ -212,8 +211,6 @@ public class SceneController : MonoBehaviour
         yield return null; // Wait for the animator to update clip
 
         // Await the length of the animation
-        Debug.Log($"Clip name: {transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name}");
-        Debug.Log($"Waiting for {transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length} s");
         yield return new WaitForSeconds(transitionAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         tcs.SetResult(true);
