@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Button
+  - Toolbox
   layers:
   - Default
   - TransparentFX
@@ -41,4 +42,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3396549345
+    locked: 0
+  - name: Character
+    uniqueID: 2887867719
+    locked: 0
+  - name: Foreground
+    uniqueID: 2404250631
     locked: 0

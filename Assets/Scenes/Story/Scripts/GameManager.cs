@@ -1,43 +1,53 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 using Random = System.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Game Settings")]
+    [Header("Game Resources")]
     [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
-    [SerializeField] public int numberOfCharacters; // How many characters each session should have
-    [SerializeField] private int numQuestions; // Amount of times the player can ask a question
-    [SerializeField] private int minimumRemaining; // The amount of active characters at which the session should end
-    [SerializeField] private bool immediateVictim; // Start the first round with an inactive characters
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
-    /// The amount of times  the player has talked, should be 0 at the start of each cycle
-    private int numQuestionsAsked;
-    // The list of the characters in the current game. This includes both active and inactive characters
-    public List<CharacterInstance> currentCharacters;
-    // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    [NonSerialized] public GameState gameState;
-
-    // Game Events
     [Header("Events")]
     public GameEvent onDialogueStart;
+    
+    // GAME VARIABLES
+    /*private int numberOfCharacters; // How many characters each session should have
+    private int numQuestions; // Amount of times the player can ask a question
+    private int minimumRemaining; // The amount of active characters at which the session should end
+    private bool immediateVictim; // Start the first round with an inactive characters*/
+    [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
+    public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
+    [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
+    public StoryObject story; // Contains information about the current game pertaining to the story
+    
+    // EPILOGUE VARIABLES
+    public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
+    public CharacterInstance IntermediateChosenCuplrit; // Save the character that has been chosen during the intermediate choice moment.
+    public CharacterInstance FinalChosenCuplrit;    // Save the character that has been chosen at the end of the game.
+    public List<List<string>> remainingDialogueScenario; // Holds the remainder of the conversation in the epilogue.
     
     // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
+    public NotebookData notebookData;
 
+    // Enumerations
+    #region Enumerations
+    // This enumeration defines all the possible GameStates, which we can use to test correct behavior
     public enum GameState
     {
         // Is there a gamestate for when the game is loading in?
@@ -47,39 +57,104 @@ public class GameManager : MonoBehaviour
         NpcDialogue,    //      --> NpcSelect, CulpritSelect
         HintDialogue,   //      --> NpcSelect
         GameLoss,       //      --> Loading (restart/retry)
-        GameWon         //      --> Loading (restart/retry)
+        GameWon,        //      --> Loading (restart/retry)
+        Epilogue
     }
+    #endregion
     
     // Called when this script instance is being loaded
     private void Awake()
     {
-        Load();
+        // make GameManager static, so it can be easily reached
+        gm = this;
+
+        // Make parentobject (the toolbox) persistent, so that all objects in the toolbox remain persistent.
+        DontDestroyOnLoad(gameObject.transform.parent);
+    }
+    
+    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
+    public void StartGame(Component sender, params object[] data)
+    {
+        // Set reference to static SceneController
+        sc = SceneController.sc;
+
+        // Empty some variables so they can be initialized later.
+        currentCharacters = new List<CharacterInstance>();
+        
+        // Set the gamestory based on the data we passed
+        if (data[0] is StoryObject storyObject)
+        {
+            // Set the story object
+            story = storyObject;
+            // Initialize a new game
+            NewGame();
+        }
+        else if (data[0] is SaveData saveData)
+        {
+            LoadGame(saveData);
+        }
     }
 
-    private void Start()
+    public void LoadGame(SaveData saveData)
     {
-        sc = SceneController.sc;
+        // Fetch all storyobjects from the Resources/Stories-folder
+        StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
+        // Set this game's story to the storyobject (which we fetched) which the correct ID (as per the SaveData)
+        story = stories.First(s => s.storyID == saveData.storyId);
+
+        //assign numQuestionsAsked
+        numQuestionsAsked = saveData.numQuestionsAsked;
         
-        // Initialize an empty list of characters
-        currentCharacters = new List<CharacterInstance>();
-        // Now, populate this list.
-        PopulateCharacters();
-        // Prints to console the characters that were selected to be in the current game. UNCOMMENT WHILE DEBUGGING
-        //Test_CharactersInGame();
-        // On load start cycle, depending on whether we want an immediate victim or not.
-        FirstCycle();
+        //clear all current characters
+        currentCharacters.Clear();
+        
+        //create all current characters
+        currentCharacters.AddRange(characters.FindAll(c => 
+            saveData.activeCharacterIds.Contains(c.id) ||
+            saveData.inactiveCharacterIds.Contains(c.id)).
+                Select(c => new CharacterInstance(c)));
+
+        //assign all data to the current characters
+        currentCharacters = currentCharacters.Select(c =>
+        {
+            c.isActive = saveData.activeCharacterIds.Contains(c.id);
+            c.isCulprit = saveData.culpritId == c.id;
+            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
+            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
+            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
+            return c;
+        }).ToList();
+        
+        //assign notebook data
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
+        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        {
+            CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
+            return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
+        }));
+        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
+        
+        //unload all scenes
+        SceneController.sc.UnloadAdditiveScenes();
+        
+        //load npcSelect scene
+        sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
 
     /// <summary>
-    /// Creates persistent toolbox of important manager objects, 
+    /// This private method initializes a new game.
     /// </summary>
-    private void Load()
+    private void NewGame()
     {
-        gm = this;
+        // Populate the list of characters
+        PopulateCharacters();
         
-        // Make parentobject persistent, so that all objects in the toolbox remain persistent.
-        DontDestroyOnLoad(gameObject.transform.parent);
+        // Create new notebook
+        notebookData = new NotebookData();
+
+        FirstCycle();
     }
+    
     
     // This region contains methods that start or end the cycles.
     #region Cycles
@@ -89,15 +164,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void FirstCycle()
     {
-        if (immediateVictim)
+        if (story.immediateVictim)
         {
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
             // Transition-effect
-            gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+            //CycleTransition(victimName);
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
+
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -112,7 +188,7 @@ public class GameManager : MonoBehaviour
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
         // Transition
-        gameObject.GetComponent<UIManager>().Transition(victimName + " went home..");
+        //CycleTransition(victimName);
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
@@ -122,15 +198,10 @@ public class GameManager : MonoBehaviour
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
 
-        var dialogueObject = new SpeakingObject(dialogue, GetRandomBackground());
+        // Creates Dialogue that says who disappeared and provides a new hint.
+        var dialogueObject = new SpeakingObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
 
         StartDialogue(dialogueObject);
-
-        //// Start the NPC Selection scene
-        //sc.TransitionScene(
-        //    SceneController.SceneName.DialogueScene, 
-        //    SceneController.SceneName.NPCSelectScene, 
-        //    SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -161,31 +232,35 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void PopulateCharacters()
     {
+        // Start by emptying the list
+        currentCharacters = new List<CharacterInstance>();
+        
         // Create a random population of 'numberOfCharacters' number, initialize them, and choose a random culprit.
 
         // Create array to remember what indices we have already visited, so we don't get doubles.
         // Because this empty array is initiated with 0's, we need to offset our number generated below with +1.
         // When we use this index to retrieve a character from the characters-list, we reverse the offset with -1.
-        int[] visitedIndices = new int[numberOfCharacters];
+        int[] visitedIndices = new int[story.numberOfCharacters];
 
         // We iterate over a for-loop to find a specific number of characters to populate our game with.
         // We clamp it down to the smallest value, in case numberOfCharacters is more than the number we have generated.
-        numberOfCharacters = Math.Min(characters.Count, numberOfCharacters);
-        for (int i = 0; i < numberOfCharacters; i++)
+        story.numberOfCharacters = Math.Min(characters.Count, story.numberOfCharacters);
+        for (int i = 0; i < story.numberOfCharacters; i++)
         {
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = random.Next(0, numberOfCharacters) + 1; // offset by 1 to check existence
+                int index = random.Next(0, story.numberOfCharacters) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
-                for (int j = 0; j< visitedIndices.Length; j++)
+                for (int j = 0; j < visitedIndices.Length; j++)
                     arrayString += (visitedIndices[j] + ", ");
-                
+
                 if (!visitedIndices.Contains(index))
                 {
                     var toAdd = characters[index - 1]; // correct the offset
-                    currentCharacters.Add(new CharacterInstance(toAdd)); // add the character we found to the list of current characters
+                    currentCharacters.Add(
+                        new CharacterInstance(toAdd)); // add the character we found to the list of current characters
                     visitedIndices[i] = index; // add the index with the offset to the array of visited indices
                     foundUniqueInt = true; // change the boolean-value to exit the while-loop
                 }
@@ -199,9 +274,9 @@ public class GameManager : MonoBehaviour
             c.isCulprit = false;
         }
         //Randomly select a culprit
-        currentCharacters[random.Next(0, numberOfCharacters)].isCulprit = true;
+        currentCharacters[random.Next(0, story.numberOfCharacters)].isCulprit = true;
     }
-    
+
     /// <summary>
     /// Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and
     /// the victim that is removed from their list of questions and prints to to the debuglog
@@ -246,7 +321,6 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         Debug.Log("End game.");
-        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
     
@@ -259,6 +333,7 @@ public class GameManager : MonoBehaviour
 
         // Unload all active scenes except the story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
         // Reset these characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -266,10 +341,9 @@ public class GameManager : MonoBehaviour
             character.isActive = true;
             character.InitializeQuestions();
         }
-        if (immediateVictim)
-            StartCycle();
-        else
-            FirstCycle();
+        
+        // Start the game again
+        FirstCycle();
     }
     
     /// <summary>
@@ -279,9 +353,22 @@ public class GameManager : MonoBehaviour
     {
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
         // reset game
-        Start();        
+        NewGame();     
     }
+
+    /// <summary>
+    /// Performs a visual fade-in/out when called,
+    /// displaying the victim's name and their fate, depending on the Story we are currently in.
+    /// </summary>
+    /// <param name="victimName"></param>
+    private void CycleTransition(string victimName)
+    {
+        string victimFate = story.victimDialogue;
+        gameObject.GetComponent<UIManager>().Transition(victimName + " " + victimFate);
+    }
+    
     #endregion
 
     // This region contains methods regarding dialogue
@@ -304,15 +391,16 @@ public class GameManager : MonoBehaviour
                 SceneController.TransitionType.Transition);
         }
 
+        gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        gameState = GameState.HintDialogue;
         onDialogueStart.Raise(this, dialogueObject);
     }
 
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
+    /// 
     /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
     /// Then, it loads the DialogueScene.
     /// </summary>
@@ -320,7 +408,7 @@ public class GameManager : MonoBehaviour
     ///  TODO: Should use the id of a character instead of the CharacterInstance.
     public async void StartDialogue(CharacterInstance character)
     {
-        GameObject[] background = GetRandomBackground(character);
+        GameObject[] background = CreateDialogueBackground(character, story.dialogueBackground);
 
         var dialogueObject = new SpeakingObject(
             character.GetGreeting(),
@@ -344,18 +432,19 @@ public class GameManager : MonoBehaviour
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
 
-    private GameObject[] GetRandomBackground(CharacterInstance character = null)
+    private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
-        List<GameObject> background = new();
-        background.Add(backgroundPrefabs[random.Next(backgroundPrefabs.Length)]);
+        List<GameObject> background_ = new();
+        // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
+        background_.Add(background == null ? story.dialogueBackground : background);
 
         if (character != null)
         {
             avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
-            background.Add(avatarPrefab);
+            background_.Add(avatarPrefab);
         }
 
-        return background.ToArray();
+        return background_.ToArray();
     }
     
     /// <summary>
@@ -364,25 +453,149 @@ public class GameManager : MonoBehaviour
     /// .. if no, end cycle.
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
     /// </summary>
-    /// TODO: Check naming convention for events and listeners, if this is right
     public async void EndDialogue(Component sender, params object[] data)
     {
-
-        if (!HasQuestionsLeft())
+        // TODO: Refactor this.
+        // If we are in the epilogue and we terminate, load either the Win or GameOver scene.
+        if (gameState == GameState.Epilogue)
         {
-            // No questions left, so we end the cycle 
-            EndCycle();
+            // If we want to start a dialogue with a different person, and do not want to end
+            // the epilogue scene, the responses list should be non-empty.
+            DialogueObject currentObject = (DialogueObject)data[0];
+            CharacterInstance culprit = GetCulprit();
+            
+            // change the character of the dialogue.
+            // TODO: misschien moet het veranderd worden dat de background vastgebonden zit aan de character.
+            DialogueManager dm = (DialogueManager)sender;
+            var backgroundCulprit = CreateDialogueBackground(culprit, story.epilogueBackground);
+            dm.ReplaceBackground(backgroundCulprit);
+            // If the TerminateDialogueObject has a SpeakingObject in the Responses list, start dialogue with a different person.
+            if (currentObject.Responses.Count > 0)
+            {
+                // Transition to dialogue with a different person.
+                await sc.TransitionScene(
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.SceneName.DialogueScene,
+                    SceneController.TransitionType.Transition);
+                
+                // If we want to start dialogue with a different person in the epilogue,
+                // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
+                // which will be used for the dialogue for dialogue with the next person.
+                
+                onDialogueStart.Raise(this, currentObject.Responses[0], culprit);
+            }
+            else
+            {
+                if (hasWon)
+                {
+                    // Transition to the GameWinScene and set the gameState to GameWon.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameWinScene,
+                        SceneController.TransitionType.Transition);
+
+                    gameState = GameState.GameWon;
+                }
+                else
+                {
+                    // Transition to the GameOverScene and set the gameState to GameLoss.
+                    await SceneController.sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene,
+                        SceneController.SceneName.GameOverScene,
+                        SceneController.TransitionType.Transition);
+                
+                    gameState = GameState.GameLoss;
+                }
+            }
         }
         else
         {
-            // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            await sc.TransitionScene(
-            SceneController.SceneName.DialogueScene,
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.TransitionType.Transition);
-            gameState = GameState.NpcSelect;
+            if (!HasQuestionsLeft())
+            {
+                // No questions left, so we end the cycle 
+                EndCycle();
+            }
+            else
+            {
+                // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
+                if (gameState == GameState.GameLoss)
+                {
+                    Debug.Log("transition from game loss to npcselect");
+                    await sc.TransitionScene(
+                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
+                }
+                else
+                {
+                        await sc.TransitionScene(
+                            SceneController.SceneName.DialogueScene, 
+                            SceneController.SceneName.NPCSelectScene, 
+                            SceneController.TransitionType.Transition);
+                    }
+            
+                gameState = GameState.NpcSelect;
+            }
         }
     }
+    
+    /// <summary>
+    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
+    /// </summary>
+    /// <param name="character"> The character which has been chosen. </param>
+    public async void StartEpilogueDialogue(CharacterInstance character)
+    {
+        gameState = GameState.Epilogue;
+
+        // Get the epilogue dialogue.
+        remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+
+        // Create the DialogueObject and corresponding children.
+        // This background displays the suspected culprit over the Dialogue-background
+        var background = CreateDialogueBackground(character, story.dialogueBackground);
+        var dialogueObject = GetEpilogueStart(background);
+        
+        // Transition to the dialogue scene.
+        await SceneController.sc.TransitionScene(
+            SceneController.SceneName.NPCSelectScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
+        
+        onDialogueStart.Raise(this, dialogueObject, character);
+    }
+
+    /// <summary>
+    /// Method which returns the DialogueObjects that need to be used at the start of the epilogue.
+    /// </summary>
+    /// <returns></returns>
+    DialogueObject GetEpilogueStart(GameObject[] background)
+    {
+        var dialogueObject = new SpeakingObject(remainingDialogueScenario[0], background);
+        // Remove the first element of the list.
+        remainingDialogueScenario.RemoveAt(0);
+        if (!hasWon)
+        {
+            // If the player loses, the dialogue with the wrong person should end,
+            // and a new dialogue with the culprit should start.
+            // note: SpeakingObject gets again gets the list at index 0, since the previous
+            // dialogue at index 0 gets removed at line 490.
+            TerminateDialogueObject endDialogue = new TerminateDialogueObject();
+            dialogueObject.Responses.Add(endDialogue);
+            
+            SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
+            // Remove the first element of the list.
+            remainingDialogueScenario.RemoveAt(0);
+            endDialogue.Responses.Add(nextDialogue);
+            
+            nextDialogue.Responses.Add(new OpenResponseObject(background));
+        }
+        else
+        {
+            dialogueObject.Responses.Add(new OpenResponseObject(background));
+        }
+        return dialogueObject;
+    }
+    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
@@ -398,23 +611,8 @@ public class GameManager : MonoBehaviour
     public bool EnoughCharactersRemaining()
     {
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
-        return numberOfActiveCharacters > GameManager.gm.minimumRemaining;
+        return numberOfActiveCharacters > story.minimumRemaining;
     }
-
-    /// <summary>
-    /// Fetches the amount of questions remaining
-    /// TODO: MAKE THIS A GETTER
-    /// </summary>
-    /// <returns></returns>
-    public int AmountOfQuestionsRemaining() => numQuestions - numQuestionsAsked;
-    
-    /// <summary>
-    /// Assigns the amount of questions that are remaining, for purposed of loading a savefile.
-    /// TODO: MAKE THIS A SETTER
-    /// </summary>
-    /// <param name="questionsRemaining"></param>
-    public void AssignAmountOfQuestionsRemaining(int questionsRemaining) =>
-        numQuestionsAsked = numQuestions - questionsRemaining;
     
     /// <summary>
     /// Checks if the player can ask more questions this cycle.
@@ -422,7 +620,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
-        return numQuestionsAsked < numQuestions;
+        return numQuestionsAsked < story.numQuestions;
     }
     #endregion
 
@@ -442,9 +640,11 @@ public class GameManager : MonoBehaviour
                 : (i + 2 == currentCharacters.Count ? " and " : ", ")));
         }
         Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
+
         
-        foreach (var c in currentCharacters.Where(c => c.isCulprit))
-            Debug.Log(c.characterName + " is the culprit!");
-    }
+        //dialogueRecipient = currentCharacters[id];
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+    }    
+    
     #endregion
 }

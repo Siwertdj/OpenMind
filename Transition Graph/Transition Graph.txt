@@ -1,6 +1,0 @@
-Loading --> NPCSelectScene(A), NPCSelectScene(U), NotebookScene(A)
-NPCSelectScene --> DialogueScene(T), GameOverScene(T), GameWinScene(T)
-DialogueScene --> DialogueScene(T), NPCSelectScene(T)
-NotebookScene --> Loading(U)
-GameOverScene --> NPCSelectScene(T)
-GameWinScene --> NPCSelectScene(T)

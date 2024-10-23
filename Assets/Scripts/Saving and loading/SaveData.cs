@@ -7,13 +7,15 @@ using UnityEngine;
 /// </summary>
 public class SaveData
 {
-    public int[] activeCharacters;
-    public int[] inactiveCharacters;
-    public int culprit;
-    public int questionsRemaining;
+    public int                     storyId;
+    public int[]                   activeCharacterIds;
+    public int[]                   inactiveCharacterIds;
+    public int                     culpritId;
     public (int, List<Question>)[] remainingQuestions;
-    public string noteBookData;
-    public string[] sceneStack;
+    public string                  personalNotes;
+    public (int, string)[]         characterNotes;
+    public (int, List<Question>)[] askedQuestionsPerCharacter;
+    public int                     numQuestionsAsked;
 }
 
 /// <summary>
@@ -21,37 +23,27 @@ public class SaveData
 /// Adjust these paths if files are moved around.
 /// </summary>
 public static class FilePathConstants
-{
-    /// <summary>
-    /// The folder from the root folder where the save file resides.
-    /// So if the asset folder had the path root/Assets, the save file would be saved in root/<see cref="folderName"/>>.
-    /// </summary>
-    private const string playerSaveDataFolderName = "Assets/Data";
-    
+{    
     /// <summary>
     /// The name of the save file of the player save data.
     /// </summary>
     private const string playerSaveDataFileName = "saveData.txt";
 
     /// <summary>
-    /// The filepath to where the notebook data is stored. The "root" of this filepath is Assets.
+    /// Gets the location of the folder where the save file should be stored. This is used for checking if this folder exists
     /// </summary>
-    private const string notebookFilePath = "Notebook/notes.txt";
-    
-    /// <summary>
-    /// Gets the location to the notebook file.
-    /// </summary>
-    public static string GetNoteBookLocation() => Application.dataPath + "/Scenes/" + notebookFilePath;
-    
-    /// <summary>
-    /// Gets the location to the directory when the save file is stored.
-    /// </summary>
-    public static string GetSaveFileDirectory() => Path.GetFullPath(Path.Combine(Application.dataPath, @"..\")) + playerSaveDataFolderName;
+    public static string GetSaveFolderLocation() => Path.Combine(Application.persistentDataPath, "SaveData");
     
     /// <summary>
     /// Gets the location to the save file.
+    /// Uses "Application.persistentDataPath", which is the standard directory for save data.
     /// </summary>
-    public static string GetSaveFileLocation() => GetSaveFileDirectory() + @"\" + playerSaveDataFileName;
+    public static string GetSaveFileLocation() => Path.Combine(GetSaveFolderLocation(), playerSaveDataFileName);
+
+    /// <summary>
+    /// Checks if the save file exists.
+    /// </summary>
+    public static bool DoesSaveFileLocationExist() => File.Exists(GetSaveFileLocation());
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.

@@ -20,10 +20,21 @@ public class Saving : MonoBehaviour
     {
         GameManager gameManager = GameManager.gm;
         //check if the gamemanger is loaded
-        if (gameManager is null)    
+        if (gameManager is null)
+        {
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
+            return;
+        }
 
-        //check if all characters have a unique id
+        //check if current Characters have been assigned
+        if (gameManager.currentCharacters is null)
+        {
+            Debug.LogError(
+                "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
+            return;
+        }
+
+        //check if all characters have a unique id. note: this check is obsolete at this point
         bool allUniqueID = true;
         for (int i = 0; i < gameManager.currentCharacters.Count; i++)
             for (int j = i+1; j < gameManager.currentCharacters.Count; j++)
@@ -38,34 +49,31 @@ public class Saving : MonoBehaviour
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
-        string noteBookData =
-            FilePathConstants.GetSafeFileContents(FilePathConstants.GetNoteBookLocation(), "notebook", "Saving");
         
         (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
-
-        
-        //saves the scene stack, excluding the loading scene
-        string[] sceneStack = new string[SceneManager.sceneCount-1];
-        for (int i = 0; i < sceneStack.Length; i++)
-            sceneStack[i] = SceneManager.GetSceneAt(i+1).name;
+        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
+        (int, string)[] characterNotes = GameManager.gm.currentCharacters
+            .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
 
         SaveData saveData = new SaveData
         {
-            activeCharacters = active.Select(c => c.id).ToArray(),
-            inactiveCharacters = inactive.Select(c => c.id).ToArray(),
-            culprit = gameManager.GetCulprit().id,
-            questionsRemaining = gameManager.AmountOfQuestionsRemaining(),
+            storyId = gameManager.story.storyID,
+            activeCharacterIds = active.Select(c => c.id).ToArray(),
+            inactiveCharacterIds = inactive.Select(c => c.id).ToArray(),
+            culpritId = gameManager.GetCulprit().id,
             remainingQuestions = remainingQuestions,
-            noteBookData = noteBookData,
-            sceneStack = sceneStack
+            personalNotes = gameManager.notebookData.GetPersonalNotes(),
+            characterNotes = characterNotes,
+            askedQuestionsPerCharacter = askedQuestions,
+            numQuestionsAsked = gameManager.numQuestionsAsked
         };
 
         string jsonString = JsonConvert.SerializeObject(saveData);
-        string directoryLocation = FilePathConstants.GetSaveFileDirectory();
+        string folderLocation = FilePathConstants.GetSaveFolderLocation();
         string fileLocation = FilePathConstants.GetSaveFileLocation();
         
-        if (!Directory.Exists(directoryLocation))
-            Directory.CreateDirectory(directoryLocation);
+        if (!Directory.Exists(folderLocation))
+            Directory.CreateDirectory(folderLocation);
         
         File.WriteAllText(fileLocation,jsonString);
     }
