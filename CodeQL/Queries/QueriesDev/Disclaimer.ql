@@ -11,8 +11,7 @@ import csharp
  * The required text for the first and second comments.
  */
 string requiredFirstCommentText = 
-  "This program has been developed by students from the bachelor Computer Science at Utrecht " +
-  "University within the Software Project course.";
+  "This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.";
 
 string requiredSecondCommentText = 
   "© Copyright Utrecht University (Department of Information and Computing Sciences)";
