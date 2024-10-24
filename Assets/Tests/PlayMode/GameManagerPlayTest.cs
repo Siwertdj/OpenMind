@@ -400,6 +400,8 @@ public class GameManagerPlayTest
         yield return null;
     }
     
+    //startdialogue,enddialogue, amountofquestionsremaining, assignamountofquestionsremaining
+    
     /// <summary>
     /// Check whether the transition between culprit selection and epilogue works as intended.
     /// </summary>

@@ -101,4 +101,70 @@ public class DialogueManagerPlayTest
 
         yield return null;
     }
+
+    static bool[] bools = new bool[] { true, false };
+    /// <summary>
+    /// Check if the ReplaceBackground method works as intended.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ReplaceBackgroundTest([ValueSource(nameof(bools))] bool newBackground)
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Get GameManager object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Start the game
+        gm.StartGame();
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Start the dialogue with a character
+        var character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitForSeconds(3); // Wait for it to load
+        
+        // Get DialogueManager object
+        var d = GameObject.Find("DialogueManager");
+        var dm = d.GetComponent<DialogueManager>();
+        
+        // Get current background.
+        var backgroundField = GameObject.Find("BackgroundField");
+        var b1 = backgroundField.transform.GetChild(0);
+
+        // Get different background.
+        //var b2 = new();
+        if (newBackground)
+        {
+            
+        }
+        else
+        {
+            
+        }
+        
+        // Replace the background.
+        //dm.ReplaceBackground(b2);
+        
+        // Get current background after replacing the background.
+        backgroundField = GameObject.Find("BackgroundField");
+        var b3 = backgroundField.transform.GetChild(0);
+        
+        if (newBackground)
+        {
+            // Check if the background has changed.
+            Assert.AreNotEqual(b1, b3);
+        }
+        else
+        {
+            // Check if background has not changed.
+            Assert.AreEqual(b1, b3);
+        }
+        
+
+        
+        
+    }
 }
