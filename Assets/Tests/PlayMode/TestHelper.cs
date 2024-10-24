@@ -16,28 +16,6 @@ public class TestHelper : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     
-    /// <summary>
-    /// Can be used as a coroutine to load a scene
-    /// </summary>
-    private IEnumerator LoadSceneCoroutine(string scene, TaskCompletionSource<bool> tcs)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
-        
-        while (!asyncLoad.isDone)
-            yield return null;
-        
-        tcs.SetResult(true);
-    }
-    
-    public Task LoadScene(string scene)
-    {
-        var tcs = new TaskCompletionSource<bool>();
-        
-        StartCoroutine(LoadSceneCoroutine(scene, tcs));
-        
-        return tcs.Task;
-    }
-    
     public bool Await(Action action, Func<bool> completeCondition)
     {
         if (!isRunning)
@@ -63,15 +41,6 @@ public class TestHelper : MonoBehaviour
                 count++;
 
         return count;
-    }
-    
-    /// <summary>
-    /// Returns the scene at index i, ignoring the test scene.
-    /// So inputting "-1" would result in the test scene.
-    /// </summary>
-    public Scene GetSceneAt(int i)
-    {
-        return SceneManager.GetSceneAt(i + 1);
     }
     
     #endregion
