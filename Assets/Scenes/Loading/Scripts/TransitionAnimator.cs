@@ -5,17 +5,23 @@ using UnityEngine;
 
 public class TransitionAnimator : MonoBehaviour
 {
+    /// <summary>
+    /// The static instance of the transition animator
+    /// </summary>
     public static TransitionAnimator i;
 
     [SerializeField] private Animator animator;
 
+    /// <summary>
+    /// Different kinds of animations
+    /// </summary>
     public enum AnimationType
     {
         Fade = 0,
         Wipe = 1
     }
 
-    void Start()
+    private void Start()
     {
         i = this;
     }
