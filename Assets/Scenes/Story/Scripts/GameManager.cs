@@ -126,12 +126,12 @@ public class GameManager : MonoBehaviour
         }).ToList();
         
         //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
-        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter =
+        saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }));
+        }).ToDictionary(pair => pair.Key, pair => pair.Value);
         notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
         //unload all scenes
@@ -211,6 +211,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndCycle() 
     {
+        Debug.Log("EndCycle");
         // Start Cycle as normal
         if (EnoughCharactersRemaining())    
             StartCycle();

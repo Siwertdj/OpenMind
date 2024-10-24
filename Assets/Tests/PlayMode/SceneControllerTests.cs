@@ -14,12 +14,13 @@ using UnityEngine.TestTools;
 /// - An invalid scene transition should give an error
 /// - A valid scene transition should actual transition the scene 
 /// </summary>
-public class SceneControllerTests : MonoBehaviour
+public class SceneControllerTests
 {
+    
     [OneTimeSetUp]
     public void CreateLoadingScene()
     {
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("TestScene", LoadSceneMode.Single);
     }
     
     
@@ -47,15 +48,27 @@ public class SceneControllerTests : MonoBehaviour
     [UnityTest]
     public IEnumerator TestUnloadAdditiveScenes()
     {
-        //load all scenes first
-        foreach (var scene in sceneNames)
-            SceneManager.LoadScene(scene.ToString(), LoadSceneMode.Additive);
+        //load 3 scenes
+        while(!TestHelper.th.Await(() =>
+              {
+                  SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+                  SceneManager.LoadScene("StartScreenScene", LoadSceneMode.Additive);
+                  SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
+              }, () =>
+                      SceneManager.GetSceneByName("Loading").isLoaded &&
+                      SceneManager.GetSceneByName("StartScreenScene").isLoaded &&
+                      SceneManager.GetSceneByName("GameWinScene").isLoaded
+              )) yield return null;
+        
+        //check if the 3 scenes are loaded
+        Assert.AreEqual(3, TestHelper.th.LoadedSceneCount());
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
         
-        //check if more than 1 scene is loaded
-        Assert.IsTrue(SceneManager.loadedSceneCount == 1);
+        
+        //check if more than 1 scene is loaded, the loading scene should still be loaded
+        Assert.AreEqual(1, TestHelper.th.LoadedSceneCount());
         
         yield return null;
     }
