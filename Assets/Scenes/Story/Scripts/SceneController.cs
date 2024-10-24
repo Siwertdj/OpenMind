@@ -206,6 +206,8 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
     }
     
+    //TODO: This method should be removed eventually
+    //this method is not tested
     public void ToggleNotebookScene()
     {
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
