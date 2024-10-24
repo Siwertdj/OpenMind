@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bacd756deb4a9e4e9ebe58f48a10d29, type: 3}
+  m_Name: Psychic
+  m_EditorClassIdentifier: 
+  storyName: Nnnenenenene ~(( O _ O ))~
+  storyID: 1
+  dialogueBackground: {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
+  hintBackground: {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
+  epilogueBackground: {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
+  victimDialogue: went home..
+  hintDialogue: Hmm.. I am seeing something..
+  numberOfCharacters: 4
+  numQuestions: 1
+  minimumRemaining: 2
+  immediateVictim: 0
