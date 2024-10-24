@@ -1,8 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// The manager class for the startscreen
+/// </summary>
 public class StartMenuManager : MonoBehaviour
 {
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
@@ -16,15 +18,19 @@ public class StartMenuManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onGameLoaded;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// Makes sure the continuebutton is only clickable when a save exists.
+    /// If there are no saves, disable the button.
+    /// </summary>
     void Start()
     {
-        // Continue button is only clickable when there are saves to be loaded
-        // If there are no saves, disable the button
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
     }
     
+    /// <summary>
+    /// Activates the prompt which asks the player to skip the prologue
+    /// </summary>
     public void OpenSkipProloguePrompt()
     {
         // Change menu's
@@ -33,12 +39,20 @@ public class StartMenuManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    /// Gets savedata and loads a game using that data
+    /// </summary>
     public void ContinueGame()
     {
         SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }
     
+    /// <summary>
+    /// Starts an operation to load the game using saveData then unloads the current scene
+    /// </summary>
+    /// <param name="saveData">The data that needs to be loaded</param>
+    /// <returns></returns>
     IEnumerator LoadGame(SaveData saveData)
     {
         // Start the loadscene-operation
@@ -53,14 +67,20 @@ public class StartMenuManager : MonoBehaviour
         onGameLoaded.Raise(this, saveData);
         
         // Finally, when the data has been sent, we then unload our currentscene
-        SceneManager.UnloadSceneAsync("StartScreenScene");  // unload this scene; no longer necessary
+        SceneManager.UnloadSceneAsync("StartScreenScene");
     }
 
+    /// <summary>
+    /// Starts the prologuescene
+    /// </summary>
     public void StartPrologue()
     {
         SceneManager.LoadScene("PrologueScene");
     }
     
+    /// <summary>
+    /// Skips the prologuescene and starts the storyselectscene instead
+    /// </summary>
     public void SkipPrologue()
     {
         SceneManager.LoadScene("StorySelectScene");
