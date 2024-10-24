@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/StartScreenScene.unity
     guid: d8e697686f5ae364fb4b301ab6b4e63f
   - enabled: 1
-    path: Assets/Scenes/Story/Loading.unity
+    path: Assets/Scenes/Loading/Loading.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
     path: Assets/Scenes/NPCSelect/NPCSelectScene.unity
