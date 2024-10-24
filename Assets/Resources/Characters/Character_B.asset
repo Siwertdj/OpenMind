@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 17_Maud_Data
+  m_EditorClassIdentifier: 
+  characterName: Maud
+  id: 17
+  avatar: {fileID: 21300000, guid: 44c45de16ee02e6418d2df439c7dc262, type: 3}
+  voicePitch: 1.4
+  answers:
+  - question: 3
+    answer:
+    - I am a democrat.
+    - I will be voting for joe biden.
+    trait:
+    - bemograt
+  - question: 1
+    answer:
+    - I was in 1987.
+    - I am 37 years old.
+    trait:
+    - bobn 1987
+  - question: 7
+    answer:
+    - The most important core value to me is happiness.
+    - It doesn't matter how much money u have
+    - or how famous u are if u cannot be happy.
+    trait:
+    - big munney
+  - question: 8
+    answer:
+    - I consider myself to be kind.
+    - I am also quite shy.
+    trait:
+    - shy guy (mario)
+  - question: 4
+    answer:
+    - My hobby is drawing.
+    - I like drawing animals.
+    trait:
+    - draw animal
+  - question: 5
+    answer:
+    - I was born in the Netherlands,
+    - However my parents are both german.
+    trait:
+    - bobn nebetrlands
+  greetings:
+  - lines:
+    - Hello there
+  - lines:
+    - Oh, hey
+    - Good to see you again

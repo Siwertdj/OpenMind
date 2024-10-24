@@ -11,6 +11,12 @@ public class NotebookPage
         _character = character;
         _notes = "Notes on " + character.characterName + ".\n";
     }
+
+    public NotebookPage(string notes, CharacterInstance character)
+    {
+        _character = character;
+        _notes = notes;
+    }
     
     public string GetNotes()
     {
@@ -62,11 +68,15 @@ public class NotebookPage
         {
             Question.Name => "Name",
             Question.Age => "Age",
+            Question.LifeGeneral => "Life",
+            Question.Inspiration => "Inspiration",
+            Question.Sexuality => "Sexuality",
             Question.Wellbeing => "Wellbeing",
             Question.Political => "Political ideology",
             Question.Personality => "Personality",
             Question.Hobby => "Hobbies",
             Question.CulturalBackground => "Cultural background",
+            Question.Religion => "Religion",
             Question.Education => "Education level",
             Question.CoreValues => "Core values",
             Question.ImportantPeople => "Most important people",
