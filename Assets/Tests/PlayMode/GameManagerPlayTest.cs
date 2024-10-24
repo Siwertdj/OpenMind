@@ -519,22 +519,6 @@ public class GameManagerPlayTest
         
         // End the game
         gm.EndGame();
-        //UnityEditor.EditorApplication.isPlaying = false;
-        yield return new WaitForSeconds(2); // Wait for it to load
-        /*
-        // Get all active scene and unload them.
-        int activeSceneCount = SceneManager.sceneCount;
-        UnityEngine.SceneManagement.Scene[] loadedScenes = new UnityEngine.SceneManagement.Scene[activeSceneCount];
-        for (int i = 0; i < activeSceneCount; i++)
-        {
-            loadedScenes[i] = SceneManager.GetSceneAt(i);
-            Debug.Log(loadedScenes[i].name);
-        }
-
-        for (int i = 0; i < activeSceneCount; i++)
-        {
-            SceneManager.UnloadScene(loadedScenes[i]);
-        }*/
         
         yield return null;
     }
