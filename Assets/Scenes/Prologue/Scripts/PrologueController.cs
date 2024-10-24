@@ -181,7 +181,8 @@ public class CutsceneController : MonoBehaviour
         {
             spokenText.text = "no text";
         }
-        typeText(); // Activate the effect for the text
+        // TODO: Fix typewriter
+        //typeText(); // Activate the effect for the text
     }
     #endregion
     
