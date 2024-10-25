@@ -12,6 +12,41 @@ using Button = UnityEngine.UI.Button;
 
 public class GameManagerPlayTest
 {
+    
+    /// <summary>
+    /// Checks if the correct amount of questions are assigned to numQuestionsAsked.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator AssignQuestionsRemainingTest()
+    {
+        // Load scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitForSeconds(2); // Wait for it to load
+
+        // Get "GameManager" object
+        var g = GameObject.Find("GameManager");
+        var gm = g.GetComponent<GameManager>();
+
+        // Start the game cycle.
+        gm.StartGame();
+        yield return new WaitForSeconds(2); // Wait for it to load
+        
+        // Get the amount of questions that can be asked in a cycle.
+        // Calling this method will return numQuestions, since no questions have been asked yet.
+        int numQuestions = gm.AmountOfQuestionsRemaining();
+        
+        // If there is only 1 question remaining, numQuestionsAsked should have value: numQuestions - 1.
+        gm.AssignAmountOfQuestionsRemaining(1);
+        
+        // Check if numQuestionsAsked is equal to numQuestions - 1 when there is only 1 question remaining.
+        Assert.AreEqual(numQuestions - 1, gm.numQuestionsAsked);
+        
+        // End the game
+        gm.EndGame();
+        
+        yield return null;
+    }
+    
     /// <summary>
     /// Checks if the character list gets populated.
     /// </summary>
