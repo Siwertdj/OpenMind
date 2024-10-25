@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 3_Olivier_Data
+  m_EditorClassIdentifier: 
+  characterName: Olivier
+  id: 3
+  avatar: {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
+  voicePitch: 1
+  answers:
+  - question: 13
+    answer:
+    - 'I am Christian, so the most important person to me '
+    - is Jesus Christ.
+    - It's my goal to be as much like him as possible.
+    trait:
+    - Jesus Christ is the most important person in my life.
+  - question: 3
+    answer:
+    - Sifan Hassan is very inspiring to me.
+    - "I think it's great that we\u2019re giving women a chance"
+    - "and that she\u2019s really going for it."
+    trait:
+    - My parents say I am enthusiastic fot the future and I think I am great at listening.
+  - question: 9
+    answer:
+    - Yes, I am Christian.
+    - Religion to me is who I think God is, and who God wants to be, to me.
+    - I think God created a beautiful world but things happened
+    - that made it not beautiful anymore but that I am loved and that my purpose
+      is
+    - 'to contribute to make it beautiful again. '
+    trait:
+    - I am a Christian and I believe I am loved by God.
+  - question: 2
+    answer:
+    - Life is and has been great.
+    - I have a ton of friends, old and new and I love my family and my girlfriend.
+    - Over the last couple of years I learned that even in hard times
+    - 'there are good things to be appreciated. '
+    - 'So even though things are kind of hard right now I am still doing well. '
+    trait:
+    - Life is great, I have bunch of friends and I have learned to see the good things
+      in bad times.
+  - question: 12
+    answer:
+    - My parents would say my best trait is that I just love life
+    - and that I'm enthusiastic for the future.
+    - 'I think honesty is very important and that I am a great listener. '
+    - "But sometimes I think I\u2019m a little too dominant in conversations"
+    - 'which actually makes me a worse listener.  '
+    trait:
+    - My parents say I am enthusiastic fot the future and I think I am great at listening.
+  - question: 6
+    answer:
+    - "I think we\u2019re going in the wrong direction."
+    - "We\u2019re listening to each other less and less and that means it is becoming
+      harder "
+    - and harder to come up with solutions that work.
+    - I also worry about the climate and
+    - "I think we\u2019re not doing enough about inequality. "
+    trait:
+    - I am worried about the political climate because we're listening to each other
+      less and less.
+  greetings:
+  - lines:
+    - Hello there!
