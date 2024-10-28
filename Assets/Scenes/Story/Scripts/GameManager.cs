@@ -127,11 +127,12 @@ public class GameManager : MonoBehaviour
         
         //assign notebook data
         Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter =
-        saveData.characterNotes.Select(cn =>
-        {
-            CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
-            return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }).ToDictionary(pair => pair.Key, pair => pair.Value);
+            saveData.characterNotes.Select(cn =>
+            {
+                CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
+                return new KeyValuePair<CharacterInstance, NotebookPage>(instance,
+                    new NotebookPage(cn.Item2, instance));
+            }).ToDictionary(pair => pair.Key, pair => pair.Value);
         notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
         //unload all scenes

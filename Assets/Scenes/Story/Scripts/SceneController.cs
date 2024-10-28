@@ -38,6 +38,8 @@ public class SceneController : MonoBehaviour
 
     //read from a file
     private List<List<(int, TransitionType)>> sceneGraph;
+    public  List<List<(int, TransitionType)>> GetGraph => sceneGraph;
+    public  Dictionary<string, int>           GetIds   => sceneToID;
 
     //inferred from reading the same file, what scene is matched to what id doesn't matter, as long as they are all assigned to a unique ID
     private Dictionary<string, int> sceneToID;

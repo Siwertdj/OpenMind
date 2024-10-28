@@ -24,7 +24,13 @@ public class TestHelper : MonoBehaviour
             action();
         }
         
-        return completeCondition();
+        if (completeCondition())
+        {
+            isRunning = false;
+            return true;
+        }
+        
+        return false;
     }
     
     #region helperFunctions
