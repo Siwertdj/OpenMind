@@ -12,41 +12,34 @@ using Button = UnityEngine.UI.Button;
 
 public class GameManagerPlayTest
 {
-    
     /// <summary>
-    /// Checks if the correct amount of questions are assigned to numQuestionsAsked.
+    /// SetUp which is run for every test (currently WaitForSeconds is used, this will probably be changed in the
+    /// future. Refer to #testing channel for the correct implementation (sanders dingetje met WaitUntil)).
     /// </summary>
-    /*
-    [UnityTest]
-    public IEnumerator AssignQuestionsRemainingTest()
+    [UnitySetUp]
+    public IEnumerator SetUp()
     {
         // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(2); // Wait for it to load
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded); // Wait for scene to load
+        yield return new WaitForSeconds(1);
+        Button newGameButton = GameObject.Find("NewGameButton").GetComponent<Button>();
+        newGameButton.onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        Button noButton = GameObject.Find("NoButton").GetComponent<Button>();
+        noButton.onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        Button storyAButton = GameObject.Find("StoryA_Button").GetComponent<Button>();
+        storyAButton.onClick.Invoke();
+        yield return new WaitForSeconds(2);
+    }
 
-        // Get "GameManager" object
-        var g = GameObject.Find("GameManager");
-        var gm = g.GetComponent<GameManager>();
-
-        // Start the game cycle.
-        gm.StartGame();
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Get the amount of questions that can be asked in a cycle.
-        // Calling this method will return numQuestions, since no questions have been asked yet.
-        int numQuestions = gm.AmountOfQuestionsRemaining();
-        
-        // If there is only 1 question remaining, numQuestionsAsked should have value: numQuestions - 1.
-        gm.AssignAmountOfQuestionsRemaining(1);
-        
-        // Check if numQuestionsAsked is equal to numQuestions - 1 when there is only 1 question remaining.
-        Assert.AreEqual(numQuestions - 1, gm.numQuestionsAsked);
-        
-        // End the game
-        gm.EndGame();
-        
-        yield return null;
-    }*/
+    [TearDown]
+    public void TearDown()
+    {
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneController.sc.UnloadAdditiveScenes();
+    }
     
     /// <summary>
     /// Checks if the character list gets populated.
@@ -54,10 +47,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator PopulateCharactersTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -70,9 +59,6 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
     
@@ -82,10 +68,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ActiveCharactersTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -94,12 +76,9 @@ public class GameManagerPlayTest
         var expected = gm.currentCharacters.Count(c => c.isActive);
         // The number of characters at the start of the game
         var actual = 4;
-
+        
         // Check if they are equal
         Assert.AreEqual(expected, actual);
-        
-        // End the game
-        gm.EndGame();
         
         yield return null;
     }
@@ -110,10 +89,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ChooseCulpritTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -125,9 +100,6 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
     
@@ -137,10 +109,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator HasQuestionsLeftTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get GameManager object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -152,9 +120,6 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
 
@@ -164,10 +129,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator GetCulpritTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -179,9 +140,6 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
 
@@ -191,10 +149,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator EnoughCharactersTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -206,9 +160,6 @@ public class GameManagerPlayTest
         // Check if they are equal
         Assert.AreEqual(expected, actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
 
@@ -218,16 +169,11 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator RestartStoryTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
         
         // Start the game cycle.
-        //gm.StartGame();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
         
         // Start dialogue.
@@ -245,9 +191,6 @@ public class GameManagerPlayTest
         Assert.IsTrue(SceneManager.GetSceneByName("Loading").isLoaded);
         Assert.IsTrue(SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
     
@@ -257,10 +200,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator RetryStoryTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -273,9 +212,6 @@ public class GameManagerPlayTest
         // Check if it holds
         Assert.IsTrue(actual);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
 
@@ -285,10 +221,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ChooseVictimTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -298,9 +230,6 @@ public class GameManagerPlayTest
 
         // Check if it actually returned a victim
         Assert.IsTrue(victim != null);
-        
-        // End the game
-        gm.EndGame();
         
         yield return null;
     }
@@ -313,10 +242,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator EndCycleTest([ValueSource(nameof(bools))] bool enoughCharacters)
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -342,7 +267,6 @@ public class GameManagerPlayTest
         }
         
         // Start the game cycle.
-        //gm.StartGame();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
         
         // Variable which counts the number of characters before calling EndCycle.
@@ -401,9 +325,6 @@ public class GameManagerPlayTest
         // No scene should be switched, because it's an additive scene
         Assert.AreEqual("Loading", scene);
         
-        // End the game.
-        gm.EndGame();
-        
         yield return null;
     }
 
@@ -413,10 +334,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator StartDialogueTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -432,13 +349,8 @@ public class GameManagerPlayTest
         // No scene should be switched, because it's an additive scene
         Assert.AreEqual("Loading", scene);
         
-        // End the game
-        gm.EndGame();
-        
         yield return null;
     }
-    
-    //startdialogue,enddialogue, amountofquestionsremaining, assignamountofquestionsremaining
     
     /// <summary>
     /// Check whether the transition between culprit selection and epilogue works as intended.
@@ -446,10 +358,6 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
-        
         // Get "GameManager" object
         var g = GameObject.Find("GameManager");
         var gm = g.GetComponent<GameManager>();
@@ -471,7 +379,6 @@ public class GameManagerPlayTest
         }
         
         // Start the game cycle with not enough characters remaining.
-        //gm.StartGame();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
         
         // Set this to maxValue in order to make sure that no more questions can be asked.
@@ -554,9 +461,6 @@ public class GameManagerPlayTest
         Assert.AreEqual(GameManager.GameState.Epilogue, gm.gameState);
         bool inDialogueScene = SceneManager.GetSceneByName("DialogueScene").isLoaded;
         Assert.IsTrue(inDialogueScene);
-        
-        // End the game
-        gm.EndGame();
         
         yield return null;
     }
