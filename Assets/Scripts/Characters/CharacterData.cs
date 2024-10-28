@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,30 +20,34 @@ public class CharacterData : ScriptableObject
     [SerializeField] public DialogueLines[] greetings;
 }
 
-// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
-[Serializable]
-public struct KeyValuePair
+/// <summary>
+/// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
+/// </summary>
+[Serializable] public struct KeyValuePair
 {
     [SerializeField] public Question question;
     [SerializeField] public List<string> answer;
     [SerializeField] public List<string> trait;
 }
 
-[Serializable]
-public struct DialogueLines
+/// <summary>
+/// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
+/// </summary>
+[Serializable] public struct DialogueLines
 {
     [SerializeField]
     public List<string> lines;
 }
 
-[Serializable]
-public struct DialogueLine
+/// <summary>
+/// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
+/// </summary>
+[Serializable] public struct DialogueLine
 {
     [SerializeField]
     public Emotion emotion;
     [SerializeField]
     public string line;
-
 }
 
 public enum Emotion

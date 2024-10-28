@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -54,6 +56,7 @@ public class Saving : MonoBehaviour
         (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
+        // Set the saveData to the data found
         SaveData saveData = new SaveData
         {
             storyId = gameManager.story.storyID,
