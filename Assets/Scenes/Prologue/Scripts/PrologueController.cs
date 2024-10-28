@@ -1,14 +1,17 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager class for cutscenes.
+/// </summary>
 public class CutsceneController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline

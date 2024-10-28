@@ -1,27 +1,31 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
+/// <summary>
+/// Manager class for timelines.
+/// </summary>
 public class TimelineManager : MonoBehaviour
 {
-    public PlayableDirector introStoryA;
-    public PlayableDirector introStoryB;
-    public PlayableDirector introStoryC;
-    //public Button continueButton;
-    public TMP_Text objectiveText;
-    
-    private PlayableDirector currentTimeline; 
-    
+    public  PlayableDirector introStoryA;
+    public  PlayableDirector introStoryB;
+    public  PlayableDirector introStoryC;
+    public  TMP_Text         objectiveText;
+    private PlayableDirector currentTimeline;
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
 
+    /// <summary>
+    /// Starts the proper intro.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
         // depending on the chosen storyline, play the intro to the story
@@ -55,25 +59,35 @@ public class TimelineManager : MonoBehaviour
         currentTimeline.Play();
     }
 
+    /// <summary>
+    /// Pauses the timeline.
+    /// </summary>
     public void PauseCurrentTimeline()
     {
         currentTimeline.Pause();
         //continueButton.gameObject.SetActive(true);
     }
 
+    /// <summary>
+    /// Continues the timeline.
+    /// </summary>
     public void ContinueCurrentTimeline()
     {
         currentTimeline.Play();
         //continueButton.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// Starts the game once the intro is over.
+    /// </summary>
     public void StartGame()
     {
         StartCoroutine(LoadGame());
-        
     }
-    
-    
+
+    /// <summary>
+    /// Loads the game.
+    /// </summary>
     // TODO: This is duplicate code, also found in Loading.cs. Make this a global thing?
     IEnumerator LoadGame()
     {
