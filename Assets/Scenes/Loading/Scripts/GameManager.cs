@@ -373,20 +373,10 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(DialogueObject dialogueObject)
     {
         // Transition to dialogue scene and await the loading operation
-        if (gameState == GameState.NpcSelect)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.NPCSelectScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
-        else if (gameState == GameState.NpcDialogue)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.DialogueScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
+        await sc.TransitionScene(
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
 
         gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
