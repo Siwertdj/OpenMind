@@ -15,45 +15,56 @@ MonoBehaviour:
   characterName: David
   id: 8
   avatar: {fileID: 21300000, guid: 7453c415a721a8040a3af3e629408cc0, type: 3}
-  voicePitch: 0.6
+  voicePitch: 0.5
   answers:
-  - question: 1
+  - question: 2
     answer:
-    - I was born in 1979.
-    - I am 45 years old.
+    - "It\u2019s great,"
+    - 'I live together with my partner in an apartment. We also have two lovely cats. '
     trait:
-    - 45445
-  - question: 11
-    answer:
-    - A negative trait i have is that i am short-tempered.
-    - Maybe this is the case because
-    - I do not sleep very well.
-    trait:
-    - very zzzzz
-  - question: 7
-    answer:
-    - The most important thing to me is money.
-    - You can do everything,
-    - as long as u have money.
-    trait:
-    - biggnf muneyyyy
+    - I live with my partner and cats.
   - question: 4
     answer:
-    - My hobby is bowling.
-    - I always score atleast 1 strike per game.
+    - I am gay,
+    - I have a partner and we live together in an apartment.
     trait:
-    - boaling
+    - very zzzzz
   - question: 6
     answer:
-    - I have a master's degree in
-    - business administration.
+    - I think religion is a big problem.
+    - "Religion in and of itself is not bad, it\u2019s more how people abuse it."
+    - People use religion to oppress people and get more power, land or money.
+    - "I think that\u2019s very problematic. "
     trait:
-    - master bibness
-  - question: 5
+    - I think the way religion executed is a big problem.
+  - question: 7
     answer:
-    - I am an atheist.
-    - I was born in England
-    - and my parents are also English.
+    - My favorite thing to do is just hanging out with friends,
+    - maybe grabbing a drink with them.
+    - " I also like to watch quiz shows on tv, like \u201CSlimste Mens\u201D or \u201C2
+      voor 12\u201D. "
     trait:
-    - engluudndndn CAM ON ENGLERIDALND
-  greetings: []
+    - I like to hang out with friends and watch tv.
+  - question: 9
+    answer:
+    - I am not religious, but I have looked into most religions.
+    - Not to see if I want to convert to any of them,
+    - Not to see if I want to convert to any of them,
+    - 'just out of pure interest. '
+    - My parents were not that religious and I did go to a Christian primary school,
+    - 'but I think all schools should be secular and that religions should be practiced
+      at home.  '
+    trait:
+    - I am not religious.
+  - question: 11
+    answer:
+    - "Even though I don\u2019t believe in God,"
+    - I do share a lot of values with Christianity.
+    - 'For example, never knowingly harm another. '
+    - I also really believe in justice and our judicial system.
+    - Always being on time is also very important to me.
+    trait:
+    - I follow a lot of Christian values.
+  greetings:
+  - lines:
+    - Hello!
