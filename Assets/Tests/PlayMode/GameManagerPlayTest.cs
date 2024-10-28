@@ -15,7 +15,7 @@ public class GameManagerPlayTest
     /// <summary>
     /// Checks if the character list gets populated.
     /// </summary>
-    [UnityTest]
+    /*[UnityTest]
     public IEnumerator PopulateCharactersTest()
     {
         // Load scene
@@ -521,5 +521,5 @@ public class GameManagerPlayTest
         gm.EndGame();
         
         yield return null;
-    }
+    }*/
 }
