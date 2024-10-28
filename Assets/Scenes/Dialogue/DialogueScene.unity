@@ -669,12 +669,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43310ff33057554d84bb2335249366b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  text: {fileID: 1804029613}
   delayInSeconds: 0.06
   delayAfterSentence: 1
-  InDialogue: 0
-  OnDialogueComplete:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0

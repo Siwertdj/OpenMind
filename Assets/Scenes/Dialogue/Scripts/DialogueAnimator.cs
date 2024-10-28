@@ -1,29 +1,33 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using System;
 
 public class DialogueAnimator : MonoBehaviour
 {
+    [Header("Component references")]
+    [SerializeField] private TMP_Text text;
+
+    [Header("Settings")]
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
-    
-    private TMP_Text text;
+
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    public bool InDialogue = false; // Is there dialogue on the screen?
-    private bool isOutputting = false; // Is currently being written?
+    public bool InDialogue { get; private set; } = false; // Is there dialogue on the screen?
+
+    private bool isOutputting = false; // Is dialogue currently being written?
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
     private string currentSentence = "";
 
-    public UnityEvent OnDialogueComplete;
+    [NonSerialized] public UnityEvent OnDialogueComplete = new();
 
-    void Awake()
+    private void Awake()
     {
-        text = GetComponentInChildren<TMP_Text>();
         text.enableAutoSizing = false;
         text.fontSize = 40;
         audioSource = GetComponent<AudioSource>();
@@ -83,7 +87,7 @@ public class DialogueAnimator : MonoBehaviour
         OnDialogueComplete.Invoke();
     }
 
-    IEnumerator WritingAnimation(string output, int stringIndex)
+    private IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // If a new sentence is started, first clear the old sentence
         if (stringIndex == 0)
