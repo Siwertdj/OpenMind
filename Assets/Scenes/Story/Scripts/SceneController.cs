@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEditor;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -36,7 +35,7 @@ public class SceneController : MonoBehaviour
     }
     
     public static SceneController sc;
-    
+
     //read from a file
     private List<List<(int, TransitionType)>> sceneGraph;
 
@@ -179,8 +178,10 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Transition:
-                SceneManager.UnloadSceneAsync(currentScene);
-                await LoadScene(targetScene);
+                await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
+                SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
+                await LoadScene(targetScene); // Load new scene
+                _ = TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade back into game
                 break;
         }
     }
@@ -262,15 +263,14 @@ public class SceneController : MonoBehaviour
 
         await loadCode(currentScene, targetScene, transitionType);
     }
-
     
     //args is the data to transfer
     public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
-
-    
+        
     //the function to be called when loading the first cycle
     public void StartScene(SceneName start)
     {
+        TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
@@ -281,12 +281,12 @@ public class SceneController : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
-            TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
             //SceneManager.UnloadSceneAsync("NotebookScene");
         }
         else
         {
-            TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
             //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         }
     }

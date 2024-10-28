@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -170,7 +169,7 @@ public class GameManager : MonoBehaviour
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
             // Transition-effect
-            CycleTransition(victimName);
+            //CycleTransition(victimName);
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
@@ -189,7 +188,7 @@ public class GameManager : MonoBehaviour
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
         // Transition
-        CycleTransition(victimName);
+        //CycleTransition(victimName);
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
@@ -251,7 +250,7 @@ public class GameManager : MonoBehaviour
             bool foundUniqueInt = false; // We use this bool to exist the while-loop when we find a unique index
             while (!foundUniqueInt)
             {
-                int index = random.Next(0, story.numberOfCharacters) + 1; // offset by 1 to check existence
+                int index = random.Next(0, characters.Count) + 1; // offset by 1 to check existence
 
                 string arrayString = "";
                 for (int j = 0; j < visitedIndices.Length; j++)
@@ -290,9 +289,6 @@ public class GameManager : MonoBehaviour
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
         
-        //TODO: wait until I have a dialogue box to put this in
-        //Debug.Log(string.Join(", ", randTraitCulprit)); 
-        //Debug.Log(string.Join(", ", randTraitVictim));
         return victim.characterName;
     }
     

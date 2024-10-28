@@ -55,7 +55,7 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void ContinueTimeline()
     {
-         
+        Debug.Log("Continue Timeline");
         imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
         continueButton.gameObject.SetActive(false);  // Disable continuebutton
         playableDirector.Play(); // Resume timeline.
@@ -181,7 +181,8 @@ public class CutsceneController : MonoBehaviour
         {
             spokenText.text = "no text";
         }
-        typeText(); // Activate the effect for the text
+        // TODO: Fix typewriter
+        //typeText(); // Activate the effect for the text
     }
     #endregion
     
@@ -201,6 +202,8 @@ public class CutsceneController : MonoBehaviour
     /// <summary>
     /// Method that actually performs the typewriter effect. 
     /// </summary>
+    /// TODO: Ensure this doesnt bug out and is consistent on different systems
+    /// Issue: It types the same letter multiple times sometimes
     IEnumerator TypeWriterCoroutine()
     {
         for (int i = 0; i < text.Length; i++)

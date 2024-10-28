@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,7 +17,7 @@ public class Loading : MonoBehaviour
     /// <summary>
     /// Loads the game by retrieving savedata, by reloading the game in Gamemanager and passing the savedata.
     /// </summary>
-    public void Load()
+    public void LoadButtonPressed()
     {
         // retrieve savedata, if there is any.
         SaveData saveData = GetSaveData();
