@@ -10,18 +10,52 @@ using UnityEngine.UI;
 
 public class DialogueManagerPlayTest
 {
-    [OneTimeSetUp]
-    public void CreateLoadingScene()
+    private GameManager     gm;
+    private DialogueManager dm;
+    
+    #region Setup
+    
+    /// <summary>
+    /// SetUp which is run for every test (currently WaitForSeconds is used, this will probably be changed in the
+    /// future. Refer to #testing channel for the correct implementation (sanders dingetje met WaitUntil)).
+    /// </summary>
+    [UnitySetUp]
+    public IEnumerator SetUp()
     {
-        // hoi
+        // Load scene
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded); // Wait for scene to load
+        yield return new WaitForSeconds(1);
+        Button newGameButton = GameObject.Find("NewGameButton").GetComponent<Button>();
+        newGameButton.onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        Button noButton = GameObject.Find("NoButton").GetComponent<Button>();
+        noButton.onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        Button storyAButton = GameObject.Find("StoryA_Button").GetComponent<Button>();
+        storyAButton.onClick.Invoke();
+        yield return new WaitForSeconds(2);
+
+        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        gm.StartDialogue(gm.currentCharacters[0]);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
+
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
     }
+
+    [TearDown]
+    public void TearDown()
+    {
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneController.sc.UnloadAdditiveScenes();
+    }
+    
+    #endregion
     
     [UnityTest]
     public IEnumerator OnDialogueCompleteTest()
     {
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
-
         var expected = dm.currentObject.Responses[0];
         
         dm.OnDialogueComplete();
@@ -36,30 +70,9 @@ public class DialogueManagerPlayTest
     /// <summary>
     /// Check if the back button works as intended when there are enough characters and questions left.
     /// </summary>
-    /*[UnityTest]
+    [UnityTest]
     public IEnumerator BackButtonTest()
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Get GameManager object
-        var g = GameObject.Find("GameManager");
-        var gm = g.GetComponent<GameManager>();
-
-        // Start the game
-        //gm.StartGame();
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Start the dialogue with a character
-        var character = gm.currentCharacters[0];
-        gm.StartDialogue(character);
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Get DialogueManager object
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
-        
         // Complete the dialogue and move to the BackButton screen.
         dm.OnDialogueComplete();
         yield return new WaitForSeconds(3); // Wait for it to load
@@ -89,27 +102,6 @@ public class DialogueManagerPlayTest
     [UnityTest]
     public IEnumerator ReplaceBackgroundTest([ValueSource(nameof(bools))] bool newBackground)
     {
-        // Load scene
-        SceneManager.LoadScene("Loading");
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Get GameManager object
-        var g = GameObject.Find("GameManager");
-        var gm = g.GetComponent<GameManager>();
-
-        // Start the game
-        //gm.StartGame();
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Start the dialogue with a character
-        var character = gm.currentCharacters[0];
-        gm.StartDialogue(character);
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
-        // Get DialogueManager object
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
-        
         // Get current background.
         var backgroundField = GameObject.Find("BackgroundField");
         var b1 = backgroundField.transform.GetChild(0);
@@ -142,6 +134,7 @@ public class DialogueManagerPlayTest
             // Check if background has not changed.
             Assert.AreEqual(b1, b3);
         }
-    }*/
-    
+
+        yield return null;
+    }
 }
