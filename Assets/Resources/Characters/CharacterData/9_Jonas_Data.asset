@@ -24,6 +24,7 @@ MonoBehaviour:
     - I am 23 years old.
   - question: 2
     answer:
+    - Life's good!
     - I am living in a privately rented home in a working class neighbourhood, together
       with with pet rodents.
     - I feel like I am that one weirdo there.
@@ -97,7 +98,7 @@ MonoBehaviour:
     - If something is bothering me, sometimes I don't handle it well.
     trait:
     - My negative trait is that I'm impantient.
-  - question: 17
+  - question: 19
     answer:
     - I would pay off my student debt and donate the rest of the money.
     - I think being a multimillionair is unethical.
@@ -111,13 +112,14 @@ MonoBehaviour:
     trait:
     - My political opinion is that people forget they are running a country and not
       a business that needs to make money.
-  - question: 18
+  - question: 20
     answer:
     - I am vegetarian.
     - Sometimes I accidentally eat vegan because animal products are expensive.
+    - So many people are hungry and we are throwing away milliards kilos of food.
     trait:
     - I am vegetarian.
-  - question: 19
+  - question: 18
     answer:
     - I think it is great that we have different levels because not everyone functions
       in the same way.
@@ -128,11 +130,16 @@ MonoBehaviour:
     trait:
     - I think the Dutch school system is too focussed on grading how well someone
       can reproduce something instead of applying it.
-  - question: 20
+  - question: 17
     answer:
-    - In general people assume that I am a lot younger than I am.
-    - Often people tell me they were suprised I am smart.
-    - They also assume I am depressed because of my alternative look.
+    - I care about the rights of minority groups.
+    - Trans rights to be more specific but also for religious and ethnic minorities.
+    - I think I'm passionate about social justice in general.
+    - Besides that I think trusting science is important.
+    - A lot of people are doing their own research and the legitimacy from real scientific
+      research is declining because of that.
     trait:
-    - People often told me they were suprised I am smart.
-  greetings: []
+    - I care about the rights of minority groups.
+  greetings:
+  - lines:
+    - Hello, nice to see you here.

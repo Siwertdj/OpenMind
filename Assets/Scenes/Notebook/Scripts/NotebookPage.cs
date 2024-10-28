@@ -83,10 +83,10 @@ public class NotebookPage
             Question.PositiveTrait => "Positive trait",
             Question.NegativeTrait => "Bad trait",
             Question.OddTrait => "Odd trait",
+            Question.SocialIssues => "Social Issues",
+            Question.EducationSystem => "Dutch education system",
             Question.Lottery => "Lottery",
             Question.Diet => "Diet",
-            Question.SchoolSystem => "Dutch education system",
-            Question.Assumptions => "Assumptions",
             _ => "",
         };
     }
