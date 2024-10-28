@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
@@ -15,8 +16,16 @@ public class TimelineManager : MonoBehaviour
     public PlayableDirector introStoryC;
     //public Button continueButton;
     public TMP_Text objectiveText;
+    public Sprite[] backgrounds;
+    public String[] storyText; 
+    public TMP_Text text;
+    public Image    background;
+    public Button   continueButton;
+    public Image    textBubble; 
     
     private PlayableDirector currentTimeline; 
+    private int              backgroundIndex = 0;
+    private int              textIndex       = -1; 
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
@@ -33,16 +42,16 @@ public class TimelineManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    currentTimeline = introStoryA;
+                    StoryA();
                     break;
                 case 1:
-                    currentTimeline = introStoryB;
+                    StoryB();
                     break;
                 case 2:
-                    currentTimeline = introStoryC;
+                    StoryC();
                     break;
                 default:
-                    currentTimeline = introStoryA;
+                    StoryA();
                     break;
             }
         }
@@ -52,19 +61,78 @@ public class TimelineManager : MonoBehaviour
             // Return to StorySelectScene adn try again.
             SceneManager.LoadScene("StorySelectScene");
         }
-        currentTimeline.Play();
     }
-
+    
+    public void ChangeText()
+    {
+        PauseCurrentTimeline();
+        textBubble.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
+        textIndex++;
+        try
+        {
+            text.text = storyText[textIndex];
+        }
+        catch
+        {
+            textIndex = 0;
+            text.text = storyText[textIndex];
+            Debug.LogError("Error: No more text to speak.");
+        }
+        
+    }
+    
+    private void StoryA()
+    {
+        currentTimeline = introStoryA;
+        currentTimeline.Play();
+        backgroundIndex = 0;
+        background.sprite = backgrounds[backgroundIndex];
+    }
+    
+    private void StoryB()
+    {
+        currentTimeline = introStoryB;
+        currentTimeline.Play();
+        text.text = "Story B";
+    }
+    
+    private void StoryC()
+    {
+        currentTimeline = introStoryC;
+        currentTimeline.Play();
+        text.text = "Story C";
+    }
+    
+    public void ChangeBackground()
+    {
+        backgroundIndex++;
+        try
+        {
+            background.sprite = backgrounds[backgroundIndex];
+        }
+        catch
+        {
+            Debug.LogError("Error: No more available backgrounds.");
+            backgroundIndex = 0;
+            background.sprite = backgrounds[backgroundIndex];
+        }
+        if(backgroundIndex > 0) PauseCurrentTimeline();
+    }
+    
+    
     public void PauseCurrentTimeline()
     {
+        continueButton.gameObject.SetActive(true);
         currentTimeline.Pause();
-        //continueButton.gameObject.SetActive(true);
     }
 
     public void ContinueCurrentTimeline()
     {
+        continueButton.gameObject.SetActive(false);
+        textBubble.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
         currentTimeline.Play();
-        //continueButton.gameObject.SetActive(false);
     }
 
     public void StartGame()
