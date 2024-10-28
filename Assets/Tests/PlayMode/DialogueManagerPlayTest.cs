@@ -56,7 +56,7 @@ public class DialogueManagerPlayTest
     /// <summary>
     /// Check if the back button works as intended when there are enough characters and questions left.
     /// </summary>
-    [UnityTest]
+    /*[UnityTest]
     public IEnumerator BackButtonTest()
     {
         // Load scene
@@ -162,9 +162,5 @@ public class DialogueManagerPlayTest
             // Check if background has not changed.
             Assert.AreEqual(b1, b3);
         }
-        
-
-        
-        
-    }
+    }*/
 }

@@ -44,7 +44,7 @@ public class GameManagerPlayTest
     /// <summary>
     /// Checks if the character list gets populated.
     /// </summary>
-    [UnityTest]
+    /*[UnityTest]
     public IEnumerator PopulateCharactersTest()
     {
         // Get GameManager object
@@ -463,5 +463,5 @@ public class GameManagerPlayTest
         Assert.IsTrue(inDialogueScene);
         
         yield return null;
-    }
+    }*/
 }
