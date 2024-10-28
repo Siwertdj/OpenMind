@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Willow
   id: 2
   avatar: {fileID: 0}
-  voicePitch: 1
+  voicePitch: 1.5
   answers:
   - question: 1
     answer:

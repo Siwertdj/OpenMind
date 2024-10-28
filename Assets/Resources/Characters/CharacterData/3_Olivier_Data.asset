@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Olivier
   id: 3
   avatar: {fileID: 0}
-  voicePitch: 1
+  voicePitch: 1.1
   answers:
   - question: 11
     answer:

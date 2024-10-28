@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Fatima
   id: 0
   avatar: {fileID: 21300000, guid: bcda24061dd8336488702411d21f66b9, type: 3}
-  voicePitch: 1.5
+  voicePitch: 1.7
   answers:
   - question: 5
     answer:

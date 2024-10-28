@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Youssef
   id: 5
   avatar: {fileID: 0}
-  voicePitch: 1
+  voicePitch: 1.2
   answers:
   - question: 1
     answer:

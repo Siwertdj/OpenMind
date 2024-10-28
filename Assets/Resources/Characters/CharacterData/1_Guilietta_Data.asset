@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: GiulIetta
   id: 1
   avatar: {fileID: 0}
-  voicePitch: 1.3
+  voicePitch: 1.5
   answers:
   - question: 10
     answer:
