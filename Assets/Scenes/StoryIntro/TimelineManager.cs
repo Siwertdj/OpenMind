@@ -70,9 +70,7 @@ public class TimelineManager : MonoBehaviour
     public void StartGame()
     {
         StartCoroutine(LoadGame());
-        
     }
-    
     
     // TODO: This is duplicate code, also found in Loading.cs. Make this a global thing?
     IEnumerator LoadGame()

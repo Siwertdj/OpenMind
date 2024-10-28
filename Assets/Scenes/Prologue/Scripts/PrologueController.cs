@@ -59,7 +59,7 @@ public class CutsceneController : MonoBehaviour
         imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
         continueButton.gameObject.SetActive(false);  // Disable continuebutton
         playableDirector.Play(); // Resume timeline.
-        StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
+        //StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>
