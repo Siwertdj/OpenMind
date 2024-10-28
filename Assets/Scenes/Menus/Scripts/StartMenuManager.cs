@@ -15,6 +15,8 @@ public class StartMenuManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+
+    public Canvas copyright;
     
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,9 @@ public class StartMenuManager : MonoBehaviour
         // If there are no saves, disable the button
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
+        
+        // Keep the copyright text on the screen in all scenes
+        DontDestroyOnLoad(copyright);
     }
     
     public void OpenSkipProloguePrompt()
