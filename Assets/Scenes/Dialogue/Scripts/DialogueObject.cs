@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +9,12 @@ using UnityEngine;
 /// </summary>
 public abstract class DialogueObject
 {
+    protected GameObject[] background;
+
     /// <summary>
     /// The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object)
     /// </summary>
-    public abstract List<DialogueObject> Responses { get; set; }
+    public List<DialogueObject> Responses = new();
 
     /// <summary>
     /// Executes the logic of the given dialogue object
@@ -27,14 +29,6 @@ public abstract class DialogueObject
 public class SpeakingObject : DialogueObject
 {
     public List<string> dialogue;
-    public GameObject[] background;
-
-    private List<DialogueObject> _responses = new();
-    public override List<DialogueObject> Responses
-    {
-        get { return _responses; }
-        set { _responses = value; }
-    }
 
     public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
@@ -60,29 +54,10 @@ public class SpeakingObject : DialogueObject
 /// </summary>
 public class TerminateDialogueObject : DialogueObject
 {
-    private List<DialogueObject> _responses = new();
-    public override List<DialogueObject> Responses
-    {
-        get { return _responses; }
-        set { _responses = value; }
-    }
-
-    Action post;
-
-    public TerminateDialogueObject() { }
-
-    public TerminateDialogueObject(Action post)
-    {
-        this.post = post;
-    }
-
     public override void Execute()
     {
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
         // Also pass along the currentObject, which is used for the Epilogue scene.
         DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);
-        
-        // Invoke post function if given
-        post?.Invoke();
     }
 }

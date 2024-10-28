@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,14 +9,6 @@ using UnityEngine;
 public class ResponseObject : DialogueObject
 {
     public Question question;
-    public GameObject[] background;
-    
-    public List<DialogueObject> _responses = new();
-    public override List<DialogueObject> Responses
-    {
-        get { return _responses; }
-        set { _responses = value; }
-    }
 
     public ResponseObject(Question question, GameObject[] background)
     {

@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
         // Select the Culprit
         else
         {
-            sc.TransitionScene(
+            _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
