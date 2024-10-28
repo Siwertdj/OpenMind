@@ -88,8 +88,15 @@ public class DialogueManager : MonoBehaviour
         // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
         if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
             CreateOpenQuestion();
-        
-        // Execute next dialogue object
+
+        ExecuteNextObject();
+    }
+
+    /// <summary>
+    /// Gets the current object's first response and executes it.
+    /// </summary>
+    public void ExecuteNextObject()
+    {
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
     }
@@ -238,10 +245,8 @@ public class DialogueManager : MonoBehaviour
         
         // Reset the text from the input field.
         inputField.GetComponentInChildren<TMP_InputField>().text = "";
-        
-        // Go to the next part of the dialogue.
-        currentObject = currentObject.Responses[0];
-        currentObject.Execute();
+
+        ExecuteNextObject();
     }
     /// <summary>
     /// Helper function for CreateBackButton.

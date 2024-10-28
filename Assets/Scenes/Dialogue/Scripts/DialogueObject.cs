@@ -14,7 +14,7 @@ public abstract class DialogueObject
     /// <summary>
     /// The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object)
     /// </summary>
-    public List<DialogueObject> Responses = new();
+    public List<DialogueObject> Responses { get; set; } = new();
 
     /// <summary>
     /// Executes the logic of the given dialogue object
