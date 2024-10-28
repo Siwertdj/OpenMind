@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
-using UnityEngine.TextCore.Text;
 using Random = System.Random;
 
+/// <summary>
+/// The manager for the entire game, where most of the magic happens.
+/// instances of this class can be passed to all other classes.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     [Header("Game Resources")]
@@ -62,52 +63,57 @@ public class GameManager : MonoBehaviour
     }
     #endregion
     
-    // Called when this script instance is being loaded
+    /// <summary>
+    /// When loaded, make a static instance of this class so it can be reached from other places.
+    /// Also make the toolbox persistent.
+    /// </summary>
     private void Awake()
     {
-        // make GameManager static, so it can be easily reached
         gm = this;
-
-        // Make parentobject (the toolbox) persistent, so that all objects in the toolbox remain persistent.
         DontDestroyOnLoad(gameObject.transform.parent);
     }
     
-    // Calls FirstCycle(), this function is called by the NewGame button on the StartScreen
+    /// <summary>
+    /// Starts the game.
+    /// If a story is passed along, starts a new game with that story.
+    /// If savedata is passed along loads the game with that data.
+    /// </summary>
+    /// <param name="sender">The sender, sends either a <see cref="StoryObject"/> or some <see cref="SaveData"/>.</param>
+    /// <param name="data">The story that the player has chosen, or the savedata that needs to be loaded.</param>
     public void StartGame(Component sender, params object[] data)
     {
         // Set reference to static SceneController
         sc = SceneController.sc;
-
         // Empty some variables so they can be initialized later.
         currentCharacters = new List<CharacterInstance>();
-        
         // Set the gamestory based on the data we passed
         if (data[0] is StoryObject storyObject)
         {
-            // Set the story object
             story = storyObject;
-            // Initialize a new game
             NewGame();
         }
+        // Load the savedata
         else if (data[0] is SaveData saveData)
         {
             LoadGame(saveData);
         }
     }
 
+    /// <summary>
+    /// Loads the game using savedata passed along.
+    /// </summary>
+    /// <param name="saveData">savedata that needs to be loaded.</param>
     public void LoadGame(SaveData saveData)
     {
         // Fetch all storyobjects from the Resources/Stories-folder
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
         // Set this game's story to the storyobject (which we fetched) which the correct ID (as per the SaveData)
         story = stories.First(s => s.storyID == saveData.storyId);
-
+        
         //assign numQuestionsAsked
         numQuestionsAsked = saveData.numQuestionsAsked;
-        
         //clear all current characters
         currentCharacters.Clear();
-        
         //create all current characters
         currentCharacters.AddRange(characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
@@ -136,22 +142,19 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
-        
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
 
     /// <summary>
-    /// This private method initializes a new game.
+    /// Initializes a new game.
     /// </summary>
     private void NewGame()
     {
         // Populate the list of characters
         PopulateCharacters();
-        
         // Create new notebook
         notebookData = new NotebookData();
-
         FirstCycle();
     }
     
@@ -168,12 +171,9 @@ public class GameManager : MonoBehaviour
         {
             // Choose a victim, make them inactive, and print the hints to the console.
             string victimName = ChooseVictim();
-            // Transition-effect
-            //CycleTransition(victimName);
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
-
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -187,20 +187,17 @@ public class GameManager : MonoBehaviour
     {
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
-        // Transition
-        //CycleTransition(victimName);
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
+        // Tell the player what happened in between cycles
         var dialogue = new List<string> {
             $"{victimName} has disappeared.",
             "There is some new information about the culprit:",
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
-
         // Creates Dialogue that says who disappeared and provides a new hint.
         var dialogueObject = new SpeakingObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
-
         StartDialogue(dialogueObject);
     }
 
@@ -288,7 +285,6 @@ public class GameManager : MonoBehaviour
 
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
-        
         return victim.characterName;
     }
     
@@ -326,19 +322,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void RetryStoryScene()
     {
-        Debug.Log("Retry story scene");
-
         // Unload all active scenes except the story scene
         SceneController.sc.UnloadAdditiveScenes();
-        
-        // Reset these characters
+        // Reset the characters
         foreach (CharacterInstance character in currentCharacters)
         {
             // Reset the questions and active-status of this character
             character.isActive = true;
             character.InitializeQuestions();
         }
-        
         // Start the game again
         FirstCycle();
     }
@@ -350,8 +342,6 @@ public class GameManager : MonoBehaviour
     {
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
-        
-        // reset game
         NewGame();     
     }
 
@@ -359,7 +349,7 @@ public class GameManager : MonoBehaviour
     /// Performs a visual fade-in/out when called,
     /// displaying the victim's name and their fate, depending on the Story we are currently in.
     /// </summary>
-    /// <param name="victimName"></param>
+    /// <param name="victimName">The name of the victim.</param>
     private void CycleTransition(string victimName)
     {
         string victimFate = story.victimDialogue;
@@ -370,6 +360,10 @@ public class GameManager : MonoBehaviour
 
     // This region contains methods regarding dialogue
     #region Dialogue
+    /// <summary>
+    /// Starts a new dialogue.
+    /// </summary>
+    /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(DialogueObject dialogueObject)
     {
         // Transition to dialogue scene and await the loading operation
@@ -397,25 +391,21 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Can be called to start Dialogue with a specific character, taking a CharacterInstance as parameter.
     /// This toggles-off the NPCSelectScene,
-    /// 
     /// and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter.
     /// Then, it loads the DialogueScene.
     /// </summary>
-    /// <param name="character"></param>
+    /// <param name="character">The character that the dialogue will be with.</param>
     ///  TODO: Should use the id of a character instead of the CharacterInstance.
     public async void StartDialogue(CharacterInstance character)
     {
         GameObject[] background = CreateDialogueBackground(character, story.dialogueBackground);
-
         var dialogueObject = new SpeakingObject(
             character.GetGreeting(),
             background);
-        
         dialogueObject.Responses.Add(new QuestionObject(background));
 
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
-
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
@@ -423,12 +413,17 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition);
 
         gameState = GameState.NpcDialogue;
-
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
 
+    /// <summary>
+    /// Creates a background for the coming dialogue.
+    /// </summary>
+    /// <param name="character">The character the dialogue will be with.</param>
+    /// <param name="background">The background for the dialogue.</param>
+    /// <returns></returns>
     private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
         List<GameObject> background_ = new();
@@ -440,7 +435,6 @@ public class GameManager : MonoBehaviour
             avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
             background_.Add(avatarPrefab);
         }
-
         return background_.ToArray();
     }
     
@@ -478,7 +472,6 @@ public class GameManager : MonoBehaviour
                 // If we want to start dialogue with a different person in the epilogue,
                 // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
                 // which will be used for the dialogue for dialogue with the next person.
-                
                 onDialogueStart.Raise(this, currentObject.Responses[0], culprit);
             }
             else
@@ -490,7 +483,6 @@ public class GameManager : MonoBehaviour
                         SceneController.SceneName.DialogueScene,
                         SceneController.SceneName.GameWinScene,
                         SceneController.TransitionType.Transition);
-
                     gameState = GameState.GameWon;
                 }
                 else
@@ -500,7 +492,6 @@ public class GameManager : MonoBehaviour
                         SceneController.SceneName.DialogueScene,
                         SceneController.SceneName.GameOverScene,
                         SceneController.TransitionType.Transition);
-                
                     gameState = GameState.GameLoss;
                 }
             }
@@ -543,7 +534,6 @@ public class GameManager : MonoBehaviour
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
         gameState = GameState.Epilogue;
-
         // Get the epilogue dialogue.
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
 
@@ -557,14 +547,13 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-        
         onDialogueStart.Raise(this, dialogueObject, character);
     }
 
     /// <summary>
     /// Method which returns the DialogueObjects that need to be used at the start of the epilogue.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>A <see cref="DialogueObject"/> that is used at the start of the epilogue.</returns>
     DialogueObject GetEpilogueStart(GameObject[] background)
     {
         var dialogueObject = new SpeakingObject(remainingDialogueScenario[0], background);
@@ -598,13 +587,12 @@ public class GameManager : MonoBehaviour
     // This region contains methods that check certain properties that affect the Game State.
     #region CheckProperties
     /// <summary>
-    /// Checks if the number of characters
-    /// ..in the currently active game (selected in the 'currentCharacters'-list)
-    /// ..that are also 'active' (the isActive-bool of these CharacterInstances)
+    /// Checks if the number of characters in the currently active game (selected in the 'currentCharacters'-list)
+    /// that are also 'active' (the isActive-bool of these CharacterInstances)
     /// is more than the gamemanager variable 'numberOfActiveCharacters', which is the minimum amount of characters
     /// that should be remaining until we transition into selecting a culprit.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>True if more, False if not.</returns>
     public bool EnoughCharactersRemaining()
     {
         int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
@@ -637,8 +625,6 @@ public class GameManager : MonoBehaviour
                 : (i + 2 == currentCharacters.Count ? " and " : ", ")));
         }
         Debug.Log("The " + currentCharacters.Count + " characters currently in game are " + output);
-
-        
         //dialogueRecipient = currentCharacters[id];
         SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
     }    
