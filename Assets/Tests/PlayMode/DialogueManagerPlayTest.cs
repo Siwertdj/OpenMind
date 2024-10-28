@@ -57,13 +57,8 @@ public class DialogueManagerPlayTest
     public IEnumerator OnDialogueCompleteTest()
     {
         var expected = dm.currentObject.Responses[0];
-        
         dm.OnDialogueComplete();
-
-        var actual = dm.currentObject;
-        
-        Assert.AreEqual(expected, actual);
-        
+        Assert.AreEqual(expected, dm.currentObject);
         yield return null;
     }
 
@@ -75,8 +70,7 @@ public class DialogueManagerPlayTest
     {
         // Complete the dialogue and move to the BackButton screen.
         dm.OnDialogueComplete();
-        yield return new WaitForSeconds(3); // Wait for it to load
-        
+
         // Check if we are currently in the gameState NpcDialogue
         Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
         bool inDialogueScene = SceneManager.GetSceneByName("DialogueScene").isLoaded;
