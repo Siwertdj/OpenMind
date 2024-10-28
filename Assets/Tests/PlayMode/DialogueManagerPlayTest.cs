@@ -68,7 +68,7 @@ public class DialogueManagerPlayTest
         var gm = g.GetComponent<GameManager>();
 
         // Start the game
-        gm.StartGame();
+        //gm.StartGame();
         yield return new WaitForSeconds(3); // Wait for it to load
         
         // Start the dialogue with a character
@@ -118,7 +118,7 @@ public class DialogueManagerPlayTest
         var gm = g.GetComponent<GameManager>();
 
         // Start the game
-        gm.StartGame();
+        //gm.StartGame();
         yield return new WaitForSeconds(3); // Wait for it to load
         
         // Start the dialogue with a character

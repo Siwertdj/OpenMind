@@ -125,14 +125,11 @@ public class GameManager : MonoBehaviour
             return c;
         }).ToList();
         
-        //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
-        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }));
-        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
+        }).ToDictionary(pair => pair.Key, pair => pair.Value);
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
