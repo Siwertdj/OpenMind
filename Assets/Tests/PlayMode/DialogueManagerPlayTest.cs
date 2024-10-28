@@ -10,6 +10,29 @@ using UnityEngine.UI;
 
 public class DialogueManagerPlayTest
 {
+    [OneTimeSetUp]
+    public void CreateLoadingScene()
+    {
+        // hoi
+    }
+    
+    [UnityTest]
+    public IEnumerator OnDialogueCompleteTest()
+    {
+        var d = GameObject.Find("DialogueManager");
+        var dm = d.GetComponent<DialogueManager>();
+
+        var expected = dm.currentObject.Responses[0];
+        
+        dm.OnDialogueComplete();
+
+        var actual = dm.currentObject;
+        
+        Assert.AreEqual(expected, actual);
+        
+        yield return null;
+    }
+
     /// <summary>
     /// Check if the back button works as intended when there are enough characters and questions left.
     /// </summary>
