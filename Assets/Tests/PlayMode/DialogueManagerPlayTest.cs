@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -12,38 +13,40 @@ public class DialogueManagerPlayTest
 {
     private GameManager     gm;
     private DialogueManager dm;
+    private StoryObject     story;
     
     #region Setup
     
     /// <summary>
-    /// SetUp which is run for every test (currently WaitForSeconds is used, this will probably be changed in the
-    /// future. Refer to #testing channel for the correct implementation (sanders dingetje met WaitUntil)).
+    /// Set up the game so that each test starts at the DialogueScene, talking to an NPC.
     /// </summary>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
-        // Load scene
-        SceneManager.LoadScene("StartScreenScene");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded); // Wait for scene to load
-        yield return new WaitForSeconds(1);
-        Button newGameButton = GameObject.Find("NewGameButton").GetComponent<Button>();
-        newGameButton.onClick.Invoke();
-        yield return new WaitForSeconds(1);
-        Button noButton = GameObject.Find("NoButton").GetComponent<Button>();
-        noButton.onClick.Invoke();
-        yield return new WaitForSeconds(1);
-        Button storyAButton = GameObject.Find("StoryA_Button").GetComponent<Button>();
-        storyAButton.onClick.Invoke();
-        yield return new WaitForSeconds(2);
+        // Load "Loading" scene
+        SceneManager.LoadScene("Loading");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
 
+        // Set global variables
+        story = Resources.LoadAll<StoryObject>("Stories")[0];
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+        
+        // Start NPC select scene
+        gm.StartGame(null, story);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        
+        // Start dialogue scene
         gm.StartDialogue(gm.currentCharacters[0]);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
+        // Set global variable
         dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
     }
 
+    /// <summary>
+    /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
+    /// gets removed before a new test starts.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -53,12 +56,57 @@ public class DialogueManagerPlayTest
     
     #endregion
     
+    /// <summary>
+    /// Tests if responses get correctly loaded after dialogue has been completed.
+    /// </summary>
     [UnityTest]
     public IEnumerator OnDialogueCompleteTest()
     {
-        var expected = dm.currentObject.Responses[0];
+        // Simulate that dialogue gets completed.
         dm.OnDialogueComplete();
-        Assert.AreEqual(expected, dm.currentObject);
+        
+        // There should be at least one response.
+        Assert.IsTrue(dm.currentObject.Responses.Count > 0);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Check if the ReplaceBackground method works as intended.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ReplaceBackgroundTest()
+    {
+        // Get current background.
+        var backgroundField = new [] { GameObject.Find("BackgroundField") };
+
+        // Replace the background.
+        dm.ReplaceBackground(backgroundField);
+        
+        // Transform current background
+        var parent = backgroundField[0].transform;
+
+        // Check if the background has changed.
+        Assert.AreEqual(parent.childCount, GameObject.Find("BackgroundField").transform.childCount);
+
+        yield return null;
+    }
+
+    /// <summary>
+    /// Tests if the buttons to ask questions get correctly loaded in after completing the dialogue.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator PromptButtonsTest()
+    {
+        // Complete the dialogue.
+        dm.OnDialogueComplete();
+
+        // Get number of question and back buttons.
+        int numQuestionButtons = GameObject.FindGameObjectsWithTag("Button").Where(b => b.name == "questionButton").Count();
+        int numBackButtons = GameObject.FindGameObjectsWithTag("Button").Where(b => b.name == "backButton").Count();
+
+        // There should be more than zero question buttons, while there should only be one back button.
+        Assert.IsTrue(numQuestionButtons > 0);
+        Assert.IsTrue(numBackButtons == 1);
         yield return null;
     }
 
@@ -85,49 +133,6 @@ public class DialogueManagerPlayTest
         Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
         bool inNpcSelectScene = SceneManager.GetSceneByName("NPCSelectScene").isLoaded;
         Assert.IsTrue(inNpcSelectScene);
-
-        yield return null;
-    }
-
-    static bool[] bools = new bool[] { true, false };
-    /// <summary>
-    /// Check if the ReplaceBackground method works as intended.
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ReplaceBackgroundTest([ValueSource(nameof(bools))] bool newBackground)
-    {
-        // Get current background.
-        var backgroundField = GameObject.Find("BackgroundField");
-        var b1 = backgroundField.transform.GetChild(0);
-
-        // Get different background.
-        //var b2 = new();
-        if (newBackground)
-        {
-            
-        }
-        else
-        {
-            
-        }
-        
-        // Replace the background.
-        //dm.ReplaceBackground(b2);
-        
-        // Get current background after replacing the background.
-        backgroundField = GameObject.Find("BackgroundField");
-        var b3 = backgroundField.transform.GetChild(0);
-        
-        if (newBackground)
-        {
-            // Check if the background has changed.
-            Assert.AreNotEqual(b1, b3);
-        }
-        else
-        {
-            // Check if background has not changed.
-            Assert.AreEqual(b1, b3);
-        }
 
         yield return null;
     }

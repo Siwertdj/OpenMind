@@ -8,6 +8,11 @@ using UnityEngine.SceneManagement;
 
 public class DialogueManagerEditTest
 {
+    /// <summary>
+    /// Checks if the "GetPromptText" function gives the correct answer to a given question.
+    /// </summary>
+    /// <param name="question">The type of question that is being asked.</param>
+    /// <param name="expected">The answer that the function should put out.</param>
     [Test]
     [TestCase(Question.Name, "What's your name?")]
     [TestCase(Question.Age, "How old are you?")]
@@ -24,10 +29,13 @@ public class DialogueManagerEditTest
     [TestCase(Question.OddTrait, "Do you have any odd traits?")]
     public void GetPromptTextTest(Question question, string expected)
     {
+        // Create DialogueManager instance for the test
         DialogueManager dm = new DialogueManager();
 
+        // Get the actual answer
         string actual = dm.GetPromptText(question);
         
+        // Watch if it the actual output is equal to the expected output
         Assert.AreEqual(expected, actual);
     }
 }
