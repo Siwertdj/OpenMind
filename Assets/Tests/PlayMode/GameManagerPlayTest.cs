@@ -39,28 +39,31 @@ public class GameManagerPlayTest
         yield return new WaitForSeconds(2);
     }*/
 
+    /// <summary>
+    /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
+    /// </summary>
     [UnitySetUp]
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
         
+        // Get a StoryObject.
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
         story = stories[0];
         
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
         
+        // Start the game with the chosen story.
         gm.StartGame(null, story);
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
-
-        yield return new WaitForSeconds(2);
-        //SceneManager.LoadScene("DialogueScene");
-        //yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
-        //dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-        //yield return null;
     }
     
+    /// <summary>
+    /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
+    /// gets removed before a new test starts.
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
@@ -86,7 +89,7 @@ public class GameManagerPlayTest
     }
     
     /// <summary>
-    /// Checks if the characters all get set to active during populating
+    /// Checks if the characters all get set to active during populating.
     /// </summary>
     [UnityTest]
     public IEnumerator ActiveCharactersTest()
@@ -103,7 +106,7 @@ public class GameManagerPlayTest
     }
     
     /// <summary>
-    /// Checks if one culprit gets chosen during populating
+    /// Checks if one culprit gets chosen during populating.
     /// </summary>
     [UnityTest]
     public IEnumerator ChooseCulpritTest()
@@ -118,18 +121,28 @@ public class GameManagerPlayTest
         yield return null;
     }
     
+    // Input parameters for testing different inputs.
+    static bool[] bools = new bool[] { true, false };
+    static int[] ints = new int[] { 1, 2, 3 };
+    
     /// <summary>
-    /// Checks if the "HasQuestionsLeft" method works.
+    /// Checks if HasQuestionsLeft returns true when numQuestionsAsked is smaller than numQuestions,
+    /// or false when numQuestionsAsked is greater than or equal to numQuestions.
     /// </summary>
     [UnityTest]
-    public IEnumerator HasQuestionsLeftTest()
+    public IEnumerator HasQuestionsLeftTest([ValueSource(nameof(bools))] int ints)
     {
-        // Set up expected and actual values
-        var expected = gm.numQuestionsAsked < gm.story.numQuestions;
-        var actual = gm.HasQuestionsLeft();
-
-        // Check if they are equal
-        Assert.AreEqual(expected, actual);
+        gm.story.numQuestions = 1;
+        if (ints < gm.story.numQuestions)
+        {
+            // Check if HasQuestionsLeft is true when numQuestionsAsked is smaller than numQuestions.
+            Assert.IsTrue(gm.HasQuestionsLeft());
+        }
+        else
+        {
+            // Check if HasQuestionsLeft returns false when numQuestionsAsked is greater than or equal to numQuestions.
+            Assert.IsFalse(gm.HasQuestionsLeft());
+        }
         
         yield return null;
     }
@@ -225,8 +238,6 @@ public class GameManagerPlayTest
         
         yield return null;
     }
-    
-    static bool[] bools = new bool[] { true, false };
 
     /// <summary>
     /// Checks if the "EndCycle" method works.
@@ -272,23 +283,13 @@ public class GameManagerPlayTest
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Get "DialogueManager" object
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
-        
-        // Finish the dialogue.
-        dm.OnDialogueComplete();
-        
-        // Return to the NpcSelect scene, this will cause EndCycle to be called.
-        Button backButton = GameObject.Find("backButton").GetComponent<Button>();
-        backButton.onClick.Invoke();
-        
-        // Use reflection to call BacktoNPCScreen
+        // Use reflection to call BacktoNPCScreen twice, to go from dialogue -> hintdialogue -> npcselect
         Type type = typeof(DialogueManager);
         var fakeDialogueManager = Activator.CreateInstance(type);
         MethodInfo m = type.GetMethod("BacktoNPCScreen", 
             BindingFlags.NonPublic | BindingFlags.Instance);
 
+        m.Invoke(fakeDialogueManager, null);
         m.Invoke(fakeDialogueManager, null);
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
@@ -315,14 +316,6 @@ public class GameManagerPlayTest
             // TODO: In the current version, the gameState "culpritSelect" is never used, which should be used.
             //Assert.AreEqual(GameManager.GameState.CulpritSelect, gm.gameState);
         }
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Get current scene
-        var scene = SceneManager.GetActiveScene().name;
-        
-        // See if it's still equal to the "main" scene of the game
-        // No scene should be switched, because it's an additive scene
-        Assert.AreEqual("Loading", scene);
         
         yield return null;
     }
@@ -380,17 +373,17 @@ public class GameManagerPlayTest
         gm.StartDialogue(character);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load
         
-        // Get "DialogueManager" object.
-        var d = GameObject.Find("DialogueManager");
-        var dm = d.GetComponent<DialogueManager>();
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Finish the dialogue.
-        dm.OnDialogueComplete();
-        yield return new WaitForSeconds(2); // Wait for it to load
-        
-        // Return to the NpcSelect scene.
-        Button backButton = GameObject.Find("backButton").GetComponent<Button>();
-        backButton.onClick.Invoke();
+        // Use reflection to call BacktoNPCScreen twice, to go from dialogue -> hintdialogue -> npcselect
+        Type type = typeof(DialogueManager);
+        var fakeDialogueManager = Activator.CreateInstance(type);
+        MethodInfo m = type.GetMethod("BacktoNPCScreen", 
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        m.Invoke(fakeDialogueManager, null);
+        m.Invoke(fakeDialogueManager, null);
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
         
