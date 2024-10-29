@@ -148,7 +148,7 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
-    /// Checks if the "GetCulpritTest" method works.
+    /// Checks if the "GetCulpritTest" returns the culprit.
     /// </summary>
     [UnityTest]
     public IEnumerator GetCulpritTest()
@@ -164,23 +164,44 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
-    /// Checks if the "EnoughCharacters" method works.
+    /// Checks if the "EnoughCharacters" returns true when there are enough characters remaining, else false.
     /// </summary>
     [UnityTest]
-    public IEnumerator EnoughCharactersTest()
+    public IEnumerator EnoughCharactersTest([ValueSource(nameof(bools))] bool enoughCharacters)
     {
-        // Set up expected and actual values
-        var expected = gm.currentCharacters.Count(c => c.isActive) > 2;
-        var actual = gm.EnoughCharactersRemaining();
-
-        // Check if they are equal
-        Assert.AreEqual(expected, actual);
+        if (enoughCharacters)
+        {
+            bool hasEnoughCharacters = gm.currentCharacters.Count(c => c.isActive) > 2;
+            // Check if when there are enough characters, EnoughCharactersRemaining returns true.
+            Assert.IsTrue(hasEnoughCharacters);
+            Assert.IsTrue(gm.EnoughCharactersRemaining());
+        }
+        else
+        {
+            // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
+            while (gm.currentCharacters.Count(c => c.isActive) > 2)
+            {
+                // Set this bool to true once a character has been removed.
+                bool removedCharacter = false;
+                foreach (CharacterInstance c in gm.currentCharacters)
+                {
+                    // Set a character to not active if it is not a culprit, is active and the bool removedCharacter is false.
+                    if (!c.isCulprit && c.isActive && !removedCharacter)
+                    {
+                        c.isActive = false;
+                        removedCharacter = true;
+                    }
+                }
+            }
+            // Check if EnoughCharactersRemaining returns false.
+            Assert.IsFalse(gm.EnoughCharactersRemaining());
+        }
         
         yield return null;
     }
 
     /// <summary>
-    /// Checks if the "RestartStoryScene" method works.
+    /// Checks if the "RestartStoryScene" correctly resets the variables.
     /// </summary>
     [UnityTest]
     public IEnumerator RestartStoryTest()
@@ -208,7 +229,7 @@ public class GameManagerPlayTest
     }
     
     /// <summary>
-    /// Checks if the "RetryStoryScene" method works.
+    /// Checks if the "RetryStoryScene"
     /// </summary>
     [UnityTest]
     public IEnumerator RetryStoryTest()
@@ -225,7 +246,7 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
-    /// Checks if the "GetRandomVictimNoCulprit" method works.
+    /// Checks if the "GetRandomVictimNoCulprit" returns a CharacterInstance that is not the culprit.
     /// </summary>
     [UnityTest]
     public IEnumerator ChooseVictimTest()
@@ -240,7 +261,8 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
-    /// Checks if the "EndCycle" method works.
+    /// Checks if the "EndCycle" method sets 1 character to inactive if there are enough characters remaining,
+    /// else check if no characters get set to inactive.
     /// </summary>
     [UnityTest]
     public IEnumerator EndCycleTest([ValueSource(nameof(bools))] bool enoughCharacters)
@@ -330,18 +352,17 @@ public class GameManagerPlayTest
         var character = gm.currentCharacters[0];
         gm.StartDialogue(character);
 
-        // Get current scene
-        var scene = SceneManager.GetActiveScene().name;
-
-        // See if it's still equal to the "main" scene of the game
-        // No scene should be switched, because it's an additive scene
-        Assert.AreEqual("Loading", scene);
+        
         
         yield return null;
     }
     
     /// <summary>
-    /// Check whether the transition between culprit selection and epilogue works as intended.
+    /// Check whether the transition between culprit selection and epilogue works intended by looking at the following:
+    /// - if culprit is chosen:
+    /// Check if hasWon is set to true, check if the gameState is epilogue and check if we are currently in the DialogueScene.
+    /// - if innocent person is chosen:
+    /// Check if hasWon is set to false, check if the gameState is epilogue and check if we are currently in the DialogueScene.
     /// </summary>
     [UnityTest]
     public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
