@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using UnityEngine.Events;
+using System.Xml.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -103,7 +104,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     /// <param name="dialogue"></param>
     /// <param name="pitch"></param>
-    public void WriteDialogue(List<string> dialogue, float pitch = 1)
+    public void WriteDialogue(List<string> dialogue, List<DialogueObject.Mood> moods, GameObject[] background,  float pitch = 1)
     {
         // Enable the dialogue field
         dialogueField.SetActive(true);
@@ -117,7 +118,7 @@ public class DialogueManager : MonoBehaviour
 
         // Animator write dialogue to the screen.
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, pitch);
+        animator.WriteDialogue(dialogue, moods, background, pitch);
     }
 
     /// <summary>
@@ -134,8 +135,30 @@ public class DialogueManager : MonoBehaviour
 
         // Instantiate new background
         foreach (GameObject element in newBackground)
+        {
             Instantiate(element).transform.parent = parent;
 
+            // Change player sprite to set mood to dialogueObject (nog geen idee hoe )
+            /*
+            if (element.CompareTag("Player"))
+            {
+                switch (currentRecipient.)
+                {
+                    case DialogueObject.Mood.Neutral:
+                        Debug.Log("Feeling neutral");
+                        break;
+                    case DialogueObject.Mood.Happy:
+                        Debug.Log("Feeling happy");
+                        break;
+                    case DialogueObject.Mood.Sad:
+                        Debug.Log("Feeling sad");
+                        break;
+                    case DialogueObject.Mood.Angry:
+                        Debug.Log("Feeling angry");
+                        break;
+                }
+            }*/
+        }
     }
 
     /// <summary>

@@ -29,6 +29,7 @@ public class ResponseObject : DialogueObject
         var dm = DialogueManager.dm;
 
         List<string> answer = GetQuestionResponse(question);
+        List<DialogueObject.Mood> mood = GetQuestionResponseMood(question);
 
         if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionObject(background));
@@ -36,7 +37,7 @@ public class ResponseObject : DialogueObject
             Responses.Add(new TerminateDialogueObject());
 
         dm.ReplaceBackground(background);
-        dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
+        dm.WriteDialogue(answer, mood, background, DialogueManager.dm.currentRecipient.pitch);
     }
 
     // Gets character's response to the given question
@@ -52,5 +53,19 @@ public class ResponseObject : DialogueObject
         
         // Return answer to the question
         return character.Answers[question];
+    }
+
+    private List<DialogueObject.Mood> GetQuestionResponseMood(Question question)
+    {
+        GameManager.gm.AssignAmountOfQuestionsRemaining(GameManager.gm.AmountOfQuestionsRemaining() - 1);
+
+        CharacterInstance character = DialogueManager.dm.currentRecipient;
+        character.RemainingQuestions.Remove(question);
+
+        // Write answers to notebook
+        //character.AskedQuestions.Add(question);
+
+        // Return answer to the question
+        return character.Moods[question];
     }
 }

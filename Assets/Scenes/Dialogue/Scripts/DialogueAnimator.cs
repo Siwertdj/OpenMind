@@ -16,6 +16,8 @@ public class DialogueAnimator : MonoBehaviour
     public bool InDialogue = false; // Is there dialogue on the screen?
     private bool isOutputting = false; // Is currently being written?
     private List<string> currentDialogue;
+    private List<DialogueObject.Mood> currentMood = new List<DialogueObject.Mood>();
+    private GameObject[] background;
     private int dialogueIndex = 0;
     private string currentSentence = "";
 
@@ -29,8 +31,10 @@ public class DialogueAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void WriteDialogue(List<string> output, float pitch = 1)
+    public void WriteDialogue(List<string> output, List<DialogueObject.Mood> moods, GameObject[] background, float pitch = 1)
     {
+
+
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
@@ -39,6 +43,22 @@ public class DialogueAnimator : MonoBehaviour
 
             InDialogue = true;
             currentDialogue = output;
+
+            //currentMood = moods;
+            //not every time is mood given, because not always does it matter. Those times it should be neutral expression
+            if (moods == null)
+                currentMood.Add(DialogueObject.Mood.Neutral);
+            else
+                currentMood = moods;
+
+            this.background = background;
+
+            //if (currentMood.Count < 1)
+            //    Debug.Log("uhh test");
+            //    currentMood.Add(DialogueObject.Mood.Neutral);
+            //change facial expression at start
+            
+
             WriteSentence(output[dialogueIndex]);
         }
     }
@@ -47,6 +67,7 @@ public class DialogueAnimator : MonoBehaviour
     {
         if (!isOutputting)
         {
+            ChangeMood(background, currentMood, dialogueIndex);
             isOutputting = true;
             currentSentence = output;
             outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
@@ -68,6 +89,7 @@ public class DialogueAnimator : MonoBehaviour
         }
         else if (dialogueIndex < currentDialogue.Count)
         {
+            //ChangeMood(background, currentMood, dialogueIndex);
             WriteSentence(currentDialogue[dialogueIndex]);
         }
         else
@@ -81,6 +103,18 @@ public class DialogueAnimator : MonoBehaviour
         // Close dialogue
         InDialogue = false;
         OnDialogueComplete.Invoke();
+    }
+
+    //change the player background to the correct expression (currently only debug.log is done. No actual change is made
+    private void ChangeMood(GameObject[] background, List<DialogueObject.Mood> moods, int dialogueIndex)
+    {
+        foreach (GameObject bg in background)
+        {
+            if (bg.CompareTag("Player"))
+            {
+                Debug.Log(moods[dialogueIndex]);
+            }
+        }
     }
 
     IEnumerator WritingAnimation(string output, int stringIndex)
@@ -114,6 +148,9 @@ public class DialogueAnimator : MonoBehaviour
 
                 if (dialogueIndex >= currentDialogue.Count)
                     Debug.Log("Index out of boudns?????");
+
+                //another place to changedialogue
+                //ChangeMood(background, currentMood, dialogueIndex);
 
                 if (dialogueIndex < currentDialogue.Count)
                     WriteSentence(currentDialogue[dialogueIndex]);

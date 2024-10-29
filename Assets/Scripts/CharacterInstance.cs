@@ -8,9 +8,11 @@ public class CharacterInstance
     public CharacterData data;
 
     public Dictionary<Question, List<string>> Answers = new();
+    public Dictionary<Question, List<DialogueObject.Mood>> Moods = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();
+    
     
     public List<string>[] greetings;
     
@@ -160,6 +162,7 @@ public class CharacterInstance
         foreach (var kvp in data.answers)
         {
             Answers[kvp.question] = kvp.answer;
+            Moods[kvp.question] = kvp.mood;
             Traits[kvp.question] = kvp.trait;
             RemainingQuestions.Add(kvp.question);
         }

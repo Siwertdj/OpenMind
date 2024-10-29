@@ -21,12 +21,14 @@ MonoBehaviour:
     answer:
     - I am a democrat.
     - I will be voting for joe biden.
+    mood: 0000000000000000
     trait:
     - bemograt
   - question: 1
     answer:
     - I was in 1987.
     - I am 37 years old.
+    mood: 
     trait:
     - bobn 1987
   - question: 7
@@ -34,24 +36,28 @@ MonoBehaviour:
     - The most important core value to me is happiness.
     - It doesn't matter how much money u have
     - or how famous u are if u cannot be happy.
+    mood: 010000000000000001000000
     trait:
     - big munney
   - question: 8
     answer:
     - I consider myself to be kind.
     - I am also quite shy.
+    mood: 0100000002000000
     trait:
     - shy guy (mario)
   - question: 4
     answer:
     - My hobby is drawing.
     - I like drawing animals.
+    mood: 0000000001000000
     trait:
     - draw animal
   - question: 5
     answer:
     - I was born in the Netherlands,
     - However my parents are both german.
+    mood: 0000000002000000
     trait:
     - bobn nebetrlands
   greetings:

@@ -22,23 +22,27 @@ MonoBehaviour:
     - I was born in Turkey.
     - My parents are also turkish.
     - We are all muslims.
+    mood: 000000000100000000000000
     trait:
     - YALLA TURKIYE #1
   - question: 4
     answer:
     - My hobby is cooking.
     - I love cooking turkish food.
+    mood: 0000000001000000
     trait:
     - cook turkiye food, baklava doner
   - question: 6
     answer:
     - I have a master's degree in applied geophyics.
+    mood: 00000000
     trait:
     - masters degbree
   - question: 1
     answer:
     - I was born in 1981.
     - I am 43 years old.
+    mood: 0000000002000000
     trait:
     - 43 years bodledsa
   - question: 10
@@ -46,12 +50,14 @@ MonoBehaviour:
     - A positive trait is
     - ' that i can speak multiple languages:'
     - Dutch, Turkish, English, Arabic and French.
+    mood: 000000000000000001000000
     trait:
     - man languesages :)
   - question: 9
     answer:
     - The most important people to me are my parents.
     - They are always there for me.
+    mood: 0000000001000000
     trait:
     - famaerlrs
   greetings: []

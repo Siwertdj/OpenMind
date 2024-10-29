@@ -21,6 +21,7 @@ MonoBehaviour:
     answer:
     - I was born in 1979.
     - I am 45 years old.
+    mood: 0000000000000000
     trait:
     - 45445
   - question: 11
@@ -28,6 +29,7 @@ MonoBehaviour:
     - A negative trait i have is that i am short-tempered.
     - Maybe this is the case because
     - I do not sleep very well.
+    mood: 000000000300000003000000
     trait:
     - very zzzzz
   - question: 7
@@ -35,18 +37,21 @@ MonoBehaviour:
     - The most important thing to me is money.
     - You can do everything,
     - as long as u have money.
+    mood: 000000000100000000000000
     trait:
     - biggnf muneyyyy
   - question: 4
     answer:
     - My hobby is bowling.
     - I always score atleast 1 strike per game.
+    mood: 0000000001000000
     trait:
     - boaling
   - question: 6
     answer:
     - I have a master's degree in
     - business administration.
+    mood: 0000000002000000
     trait:
     - master bibness
   - question: 5
@@ -54,6 +59,7 @@ MonoBehaviour:
     - I am an atheist.
     - I was born in England
     - and my parents are also English.
+    mood: 000000000200000002000000
     trait:
     - engluudndndn CAM ON ENGLERIDALND
   greetings: []
