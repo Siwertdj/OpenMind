@@ -70,9 +70,13 @@ public class DialogueManagerPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Tests if the WriteDialogue method works correctly, so if the dialogueField is activated.
+    /// </summary>
     [UnityTest]
     public IEnumerator WriteDialogueTest()
     {
+        // Find dialogueField and see if it is currently active.
         var dialogueField = GameObject.Find("Dialogue Field");
         Assert.IsTrue(dialogueField.activeSelf);
         
