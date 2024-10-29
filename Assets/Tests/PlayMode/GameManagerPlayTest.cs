@@ -11,6 +11,7 @@ using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
+using Object = System.Object;
 
 public class GameManagerPlayTest
 {
@@ -46,7 +47,7 @@ public class GameManagerPlayTest
     public IEnumerator SetUp()
     {
         SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load.
         
         // Get a StoryObject.
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
@@ -57,7 +58,7 @@ public class GameManagerPlayTest
         // Start the game with the chosen story.
         gm.StartGame(null, story);
         
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
     }
     
     /// <summary>
@@ -77,12 +78,12 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator PopulateCharactersTest()
     {
-        // Set up expected and actual values
-        var expected = gm.currentCharacters.Count;
-        // The number of characters at the start of the game
-        var actual = 4;
+        // Set up expected and actual values.
+        int expected = gm.currentCharacters.Count;
+        // The number of characters at the start of the game.
+        int actual = 4;
 
-        // Check if they are equal
+        // Check if they are equal.
         Assert.AreEqual(expected, actual);
         
         yield return null;
@@ -94,12 +95,12 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ActiveCharactersTest()
     {
-        // Set up expected and actual values
-        var expected = gm.currentCharacters.Count(c => c.isActive);
-        // The number of characters at the start of the game
-        var actual = 4;
+        // Set up expected and actual values.
+        int expected = gm.currentCharacters.Count(c => c.isActive);
+        // The number of characters at the start of the game.
+        int actual = 4;
         
-        // Check if they are equal
+        // Check if they are equal.
         Assert.AreEqual(expected, actual);
         
         yield return null;
@@ -111,11 +112,11 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ChooseCulpritTest()
     {
-        // Set up expected and actual values
-        var expected = gm.currentCharacters.Count(c => c.isCulprit);
-        var actual = 1;
+        // Set up expected and actual values.
+        int expected = gm.currentCharacters.Count(c => c.isCulprit);
+        int actual = 1;
 
-        // Check if they are equal
+        // Check if they are equal.
         Assert.AreEqual(expected, actual);
         
         yield return null;
@@ -123,17 +124,18 @@ public class GameManagerPlayTest
     
     // Input parameters for testing different inputs.
     static bool[] bools = new bool[] { true, false };
-    static int[] ints = new int[] { 1, 2, 3 };
+    static int[] ints = new int[] { 0, 1, 2 };
     
     /// <summary>
     /// Checks if HasQuestionsLeft returns true when numQuestionsAsked is smaller than numQuestions,
     /// or false when numQuestionsAsked is greater than or equal to numQuestions.
     /// </summary>
     [UnityTest]
-    public IEnumerator HasQuestionsLeftTest([ValueSource(nameof(bools))] int ints)
+    public IEnumerator HasQuestionsLeftTest([ValueSource(nameof(ints))] int values)
     {
+        gm.numQuestionsAsked = values;
         gm.story.numQuestions = 1;
-        if (ints < gm.story.numQuestions)
+        if (values < gm.story.numQuestions)
         {
             // Check if HasQuestionsLeft is true when numQuestionsAsked is smaller than numQuestions.
             Assert.IsTrue(gm.HasQuestionsLeft());
@@ -153,11 +155,11 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator GetCulpritTest()
     {
-        // Set up expected and actual values
-        var expected = gm.currentCharacters.Find(c => c.isCulprit);
-        var actual = gm.GetCulprit();
+        // Set up expected and actual values.
+        CharacterInstance expected = gm.currentCharacters.Find(c => c.isCulprit);
+        CharacterInstance actual = gm.GetCulprit();
 
-        // Check if they are equal
+        // Check if they are equal.
         Assert.AreEqual(expected, actual);
         
         yield return null;
@@ -207,18 +209,18 @@ public class GameManagerPlayTest
     public IEnumerator RestartStoryTest()
     {
         // Start the game cycle.
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Start dialogue.
         gm.StartDialogue(gm.currentCharacters[0]);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
-        // Call RestartStoryScene to check if values get reset
+        // Call RestartStoryScene to check if values get reset.
         gm.RestartStoryScene();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Check if we are in the NpcSelect gameState and if only 2 scenes exist,
-        // namely NpcSelectScene and Loading
+        // namely NpcSelectScene and Loading.
         // TODO: currently the gameState is not reset correctly.
         Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
         Assert.AreEqual(2, SceneManager.loadedSceneCount);
@@ -229,17 +231,17 @@ public class GameManagerPlayTest
     }
     
     /// <summary>
-    /// Checks if the "RetryStoryScene"
+    /// Checks if the "RetryStoryScene" resets all characters to be active.
     /// </summary>
     [UnityTest]
     public IEnumerator RetryStoryTest()
     {
         gm.RetryStoryScene();
         
-        // Set up actual value
-        var actual = gm.currentCharacters.Count(c => c.isActive) == gm.currentCharacters.Count();
+        // True if all characters are active.
+        bool actual = gm.currentCharacters.Count(c => c.isActive) == gm.currentCharacters.Count();
 
-        // Check if it holds
+        // Check if all characters are active.
         Assert.IsTrue(actual);
         
         yield return null;
@@ -251,10 +253,10 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator ChooseVictimTest()
     {
-        // Get victim
-        var victim = gm.GetRandomVictimNoCulprit();
+        // Get victim.
+        CharacterInstance victim = gm.GetRandomVictimNoCulprit();
 
-        // Check if it actually returned a victim
+        // Check if it actually returned a victim.
         Assert.IsTrue(victim != null);
         
         yield return null;
@@ -288,7 +290,7 @@ public class GameManagerPlayTest
         }
         
         // Start the game cycle.
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Variable which counts the number of characters before calling EndCycle.
         int nCharactersPrior = gm.currentCharacters.Count(c => c.isActive);
@@ -300,21 +302,21 @@ public class GameManagerPlayTest
         // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
         CharacterInstance character = gm.currentCharacters[0];
         gm.StartDialogue(character);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
 
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Use reflection to call BacktoNPCScreen twice, to go from dialogue -> hintdialogue -> npcselect
+        // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> HintDialogue -> NpcSelect.
         Type type = typeof(DialogueManager);
-        var fakeDialogueManager = Activator.CreateInstance(type);
+        Object fakeDialogueManager = Activator.CreateInstance(type);
         MethodInfo m = type.GetMethod("BacktoNPCScreen", 
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         m.Invoke(fakeDialogueManager, null);
         m.Invoke(fakeDialogueManager, null);
         
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Variable which counts the number of characters after calling EndCycle.
         int nCharactersPosterior = gm.currentCharacters.Count(c => c.isActive);
@@ -343,16 +345,20 @@ public class GameManagerPlayTest
     }
 
     /// <summary>
-    /// Checks if the "StartDialogue" method works.
+    /// Checks if the "StartDialogue" has the correct gameState (NpcDialogue) and checks if the DialogueScene is loaded.
     /// </summary>
     [UnityTest]
     public IEnumerator StartDialogueTest()
     {
-        // Get character to start dialogue with
-        var character = gm.currentCharacters[0];
+        // Get character to start dialogue with.
+        CharacterInstance character = gm.currentCharacters[0];
         gm.StartDialogue(character);
 
-        
+        // Check if the gameState is set to NpcDialogue.
+        Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
+        // Check if we are in the DialogueScene.
+        bool inDialogueScene = SceneManager.GetSceneByName("DialogueScene").isLoaded;
+        Assert.IsTrue(inDialogueScene);
         
         yield return null;
     }
@@ -384,7 +390,7 @@ public class GameManagerPlayTest
         }
         
         // Start the game cycle with not enough characters remaining.
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Set this to maxValue in order to make sure that no more questions can be asked.
         gm.numQuestionsAsked = int.MaxValue;
@@ -392,25 +398,24 @@ public class GameManagerPlayTest
         // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
         CharacterInstance character = gm.currentCharacters[0];
         gm.StartDialogue(character);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Use reflection to call BacktoNPCScreen twice, to go from dialogue -> hintdialogue -> npcselect
+        // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> HintDialogue -> NpcSelect.
         Type type = typeof(DialogueManager);
-        var fakeDialogueManager = Activator.CreateInstance(type);
+        Object fakeDialogueManager = Activator.CreateInstance(type);
         MethodInfo m = type.GetMethod("BacktoNPCScreen", 
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         m.Invoke(fakeDialogueManager, null);
         m.Invoke(fakeDialogueManager, null);
         
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         // Get "SelectionManager" object.
-        var s = GameObject.Find("SelectionManager");
-        var sm = s.GetComponent<SelectionManager>();
+        SelectionManager sm = GameObject.Find("SelectionManager").GetComponent<SelectionManager>();
         
         if (hasChosenCulprit)
         {
