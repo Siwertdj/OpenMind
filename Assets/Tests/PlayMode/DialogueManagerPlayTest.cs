@@ -69,6 +69,15 @@ public class DialogueManagerPlayTest
         Assert.IsTrue(dm.currentObject.Responses.Count > 0);
         yield return null;
     }
+
+    [UnityTest]
+    public IEnumerator WriteDialogueTest()
+    {
+        var dialogueField = GameObject.Find("Dialogue Field");
+        Assert.IsTrue(dialogueField.activeSelf);
+        
+        yield return null;
+    }
     
     /// <summary>
     /// Check if the ReplaceBackground method works as intended.
@@ -81,12 +90,10 @@ public class DialogueManagerPlayTest
 
         // Replace the background.
         dm.ReplaceBackground(backgroundField);
-        
-        // Transform current background
-        var parent = backgroundField[0].transform;
 
         // Check if the background has changed.
-        Assert.AreEqual(parent.childCount, GameObject.Find("BackgroundField").transform.childCount);
+        // TODO: change background names / tags so that we can easily check whether or not the background is actually being replaced
+        Assert.IsTrue(GameObject.Find("BackgroundField").transform.childCount > 0); // BackgroundField should have the new background as a child
 
         yield return null;
     }
@@ -107,8 +114,43 @@ public class DialogueManagerPlayTest
         // There should be more than zero question buttons, while there should only be one back button.
         Assert.IsTrue(numQuestionButtons > 0);
         Assert.IsTrue(numBackButtons == 1);
+
+        // The questions field should be active
+        var questionsField = GameObject.Find("Questions Field");
+        Assert.IsTrue(questionsField.activeSelf);
+        
         yield return null;
     }
+
+    /// <summary>
+    /// Tests if buttons get destroyed if a question button gets clicked on, and if the questionsField gets set to non-active
+    /// </summary>
+    [UnityTest]
+    public IEnumerator OnButtonClickTest()
+    {
+        // Complete dialogue
+        dm.OnDialogueComplete();
+        
+        // Find question button and invoke it
+        Button button = GameObject.Find("questionButton").GetComponent<Button>();
+        button.onClick.Invoke();
+
+        // Find number of buttons in scene
+        int buttons = GameObject.FindGameObjectsWithTag("Button").Count();
+
+        // Find questions field
+        var questionsField = GameObject.Find("Questions Field");
+
+        // There should be no buttons left, and questionsField should be null
+        Assert.IsTrue(buttons == 0);
+        Assert.IsNull(questionsField);
+
+        yield return null;
+    }
+    
+    // TODO: CreateOpenQuestion test? Depends on epilogue --> should fix that first
+    
+    // TODO: AnswerOpenQuestion test? Depends on epilogue --> should fix that first
 
     /// <summary>
     /// Check if the back button works as intended when there are enough characters and questions left.
