@@ -1,10 +1,15 @@
-﻿using System.Collections;
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
-using System;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// Handles putting dialogue on the screen
+/// </summary>
 public class DialogueAnimator : MonoBehaviour
 {
     [Header("Component references")]
@@ -26,27 +31,38 @@ public class DialogueAnimator : MonoBehaviour
 
     [NonSerialized] public UnityEvent OnDialogueComplete = new();
 
-    private void Awake()
+    /// <summary>
+    /// Sets the properties of the text when loaded
+    /// </summary>
+    void Awake()
     {
         text.enableAutoSizing = false;
         text.fontSize = 40;
         audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// Puts dialogue on screen.
+    /// </summary>
+    /// <param name="output">The text that is written</param>
+    /// <param name="pitch">The pitch of the characters voice.</param>
     public void WriteDialogue(List<string> output, float pitch = 1)
     {
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
-
             audioSource.pitch = pitch;
 
-            InDialogue = true;
+            inDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
         }
     }
 
+    /// <summary>
+    /// Helper function for <see cref="WriteDialogue"/> which writes a single sentence.
+    /// </summary>
+    /// <param name="output">The current sentence which needs to be written</param>
     private void WriteSentence(string output)
     {
         if (!isOutputting)
@@ -57,9 +73,12 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Skips dialogue that is being written
+    /// </summary>
     public void SkipDialogue()
     {
-        if (!InDialogue)
+        if (!inDialogue)
             return;
 
         if (isOutputting)
@@ -80,14 +99,23 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Closes dialogue once it is finished
+    /// </summary>
     private void EndDialogue()
     {
         // Close dialogue
-        InDialogue = false;
+        inDialogue = false;
         OnDialogueComplete.Invoke();
     }
 
-    private IEnumerator WritingAnimation(string output, int stringIndex)
+    /// <summary>
+    /// Writes the text to the screen letter by letter
+    /// </summary>
+    /// <param name="output">The text that needs to be written</param>
+    /// <param name="stringIndex">The index of the letter that is being written</param>
+    /// <returns></returns>
+    IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // If a new sentence is started, first clear the old sentence
         if (stringIndex == 0)
@@ -121,13 +149,6 @@ public class DialogueAnimator : MonoBehaviour
 
                 if (dialogueIndex < currentDialogue.Count)
                     WriteSentence(currentDialogue[dialogueIndex]);
-            }
-            else
-            {
-                // NOTE: Uncomment the lines below if we want dialogue to automatically end
-
-                //yield return new WaitForSeconds(delayAfterSentence);
-                //EndDialogue();
             }
         }
     }

@@ -1,11 +1,13 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Manager class for UI.
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     [Header("UI Settings")] 
@@ -23,8 +25,6 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OpenMenu()
     {
-        // Hide buttoncanvas
-        // Reveal menucanvas
         gameButtons.SetActive(false);
         gameMenu.SetActive(true);
     }
@@ -34,17 +34,14 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        // Reveal buttoncanvas
-        // Hide menucanvas
         gameButtons.SetActive(true);
         gameMenu.SetActive(false);
     }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.
-    /// The text to be displayed during this transtition is passed as the parameter in a string.
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="text">Text to be displayed during the transition.</param>
     public void Transition(string text)
     {
         UpdateTransitionText(text);
@@ -54,7 +51,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Updates the text to be displayed in the transition.
     /// </summary>
-    /// <param name="text"></param>
+    /// <param name="text">Text to be displayed during the transition.</param>
     private void UpdateTransitionText(string text) { transitionText.text = text; }
 
     /// <summary>
@@ -90,7 +87,6 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         canvasGroup.alpha = 0f;
-
         transitionCanvas.SetActive(false);
     }
 

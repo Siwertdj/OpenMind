@@ -1,18 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Button = UnityEngine.UI.Button;
 
+/// <summary>
+/// Instances of this class act as special buttons for the NPCSelect scene.
+/// </summary>
 public class SelectOption : MonoBehaviour
 {
-    public CharacterInstance character;
-
-    private Image avatar;
-    private TMP_Text characterNameText;
+    public  CharacterInstance character;
+    private Image             avatar;
+    private TMP_Text          characterNameText;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// On startup, set the sprite and name to that of the proper character and check whether it is active or not.
+    /// </summary>
     void Start()
     {
         avatar = GetComponentInChildren<Image>();
@@ -25,6 +28,9 @@ public class SelectOption : MonoBehaviour
             SetInactive();
     }
 
+    /// <summary>
+    /// If a character is inactive grey out the button.
+    /// </summary>
     private void SetInactive()
     {
         avatar.color = new Color(0.6f,0.6f,0.6f,0.6f);

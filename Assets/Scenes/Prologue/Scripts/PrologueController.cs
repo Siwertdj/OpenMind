@@ -1,14 +1,17 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager class for cutscenes.
+/// </summary>
 public class CutsceneController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
@@ -55,11 +58,10 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void ContinueTimeline()
     {
-        Debug.Log("Continue Timeline");
         imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
         continueButton.gameObject.SetActive(false);  // Disable continuebutton
         playableDirector.Play(); // Resume timeline.
-        StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
+        //StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>
@@ -72,7 +74,6 @@ public class CutsceneController : MonoBehaviour
         playableDirector.Pause();
         continueButton.gameObject.SetActive(true); // Make sure timeline can manually be resumed. 
     }
-    
 
     /// <summary>
     /// This method is called when the timeline reaches the end of the prologue.
