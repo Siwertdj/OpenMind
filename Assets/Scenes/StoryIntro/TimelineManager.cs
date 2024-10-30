@@ -57,10 +57,10 @@ public class TimelineManager : MonoBehaviour
                     StoryA();
                     break;
                 case 1:
-                    StoryB();
+                    StoryA(); //StoryB();
                     break;
                 case 2:
-                    StoryC();
+                    StoryA(); //StoryC();
                     break;
                 default:
                     StoryA();

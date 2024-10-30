@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OpenMenu()
     {
+        GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
         gameMenu.SetActive(true);
     }
@@ -34,6 +35,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
+        GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
         gameMenu.SetActive(false);
     }
