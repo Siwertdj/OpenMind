@@ -19,6 +19,7 @@ public class DialogueAnimator : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
+    [SerializeField] private bool audioEnabled = true;
 
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
@@ -127,7 +128,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Write the current letter
             text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 2 == 0)
+            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled)
                 audioSource.Play();
 
             // Wait and continue with next letter
@@ -146,7 +147,7 @@ public class DialogueAnimator : MonoBehaviour
                 yield return new WaitForSeconds(delayAfterSentence);
 
                 if (dialogueIndex >= currentDialogue.Count)
-                    Debug.Log("Index out of boudns?????");
+                    Debug.LogError("dialogueIndex is greater than the amount of dialogue");
 
                 if (dialogueIndex < currentDialogue.Count)
                     WriteSentence(currentDialogue[dialogueIndex]);

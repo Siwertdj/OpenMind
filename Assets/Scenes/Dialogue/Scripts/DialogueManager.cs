@@ -27,9 +27,6 @@ public class DialogueManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
-    [Header("Visuals")]
-    [SerializeField] private SpriteRenderer avatar;
-
     [Header("Events")]
     public GameEvent onEndDialogue;
 
