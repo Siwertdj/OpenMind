@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+
+    public bool IsPaused { get; set; } = false;
     
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
@@ -192,8 +194,8 @@ public class GameManager : MonoBehaviour
 
         // Tell the player what happened in between cycles
         var dialogue = new List<string> {
-            $"{victimName} has disappeared.",
-            "There is some new information about the culprit:",
+            $"{victimName} has gone home.",
+            "There is some new information about the stranger:",
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.

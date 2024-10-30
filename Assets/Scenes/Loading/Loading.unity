@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 342585765}
   - component: {fileID: 342585764}
   - component: {fileID: 342585763}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ButtonCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 541437698}
   - component: {fileID: 541437697}
   - component: {fileID: 541437696}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1121,7 +1121,7 @@ GameObject:
   - component: {fileID: 893520271}
   - component: {fileID: 893520273}
   - component: {fileID: 893520272}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1731,7 +1731,7 @@ GameObject:
   - component: {fileID: 1246025349}
   - component: {fileID: 1246025351}
   - component: {fileID: 1246025350}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2291,7 +2291,7 @@ GameObject:
   - component: {fileID: 1452397065}
   - component: {fileID: 1452397064}
   - component: {fileID: 1452397063}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NotebookButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -80,6 +81,14 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     public void SkipDialogue()
     {
+        // Don't do anything if the game is paused
+        if (GameManager.gm.IsPaused)
+            return;
+
+        // Don't do anything if the player clicked a UI element
+        if (EventSystem.current.IsPointerOverGameObject(0))
+            return;
+
         if (!InDialogue)
             return;
 
@@ -119,6 +128,10 @@ public class DialogueAnimator : MonoBehaviour
     /// <returns></returns>
     IEnumerator WritingAnimation(string output, int stringIndex)
     {
+        // Don't write if the game is paused
+        while (GameManager.gm.IsPaused)
+            yield return null;
+
         // If a new sentence is started, first clear the old sentence
         if (stringIndex == 0)
             text.text = "";
