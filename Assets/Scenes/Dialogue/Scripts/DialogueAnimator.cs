@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using System;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -53,7 +54,7 @@ public class DialogueAnimator : MonoBehaviour
             dialogueIndex = 0;
             audioSource.pitch = pitch;
 
-            inDialogue = true;
+            InDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
         }
@@ -78,7 +79,7 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     public void SkipDialogue()
     {
-        if (!inDialogue)
+        if (!InDialogue)
             return;
 
         if (isOutputting)
@@ -105,7 +106,7 @@ public class DialogueAnimator : MonoBehaviour
     private void EndDialogue()
     {
         // Close dialogue
-        inDialogue = false;
+        InDialogue = false;
         OnDialogueComplete.Invoke();
     }
 

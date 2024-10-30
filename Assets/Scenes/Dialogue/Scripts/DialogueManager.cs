@@ -78,7 +78,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && animator.inDialogue && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && animator.InDialogue && !EventSystem.current.IsPointerOverGameObject())
             animator.SkipDialogue();
     }
 
