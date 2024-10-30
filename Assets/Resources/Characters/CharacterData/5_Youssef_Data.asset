@@ -17,41 +17,40 @@ MonoBehaviour:
   avatar: {fileID: 0}
   voicePitch: 1.2
   answers:
-  - question: 1
+  - question: 3
     answer:
     - I love the old rapper Rakim.
-    - ' The lyrics he writes are always so beautiful and they really'
-    - ' The lyrics he writes are always so beautiful and they really'
+    - The lyrics he writes are always so beautiful and they really
     - 'helped me to expand my view of the world. '
     trait:
-    - I love the rapper Rakim, his lyrics really helped me
-  - question: 4
+    - I love the rapper Rakim, his lyrics really helped me.
+  - question: 6
     answer:
     - I think social equality is very important.
-    - ' I went to a very white primary school '
+    - 'I went to a very white primary school '
     - "and that\u2019s when I first started noticing that I didn\u2019t really look
       like anyone."
     - I was always dismissed as some kind of criminal
     - 'even though that was not the case at all. '
     trait:
     - Politically, social equality is one of the most important thing to me.
-  - question: 5
+  - question: 7
     answer:
     - I love arts and crafts and just making things in general.
     - I also like reading scientific papers,
-    - ' I like to look into how things work and try to think of a better solution.'
+    - I like to look into how things work and try to think of a better solution.
     trait:
     - Arts and crafts, and learning how things work are my biggest hobbies.
-  - question: 6
+  - question: 8
     answer:
     - My father is of Moroccan descent and muslim and he also wanted me to be muslim.
-    - ' He really had a vision of who and what he wanted me to be,'
+    - He really had a vision of who and what he wanted me to be,
     - "but it didn\u2019t stick."
     - Now I think that freedom is very important,
     - 'to be who you want to be. '
     trait:
-    - Politically, social is one of the most important thing to me.
-  - question: 7
+    - Politically, social equality is one of the most important thing to me.
+  - question: 9
     answer:
     - I am not religious, and I never really have been
     - My dad did not like that, haha.

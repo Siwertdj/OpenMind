@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Brooke
   id: 13
-  avatar: {fileID: 21300000, guid: a5cad24aad2cc044fbc1644ffabc8d02, type: 3}
+  avatar: {fileID: 21300000, guid: 384bb9365c83ebd4dbc7b3fe702cb5dd, type: 3}
   voicePitch: 1
   answers: []
   greetings: []

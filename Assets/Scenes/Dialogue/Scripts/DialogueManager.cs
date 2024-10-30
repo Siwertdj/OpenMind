@@ -322,6 +322,10 @@ public class DialogueManager : MonoBehaviour
             Question.PositiveTrait => "What do you think is your best trait?",
             Question.NegativeTrait => "What is a bad trait you may have?",
             Question.OddTrait => "Do you have any odd traits?",
+            Question.SocialIssues => "What social issues are you interested in?",
+            Question.EducationSystem => "What is you opinion on the Dutch school system?",
+            Question.Lottery => "If you win the lottery, what would you do?",
+            Question.Diet => "Do you have any dietary restrictions?",
             _ => "",
         };
     }
@@ -348,5 +352,9 @@ public enum Question
     ImportantPeople,
     PositiveTrait,
     NegativeTrait,
-    OddTrait
+    OddTrait,
+    SocialIssues,
+    EducationSystem,
+    Lottery,
+    Diet
 }
