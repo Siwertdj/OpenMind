@@ -338,7 +338,7 @@ public class GameManagerPlayTest
             Assert.AreEqual(nCharactersPrior, nCharactersPosterior);
             // Check if the gameState transitions to culpritSelect.
             // TODO: In the current version, the gameState "culpritSelect" is never used, which should be used.
-            //Assert.AreEqual(GameManager.GameState.CulpritSelect, gm.gameState);
+            Assert.AreEqual(GameManager.GameState.CulpritSelect, gm.gameState);
         }
         
         yield return null;
