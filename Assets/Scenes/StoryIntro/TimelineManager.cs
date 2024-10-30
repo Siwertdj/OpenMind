@@ -9,28 +9,36 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
+//This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+//© Copyright Utrecht University (Department of Information and Computing Sciences)
+
 public class TimelineManager : MonoBehaviour
 {
+    // PlayableDirectors manage the different timelines for the different stories
     public PlayableDirector introStoryA;
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
-    //public Button continueButton;
-    public TMP_Text objectiveText;
-    public Sprite[] backgrounds;
-    public String[] storyText; 
+    
+    public Sprite[] backgrounds; // Stores all the used backgrounds for the introduction.
+    public String[] storyText;  // Stores all the used text for the introduction. 
+    // The variables below are the UI components that we want to manipulate during the introduction
     public TMP_Text text;
     public Image    background;
     public Button   continueButton;
     public Image    textBubble; 
-    
+    // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
-    private int              backgroundIndex = 0;
-    private int              textIndex       = -1; 
+    private int              backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
+    private int              textIndex       = -1; // text[textIndex] is the currently shown text. 
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
-
+    
+    /// <summary>
+    /// This method is called when the introduction scene is started. Depending on the chosen story, the right
+    /// timeline is loaded and the according introduction is played. 
+    /// </summary>
     public void StartIntro(Component sender, params object[] data)
     {
         // depending on the chosen storyline, play the intro to the story
@@ -63,6 +71,9 @@ public class TimelineManager : MonoBehaviour
         }
     }
     
+    // This region contains methods that manipulate UI elements of the scene.
+    #region UIManipulators
+
     public void ChangeText()
     {
         PauseCurrentTimeline();
@@ -82,6 +93,46 @@ public class TimelineManager : MonoBehaviour
         
     }
     
+    public void ChangeBackground()
+    {
+        backgroundIndex++;
+        try
+        {
+            background.sprite = backgrounds[backgroundIndex];
+        }
+        catch
+        {
+            Debug.LogError("Error: No more available backgrounds.");
+            backgroundIndex = 0;
+            background.sprite = backgrounds[backgroundIndex];
+        }
+        if(backgroundIndex > 0) PauseCurrentTimeline();
+    }
+
+    #endregion
+    
+    // This region contains methods that directly manipulate the timeline
+    #region TimelineManipulators
+
+    public void PauseCurrentTimeline()
+    {
+        continueButton.gameObject.SetActive(true);
+        currentTimeline.Pause();
+    }
+
+    public void ContinueCurrentTimeline()
+    {
+        continueButton.gameObject.SetActive(false);
+        textBubble.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
+        currentTimeline.Play();
+    }
+
+    #endregion
+
+    // This region
+    #region StoryLines
+
     private void StoryA()
     {
         currentTimeline = introStoryA;
@@ -103,38 +154,11 @@ public class TimelineManager : MonoBehaviour
         currentTimeline.Play();
         text.text = "Story C";
     }
-    
-    public void ChangeBackground()
-    {
-        backgroundIndex++;
-        try
-        {
-            background.sprite = backgrounds[backgroundIndex];
-        }
-        catch
-        {
-            Debug.LogError("Error: No more available backgrounds.");
-            backgroundIndex = 0;
-            background.sprite = backgrounds[backgroundIndex];
-        }
-        if(backgroundIndex > 0) PauseCurrentTimeline();
-    }
-    
-    
-    public void PauseCurrentTimeline()
-    {
-        continueButton.gameObject.SetActive(true);
-        currentTimeline.Pause();
-    }
 
-    public void ContinueCurrentTimeline()
-    {
-        continueButton.gameObject.SetActive(false);
-        textBubble.gameObject.SetActive(false);
-        text.gameObject.SetActive(false);
-        currentTimeline.Play();
-    }
-
+    #endregion
+    
+    // This region contains methods that handle the starting of the game at the end of the introduction
+    #region StartGame 
     public void StartGame()
     {
         StartCoroutine(LoadGame());
@@ -157,4 +181,6 @@ public class TimelineManager : MonoBehaviour
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary
     }
+    #endregion
+   
 }
