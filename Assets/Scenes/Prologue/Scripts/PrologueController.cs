@@ -2,13 +2,11 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 /// <summary>
