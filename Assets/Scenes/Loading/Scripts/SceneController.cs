@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Scene = UnityEngine.SceneManagement.Scene;
+using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Class used for swapping scenes.
@@ -306,12 +308,20 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// Function to load the notebook.
     /// </summary>
-    public void ToggleNotebookScene()
+    public void ToggleNotebookScene(Button button)
     {
+        TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            buttonText.text = "Notes";
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+        }
         else
+        {
+            buttonText.text = "Close";
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+        }
     }
 
     /// <summary>
