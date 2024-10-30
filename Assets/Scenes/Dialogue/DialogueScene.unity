@@ -494,7 +494,6 @@ GameObject:
   - component: {fileID: 643388404}
   - component: {fileID: 643388407}
   - component: {fileID: 643388406}
-  - component: {fileID: 643388405}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -521,18 +520,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.5, y: 0}
   m_SizeDelta: {x: 351, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &643388405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643388403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e100fb770b6accd408868746c905702d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &643388406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,7 +641,7 @@ GameObject:
   - component: {fileID: 826756117}
   - component: {fileID: 826756120}
   m_Layer: 5
-  m_Name: Dialog
+  m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -694,7 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayInSeconds: 0.06
   delayAfterSentence: 1
-  InDialogue: 0
+  inDialogue: 0
   OnDialogueComplete:
     m_PersistentCalls:
       m_Calls: []
