@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Scene = UnityEngine.SceneManagement.Scene;
+using UnityEngine.UI;
+using TMPro;
 
 /// <summary>
 /// Class used for swapping scenes.
@@ -233,6 +235,10 @@ public class SceneController : MonoBehaviour
         // Wait until the scene is fully loaded
         while (!asyncLoad.isDone)
             yield return null;
+
+        // Set the ActiveScene to the newly loaded scene
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
+
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }
@@ -302,11 +308,40 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// Function to load the notebook.
     /// </summary>
-    public void ToggleNotebookScene()
+    public void ToggleNotebookScene(Button button)
     {
+        TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            GameManager.gm.IsPaused = false;
+            buttonText.text = "Notes";
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+        }
         else
+        {
+            GameManager.gm.IsPaused = true;
+            buttonText.text = "Close";
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+        }
+    }
+
+    /// <summary>
+    /// Converts the given scene to the corresponding value in the SceneName enum.
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <returns></returns>
+    public SceneName GetSceneName(Scene scene)
+    {
+        try
+        {
+            return (SceneName)Enum.Parse(typeof(SceneName), scene.name, true);
+        }
+        catch (ArgumentException)
+        {
+            // If scene name is not found, throw an error
+            Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
+            throw;
+        }
     }
 }
