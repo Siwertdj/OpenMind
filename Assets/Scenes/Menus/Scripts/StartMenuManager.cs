@@ -19,6 +19,8 @@ public class StartMenuManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+
+    public Canvas copyright;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -28,6 +30,9 @@ public class StartMenuManager : MonoBehaviour
     {
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
+        
+        // Keep the copyright text on the screen in all scenes
+        DontDestroyOnLoad(copyright);
     }
     
     /// <summary>
