@@ -48,7 +48,9 @@ public class NotebookDataPlayTest
     
     #endregion
 
-
+    /// <summary>
+    /// Checks if the character notes get retrieved correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator GetCharacterNotesTest()
     {
@@ -59,6 +61,9 @@ public class NotebookDataPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the answers get retrieved correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator GetAnswersTest()
     {
@@ -82,6 +87,9 @@ public class NotebookDataPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the character notes get updated correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator UpdateCharacterNotesTest()
     {
@@ -94,6 +102,9 @@ public class NotebookDataPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the personal notes get updated correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator UpdatePersonalNotesTest()
     {
@@ -106,6 +117,9 @@ public class NotebookDataPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the personal notes get retrieved correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator GetPersonalNotesTest()
     {

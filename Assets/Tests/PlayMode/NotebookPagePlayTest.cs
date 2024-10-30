@@ -39,8 +39,10 @@ public class NotebookPagePlayTest
     }
     
     #endregion
-
-
+    
+    /// <summary>
+    /// Tessts if the GetNotes method returns the correct notes
+    /// </summary>
     [UnityTest]
     public IEnumerator GetNotesTest()
     {
@@ -49,6 +51,9 @@ public class NotebookPagePlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the SetNotes method correctly adjusts the notes
+    /// </summary>
     [UnityTest]
     public IEnumerator SetNotesTest()
     {
@@ -60,6 +65,10 @@ public class NotebookPagePlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the QuestionText method correctly returns the questions.
+    /// </summary>
+    // TODO: write test for when questions have been asked?
     [UnityTest]
     public IEnumerator QuestionTextTest()
     {
@@ -68,6 +77,9 @@ public class NotebookPagePlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the IntroTest method works correctly and returns the correct string.
+    /// </summary>
     [UnityTest]
     public IEnumerator IntroTest()
     {

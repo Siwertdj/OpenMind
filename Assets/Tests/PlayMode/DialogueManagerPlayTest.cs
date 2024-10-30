@@ -18,7 +18,7 @@ public class DialogueManagerPlayTest
     #region Setup
     
     /// <summary>
-    /// Set up the game so that each test starts at the DialogueScene, talking to an NPC.
+    /// Set up the game so that each test starts at the DialogueScene, talking to an NPC
     /// </summary>
     [UnitySetUp]
     public IEnumerator SetUp()
