@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manager class for UI.
@@ -38,6 +39,14 @@ public class UIManager : MonoBehaviour
         GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
         gameMenu.SetActive(false);
+    }
+
+    public void ReturnToStartScreen()
+    {
+        _ = SceneController.sc.TransitionScene(
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.StartScreenScene,
+            SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -91,5 +100,4 @@ public class UIManager : MonoBehaviour
         canvasGroup.alpha = 0f;
         transitionCanvas.SetActive(false);
     }
-
 }
