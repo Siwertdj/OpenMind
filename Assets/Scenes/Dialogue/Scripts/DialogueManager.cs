@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,6 +9,9 @@ using TMPro;
 using System;
 using UnityEngine.Events;
 
+/// <summary>
+/// The manager for the dialogue scene
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue animator reference")]
@@ -55,9 +60,9 @@ public class DialogueManager : MonoBehaviour
             currentRecipient = recipient;
             characterNameField.SetActive(true);
         } 
+        // No dialogue recipient given, so we remove the character name field
         else
         {
-            // No dialogue recipient given, so we remove the character name field
             characterNameField.SetActive(false);
         }
         
@@ -68,11 +73,12 @@ public class DialogueManager : MonoBehaviour
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Checks for mouse input to skip current dialogue
+    /// </summary>
     void Update()
     {
-        // Check for mouse input to skip current dialogue
-        if (Input.GetMouseButtonDown(0) && animator.InDialogue && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && animator.inDialogue && !EventSystem.current.IsPointerOverGameObject())
             animator.SkipDialogue();
     }
 
@@ -97,8 +103,8 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Write the given dialogue to the screen using the dialogue animator.
     /// </summary>
-    /// <param name="dialogue"></param>
-    /// <param name="pitch"></param>
+    /// <param name="dialogue">The text that needs to be written</param>
+    /// <param name="pitch">The pitch of the character</param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
         // Enable the dialogue field
@@ -119,7 +125,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Replaces the current dialogue background with the given background.
     /// </summary>
-    /// <param name="newBackground"></param>
+    /// <param name="newBackground">The background that will replace the current background.</param>
     public void ReplaceBackground(GameObject[] newBackground)
     {
         Transform parent = backgroundField.transform;
@@ -137,7 +143,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
-    /// <param name="questionObject"></param>
+    /// <param name="questionObject">A <see cref="QuestionObject"/> containing the questions and responses</param>
     public void InstantiatePromptButtons(QuestionObject questionObject)
     {
         // Instantiate button containing each response
@@ -172,9 +178,10 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Executed when a question button is pressed.
     /// </summary>
-    /// <param name="response"></param>
+    /// <param name="response">A <see cref="ResponseObject"/> containing the response</param>
     public void OnButtonClick(ResponseObject response)
     {
+        // Remove buttons from screen
         DestroyButtons();
 
         // Remove questions field
@@ -243,6 +250,7 @@ public class DialogueManager : MonoBehaviour
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
     }
+    
     /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
@@ -299,6 +307,11 @@ public class DialogueManager : MonoBehaviour
             Destroy(buttons[i]);
     }
     
+    /// <summary>
+    /// Gets the text for the buttons that prompt specific questions.
+    /// </summary>
+    /// <param name="questionType">The type of question that is being prompted.</param>
+    /// <returns></returns>
     public string GetPromptText(Question questionType)
     {
         return questionType switch

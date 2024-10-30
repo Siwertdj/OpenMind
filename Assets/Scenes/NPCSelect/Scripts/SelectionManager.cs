@@ -1,11 +1,12 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager class for the NPCSelect scene.
+/// </summary>
 public class SelectionManager : MonoBehaviour
 {
     // Prefab which is used to create SelectOption objects.
@@ -24,24 +25,24 @@ public class SelectionManager : MonoBehaviour
     // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
     private string selectionType;
     
+    /// <summary>
+    /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
+    /// </summary>
     private void Start()
     {
         sc = SceneController.sc;
-        
         SetSceneType();
-        
-        //Line for testing decidecriminal.
-        //selectionType = "decidecriminal";
-        
         SetHeaderText(selectionType);
         GenerateOptions();
     }
 
-    // Set the selectionType variable.
+    /// <summary>
+    /// Set the selectionType variable.
+    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
+    /// set the selectionType variable to decidecriminal.
+    /// </summary>
     private void SetSceneType()
-    {        
-        // If the number of characters has reached the minimum amount, and the player has no more questions left,
-        // set the selectionType variable to decidecriminal.
+    {
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
             selectionType = "decidecriminal";
         else
@@ -98,18 +99,13 @@ public class SelectionManager : MonoBehaviour
             }
             else
             {
-            
                 // Set the FinalChosenCulprit variable to the chosen character in GameManager.
                 GameManager.gm.FinalChosenCuplrit = selectOption.character;
-                // Set the dialogueRecipient to the chosen character in GameManager.
-                //GameManager.gm.dialogueRecipient = selectOption.character;
-                
                 // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
                 if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
                     GameManager.gm.hasWon = true;
                 else
                     GameManager.gm.hasWon = false;
-                
                 // Load the epilogue scene.
                 GameManager.gm.StartEpilogueDialogue(selectOption.character);
             }

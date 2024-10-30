@@ -681,7 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   delayInSeconds: 0.06
   delayAfterSentence: 1
-  InDialogue: 0
+  inDialogue: 0
   OnDialogueComplete:
     m_PersistentCalls:
       m_Calls: []
