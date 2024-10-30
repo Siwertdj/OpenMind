@@ -186,6 +186,7 @@ public class CharacterInstance
             Question question = RemainingQuestions[randomInt];
             
             // Remove question from all characters so that it can not be asked to anyone, if RemainingQuestions contains it.
+            // TODO: discuss how we're gonna implement this feature --> for now, this leads to a bug where a character has not enough questions
             foreach (CharacterInstance character in GameManager.gm.currentCharacters)
             {
                 if (character.RemainingQuestions.Contains(question))
