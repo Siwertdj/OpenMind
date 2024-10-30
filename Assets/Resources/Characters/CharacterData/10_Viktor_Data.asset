@@ -16,5 +16,120 @@ MonoBehaviour:
   id: 10
   avatar: {fileID: 21300000, guid: da416209f36323b48bc76b6e6548930c, type: 3}
   voicePitch: 1
-  answers: []
-  greetings: []
+  answers:
+  - question: 1
+    answer:
+    - I am 58 years old.
+    trait:
+    - I am 58 years old.
+  - question: 2
+    answer:
+    - Good. I am living in a row house with my wife and I work as a software developer.
+    - I have three kids that have left home.
+    - I have seen them growing up.
+    - It was fun when they were young, I miss that time in my life but I am very
+      proud of what they have achieved in life.
+    trait:
+    - I am a software developer that lives with his wive and has three kids.
+  - question: 3
+    answer:
+    - I really respect Mark Rutte.
+    - The way he followed through the last couple of years.
+    - You can say what you want but when you look at what he has achieved and the
+      way he has done it, with complete surrender.
+    - A private life didn't exist for him.
+    - I think that is really something.
+    trait:
+    - I really respect Mark Rutte.
+  - question: 6
+    answer:
+    - I try to follow as many different news sources as I can to get a clear view
+      of what is happening on both the right and left side.
+    - Personally I am on the right side of the political spectrum.
+    - I will never join a splinter party.
+    - And I think populism is condemnable because it is really easy to use people's
+      gut feeling.
+    - I can't stand Donald Trump because of that.
+    trait:
+    - I am on the right side of the political spectrum.
+  - question: 7
+    answer:
+    - I like listening to music.
+    - Zoning out the rest of the world with my headphones on.
+    - I mostly listen to progressive rock and I like going to concerts.
+    - Some of my other hobbies are walking in nature and watching fantasy and crime
+      shows.
+    trait:
+    - I like listening to progressive rock music.
+  - question: 10
+    answer:
+    - I have a hbo degree.
+    trait:
+    - I have a hbo degree.
+  - question: 13
+    answer:
+    - The most important people in my life are my wife and my children.
+    - I also have a lot of friends from my youth, nice neighbours and I like to do
+      things with colleages as well.
+    trait:
+    - My wife and children are the most important people in my life.
+  - question: 14
+    answer:
+    - I am great at listening and other people tell me I'm a joker.
+    - I like using humour.
+    - Hearing people laugh makes me feel really good.
+    trait:
+    - I am a great listener and I am a joker.
+  - question: 15
+    answer:
+    - You get calmer as you age but I'm quick to anger and I'm a bit impatient.
+    - There was a lot swearing in my home when I was growing up so naturally I have
+      taken it up as well.
+    - I have really try to keep it in but when I hit my head it comes out anyway.
+    trait:
+    - I am impatient and quick to anger.
+  - question: 16
+    answer:
+    - People think I look a lot younger than I am.
+    - And they don't expect me to listen to heavy music.
+    - Some people just don't understand you.
+    trait:
+    - People think I look younger than I am.
+  - question: 18
+    answer:
+    - A lot has changed over the years.
+    - The most important thing that has declined in the discipline part.
+    - Teachers are struggeling to keep order and teach.
+    - The result is that kids drop out too early and they will slide down even further.
+    trait:
+    - I think discipline has declined in our education system.
+  - question: 19
+    answer:
+    - I would definitely share it with my wife.
+    - I think we would spend in on traveling.
+    trait:
+    - If I win the lottery I would spend it on traveling.
+  - question: 20
+    answer:
+    - No, we eat an AVG everyday but we have started eating more varied meals.
+    - We also try to eat less meat.
+    trait:
+    - We used to eat AVG everyday.
+  - question: 17
+    answer:
+    - I think migration.
+    - I notice some people in my are that behave themselves in a way that is not
+      normal.
+    - I have a problem with that.
+    - 'Some pupulation groups, probably because of social deprivation, '
+    - are more concerned with being in the thieving guild than actually studying
+      something decent.
+    - When countries are being attacked and people really need to flee I think you
+      need to help them.
+    - That doesn't mean we need to drag them to other countries where they will never
+      feel at home.
+    trait:
+    - I care a lot about migration. We shouldn't drag refugees to other countries.
+  greetings:
+  - lines:
+    - Good day.
