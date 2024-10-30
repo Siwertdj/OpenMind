@@ -56,7 +56,7 @@ public class SelectionManager : MonoBehaviour
     private void SetHeaderText(string sceneType)
     {
         if (sceneType == "decidecriminal")
-            headerText.text = "Choose the character u think is the culprit";
+            headerText.text = "Who do you think it was?";
     }
     
     /// <summary>

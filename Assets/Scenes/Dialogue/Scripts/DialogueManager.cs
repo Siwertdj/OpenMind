@@ -27,9 +27,6 @@ public class DialogueManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
-    [Header("Visuals")]
-    [SerializeField] private SpriteRenderer avatar;
-
     [Header("Events")]
     public GameEvent onEndDialogue;
 
@@ -78,7 +75,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && animator.inDialogue && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0) && animator.InDialogue && !EventSystem.current.IsPointerOverGameObject())
             animator.SkipDialogue();
     }
 
@@ -94,8 +91,15 @@ public class DialogueManager : MonoBehaviour
         // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
         if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
             CreateOpenQuestion();
-        
-        // Execute next dialogue object
+
+        ExecuteNextObject();
+    }
+
+    /// <summary>
+    /// Gets the current object's first response and executes it.
+    /// </summary>
+    public void ExecuteNextObject()
+    {
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
     }
@@ -245,10 +249,8 @@ public class DialogueManager : MonoBehaviour
         
         // Reset the text from the input field.
         inputField.GetComponentInChildren<TMP_InputField>().text = "";
-        
-        // Go to the next part of the dialogue.
-        currentObject = currentObject.Responses[0];
-        currentObject.Execute();
+
+        ExecuteNextObject();
     }
     
     /// <summary>

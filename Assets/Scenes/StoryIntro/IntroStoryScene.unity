@@ -520,7 +520,6 @@ MonoBehaviour:
   introStoryA: {fileID: 1239055691}
   introStoryB: {fileID: 1407954286}
   introStoryC: {fileID: 274968078}
-  objectiveText: {fileID: 1835178958}
   backgrounds:
   - {fileID: 21300000, guid: 38c2b43cb244f7640b6567ac8cf99a1e, type: 3}
   - {fileID: 21300000, guid: 6c11d634dd0d776438b0d6ddc9252732, type: 3}
@@ -533,8 +532,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3d2dc64bbb4e01a49bf99844bc31fe9f, type: 3}
   - {fileID: 21300000, guid: b54d7a7d79644c8458f2ca0058f468c5, type: 3}
   - {fileID: 21300000, guid: 459e333e910fdbe439a8c799c23761cb, type: 3}
-  - {fileID: 21300000, guid: af10efc68f0da6847b09eb77b5cb9362, type: 3}
-  - {fileID: 21300000, guid: 28efdbd3dbc7dc648863559b110fd35d, type: 3}
+  - {fileID: 21300000, guid: fa753ecfc7341254496b26fbb7d2fca2, type: 3}
   storyText:
   - 'I got a text! '
   - 'Unknown? I must have removed their number. How awkward... '

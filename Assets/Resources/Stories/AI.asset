@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bacd756deb4a9e4e9ebe58f48a10d29, type: 3}
   m_Name: AI
   m_EditorClassIdentifier: 
-  storyName: the Paper Pariah
+  storyName: The Lost Paper
   storyID: 2
   dialogueBackground: {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
   hintBackground: {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
