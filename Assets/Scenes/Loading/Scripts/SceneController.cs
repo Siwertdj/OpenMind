@@ -314,11 +314,13 @@ public class SceneController : MonoBehaviour
 
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
+            GameManager.gm.IsPaused = false;
             buttonText.text = "Notes";
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
         }
         else
         {
+            GameManager.gm.IsPaused = true;
             buttonText.text = "Close";
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
         }
