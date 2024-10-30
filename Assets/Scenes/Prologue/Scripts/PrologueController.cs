@@ -9,9 +9,9 @@ using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-//This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
-//© Copyright Utrecht University (Department of Information and Computing Sciences)
-
+/// <summary>
+/// Manager class for cutscenes.
+/// </summary>
 public class CutsceneController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
@@ -62,7 +62,7 @@ public class CutsceneController : MonoBehaviour
         imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
         continueButton.gameObject.SetActive(false);  // Disable continuebutton
         playableDirector.Play(); // Resume timeline.
-        //StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
+        StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>

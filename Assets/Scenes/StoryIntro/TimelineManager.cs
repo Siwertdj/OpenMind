@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,12 +8,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using Object = UnityEngine.Object;
 
-//This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
-//© Copyright Utrecht University (Department of Information and Computing Sciences)
-
+/// <summary>
+/// Manager class for timelines.
+/// </summary>
 public class TimelineManager : MonoBehaviour
 {
     // PlayableDirectors manage the different timelines for the different stories
@@ -34,11 +34,12 @@ public class TimelineManager : MonoBehaviour
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
-    
+
     /// <summary>
-    /// This method is called when the introduction scene is started. Depending on the chosen story, the right
-    /// timeline is loaded and the according introduction is played. 
+    /// Starts the proper intro.
     /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
         // depending on the chosen storyline, play the intro to the story
@@ -114,12 +115,18 @@ public class TimelineManager : MonoBehaviour
     // This region contains methods that directly manipulate the timeline
     #region TimelineManipulators
 
+    /// <summary>
+    /// Pauses the timeline.
+    /// </summary>
     public void PauseCurrentTimeline()
     {
         continueButton.gameObject.SetActive(true);
         currentTimeline.Pause();
     }
 
+    /// <summary>
+    /// Continues the timeline.
+    /// </summary>
     public void ContinueCurrentTimeline()
     {
         continueButton.gameObject.SetActive(false);
@@ -159,11 +166,18 @@ public class TimelineManager : MonoBehaviour
     
     // This region contains methods that handle the starting of the game at the end of the introduction
     #region StartGame 
+    /// <summary>
+    /// Starts the game once the intro is over.
+    /// </summary>
     public void StartGame()
     {
         StartCoroutine(LoadGame());
     }
     
+
+    /// <summary>
+    /// Loads the game.
+    /// </summary>
     // TODO: This is duplicate code, also found in Loading.cs. Make this a global thing?
     IEnumerator LoadGame()
     {
