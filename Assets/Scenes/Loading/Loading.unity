@@ -2597,10 +2597,7 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: a089875b5c4e45544868c9f340aa4a65, type: 2}
   - {fileID: 11400000, guid: aab7d5f5a9eb39c43bc785d6168c9b47, type: 2}
-  - {fileID: 11400000, guid: 77f7ee3ee38f32d4180ca1e60b838469, type: 2}
-  - {fileID: 11400000, guid: 0b57ec22b508c4648adbabf604078cea, type: 2}
   - {fileID: 11400000, guid: 3b8f65c29c7c3f64386fe4d98471b496, type: 2}
-  - {fileID: 11400000, guid: 9b81968a8db27604986baa3c479c2745, type: 2}
   - {fileID: 11400000, guid: fcc91b6ad4ec1a84785909eac06bab23, type: 2}
   avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
   backgroundPrefabs:
