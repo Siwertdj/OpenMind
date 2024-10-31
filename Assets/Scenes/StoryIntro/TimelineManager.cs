@@ -40,7 +40,7 @@ public class TimelineManager : MonoBehaviour
     private int              backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
     private int              textIndex       = -1; // text[textIndex] is the currently shown text. 
 
-    private UnityEngine.Vector3 moveTexts = new UnityEngine.Vector3(0,600, 0); 
+    private UnityEngine.Vector3 moveTexts = new UnityEngine.Vector3(0,500, 0); 
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
