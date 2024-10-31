@@ -1,9 +1,15 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
+/// <summary>
+/// Handles putting dialogue on the screen
+/// </summary>
 public class DialogueAnimator : MonoBehaviour
 {
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
@@ -13,8 +19,8 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    public bool InDialogue = false; // Is there dialogue on the screen?
-    private bool isOutputting = false; // Is currently being written?
+    [FormerlySerializedAs("InDialogue")] public bool inDialogue = false; // Is there dialogue on the screen?
+    private bool isOutputting = false;
     private List<string> currentDialogue;
     private List<DialogueObject.Mood> currentMood = new List<DialogueObject.Mood>();
     private GameObject[] background;
@@ -23,6 +29,9 @@ public class DialogueAnimator : MonoBehaviour
 
     public UnityEvent OnDialogueComplete;
 
+    /// <summary>
+    /// Sets the properties of the text when loaded
+    /// </summary>
     void Awake()
     {
         text = GetComponentInChildren<TMP_Text>();
@@ -31,6 +40,13 @@ public class DialogueAnimator : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// Puts dialogue on screen.
+    /// </summary>
+    /// <param name="output">The text that is written</param>
+    /// <param name="moods">The list of moods for sentences></param>
+    /// <param name="background">The list of sprites loaded></param>
+    /// <param name="pitch">The pitch of the characters voice.</param>
     public void WriteDialogue(List<string> output, List<DialogueObject.Mood> moods, GameObject[] background, float pitch = 1)
     {
 
@@ -38,10 +54,9 @@ public class DialogueAnimator : MonoBehaviour
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
-
             audioSource.pitch = pitch;
 
-            InDialogue = true;
+            inDialogue = true;
             currentDialogue = output;
 
             //currentMood = moods;
@@ -63,6 +78,10 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Helper function for <see cref="WriteDialogue"/> which writes a single sentence.
+    /// </summary>
+    /// <param name="output">The current sentence which needs to be written</param>
     private void WriteSentence(string output)
     {
         if (!isOutputting)
@@ -74,9 +93,12 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Skips dialogue that is being written
+    /// </summary>
     public void SkipDialogue()
     {
-        if (!InDialogue)
+        if (!inDialogue)
             return;
 
         if (isOutputting)
@@ -98,10 +120,13 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Closes dialogue once it is finished
+    /// </summary>
     private void EndDialogue()
     {
         // Close dialogue
-        InDialogue = false;
+        inDialogue = false;
         OnDialogueComplete.Invoke();
     }
 
@@ -117,6 +142,12 @@ public class DialogueAnimator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Writes the text to the screen letter by letter
+    /// </summary>
+    /// <param name="output">The text that needs to be written</param>
+    /// <param name="stringIndex">The index of the letter that is being written</param>
+    /// <returns></returns>
     IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // If a new sentence is started, first clear the old sentence
@@ -154,13 +185,6 @@ public class DialogueAnimator : MonoBehaviour
 
                 if (dialogueIndex < currentDialogue.Count)
                     WriteSentence(currentDialogue[dialogueIndex]);
-            }
-            else
-            {
-                // NOTE: Uncomment the lines below if we want dialogue to automatically end
-
-                //yield return new WaitForSeconds(delayAfterSentence);
-                //EndDialogue();
             }
         }
     }
