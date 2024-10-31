@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: GiulIetta
   id: 1
-  avatar: {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
+  avatar: {fileID: 21300000, guid: c6f19b87ad001e2499dea5ad698ef63f, type: 3}
   voicePitch: 1.5
   answers:
   - question: 15

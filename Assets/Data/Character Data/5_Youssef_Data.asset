@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Youssef
   id: 5
-  avatar: {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
+  avatar: {fileID: 21300000, guid: 09070e3d2cde81743bbe14a583b1f86a, type: 3}
   voicePitch: 1.2
   answers:
   - question: 3
