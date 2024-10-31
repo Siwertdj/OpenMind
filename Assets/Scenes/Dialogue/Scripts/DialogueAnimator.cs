@@ -54,11 +54,37 @@ public class DialogueAnimator : MonoBehaviour
         if (!isOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
-            audioSource.pitch = pitch;
+            if (audioEnabled && audioSource != null)
+                audioSource.pitch = pitch;
 
             InDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
+        }
+    }
+
+    /// <summary>
+    /// An overload of WriteDialogue() for single lines.
+    /// </summary>
+    /// <param name="output">The line that is written</param>
+    /// <param name="pitch">The pitch of the characters voice.</param>
+    public void WriteDialogue(string output, float pitch = 1)
+    {
+        // Convert the output to a list of strings
+        // and then execute the WriteDialogue() function
+        WriteDialogue(new List<string> { output }, pitch);
+    }
+
+    /// <summary>
+    /// Immediately stops writing new dialogue to the screen.
+    /// Does <b>not</b> skip dialogue or do anything other than stopping the writing coroutine.
+    /// </summary>
+    public void CancelWriting()
+    {
+        if (isOutputting)
+        {
+            isOutputting = false;
+            StopCoroutine(outputCoroutine);
         }
     }
 
@@ -129,7 +155,8 @@ public class DialogueAnimator : MonoBehaviour
     IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // Don't write if the game is paused
-        while (GameManager.gm.IsPaused)
+        // '?' is used to make sure there is already an instance of the GameManager
+        while (GameManager.gm?.IsPaused == true) 
             yield return null;
 
         // If a new sentence is started, first clear the old sentence
@@ -141,7 +168,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Write the current letter
             text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled)
+            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled && audioSource != null)
                 audioSource.Play();
 
             // Wait and continue with next letter
