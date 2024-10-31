@@ -10,6 +10,7 @@ using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEditor.SceneManagement;
+using UnityEngine.TextCore.Text;
 
 public class NotebookPageDataTest
 {
@@ -53,22 +54,23 @@ public class NotebookPageDataTest
     /// Checks if the answers get retrieved correctly
     /// </summary>
     [Test]
-    public void GetAnswersTest()
+    [TestCase(null, "", "You have not asked Fatima\nany questions.\n\n")]
+    [TestCase(Question.Name, "Name", "Your info on Fatima.\n\nNAME\nName \n \n")]
+    public void GetAnswersTest(Question question, string answer, string expected)
     {
-        var actual = data.GetAnswers(character);
-
-        var expected = "";
+        // Reset character values
+        character.AskedQuestions = new List<Question>();
+        character.Answers = new Dictionary<Question, List<string>>();
         
-        if (character.AskedQuestions.Count > 0)
+        // Add questions if they've been "asked"
+        if (answer.Length > 0)
         {
-            expected += "Your info on " + character.characterName + ".\n";
+            List<string> a = new List<string> { answer };
+            character.AskedQuestions.Add(question);
+            character.Answers.Add(question, a);
         }
-        else
-        {
-            expected += "You have not asked " + character.characterName + "\nany questions.\n";
-        }
-
-        expected += "\n";
+        
+        var actual = data.GetAnswers(character);
 
         Assert.AreEqual(expected, actual);
     }
