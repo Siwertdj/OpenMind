@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Mysterious Contact
   storyID: 0
-  dialogueBackground: {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
+  dialogueBackground: {fileID: 8050863395665748733, guid: 3b777fcfdcdbf3f41a9aa3769379918d, type: 3}
   hintBackground: {fileID: 8050863395665748733, guid: 9b1f7119640df89458e42af631edf28c, type: 3}
   epilogueBackground: {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
-  victimDialogue: went home..
+  victimDialogue: has gone home.
   hintDialogue: '*beep beep* You got a new message!'
   numberOfCharacters: 4
   numQuestions: 1
