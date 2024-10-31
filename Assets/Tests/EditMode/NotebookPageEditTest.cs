@@ -1,46 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class NotebookPagePlayTest
+public class NotebookPageEditTest
 {
-    private GameManager       gm;
     private NotebookPage      page;
     private CharacterInstance character;
     private string            notes;
     
-    #region Setup and Teardown
-    
-    [UnitySetUp]
-    public IEnumerator Setup()
+    [OneTimeSetUp]
+    public void Setup()
     {
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-        
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
-        
-        character = gm.currentCharacters[0];
-        notes = "test";
-        page = new NotebookPage(notes, character);
-        
-        yield return null;
+        CharacterData c = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData));
+        character = new CharacterInstance(c);
+        page = new NotebookPage(character);
+        notes = "Notes on " + character.characterName + ".\n";
     }
     
-    [TearDown]
-    public void TearDown()
-    {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
-        SceneController.sc.UnloadAdditiveScenes();
-    }
-    
-    #endregion
-
-
     [UnityTest]
     public IEnumerator GetNotesTest()
     {
