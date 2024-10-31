@@ -11,7 +11,8 @@ using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
-using Object = System.Object;
+using UnityEditor;
+using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameManagerPlayTest
 {
@@ -307,14 +308,30 @@ public class GameManagerPlayTest
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the NpcDialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        // Get the DialogueManager.
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the HintDialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        /*
         // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> HintDialogue -> NpcSelect.
         Type type = typeof(DialogueManager);
-        Object fakeDialogueManager = Activator.CreateInstance(type);
-        MethodInfo m = type.GetMethod("BacktoNPCScreen", 
+        var fakeDialogueManager = Activator.CreateInstance(type);
+        MethodInfo m = type.GetMethod("BacktoNPCScreen",
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         m.Invoke(fakeDialogueManager, null);
         m.Invoke(fakeDialogueManager, null);
+        */
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
@@ -403,14 +420,23 @@ public class GameManagerPlayTest
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        /*
         // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> HintDialogue -> NpcSelect.
         Type type = typeof(DialogueManager);
-        Object fakeDialogueManager = Activator.CreateInstance(type);
+        var fakeDialogueManager = Activator.CreateInstance(type);
         MethodInfo m = type.GetMethod("BacktoNPCScreen", 
             BindingFlags.NonPublic | BindingFlags.Instance);
 
         m.Invoke(fakeDialogueManager, null);
         m.Invoke(fakeDialogueManager, null);
+        */
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
@@ -474,4 +500,149 @@ public class GameManagerPlayTest
         
         yield return null;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndDialogueEpilogueTest([ValueSource(nameof(bools))] bool hasWon)
+    {
+        
+        gm.StartEpilogueDialogue(gm.GetCulprit());
+        
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        
+        
+        // Check if certain properties hold when hasWon is set to true or false.
+        if (hasWon)
+        {
+            // Check if the GameWinScene is loaded.
+            bool inGameWinScene = SceneManager.GetSceneByName("GameWinScene").isLoaded;
+            Assert.IsTrue(inGameWinScene);
+        
+            // Check if we are in the correct gameState.
+            Assert.AreEqual(GameManager.GameState.GameWon, gm.gameState);
+        }
+        else
+        {
+            // Check if the GameOverScene is loaded.
+            bool inGameOverScene = SceneManager.GetSceneByName("GameOverScene").isLoaded;
+            Assert.IsTrue(inGameOverScene);
+        
+            // Check if we are in the correct gameState.
+            Assert.AreEqual(GameManager.GameState.GameLoss, gm.gameState);
+        }
+
+        yield return null;
+    }
+
+    public IEnumerator ToCulpritSelect()
+    {
+        // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
+        while (gm.EnoughCharactersRemaining())
+        {
+            // Set this bool to true once a character has been removed.
+            bool removedCharacter = false;
+            foreach (CharacterInstance c in gm.currentCharacters)
+            {
+                // Set a character to not active if it is not a culprit, is active and the bool removedCharacter is false.
+                if (!c.isCulprit && c.isActive && !removedCharacter)
+                {
+                    c.isActive = false;
+                    removedCharacter = true;
+                }
+            }
+        }
+        
+        // Start the game cycle with not enough characters remaining.
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+        
+        // Set this to maxValue in order to make sure that no more questions can be asked.
+        gm.numQuestionsAsked = int.MaxValue;
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        /*
+        // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> HintDialogue -> NpcSelect.
+        Type type = typeof(DialogueManager);
+        var fakeDialogueManager = Activator.CreateInstance(type);
+        MethodInfo m = type.GetMethod("BacktoNPCScreen",
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        m.Invoke(fakeDialogueManager, null);
+        m.Invoke(fakeDialogueManager, null);
+        */
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+    }
+    
+    /// <summary>
+    /// Check if EndDialogue returns to the NPCSelect state when there are questions left.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndDialogueGameCycleTest()
+    {
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Check if there are questions left. 
+        Assert.IsTrue(gm.HasQuestionsLeft());
+        
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        /*
+        // Use reflection to call BacktoNPCScreen twice, to go from NpcDialogue -> NpcSelect.
+        Type type = typeof(DialogueManager);
+        var fakeDialogueManager = Activator.CreateInstance(type);
+        MethodInfo m = type.GetMethod("BacktoNPCScreen", 
+            BindingFlags.NonPublic | BindingFlags.Instance);
+
+        m.Invoke(fakeDialogueManager, null);
+        */
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
+        
+        // Check if the NPCSelectScene is loaded.
+        bool inNpcSelectScene = SceneManager.GetSceneByName("NPCSelectScene").isLoaded;
+        Assert.IsTrue(inNpcSelectScene);
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
+        
+        yield return null;
+    }
+    
+    
 }
