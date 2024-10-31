@@ -5,10 +5,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Vector2 = System.Numerics.Vector2;
 
 // hallo
 
@@ -22,18 +24,23 @@ public class TimelineManager : MonoBehaviour
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    public Sprite[] backgrounds; // Stores all the used backgrounds for the introduction.
-    public String[] storyText;  // Stores all the used text for the introduction. 
+    public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
+    public String[]   storyText;   // Stores all the used text for the introduction. 
+    public GameObject texts; 
+    public Image[]    textMessages; 
     // The variables below are the UI components that we want to manipulate during the introduction
     public TMP_Text text;
     public Image    background;
     public Button   continueButton;
-    public Image    textBubble; 
+    public Image    textBubble;
+    public Image topOfPhone;
+    public Image bottomOfPhone;
     // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
     private int              backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
     private int              textIndex       = -1; // text[textIndex] is the currently shown text. 
-    
+
+    private UnityEngine.Vector3 moveTexts = new UnityEngine.Vector3(0,600, 0); 
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
@@ -57,10 +64,10 @@ public class TimelineManager : MonoBehaviour
                     StoryA();
                     break;
                 case 1:
-                    StoryA(); //StoryB();
+                    StoryA();
                     break;
                 case 2:
-                    StoryA(); //StoryC();
+                    StoryA();
                     break;
                 default:
                     StoryA();
@@ -77,6 +84,22 @@ public class TimelineManager : MonoBehaviour
     
     // This region contains methods that manipulate UI elements of the scene.
     #region UIManipulators
+    
+    private void hideTexts()
+    {
+        topOfPhone.gameObject.SetActive(false);
+        bottomOfPhone.gameObject.SetActive(false);
+        texts.SetActive(false);
+    }
+    public void SendText()
+    {
+        background.sprite = backgrounds[3];
+        topOfPhone.gameObject.SetActive(true);
+        bottomOfPhone.gameObject.SetActive(true);
+        texts.SetActive(true);
+        texts.transform.position += moveTexts;
+        PauseCurrentTimeline();
+    }
 
     public void ChangeText()
     {
@@ -99,6 +122,7 @@ public class TimelineManager : MonoBehaviour
     
     public void ChangeBackground()
     {
+        hideTexts();
         backgroundIndex++;
         try
         {
