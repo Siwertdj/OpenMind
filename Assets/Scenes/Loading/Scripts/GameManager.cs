@@ -508,7 +508,6 @@ public class GameManager : MonoBehaviour
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
-                    Debug.Log("transition from game loss to npcselect");
                     await sc.TransitionScene(
                         SceneController.SceneName.GameOverScene, 
                         SceneController.SceneName.NPCSelectScene, 
