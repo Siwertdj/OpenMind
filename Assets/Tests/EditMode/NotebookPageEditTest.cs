@@ -19,48 +19,104 @@ public class NotebookPageEditTest
     [OneTimeSetUp]
     public void Setup()
     {
+        // Get some random character to make the page for
         CharacterData c = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData));
+        
+        // Set global variables
         character = new CharacterInstance(c);
         page = new NotebookPage(character);
         notes = "Notes on " + character.characterName + ".\n";
     }
     
-    [UnityTest]
-    public IEnumerator GetNotesTest()
+    /// <summary>
+    /// Tests if notes are correctly retrieved
+    /// </summary>
+    [Test]
+    public void GetNotesTest()
     {
-        Assert.AreEqual(notes, page.GetNotes());
+        string newText = "hello";
         
-        yield return null;
+        page.SetNotes(newText);
+        
+        Assert.AreEqual(newText, page.GetNotes());
     }
 
-    [UnityTest]
-    public IEnumerator SetNotesTest()
+    /// <summary>
+    /// Tests if notes are set correctly
+    /// </summary>
+    [Test]
+    public void SetNotesTest()
     {
         page.SetNotes("hello");
         
         Assert.AreEqual("hello", page.GetNotes());
         Assert.AreNotEqual(notes, page.GetNotes());
-
-        yield return null;
     }
 
-    [UnityTest]
-    public IEnumerator QuestionTextTest()
+    /// <summary>
+    /// Tests if the correct string gets put out after invoking QuestionText()
+    /// </summary>
+    [Test]
+    [TestCase(Question.Name, "Name")]
+    [TestCase(Question.Age, "Age")]
+    [TestCase(Question.LifeGeneral, "Life")]
+    [TestCase(Question.Inspiration, "Inspiration")]
+    [TestCase(Question.Sexuality, "Sexuality")]
+    [TestCase(Question.Wellbeing, "Wellbeing")]
+    [TestCase(Question.Political, "Political ideology")]
+    [TestCase(Question.Personality, "Personality")]
+    [TestCase(Question.Hobby, "Hobbies")]
+    [TestCase(Question.CulturalBackground, "Cultural background")]
+    [TestCase(Question.Religion, "Religion")]
+    [TestCase(Question.Education, "Education level")]
+    [TestCase(Question.CoreValues, "Core values")]
+    [TestCase(Question.ImportantPeople, "Most important people")]
+    [TestCase(Question.PositiveTrait, "Positive trait")]
+    [TestCase(Question.NegativeTrait, "Bad trait")]
+    [TestCase(Question.OddTrait, "Odd trait")]
+    public void QuestionTextTest(Question question, string questionString)
     {
-        Assert.AreEqual("\n", page.QuestionText());
-
-        yield return null;
+        // The expected answer
+        string answer = "\n" + questionString.ToUpper() + "\n" + questionString + " \n \n";
+        
+        CharacterInstance c = character;
+        c.AskedQuestions = new List<Question>();
+        c.Answers = new Dictionary<Question, List<string>>();
+        
+        c.AskedQuestions.Add(question);
+        c.Answers[question] = new List<string> { questionString };
+        
+        Assert.AreEqual(answer, page.QuestionText());
     }
-
-    [UnityTest]
-    public IEnumerator IntroTest()
+    
+    /// <summary>
+    /// Source lists for IntroTest
+    /// </summary>
+    private static readonly object[] sourceLists = 
     {
+        new object[] {new List<Question> { } },
+        new object[] {new List<Question> { Question.Name }},
+        new object[] {new List<Question> { Question.Name, Question.Age}}
+    };
+
+    /// <summary>
+    /// Tests if the Intro method displays the correct string
+    /// </summary>
+    [Test]
+    [TestCaseSource(nameof(sourceLists))]
+    public void IntroTest(List<Question> questions)
+    {
+        CharacterInstance c = character;
+        
+        foreach (Question q in questions)
+        {
+            c.AskedQuestions.Add(q);
+        }
+        
         var res = page.Intro();
         
         if (character.AskedQuestions.Count > 0)
             Assert.AreEqual("Your info on " + character.characterName + ".\n", res);
         else Assert.AreEqual("You have not asked " + character.characterName + "\nany questions.\n", res);
-        
-        yield return null;
     }
 }

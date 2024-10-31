@@ -26,10 +26,6 @@ public class NotebookManagerPlayTest : MonoBehaviour
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-        
-        Button notebookButton = GameObject.Find("NotebookButton").GetComponent<Button>();
-        notebookButton.onClick.Invoke();
 
         SceneManager.LoadScene("NotebookScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NotebookScene").isLoaded);
@@ -46,6 +42,9 @@ public class NotebookManagerPlayTest : MonoBehaviour
     
     #endregion
 
+    /// <summary>
+    /// Checks if the notebook gets setupped correctly.
+    /// </summary>
     [UnityTest]
     public IEnumerator StartNotebookTest()
     {
@@ -58,6 +57,9 @@ public class NotebookManagerPlayTest : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if all buttons get correctly initialized.
+    /// </summary>
     [UnityTest]
     public IEnumerator InitializeCharacterButtonsTest()
     {
@@ -76,6 +78,9 @@ public class NotebookManagerPlayTest : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the notes are correctly opened
+    /// </summary>
     [UnityTest]
     public IEnumerator OpenPersonalNotesTest()
     {
@@ -91,7 +96,10 @@ public class NotebookManagerPlayTest : MonoBehaviour
     }
     
     // TODO: CharacterTab test?
-
+    
+    /// <summary>
+    /// Checks if the ToggleCharacterInfo method works correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator ToggleCharacterInfoTest()
     {
@@ -106,6 +114,9 @@ public class NotebookManagerPlayTest : MonoBehaviour
         yield return null;
     }
 
+    /// <summary>
+    /// Checks if the notes get saved correctly
+    /// </summary>
     [UnityTest]
     public IEnumerator SaveNotesTest()
     {
