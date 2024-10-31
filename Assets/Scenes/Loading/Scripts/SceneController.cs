@@ -74,7 +74,8 @@ public class SceneController : MonoBehaviour
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             Scene loadedScene = SceneManager.GetSceneAt(i);
-            if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
+            if (loadedScene != loadingScene) 
+                SceneManager.UnloadSceneAsync(loadedScene.name);
         }
     }
 

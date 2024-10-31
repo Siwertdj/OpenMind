@@ -51,9 +51,9 @@ public class DialogueManager : MonoBehaviour
 
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
-        {
             currentObject = dialogueObject;
-        }
+        else
+            Debug.LogError("Could not find DialogueObject. \nMake sure data[0] is a DialogueObject");
         // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
@@ -62,10 +62,8 @@ public class DialogueManager : MonoBehaviour
         } 
         // No dialogue recipient given, so we remove the character name field
         else
-        {
             characterNameField.SetActive(false);
-        }
-        
+
         // Execute the starting object
         currentObject.Execute();
 
