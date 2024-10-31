@@ -782,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bed11ee3730bd614ab7a0591fde6971f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd0ab3d764f597c469fd063abd62e39b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -810,7 +810,7 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -20.206612}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 903298825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1336,7 +1336,7 @@ PlayableDirector:
   - key: {fileID: 1598549895712223494, guid: f51a57816b69605499f203a62707fc12, type: 2}
     value: {fileID: 381591056}
   - key: {fileID: -4503172504463064776, guid: f51a57816b69605499f203a62707fc12, type: 2}
-    value: {fileID: 1969004739}
+    value: {fileID: 0}
   - key: {fileID: 1551082218906815168, guid: f51a57816b69605499f203a62707fc12, type: 2}
     value: {fileID: 1216014418}
   m_ExposedReferences:
@@ -1378,8 +1378,9 @@ MonoBehaviour:
   continueButton: {fileID: 198219724}
   dialogueAnimator: {fileID: 429653936}
   backgrounds:
-  - {fileID: 21300000, guid: f93e7f452e5efba46a17728f32d3f31f, type: 3}
+  - {fileID: 21300000, guid: 4b6ae141aa9f7444385195f56bdb8b79, type: 3}
   - {fileID: 21300000, guid: 3c09c83f5afb26b448aa21a9b585e907, type: 3}
+  - {fileID: 21300000, guid: 578686d0038ee43499e66c0dfda73d6d, type: 3}
   illusions:
   - {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
   - {fileID: 21300000, guid: f2861768c92ff8c46b7aba52169623c9, type: 3}
@@ -2264,7 +2265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f93e7f452e5efba46a17728f32d3f31f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4b6ae141aa9f7444385195f56bdb8b79, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2503,7 +2504,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.07619079, g: 0.17423399, b: 0.3283019, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

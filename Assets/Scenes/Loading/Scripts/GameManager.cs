@@ -194,7 +194,7 @@ public class GameManager : MonoBehaviour
 
         // Tell the player what happened in between cycles
         var dialogue = new List<string> {
-            $"{victimName} has gone home.",
+            $"{victimName} {story.hintDialogue}",
             "There is some new information about the stranger:",
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
