@@ -67,11 +67,11 @@ public class NotebookManagerPlayTest
     public IEnumerator OpenPersonalNotesTest()
     {
         // Set up fields
+        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        
         string newText = "hello";
 
         nm.inputField.GetComponent<TMP_InputField>().text = newText;
-        
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
         
         nm.OpenPersonalNotes();
         
@@ -111,11 +111,11 @@ public class NotebookManagerPlayTest
     [UnityTest]
     public IEnumerator SaveNotesTest()
     {
+        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        
         // Write dummy text to input field
         string newText = "hello";
         nm.inputField.GetComponent<TMP_InputField>().text = newText;
-        
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
         
         nm.SaveNotes();
         
