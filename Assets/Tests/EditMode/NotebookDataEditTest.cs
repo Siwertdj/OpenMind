@@ -1,53 +1,44 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEditor.SceneManagement;
 
-public class NotebookDataPlayTest
+public class NotebookPageDataTest
 {
-    private GameManager       gm;
-    private NotebookManager   nm;
     private NotebookData      data;
     private CharacterInstance character;
     
-    #region Setup and Teardown
-    
-    [UnitySetUp]
-    public IEnumerator Setup()
+    [OneTimeSetUp]
+    public void Setup()
     {
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+        // Get some random character to make the page for
+        CharacterData c = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData));
         
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
+        character = new CharacterInstance(c);
 
-        SceneManager.LoadScene("NotebookScene");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NotebookScene").isLoaded);
+        // Load "Loading scene" and find GameManager to set it up
+        EditorSceneManager.OpenScene("Assets/Scenes/Loading/Loading.unity");
+        GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gm.currentCharacters = new List<CharacterInstance>();
+        gm.currentCharacters.Add(character);
+        GameManager.gm = gm;
         
-        nm = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
-        data = nm.notebookData;
-        character = gm.currentCharacters[0];
+        data = new NotebookData();
     }
-    
-    [TearDown]
-    public void TearDown()
-    {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NotebookScene"));
-        SceneController.sc.UnloadAdditiveScenes();
-    }
-    
-    #endregion
 
     /// <summary>
     /// Checks if the character notes get retrieved correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator GetCharacterNotesTest()
+    [Test]
+    public void GetCharacterNotesTest()
     {
         string newNotes = "hello";
         
@@ -56,15 +47,13 @@ public class NotebookDataPlayTest
         var notes = data.GetCharacterNotes(character);
         
         Assert.AreEqual(newNotes, notes);
-        
-        yield return null;
     }
-
+    
     /// <summary>
     /// Checks if the answers get retrieved correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator GetAnswersTest()
+    [Test]
+    public void GetAnswersTest()
     {
         var actual = data.GetAnswers(character);
 
@@ -82,45 +71,39 @@ public class NotebookDataPlayTest
         expected += "\n";
 
         Assert.AreEqual(expected, actual);
-
-        yield return null;
     }
 
     /// <summary>
     /// Checks if the character notes get updated correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator UpdateCharacterNotesTest()
+    [Test]
+    public void UpdateCharacterNotesTest()
     {
         string newNotes = "hello";
         
         data.UpdateCharacterNotes(character, newNotes);
         
         Assert.AreEqual(newNotes, data.GetCharacterNotes(character));
-
-        yield return null;
     }
 
     /// <summary>
     /// Checks if the personal notes get updated correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator UpdatePersonalNotesTest()
+    [Test]
+    public void UpdatePersonalNotesTest()
     {
         string newNotes = "hello";
         
         data.UpdatePersonalNotes(newNotes);
         
         Assert.AreEqual(newNotes, data.GetPersonalNotes());
-
-        yield return null;
     }
 
     /// <summary>
     /// Checks if the personal notes get retrieved correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator GetPersonalNotesTest()
+    [Test]
+    public void GetPersonalNotesTest()
     {
         string newNotes = "hello";
         
@@ -129,7 +112,5 @@ public class NotebookDataPlayTest
         var notes = data.GetPersonalNotes();
         
         Assert.AreEqual(newNotes, data.GetPersonalNotes());
-
-        yield return null;
     }
 }
