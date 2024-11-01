@@ -33,8 +33,6 @@ public class TimelineManager : MonoBehaviour
     public Image    background;
     public Button   continueButton;
     public Image    textBubble;
-    public Image topOfPhone;
-    public Image bottomOfPhone;
     // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
     private int              backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
@@ -44,6 +42,10 @@ public class TimelineManager : MonoBehaviour
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
+    
+    public  GameObject[] MessageArray;
+    public  GameObject[] Locations; 
+    private int          messageInt = 0; 
 
     /// <summary>
     /// Starts the proper intro.
@@ -87,20 +89,38 @@ public class TimelineManager : MonoBehaviour
     
     private void hideTexts()
     {
-        topOfPhone.gameObject.SetActive(false);
-        bottomOfPhone.gameObject.SetActive(false);
-        texts.SetActive(false);
+        foreach(GameObject message in MessageArray)
+        {
+            message.SetActive(false);
+        }
+        foreach (GameObject location in Locations)
+        {
+            location.SetActive(false);
+        }
+        
     }
     public void SendText()
     {
         background.sprite = backgrounds[3];
-        topOfPhone.gameObject.SetActive(true);
-        bottomOfPhone.gameObject.SetActive(true);
-        texts.SetActive(true);
-        texts.transform.position += moveTexts;
+        messageInt++;
+        if (messageInt > 4) hideTexts(); 
+        int j = 0; 
+        for (int i = messageInt; i < messageInt + 4; i++)
+        {
+            MessageArray[i].transform.position = Locations[j].transform.position; 
+            MessageArray[i].SetActive(true);
+            j++; 
+        }
+        
+        foreach (GameObject location in Locations)
+        {
+            location.SetActive(true);
+        }
         PauseCurrentTimeline();
     }
 
+    
+    
     public void ChangeText()
     {
         PauseCurrentTimeline();
