@@ -195,9 +195,12 @@ public class TimelineManager : MonoBehaviour
 
     #endregion
 
-    // This region
+    // This region contains methods that regulate the different storylines. 
     #region StoryLines
 
+    /// <summary>
+    /// Method that prepares the scene to play storyline A. 
+    /// </summary>
     private void StoryA()
     {
         currentTimeline = introStoryA;
@@ -206,6 +209,9 @@ public class TimelineManager : MonoBehaviour
         background.sprite = backgrounds[backgroundIndex];
     }
     
+    /// <summary>
+    /// Method that prepares the scene to play storyline B. 
+    /// </summary>
     private void StoryB()
     {
         currentTimeline = introStoryB;
@@ -213,6 +219,9 @@ public class TimelineManager : MonoBehaviour
         playerText.text = "Story B";
     }
     
+    /// <summary>
+    /// Method that prepares the scene to play storyline C. 
+    /// </summary>
     private void StoryC()
     {
         currentTimeline = introStoryC;
