@@ -2876,28 +2876,7 @@ MonoBehaviour:
   - Who could have sent me those texts..
   - I guess I should go talk to people. That will definitely help me find out who
     this person is that has been sending me these messages.
-  texts: {fileID: 0}
-  textMessages:
-  - {fileID: 1092684858}
-  - {fileID: 925894284}
-  - {fileID: 2410092}
-  - {fileID: 1365418191}
-  - {fileID: 1623846772}
-  - {fileID: 1577301819}
-  - {fileID: 743079423}
-  - {fileID: 766146806}
-  - {fileID: 769899524}
-  - {fileID: 1516216346}
-  - {fileID: 581109216}
-  - {fileID: 440754196}
-  - {fileID: 1892630684}
-  - {fileID: 1437383812}
-  text: {fileID: 1835178958}
-  background: {fileID: 1208453420}
-  continueButton: {fileID: 96174140}
-  textBubble: {fileID: 827123414}
-  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
-  MessageArray:
+  TextMessages:
   - {fileID: 730265060}
   - {fileID: 730265060}
   - {fileID: 730265060}
@@ -2916,11 +2895,16 @@ MonoBehaviour:
   - {fileID: 1027126677}
   - {fileID: 1849246439}
   - {fileID: 1480783585}
-  Locations:
+  MessageLocations:
   - {fileID: 1602891227}
   - {fileID: 1875904328}
   - {fileID: 1893652347}
   - {fileID: 1751352165}
+  playerText: {fileID: 1835178958}
+  background: {fileID: 1208453420}
+  continueButton: {fileID: 96174140}
+  textBubble: {fileID: 827123414}
+  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
 --- !u!114 &1187182887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,7 +3019,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1187182886}
           m_TargetAssemblyTypeName: TimelineManager, Assembly-CSharp
-          m_MethodName: ChangeText
+          m_MethodName: ChangePlayerText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -4700,7 +4684,7 @@ GameObject:
   - component: {fileID: 1835178962}
   - component: {fileID: 1835178961}
   m_Layer: 0
-  m_Name: Text
+  m_Name: PlayerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
