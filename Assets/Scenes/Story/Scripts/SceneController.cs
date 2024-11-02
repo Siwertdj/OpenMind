@@ -16,15 +16,12 @@ public class SceneController : MonoBehaviour
 {
     public enum SceneName
     {
-        StartScreenScene,
         NPCSelectScene,
         DialogueScene,
         GameOverScene,
         GameWinScene,
         Loading,
         NotebookScene,
-        PrologueScene,
-        EpilogueScene
     }
 
     public enum TransitionType

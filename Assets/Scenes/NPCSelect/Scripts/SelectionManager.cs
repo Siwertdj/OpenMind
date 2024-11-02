@@ -42,7 +42,6 @@ public class SelectionManager : MonoBehaviour
     {        
         // If the number of characters has reached the minimum amount, and the player has no more questions left,
         // set the selectionType variable to decidecriminal.
-        Debug.Log("SetSceneType");
         if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
             selectionType = "decidecriminal";
         else

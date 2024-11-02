@@ -25,9 +25,9 @@ public class EpilogueManager : MonoBehaviour
                 : SceneController.SceneName.GameOverScene;
                 
         // Transition to the right scene.
-        SceneController.sc.TransitionScene(
-            SceneController.SceneName.EpilogueScene,
-            targetScene, 
-            SceneController.TransitionType.Transition);
+        // SceneController.sc.TransitionScene(
+        //     SceneController.SceneName.EpilogueScene,
+        //     targetScene, 
+        //     SceneController.TransitionType.Transition);
     }
 }

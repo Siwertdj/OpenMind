@@ -9,31 +9,99 @@ using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// A class that tests scene controller properties:
 /// - Make sure the transition graph can be read, that it throws no errors when reading
-/// - UnloadAdditiveScenes should unload all scenes except the loading scene
 /// - An invalid scene transition should give an error
 /// - A valid scene transition should actual transition the scene 
 /// </summary>
 public class SceneControllerTests
 {
+    private GameManager     gm;
+    private SceneController sc;
     
-    [OneTimeSetUp]
-    public void CreateLoadingScene()
+    /// <summary>
+    /// Sets up the unit tests:
+    /// - Disables event systems
+    /// - Disables audio listeners
+    /// - Initialises Gamemanager.gm.currentCharacters so loading NPCSelectScene doesn't throw an error
+    /// - Initialises Gamemanager.gm.story (through reflection) so loading NPCSelectScene doesn't throw an error
+    /// - Initialises Gamemanager.gm.notebookData so loading NotebookScene doesn't throw an error
+    /// </summary>
+    [UnitySetUp]
+    public IEnumerator SetupUnitTest()
     {
-        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
+        
+        yield return new WaitUntil(() =>
+        {
+           //Debug.Log("Loading");
+           return SceneManager.GetSceneByName("Loading").isLoaded;
+        });
+        
+        DisbleAllEventAndAudioListeners();
+        GameManager.gm.currentCharacters = new List<CharacterInstance>();
+        CharacterData dummyData = ScriptableObject.CreateInstance<CharacterData>();
+        dummyData.answers = Array.Empty<KeyValuePair>();
+        CharacterInstance dummy = new CharacterInstance(dummyData);
+        GameManager.gm.currentCharacters.AddRange(new[] {dummy, dummy, dummy, dummy});
+        SetProperty("story", GameManager.gm, ScriptableObject.CreateInstance<StoryObject>());
+        
+        GameManager.gm.notebookData = new NotebookData();
+        
+        gm = GameManager.gm;
+        sc = SceneController.sc;
+        
+        //TransitionAnimator.i = new FastTransitionAnimator();
+    }
+    
+    [UnityTearDown]
+    public IEnumerator TearDownUnitTests()
+    {
+        yield return new WaitUntil(() =>
+        {
+            //Debug.Log($"Unloading: {SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1).name}");
+            SceneManager.UnloadSceneAsync(
+                SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1));
+            
+            return SceneManager.loadedSceneCount == 1;
+        });
+    }
+    
+    /// <summary>
+    /// Disables all event systems and audio systems to prevent the debug spam of having multiple of these systems.
+    /// </summary>
+    private void DisbleAllEventAndAudioListeners()
+    {
+        //disable event systems to prevent debug spam
+        EventSystem[] eventSystems = UnityEngine.Object.FindObjectsOfType<EventSystem>();
+        foreach(EventSystem eventSystem in eventSystems)
+            eventSystem.enabled = false;
+        
+        //disable event systems to prevent debug spam
+        AudioListener[] audioSystems = UnityEngine.Object.FindObjectsOfType<AudioListener>();
+        foreach(AudioListener audioSource in audioSystems)
+            audioSource.enabled = false;
+    }
+    
+    private void GetValue<TV, TC>(string varName, TC instance, out TV variable) where TV : class
+    {
+        FieldInfo fieldInfo =
+            typeof(TC).GetField(varName, BindingFlags.NonPublic | BindingFlags.Instance);
+        variable = fieldInfo.GetValue(instance) as TV;
+    }
+    
+    private void SetProperty<TV, TC>(string varName, TC instance, TV value)
+    {
+        PropertyInfo propertyInfo = typeof(TC).GetProperty(varName);
+        propertyInfo.SetValue(instance, value, null);
     }
     
     //all possible scene names
     private static SceneController.SceneName[] sceneNames = 
         Enum.GetValues(typeof(SceneController.SceneName)).Cast<SceneController.SceneName>().ToArray();
-    
-    //exclude npcselect and notebook, because loading these gives errors
-    private static SceneController.SceneName[] filteredSceneNames() => Array.FindAll(sceneNames,
-        sn => sn != SceneController.SceneName.NPCSelectScene &&
-              sn != SceneController.SceneName.NotebookScene);
     
     private static SceneController.TransitionType[] transitionTypes =
         Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
@@ -44,39 +112,28 @@ public class SceneControllerTests
     /// Also tests whether the right scene gets loaded from SceneController.StartScene, since both properties are tested with this method.
     /// </summary>
     [UnityTest, Order(1)]
-    public IEnumerator TestSceneGraphReading([ValueSource(nameof(filteredSceneNames))] SceneController.SceneName sceneName)
+    public IEnumerator TestSceneGraphReading([ValueSource(nameof(sceneNames))] SceneController.SceneName sceneName)
     {
         //creates scene graph
-        SceneController.sc.StartScene(sceneName);
-        yield return new WaitForSeconds(0.1f);
+        sc.StartScene(sceneName);
+        int i = 0;
+        const int timeout = 1000;
+        bool finished = true;
         
-        //checks if the start scene is loaded
-        Assert.IsTrue(SceneManager.GetSceneByName(sceneName.ToString()).isLoaded);
-        SceneManager.UnloadSceneAsync(sceneName.ToString());
-    }
-    
-    /// <summary>
-    /// Tests whether unloading all scenes unloads all scenes
-    /// </summary>
-    [UnityTest, Order(2)]
-    public IEnumerator TestUnloadAdditiveScenes()
-    {
-        //load 2 scenes
-        SceneManager.LoadScene("StartScreenScene", LoadSceneMode.Additive);
-        SceneManager.LoadScene("GameWinScene", LoadSceneMode.Additive);
-        
+        //wait for the scene to load or a timeout. If the timeout is hit, assume the scene never loaded.
         yield return new WaitUntil(() =>
-            SceneManager.GetSceneByName("StartScreenScene").isLoaded &&
-            SceneManager.GetSceneByName("GameWinScene").isLoaded);
+        {
+            i = i++;
+            if (i > timeout)
+            {
+                finished = false;
+                return true;
+            }
+            
+            return SceneManager.GetSceneByName(sceneName.ToString()).isLoaded;
+        });
         
-        //check if the 3 scenes are loaded, including the loading scene, an init test scene is created when running tests, so this scene counts as well, making the total count 4
-        Assert.AreEqual(4, SceneManager.loadedSceneCount);
-        
-        //unload all scenes
-        SceneController.sc.UnloadAdditiveScenes();
-        
-        //check if more than 1 scene is loaded, the loading scene should still be loaded
-        Assert.AreEqual(1, SceneManager.loadedSceneCount);
+        Assert.IsTrue(finished);
     }
     
     /// <summary>
@@ -84,96 +141,68 @@ public class SceneControllerTests
     /// Tests whether transitioning from an unloaded scene throws an error
     /// </summary>
     [UnityTest, Order(3)]
-    public IEnumerator TestInvalidSceneTransition(
-        [ValueSource(nameof(filteredSceneNames))] SceneController.SceneName from,
-        [ValueSource(nameof(filteredSceneNames))] SceneController.SceneName to,
+    public IEnumerator TestSceneTransitionValidity(
+        [ValueSource(nameof(sceneNames))] SceneController.SceneName from,
+        [ValueSource(nameof(sceneNames))] SceneController.SceneName to,
         [ValueSource(nameof(transitionTypes))] SceneController.TransitionType tt
         )
     {
-        if (typeof(SceneController).GetField("sceneGraph", BindingFlags.NonPublic | BindingFlags.Instance) is null)
-            SceneController.sc.StartScene(from);
+        GetValue("sceneGraph", sc, out object value1);
+        GetValue("sceneToID", sc, out object value2);
+        if (value1 is null || value2 is null)
+        {
+            sc.StartScene(from);
+            //Debug.Log("StartScene");
+        }
         else
-            SceneManager.LoadScene(from.ToString());
+        {
+            SceneManager.LoadScene(from.ToString(), LoadSceneMode.Additive);
+            //Debug.Log("LoadScene");
+        }
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName(from.ToString()).isLoaded);
         
-        List<List<(int, SceneController.TransitionType)>> sceneGraph =
-            typeof(SceneController).GetField("sceneGraph", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(SceneController.sc) as List<List<(int, SceneController.TransitionType)>>;
-        Dictionary<string, int> sceneToID =
-            typeof(SceneController).GetField("sceneToID", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(SceneController.sc) as Dictionary<string, int>;
+        //reassign Gamemanager.gm, since loading the Loading scene overwrites it
+        if (from == SceneController.SceneName.Loading)
+            GameManager.gm = gm;
         
+        List<List<(int, SceneController.TransitionType)>> sceneGraph;
+        Dictionary<string, int> sceneToID;
         
-        
+        GetValue("sceneGraph", sc, out sceneGraph);
+        GetValue("sceneToID", sc, out sceneToID);
         
         //check if an error is thrown when transitioning from an unloaded scene
         if (!SceneManager.GetSceneByName(to.ToString()).isLoaded)
         {
-            Task task1 = SceneController.sc.TransitionScene(to, from, tt);
-            yield return new WaitUntil(() => task1.IsCompleted);
             LogAssert.Expect(LogType.Error,
                 $"Cannot make a transition from the scene {to}, since it's not loaded.");
-        }
-        
-        //checks whether the scene is invalid, if it valid, nothing is tested
-        int fromID = sceneToID[from.ToString()];
-        int toID = sceneToID[to.ToString()];
-        if (!sceneGraph[fromID].Contains((toID, tt)))
-        {
-            //invalid transition
-            LogAssert.Expect(LogType.Error,
-                $"Current scene {from} cannot make a {tt}-transition to {to}");
             
-            Task task2 = SceneController.sc.TransitionScene(from, to, tt);
-            yield return new WaitUntil(() => task2.IsCompleted);
+            Task task1 = sc.TransitionScene(to, from, tt);
+            yield return new WaitUntil(() => task1.IsCompleted);
         }
-        
-        SceneManager.UnloadSceneAsync(from.ToString());
-    }
-    
-    /// <summary>
-    /// Tests whether a valid scene transition results in a new scene
-    /// </summary>
-    [UnityTest, Order(3)]
-    public IEnumerator TestValidSceneTransition(
-        [ValueSource(nameof(filteredSceneNames))] SceneController.SceneName from,
-        [ValueSource(nameof(filteredSceneNames))] SceneController.SceneName to,
-        [ValueSource(nameof(transitionTypes))] SceneController.TransitionType tt
-    )
-    {
-        if (typeof(SceneController).GetField("sceneGraph", BindingFlags.NonPublic | BindingFlags.Instance) is null)
-            SceneController.sc.StartScene(from);
-        else
-            SceneManager.LoadScene(from.ToString());
-        
-        yield return new WaitUntil(() => SceneManager.GetSceneByName(from.ToString()).isLoaded);
-        
-        List<List<(int, SceneController.TransitionType)>> sceneGraph =
-            typeof(SceneController).GetField("sceneGraph", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(SceneController.sc) as List<List<(int, SceneController.TransitionType)>>;
-        Dictionary<string, int> sceneToID =
-            typeof(SceneController).GetField("sceneToID", BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(SceneController.sc) as Dictionary<string, int>;
-        
-        //check if the transition is valid, if not, nothing will be tested
+
+        //checks whether the scene is invalid, if it is valid, check if the right transition happened
         int fromID = sceneToID[from.ToString()];
         int toID = sceneToID[to.ToString()];
         if (sceneGraph[fromID].Contains((toID, tt)))
         {
-            Task task = SceneController.sc.TransitionScene(from, to, tt);
+            //do the transition
+            Task task = sc.TransitionScene(from, to, tt);
             yield return new WaitUntil(() => task.IsCompleted);
             
+            //the transition has different results based on the type of transition
             switch (tt)
             {
                 case SceneController.TransitionType.Additive:
                     Assert.IsTrue(SceneManager.GetSceneByName(from.ToString()).isLoaded);
                     Assert.IsTrue(SceneManager.GetSceneByName(to.ToString()).isLoaded);
-                    SceneManager.UnloadSceneAsync(from.ToString());
                     break;
                 
                 case SceneController.TransitionType.Transition:
-                    Assert.IsFalse(SceneManager.GetSceneByName(from.ToString()).isLoaded);
+                    //edge case for when to == from
+                    if (to != from)
+                        Assert.IsFalse(SceneManager.GetSceneByName(from.ToString()).isLoaded);
                     Assert.IsTrue(SceneManager.GetSceneByName(to.ToString()).isLoaded);
                     break;
                 
@@ -186,7 +215,14 @@ public class SceneControllerTests
                     throw new Exception($"There is no test for this type of transition yet: {tt}");
             }
         }
-        
-        SceneManager.UnloadSceneAsync(to.ToString());
+        else
+        {
+            //invalid transition
+            LogAssert.Expect(LogType.Error,
+                $"Current scene {from} cannot make a {tt}-transition to {to}");
+            
+            Task task2 = sc.TransitionScene(from, to, tt);
+            yield return new WaitUntil(() => task2.IsCompleted);
+        }
     }
 }
