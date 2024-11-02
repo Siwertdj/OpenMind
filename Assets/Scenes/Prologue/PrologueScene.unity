@@ -2572,7 +2572,6 @@ GameObject:
   - component: {fileID: 2112137517}
   - component: {fileID: 2112137516}
   - component: {fileID: 2112137519}
-  - component: {fileID: 2112137520}
   m_Layer: 0
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -2652,19 +2651,6 @@ MonoBehaviour:
   m_Events:
     m_Signals: []
     m_Events: []
---- !u!114 &2112137520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112137514}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f9d5286691999c46bbdb9a00e1cc40a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skipButton: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

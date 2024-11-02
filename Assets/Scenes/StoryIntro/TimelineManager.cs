@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -28,13 +28,12 @@ public class TimelineManager : MonoBehaviour
     public Sprite[]     backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]     storyText;   // Stores all the used text for the introduction. 
     public GameObject[] TextMessages;
-    public GameObject[] MessageLocations; 
-    
+    public GameObject[] MessageLocations;
+
     // The variables below are the UI components that we want to manipulate during the introduction
-    public TMP_Text playerText;
+    [SerializeField] private DialogueAnimator dialogueAnimator;
     public  Image    background;
     public  Button   continueButton;
-    public  Image    textBubble;
     // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
     private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
@@ -129,17 +128,15 @@ public class TimelineManager : MonoBehaviour
     {
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
-        textBubble.gameObject.SetActive(true);
-        playerText.gameObject.SetActive(true);
+        dialogueAnimator.gameObject.SetActive(true);
         playerTextIndex++; // Keep track of which text needs to be shown. 
         try
         {
-            playerText.text = storyText[playerTextIndex];
+            dialogueAnimator.WriteDialogue(storyText[playerTextIndex]);
         }
         catch
         {
             playerTextIndex = 0;
-            playerText.text = storyText[playerTextIndex];
             Debug.LogError("Error: No more text to speak.");
         }
     }
@@ -188,8 +185,8 @@ public class TimelineManager : MonoBehaviour
     public void ContinueCurrentTimeline()
     {
         continueButton.gameObject.SetActive(false);
-        textBubble.gameObject.SetActive(false);
-        playerText.gameObject.SetActive(false);
+        dialogueAnimator.gameObject.SetActive(false);
+        dialogueAnimator.CancelWriting();
         currentTimeline.Play();
     }
 
@@ -216,7 +213,6 @@ public class TimelineManager : MonoBehaviour
     {
         currentTimeline = introStoryB;
         currentTimeline.Play();
-        playerText.text = "Story B";
     }
     
     /// <summary>
@@ -226,7 +222,6 @@ public class TimelineManager : MonoBehaviour
     {
         currentTimeline = introStoryC;
         currentTimeline.Play();
-        playerText.text = "Story C";
     }
 
     #endregion
