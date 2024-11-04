@@ -11,11 +11,11 @@ public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
-    [SerializeField] private GameObject inputField;
 
     [Header("Fields")]
     [SerializeField] private GameObject dialogueField;
     [SerializeField] private GameObject questionsField;
+    [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
 
@@ -28,9 +28,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
 
-    public string inputText;
-
-    // Start is called before the first frame update
+    [NonSerialized] public string inputText;
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;
@@ -133,7 +131,7 @@ public class DialogueManager : MonoBehaviour
         // Instantiate new background
         foreach (GameObject element in newBackground)
             Instantiate(element).transform.parent = parent;
-
+        
     }
 
     /// <summary>
