@@ -1392,9 +1392,9 @@ MonoBehaviour:
   - 'Before I will lead you to the others, I would like you to answer some questions. '
   - Walk with me?
   - I'm going to show you an image.
-  - What color was the butterfly?
-  - The correct answer is grey!
-  - 'The image was actually black and white. '
+  - What did you see?
+  - Maybe you saw a butterfly and some lines.
+  - 'But did you notice the image was actually black and white? '
   - 'By adding a grid of colored lines, your brain makes you believe the image is
     in color. '
   - 'Try it for yourself! You can remove the lines with the toggle on top of the

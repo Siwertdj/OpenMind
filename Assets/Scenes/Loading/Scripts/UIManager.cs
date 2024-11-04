@@ -43,10 +43,7 @@ public class UIManager : MonoBehaviour
 
     public void ReturnToStartScreen()
     {
-        _ = SceneController.sc.TransitionScene(
-            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
-            SceneController.SceneName.StartScreenScene,
-            SceneController.TransitionType.Transition);
+        //_ = SceneController.sc.LoadScene(SceneController.SceneName.StartScreenScene);
     }
 
     /// <summary>
