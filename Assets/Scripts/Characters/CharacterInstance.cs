@@ -80,10 +80,9 @@ public class CharacterInstance
     {
         List<string> speakingText1 = new List<string>()
         {
-            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
+            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName + ".",
             "I was indeed the one who kept sending you messages.",
-            "and in fact, I knew that you did not know who",
-            "was sending the messages.",
+            "and in fact, I knew that you did not know who was sending the messages.",
             "You managed to guess correctly, and so i wanted to ask you the following:",
             "What made you think it was me sending the messages?"
         };
