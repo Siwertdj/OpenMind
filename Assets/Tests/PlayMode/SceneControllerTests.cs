@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.EventSystems;
+using Random = System.Random;
 
 /// <summary>
 /// A class that tests scene controller properties:
@@ -21,6 +22,13 @@ public class SceneControllerTests
 {
     private GameManager     gm;
     private SceneController sc;
+    
+    //all possible scene names
+    private static SceneController.SceneName[] sceneNames =
+        Enum.GetValues(typeof(SceneController.SceneName)).Cast<SceneController.SceneName>().ToArray();
+    
+    private static SceneController.TransitionType[] transitionTypes =
+        Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
     
     /// <summary>
     /// Sets up the unit tests:
@@ -35,11 +43,7 @@ public class SceneControllerTests
     {
         SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
         
-        yield return new WaitUntil(() =>
-        {
-           //Debug.Log("Loading");
-           return SceneManager.GetSceneByName("Loading").isLoaded;
-        });
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
         DisbleAllEventAndAudioListeners();
         GameManager.gm.currentCharacters = new List<CharacterInstance>();
@@ -54,7 +58,8 @@ public class SceneControllerTests
         gm = GameManager.gm;
         sc = SceneController.sc;
         
-        //TransitionAnimator.i = new FastTransitionAnimator();
+        //unload the loading scene now
+        SceneManager.UnloadSceneAsync("Loading");
     }
     
     [UnityTearDown]
@@ -99,14 +104,6 @@ public class SceneControllerTests
         propertyInfo.SetValue(instance, value, null);
     }
     
-    //all possible scene names
-    private static SceneController.SceneName[] sceneNames = 
-        Enum.GetValues(typeof(SceneController.SceneName)).Cast<SceneController.SceneName>().ToArray();
-    
-    private static SceneController.TransitionType[] transitionTypes =
-        Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
-    
-    
     /// <summary>
     /// Tests whether the scene graph reading works and no errors are thrown.
     /// Also tests whether the right scene gets loaded from SceneController.StartScene, since both properties are tested with this method.
@@ -150,15 +147,9 @@ public class SceneControllerTests
         GetValue("sceneGraph", sc, out object value1);
         GetValue("sceneToID", sc, out object value2);
         if (value1 is null || value2 is null)
-        {
             sc.StartScene(from);
-            //Debug.Log("StartScene");
-        }
         else
-        {
             SceneManager.LoadScene(from.ToString(), LoadSceneMode.Additive);
-            //Debug.Log("LoadScene");
-        }
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName(from.ToString()).isLoaded);
         
@@ -180,6 +171,8 @@ public class SceneControllerTests
             
             Task task1 = sc.TransitionScene(to, from, tt);
             yield return new WaitUntil(() => task1.IsCompleted);
+            
+            Assert.IsFalse(DidTransitionHappen(from, to));
         }
 
         //checks whether the scene is invalid, if it is valid, check if the right transition happened
@@ -187,6 +180,16 @@ public class SceneControllerTests
         int toID = sceneToID[to.ToString()];
         if (sceneGraph[fromID].Contains((toID, tt)))
         {
+            Debug.Log(SceneManager.GetSceneByName(to.ToString()).isLoaded);
+            
+            if (tt == SceneController.TransitionType.Unload)
+            {
+                //if the transition is an unload, make sure the to is loaded
+                SceneManager.LoadScene(to.ToString(), LoadSceneMode.Additive);
+                yield return new WaitUntil(
+                    () => SceneManager.GetSceneByName(to.ToString()).isLoaded);
+            }
+            
             //do the transition
             Task task = sc.TransitionScene(from, to, tt);
             yield return new WaitUntil(() => task.IsCompleted);
@@ -223,6 +226,29 @@ public class SceneControllerTests
             
             Task task2 = sc.TransitionScene(from, to, tt);
             yield return new WaitUntil(() => task2.IsCompleted);
+            
+            Assert.IsFalse(DidTransitionHappen(from, to));
         }
+    }
+    
+    /// <summary>
+    /// Tests whether a transition occured
+    /// Assumes:
+    /// from was active
+    /// to was not active
+    /// Loading was active
+    /// </summary>
+    private bool DidTransitionHappen(SceneController.SceneName from, SceneController.SceneName to)
+    {
+        //if from == to, from should be loaded, which means to is also loaded and no transition happened
+        if (from == to)
+            return !SceneManager.GetSceneByName(from.ToString()).isLoaded;
+        
+        bool transitionHappened = false; 
+        transitionHappened |= SceneManager.GetSceneByName(to.ToString()).isLoaded;
+        
+        //if from is not active, a transition happened
+        transitionHappened |= !SceneManager.GetSceneByName(from.ToString()).isLoaded;
+        return transitionHappened;
     }
 }
