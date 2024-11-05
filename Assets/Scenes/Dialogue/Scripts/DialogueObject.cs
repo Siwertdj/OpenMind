@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,12 +38,20 @@ public class SpeakingObject : DialogueObject
         set { _responses = value; }
     }
 
+    /// <summary>
+    /// The constructor for <see cref="SpeakingObject"/>.
+    /// </summary>
+    /// <param name="dialogue">The text</param>
+    /// <param name="background">The background</param>
     public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
         this.background = background;
     }
 
+    /// <summary>
+    /// Writes the text to the screen
+    /// </summary>
     public override void Execute()
     {
         var dm = DialogueManager.dm;
@@ -76,6 +86,9 @@ public class TerminateDialogueObject : DialogueObject
         this.post = post;
     }
 
+    /// <summary>
+    /// Unloads the scene and loads NPCSelect
+    /// </summary>
     public override void Execute()
     {
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
