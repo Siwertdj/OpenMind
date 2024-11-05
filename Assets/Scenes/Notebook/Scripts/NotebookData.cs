@@ -1,9 +1,11 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 
+/// <summary>
+/// Class that stores the data written in the notebook
+/// </summary>
 public class NotebookData
 {
     private Dictionary<CharacterInstance, NotebookPage> _pages = 
@@ -11,6 +13,9 @@ public class NotebookData
 
     private string _personalNotes;
 
+    /// <summary>
+    /// Constructor for creating a new empty notebook
+    /// </summary>
     public NotebookData()
     {
         // Empty all pages when we create new notebookdata
@@ -27,6 +32,11 @@ public class NotebookData
         _personalNotes = "Write down your thoughts.";
     }
 
+    /// <summary>
+    /// Constructor for creating a notebook that already has writing 
+    /// </summary>
+    /// <param name="pages">The pages in the notebook</param>
+    /// <param name="personalNotes"> The notes the player has taken</param>
     public NotebookData(Dictionary<CharacterInstance, NotebookPage> pages, string personalNotes)
     {
         _pages = pages;
