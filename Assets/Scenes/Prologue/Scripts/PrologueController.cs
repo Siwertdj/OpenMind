@@ -1,39 +1,43 @@
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager class for cutscenes.
+/// </summary>
 public class CutsceneController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
     // The variables below are the UI components that we want to manipulate during the prologue scene
-    public Image textBubbleImage; 
-    public Image backgroundImage;
-    public Image illusionImage; 
-    public TMP_Text introText;
-    public TMP_Text spokenText;
-    public TMP_Text nameBoxText;
-    public Toggle imageToggler;
-    public Button continueButton;
-    // The arrays below store data that is required at a later stadium of the prologue
-    public Sprite[] backgrounds; // Stores all the background images
-    public Sprite[] illusions; // Stores all the optical illusion images
-    public string[] receptionistText; // Stores all the text spoken by the receptionist
+    [Header("Image refs")]
+    [SerializeField] private Image textBubbleImage;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image illusionImage;
+
+    [Header("Text refs")]
+    [SerializeField] private TMP_Text introText;
+    [SerializeField] private TMP_Text nameBoxText;
+
+    [Header("Misc. refs")]
+    [SerializeField] private Toggle imageToggler;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private DialogueAnimator dialogueAnimator;
+
+    [Header("Prologue data")] // The arrays below store data that is required at a later stadium of the prologue
+    [SerializeField] private Sprite[] backgrounds; // Stores all the background images
+    [SerializeField] private Sprite[] illusions; // Stores all the optical illusion images
+    [SerializeField] private string[] receptionistText; // Stores all the text spoken by the receptionist
     
     private int textIndex; // Index to keep track of the text that needs to be spoken
     private int backgroundIndex; // Index to keep track of the background that needs to be used
     private Transform checkmarkTransform; // This is the checkmark image on the toggler
-    
-    // These variables are necessary for the typewriter effect of the text
-    private Coroutine typeWriterCoroutine;
-    public float typingSpeed = 0.1f; // The speed of the typewriter effect in seconds. 
-    private string text;
     
     /// <summary>
     /// This method is called when the scene is started this script belongs to is activated. 
@@ -55,11 +59,10 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void ContinueTimeline()
     {
-        Debug.Log("Continue Timeline");
         imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
         continueButton.gameObject.SetActive(false);  // Disable continuebutton
         playableDirector.Play(); // Resume timeline.
-        StopCoroutine(typeWriterCoroutine); // Makes sure player can continue when texteffect is not finished
+        dialogueAnimator.CancelWriting(); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>
@@ -72,7 +75,6 @@ public class CutsceneController : MonoBehaviour
         playableDirector.Pause();
         continueButton.gameObject.SetActive(true); // Make sure timeline can manually be resumed. 
     }
-    
 
     /// <summary>
     /// This method is called when the timeline reaches the end of the prologue.
@@ -102,7 +104,7 @@ public class CutsceneController : MonoBehaviour
         // Activate the UI for the spoken text
         textBubbleImage.gameObject.SetActive(true);
         nameBoxText.gameObject.SetActive(true);
-        spokenText.gameObject.SetActive(true);
+        dialogueAnimator.gameObject.SetActive(true);
         
         UpdateText(); // Update the text that is shown
         PauseTimeline(); // Pause the timeline such that the player can read the text. 
@@ -122,7 +124,7 @@ public class CutsceneController : MonoBehaviour
     {
         textBubbleImage.gameObject.SetActive(false);
         nameBoxText.gameObject.SetActive(false);
-        spokenText.gameObject.SetActive(false);
+        dialogueAnimator.gameObject.SetActive(false);
     }
     
     #endregion
@@ -173,46 +175,7 @@ public class CutsceneController : MonoBehaviour
     public void UpdateText()
     {
         textIndex++;
-        try
-        {
-            spokenText.text = receptionistText[textIndex];
-        }
-        catch
-        {
-            spokenText.text = "no text";
-        }
-        // TODO: Fix typewriter
-        //typeText(); // Activate the effect for the text
+        dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
     }
     #endregion
-    
-    // This region contains methods for creating the typewriter effect of the text.
-    #region TypewriterEffect
-    /// <summary>
-    /// This method can be called when the typewriter effect is wanted for the text.
-    /// This method uses the coroutine method below. 
-    /// </summary>
-    private void typeText()
-    {
-        text = spokenText.text;
-        spokenText.text = "";
-        typeWriterCoroutine = StartCoroutine(TypeWriterCoroutine());
-    }
-    
-    /// <summary>
-    /// Method that actually performs the typewriter effect. 
-    /// </summary>
-    /// TODO: Ensure this doesnt bug out and is consistent on different systems
-    /// Issue: It types the same letter multiple times sometimes
-    IEnumerator TypeWriterCoroutine()
-    {
-        for (int i = 0; i < text.Length; i++)
-        {
-            spokenText.text += text[i];
-            yield return new WaitForSeconds(typingSpeed);
-        }
-    }
-    
-    #endregion
-    
 }

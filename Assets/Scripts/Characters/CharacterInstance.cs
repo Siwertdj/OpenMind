@@ -1,8 +1,13 @@
-﻿using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// An instance of a character. Takes a set of <see cref="CharacterData"/>
+/// Each character in the game is a different a separate instance of this class. With its own <see cref="CharacterData"/>.
+/// </summary>
 public class CharacterInstance
 {
     public CharacterData data;
@@ -11,22 +16,24 @@ public class CharacterInstance
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();
-    
-    public List<string>[] greetings;
-    
+
     public string characterName;
     public int id;
     public Sprite avatar;
     public float pitch;
 
-    public bool isCulprit;      // This character's random characteristic is revealed every cycle
+    public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
     public bool TalkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
     
+    /// <summary>
+    /// The constructor for <see cref="CharacterInstance"/>.
+    /// Sets this instances variables to the information from <see cref="data"/> 
+    /// </summary>
+    /// <param name="data">A set of <see cref="CharacterData"/></param>
     public CharacterInstance(CharacterData data)
     {
         this.data = data;
-
         characterName = data.characterName;
         id = data.id;
         avatar = data.avatar;
@@ -53,10 +60,10 @@ public class CharacterInstance
     }
 
     /// <summary>
-    /// Get the epilogue dialogue depending on whether the player has chosen the correct character or not.
+    /// Get the epilogue dialogue depending on the players choice at the end of the game.
     /// </summary>
-    /// <param name="hasWon"></param>
-    /// <returns></returns>
+    /// <param name="hasWon">Whether the player has chosen the correct character at the end</param>
+    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
     public List<List<string>> GetEpilogueDialogue(bool hasWon)
     {
         if (hasWon)
@@ -66,7 +73,7 @@ public class CharacterInstance
     }
 
     /// <summary>
-    /// Scenario for when the player guesses the culprit.
+    /// Helper function for <see cref="GetEpilogueDialogue"/> which gives the scenario for when the player guesses the culprit.
     /// </summary>
     /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
     private List<List<string>> EpilogueWinScenario()
@@ -74,21 +81,21 @@ public class CharacterInstance
         List<string> speakingText1 = new List<string>()
         {
             "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-            "I was indeed the one who kept sending u messages.",
+            "I was indeed the one who kept sending you messages.",
             "and in fact, I knew that you did not know who",
             "was sending the messages.",
             "You managed to guess correctly, and so i wanted to ask you the following:",
-            "Why did u think I was the one who kept sending u messages?"
+            "What made you think it was me sending the messages?"
         };
         List<string> speakingText2 = new List<string>()
         {
             "Okay, thats very interesting!",
             "Now I have another question for you:",
-            "Which characteristics of the character resemble with urself?"
+            "Have you found something about me that you can relate to?"
         };
         List<string> speakingText3 = new List<string>()
         {
-            "alright very cool.",
+            "Alright very cool.",
             "I have to go now.",
             "I do not want to miss the bus.",
             "Goodbye."
@@ -99,7 +106,7 @@ public class CharacterInstance
     }
 
     /// <summary>
-    /// Scenario for when the player does not guess the correct culprit
+    /// Helper function for <see cref="GetEpilogueDialogue"/> which gives the scenario for when the player does not guess the correct culprit
     /// </summary>
     /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
     private List<List<string>> EpilogueLoseScenario()
@@ -107,30 +114,30 @@ public class CharacterInstance
         List<string> speakingText1 = new List<string>()
         { 
             "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-            "You are asking me if I was sending u messages?",
-            "I am sorry but i do not know what u are talking about.",
+            "You are asking me if I was sending you messages?",
+            "I am sorry but I do not know what you are talking about.",
             "I have to go now, bye."
         };
         List<string> speakingText2 = new List<string>()
         { 
             "Well that was pretty awkward, wasn't it?",
             "I'm " + GameManager.gm.GetCulprit().characterName,
-            "I am the one who kept sending u messages.",
+            "I am the one who kept sending you messages.",
             "and in fact, I knew that you did not know who",
             "was sending the messages.",
             "You did not guess correctly unfortunately.",
             "Despite that, I still wanted to to ask you the following:",
-            "Why did u think I was the one who kept sending u messages?"
+            "What made you think it was me sending the messages?"
         };
         List<string> speakingText3 = new List<string>()
         { 
             "Okay, thats very interesting!",
             "Now I have another question for you:",
-            "Which characteristics of the character resemble with urself?"
+            "Have you found something about me that you can relate to?"
         };
         List<string> speakingText4 = new List<string>()
         { 
-            "alright very cool.",
+            "Alright very cool.",
             "I have to go now.",
             "I do not want to miss the bus.",
             "Goodbye." 
@@ -143,12 +150,14 @@ public class CharacterInstance
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently
     /// </summary>
+    /// <returns>A list of type string containing all traits of this character</returns>
     private List<string>[] GetAllTraits()
     {
         return Traits.Values.ToArray();
     }
 
     /// <summary>
+    /// Helper function for the constructor.
     /// Places character data (answers & traits) in their respective dictionaries.
     /// </summary>
     public void InitializeQuestions()
@@ -177,6 +186,7 @@ public class CharacterInstance
             Question question = RemainingQuestions[randomInt];
             
             // Remove question from all characters so that it can not be asked to anyone, if RemainingQuestions contains it.
+            // TODO: discuss how we're gonna implement this feature --> for now, this leads to a bug where a character has not enough questions
             foreach (CharacterInstance character in GameManager.gm.currentCharacters)
             {
                 if (character.RemainingQuestions.Contains(question))

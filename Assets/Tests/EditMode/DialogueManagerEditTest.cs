@@ -1,13 +1,30 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEditor.SceneManagement;
+using UnityEngine.TextCore.Text;
+using TMPro;
 
 public class DialogueManagerEditTest
 {
+    private DialogueManager   dm;
+    
+    [OneTimeSetUp]
+    public void Setup()
+    {
+        // Load DialogueScene and find DialogueManager to set it up
+        EditorSceneManager.OpenScene("Assets/Scenes/Dialogue/DialogueScene.unity");
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+    }
+    
     /// <summary>
     /// Checks if the "GetPromptText" function gives the correct answer to a given question.
     /// </summary>
@@ -29,9 +46,6 @@ public class DialogueManagerEditTest
     [TestCase(Question.OddTrait, "Do you have any odd traits?")]
     public void GetPromptTextTest(Question question, string expected)
     {
-        // Create DialogueManager instance for the test
-        DialogueManager dm = new DialogueManager();
-
         // Get the actual answer
         string actual = dm.GetPromptText(question);
         

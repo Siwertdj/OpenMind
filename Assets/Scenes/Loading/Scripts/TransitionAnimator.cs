@@ -1,8 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// Class which handles transitions.
+/// </summary>
 public class TransitionAnimator : MonoBehaviour
 {
     /// <summary>
@@ -21,6 +25,9 @@ public class TransitionAnimator : MonoBehaviour
         Wipe = 1
     }
 
+    /// <summary>
+    /// On startup, initialize the static instance of this class.
+    /// </summary>
     private void Start()
     {
         i = this;
@@ -34,21 +41,25 @@ public class TransitionAnimator : MonoBehaviour
     public Task PlayStartAnimation(AnimationType type = AnimationType.Fade, float timeScale = 1)
     {
         var tcs = new TaskCompletionSource<bool>();
-
         PlayAnimation("SceneLoading", type, timeScale, tcs);
-
         return tcs.Task;
     }
 
+    /// <summary>
+    /// The function that should be called to end the fade animation.
+    /// Only fades to black.
+    /// Can be awaited.
+    /// </summary>
     public Task PlayEndAnimation(AnimationType type = AnimationType.Fade, float timeScale = 1)
     {
         var tcs = new TaskCompletionSource<bool>();
-
         PlayAnimation("SceneLoaded", type, timeScale, tcs);
-
         return tcs.Task;
     }
 
+    /// <summary>
+    /// Function which plays the transition animation.
+    /// </summary>
     private Task PlayAnimation(string trigger, AnimationType type, float timeScale, TaskCompletionSource<bool> tcs)
     {
         // Set animator vars

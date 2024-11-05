@@ -1,28 +1,52 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A single page in the notebook.
+/// </summary>
 public class NotebookPage
 {
     private readonly CharacterInstance _character;
     private string _notes;
 
+    /// <summary>
+    /// Constructor for making a new empty page.
+    /// </summary>
+    /// <param name="character">The character the page is on.</param>
     public NotebookPage(CharacterInstance character)
     {
         _character = character;
         _notes = "Notes on " + character.characterName + ".\n";
     }
 
+    /// <summary>
+    /// Constructor for making a page that already has writing.
+    /// </summary>
+    /// <param name="notes">The notes that have already been written.</param>
+    /// <param name="character">The character the page is on.</param>
     public NotebookPage(string notes, CharacterInstance character)
     {
         _character = character;
         _notes = notes;
     }
     
+    /// <summary>
+    /// Method which gets the notes contained on this page.
+    /// For external use.
+    /// </summary>
+    /// <returns>The notes written on this page.</returns>
     public string GetNotes()
     {
         return _notes;
     }
 
+    /// <summary>
+    /// Method which sets the notes on this page to the input.
+    /// For external use.
+    /// </summary>
+    /// <param name="input">New set of notes.</param>
     public void SetNotes(string input)
     {
         _notes = input;
@@ -62,6 +86,12 @@ public class NotebookPage
         }
     }
     
+    /// <summary>
+    /// Method which gives a string based on the type of question that was asked.
+    /// To use as a prefix to the answer.
+    /// </summary>
+    /// <param name="questionType">The type of question.</param>
+    /// <returns>String relating to the questiontype.</returns>
     private string GetQuestionText(Question questionType)
     {
         return questionType switch
@@ -83,6 +113,10 @@ public class NotebookPage
             Question.PositiveTrait => "Positive trait",
             Question.NegativeTrait => "Bad trait",
             Question.OddTrait => "Odd trait",
+            Question.SocialIssues => "Social Issues",
+            Question.EducationSystem => "Dutch education system",
+            Question.Lottery => "Lottery",
+            Question.Diet => "Diet",
             _ => "",
         };
     }
