@@ -31,7 +31,9 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    public StoryObject story; // Contains information about the current game pertaining to the story
+    
+    public StoryObject
+        story { get; private set; } // Contains information about the current game pertaining to the story
     
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.

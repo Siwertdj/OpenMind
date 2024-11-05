@@ -16,15 +16,12 @@ public class SceneController : MonoBehaviour
 {
     public enum SceneName
     {
-        StartScreenScene,
         NPCSelectScene,
         DialogueScene,
         GameOverScene,
         GameWinScene,
         Loading,
         NotebookScene,
-        PrologueScene,
-        EpilogueScene
     }
 
     public enum TransitionType
@@ -277,6 +274,8 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
     }
     
+    //TODO: This method should be removed eventually
+    //this method is not tested
     public void ToggleNotebookScene()
     {
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
