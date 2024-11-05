@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+#if DEBUG
 using static UnityEditor.EditorUtility;
+#endif
 
 /// <summary>
 /// Manages all debug options. Every debug message and error handling should go through this class
@@ -31,8 +33,8 @@ public class DebugManager : MonoBehaviour
     private void Awake()
     {
         #if DEBUG
-        DontDestroyOnLoad(gameObject);
-        IsDebug = true;
+        // DontDestroyOnLoad(gameObject);
+        // IsDebug = true;
         #endif
         
         Debug.unityLogger.logEnabled = IsDebug;
@@ -46,6 +48,7 @@ public class DebugManager : MonoBehaviour
     //Called when there is an exception
     void LogCallback(string condition, string stackTrace, LogType type)
     {
+        #if DEBUG
         if (!(DisablePopups || ignores.Contains(condition) || type == LogType.Log))
         {
             int result = DisplayDialogComplex(type.ToString(),
@@ -57,6 +60,7 @@ public class DebugManager : MonoBehaviour
             else if (result == 2)
                 DisablePopups = true;
         }
+        #endif
     }
     
     void OnDisable()

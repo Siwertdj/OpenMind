@@ -1,41 +1,31 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
-// © Copyright Utrecht University (Department of Information and Computing Sciences)
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
+using File = System.IO.File;
 using Scene = UnityEngine.SceneManagement.Scene;
 
-/// <summary>
-/// Class used for swapping scenes.
-/// If anywhere in the code, you need to swap scenes. Use a static instance of this class to do it.
-/// </summary>
 public class SceneController : MonoBehaviour
 {
-    /// <summary>
-    /// All scenes in the project.
-    /// </summary>
     public enum SceneName
     {
         StartScreenScene,
+        PrologueScene,
         NPCSelectScene,
         DialogueScene,
         GameOverScene,
         GameWinScene,
         Loading,
         NotebookScene,
-        PrologueScene,
-        EpilogueScene
     }
 
-    /// <summary>
-    /// The type of transition between scenes.
-    /// </summary>
     public enum TransitionType
     {
         Transition,
@@ -43,7 +33,6 @@ public class SceneController : MonoBehaviour
         Unload
     }
     
-    // A static instance of this class
     public static SceneController sc;
 
     //read from a file
@@ -55,11 +44,9 @@ public class SceneController : MonoBehaviour
     private const string TransitionGraphLocation = "Transition Graph/Transition Graph";
     private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../Assets/Resources/") + TransitionGraphLocation;
 
-    /// <summary>
-    /// When loaded, initialize the static instance of this class.
-    /// </summary>
     public void Awake()
     {
+        // Initializes static instance of SceneController.
         sc = this;
     }
 
@@ -70,6 +57,7 @@ public class SceneController : MonoBehaviour
     {
         //Get the story scene
         Scene loadingScene = SceneManager.GetSceneByName("Loading");
+
         // Unload all loaded scenes that are not the story scene
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
@@ -78,10 +66,7 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// read the scene graph from the file and assign <see cref="sceneGraph"/> and <see cref="sceneToID"/>
-    /// </summary>
-    //
+    //read the scene graph from the file and assign both vars described above
     private void ReadSceneGraph()
     {
         // Load the scene graph file
@@ -116,7 +101,6 @@ public class SceneController : MonoBehaviour
         //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWinScene(T)
         const string arrowSeparator = " --> ";
         const string sceneSeparator = ", ";
-        // Check the scene before the arrowSeparator is correctly written.
         for(int i = 0; i < fileGraphContentLines.Length; i++)
         {
             string sceneName = fileGraphContentLines[i].Split(arrowSeparator)[0];
@@ -130,7 +114,7 @@ public class SceneController : MonoBehaviour
             }
             sceneToID.Add(sceneName, sceneToID.Count);
         }
-        // Check if all scene names are correctly written.
+
         for (int i = 0; i < fileGraphContentLines.Length; i++)
         {
             string[] fromTo = fileGraphContentLines[i].Split(arrowSeparator);
@@ -148,7 +132,7 @@ public class SceneController : MonoBehaviour
                     validReading = false;
                     break;
                 }
-                // Set the correct transitiontype
+
                 bool found = false;
                 char trans = to[^2];
                 foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
@@ -160,6 +144,7 @@ public class SceneController : MonoBehaviour
                         break;
                     }
                 }
+
                 if (!found)
                 {
                     Debug.LogError($"The transition with the letter {trans} on line {i} of the scene graph file belonging to the scene transition {fromTo[0]} --> {toScene} does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
@@ -167,7 +152,7 @@ public class SceneController : MonoBehaviour
                 }
             }
         }
-        // Empty sceneGraph and sceneToID if the transition is invalid.
+
         if (!validReading)
         {
             sceneGraph = new List<List<(int, TransitionType)>>();
@@ -175,12 +160,10 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// transitions to a new scene.
-    /// </summary>
-    /// <param name="currentScene">The scene the game is currently in.</param>
-    /// <param name="targetScene">The scene that needs to be loaded.</param>
-    /// <param name="transitionType">The type of transition to use.</param>
+    //transitions to a new scene
+    //conditions: current = true, means current is loaded. current = false, means current is unloaded
+    //pre conditions: current
+    //post conditions: current = !target_pre && target_post
     private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
     {
         switch (transitionType)
@@ -216,6 +199,7 @@ public class SceneController : MonoBehaviour
 
         // Start the coroutine
         StartCoroutine(LoadSceneCoroutine(targetScene, tcs));
+
         // Return the task that will complete when the coroutine ends
         return tcs.Task;
     }
@@ -233,19 +217,13 @@ public class SceneController : MonoBehaviour
         // Wait until the scene is fully loaded
         while (!asyncLoad.isDone)
             yield return null;
+
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }
     #endregion
 
-    /// <summary>
-    /// Additional method to let a scene determine the transition itself.
-    /// This method can be directly called to override the transition code.
-    /// </summary>
-    /// <param name="from">The current scene.</param>
-    /// <param name="to">The scene that needs to be loaded.</param>
-    /// <param name="transitionType">The type of transition.</param>
-    /// <param name="loadCode"></param>
+    //if a scene really wants to determine the transition itself, this method can be directly called to override the transition code
     public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Func<string, string, TransitionType, Task> loadCode)
     {
         string currentScene = from.ToString();
@@ -258,11 +236,13 @@ public class SceneController : MonoBehaviour
             Debug.LogError($"The scene with the name {currentScene} cannot be found in the transition graph. Please add it to the transition graph.");
             return;
         }
+        
         if (!sceneToID.ContainsKey(targetScene))
         {
             Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. Please add it to the transition graph.");
             return;
         }
+        
         //cannot load from an unloaded scene
         if (!SceneManager.GetSceneByName(currentScene).isLoaded)
         {
@@ -286,10 +266,7 @@ public class SceneController : MonoBehaviour
     //args is the data to transfer
     public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
         
-    /// <summary>
-    /// Function to be called when loading the first cycle
-    /// </summary>
-    /// <param name="start"></param>
+    //the function to be called when loading the first cycle
     public void StartScene(SceneName start)
     {
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
@@ -299,14 +276,19 @@ public class SceneController : MonoBehaviour
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
     }
     
-    /// <summary>
-    /// Function to load the notebook.
-    /// </summary>
+    //TODO: This method should be removed eventually
+    //this method is not tested
     public void ToggleNotebookScene()
     {
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            //SceneManager.UnloadSceneAsync("NotebookScene");
+        }
         else
+        {
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            //SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
+        }
     }
 }
