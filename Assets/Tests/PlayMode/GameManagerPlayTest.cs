@@ -535,8 +535,8 @@ public class GameManagerPlayTest
         // Check if the DialogueObjects in the responses list of the currentObject
         Assert.GreaterOrEqual(1, dm.currentObject.Responses.Count);
 
-        // Wait for new dialogue with culprit to load.
-        yield return new WaitForSeconds(2);
+        // Wait for new dialogue with culprit to unload and load.
+        yield return new WaitUntil(() => !SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
