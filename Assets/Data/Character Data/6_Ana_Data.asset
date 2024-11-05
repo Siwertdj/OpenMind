@@ -22,6 +22,7 @@ MonoBehaviour:
     - I am doing really well!
     - I am currently living in a rented studio apartment,
     - 'I love my job and colleagues and I have a great work/life balance.  '
+    emotion: 010000000000000001000000
     trait:
     - My life is going great, I have a great job with great colleagues.
   - question: 3
@@ -30,6 +31,7 @@ MonoBehaviour:
     - He worked so hard so that he can be where is today.
     - I also look up to Angelina Jolie for all that
     - she does for Unicef and other humanitarian rights associations.
+    emotion: 01000000000000000100000000000000
     trait:
     - I have a lot of respect for Cristiano Ronaldo and Angelina Jolie.
   - question: 6
@@ -38,6 +40,7 @@ MonoBehaviour:
     - trying to get rid of immigrants and expats,
     - that they are viewing these people as a threat when they are not.
     - 'I feel like history is repeating itself.  '
+    emotion: 00000000000000000000000000000000
     trait:
     - It is concerning that countries are viewing immigrants and expats as a threat.
   - question: 7
@@ -47,6 +50,7 @@ MonoBehaviour:
     - 'Mexico is my favorite country that I have visited. '
     - "It was super sunny, there\u2019s a lot of nature,"
     - 'the people are great and the food is amazing. '
+    emotion: 0100000000000000000000000100000001000000
     trait:
     - I love travelling, hanging out with friends and going to the gym.
   - question: 8
@@ -54,6 +58,7 @@ MonoBehaviour:
     - I am from Portugal. My parents taught me that it's important to
     - keep a tidy home and to be close and love your family.
     - 'They pushed how important family is and I totally agree with them. '
+    emotion: 000000000000000000000000
     trait:
     - My parents taught me love my family and to keep my home tidy.
   - question: 11
@@ -64,6 +69,7 @@ MonoBehaviour:
     - that they can be who they want to be.
     - "I think it\u2019s also important that they have abortion rights"
     - 'and that they can get a divorce if they want to. '
+    emotion: 000000000000000000000000000000000000000000000000
     trait:
     - Social equality is very important to me, I think a lot of developing countries
       are lacking that.

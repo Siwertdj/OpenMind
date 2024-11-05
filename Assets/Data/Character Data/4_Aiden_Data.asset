@@ -24,6 +24,7 @@ MonoBehaviour:
     - I own a gym, I like training there so I can eat whatever I want.
     - Oh, but I do stay away from ultra processed foods.
     - 'I do still live with my parents though, I wish I could get a place of my own. '
+    emotion: 0100000000000000010000000000000000000000
     trait:
     - I love my life! I love my friend and going to the gym.
   - question: 7
@@ -31,6 +32,7 @@ MonoBehaviour:
     - I really enjoy exercising, like cardio and strength training.
     - In my gym of course.
     - 'I also enjoy reading, cooking and, especially, eating Italian food.  '
+    emotion: 010000000000000001000000
     trait:
     - I love my life! I love my friend and going to the gym.
   - question: 6
@@ -39,6 +41,7 @@ MonoBehaviour:
     - I get that we serve as an example for the rest of the world
     - but when I hear that China and Egypt are just dumping trash in the ocean.
     - 'All of it feels a bit pointless. '
+    emotion: 00000000000000000000000000000000
     trait:
     - I think what we're doing for the climate is pointless when other countries
       are not doing anything.

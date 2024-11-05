@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using UnityEngine;
@@ -11,7 +11,7 @@ public class StorySelectionManager : MonoBehaviour
 {
     [Header("Data")] 
     [SerializeField] private StoryObject[] stories;
-    
+
     // Game Events
     [Header("Events")]
     public GameEvent onIntroLoaded;
@@ -63,6 +63,9 @@ public class StorySelectionManager : MonoBehaviour
         {
             yield return null;
         }
+
+        Debug.Log(onIntroLoaded);
+        Debug.Log(stories);
         onIntroLoaded.Raise(this, stories[storyid]);
         
         // Finally, when the data has been sent, we then unload our currentscene

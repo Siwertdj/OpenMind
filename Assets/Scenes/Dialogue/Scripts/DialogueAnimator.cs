@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ public class DialogueAnimator : MonoBehaviour
     [FormerlySerializedAs("InDialogue")] public bool inDialogue = false; // Is there dialogue on the screen?
     private bool isOutputting = false;
     private List<string> currentDialogue;
-    private List<DialogueObject.Mood> currentMood = new List<DialogueObject.Mood>();
+    private List<Emotion> currentEmotion = new List<Emotion>();
     private GameObject[] background;
     private int dialogueIndex = 0;
     private string currentSentence = "";
@@ -47,7 +47,7 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="moods">The list of moods for sentences></param>
     /// <param name="background">The list of sprites loaded></param>
     /// <param name="pitch">The pitch of the characters voice.</param>
-    public void WriteDialogue(List<string> output, List<DialogueObject.Mood> moods, GameObject[] background, float pitch = 1)
+    public void WriteDialogue(List<string> output, List<Emotion> emotions, GameObject[] background, float pitch = 1)
     {
 
 
@@ -61,10 +61,10 @@ public class DialogueAnimator : MonoBehaviour
 
             //currentMood = moods;
             //not every time is mood given, because not always does it matter. Those times it should be neutral expression
-            if (moods == null)
-                currentMood.Add(DialogueObject.Mood.Neutral);
+            if (emotions == null)
+                currentEmotion.Add(Emotion.Neutral);
             else
-                currentMood = moods;
+                currentEmotion = emotions;
 
             this.background = background;
 
@@ -86,7 +86,7 @@ public class DialogueAnimator : MonoBehaviour
     {
         if (!isOutputting)
         {
-            ChangeMood(background, currentMood, dialogueIndex);
+            ChangeEmotion(background, currentEmotion, dialogueIndex);
             isOutputting = true;
             currentSentence = output;
             outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
@@ -131,13 +131,13 @@ public class DialogueAnimator : MonoBehaviour
     }
 
     //change the player background to the correct expression (currently only debug.log is done. No actual change is made
-    private void ChangeMood(GameObject[] background, List<DialogueObject.Mood> moods, int dialogueIndex)
+    private void ChangeEmotion(GameObject[] background, List<Emotion> emotions, int dialogueIndex)
     {
         foreach (GameObject bg in background)
         {
             if (bg.CompareTag("Player"))
             {
-                Debug.Log(moods[dialogueIndex]);
+                Debug.Log(emotions[dialogueIndex]);
             }
         }
     }

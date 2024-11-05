@@ -108,7 +108,7 @@ public class DialogueManager : MonoBehaviour
     /// <param name="moods">The list of moods per lines</param>
     /// <param name="background">The list of current backgrounds on screen</param>
     /// <param name="pitch">The pitch of the character</param>
-    public void WriteDialogue(List<string> dialogue, List<DialogueObject.Mood> moods, GameObject[] background,  float pitch = 1)
+    public void WriteDialogue(List<string> dialogue, List<Emotion> emotions, GameObject[] background,  float pitch = 1)
     {
         // Enable the dialogue field
         dialogueField.SetActive(true);
@@ -122,7 +122,7 @@ public class DialogueManager : MonoBehaviour
 
         // Animator write dialogue to the screen.
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, moods, background, pitch);
+        animator.WriteDialogue(dialogue, emotions, background, pitch);
     }
 
     /// <summary>

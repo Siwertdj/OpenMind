@@ -22,6 +22,7 @@ MonoBehaviour:
     - I was born in Morocco, but we moved to the Netherlands when I was still quite
       young.
     - I am muslim, but I only recently started wearing a hijab
+    emotion: 0000000000000000
     trait:
     - I was born in Morocco and I'm muslim.
   - question: 7
@@ -29,12 +30,14 @@ MonoBehaviour:
     - I really, really love reading books and listening to audiobooks.
     - It is so easy to lose myself in them
     - and it is just is so relaxing.
+    emotion: 010000000000000001000000
     trait:
     - My biggest hobby is reading books and listening to audiobooks.
   - question: 10
     answer:
     - I have a master's degree
     - and now I actually teach at the university I studied at.
+    emotion: 0000000000000000
     trait:
     - I got a master's degree at the university I now teach at.
   - question: 12
@@ -42,6 +45,7 @@ MonoBehaviour:
     - My friends and my family would describe me as funny and kind.
     - I agree with them,
     - I think I'm pretty funny aswell.
+    emotion: 010000000000000001000000
     trait:
     - I am kind and funny.
   - question: 13
@@ -50,6 +54,7 @@ MonoBehaviour:
     - are my husband and my daughter
     - My husband is always there for me to lean on.
     - You could say he's kind of my coach.
+    emotion: 00000000010000000000000001000000
     trait:
     - My husband and daughter are very important to me.
   greetings:

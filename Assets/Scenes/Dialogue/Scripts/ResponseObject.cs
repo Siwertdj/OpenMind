@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
@@ -38,7 +38,7 @@ public class ResponseObject : DialogueObject
         var dm = DialogueManager.dm;
 
         List<string> answer = GetQuestionResponse(question);
-        List<DialogueObject.Mood> mood = GetQuestionResponseMood(question);
+        List<Emotion> emotion = GetQuestionResponseEmotion(question);
 
         if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionObject(background));
@@ -47,7 +47,7 @@ public class ResponseObject : DialogueObject
             Responses.Add(new TerminateDialogueObject());
 
         dm.ReplaceBackground(background);
-        dm.WriteDialogue(answer, mood, background, DialogueManager.dm.currentRecipient.pitch);
+        dm.WriteDialogue(answer, emotion, background, DialogueManager.dm.currentRecipient.pitch);
     }
     /// <summary>
     /// Gets character's response to the given question
@@ -69,9 +69,10 @@ public class ResponseObject : DialogueObject
         return character.Answers[question];
     }
 
-    private List<DialogueObject.Mood> GetQuestionResponseMood(Question question)
+    private List<Emotion> GetQuestionResponseEmotion(Question question)
     {
-        GameManager.gm.AssignAmountOfQuestionsRemaining(GameManager.gm.AmountOfQuestionsRemaining() - 1);
+        //GameManager.gm.AssignAmountOfQuestionsRemaining(GameManager.gm.AmountOfQuestionsRemaining() - 1);
+        GameManager.gm.numQuestionsAsked++;
 
         CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
@@ -80,6 +81,6 @@ public class ResponseObject : DialogueObject
         //character.AskedQuestions.Add(question);
 
         // Return answer to the question
-        return character.Moods[question];
+        return character.Emotions[question];
     }
 }

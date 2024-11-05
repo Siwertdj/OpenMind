@@ -22,6 +22,7 @@ MonoBehaviour:
     - I love the old rapper Rakim.
     - The lyrics he writes are always so beautiful and they really
     - 'helped me to expand my view of the world. '
+    emotion: 000000000100000001000000
     trait:
     - I love the rapper Rakim, his lyrics really helped me.
   - question: 6
@@ -32,6 +33,7 @@ MonoBehaviour:
       like anyone."
     - I was always dismissed as some kind of criminal
     - 'even though that was not the case at all. '
+    emotion: 0000000000000000000000000000000000000000
     trait:
     - Politically, social equality is one of the most important thing to me.
   - question: 7
@@ -39,6 +41,7 @@ MonoBehaviour:
     - I love arts and crafts and just making things in general.
     - I also like reading scientific papers,
     - I like to look into how things work and try to think of a better solution.
+    emotion: 010000000100000000000000
     trait:
     - Arts and crafts, and learning how things work are my biggest hobbies.
   - question: 8
@@ -48,6 +51,7 @@ MonoBehaviour:
     - "but it didn\u2019t stick."
     - Now I think that freedom is very important,
     - 'to be who you want to be. '
+    emotion: 0000000000000000000000000000000000000000
     trait:
     - Politically, social equality is one of the most important thing to me.
   - question: 9
@@ -55,6 +59,7 @@ MonoBehaviour:
     - I am not religious, and I never really have been
     - My dad did not like that, haha.
     - He wanted me to be muslim, like him.
+    emotion: 000000000100000000000000
     trait:
     - I am not religious.
   greetings:

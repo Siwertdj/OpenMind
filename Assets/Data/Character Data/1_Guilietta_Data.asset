@@ -24,6 +24,7 @@ MonoBehaviour:
     - But I think it's also kind of a positive trait,
     - my friends say it makes me really refreshing.
     - And I think it make me more spontaneous and playful!
+    emotion: 0000000000000000000000000100000001000000
     trait:
     - My biggest negative trait is that I'm very chaotic, but it also has its positive
       side.
@@ -32,6 +33,7 @@ MonoBehaviour:
     - I really like music.
     - I like listening but I love to sing!
     - When I have time I also like to write my own music.
+    emotion: 000000000100000000000000
     trait:
     - I love to listen to and write music.
   - question: 11
@@ -39,6 +41,7 @@ MonoBehaviour:
     - I think the most important thing right now is equality.
     - There's so much hate towards women
     - and minorities like people of color and trans people.
+    emotion: 000000000000000000000000
     trait:
     - Equality is very important to me.
   - question: 6
@@ -47,6 +50,7 @@ MonoBehaviour:
     - in so many countries right now is very scary.
     - That's one of the reasons why I have
     - a lot of respect for AOC in the US.
+    emotion: 00000000000000000000000000000000
     trait:
     - I think the growth of right-wing parties is very scary.
   greetings:

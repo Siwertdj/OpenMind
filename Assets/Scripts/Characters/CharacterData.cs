@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
@@ -27,6 +27,7 @@ public class CharacterData : ScriptableObject
 {
     [SerializeField] public Question question;
     [SerializeField] public List<string> answer;
+    [SerializeField] public List<Emotion> emotion;
     [SerializeField] public List<string> trait;
 }
 
@@ -52,6 +53,6 @@ public class CharacterData : ScriptableObject
 
 public enum Emotion
 {
-    Happy,
-    Neutral
+    Neutral,
+    Happy
 }

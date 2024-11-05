@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -12,15 +12,16 @@ using UnityEngine;
 public abstract class DialogueObject
 {
 
+    /*
     public enum Mood
     {
         Neutral,
         Happy,
         Sad,
         Angry
-    }
+    }*/
 
-    public Mood mood = Mood.Neutral;
+    public Emotion emotion = Emotion.Neutral;
     /// <summary>
     /// The possible responses to the dialogue object (when picturing a tree structure, these are the children of the object)
     /// </summary>
@@ -39,7 +40,7 @@ public abstract class DialogueObject
 public class SpeakingObject : DialogueObject
 {
     public List<string> dialogue;
-    public List<DialogueObject.Mood> mood;
+    public List<Emotion> emotion;
     public GameObject[] background;
 
     private List<DialogueObject> _responses = new();
@@ -57,7 +58,7 @@ public class SpeakingObject : DialogueObject
     public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
-        this.mood = mood;
+        this.emotion = emotion;
         this.background = background;
     }
 
@@ -69,7 +70,7 @@ public class SpeakingObject : DialogueObject
         var dm = DialogueManager.dm;
 
         dm.ReplaceBackground(background);
-        dm.WriteDialogue(dialogue, mood, background);
+        dm.WriteDialogue(dialogue, emotion, background);
 
         // If no response is given, terminate dialogue
         if (Responses.Count <= 0)

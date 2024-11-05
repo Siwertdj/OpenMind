@@ -21,14 +21,14 @@ MonoBehaviour:
     answer:
     - I am a republican.
     - I will be voting for Donald Trump.
-    mood: 0000000000000000
+    emotion: 0000000000000000
     trait:
     - rebubligan
   - question: 1
     answer:
     - I was born in 1989
     - I am 35 years old
-    mood: 0000000000000000
+    emotion: 0000000000000000
     trait:
     - bobn 1989
   - question: 2
@@ -37,7 +37,7 @@ MonoBehaviour:
     - I recently bought a new car.
     - Today, i drove to the reunion and it was awesome.
     - So i am feeling great today.
-    mood: 01000000000000000000000001000000
+    emotion: 01000000000000000000000001000000
     trait:
     - gob new gar
   - question: 9
@@ -46,7 +46,7 @@ MonoBehaviour:
     - my son and my wife.
     - They mean so much to me
     - and i would do everything for them.
-    mood: 00000000010000000100000000000000
+    emotion: 
     trait:
     - my bon anb my bife
   - question: 11
@@ -54,14 +54,14 @@ MonoBehaviour:
     - 'A bad trait i have is that i am too tall. '
     - 'I can barely fit through most doors, '
     - which means i have to crouch a lot.
-    mood: 000000000200000002000000
+    emotion: 000000000000000000000000
     trait:
     - bery tall guy :o
   - question: 6
     answer:
     - I have a bachelor's degree in psychology
     - I have not gotten a master's degree.
-    mood: 0000000002000000
+    emotion: 
     trait:
     - babbelors begree, no baster :(
   greetings: []
