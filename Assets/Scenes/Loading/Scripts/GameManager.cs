@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+
+    public bool IsPaused { get; set; } = false;
     
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
@@ -192,8 +194,8 @@ public class GameManager : MonoBehaviour
 
         // Tell the player what happened in between cycles
         var dialogue = new List<string> {
-            $"{victimName} has disappeared.",
-            "There is some new information about the culprit:",
+            $"{victimName} {story.victimDialogue}",
+            story.hintDialogue,
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.
@@ -214,7 +216,7 @@ public class GameManager : MonoBehaviour
         // Select the Culprit
         else
         {
-            sc.TransitionScene(
+            _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
@@ -367,20 +369,10 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(DialogueObject dialogueObject)
     {
         // Transition to dialogue scene and await the loading operation
-        if (gameState == GameState.NpcSelect)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.NPCSelectScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
-        else if (gameState == GameState.NpcDialogue)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.DialogueScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
+        await sc.TransitionScene(
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
 
         gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager

@@ -33,8 +33,8 @@ public class DebugManager : MonoBehaviour
     private void Awake()
     {
         #if DEBUG
-        // DontDestroyOnLoad(gameObject);
-        // IsDebug = true;
+        DontDestroyOnLoad(gameObject);
+        IsDebug = true;
         #endif
         
         Debug.unityLogger.logEnabled = IsDebug;

@@ -1,9 +1,10 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manager class for UI.
@@ -25,6 +26,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OpenMenu()
     {
+        GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
         gameMenu.SetActive(true);
     }
@@ -34,8 +36,17 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
+        GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
         gameMenu.SetActive(false);
+    }
+
+    public void ReturnToStartScreen()
+    {
+        _ = SceneController.sc.TransitionScene(
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.StartScreenScene,
+            SceneController.TransitionType.Transition);
     }
 
     /// <summary>
@@ -89,5 +100,4 @@ public class UIManager : MonoBehaviour
         canvasGroup.alpha = 0f;
         transitionCanvas.SetActive(false);
     }
-
 }
