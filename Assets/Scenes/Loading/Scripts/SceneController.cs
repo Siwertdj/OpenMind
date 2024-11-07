@@ -318,18 +318,20 @@ public class SceneController : MonoBehaviour
     // this method is not tested
     public void ToggleNotebookScene(Button button)
     {
-        TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+        Debug.Log($"Button: {button.gameObject.name}");
+        var crossOverlay = button.transform.GetChild(0).gameObject;
 
+        // If notebook is already open, close it
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
             GameManager.gm.IsPaused = false;
-            buttonText.text = "Notes";
+            crossOverlay.SetActive(false);
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
         }
         else
         {
             GameManager.gm.IsPaused = true;
-            buttonText.text = "Close";
+            crossOverlay.SetActive(true);
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
         }
     }
