@@ -505,10 +505,10 @@ RectTransform:
   - {fileID: 1253977768}
   m_Father: {fileID: 903298825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 293}
-  m_SizeDelta: {x: -51.999992, y: 419.7}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -3.9692993, y: 294}
+  m_SizeDelta: {x: 853.2191, y: 395.2411}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &429653934
 MonoBehaviour:
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3c09c83f5afb26b448aa21a9b585e907, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d74b14c303c33394da1fe211d17a5e0f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -782,7 +782,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dd0ab3d764f597c469fd063abd62e39b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 295eb262c57e73d4bbae122726be8975, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1064,7 +1064,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b5faef55b40ccb1408ce5ff79a79beb9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b740acea4c81ab94593d97ed8f025c5a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1379,12 +1379,12 @@ MonoBehaviour:
   dialogueAnimator: {fileID: 429653936}
   backgrounds:
   - {fileID: 21300000, guid: 4b6ae141aa9f7444385195f56bdb8b79, type: 3}
-  - {fileID: 21300000, guid: 3c09c83f5afb26b448aa21a9b585e907, type: 3}
+  - {fileID: 21300000, guid: 7cfeb8ea87a17b944b02a9337d17d4ae, type: 3}
   - {fileID: 21300000, guid: 578686d0038ee43499e66c0dfda73d6d, type: 3}
   illusions:
   - {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
   - {fileID: 21300000, guid: f2861768c92ff8c46b7aba52169623c9, type: 3}
-  - {fileID: 21300000, guid: e98ac868153b0d742920484e669df99f, type: 3}
+  - {fileID: 21300000, guid: 2720b22725212124991e2405d6c00046, type: 3}
   - {fileID: 21300000, guid: fab911f99cfad8e4c88c762a9523bc6f, type: 3}
   - {fileID: 21300000, guid: bb73f3777b31601439ca9e9a19f753f2, type: 3}
   receptionistText:
@@ -1392,17 +1392,17 @@ MonoBehaviour:
   - 'Before I will lead you to the others, I would like you to answer some questions. '
   - Walk with me?
   - I'm going to show you an image.
-  - What color was the butterfly?
-  - The correct answer is grey!
-  - 'The image was actually black and white. '
+  - What did you see?
+  - Maybe you saw a butterfly and some lines.
+  - 'But did you notice the image was actually black and white? '
   - 'By adding a grid of colored lines, your brain makes you believe the image is
     in color. '
   - 'Try it for yourself! You can remove the lines with the toggle on top of the
     screen. '
   - 'Amazing right? '
   - Your brain can often fool you. Just look outside for example!
-  - What shapes do you recognize?
-  - I see a T-Rex, but maybe you saw something else!
+  - What shapes do you recognize in these clouds?
+  - I see a bunny, but maybe you saw something else!
   - Your outlook on certain things may differ from those around you.
   - Reality can be perceived in different ways.
   - Learning about these different perspectives can create new ways of thinking.
@@ -2155,7 +2155,7 @@ GameObject:
   - component: {fileID: 1969004741}
   - component: {fileID: 1969004740}
   - component: {fileID: 1969004739}
-  - component: {fileID: 1969004738}
+  - component: {fileID: 1969004743}
   m_Layer: 0
   m_Name: BackgroundImage
   m_TagString: Untagged
@@ -2177,23 +2177,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 903298825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.7279, y: 0.0037923}
-  m_SizeDelta: {x: 932.84, y: 1960}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0.46643066, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!225 &1969004738
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969004736}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!95 &1969004739
 Animator:
   serializedVersion: 5
@@ -2283,6 +2271,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969004736}
   m_CullTransparentMesh: 1
+--- !u!114 &1969004743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969004736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 4
+  m_AspectRatio: 0.69873047
 --- !u!1 &2033686001
 GameObject:
   m_ObjectHideFlags: 0
