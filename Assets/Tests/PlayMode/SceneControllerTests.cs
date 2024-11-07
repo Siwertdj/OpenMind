@@ -67,7 +67,6 @@ public class SceneControllerTests
     {
         yield return new WaitUntil(() =>
         {
-            //Debug.Log($"Unloading: {SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1).name}");
             SceneManager.UnloadSceneAsync(
                 SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1));
             

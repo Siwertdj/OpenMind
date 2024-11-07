@@ -267,6 +267,7 @@ public class SceneController : MonoBehaviour
     //the function to be called when loading the first cycle
     public void StartScene(SceneName start)
     {
+        Debug.Log(TransitionAnimator.i);
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
