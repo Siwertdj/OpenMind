@@ -26,8 +26,8 @@ public class DialogueAnimator : MonoBehaviour
     private AudioSource audioSource;
 
     public bool InDialogue { get; private set; } = false; // Is there dialogue on the screen?
+    public bool IsOutputting { get; private set; } = false; // Is dialogue currently being written?
 
-    private bool isOutputting = false; // Is dialogue currently being written?
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
     private string currentSentence = "";
@@ -51,7 +51,7 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="pitch">The pitch of the characters voice.</param>
     public void WriteDialogue(List<string> output, float pitch = 1)
     {
-        if (!isOutputting) // Don't start writing something new if something is already being written
+        if (!IsOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
             if (audioEnabled && audioSource != null)
@@ -81,9 +81,9 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     public void CancelWriting()
     {
-        if (isOutputting)
+        if (IsOutputting)
         {
-            isOutputting = false;
+            IsOutputting = false;
             StopCoroutine(outputCoroutine);
         }
     }
@@ -94,9 +94,9 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="output">The current sentence which needs to be written</param>
     private void WriteSentence(string output)
     {
-        if (!isOutputting)
+        if (!IsOutputting)
         {
-            isOutputting = true;
+            IsOutputting = true;
             currentSentence = output;
             outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
         }
@@ -108,20 +108,16 @@ public class DialogueAnimator : MonoBehaviour
     public void SkipDialogue()
     {
         // Don't do anything if the game is paused
-        if (GameManager.gm.IsPaused)
-            return;
-
-        // Don't do anything if the player clicked a UI element
-        if (EventSystem.current.IsPointerOverGameObject(0))
+        if (GameManager.gm?.IsPaused == true)
             return;
 
         if (!InDialogue)
             return;
 
-        if (isOutputting)
+        if (IsOutputting)
         {
             // Write full sentence and then stop writing
-            isOutputting = false;
+            IsOutputting = false;
             StopCoroutine(outputCoroutine);
             text.text = currentSentence;
             dialogueIndex++;
@@ -178,7 +174,7 @@ public class DialogueAnimator : MonoBehaviour
         else
         {
             // If sentence is finished, stop outputting
-            isOutputting = false;
+            IsOutputting = false;
             dialogueIndex++;
 
             // If there are more sentences, start writing the next sentence after s seconds
