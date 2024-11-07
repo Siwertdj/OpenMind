@@ -24,7 +24,7 @@ public class DebugManager : MonoBehaviour
     /// A list of all conditions to be ignored.
     /// </summary>
     private HashSet<string> ignores = new HashSet<string>();
-    
+
     /// <summary>
     /// A bool that determines whether pops are disabled
     /// </summary>
@@ -32,7 +32,7 @@ public class DebugManager : MonoBehaviour
     
     private void Awake()
     {
-        #if DEBUG
+        #if DEBUG && !IsTesting
         DontDestroyOnLoad(gameObject);
         IsDebug = true;
         #endif
