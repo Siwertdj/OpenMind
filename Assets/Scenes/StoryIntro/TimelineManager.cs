@@ -184,10 +184,16 @@ public class TimelineManager : MonoBehaviour
     /// </summary>
     public void ContinueCurrentTimeline()
     {
-        continueButton.gameObject.SetActive(false);
-        dialogueAnimator.gameObject.SetActive(false);
-        dialogueAnimator.CancelWriting();
-        currentTimeline.Play();
+        if (dialogueAnimator.IsOutputting)
+        {
+            dialogueAnimator.SkipDialogue();
+        }
+        else
+        {
+            continueButton.gameObject.SetActive(false);
+            dialogueAnimator.gameObject.SetActive(false);
+            currentTimeline.Play();
+        }
     }
 
     #endregion
