@@ -38,6 +38,13 @@ public class NotebookData
     /// </summary>
     public string GetCharacterNotes(CharacterInstance character)
     {
+        Debug.Log(character.id);
+        
+        foreach (var keyValuePair in _pages)
+        {
+            Debug.Log(keyValuePair.Key.id);
+        }
+        
         return _pages[character].GetNotes();
     }
     

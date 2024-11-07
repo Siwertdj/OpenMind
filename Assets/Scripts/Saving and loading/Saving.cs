@@ -16,14 +16,32 @@ public class Saving : MonoBehaviour
     ///
     /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
     /// </summary>
-    public void Save()
+    public void Save(SaveData saveData = null)
+    {
+        if (saveData is null)
+            saveData = CreateSaveData();
+        
+        if (saveData is null)
+            return;
+
+        string jsonString = JsonConvert.SerializeObject(saveData);
+        string folderLocation = FilePathConstants.GetSaveFolderLocation();
+        string fileLocation = FilePathConstants.GetSaveFileLocation();
+        
+        if (!Directory.Exists(folderLocation))
+            Directory.CreateDirectory(folderLocation);
+        
+        File.WriteAllText(fileLocation,jsonString);
+    }
+    
+    public SaveData CreateSaveData()
     {
         GameManager gameManager = GameManager.gm;
         //check if the gamemanger is loaded
         if (gameManager is null)
         {
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
-            return;
+            return null;
         }
 
         //check if current Characters have been assigned
@@ -31,7 +49,7 @@ public class Saving : MonoBehaviour
         {
             Debug.LogError(
                 "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
-            return;
+            return null;
         }
 
         //check if all characters have a unique id. note: this check is obsolete at this point
@@ -44,7 +62,7 @@ public class Saving : MonoBehaviour
         if (!allUniqueID)
         {
             Debug.LogError("Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
-            return;
+            return null;
         }
 
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
@@ -55,7 +73,7 @@ public class Saving : MonoBehaviour
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
 
-        SaveData saveData = new SaveData
+        return new SaveData
         {
             storyId = gameManager.story.storyID,
             activeCharacterIds = active.Select(c => c.id).ToArray(),
@@ -67,14 +85,5 @@ public class Saving : MonoBehaviour
             askedQuestionsPerCharacter = askedQuestions,
             numQuestionsAsked = gameManager.numQuestionsAsked
         };
-
-        string jsonString = JsonConvert.SerializeObject(saveData);
-        string folderLocation = FilePathConstants.GetSaveFolderLocation();
-        string fileLocation = FilePathConstants.GetSaveFileLocation();
-        
-        if (!Directory.Exists(folderLocation))
-            Directory.CreateDirectory(folderLocation);
-        
-        File.WriteAllText(fileLocation,jsonString);
     }
 }

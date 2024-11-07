@@ -11,33 +11,41 @@ using Property = NUnit.Framework.PropertyAttribute;
 /// This class tests all filepath related stuff in the saving and loading files. This class:
 /// - Saves contents to a file and checks whether no errors are thrown while saving
 /// - Loads contents from a file and checks whether no errors are thrown
-/// - Assigns specific values for each variable in the SaveData class & saves these contents
-/// - Then checks whether the loaded contents are the same
-/// - Then checks whether every variable is assigned correctly
-/// - Then saves gain and loads again and checks whether every variable is assigned correctly, this tests whether saving is correct
 /// </summary>
-public class SavingLoadingTests
+public class SavingLoadingTestFilePaths
 {
     [UnitySetUp]
     private IEnumerator Initialise()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
-        switch (layer)
+        if (layer > 0)
         {
-            case 0:
-                break;
-            
-            case 1:
-                //create gamemanager without initialising it
-                SceneManager.LoadScene("Loading");
-                yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-                break;
-                
-            case 2:
-                //initialise gamemanager
-                StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
-                GameManager.gm.StartGame(null, story);
-                goto case 1;
+            Debug.Log("hi");
+            //create gamemanager without initialising it
+            SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+        }
+        
+        if (layer > 1)
+        {
+            //initialise gamemanager
+            StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
+            GameManager.gm.StartGame(null, story);
+            yield return new WaitUntil(() =>
+                SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        }
+    }
+    
+    [UnityTearDown]
+    public IEnumerator RemoveGameManager()
+    {
+        int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
+        GameManager.gm = null;
+        
+        if (layer > 0)
+        {
+            SceneManager.UnloadSceneAsync("Loading");
+            yield return new WaitUntil(() => !SceneManager.GetSceneByName("Loading").isLoaded);
         }
     }
     
@@ -72,10 +80,10 @@ public class SavingLoadingTests
     /// <summary>
     /// Tests whether the correct error is thrown when the characters don't all have unique ids, i.e. duplicate characters
     /// </summary>
-    [UnityTest]
-    public IEnumerator TestSavingErrorHandlingDuplicateCharacterIds()
+    [Test]
+    [Property("layer", 2)]
+    public void TestSavingErrorHandlingDuplicateCharacterIds()
     {
-        yield return Initialise(1);
         GameManager.gm.currentCharacters.Add(GameManager.gm.currentCharacters[0]);
         
         LogAssert.Expect(LogType.Error, "Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
@@ -85,10 +93,10 @@ public class SavingLoadingTests
     /// <summary>
     /// Tests a basic saving operation
     /// </summary>
-    [UnityTest]
-    public IEnumerator TestInitialSave()
+    [Test]
+    [Property("layer", 2)]
+    public void TestInitialSave()
     {
-        yield return Initialise(1);
         saving.Save();
     }
     
@@ -97,6 +105,7 @@ public class SavingLoadingTests
     /// Deletes the save file and tests whether no errors are thrown after saving
     /// </summary>
     [Test]
+    [Property("layer", 2)]
     public void TestSavingNoSaveFile()
     {
         File.Delete(FilePathConstants.GetSaveFileLocation());
@@ -107,6 +116,7 @@ public class SavingLoadingTests
     /// Deletes the save folder and tests whether no errors are thrown after saving
     /// </summary>
     [Test]
+    [Property("layer", 2)]
     public void TestSavingNoSaveFolder()
     {
         Directory.Delete(FilePathConstants.GetSaveFolderLocation());
@@ -118,6 +128,7 @@ public class SavingLoadingTests
     /// Tests if no errors are thrown when loading the saveData and checks whether this savedata is not null
     /// </summary>
     [Test]
+    [Property("layer", 2)]
     public void TestInitialLoading()
     {
         //add the loading file to the current object
