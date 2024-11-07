@@ -34,7 +34,9 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    public StoryObject story; // Contains information about the current game pertaining to the story
+    
+    public StoryObject
+        story { get; private set; } // Contains information about the current game pertaining to the story
     
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
@@ -134,14 +136,22 @@ public class GameManager : MonoBehaviour
         }).ToList();
         
         //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
+        //OLD CODE, ADDRANGE DIDN'T WORK
+        /*Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
         notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
         }));
-        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
+        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);*/
         
+        //TEMP SOLUTION
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = saveData.characterNotes.Select(cn =>
+        {
+            CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
+            return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
+        }).ToDictionary(pair => pair.Key, pair => pair.Value);
+
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
         //load npcSelect scene
@@ -497,6 +507,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
