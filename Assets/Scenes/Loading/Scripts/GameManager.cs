@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
+
 /// <summary>
 /// The manager for the entire game, where most of the magic happens.
 /// instances of this class can be passed to all other classes.
