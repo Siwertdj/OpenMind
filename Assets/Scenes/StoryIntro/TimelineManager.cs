@@ -34,6 +34,8 @@ public class TimelineManager : MonoBehaviour
 
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
+    [SerializeField] private DialogueAnimator typingAnimation;
+    
     public  Image    background;
     public  Button   continueButton;
     public Button sendButton; 
@@ -171,10 +173,14 @@ public class TimelineManager : MonoBehaviour
         } 
     }
     
-    
+    /// <summary>
+    /// This method creates the animation that the player types in text and can then send it. 
+    /// </summary>
     public void TypeAnimation()
     {
         PauseCurrentTimeline();
+        continueButton.gameObject.SetActive(false); //This button is not necessary now, because we have another button to continue. 
+        typingAnimation.gameObject.SetActive(true);
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
         try
@@ -217,6 +223,7 @@ public class TimelineManager : MonoBehaviour
         {
             continueButton.gameObject.SetActive(false);
             dialogueAnimator.gameObject.SetActive(false);
+            typingAnimation.gameObject.SetActive(false);
             currentTimeline.Play();
         }
     }
