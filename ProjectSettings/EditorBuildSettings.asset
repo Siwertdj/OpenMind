@@ -29,9 +29,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameWin/GameWinScene.unity
     guid: 9459aba835045d04b82cfe06dcb6a8a3
-  - enabled: 0
-    path: Assets/Scenes/Epilogue/EpilogueScene.unity
-    guid: 564671c75eabdf2429f4450351fc7c9f
   - enabled: 1
     path: Assets/Scenes/Menus/StorySelectScene.unity
     guid: 7640a6bda6c8bf74c9bddd3d2196cf1f
@@ -41,10 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StoryIntro/IntroStoryScene.unity
     guid: b0836b65373a72a44abb929fe53e4176
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/TestScene/TestScene.unity
     guid: 26d9eed360d3a1c4bad40593c6588c36
-  - enabled: 1
-    path: Assets/Scenes/Testing/TestingScene.unity
-    guid: 0150aa70e7c77ff4ab7029dfad5ea2f3
   m_configObjects: {}

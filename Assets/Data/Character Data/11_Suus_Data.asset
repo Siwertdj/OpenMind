@@ -16,5 +16,93 @@ MonoBehaviour:
   id: 11
   avatar: {fileID: 21300000, guid: dd0ab3d764f597c469fd063abd62e39b, type: 3}
   voicePitch: 1
-  answers: []
-  greetings: []
+  answers:
+  - question: 1
+    answer:
+    - I am 61 years old.
+    trait:
+    - I am 61 years old.
+  - question: 2
+    answer:
+    - My life is great right now!
+    - My husband and I are really enjoying our two grandchildren.
+    - Because of that my husband and I are also enjoying each other again.
+    - We are doing a lot of things together, just like we did when we just got together.
+    - I have been working as a childminder for a long time.
+    trait:
+    - I work as a childminder.
+  - question: 3
+    answer:
+    - I really respect the royal family.
+    - They are just normal people, they didn't choose their life.
+    - I understand the human mistakes they make.
+    - They are just human beings too.
+    trait:
+    - I really respect the royal family.
+  - question: 6
+    answer:
+    - I'm not really into politics.
+    - I have my husband for that.
+    - He explains it to me in case I didn't entirely understand something.
+    - I am on the right side of the political spectrum.
+    trait:
+    - I'm on the right side of the political spectrum.
+  - question: 12
+    answer:
+    - I am good at taking care of people.
+    - But sometimes I waithdraw from others
+    - and I tend to put the needs of others before my own too much.
+    - People are really suprised when I get angry.
+    - I rarely get angry but when I do they really went too far.
+    trait:
+    - I rarely get angry.
+  - question: 7
+    answer:
+    - I like needlework and crocheting.
+    trait:
+    - My hobbies are needlework and crocheting.
+  - question: 9
+    answer:
+    - I still say a prayer before dinner.
+    - I've been doing that since I was a child.
+    - That is the only thing I still do consistently.
+    trait:
+    - I pray before eating.
+  - question: 11
+    answer:
+    - Seize the day.
+    - I have a "carpe diem" poster hanging above my bed.
+    trait:
+    - I have a "carpe diem" poster hanging above my head.
+  - question: 13
+    answer:
+    - My favourite person is my husband.
+    - We have been married for a long time.
+    - He is the first person I go to if I have a problem.
+    - He knows how I feel about things and he knows the right tool to give me to
+      help deal with them.
+    - My social network consists of my close friends, they are my chosen family.
+    - Family is really important to me.
+    trait:
+    - My husband is the most important person in my life.
+  - question: 18
+    answer:
+    - I think the system could be a lot better.
+    - The groups need to be smaller and there should be more space for children that
+      need more support than the standard.
+    trait:
+    - I think the education system in the Netherlands needs to have more space for
+      children that need more support.
+  - question: 17
+    answer:
+    - There is a lot of poverty in the Netherlands, for different reasons.
+    - It's sad to see.
+    - We are living in a good country.
+    - 'If you don''t agree with that because so many things are changing then we
+      sometimes tell someone:'
+    - '"well, then just move to another country".'
+    trait:
+    - It saddens me to see that there is a lot of poverty in the Netherlands.
+  greetings:
+  - lines:
+    - Hello.

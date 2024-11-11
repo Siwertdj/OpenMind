@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -5,7 +7,7 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// Contains all data that is saved to a file
+/// Contains data that can be saved to a file.
 /// </summary>
 public class SaveData
 {

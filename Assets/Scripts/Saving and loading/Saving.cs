@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -58,13 +60,13 @@ public class Saving : MonoBehaviour
             for (int j = i+1; j < gameManager.currentCharacters.Count; j++)
                 if (gameManager.currentCharacters[i].id == gameManager.currentCharacters[j].id)
                     allUniqueID = false;
-
         if (!allUniqueID)
         {
             Debug.LogError("Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
             return null;
         }
-
+        
+        // Gets all data that needs to be saved.
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         
