@@ -93,4 +93,9 @@ public class StartMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("StorySelectScene");
     }
+
+    public void OpenSettings()
+    {
+        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
+    }
 }

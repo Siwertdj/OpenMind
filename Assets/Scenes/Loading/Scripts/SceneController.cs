@@ -15,7 +15,7 @@ using TMPro;
 
 /// <summary>
 /// Class used for swapping scenes.
-/// If anywhere in the code, you need to swap scenes. Use a static instance of this class to do it.
+/// If anywhere in the code, you need to swap scenes. Use a static sm of this class to do it.
 /// </summary>
 public class SceneController : MonoBehaviour
 {
@@ -45,7 +45,7 @@ public class SceneController : MonoBehaviour
         Unload
     }
     
-    // A static instance of this class
+    // A static sm of this class
     public static SceneController sc;
 
     //read from a file
@@ -58,7 +58,7 @@ public class SceneController : MonoBehaviour
     private string GetTransitionGraphFilePath() => Path.Combine(Application.dataPath, "../Assets/Resources/") + TransitionGraphLocation;
 
     /// <summary>
-    /// When loaded, initialize the static instance of this class.
+    /// When loaded, initialize the static sm of this class.
     /// </summary>
     public void Awake()
     {

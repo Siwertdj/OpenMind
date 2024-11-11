@@ -27,7 +27,7 @@ public class GameEvent : ScriptableObject
    /// <summary>
    /// Registers a new eventlistener
    /// </summary>
-   /// <param name="listener">An instance of <see cref="GameEventListener"/></param>
+   /// <param name="listener">An sm of <see cref="GameEventListener"/></param>
    public void RegisterListener(GameEventListener listener)
    {
       if (!listeners.Contains(listener))
@@ -37,7 +37,7 @@ public class GameEvent : ScriptableObject
    /// <summary>
    /// Unregisters an eventlistener
    /// </summary>
-   /// <param name="listener">An instance of <see cref="GameEventListener"/> from <see cref="listeners"/></param>
+   /// <param name="listener">An sm of <see cref="GameEventListener"/> from <see cref="listeners"/></param>
    public void UnregisterListener(GameEventListener listener)
    {
       if (listeners.Contains(listener))

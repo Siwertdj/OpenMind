@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     
     // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
-    public static GameManager gm;       // static instance of the gamemanager
+    public static GameManager gm;       // static sm of the gamemanager
     private SceneController sc;
     public NotebookData notebookData;
 
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     #endregion
     
     /// <summary>
-    /// When loaded, make a static instance of this class so it can be reached from other places.
+    /// When loaded, make a static sm of this class so it can be reached from other places.
     /// Also make the toolbox persistent.
     /// </summary>
     private void Awake()
