@@ -204,10 +204,16 @@ public class DialogueAnimator : MonoBehaviour
 #region Test Variables
 #if UNITY_INCLUDE_TESTS
     public float Test_DelayInSeconds
-        { 
-            get { return delayInSeconds; }
-            set { delayInSeconds = value; } 
-        }
+    { 
+        get { return delayInSeconds; }
+        set { delayInSeconds = value; } 
+    }
+
+    public float Test_DelayAfterSentence
+    {
+        get { return delayAfterSentence; }
+    }
+
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
 #endif
 #endregion

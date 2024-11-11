@@ -44,7 +44,7 @@ public class DialogueAnimatorPlayTest
     /// Tests if each character is being written at the right time.
     /// </summary>
     [UnityTest]
-    public IEnumerator WritingDelayTest()
+    public IEnumerator SingleLineWritingDelayTest()
     {
         // The different cases to test for
         float[] delays = new float[] { 0.01f, 0.003f };
@@ -65,6 +65,33 @@ public class DialogueAnimatorPlayTest
 
                 yield return new WaitForSeconds(delay);
             }
+        }
+    }
+
+    /// <summary>
+    /// Checks whether each letter is typed at the right moment when multiple lines are used.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator MultiLineWritingDelayTest()
+    {
+        List<string> lines = new List<string> { "Hello, World!", "foo", "bar" };
+        animator.WriteDialogue(lines);
+
+        // Go through each letter and check if it is typed when expected
+        for (int i = 0; i < lines.Count; i++)
+        {
+            string line = "";
+            for (int j = 0; j < lines[i].Length; j++)
+            {
+                line += lines[i][j];
+                Assert.AreEqual(line, textField.text);
+
+                // Await next letter
+                yield return new WaitForSeconds(animator.Test_DelayInSeconds);
+            }
+
+            // Await next line start
+            yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
         }
     }
 
@@ -150,4 +177,29 @@ public class DialogueAnimatorPlayTest
         animator.CancelWriting();
         Assert.AreEqual(expectedText, textField.text);
     }
+
+    /// <summary>
+    /// Tests whether or not the OnDialogueComplete event is properly invoked.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndDialogueEventTest()
+    {
+        string text = "Hello, World!";
+        bool dialogueEndCheck = false;
+        animator.OnDialogueComplete.AddListener(() => setBool(ref dialogueEndCheck));
+        animator.WriteDialogue(text);
+
+        // Wait for dialogue to finish
+        yield return new WaitForSeconds(animator.Test_DelayInSeconds * (text.Length + 2));
+
+        // End the dialogue
+        animator.SkipDialogue();
+
+        Assert.IsTrue(dialogueEndCheck);        
+    }
+
+    /// <summary>
+    /// Helper function which simply sets a bool reference to its opposite value.
+    /// </summary>
+    private void setBool(ref bool p) => p = !p;
 }
