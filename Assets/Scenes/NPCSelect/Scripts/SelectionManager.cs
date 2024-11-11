@@ -3,6 +3,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
@@ -20,6 +21,9 @@ public class SelectionManager : MonoBehaviour
 
     private SceneController sc;
     
+    // Button that activates the tutorial for the player. 
+    public  Button TutorialButton;
+    
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
     // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
@@ -34,6 +38,9 @@ public class SelectionManager : MonoBehaviour
         SetSceneType();
         SetHeaderText(selectionType);
         GenerateOptions();
+        
+        //TODO: if it is the first time the selection scene is loaded, the tutorialbutton needs to be pressed
+        //TutorialButton.onClick.Invoke();
     }
 
     /// <summary>
