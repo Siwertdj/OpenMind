@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,6 +31,18 @@ public class SceneControllerTests
     
     private static SceneController.TransitionType[] transitionTypes =
         Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
+    
+    [OneTimeSetUp]
+    public void LoadTestingScene()
+    {
+        SceneManager.LoadScene("TestingScene");
+    }
+    
+    [OneTimeTearDown]
+    public void UnloadTestingScene()
+    {
+        SceneManager.UnloadSceneAsync("TestingScene");
+    }
     
     /// <summary>
     /// Sets up the unit tests:
@@ -67,7 +81,6 @@ public class SceneControllerTests
     {
         yield return new WaitUntil(() =>
         {
-            //Debug.Log($"Unloading: {SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1).name}");
             SceneManager.UnloadSceneAsync(
                 SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1));
             
