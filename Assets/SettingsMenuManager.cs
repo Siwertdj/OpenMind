@@ -12,6 +12,7 @@ public class SettingsMenuManager : MonoBehaviour
     
     public void SetMusicVolume(float volume)
     {
+        Debug.Log($"Set music-volume to {volume}");
         SettingsManager.sm.SetMusicVolume(volume);
     }
     

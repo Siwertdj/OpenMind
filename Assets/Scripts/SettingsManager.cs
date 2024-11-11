@@ -28,7 +28,7 @@ public class SettingsManager : MonoBehaviour
     
     public void SetSfxVolume(float volume)
     {
-        audioMixer.SetFloat("AmbienceVolume", volume);
+        audioMixer.SetFloat("SfxVolume", volume);
         
     }
     
