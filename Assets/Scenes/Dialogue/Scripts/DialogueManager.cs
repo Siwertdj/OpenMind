@@ -132,7 +132,7 @@ public class DialogueManager : MonoBehaviour
         // Instantiate new background
         foreach (GameObject element in newBackground)
             Instantiate(element).transform.parent = parent;
-
+        
     }
 
     /// <summary>
