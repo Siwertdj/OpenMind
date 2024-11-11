@@ -26,12 +26,21 @@ public class SavingLoadingTestValueReadAndWrite
     private Saving  saving  => GameManager.FindObjectOfType<Saving>();
     private Loading loading => GameManager.FindObjectOfType<Loading>();
     
+    [OneTimeSetUp]
+    public void LoadTestingScene()
+    {
+        SceneManager.LoadScene("TestingScene");
+    }
+    
+    [OneTimeTearDown]
+    public void UnloadTestingScene()
+    {
+        SceneManager.UnloadSceneAsync("TestingScene");
+    }
+    
     [UnitySetUp]
     private IEnumerator Initialise()
     {
-        SceneManager.LoadScene("TestingScene");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("TestingScene").isLoaded);
-        
         //create gamemanager without initialising it
         SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);

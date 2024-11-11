@@ -16,8 +16,20 @@ using Property = NUnit.Framework.PropertyAttribute;
 /// </summary>
 public class SavingLoadingTestFilePaths
 {
+    [OneTimeSetUp]
+    public void LoadTestingScene()
+    {
+        SceneManager.LoadScene("TestingScene");
+    }
+    
+    [OneTimeTearDown]
+    public void UnloadTestingScene()
+    {
+        SceneManager.UnloadSceneAsync("TestingScene");
+    }
+    
     [UnitySetUp]
-    private IEnumerator Initialise()
+    public IEnumerator Initialise()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
         if (layer > 0)

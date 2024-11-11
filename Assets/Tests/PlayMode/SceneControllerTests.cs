@@ -32,6 +32,18 @@ public class SceneControllerTests
     private static SceneController.TransitionType[] transitionTypes =
         Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
     
+    [OneTimeSetUp]
+    public void LoadTestingScene()
+    {
+        SceneManager.LoadScene("TestingScene");
+    }
+    
+    [OneTimeTearDown]
+    public void UnloadTestingScene()
+    {
+        SceneManager.UnloadSceneAsync("TestingScene");
+    }
+    
     /// <summary>
     /// Sets up the unit tests:
     /// - Disables event systems
