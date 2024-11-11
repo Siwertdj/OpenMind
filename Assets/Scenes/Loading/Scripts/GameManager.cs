@@ -507,6 +507,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
