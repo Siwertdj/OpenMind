@@ -111,18 +111,24 @@ public class GameManager : MonoBehaviour
         currentCharacters.Clear();
         
         //create all current characters
-        currentCharacters.AddRange(characters.FindAll(c => 
+        List<CharacterInstance> newCurrentCharacters = characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
             saveData.inactiveCharacterIds.Contains(c.id)).
-                Select(c => new CharacterInstance(c)));
+                Select(c => new CharacterInstance(c)).ToList();
+        
+        //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
+        //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
+        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+            currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
+        
 
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
-            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
+            
+            c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();

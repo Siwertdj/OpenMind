@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -66,18 +68,20 @@ public class SavingLoadingTestValueReadAndWrite
         
         RandList<int> possibleCharacterIdsRandom = new RandList<int>(random, possibleCharacterIds);
         int totalCharacters = stories[storyId].numberOfCharacters;
-        int activeCharacterCount = RandI(totalCharacters) + 1;
-        int inactiveCharacterCount = totalCharacters - activeCharacterCount;
         
-        int[] activeCharacterIds = new int[activeCharacterCount];
-        for (int i = 0; i < activeCharacterCount; i++)
-            activeCharacterIds[i] = possibleCharacterIdsRandom.GetNext();
-        
-        int[] inactiveCharacterIds = new int[inactiveCharacterCount];
-        for (int i = 0; i < inactiveCharacterCount; i++)
-            inactiveCharacterIds[i] = possibleCharacterIdsRandom.GetNext();
-        
-        int culpritId = RandL(possibleCharacterIds);
+        int[] currentCharacters = new int[totalCharacters];
+        List<int> activeCharacterIds = new List<int>();
+        List<int> inactiveCharacterIds = new List<int>();
+        for (int i = 0; i < totalCharacters; i++)
+        {
+            currentCharacters[i] = possibleCharacterIdsRandom.GetNext();
+            if (RandB())
+                activeCharacterIds.Add(currentCharacters[i]);
+            else
+                inactiveCharacterIds.Add(currentCharacters[i]);
+        }
+            
+        int culpritId = RandL(currentCharacters);
         
         Question[] possibleQuestions = Enum.GetValues(typeof(Question)).Cast<Question>().ToArray();
         
@@ -87,11 +91,8 @@ public class SavingLoadingTestValueReadAndWrite
         List<(int, List<Question>)> remainingQuestions = new List<(int, List<Question>)>();
         List<(int, string)> characterNotes = new List<(int, string)>();
         
-        foreach (int characterId in possibleCharacterIds)
+        foreach (int characterId in currentCharacters)
         {
-            if (!activeCharacterIds.Contains(characterId) && !inactiveCharacterIds.Contains(characterId))
-                continue;
-            
             int totalQuestions = stories[storyId].numQuestions;
             Question[] questions = new Question[totalQuestions];
             for (var i = 0; i < questions.Length; i++)
@@ -116,8 +117,8 @@ public class SavingLoadingTestValueReadAndWrite
         SaveData saveData = new SaveData
         {
             storyId = storyId,
-            activeCharacterIds = activeCharacterIds,
-            inactiveCharacterIds = inactiveCharacterIds,
+            activeCharacterIds = activeCharacterIds.ToArray(),
+            inactiveCharacterIds = inactiveCharacterIds.ToArray(),
             culpritId = culpritId,
             remainingQuestions = remainingQuestions.ToArray(),
             askedQuestionsPerCharacter = askedQuestions.ToArray(),
@@ -135,26 +136,19 @@ public class SavingLoadingTestValueReadAndWrite
         List<T> l2 = list2.ToList();
         Assert.AreEqual(l1.Count, l2.Count, msg + ": count");
         
-        
         for (int i = 0; i < l1.Count; i++)
         {
-            bool found = false;
-            
-            for (int j = 0; j < l2.Count; j++)
-                if (comparer is null)
-                    found |= l1[i].Equals(l2[j]);
-                else
-                    comparer(l1[i], l2[i], msg);
-            
             if (comparer is null)
-                Assert.IsTrue(found, msg + ": item " + l1[i]);
+                Assert.AreEqual(l1[i], l2[i], msg + ": item " + i);
+            else
+                comparer(l1[i], l2[i], msg);
         }
             
     }
     
     private void CompareQuestionList((int, List<Question>) item1, (int, List<Question>) item2, string msg)
     {
-        Assert.AreEqual(item1.Item1, item2.Item1, msg + ": characterID");
+        Assert.AreEqual(item1.Item1, item2.Item1, msg + ": characterId");
         ListEquals(item1.Item2, item2.Item2, msg + ": questionList");
     }
     
@@ -216,16 +210,19 @@ public class SavingLoadingTestValueReadAndWrite
     /// Tests whether saving and loading repeatedly does nothing to change the savedata or the gamestate
     /// </summary>
     [UnityTest]
+    [Repeat(75)]
     public IEnumerator SavingLoadingDoesNotChangeGameState()
     {
-        SaveData saveData = //loading.GetSaveData();
-                            CreateSaveData();
+        SaveData saveData = CreateSaveData();
         
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             saving.Save(saveData);
             SaveData loaded = loading.GetSaveData();
             GameManager.gm.StartGame(null, loaded);
+            yield return new WaitUntil(
+                () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+            
             SaveData retrieved = saving.CreateSaveData();
             
             CompareSaveData(loaded, retrieved, "compare " + i);
@@ -233,6 +230,38 @@ public class SavingLoadingTestValueReadAndWrite
             SceneManager.UnloadSceneAsync("NPCSelectScene");
             yield return new WaitUntil(
                 () => !SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        }
+    }
+    
+    /// <summary>
+    /// Tests whether the current saved file is not corrupted and is a valid save file, without changing it's contents
+    /// If no save file exists, this test succeeds
+    /// </summary>
+    [UnityTest]
+    public IEnumerator DoesCurrentSaveFileWork()
+    {
+        //if the file doesn't exist, we can't test it
+        if (File.Exists(FilePathConstants.GetSaveFileLocation()))
+        {
+            SaveData saveData = loading.GetSaveData();
+            Assert.IsNotNull(saveData);
+            
+            SaveData saveDataCopy = loading.GetSaveData();
+            for (int i = 0; i < 5; i++)
+            {
+                GameManager.gm.StartGame(null, saveDataCopy);
+                yield return new WaitUntil(
+                    () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+                
+                SaveData retrieved = saving.CreateSaveData();
+                saveDataCopy = retrieved;
+                
+                SceneManager.UnloadSceneAsync("NPCSelectScene");
+                yield return new WaitUntil(
+                    () => !SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+            }
+            
+            CompareSaveData(saveData, saveDataCopy, "compare");
         }
     }
 }

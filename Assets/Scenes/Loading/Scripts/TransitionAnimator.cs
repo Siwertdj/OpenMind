@@ -68,10 +68,20 @@ public class TransitionAnimator : MonoBehaviour
     /// <param name="tcs"></param>
     private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
     {
-        yield return null; // Wait for the animator to update clip
-
+        float seconds = 0;
+        // Wait for the animator to update clip
+        yield return new WaitUntil(() =>
+        {
+            var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+            if (clipInfo.Length == 0)
+                return false;
+            
+            seconds = clipInfo[0].clip.length;
+            return true;
+        });
+        
         // Await the length of the animation
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        yield return new WaitForSeconds(seconds);
 
         tcs.SetResult(true);
     }

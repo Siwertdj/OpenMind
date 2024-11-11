@@ -68,8 +68,10 @@ public class Saving : MonoBehaviour
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         
-        (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
-        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
+        (int, List<Question>)[] remainingQuestions = gameManager.currentCharacters
+            .Select(a => (a.id, a.RemainingQuestions)).ToArray();
+        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters
+            .Select(a => (a.id, a.AskedQuestions)).ToArray();
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
 
