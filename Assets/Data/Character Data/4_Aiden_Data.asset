@@ -42,6 +42,19 @@ MonoBehaviour:
     trait:
     - I think what we're doing for the climate is pointless when other countries
       are not doing anything.
+  - question: 1
+    answer:
+    - I am 25 years old.
+    trait:
+    - I am 25 years old.
+  - question: 19
+    answer:
+    - If I won the lottery,
+    - I would probably invest the money.
+    - I think I'd buy a house for myself, and buy
+    - other house to rent as an investment.
+    trait:
+    - If I won the lottery I would buy a house.
   greetings:
   - lines:
     - Yo!
