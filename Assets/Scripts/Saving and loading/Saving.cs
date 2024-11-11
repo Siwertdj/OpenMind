@@ -8,24 +8,42 @@ using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 
-/// <summary>
-/// Saves data to a file.
-/// All data saved to a file is stored in <see cref="SaveData"/>>.
-/// </summary>
 public class Saving : MonoBehaviour
 {
     /// <summary>
-    /// The method which saves data to a file.
+    /// Saves data to a file.
+    /// All data saved to a file is stored in <see cref="SaveData"/>>.
+    /// When accessing the notebook file, all relevant exceptions are caught and result in an error in the debug console and results in nothing being saved.
+    /// When the specified directory and or file to save to cannot be found, these will be created anew.
+    ///
     /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
     /// </summary>
-    public void Save()
+    public void Save(SaveData saveData = null)
+    {
+        if (saveData is null)
+            saveData = CreateSaveData();
+        
+        if (saveData is null)
+            return;
+
+        string jsonString = JsonConvert.SerializeObject(saveData);
+        string folderLocation = FilePathConstants.GetSaveFolderLocation();
+        string fileLocation = FilePathConstants.GetSaveFileLocation();
+        
+        if (!Directory.Exists(folderLocation))
+            Directory.CreateDirectory(folderLocation);
+        
+        File.WriteAllText(fileLocation,jsonString);
+    }
+    
+    public SaveData CreateSaveData()
     {
         GameManager gameManager = GameManager.gm;
         //check if the gamemanger is loaded
         if (gameManager is null)
         {
             Debug.LogError("Cannot save data when the gamemanger is not loaded.\nSaving failed");
-            return;
+            return null;
         }
 
         //check if current Characters have been assigned
@@ -33,7 +51,7 @@ public class Saving : MonoBehaviour
         {
             Debug.LogError(
                 "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
-            return;
+            return null;
         }
 
         //check if all characters have a unique id. note: this check is obsolete at this point
@@ -45,19 +63,21 @@ public class Saving : MonoBehaviour
         if (!allUniqueID)
         {
             Debug.LogError("Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
-            return;
+            return null;
         }
         
         // Gets all data that needs to be saved.
         CharacterInstance[] active = gameManager.currentCharacters.FindAll(c => c.isActive).ToArray();
         CharacterInstance[] inactive = gameManager.currentCharacters.FindAll(c => !c.isActive).ToArray();
         
-        (int, List<Question>)[] remainingQuestions = active.Select(a => (a.id, a.RemainingQuestions)).ToArray();
-        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
+        (int, List<Question>)[] remainingQuestions = gameManager.currentCharacters
+            .Select(a => (a.id, a.RemainingQuestions)).ToArray();
+        (int, List<Question>)[] askedQuestions = gameManager.currentCharacters
+            .Select(a => (a.id, a.AskedQuestions)).ToArray();
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
-        // Set the saveData to the data found
-        SaveData saveData = new SaveData
+
+        return new SaveData
         {
             storyId = gameManager.story.storyID,
             activeCharacterIds = active.Select(c => c.id).ToArray(),
@@ -69,16 +89,5 @@ public class Saving : MonoBehaviour
             askedQuestionsPerCharacter = askedQuestions,
             numQuestionsAsked = gameManager.numQuestionsAsked
         };
-        
-        // Converts the data in SaveData to Json.
-        string jsonString = JsonConvert.SerializeObject(saveData);
-        string folderLocation = FilePathConstants.GetSaveFolderLocation();
-        string fileLocation = FilePathConstants.GetSaveFileLocation();
-        
-        // Saves the data to a file.
-        if (!Directory.Exists(folderLocation))
-            Directory.CreateDirectory(folderLocation);
-        
-        File.WriteAllText(fileLocation,jsonString);
     }
 }
