@@ -27,18 +27,22 @@ public class TimelineManager : MonoBehaviour
     
     public Sprite[]     backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]     storyText;   // Stores all the used text for the introduction. 
-    public GameObject[] TextMessages;
-    public GameObject[] MessageLocations;
+    public GameObject[] textMessages;
+    public GameObject[] messageLocations;
+    public string[]     typingTexts;
+    public TMP_Text     typingText; 
 
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
     public  Image    background;
     public  Button   continueButton;
+    public Button sendButton; 
     // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
     private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
     private int playerTextIndex = -1; // text[textIndex] is the currently shown text. 
-    private int textMessageIndex = 0; 
+    private int textMessageIndex = 0;
+    private int typeIndex = 0; 
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
@@ -90,13 +94,13 @@ public class TimelineManager : MonoBehaviour
     /// <param name="show"> Determines whether to hide or to show the texts. </param>
     private void HideOrShowTexts(bool show)
     {
-        foreach (GameObject location in MessageLocations)
+        foreach (GameObject location in messageLocations)
         {
             location.SetActive(show);
         }
         if (!show) // If the messages need to be hidden, make sure old messages are hidden as well. 
         {
-            foreach(GameObject message in TextMessages)
+            foreach(GameObject message in textMessages)
             {
                 message.SetActive(false);
             }
@@ -109,14 +113,16 @@ public class TimelineManager : MonoBehaviour
     public void SendText()
     {
         PauseCurrentTimeline();
+        sendButton.gameObject.SetActive(false);
+        typingText.gameObject.SetActive(false);
         background.sprite = backgrounds[3]; // Change the background to the phone background. 
         textMessageIndex++;
         if (textMessageIndex > 4) HideOrShowTexts(false); // More than 4 messages means that old ones need to be removed. 
         // Make sure the four most recent texts are shown on the screen. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
-            TextMessages[i].transform.position = MessageLocations[i-textMessageIndex].transform.position; 
-            TextMessages[i].SetActive(true);
+            textMessages[i].transform.position = messageLocations[i-textMessageIndex].transform.position; 
+            textMessages[i].SetActive(true);
         }
         HideOrShowTexts(true); // Show the new texts. 
     }
@@ -164,7 +170,26 @@ public class TimelineManager : MonoBehaviour
             PauseCurrentTimeline(); // The first time the background is changed, the timeline does not have to be paused. 
         } 
     }
-
+    
+    
+    public void TypeAnimation()
+    {
+        PauseCurrentTimeline();
+        sendButton.gameObject.SetActive(true);
+        typingText.gameObject.SetActive(true);
+        try
+        {
+            typingText.text = typingTexts[typeIndex];
+        }
+        catch
+        {
+            Debug.LogError("No more typing texts..");
+            typingText.text = typingTexts[0];
+            typeIndex = 0; 
+        }
+        typeIndex++;
+    }
+    
     #endregion
     
     // This region contains methods that directly manipulate the timeline
