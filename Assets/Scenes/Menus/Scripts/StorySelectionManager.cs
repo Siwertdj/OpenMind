@@ -12,6 +12,10 @@ public class StorySelectionManager : MonoBehaviour
     [Header("Data")] 
     [SerializeField] private StoryObject[] stories;
     
+    [Header("Resources")]
+    [SerializeField] private AudioClip storySelectionMusic;
+    
+    
     // Game Events
     [Header("Events")]
     public GameEvent onIntroLoaded;
