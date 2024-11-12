@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     {
         GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
-        gameMenu.SetActive(true);
+        SceneManager.LoadScene("GameMenuScene", LoadSceneMode.Additive);
     }
 
     /// <summary>
@@ -38,25 +38,8 @@ public class UIManager : MonoBehaviour
     {
         GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
-        gameMenu.SetActive(false);
-    }
-
-    public void OpenSettings()
-    {
-        CloseMenu();
-        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
     }
     
-    public void ReturnToStartScreen()
-    {
-        SceneManager.LoadScene("StartScreenScene");
-        // Destroy all DontDestroyOnLoad-objects
-        // TODO: This doesnt want to work
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DDOL"))
-        {
-            Destroy(obj);
-        }
-    }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.
