@@ -292,7 +292,7 @@ public class SceneController : MonoBehaviour
             Debug.LogError($"Current scene {currentScene} cannot make a {transitionType}-transition to {targetScene}");
             return;
         }
-
+        
         await loadCode(currentScene, targetScene, transitionType);
     }
     
@@ -320,7 +320,7 @@ public class SceneController : MonoBehaviour
     {
         Debug.Log($"Button: {button.gameObject.name}");
         var crossOverlay = button.transform.GetChild(0).gameObject;
-
+        
         // If notebook is already open, close it
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
@@ -330,6 +330,8 @@ public class SceneController : MonoBehaviour
         }
         else
         {
+            // Set the baseScene.
+            //GameManager.gm.baseScene = GetSceneName(SceneManager.GetActiveScene());
             GameManager.gm.IsPaused = true;
             crossOverlay.SetActive(true);
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
