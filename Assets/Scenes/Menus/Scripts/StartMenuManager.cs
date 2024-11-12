@@ -23,6 +23,10 @@ public class StartMenuManager : MonoBehaviour
     [Header("Copyright canvas")]
     public Canvas copyright;
     
+    [Header("Resources")]
+    [SerializeField] AudioClip startMenuMusic;
+    private float startMenuMusicFadeInSpeed = 0f;
+    
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
     /// If there are no saves, disable the button.
@@ -34,6 +38,8 @@ public class StartMenuManager : MonoBehaviour
         
         // Keep the copyright text on the screen in all scenes
         DontDestroyOnLoad(copyright);
+        
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
     
     /// <summary>

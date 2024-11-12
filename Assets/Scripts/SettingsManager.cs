@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
@@ -14,12 +15,19 @@ public class SettingsManager : MonoBehaviour
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
+    
+    private AudioSource musicSource;
 
+    [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    
     private void Awake()
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
         DontDestroyOnLoad(this.gameObject);
+        
+        // Set reference to music-audiosource by component
+        musicSource = GetComponents<AudioSource>()[0];
     }
 
 
@@ -55,9 +63,40 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// this method should fade-out the previous track, then fade-in the new track
     /// </summary>
-    private void SwitchMusic()
+    public void SwitchMusic(AudioClip newClip, float? fadeTime)
     {
-        
+        if (newClip == null)
+        {
+            Debug.LogError("Passed audio clip is null, continuing to play current clip.");
+        }
+        else
+        {
+            // If the passed fadeTime is null, we use the default music fade-in time
+            float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
+
+            // If the newclip is different than the current clip, we fade the new one in.
+            if (newClip != musicSource.clip)
+                StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+        }
+    }
+
+    private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
+    {
+        Debug.Log("Music source:" + musicSource);
+        float startVolume = musicSource.volume;
+        while (musicSource.volume > 0)
+        {
+            musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
+        musicSource.Stop();
+        musicSource.clip = newClip;
+        musicSource.Play();
+        while (musicSource.volume < 1)
+        {
+            musicSource.volume += startVolume * Time.deltaTime / fadeTime;
+            yield return null;
+        }
     }
     #endregion
 }

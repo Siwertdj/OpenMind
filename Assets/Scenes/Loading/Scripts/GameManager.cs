@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("Game Resources")]
     [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
+    [SerializeField] private AudioClip gameMusic;
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
@@ -74,7 +75,12 @@ public class GameManager : MonoBehaviour
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
     }
-    
+
+    private void Start()
+    {
+        SettingsManager.sm.SwitchMusic(gameMusic, null);
+    }
+
     /// <summary>
     /// Starts the game.
     /// If a story is passed along, starts a new game with that story.

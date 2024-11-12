@@ -954,6 +954,7 @@ MonoBehaviour:
   skipPrologueCanvas: {fileID: 152492394}
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   copyright: {fileID: 2085541975}
+  startMenuMusic: {fileID: 8300000, guid: d40345d0e3d1f134da9adce760db4a86, type: 3}
 --- !u!1 &437585440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2140,7 +2141,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3635326749597092746, guid: b044907fa2501e8418ab51b6c8622b00, type: 2}
-  m_audioClip: {fileID: 8300000, guid: d40345d0e3d1f134da9adce760db4a86, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.704
   m_Pitch: 1
