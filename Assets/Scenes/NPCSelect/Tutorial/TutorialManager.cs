@@ -17,7 +17,9 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private string[] tutorialText;  // Contains the text that will be shown. 
     [SerializeField] private TMP_Text text;          // The gameobject that will show the text on the screen. 
     private int      textIndex = 0;                 // Keeps track of which text to show.  
-    [SerializeField] private     TMP_Text question; 
+    [SerializeField] private     TMP_Text question;
+    [SerializeField] private GameObject[] objectives;
+    private GameObject objective; 
     
     /// <summary>
     /// This method is called when the help button is clicked. 
@@ -54,6 +56,7 @@ public class TutorialManager : MonoBehaviour
     public void UpdateText()
     {
         PauseTutorial(); // Pause timeline such that player has time to read the text. 
+        objective.gameObject.SetActive(false);
         try
         {
             text.text = tutorialText[textIndex];
@@ -69,5 +72,12 @@ public class TutorialManager : MonoBehaviour
         text.gameObject.SetActive(true);
         
         textIndex++; // Increase textindex in order to prepare for the next text. 
+    }
+    
+    public void ShowObjective()
+    {
+        PauseTutorial();
+        objective = objectives[0]; // TODO: when there are more stories, the game has to know which objective needs to be shown
+        objective.gameObject.SetActive(true);
     }
 }
