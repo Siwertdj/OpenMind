@@ -3405,7 +3405,7 @@ MonoBehaviour:
   dialogueAnimator: {fileID: 228368350}
   typingAnimation: {fileID: 21481127}
   background: {fileID: 1208453420}
-  continueButton: {fileID: 315456859}
+  continueButton: {fileID: 315456856}
   sendButton: {fileID: 1300033502}
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
 --- !u!114 &1187182887

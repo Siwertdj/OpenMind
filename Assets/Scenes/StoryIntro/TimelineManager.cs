@@ -37,7 +37,7 @@ public class TimelineManager : MonoBehaviour
     [SerializeField] private DialogueAnimator typingAnimation;
     
     public  Image    background;
-    public  Button   continueButton;
+    public  GameObject   continueButton;
     public Button sendButton; 
     // Variables to keep track of the state of the introduction within this code. 
     private PlayableDirector currentTimeline; 
@@ -178,7 +178,7 @@ public class TimelineManager : MonoBehaviour
     /// </summary>
     public void TypeAnimation()
     {
-        continueButton.gameObject.SetActive(false); //This button is not necessary now, because we have another button to continue. 
+        continueButton.SetActive(false); //This button is not necessary now, because we have another button to continue. 
         PauseCurrentTimeline();
         typingAnimation.gameObject.SetActive(true);
         sendButton.gameObject.SetActive(true);
@@ -206,7 +206,7 @@ public class TimelineManager : MonoBehaviour
     /// </summary>
     public void PauseCurrentTimeline()
     {
-        continueButton.gameObject.SetActive(true);
+        continueButton.SetActive(true);
         currentTimeline.Pause();
     }
 
@@ -221,7 +221,7 @@ public class TimelineManager : MonoBehaviour
         }
         else
         {
-            continueButton.gameObject.SetActive(false);
+            continueButton.SetActive(false);
             dialogueAnimator.gameObject.SetActive(false);
             typingAnimation.gameObject.SetActive(false);
             currentTimeline.Play();
