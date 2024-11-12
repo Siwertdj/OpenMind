@@ -849,13 +849,11 @@ MonoBehaviour:
   continueButton: {fileID: 1296799959}
   textBox: {fileID: 1391645433}
   tutorialText:
-  - 'The goal of this game is to find a certain character. '
-  - You can do that by asking questions to the characters in this room.
+  - You can ask questions to each character in this room.
   - 'Gathered information will be written in your notebook. You can write in your
     notebook too. '
   - 'You can enter the notebook by clicking on the notebook icon. Just click this
     icon again to exit the notebook. '
-  - 'Try it for yourself! Just click on the notebook icon. '
   - You are now ready to talk to the characters. Just click one of them to start
     a conversation. Good luck!
   text: {fileID: 1383253168}
@@ -1335,7 +1333,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00013852, y: 477.80566}
+  m_AnchoredPosition: {x: 0.00013852, y: 0.000091553}
   m_SizeDelta: {x: 866.1661, y: 372.1249}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1597849842
@@ -1592,16 +1590,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635353210}
-  m_LocalRotation: {x: 0.025465943, y: 0.0065586288, z: -0.24932025, w: 0.96806407}
-  m_LocalPosition: {x: 0, y: 0, z: 0.4597877}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0.022865506, y: 0.012988583, z: 0.012450461, w: 0.9995767}
+  m_LocalPosition: {x: 0, y: 0, z: 0.49501}
+  m_LocalScale: {x: 1.0766, y: 1.0766, z: 1.0766}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1223515027}
-  m_LocalEulerAnglesHint: {x: 3.014, y: 0, z: -28.885}
+  m_LocalEulerAnglesHint: {x: 2.601, y: 1.522, z: 1.462}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -332, y: -1188}
+  m_AnchoredPosition: {x: -379, y: -566}
   m_SizeDelta: {x: 174.3532, y: 116.1634}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1659958910
