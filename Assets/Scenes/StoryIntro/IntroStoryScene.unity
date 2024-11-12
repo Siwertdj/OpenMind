@@ -2194,7 +2194,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'First hint: I''m in the cafetaria.'
+  m_text: 'First hint: I''m at the cafetaria.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3365,10 +3365,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 38c2b43cb244f7640b6567ac8cf99a1e, type: 3}
   - {fileID: 21300000, guid: 6c11d634dd0d776438b0d6ddc9252732, type: 3}
   - {fileID: 21300000, guid: 003306c9279c2164e8a1030b4bff7514, type: 3}
-  - {fileID: 21300000, guid: e44ef008dcd8c4d4ea3d1173de060a81, type: 3}
+  - {fileID: 21300000, guid: 213215db4634ea74aa37f30e1c86dca1, type: 3}
   storyText:
   - 'Unknown? I must have removed their number. Awkward! '
-  - Let's look around, maybe I recognize them.
+  - Let's look around, maybe I recognize someone.
   - Who could have sent me those texts..
   - I guess I should go talk to people. That will definitely help me find out who
     this person is that has been sending me these messages.
@@ -3475,7 +3475,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e44ef008dcd8c4d4ea3d1173de060a81, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 213215db4634ea74aa37f30e1c86dca1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3599,8 +3599,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9768, y: 1.3315}
-  m_SizeDelta: {x: 570.84, y: 1128.8728}
+  m_AnchoredPosition: {x: 0.00052452, y: -0.010058}
+  m_SizeDelta: {x: 511.58, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1238301441
 GameObject:
@@ -4077,8 +4077,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221.60919, y: -386.4656}
-  m_SizeDelta: {x: 68.3656, y: 62.3132}
+  m_AnchoredPosition: {x: 221.60919, y: -383.00195}
+  m_SizeDelta: {x: 68.3656, y: 69.2405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1300033502
 MonoBehaviour:
@@ -4156,7 +4156,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d22deb1c4c37cfc4c8c5bc49c1261496, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6fb7cb0f1f34794c892ac36eb69b642, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

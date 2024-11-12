@@ -522,6 +522,8 @@ PlayableDirector:
     value: {fileID: 1008719525}
   - key: {fileID: 1055770566606650817, guid: 51620009f1203524e848ce7590897958, type: 2}
     value: {fileID: 1635353210}
+  - key: {fileID: 510421320581743854, guid: 51620009f1203524e848ce7590897958, type: 2}
+    value: {fileID: 1951431981}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &771824836
@@ -767,20 +769,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TutorialTimeline: {fileID: 771824835}
-  HelpButton: {fileID: 1972322077}
-  ContinueButton: {fileID: 1296799959}
-  TextBox: {fileID: 1391645433}
-  TutorialText:
-  - 'Your task is to find the right character. '
+  helpButton: {fileID: 1972322077}
+  continueButton: {fileID: 1296799959}
+  textBox: {fileID: 1391645433}
+  tutorialText:
+  - 'The goal of this game is to find a certain character. '
   - You can do that by asking questions to the characters in this room.
   - 'Gathered information will be written in your notebook. You can write in your
     notebook too. '
   - 'You can enter the notebook by clicking on the notebook icon. Just click this
     icon again to exit the notebook. '
   - 'Try it for yourself! Just click on the notebook icon. '
-  - Now you're ready to talk to the characters. Just click one of them to start a
-    conversation. Good luck!
-  Text: {fileID: 1383253168}
+  - You are now ready to talk to the characters. Just click one of them to start
+    a conversation. Good luck!
+  text: {fileID: 1383253168}
+  question: {fileID: 1951431983}
 --- !u!4 &1059265638
 Transform:
   m_ObjectHideFlags: 0
@@ -1238,7 +1241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00013852, y: 638}
+  m_AnchoredPosition: {x: 0.00013852, y: 319}
   m_SizeDelta: {x: 866.1661, y: 309.9115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1635353210
