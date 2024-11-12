@@ -22,7 +22,7 @@ public class UIManager : MonoBehaviour
     private Coroutine transitionCoroutine;
 
     /// <summary>
-    /// Opens the menu of the game, hides the UI buttons
+    /// Opens the GameMenu-scene, hides the UI buttons
     /// </summary>
     public void OpenMenu()
     {

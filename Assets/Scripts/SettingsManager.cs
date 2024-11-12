@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,12 +7,10 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-// Most code in this script is credited to Brackey's tutorial
-// https://www.youtube.com/watch?v=YOaYQrN1oYQ
 public class SettingsManager : MonoBehaviour
 {
+    // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
-    private       AudioManager    am;
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
@@ -19,24 +19,42 @@ public class SettingsManager : MonoBehaviour
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
-        am = GetComponent<AudioManager>();
         DontDestroyOnLoad(this.gameObject);
     }
 
 
     #region Audio
+    /// <summary>
+    /// Called through SettingsMenuManager to set the volume of the Master-channel of the Audiomixer.
+    /// </summary>
+    /// <param name="volume"></param>
+    public void SetMasterVolume(float volume)
+    {
+        audioMixer.SetFloat("MasterVolume", volume);
+    }
+
+    /// <summary>
+    /// Called through SettingsMenuManager to set the volume of the Music-channel of the Audiomixer.
+    /// </summary>
+    /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
         audioMixer.SetFloat("MusicVolume", volume);
     }
-    
+
+    /// <summary>
+    /// Called through SettingsMenuManager to set the volume of the SFX-channel of the Audiomixer.
+    /// </summary>
+    /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
         audioMixer.SetFloat("SfxVolume", volume);
         
     }
     
-    // this method should fade-out the previous track, then fade-in the new track
+    /// <summary>
+    /// this method should fade-out the previous track, then fade-in the new track
+    /// </summary>
     private void SwitchMusic()
     {
         
