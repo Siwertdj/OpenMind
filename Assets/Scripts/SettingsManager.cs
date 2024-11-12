@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class SettingsManager : MonoBehaviour
 {
     public static SettingsManager sm;
+    private       AudioManager    am;
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
@@ -18,9 +19,12 @@ public class SettingsManager : MonoBehaviour
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
+        am = GetComponent<AudioManager>();
         DontDestroyOnLoad(this.gameObject);
     }
-    
+
+
+    #region Audio
     public void SetMusicVolume(float volume)
     {
         audioMixer.SetFloat("MusicVolume", volume);
@@ -37,4 +41,5 @@ public class SettingsManager : MonoBehaviour
     {
         
     }
+    #endregion
 }

@@ -41,9 +41,21 @@ public class UIManager : MonoBehaviour
         gameMenu.SetActive(false);
     }
 
+    public void OpenSettings()
+    {
+        CloseMenu();
+        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
+    }
+    
     public void ReturnToStartScreen()
     {
-        //_ = SceneController.sc.LoadScene(SceneController.SceneName.StartScreenScene);
+        SceneManager.LoadScene("StartScreenScene");
+        // Destroy all DontDestroyOnLoad-objects
+        // TODO: This doesnt want to work
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DDOL"))
+        {
+            Destroy(obj);
+        }
     }
 
     /// <summary>

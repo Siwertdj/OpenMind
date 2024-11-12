@@ -1,5 +1,7 @@
 // This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +9,7 @@ using UnityEngine;
 /// A class which handles events, 
 /// </summary>
 [CreateAssetMenu(menuName = "GameEvent")]
+[Serializable]
 public class GameEvent : ScriptableObject
 {
    public List<GameEventListener> listeners = new List<GameEventListener>();

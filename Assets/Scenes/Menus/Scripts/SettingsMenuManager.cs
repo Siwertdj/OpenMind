@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,7 @@ public class SettingsMenuManager : MonoBehaviour
 {
     public void ExitSettings()
     {
+        // TODO: Load it on-top of the in-game menu
         SceneManager.UnloadSceneAsync("SettingsScene");
     }
     
