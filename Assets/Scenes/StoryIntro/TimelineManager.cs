@@ -178,14 +178,14 @@ public class TimelineManager : MonoBehaviour
     /// </summary>
     public void TypeAnimation()
     {
-        PauseCurrentTimeline();
         continueButton.gameObject.SetActive(false); //This button is not necessary now, because we have another button to continue. 
+        PauseCurrentTimeline();
         typingAnimation.gameObject.SetActive(true);
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
         try
         {
-            typingText.text = typingTexts[typeIndex];
+            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
         }
         catch
         {
