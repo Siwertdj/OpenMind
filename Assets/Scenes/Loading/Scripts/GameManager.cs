@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+
+    public bool IsPaused { get; set; } = false;
     
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
@@ -33,7 +35,9 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    public StoryObject story; // Contains information about the current game pertaining to the story
+    
+    public StoryObject
+        story { get; private set; } // Contains information about the current game pertaining to the story
     
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
@@ -116,29 +120,34 @@ public class GameManager : MonoBehaviour
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
-        currentCharacters.AddRange(characters.FindAll(c => 
+        List<CharacterInstance> newCurrentCharacters = characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
             saveData.inactiveCharacterIds.Contains(c.id)).
-                Select(c => new CharacterInstance(c)));
+                Select(c => new CharacterInstance(c)).ToList();
+        
+        //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
+        //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
+        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+            currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
+        
 
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
-            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
+            
+            c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
         //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
-        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }));
+        }).ToDictionary(pair => pair.Key, pair => pair.Value);
         notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
         //unload all scenes
@@ -193,8 +202,8 @@ public class GameManager : MonoBehaviour
 
         // Tell the player what happened in between cycles
         var dialogue = new List<string> {
-            $"{victimName} has disappeared.",
-            "There is some new information about the culprit:",
+            $"{victimName} {story.victimDialogue}",
+            story.hintDialogue,
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.
@@ -215,7 +224,7 @@ public class GameManager : MonoBehaviour
         // Select the Culprit
         else
         {
-            sc.TransitionScene(
+            _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
@@ -368,20 +377,10 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(DialogueObject dialogueObject)
     {
         // Transition to dialogue scene and await the loading operation
-        if (gameState == GameState.NpcSelect)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.NPCSelectScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
-        else if (gameState == GameState.NpcDialogue)
-        {
-            await sc.TransitionScene(
-                SceneController.SceneName.DialogueScene,
-                SceneController.SceneName.DialogueScene,
-                SceneController.TransitionType.Transition);
-        }
+        await sc.TransitionScene(
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition);
 
         gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
@@ -506,6 +505,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {

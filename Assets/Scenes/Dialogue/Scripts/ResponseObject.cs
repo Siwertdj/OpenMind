@@ -10,14 +10,6 @@ using UnityEngine;
 public class ResponseObject : DialogueObject
 {
     public Question question;
-    public GameObject[] background;
-    
-    public List<DialogueObject> _responses = new();
-    public override List<DialogueObject> Responses
-    {
-        get { return _responses; }
-        set { _responses = value; }
-    }
 
     /// <summary>
     /// The constructor.
