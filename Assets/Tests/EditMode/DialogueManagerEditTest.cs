@@ -15,7 +15,7 @@ using TMPro;
 
 public class DialogueManagerEditTest
 {
-    private DialogueManager   dm;
+    private DialogueManager dm;
     
     [OneTimeSetUp]
     public void Setup()

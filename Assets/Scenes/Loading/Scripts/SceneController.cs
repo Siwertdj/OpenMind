@@ -318,7 +318,6 @@ public class SceneController : MonoBehaviour
     // this method is not tested
     public void ToggleNotebookScene(Button button)
     {
-        Debug.Log($"Button: {button.gameObject.name}");
         var crossOverlay = button.transform.GetChild(0).gameObject;
 
         // If notebook is already open, close it
