@@ -410,6 +410,7 @@ RectTransform:
   m_Children:
   - {fileID: 1883821830}
   - {fileID: 1856771466}
+  - {fileID: 1972322076}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -846,6 +847,7 @@ MonoBehaviour:
   TutorialTimeline: {fileID: 771824835}
   helpButton: {fileID: 1972322077}
   continueButton: {fileID: 1296799959}
+  tutorialCanvas: {fileID: 1710193541}
   textBox: {fileID: 1391645433}
   tutorialText:
   - You can ask questions to each character in this room.
@@ -907,7 +909,6 @@ RectTransform:
   - {fileID: 847727583}
   - {fileID: 1008719526}
   - {fileID: 1635353214}
-  - {fileID: 1972322076}
   - {fileID: 1296799960}
   m_Father: {fileID: 1710193542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1874,6 +1875,7 @@ GameObject:
   - component: {fileID: 1951431982}
   - component: {fileID: 1951431984}
   - component: {fileID: 1951431983}
+  - component: {fileID: 1951431985}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -1997,6 +1999,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951431981}
   m_CullTransparentMesh: 1
+--- !u!114 &1951431985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951431981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: 08d3be22c04836e43bfa1a746c490258, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1059265637}
+          m_TargetAssemblyTypeName: TutorialManager, Scripts
+          m_MethodName: StopTutorial
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1972322075
 GameObject:
   m_ObjectHideFlags: 0
@@ -2028,7 +2060,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1223515027}
+  m_Father: {fileID: 484127862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -13,6 +13,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Button     helpButton;
     [SerializeField] private GameObject continueButton;
     
+    [SerializeField] private Canvas tutorialCanvas; 
     [SerializeField] private Image    textBox;       // Background of the text. 
     [SerializeField] private string[] tutorialText;  // Contains the text that will be shown. 
     [SerializeField] private TMP_Text text;          // The gameobject that will show the text on the screen. 
@@ -29,10 +30,16 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void StartTutorial()
     {
+        tutorialCanvas.gameObject.SetActive(true);
         question.gameObject.SetActive(false);   // Hide the question when the tutorial is playing, to keep the screen more clear. 
         TutorialTimeline.time = 0;              // When the button is clicked again, the tutorial has to play from the start. 
         TutorialTimeline.Play();
         helpButton.gameObject.SetActive(false); // When tutorial is playing, hide the help button. 
+    }
+    
+    public void StopTutorial()
+    {
+        tutorialCanvas.gameObject.SetActive(false);
     }
     
     /// <summary>
