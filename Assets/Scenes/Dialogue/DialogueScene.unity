@@ -938,7 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1804029613}
-  delayInSeconds: 0.06
+  delayInSeconds: 0.05
   delayAfterSentence: 1
   audioEnabled: 0
 --- !u!114 &826756118
@@ -1530,10 +1530,10 @@ RectTransform:
   - {fileID: 826756116}
   m_Father: {fileID: 1408324294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 238.67786}
-  m_SizeDelta: {x: 0, y: 477.3556}
+  m_SizeDelta: {x: 906, y: 477.3556}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1460950031
 MonoBehaviour:
@@ -1793,10 +1793,10 @@ RectTransform:
   - {fileID: 619608369}
   m_Father: {fileID: 1408324294}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 590.2545}
+  m_SizeDelta: {x: 906, y: 590.2545}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1778872299
 MonoBehaviour:
