@@ -56,6 +56,8 @@ public class TimelineManager : MonoBehaviour
         {
             // set story-variable
             story = storyObject;
+            // Start the music
+            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null);
             // depending on the chosen storyline, play the intro to the story
             switch (storyObject.storyID)
             {

@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
     
     // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
-    public static GameManager gm;       // static instance of the gamemanager
+    public static GameManager gm;       // static sm of the gamemanager
     private SceneController sc;
     public NotebookData notebookData;
 
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     #endregion
     
     /// <summary>
-    /// When loaded, make a static instance of this class so it can be reached from other places.
+    /// When loaded, make a static sm of this class so it can be reached from other places.
     /// Also make the toolbox persistent.
     /// </summary>
     private void Awake()
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
     }
-    
+
     /// <summary>
     /// Starts the game.
     /// If a story is passed along, starts a new game with that story.
@@ -152,6 +152,8 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -165,6 +167,8 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
     
@@ -537,6 +541,10 @@ public class GameManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
+        // Switch the music
+        // TODO: Switch music based on gamestate?
+        SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null);
+        
         gameState = GameState.Epilogue;
         // Get the epilogue dialogue.
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
