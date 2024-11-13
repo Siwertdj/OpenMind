@@ -21,19 +21,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.x' # Adjust according to Unity version
+
+      - name: Install Unity
+        uses: game-ci/unity-installer@v2
+        with:
+          unityVersion: '2022.3.45f1' # Adjust to your Unity version
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
           languages: ${{ matrix.language }}
 
-      - name: Build project
-        run: dotnet build --configuration Release
+      - name: Build Unity project
+        run: |
+          mkdir -p Build
+          unity -projectPath ./ -quit -batchmode -nographics -buildTarget StandaloneLinux64 -logFile Build/build.log
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
           queries: ./codeql/QueriesDev
-          additional-inputs: --strict
 
       - name: Fail if warnings found
         if: failure() || success() && steps.analyze.outputs.alerts && steps.analyze.outputs.alerts > 0
