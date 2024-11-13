@@ -200,8 +200,8 @@ public class CharacterInstance
         else
         {
             // In a normal game loop, this should never occur
-            Debug.LogError("GetRandomTrait(), but there are no more traits remaining");
-
+            Debug.LogError("GetRandomTrait(), but there are no more traits remaining. " +
+                           "Game lasted to long/ character needs more questions");
             return null;
         }
     }

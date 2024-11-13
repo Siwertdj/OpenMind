@@ -55,7 +55,10 @@ public class SpeakingObject : DialogueObject
 
         // If no response is given, terminate dialogue
         if (Responses.Count <= 0)
+        {
+            Debug.LogError("There was no response given");
             Responses.Add(new TerminateDialogueObject());
+        }
     }
 }
 

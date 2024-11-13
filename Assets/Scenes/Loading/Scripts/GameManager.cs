@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
+
 /// <summary>
 /// The manager for the entire game, where most of the magic happens.
 /// instances of this class can be passed to all other classes.
@@ -508,7 +509,6 @@ public class GameManager : MonoBehaviour
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
-                    Debug.Log("transition from game loss to npcselect");
                     await sc.TransitionScene(
                         SceneController.SceneName.GameOverScene, 
                         SceneController.SceneName.NPCSelectScene, 
