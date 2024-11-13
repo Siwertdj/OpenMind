@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Youssef
   id: 5
-  avatar: {fileID: 21300000, guid: 09070e3d2cde81743bbe14a583b1f86a, type: 3}
+  avatar: {fileID: 21300000, guid: 21c39cf450f816b4c8f34c68d76e3670, type: 3}
   voicePitch: 1.2
   answers:
   - question: 3
@@ -57,6 +57,22 @@ MonoBehaviour:
     - He wanted me to be muslim, like him.
     trait:
     - I am not religious.
+  - question: 10
+    answer:
+    - I went to barber school and I'm currently employed as a barber.
+    trait:
+    - I am a barber.
+  - question: 20
+    answer:
+    - I don't eat pork, but because of any religious reasons.
+    - I just don't like the taste.
+    trait:
+    - I don't eat pork.
+  - question: 15
+    answer:
+    - I'm very impatient.
+    trait:
+    - I am impatient.
   greetings:
   - lines:
     - Oh, hi there!

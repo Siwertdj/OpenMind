@@ -28,7 +28,7 @@ MonoBehaviour:
     - I am gay,
     - I have a partner and we live together in an apartment.
     trait:
-    - very zzzzz
+    - I am gay.
   - question: 6
     answer:
     - I think religion is a big problem.
@@ -65,6 +65,21 @@ MonoBehaviour:
     - Always being on time is also very important to me.
     trait:
     - I follow a lot of Christian values.
+  - question: 19
+    answer:
+    - I would quit my job and the first thing I would do is travel.
+    - I would love to go to South-Africa with my partner.
+    - After that I would probably look for a job again, purely for fun though.
+    trait:
+    - If I won the lottery I would quit my job a travel through South-Africa with
+      my partner.
+  - question: 3
+    answer:
+    - I used to look up to some people, but that has stopped recently.
+    - I do still have a lot of respect for selfmade people,
+    - the opposite of nepobabies.
+    trait:
+    - I don't really look up to anyone anymore.
   greetings:
   - lines:
     - Hello!

@@ -25,9 +25,16 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    public bool InDialogue { get; private set; } = false; // Is there dialogue on the screen?
+    /// <summary>
+    /// Is there dialogue currently on the screen?
+    /// </summary>
+    public bool InDialogue { get; private set; } = false;
 
-    private bool isOutputting = false; // Is dialogue currently being written?
+    /// <summary>
+    /// Is dialogue currently being written?
+    /// </summary>
+    public bool IsOutputting { get; private set; } = false;
+
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
     private string currentSentence = "";
@@ -39,6 +46,9 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     void Awake()
     {
+        if (text == null)
+            return;
+
         text.enableAutoSizing = false;
         text.fontSize = 40;
         audioSource = GetComponent<AudioSource>();
@@ -51,14 +61,40 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="pitch">The pitch of the characters voice.</param>
     public void WriteDialogue(List<string> output, float pitch = 1)
     {
-        if (!isOutputting) // Don't start writing something new if something is already being written
+        if (!IsOutputting) // Don't start writing something new if something is already being written
         {
             dialogueIndex = 0;
-            audioSource.pitch = pitch;
+            if (audioEnabled && audioSource != null)
+                audioSource.pitch = pitch;
 
             InDialogue = true;
             currentDialogue = output;
             WriteSentence(output[dialogueIndex]);
+        }
+    }
+
+    /// <summary>
+    /// An overload of WriteDialogue() for single lines.
+    /// </summary>
+    /// <param name="output">The line that is written</param>
+    /// <param name="pitch">The pitch of the characters voice.</param>
+    public void WriteDialogue(string output, float pitch = 1)
+    {
+        // Convert the output to a list of strings
+        // and then execute the WriteDialogue() function
+        WriteDialogue(new List<string> { output }, pitch);
+    }
+
+    /// <summary>
+    /// Immediately stops writing new dialogue to the screen.
+    /// Does <b>not</b> skip dialogue or do anything other than stopping the writing coroutine.
+    /// </summary>
+    public void CancelWriting()
+    {
+        if (IsOutputting)
+        {
+            IsOutputting = false;
+            StopCoroutine(outputCoroutine);
         }
     }
 
@@ -68,9 +104,9 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="output">The current sentence which needs to be written</param>
     private void WriteSentence(string output)
     {
-        if (!isOutputting)
+        if (!IsOutputting)
         {
-            isOutputting = true;
+            IsOutputting = true;
             currentSentence = output;
             outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
         }
@@ -82,20 +118,16 @@ public class DialogueAnimator : MonoBehaviour
     public void SkipDialogue()
     {
         // Don't do anything if the game is paused
-        if (GameManager.gm.IsPaused)
-            return;
-
-        // Don't do anything if the player clicked a UI element
-        if (EventSystem.current.IsPointerOverGameObject(0))
+        if (GameManager.gm?.IsPaused == true)
             return;
 
         if (!InDialogue)
             return;
 
-        if (isOutputting)
+        if (IsOutputting)
         {
             // Write full sentence and then stop writing
-            isOutputting = false;
+            IsOutputting = false;
             StopCoroutine(outputCoroutine);
             text.text = currentSentence;
             dialogueIndex++;
@@ -126,10 +158,11 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="output">The text that needs to be written</param>
     /// <param name="stringIndex">The index of the letter that is being written</param>
     /// <returns></returns>
-    IEnumerator WritingAnimation(string output, int stringIndex)
+    private IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // Don't write if the game is paused
-        while (GameManager.gm.IsPaused)
+        // '?' is used to make sure there is already an instance of the GameManager
+        while (GameManager.gm?.IsPaused == true) 
             yield return null;
 
         // If a new sentence is started, first clear the old sentence
@@ -141,7 +174,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Write the current letter
             text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled)
+            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled && audioSource != null)
                 audioSource.Play();
 
             // Wait and continue with next letter
@@ -151,7 +184,7 @@ public class DialogueAnimator : MonoBehaviour
         else
         {
             // If sentence is finished, stop outputting
-            isOutputting = false;
+            IsOutputting = false;
             dialogueIndex++;
 
             // If there are more sentences, start writing the next sentence after s seconds
@@ -167,4 +200,21 @@ public class DialogueAnimator : MonoBehaviour
             }
         }
     }
+
+#region Test Variables
+#if UNITY_INCLUDE_TESTS
+    public float Test_DelayInSeconds
+    { 
+        get { return delayInSeconds; }
+        set { delayInSeconds = value; } 
+    }
+
+    public float Test_DelayAfterSentence
+    {
+        get { return delayAfterSentence; }
+    }
+
+    public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+#endif
+#endregion
 }

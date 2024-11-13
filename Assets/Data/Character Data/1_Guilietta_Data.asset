@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: GiulIetta
   id: 1
-  avatar: {fileID: 21300000, guid: c6f19b87ad001e2499dea5ad698ef63f, type: 3}
+  avatar: {fileID: 21300000, guid: 5fb663a44d3c43849abb3dcf648b3de3, type: 3}
   voicePitch: 1.5
   answers:
   - question: 15
@@ -49,6 +49,39 @@ MonoBehaviour:
     - a lot of respect for AOC in the US.
     trait:
     - I think the growth of right-wing parties is very scary.
+  - question: 4
+    answer:
+    - I am bisexual. But I'm not in a relationship or anything
+    trait:
+    - I am bisexual.
+  - question: 16
+    answer:
+    - People often don't expect that I'm a bit of an introvert.
+    - I often struggle with socializing.
+    trait:
+    - People are surprised when they hear I'm an introvert.
+  - question: 13
+    answer:
+    - My sister, my roommate and my best friend are all very important to me.
+    - But if I had to choose one person, it would have to be my sister.
+    trait:
+    - My sister is the most important person to me.
+  - question: 19
+    answer:
+    - If I won the lottery I would invest the money in a music career.
+    trait:
+    - If I won the lottery I would invest the money in a music career.
+  - question: 19
+    answer:
+    - If I won the lottery I would invest the money in a music career.
+    trait:
+    - If I won the lottery I would invest the money in a music career.
+  - question: 18
+    answer:
+    - I think we should invest more money into education.
+    - There's no better investment than to invest in the future of your country.
+    trait:
+    - We should invest more money into education.
   greetings:
   - lines:
     - Oh, hi!
