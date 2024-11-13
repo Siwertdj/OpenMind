@@ -78,4 +78,5 @@ MonoBehaviour:
     trait:
     - If I won the lottery I would buy myself a big house and a small goat.
   greetings:
-  - lines: []
+  - lines:
+    - Hey hey!

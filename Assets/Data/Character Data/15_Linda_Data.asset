@@ -70,4 +70,6 @@ MonoBehaviour:
     - "I\u2019m super jealous of people with a lot of musical and artistic talent.  "
     trait:
     - I'm very jealous of people with a lot of talent.
-  greetings: []
+  greetings:
+  - lines:
+    - Oh, hello there.

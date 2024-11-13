@@ -83,4 +83,6 @@ MonoBehaviour:
       tolerating this.
     trait:
     - I think the occupation of Palestinian territory is a big issue.
-  greetings: []
+  greetings:
+  - lines:
+    - Hi there!
