@@ -20,8 +20,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         // When the menu is first opened, we run this.
         otherMenuOverlay = GameObject.FindGameObjectWithTag("MenuOverlay");
-        // If its not null, we set it to inactive
-        otherMenuOverlay?.SetActive(false);
     }
 
     /// <summary>
@@ -53,9 +51,19 @@ public class SettingsMenuManager : MonoBehaviour
     /// </summary>
     public void ExitSettings()
     {
-        // If the othermenuoverlay is not null, we set it back to 'active'
-        otherMenuOverlay?.SetActive(true);
-        SceneManager.UnloadSceneAsync("SettingsScene");
+        // If a scenecontroller exists, we exit the settings using the transition-graph.
+        if (SceneController.sc != null)
+        {
+            // '_ =' throws away the await
+            _ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
+                SceneController.SceneName.GameMenuScene,
+                SceneController.TransitionType.Unload);
+        }
+        // otherwise, we use the built-in SceneManager to unload.
+        else
+        {
+            SceneManager.UnloadSceneAsync("SettingsScene");
+        }
     }
     
     /// <summary>

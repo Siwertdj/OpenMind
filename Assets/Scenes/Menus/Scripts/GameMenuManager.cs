@@ -7,18 +7,35 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public void ReturnToGame()
+    /// <summary>
+    /// Closes the GameMenu-scene, and calls the UIManager.CloseMenu()-method.
+    /// </summary>
+    public async void ReturnToGame()
     {
+        // Close the GameMenu, and return to the active scene ( Dialogue or NPCSelect),
+        // which we choose by getting the activescene. 
+        // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
+        // transition.
+        await SceneController.sc.TransitionScene(
+            SceneController.SceneName.GameMenuScene, 
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()), 
+            SceneController.TransitionType.Unload);
         SceneManager.UnloadSceneAsync("GameMenuScene");
         
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
     }
 
+    /// <summary>
+    /// Calls Save.SaveGame() to save the game.
+    /// </summary>
     public void SaveGame()
     {
         Save.Saver.SaveGame();
     }
 
+    /// <summary>
+    /// Calls Load.LoadGame() to load the game, then calls ReturnToGame() to close the GameMenu.
+    /// </summary>
     public void LoadGame()
     {
         // Load Game
@@ -27,12 +44,22 @@ public class GameMenuManager : MonoBehaviour
         ReturnToGame();
     }
 
+    /// <summary>
+    /// Additively loads the SettingsMenu-scene
+    /// </summary>
     public void OpenSettings()
     {
         // Load SettingsMenu-scene, so it loads on top of all other scenes.
-        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
+        // _ = throws away the await so we dont get an error
+        _ = SceneController.sc.TransitionScene(
+            SceneController.SceneName.GameMenuScene, 
+            SceneController.SceneName.SettingsScene, 
+            SceneController.TransitionType.Additive);
     }
 
+    /// <summary>
+    /// Single-Loads the StartScreen-scene. THis unloads all additive scenes, and destroys the DDOL-objects.
+    /// </summary>
     public void ReturnToMainMenu()
     {
         SceneManager.LoadScene("StartScreenScene");
