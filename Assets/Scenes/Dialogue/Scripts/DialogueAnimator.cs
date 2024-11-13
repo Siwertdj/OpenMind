@@ -25,15 +25,8 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
 
-    /// <summary>
-    /// Is there dialogue currently on the screen?
-    /// </summary>
-    public bool InDialogue { get; private set; } = false;
-
-    /// <summary>
-    /// Is dialogue currently being written?
-    /// </summary>
-    public bool IsOutputting { get; private set; } = false;
+    public bool InDialogue { get; private set; } = false; // Is there dialogue on the screen?
+    public bool IsOutputting { get; private set; } = false; // Is dialogue currently being written?
 
     private List<string> currentDialogue;
     private int dialogueIndex = 0;
@@ -46,9 +39,6 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        if (text == null)
-            return;
-
         text.enableAutoSizing = false;
         text.fontSize = 40;
         audioSource = GetComponent<AudioSource>();
@@ -158,7 +148,7 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="output">The text that needs to be written</param>
     /// <param name="stringIndex">The index of the letter that is being written</param>
     /// <returns></returns>
-    private IEnumerator WritingAnimation(string output, int stringIndex)
+    IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // Don't write if the game is paused
         // '?' is used to make sure there is already an instance of the GameManager
@@ -200,21 +190,4 @@ public class DialogueAnimator : MonoBehaviour
             }
         }
     }
-
-#region Test Variables
-#if UNITY_INCLUDE_TESTS
-    public float Test_DelayInSeconds
-    { 
-        get { return delayInSeconds; }
-        set { delayInSeconds = value; } 
-    }
-
-    public float Test_DelayAfterSentence
-    {
-        get { return delayAfterSentence; }
-    }
-
-    public void Test_SetTextComponent(TMP_Text text) => this.text = text;
-#endif
-#endregion
 }

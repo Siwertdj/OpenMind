@@ -1,4 +1,4 @@
-﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -31,6 +31,8 @@ public class SceneController : MonoBehaviour
         GameWinScene,
         Loading,
         NotebookScene,
+        PrologueScene,
+        EpilogueScene
     }
 
     /// <summary>
@@ -70,7 +72,6 @@ public class SceneController : MonoBehaviour
     {
         //Get the story scene
         Scene loadingScene = SceneManager.GetSceneByName("Loading");
-        
         // Unload all loaded scenes that are not the story scene
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
@@ -118,7 +119,6 @@ public class SceneController : MonoBehaviour
         //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWinScene(T)
         const string arrowSeparator = " --> ";
         const string sceneSeparator = ", ";
-        
         // Check the scene before the arrowSeparator is correctly written.
         for(int i = 0; i < fileGraphContentLines.Length; i++)
         {
@@ -134,7 +134,6 @@ public class SceneController : MonoBehaviour
             }
             sceneToID.Add(sceneName, sceneToID.Count);
         }
-        
         // Check if all scene names are correctly written.
         for (int i = 0; i < fileGraphContentLines.Length; i++)
         {
@@ -154,7 +153,6 @@ public class SceneController : MonoBehaviour
                     validReading = false;
                     break;
                 }
-                
                 // Set the correct transitiontype
                 bool found = false;
                 char trans = to[^2];
@@ -167,7 +165,6 @@ public class SceneController : MonoBehaviour
                         break;
                     }
                 }
-                
                 if (!found)
                 {
                     Debug.LogError($"The transition with the letter {trans} on line {i} of the scene graph file " +
@@ -177,7 +174,6 @@ public class SceneController : MonoBehaviour
                 }
             }
         }
-        
         // Empty sceneGraph and sceneToID if the transition is invalid.
         if (!validReading)
         {
@@ -227,7 +223,6 @@ public class SceneController : MonoBehaviour
 
         // Start the coroutine
         StartCoroutine(LoadSceneCoroutine(targetScene, tcs));
-        
         // Return the task that will complete when the coroutine ends
         return tcs.Task;
     }
@@ -275,14 +270,12 @@ public class SceneController : MonoBehaviour
                            "\nPlease add it to the transition graph.");
             return;
         }
-        
         if (!sceneToID.ContainsKey(targetScene))
         {
             Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. " +
                            "\nPlease add it to the transition graph.");
             return;
         }
-        
         //cannot load from an unloaded scene
         if (!SceneManager.GetSceneByName(currentScene).isLoaded)
         {
@@ -323,7 +316,6 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// Function to load the notebook.
     /// </summary>
-    // this method is not tested
     public void ToggleNotebookScene(Button button)
     {
         Debug.Log($"Button: {button.gameObject.name}");
