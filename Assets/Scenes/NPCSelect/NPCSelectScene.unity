@@ -851,10 +851,12 @@ MonoBehaviour:
   textBox: {fileID: 1391645433}
   tutorialText:
   - You can ask questions to each character in this room.
-  - 'Gathered information will be written in your notebook. You can write in your
-    notebook too. '
-  - 'You can enter the notebook by clicking on the notebook icon. Just click this
-    icon again to exit the notebook. '
+  - 'Gathered information will be written in your notebook. '
+  - You can enter the notebook by clicking on the notebook icon. Try it!
+  - 'To find gathered information, just go to the tab of the character and click
+    on ''log''. '
+  - 'You can also write down your own thoughts. '
+  - Now exit the notebook by clicking the notebook icon again.
   - You are now ready to talk to the characters. Just click one of them to start
     a conversation. Good luck!
   text: {fileID: 1383253168}

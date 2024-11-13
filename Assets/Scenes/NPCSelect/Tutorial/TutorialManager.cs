@@ -18,7 +18,7 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private string[] tutorialText;  // Contains the text that will be shown. 
     [SerializeField] private TMP_Text text;          // The gameobject that will show the text on the screen. 
     [SerializeField] private     TMP_Text question;  // The question that is shown on top of the screen in the NPC select scene. 
-    private int      textIndex = 0;                  // Keeps track of which text to show.  
+    private int textIndex;                 // Keeps track of which text to show.  
     
     // Variables for showing the objective of the game. 
     [SerializeField] private GameObject[] objectives;
@@ -33,6 +33,7 @@ public class TutorialManager : MonoBehaviour
         tutorialCanvas.gameObject.SetActive(true);
         question.gameObject.SetActive(false);   // Hide the question when the tutorial is playing, to keep the screen more clear. 
         TutorialTimeline.time = 0;              // When the button is clicked again, the tutorial has to play from the start. 
+        textIndex = 0;
         TutorialTimeline.Play();
         helpButton.gameObject.SetActive(false); // When tutorial is playing, hide the help button. 
     }
@@ -90,6 +91,7 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void ShowObjective()
     {
+        text.gameObject.SetActive(false); // Make sure the tutorialtext is hidden. 
         if (!objectiveShown)
         {
             PauseTutorial();
@@ -97,5 +99,6 @@ public class TutorialManager : MonoBehaviour
             objective.gameObject.SetActive(true);
             objectiveShown = true; // Make sure the objective is not shown again when the player clicks the 'help' button. 
         }
+        // This method does nothing when the objective does not need to be shown. 
     }
 }
