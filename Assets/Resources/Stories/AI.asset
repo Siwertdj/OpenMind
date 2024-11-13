@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Lost Paper
   storyID: 2
-  dialogueBackground: {fileID: 8050863395665748733, guid: a7b37de7cbe05b643a7dae0283ff57ee, type: 3}
-  hintBackground: {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}
-  epilogueBackground: {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
-  victimDialogue: went home..
+  dialogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  hintBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  epilogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  victimDialogue: has gone home.
   hintDialogue: The computer calculated new data about the culprit..
   numberOfCharacters: 4
   numQuestions: 1

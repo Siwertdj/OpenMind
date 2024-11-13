@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Jurgen
   id: 12
-  avatar: {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
+  avatar: {fileID: 21300000, guid: 7b7559551154c0d4ca9b20b405052884, type: 3}
   voicePitch: 1
   answers: []
   greetings: []

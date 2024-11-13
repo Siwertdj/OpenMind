@@ -28,7 +28,7 @@ MonoBehaviour:
     - I am gay,
     - I have a partner and we live together in an apartment.
     trait:
-    - I am gay and I have a partner.
+    - I am gay.
   - question: 6
     answer:
     - I think religion is a big problem.
