@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Gijs
   id: 19
-  avatar: {fileID: 0}
+  avatar: {fileID: 21300000, guid: 17ec7191dde9b4e4d927574a2f227588, type: 3}
   voicePitch: 1
   answers:
   - question: 1
