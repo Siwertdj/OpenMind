@@ -55,6 +55,16 @@ MonoBehaviour:
     - other house to rent as an investment.
     trait:
     - If I won the lottery I would buy a house.
+  - question: 11
+    answer:
+    - I think growth and helping others are the two biggest values I follow.
+    trait:
+    - I think personal growth and helping others are important values.
+  - question: 3
+    answer:
+    - Any person who is successful to be honest.
+    trait:
+    - I look up to people who are successful.
   greetings:
   - lines:
     - Yo!
