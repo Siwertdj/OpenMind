@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,30 +9,28 @@ using TMPro;
 using System;
 using UnityEngine.Events;
 
+/// <summary>
+/// The manager for the dialogue scene
+/// </summary>
 public class DialogueManager : MonoBehaviour
 {
     [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
-    [SerializeField] private GameObject inputField;
 
     [Header("Fields")]
     [SerializeField] private GameObject dialogueField;
     [SerializeField] private GameObject questionsField;
+    [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject buttonPrefab;
 
-    [Header("Visuals")]
-    [SerializeField] private SpriteRenderer avatar;
-
     [Header("Events")]
     public GameEvent onEndDialogue;
 
-    public string inputText;
-
-    // Start is called before the first frame update
+    [NonSerialized] public string inputText;
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;
@@ -51,15 +51,16 @@ public class DialogueManager : MonoBehaviour
         {
             currentObject = dialogueObject;
         }
+
         // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
             currentRecipient = recipient;
             characterNameField.SetActive(true);
         } 
+        // No dialogue recipient given, so we remove the character name field
         else
         {
-            // No dialogue recipient given, so we remove the character name field
             characterNameField.SetActive(false);
         }
         
@@ -68,14 +69,6 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Check for mouse input to skip current dialogue
-        if (Input.GetMouseButtonDown(0) && animator.InDialogue && !EventSystem.current.IsPointerOverGameObject())
-            animator.SkipDialogue();
     }
 
     /// <summary>
@@ -90,8 +83,15 @@ public class DialogueManager : MonoBehaviour
         // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
         if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
             CreateOpenQuestion();
-        
-        // Execute next dialogue object
+
+        ExecuteNextObject();
+    }
+
+    /// <summary>
+    /// Gets the current object's first response and executes it.
+    /// </summary>
+    private void ExecuteNextObject()
+    {
         currentObject = currentObject.Responses[0];
         currentObject.Execute();
     }
@@ -99,8 +99,8 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Write the given dialogue to the screen using the dialogue animator.
     /// </summary>
-    /// <param name="dialogue"></param>
-    /// <param name="pitch"></param>
+    /// <param name="dialogue">The text that needs to be written</param>
+    /// <param name="pitch">The pitch of the character</param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
         // Enable the dialogue field
@@ -121,7 +121,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Replaces the current dialogue background with the given background.
     /// </summary>
-    /// <param name="newBackground"></param>
+    /// <param name="newBackground">The background that will replace the current background.</param>
     public void ReplaceBackground(GameObject[] newBackground)
     {
         Transform parent = backgroundField.transform;
@@ -131,15 +131,17 @@ public class DialogueManager : MonoBehaviour
             Destroy(child.gameObject);
 
         // Instantiate new background
-        foreach (GameObject element in newBackground)
-            Instantiate(element).transform.parent = parent;
-
+        foreach (GameObject prefab in newBackground)
+        {
+            var image = Instantiate(prefab).GetComponent<Image>();
+            image.rectTransform.SetParent(parent, false);
+        }        
     }
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
-    /// <param name="questionObject"></param>
+    /// <param name="questionObject">A <see cref="QuestionObject"/> containing the questions and responses</param>
     public void InstantiatePromptButtons(QuestionObject questionObject)
     {
         // Instantiate button containing each response
@@ -174,9 +176,10 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Executed when a question button is pressed.
     /// </summary>
-    /// <param name="response"></param>
+    /// <param name="response">A <see cref="ResponseObject"/> containing the response</param>
     public void OnButtonClick(ResponseObject response)
     {
+        // Remove buttons from screen
         DestroyButtons();
 
         // Remove questions field
@@ -194,18 +197,6 @@ public class DialogueManager : MonoBehaviour
     {
         // Enable the input field.
         inputField.SetActive(true);
-        
-        // Create the enter button.
-        Button enterButton = Instantiate(buttonPrefab, inputField.transform).GetComponent<Button>();
-        enterButton.name = "enterButton";
-        enterButton.gameObject.tag = "Button";
-        enterButton.transform.position = inputField.transform.position + new Vector3(0f, -300f, 0f);
-
-        TMP_Text buttonText = enterButton.GetComponentInChildren<TMP_Text>();
-        buttonText.text = "Enter";
-        buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
-        enterButton.onClick.AddListener(() => AnswerOpenQuestion());
     }
     
     /// <summary>
@@ -227,24 +218,21 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Continues the dialogue after answering the open question.
     /// </summary>
-    private void AnswerOpenQuestion()
-    {
-        DestroyButtons();
-        
+    public void AnswerOpenQuestion()
+    {        
         // Assign the text from the inputField to inputText.
         // TODO: can write the answers from the open questions to somewhere.
-        inputText = inputField.GetComponent<TMP_InputField>().text;
+        inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
         
         // Disable the input field.
         inputField.SetActive(false);
         
         // Reset the text from the input field.
-        inputField.GetComponentInChildren<TMP_InputField>().text = "";
-        
-        // Go to the next part of the dialogue.
-        currentObject = currentObject.Responses[0];
-        currentObject.Execute();
+        inputText = "";
+
+        ExecuteNextObject();
     }
+    
     /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
@@ -301,23 +289,36 @@ public class DialogueManager : MonoBehaviour
             Destroy(buttons[i]);
     }
     
+    /// <summary>
+    /// Gets the text for the buttons that prompt specific questions.
+    /// </summary>
+    /// <param name="questionType">The type of question that is being prompted.</param>
+    /// <returns></returns>
     public string GetPromptText(Question questionType)
     {
         return questionType switch
         {
-            Question.Name => "What is your name?",
+            Question.Name => "What's your name?",
             Question.Age => "How old are you?",
+            Question.LifeGeneral => "How's life?",
+            Question.Inspiration => "Is there anyone that inspires you?",
+            Question.Sexuality => "What is your sexual orientation?",
             Question.Wellbeing => "How are you doing?",
             Question.Political => "What are your political thoughts?",
             Question.Personality => "Can you describe what your personality is like?",
             Question.Hobby => "What are some of your hobbies?",
             Question.CulturalBackground => "What is your cultural background?",
+            Question.Religion => "Are you religious?",
             Question.Education => "What is your education level?",
             Question.CoreValues => "What core values are the most important to you?",
             Question.ImportantPeople => "Who are the most important people in your life?",
             Question.PositiveTrait => "What do you think is your best trait?",
             Question.NegativeTrait => "What is a bad trait you may have?",
             Question.OddTrait => "Do you have any odd traits?",
+            Question.SocialIssues => "What social issues are you interested in?",
+            Question.EducationSystem => "What is you opinion on the Dutch school system?",
+            Question.Lottery => "If you win the lottery, what would you do?",
+            Question.Diet => "Do you have any dietary restrictions?",
             _ => "",
         };
     }
@@ -330,15 +331,23 @@ public enum Question
 {
     Name,
     Age,
+    LifeGeneral,
+    Inspiration,
+    Sexuality,
     Wellbeing,
     Political,
     Hobby,
     CulturalBackground,
+    Religion,
     Education,
     CoreValues,
     Personality,
     ImportantPeople,
     PositiveTrait,
     NegativeTrait,
-    OddTrait
+    OddTrait,
+    SocialIssues,
+    EducationSystem,
+    Lottery,
+    Diet
 }

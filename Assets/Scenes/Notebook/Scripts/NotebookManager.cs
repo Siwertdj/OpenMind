@@ -1,14 +1,15 @@
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.IO;
 using System.Linq;
-using System.Net.Mime;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manager class for the notebook scene.
+/// </summary>
 public class NotebookManager : MonoBehaviour
 {
     public GameObject inputField;
@@ -21,7 +22,9 @@ public class NotebookManager : MonoBehaviour
     private List<Button> buttons;
     private Button selectedButton;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// On startup, go to the personal notes and make sure the correct data is shown
+    /// </summary>
     void Start()
     {
         // close character notes
@@ -43,7 +46,6 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void InitializeCharacterButtons()
     {
-        // get all buttons
         buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
         for (int i = 0; i < buttons.Count; i++)
         {
@@ -62,13 +64,11 @@ public class NotebookManager : MonoBehaviour
     {
         // Save character notes
         SaveNotes();
-        // Close the character inputfield
+        // Close the character tab 
         inputFieldCharacters.SetActive(false);
-        
         // activate input
         inputField.SetActive(true);
         inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-
         // Make button clickable
         ChangeButtons(personalButton);
     }
@@ -80,7 +80,6 @@ public class NotebookManager : MonoBehaviour
     {
         // Save notes
         SaveNotes();
-        
         // Deactivate the personal notes tab if it's opened
         if (inputField.activeInHierarchy)
         {
@@ -90,16 +89,12 @@ public class NotebookManager : MonoBehaviour
         
         // Activate written character notes
         inputFieldCharacters.SetActive(true);
-        
         // Get the character
         currentCharacter = GameManager.gm.currentCharacters[id];
-        
         // Write the notes to the notebook tab
         characterInfo.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
-        
         // Write text to notebook
         inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
-        
         // Make button clickable
         ChangeButtons(buttons[id]);
     }
@@ -109,7 +104,6 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void ToggleCharacterInfo()
     {
-        // Toggle character tab
         characterInfo.SetActive(!characterInfo.activeInHierarchy);
     }
     

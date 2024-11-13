@@ -1,28 +1,30 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// A child of DialogueObject. Executing this object places a text field on the screen, so that the player can answer an open question.
+/// A child of DialogueObject.
+/// Executing this object places a text field on the screen, so that the player can answer an open question.
 /// </summary>
 public class OpenResponseObject : DialogueObject
 {
     // The answer of the open question.
     public string answer = "";
-    public GameObject[] background;
 
-    private List<DialogueObject> _responses = new();
-    public override List<DialogueObject> Responses
-    {
-        get { return _responses; }
-        set { _responses = value; }
-    }
-
+    /// <summary>
+    /// The constructor.
+    /// </summary>
+    /// <param name="background">The background</param>
     public OpenResponseObject(GameObject[] background)
     {
         this.background = background;
     }
 
+    /// <summary>
+    /// Creates on open text field in which the player can type their response
+    /// </summary>
     public override void Execute()
     {
         GameManager gm = GameManager.gm;
