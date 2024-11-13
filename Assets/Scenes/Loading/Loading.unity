@@ -2669,7 +2669,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d02caaa575feddf43978c6e6c2414b5d, type: 2}
   - {fileID: 11400000, guid: 750bd7b7df0d16244881367f8c70eb3e, type: 2}
   - {fileID: 11400000, guid: 99dc439f21b28f14ca3590491e54e8d7, type: 2}
-  avatarPrefab: {fileID: 8871800800996601896, guid: 6433fcf095ca95743b8075d8625dd4f9, type: 3}
+  avatarPrefab: {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   backgroundPrefabs:
   - {fileID: 6762324756176467277, guid: 009fda065baeb9f4886428471291dc69, type: 3}
   - {fileID: 1849295784171257171, guid: 7df205953349ea341963d508810db990, type: 3}

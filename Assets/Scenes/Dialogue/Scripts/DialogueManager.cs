@@ -131,9 +131,11 @@ public class DialogueManager : MonoBehaviour
             Destroy(child.gameObject);
 
         // Instantiate new background
-        foreach (GameObject element in newBackground)
-            Instantiate(element).transform.parent = parent;
-        
+        foreach (GameObject prefab in newBackground)
+        {
+            var image = Instantiate(prefab).GetComponent<Image>();
+            image.rectTransform.SetParent(parent, false);
+        }        
     }
 
     /// <summary>
@@ -220,13 +222,13 @@ public class DialogueManager : MonoBehaviour
     {        
         // Assign the text from the inputField to inputText.
         // TODO: can write the answers from the open questions to somewhere.
-        inputText = inputField.GetComponent<TMP_InputField>().text;
+        inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
         
         // Disable the input field.
         inputField.SetActive(false);
         
         // Reset the text from the input field.
-        inputField.GetComponentInChildren<TMP_InputField>().text = "";
+        inputText = "";
 
         ExecuteNextObject();
     }

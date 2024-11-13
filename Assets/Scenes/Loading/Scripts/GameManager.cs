@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = System.Random;
 
 /// <summary>
@@ -429,14 +430,17 @@ public class GameManager : MonoBehaviour
     private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
         List<GameObject> background_ = new();
+
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
         background_.Add(background == null ? story.dialogueBackground : background);
 
+        // If a character is given, add that as well
         if (character != null)
         {
-            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
+            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
             background_.Add(avatarPrefab);
         }
+
         return background_.ToArray();
     }
     
