@@ -30,7 +30,6 @@ public class TransitionAnimator : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //Debug.Log("hi2");
         i = this;
     }
     
@@ -79,20 +78,10 @@ public class TransitionAnimator : MonoBehaviour
     /// <param name="tcs"></param>
     private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
     {
-        float seconds = 0;
-        // Wait for the animator to update clip
-        yield return new WaitUntil(() =>
-        {
-            var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
-            if (clipInfo.Length == 0)
-                return false;
-            
-            seconds = clipInfo[0].clip.length;
-            return true;
-        });
-        
+        yield return null; // Wait for the animator to update clip
+
         // Await the length of the animation
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
 
         tcs.SetResult(true);
     }

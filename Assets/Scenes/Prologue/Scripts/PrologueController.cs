@@ -151,7 +151,7 @@ public class CutsceneController : MonoBehaviour
     public void OnToggleValueChanged(bool isOn)
     {
         imageToggler.isOn = isOn;  
-        checkmarkTransform.gameObject.SetActive(isOn);
+        checkmarkTransform.GameObject().SetActive(isOn);
         if (isOn) illusionImage.sprite = illusions[0];
         else
         {

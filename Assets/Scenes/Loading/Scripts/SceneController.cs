@@ -44,7 +44,7 @@ public class SceneController : MonoBehaviour
         Unload
     }
     
-    // A static instance of this class
+    // A static sm of this class
     public static SceneController sc;
 
     //read from a file
@@ -131,7 +131,6 @@ public class SceneController : MonoBehaviour
             }
             sceneToID.Add(sceneName, sceneToID.Count);
         }
-        
         // Check if all scene names are correctly written.
         for (int i = 0; i < fileGraphContentLines.Length; i++)
         {
@@ -150,7 +149,6 @@ public class SceneController : MonoBehaviour
                     validReading = false;
                     break;
                 }
-                
                 // Set the correct transitiontype
                 bool found = false;
                 char trans = to[^2];

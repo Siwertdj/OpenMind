@@ -65,8 +65,11 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime)
     {
-        // Only if the clip is not null do we try to play it. We ignore null-audioclips.
-        if (newClip != null)
+        if (newClip == null)
+        {
+            Debug.LogError("Passed audio clip is null, continuing to play current clip.");
+        }
+        else
         {
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;

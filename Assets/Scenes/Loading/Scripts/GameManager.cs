@@ -6,7 +6,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using Random = System.Random;
 
 /// <summary>
@@ -35,9 +34,7 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    
-    public StoryObject
-        story { get; private set; } // Contains information about the current game pertaining to the story
+    public StoryObject story; // Contains information about the current game pertaining to the story
     
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
@@ -120,34 +117,29 @@ public class GameManager : MonoBehaviour
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
-        List<CharacterInstance> newCurrentCharacters = characters.FindAll(c => 
+        currentCharacters.AddRange(characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
             saveData.inactiveCharacterIds.Contains(c.id)).
-                Select(c => new CharacterInstance(c)).ToList();
-        
-        //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
-        //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
-        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
-            currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
-        
+                Select(c => new CharacterInstance(c)));
 
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            
-            c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
+            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
         //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = saveData.characterNotes.Select(cn =>
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
+        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }).ToDictionary(pair => pair.Key, pair => pair.Value);
+        }));
         notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
         //unload all scenes
@@ -431,17 +423,14 @@ public class GameManager : MonoBehaviour
     private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
         List<GameObject> background_ = new();
-
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
         background_.Add(background == null ? story.dialogueBackground : background);
 
-        // If a character is given, add that as well
         if (character != null)
         {
-            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
+            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
             background_.Add(avatarPrefab);
         }
-
         return background_.ToArray();
     }
     
@@ -512,7 +501,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {

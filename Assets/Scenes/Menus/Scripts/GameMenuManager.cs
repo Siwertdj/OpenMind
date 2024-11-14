@@ -12,27 +12,13 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public async void ReturnToGame()
     {
-        // set activescene to DialogueScene
-        Scene activeScene = SceneManager.GetSceneByName("DialogueScene");
-        // If this is not loaded, set NPCSelectScene to the active scene.
-        if (!activeScene.isLoaded)
-        {
-            activeScene = SceneManager.GetSceneByName("NPCSelectScene");
-            // If this is also not loaded, throw error and return.
-            if (!activeScene.isLoaded)
-            {
-                Debug.LogError("No valid scene active for scene-transition.");
-                return;
-            }
-        }
-
         // Close the GameMenu, and return to the active scene ( Dialogue or NPCSelect),
         // which we choose by getting the activescene. 
         // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
-            SceneController.sc.GetSceneName(activeScene), 
+            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()), 
             SceneController.TransitionType.Unload);
         SceneManager.UnloadSceneAsync("GameMenuScene");
         
