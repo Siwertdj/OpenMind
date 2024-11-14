@@ -1,4 +1,5 @@
-﻿using Codice.Client.Common;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,10 +14,15 @@ public class NPCSelectScroller : MonoBehaviour
     private bool isNavigating = false;
     private Coroutine scrollCoroutine;
 
+    // References to the navigation buttons
     private GameObject navButtonLeft;
     private GameObject navButtonRight;
 
     private SwipeDetector swipeDetector;
+    
+    /// <summary>
+    /// The character which is currently selected in the scroller.
+    /// </summary>
     public CharacterInstance SelectedCharacter { get; private set; }
 
     [SerializeField] private float scrollDuration;
@@ -36,7 +42,7 @@ public class NPCSelectScroller : MonoBehaviour
             // Set selected character
             SelectedCharacter = children[_selectedChild].GetComponentInChildren<SelectOption>().character;
 
-            // Remove correct button if the child is on either edge
+            // Remove button if the child is on either edge
             if (_selectedChild == 0)
             {
                 navButtonLeft.SetActive(false);
@@ -58,6 +64,7 @@ public class NPCSelectScroller : MonoBehaviour
         swipeDetector.OnSwipeLeft.AddListener(NavigateRight);
         swipeDetector.OnSwipeRight.AddListener(NavigateLeft);
 
+        // Get references to the nav button objects
         try
         {
             navButtonLeft = transform.GetChild(1).gameObject;
@@ -71,6 +78,7 @@ public class NPCSelectScroller : MonoBehaviour
                 e);
         }
 
+        // Get reference to scroll background
         scrollable = transform.GetChild(0);
 
         // Populate list of children
@@ -80,10 +88,12 @@ public class NPCSelectScroller : MonoBehaviour
             children[i] = scrollable.GetChild(i);
 
         selectedChild = children.Length / 2;
-        StartCoroutine(InstantNavigate());
+        StartCoroutine(InstantNavigate(selectedChild));
     }
 
-    //TODO: Should be replaced by a swiping motion instead of buttons
+    /// <summary>
+    /// Smoothly move one child to the left.
+    /// </summary>
     public void NavigateLeft()
     {
         if (selectedChild > 0)
@@ -93,6 +103,9 @@ public class NPCSelectScroller : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Smoothly move one child to the right.
+    /// </summary>
     public void NavigateRight()
     {
         if (selectedChild < children.Length - 1)
@@ -102,11 +115,10 @@ public class NPCSelectScroller : MonoBehaviour
         }
     }
 
-    private bool CanNavigate()
-    {
-        return true;
-    }
-
+    /// <summary>
+    /// Navigate to the given child.
+    /// </summary>
+    /// <param name="childIndex">The index of the child to navigate to.</param>
     private void NavigateToChild(int childIndex)
     {
         if (isNavigating)
@@ -115,13 +127,22 @@ public class NPCSelectScroller : MonoBehaviour
         scrollCoroutine = StartCoroutine(NavigationCoroutine(childIndex));
     }
 
-    private IEnumerator InstantNavigate()
+    /// <summary>
+    /// Does the same thing as NavigationCoroutine(), but in a single frame 
+    /// (the same frame in which the coroutine is called).
+    /// </summary>
+    /// <param name="childIndex">The index of the child to navigate to.</param>
+    private IEnumerator InstantNavigate(int childIndex)
     {
         yield return new WaitForEndOfFrame();
-        scrollable.localPosition = GetTargetPos(selectedChild);
+        scrollable.localPosition = GetTargetPos(childIndex);
         OnCharacterSelected.Invoke();
     }
 
+    /// <summary>
+    /// Smoothly move the first child so that the target child is in the center of the screen.
+    /// </summary>
+    /// <param name="childIndex">The index of the child to navigate to.</param>
     private IEnumerator NavigationCoroutine(int childIndex)
     {
         NoCharacterSelected.Invoke();
@@ -132,9 +153,10 @@ public class NPCSelectScroller : MonoBehaviour
         var startPos = scrollable.localPosition;
         var endPos = GetTargetPos(childIndex);
 
+        // This loop containts the actual movement code
         while (time < scrollDuration)
         {
-            time += UnityEngine.Time.deltaTime;
+            time += Time.deltaTime;
 
             // Mathf.SmoothStep makes the "animation" ease in and out
             float t = Mathf.SmoothStep(0, 1, Mathf.Clamp01(time / scrollDuration));
@@ -149,6 +171,11 @@ public class NPCSelectScroller : MonoBehaviour
         isNavigating = false;
     }
 
+    /// <summary>
+    /// Returns the position which the first child needs to have in order to center the target child.
+    /// </summary>
+    /// <param name="childIndex"></param>
+    /// <returns>A Vector3 containing the appropriate x-value.</returns>
     private Vector3 GetTargetPos(int childIndex)
     {
         return new Vector2(

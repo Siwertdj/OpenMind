@@ -1,26 +1,22 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
-using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
 /// </summary>
 public class SelectionManager : MonoBehaviour
 {
-    // Prefab which is used to create SelectOption objects.
+    [Header("Prefabs")]
     [SerializeField] private GameObject optionPrefab;
 
-    // The SelectionSpace object, which has character spaces as children.
+    [Header("References")]
     [SerializeField] private GameButton confirmSelectionButton;
     [SerializeField] private NPCSelectScroller scroller;
+    [SerializeField] private TextMeshProUGUI headerText;
 
-    // The header text at the top of the character selection screen.
-    public TextMeshProUGUI headerText;
-    
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
