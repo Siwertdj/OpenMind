@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Codice.Client.Common;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +9,11 @@ public class NPCSelectScroller : MonoBehaviour
     private Transform scrollable;
     private Transform[] children;
 
+    private bool isNavigating = false;
+    private Coroutine scrollCoroutine;
+
+    [SerializeField] private float scrollDuration;
+
     private int _selectedChild;
     private int selectedChild 
     { 
@@ -14,16 +21,11 @@ public class NPCSelectScroller : MonoBehaviour
         set 
         {
             // Make sure the target value is not too big or small
-            int target = value;
-            target = Mathf.Clamp(target, 0, children.Length - 1);
-            Debug.Log($"target: {target}");
-
-            _selectedChild = target;
+            _selectedChild = Mathf.Clamp(value, 0, children.Length - 1);
         } 
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         scrollable = transform.GetChild(0);
 
@@ -33,30 +35,65 @@ public class NPCSelectScroller : MonoBehaviour
             children[i] = scrollable.GetChild(i);
 
         selectedChild = children.Length / 2;
+        StartCoroutine(InstantNavigate());
+    }
 
-        Debug.Log($"Length of list: {children.Length}");
+    private IEnumerator InstantNavigate()
+    {
+        yield return new WaitForEndOfFrame();
+        scrollable.localPosition = GetTargetPos(selectedChild);
     }
 
     //TODO: Should be replaced by a swiping motion instead of buttons
     public void NavigateLeft()
     {
         selectedChild -= 1;
-        Debug.Log($"Selected child: {selectedChild}");
-        NavigateToChild();
+        NavigateToChild(selectedChild);
     }
 
     public void NavigateRight()
     {
         selectedChild += 1;
-        Debug.Log($"Selected child: {selectedChild}");
-        NavigateToChild();
+        NavigateToChild(selectedChild);
     }
 
-    private void NavigateToChild()
+    private void NavigateToChild(int childIndex)
     {
-        var parentRect = (RectTransform)transform;
-        var offset = parentRect.rect.size / 2 - (Vector2)children[selectedChild].localPosition;
-        Debug.Log($"Offset: {offset}");
-        parentRect.localPosition += (Vector3)offset;
+        if (isNavigating)
+            StopCoroutine(scrollCoroutine);
+
+        scrollCoroutine = StartCoroutine(NavigationCoroutine(childIndex));
+    }
+
+    private IEnumerator NavigationCoroutine(int childIndex)
+    {
+        Debug.Log("Navigating");
+        isNavigating = true;
+        float time = 0;
+
+        var startPos = scrollable.localPosition;
+        var endPos = GetTargetPos(childIndex);
+
+        while (time < scrollDuration)
+        {
+            time += UnityEngine.Time.deltaTime;
+
+            // Mathf.SmoothStep makes the "animation" ease in and out
+            float t = Mathf.SmoothStep(0, 1, Mathf.Clamp01(time / scrollDuration));
+
+            // Vector3.Lerp creates a linear interpolation between the given positions
+            scrollable.localPosition = Vector3.Lerp(startPos, endPos, t);
+
+            yield return null;
+        }
+
+        isNavigating = false;
+    }
+
+    private Vector3 GetTargetPos(int childIndex)
+    {
+        return new Vector2(
+            -children[childIndex].localPosition.x,
+            scrollable.localPosition.y);
     }
 }

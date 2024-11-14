@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -11,12 +11,13 @@ using UnityEngine.UI;
 /// </summary>
 public class GameButton : Button
 {
-    private GameEvent gameEvent;
+    [Header("Game Event")]
+    [SerializeField] private GameEvent gameEvent;
 
     private new void Start()
     {
         // Retrieve gameevent from assets folder to reference
-        gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
+        //gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
         // add method below to listeners of the onclick.
         // This method raises the aforementioned event 
         onClick.AddListener(RaiseEvent);
