@@ -940,7 +940,7 @@ MonoBehaviour:
   text: {fileID: 1804029613}
   delayInSeconds: 0.05
   delayAfterSentence: 1
-  audioEnabled: 1
+  audioEnabled: 0
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,7 +988,7 @@ AudioSource:
   m_GameObject: {fileID: 826756115}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -1143045922744275325, guid: b044907fa2501e8418ab51b6c8622b00, type: 2}
+  OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fd4c3aa0b9a754946a5dd01d1a49a8b2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.1
@@ -1271,9 +1271,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1413766659}
+  - component: {fileID: 1413766662}
   - component: {fileID: 1413766661}
   - component: {fileID: 1413766660}
-  - component: {fileID: 1413766662}
   m_Layer: 5
   m_Name: Skip Dialogue Button
   m_TagString: Untagged
@@ -1347,7 +1347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1413766658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d7b725165a0a5548b9635e051a87dd0, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
