@@ -182,4 +182,10 @@ public class NPCSelectScroller : MonoBehaviour
             -children[childIndex].localPosition.x,
             scrollable.localPosition.y);
     }
+
+#region Test Variables
+#if UNITY_INCLUDE_TESTS
+    public Vector3 GetTargetPos_Test(int childIndex) => GetTargetPos(childIndex);
+#endif
+#endregion
 }
