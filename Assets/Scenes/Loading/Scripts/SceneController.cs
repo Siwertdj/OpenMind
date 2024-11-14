@@ -336,12 +336,16 @@ public class SceneController : MonoBehaviour
             }
             else
             {
-                throw new Exception();
+                throw new Exception("The NPCSelectScene/DialogueScene is not loaded");
             }
             
+            // Get the SceneName enum from the activeScene.
+            SceneName baseScene = GetSceneName(activeScene);
+            
+            Debug.Log(baseScene.ToString());
             GameManager.gm.IsPaused = false;
             crossOverlay.SetActive(false);
-            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            _ = TransitionScene(SceneName.NotebookScene, baseScene, TransitionType.Unload);
         }
         else
         {
@@ -349,7 +353,7 @@ public class SceneController : MonoBehaviour
             //GameManager.gm.baseScene = GetSceneName(SceneManager.GetActiveScene());
             GameManager.gm.IsPaused = true;
             crossOverlay.SetActive(true);
-            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            _ = TransitionScene(SceneName.DialogueScene, SceneName.NotebookScene, TransitionType.Additive);
         }
     }
 
