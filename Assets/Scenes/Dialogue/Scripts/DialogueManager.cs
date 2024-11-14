@@ -43,7 +43,7 @@ public class DialogueManager : MonoBehaviour
     /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
     {
-        // Set static DialogueManager sm
+        // Set static DialogueManager instance
         dm = this;
 
         // Retrieve and set the dialogue object
