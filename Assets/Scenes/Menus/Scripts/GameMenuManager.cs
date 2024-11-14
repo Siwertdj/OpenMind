@@ -15,12 +15,23 @@ public class GameMenuManager : MonoBehaviour
         // Close the GameMenu, and return to the active scene ( Dialogue or NPCSelect),
         // which we choose by getting the activescene. 
         // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
+
+        Scene activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+        if (!activeScene.isLoaded)
+        {
+            activeScene = SceneManager.GetSceneByName("DialogueScene");
+            if (!activeScene.isLoaded)
+            {
+                Debug.LogError("GameMenu can not be closed, as Dialogue and NPCSelect are not loaded.");
+                return;
+            }
+        }
+        
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
-            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()), 
+            SceneController.sc.GetSceneName(activeScene), 
             SceneController.TransitionType.Unload);
-        
         
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
     }
@@ -38,10 +49,10 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
-        // Load Game
-        Load.Loader.LoadButtonPressed();
         // Call ReturnToGame(), so the menu closes, the buttons return, and the game is unpaused.
         ReturnToGame();
+        // Load Game
+        Load.Loader.LoadButtonPressed();
     }
 
     /// <summary>
