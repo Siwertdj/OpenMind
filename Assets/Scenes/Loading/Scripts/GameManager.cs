@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    public SceneController.SceneName baseScene; // Variable which holds the scene base Scene if any additive scenes are loaded on top of the current active scene.
     
     public StoryObject
         story { get; private set; } // Contains information about the current game pertaining to the story
