@@ -65,11 +65,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime)
     {
-        if (newClip == null)
-        {
-            Debug.LogError("Passed audio clip is null, continuing to play current clip.");
-        }
-        else
+        if (newClip != null)
         {
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
@@ -80,9 +76,15 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Fades out currently playing Audioclip, then fades in Audioclip passed as argument.
+    /// Speed of fade depends on fadetime.
+    /// </summary>
+    /// <param name="newClip"></param>
+    /// <param name="fadeTime"></param>
+    /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
-        Debug.Log("Music source:" + musicSource);
         float startVolume = musicSource.volume;
         while (musicSource.volume > 0)
         {

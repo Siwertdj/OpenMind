@@ -20,7 +20,7 @@ public class GameMenuManager : MonoBehaviour
             SceneController.SceneName.GameMenuScene, 
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()), 
             SceneController.TransitionType.Unload);
-        SceneManager.UnloadSceneAsync("GameMenuScene");
+        
         
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
     }
