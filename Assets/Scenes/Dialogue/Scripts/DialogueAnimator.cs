@@ -161,7 +161,7 @@ public class DialogueAnimator : MonoBehaviour
     private IEnumerator WritingAnimation(string output, int stringIndex)
     {
         // Don't write if the game is paused
-        // '?' is used to make sure there is already an sm of the GameManager
+        // '?' is used to make sure there is already an instance of the GameManager
         while (GameManager.gm?.IsPaused == true) 
             yield return null;
 

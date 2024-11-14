@@ -67,6 +67,22 @@ MonoBehaviour:
     trait:
     - Social equality is very important to me, I think a lot of developing countries
       are lacking that.
+  - question: 10
+    answer:
+    - I have a PhD in Life Sciences.
+    trait:
+    - I have a PhD in Life Sciences.
+  - question: 1
+    answer:
+    - I am 29 years old.
+    trait:
+    - I am 29 years old.
+  - question: 13
+    answer:
+    - My brother and I have always been very close, so I'd have to say he's the most
+      important person to me.
+    trait:
+    - My brother is the most important person in my life.
   greetings:
   - lines:
     - Hi!

@@ -10,7 +10,7 @@ using UnityEngine;
 public class TransitionAnimator : MonoBehaviour
 {
     /// <summary>
-    /// The static sm of the transition animator
+    /// The static instance of the transition animator
     /// </summary>
     public static TransitionAnimator i;
 
@@ -26,7 +26,7 @@ public class TransitionAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// On startup, initialize the static sm of this class.
+    /// On startup, initialize the static instance of this class.
     /// </summary>
     private void Start()
     {

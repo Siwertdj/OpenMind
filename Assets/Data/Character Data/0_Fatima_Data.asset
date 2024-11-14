@@ -21,9 +21,8 @@ MonoBehaviour:
     answer:
     - I was born in Morocco, but we moved to the Netherlands when I was still quite
       young.
-    - I am muslim, but I only recently started wearing a hijab
     trait:
-    - I was born in Morocco and I'm muslim.
+    - I was born in Morocco.
   - question: 7
     answer:
     - I really, really love reading books and listening to audiobooks.
@@ -34,9 +33,8 @@ MonoBehaviour:
   - question: 10
     answer:
     - I have a master's degree
-    - and now I actually teach at the university I studied at.
     trait:
-    - I got a master's degree at the university I now teach at.
+    - I got a master's degree.
   - question: 12
     answer:
     - My friends and my family would describe me as funny and kind.
@@ -52,6 +50,28 @@ MonoBehaviour:
     - You could say he's kind of my coach.
     trait:
     - My husband and daughter are very important to me.
+  - question: 19
+    answer:
+    - If I won the lottery I would do something good for the world.
+    - Like building an orphanage in Morocco.
+    trait:
+    - If I won the lottery I would build an orphanage in Morocco.
+  - question: 9
+    answer:
+    - I am muslim, but I only recently started wearing a hijab
+    trait:
+    - I am muslim.
+  - question: 18
+    answer:
+    - I wouldn't say I'm super positive about it.
+    - I used to get bullied for being a nerd and for doing my best.
+    trait:
+    - I used to get bullied for being a nerd.
+  - question: 16
+    answer:
+    - People don't expect that I can get really angry sometimes.
+    trait:
+    - It suprises people that I can get really angry.
   greetings:
   - lines:
     - Hi there!

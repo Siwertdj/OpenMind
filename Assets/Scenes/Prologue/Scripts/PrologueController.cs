@@ -34,9 +34,6 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private Sprite[] backgrounds; // Stores all the background images
     [SerializeField] private Sprite[] illusions; // Stores all the optical illusion images
     [SerializeField] private string[] receptionistText; // Stores all the text spoken by the receptionist
-
-    [Header("Resources")] 
-    [SerializeField] private AudioClip prologueMusic;
     
     private int textIndex; // Index to keep track of the text that needs to be spoken
     private int backgroundIndex; // Index to keep track of the background that needs to be used
@@ -51,9 +48,6 @@ public class CutsceneController : MonoBehaviour
        // Intialize indices
        textIndex = -1; 
        backgroundIndex = 0;
-       
-       // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
