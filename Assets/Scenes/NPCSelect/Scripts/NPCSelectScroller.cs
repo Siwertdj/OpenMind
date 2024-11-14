@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class NPCSelectScroller : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class NPCSelectScroller : MonoBehaviour
     private bool isNavigating = false;
     private Coroutine scrollCoroutine;
 
+    private SwipeDetector swipeDetector;
+    public CharacterInstance SelectedCharacter { get; private set; }
+
     [SerializeField] private float scrollDuration;
+
+    [NonSerialized] public UnityEvent OnCharacterSelected = new();
+    [NonSerialized] public UnityEvent NoCharacterSelected = new();
 
     private int _selectedChild;
     private int selectedChild 
@@ -22,26 +29,28 @@ public class NPCSelectScroller : MonoBehaviour
         {
             // Make sure the target value is not too big or small
             _selectedChild = Mathf.Clamp(value, 0, children.Length - 1);
+
+            // Set selected character
+            SelectedCharacter = children[_selectedChild].GetComponentInChildren<SelectOption>().character;
         } 
     }
 
     private void Start()
     {
+        // Add swipe listeners
+        swipeDetector = GetComponent<SwipeDetector>();
+        swipeDetector.OnSwipeLeft.AddListener(NavigateRight);
+        swipeDetector.OnSwipeRight.AddListener(NavigateLeft);
+
         scrollable = transform.GetChild(0);
 
         // Populate list of children
-        children = new Transform[scrollable.childCount];
+        children = new Transform[GameManager.gm.currentCharacters.Count];
         for (int i = 0; i < children.Length; i++)
             children[i] = scrollable.GetChild(i);
 
         selectedChild = children.Length / 2;
         StartCoroutine(InstantNavigate());
-    }
-
-    private IEnumerator InstantNavigate()
-    {
-        yield return new WaitForEndOfFrame();
-        scrollable.localPosition = GetTargetPos(selectedChild);
     }
 
     //TODO: Should be replaced by a swiping motion instead of buttons
@@ -65,9 +74,17 @@ public class NPCSelectScroller : MonoBehaviour
         scrollCoroutine = StartCoroutine(NavigationCoroutine(childIndex));
     }
 
+    private IEnumerator InstantNavigate()
+    {
+        yield return new WaitForEndOfFrame();
+        scrollable.localPosition = GetTargetPos(selectedChild);
+        OnCharacterSelected.Invoke();
+    }
+
     private IEnumerator NavigationCoroutine(int childIndex)
     {
-        Debug.Log("Navigating");
+        NoCharacterSelected.Invoke();
+
         isNavigating = true;
         float time = 0;
 
@@ -87,6 +104,7 @@ public class NPCSelectScroller : MonoBehaviour
             yield return null;
         }
 
+        OnCharacterSelected.Invoke();
         isNavigating = false;
     }
 

@@ -9,7 +9,7 @@ using TMPro;
 /// </summary>
 public class SelectOption : MonoBehaviour
 {
-    public  CharacterInstance character;
+    public CharacterInstance character;
 
     [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private Image avatarImage;

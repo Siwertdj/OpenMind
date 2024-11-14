@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using TMPro;
@@ -11,14 +11,14 @@ public class SelectionManager : MonoBehaviour
 {
     // Prefab which is used to create SelectOption objects.
     [SerializeField] private GameObject selectionOption;
-    
+
     // The SelectionSpace object, which has character spaces as children.
-    public GameObject parent;
+    [SerializeField] private GameButton confirmSelectionButton;
+    [SerializeField] private GameObject scrollField;
+    private NPCSelectScroller scroller;
 
     // The header text at the top of the character selection screen.
     public TextMeshProUGUI headerText;
-
-    private SceneController sc;
     
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
@@ -30,10 +30,13 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        sc = SceneController.sc;
         SetSceneType();
         SetHeaderText(selectionType);
         GenerateOptions();
+
+        scroller = scrollField.GetComponent<NPCSelectScroller>();
+        scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
+        scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
     }
 
     /// <summary>
@@ -47,6 +50,22 @@ public class SelectionManager : MonoBehaviour
             selectionType = "decidecriminal";
         else
             selectionType = "dialogue";
+    }
+
+    private void EnableSelectionButton()
+    {
+        var button = confirmSelectionButton;
+        button.gameObject.SetActive(true);
+        button.GetComponentInChildren<TMP_Text>().text = 
+            $"Talk to {scroller.SelectedCharacter.characterName}";
+        button.onClick.AddListener(() => ButtonClicked(scroller.SelectedCharacter));
+    }
+
+    private void DisableSelectionButton()
+    {
+        var button = confirmSelectionButton;
+        button.gameObject.SetActive(false);
+        button.onClick.RemoveAllListeners();
     }
     
     /// <summary>
@@ -73,7 +92,7 @@ public class SelectionManager : MonoBehaviour
             newOption.character = character;                
             // TODO: not correct yet, this will go out of bounds when there are more than 8 characters.
             // Sets one of the 8 character spaces as parent of the SelectOption object.
-            newOption.transform.SetParent(parent.transform.GetChild(counter), false);
+            newOption.transform.SetParent(scrollField.transform.GetChild(0).GetChild(counter), false);
             // Sets the position of the SelectOption object to the same position as the parent (character space).
             newOption.transform.position = newOption.transform.parent.position;
             counter++;            
@@ -85,29 +104,26 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     /// <param name="option"> The character space on which has been clicked on. </param>
     /// TODO: Add an intermediate choice for the culprit. (if everyone agrees with the storyline epilogue)
-    public void ButtonClicked(GameObject option)
+    public void ButtonClicked(CharacterInstance character)
     {
-        // Get the SelectOption object from the character space.
-        SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
         // Only active characters can be talked to.
-        if (selectOption.character.isActive)
+        if (character.isActive)
         {
             // Start the dialogue if a criminal does not need to be decided yet.
             if (selectionType == "dialogue")
             {
-                GameManager.gm.StartDialogue(selectOption.character);
+                GameManager.gm.StartDialogue(character);
             }
             else
             {
                 // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-                GameManager.gm.FinalChosenCuplrit = selectOption.character;
+                GameManager.gm.FinalChosenCuplrit = character;
+
                 // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-                if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
-                    GameManager.gm.hasWon = true;
-                else
-                    GameManager.gm.hasWon = false;
+                GameManager.gm.hasWon = GameManager.gm.GetCulprit().characterName == character.characterName;
+
                 // Load the epilogue scene.
-                GameManager.gm.StartEpilogueDialogue(selectOption.character);
+                GameManager.gm.StartEpilogueDialogue(character);
             }
         }
     }
