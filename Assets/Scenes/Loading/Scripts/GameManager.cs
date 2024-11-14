@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = System.Random;
 
 /// <summary>
@@ -46,7 +47,7 @@ public class GameManager : MonoBehaviour
     
     // Instances
     public Random random = new Random(); //random variable is made global so it can be reused
-    public static GameManager gm;       // static instance of the gamemanager
+    public static GameManager gm;       // static sm of the gamemanager
     private SceneController sc;
     public NotebookData notebookData;
 
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
     #endregion
     
     /// <summary>
-    /// When loaded, make a static instance of this class so it can be reached from other places.
+    /// When loaded, make a static sm of this class so it can be reached from other places.
     /// Also make the toolbox persistent.
     /// </summary>
     private void Awake()
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
     }
-    
+
     /// <summary>
     /// Starts the game.
     /// If a story is passed along, starts a new game with that story.
@@ -119,41 +120,40 @@ public class GameManager : MonoBehaviour
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
-        currentCharacters.AddRange(characters.FindAll(c => 
+        List<CharacterInstance> newCurrentCharacters = characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
             saveData.inactiveCharacterIds.Contains(c.id)).
-                Select(c => new CharacterInstance(c)));
+                Select(c => new CharacterInstance(c)).ToList();
+        
+        //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
+        //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
+        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+            currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
+        
 
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
-            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
+            
+            c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
         //assign notebook data
-        //OLD CODE, ADDRANGE DIDN'T WORK
-        /*Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
-        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
-        {
-            CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
-            return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }));
-        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);*/
-        
-        //TEMP SOLUTION
         Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
         }).ToDictionary(pair => pair.Key, pair => pair.Value);
-
+        notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
+        
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -167,6 +167,8 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
     
@@ -429,14 +431,17 @@ public class GameManager : MonoBehaviour
     private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
         List<GameObject> background_ = new();
+
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
         background_.Add(background == null ? story.dialogueBackground : background);
 
+        // If a character is given, add that as well
         if (character != null)
         {
-            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
+            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
             background_.Add(avatarPrefab);
         }
+
         return background_.ToArray();
     }
     
@@ -536,6 +541,10 @@ public class GameManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
+        // Switch the music
+        // TODO: Switch music based on gamestate?
+        SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null);
+        
         gameState = GameState.Epilogue;
         // Get the epilogue dialogue.
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);

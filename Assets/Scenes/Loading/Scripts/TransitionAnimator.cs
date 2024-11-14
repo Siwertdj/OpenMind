@@ -10,7 +10,7 @@ using UnityEngine;
 public class TransitionAnimator : MonoBehaviour
 {
     /// <summary>
-    /// The static instance of the transition animator
+    /// The static sm of the transition animator
     /// </summary>
     public static TransitionAnimator i;
 
@@ -26,10 +26,11 @@ public class TransitionAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// On startup, initialize the static instance of this class.
+    /// On startup, initialize the static sm of this class.
     /// </summary>
     private void Start()
     {
+        //Debug.Log("hi2");
         i = this;
     }
     
@@ -78,10 +79,20 @@ public class TransitionAnimator : MonoBehaviour
     /// <param name="tcs"></param>
     private IEnumerator AnimationCoroutine(TaskCompletionSource<bool> tcs)
     {
-        yield return null; // Wait for the animator to update clip
-
+        float seconds = 0;
+        // Wait for the animator to update clip
+        yield return new WaitUntil(() =>
+        {
+            var clipInfo = animator.GetCurrentAnimatorClipInfo(0);
+            if (clipInfo.Length == 0)
+                return false;
+            
+            seconds = clipInfo[0].clip.length;
+            return true;
+        });
+        
         // Await the length of the animation
-        yield return new WaitForSeconds(animator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        yield return new WaitForSeconds(seconds);
 
         tcs.SetResult(true);
     }
