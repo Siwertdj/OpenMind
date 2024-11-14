@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
@@ -8,8 +8,29 @@ using UnityEngine;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 
-public class Saving : MonoBehaviour
+public class Save
 {
+    private static          Save   _saver;
+    private static readonly object _lock = new object();
+    public static Save Saver
+    {
+        get
+        {
+            //double-check locking pattern for safety
+            if (_saver == null)
+            {
+                lock (_lock)
+                {
+                    if (_saver == null)
+                    {
+                        _saver = new Save();
+                    }
+                }
+            }
+            return _saver;
+        }
+    }    
+    
     /// <summary>
     /// Saves data to a file.
     /// All data saved to a file is stored in <see cref="SaveData"/>>.
@@ -18,7 +39,7 @@ public class Saving : MonoBehaviour
     ///
     /// This method results in an error in the debug console, if the gamemanager is not loaded, after which it will exit the function.
     /// </summary>
-    public void Save(SaveData saveData = null)
+    public void SaveGame(SaveData saveData = null)
     {
         if (saveData is null)
             saveData = CreateSaveData();
