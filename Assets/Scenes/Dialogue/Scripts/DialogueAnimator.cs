@@ -72,7 +72,7 @@ public class DialogueAnimator : MonoBehaviour
             //    Debug.Log("uhh test");
             //    currentMood.Add(DialogueObject.Mood.Neutral);
             //change facial expression at start
-            
+            //////////////////////////////////////////////////////this.background[1].Components[1].sprite;
 
             WriteSentence(output[dialogueIndex]);
         }

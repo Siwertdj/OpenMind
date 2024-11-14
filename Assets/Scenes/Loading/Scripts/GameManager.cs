@@ -14,8 +14,11 @@ using Random = System.Random;
 /// </summary>
 public class GameManager : MonoBehaviour
 {
+
+
+
     [Header("Game Resources")]
-    [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
+    [SerializeField] public List<CharacterData> characters; // The full list of characters in the game
 
     [Header("Background Prefabs")]
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
