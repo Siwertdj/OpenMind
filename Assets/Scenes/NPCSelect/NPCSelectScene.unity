@@ -1002,8 +1002,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1885397424}
-  - {fileID: 330808628}
   - {fileID: 1818185165}
+  - {fileID: 330808628}
   - {fileID: 1682342662}
   - {fileID: 296175160}
   m_Father: {fileID: 0}
@@ -1308,9 +1308,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7585425dc4798364499888ef9cda4b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectionOption: {fileID: 3812014761830931731, guid: 1fb297297f6b7fa458a2320916ed9a51, type: 3}
+  optionPrefab: {fileID: 3812014761830931731, guid: 1fb297297f6b7fa458a2320916ed9a51, type: 3}
   confirmSelectionButton: {fileID: 330808632}
-  scrollField: {fileID: 1885397423}
+  scroller: {fileID: 1885397429}
   headerText: {fileID: 1951431983}
 --- !u!4 &1659958912
 Transform:
@@ -1471,7 +1471,7 @@ GameObject:
   - component: {fileID: 1818185167}
   - component: {fileID: 1818185166}
   m_Layer: 5
-  m_Name: Prompt Image
+  m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1607,7 +1607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0814762a70d9db843a27a44d2ce67ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipeThreshold: 100
+  swipeThreshold: 500
 --- !u!1 &1951431981
 GameObject:
   m_ObjectHideFlags: 0
