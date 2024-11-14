@@ -5,8 +5,8 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// An sm of a character. Takes a set of <see cref="CharacterData"/>
-/// Each character in the game is a different a separate sm of this class. With its own <see cref="CharacterData"/>.
+/// An instance of a character. Takes a set of <see cref="CharacterData"/>
+/// Each character in the game is a different a separate instance of this class. With its own <see cref="CharacterData"/>.
 /// </summary>
 public class CharacterInstance
 {
