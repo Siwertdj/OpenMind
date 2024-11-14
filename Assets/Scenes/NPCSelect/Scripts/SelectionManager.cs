@@ -1,6 +1,7 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
+using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
 
@@ -50,8 +51,22 @@ public class SelectionManager : MonoBehaviour
     {
         var button = confirmSelectionButton;
         button.gameObject.SetActive(true);
-        button.GetComponentInChildren<TMP_Text>().text = 
-            $"Talk to {scroller.SelectedCharacter.characterName}";
+
+        // Set appropriate text whether or not selected character is active
+        string text = button.GetComponentInChildren<TMP_Text>().text;
+        string characterName = scroller.SelectedCharacter.characterName;
+        if (scroller.SelectedCharacter.isActive)
+        {
+            text = $"Talk to {characterName}";
+            button.interactable = true;
+        }
+        else
+        {
+            text = $"{characterName} {GameManager.gm.story.hintDialogue}";
+            button.interactable = false;
+        }
+
+        // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => ButtonClicked(scroller.SelectedCharacter));
     }
 
@@ -73,6 +88,8 @@ public class SelectionManager : MonoBehaviour
     {
         if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
             headerText.text = "Who do you think it was?";
+        else
+            headerText.text = "Who do you want to talk to?";
     }
     
     /// <summary>
