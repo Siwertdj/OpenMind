@@ -376,12 +376,14 @@ public class GameManager : MonoBehaviour
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(DialogueObject dialogueObject)
     {
+        
+        
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-
+        
         gameState = GameState.HintDialogue;
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.

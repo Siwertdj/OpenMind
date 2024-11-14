@@ -324,6 +324,21 @@ public class SceneController : MonoBehaviour
         // If notebook is already open, close it
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
+            Scene activeScene;
+            // Check if the DialogueScene or the NPCSelectScene is loaded.
+            if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+            {
+                activeScene = SceneManager.GetSceneByName("DialogueScene");
+            }
+            else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+            {
+                activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+            }
+            else
+            {
+                throw new Exception();
+            }
+            
             GameManager.gm.IsPaused = false;
             crossOverlay.SetActive(false);
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
