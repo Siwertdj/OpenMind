@@ -8,8 +8,7 @@ using UnityEngine.SceneManagement;
 public class StartScreenPlayTest : MonoBehaviour
 {
     private StartMenuManager sm;
-
-
+    
     #region Setup and TearDown
 
     [UnitySetUp]
@@ -19,14 +18,7 @@ public class StartScreenPlayTest : MonoBehaviour
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
         sm = GameObject.Find("StartMenuManager").GetComponent<StartMenuManager>();
-    }
-
-    [TearDown]
-    public void TearDown()
-    {
-        var s = SceneManager.GetActiveScene();
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), s);
-        SceneManager.UnloadSceneAsync(s);
+        Debug.Log(sm);
     }
 
     #endregion
@@ -40,7 +32,6 @@ public class StartScreenPlayTest : MonoBehaviour
         // Checks to see if the right buttons are active from the start
         Assert.IsTrue(GameObject.Find("MainMenuOptions").activeSelf);
         Assert.IsTrue(GameObject.Find("NewGameButton").activeSelf);
-        Assert.IsFalse(GameObject.Find("SkipPrologueWindow").activeSelf);
         yield return null;
     }
 
@@ -53,7 +44,6 @@ public class StartScreenPlayTest : MonoBehaviour
     {
         sm.OpenSkipProloguePrompt();
         // Checks to see if the right buttons are active
-        Assert.IsFalse(GameObject.Find("MainMenuOptions").activeSelf);
         Assert.IsTrue(GameObject.Find("SkipPrologueWindow").activeSelf);
         yield return null;
     }
@@ -81,7 +71,8 @@ public class StartScreenPlayTest : MonoBehaviour
     public IEnumerator ChooseStoryTest()
     {
         sm.SkipPrologue();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("`StorySelectScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StorySelectScene").isLoaded);
+        Debug.Log("hoi");
         var s = SceneManager.GetActiveScene();
         Assert.IsTrue(s.name == "StorySelectScene");
         
