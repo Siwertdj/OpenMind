@@ -18,7 +18,6 @@ public class StartScreenPlayTest : MonoBehaviour
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
         sm = GameObject.Find("StartMenuManager").GetComponent<StartMenuManager>();
-        Debug.Log(sm);
     }
 
     #endregion
@@ -32,6 +31,8 @@ public class StartScreenPlayTest : MonoBehaviour
         // Checks to see if the right buttons are active from the start
         Assert.IsTrue(GameObject.Find("MainMenuOptions").activeSelf);
         Assert.IsTrue(GameObject.Find("NewGameButton").activeSelf);
+        // Checks to see if the right buttons are inactive from the start
+        Assert.IsTrue(GameObject.Find("SkipPrologueWindow") == null);
         yield return null;
     }
 
@@ -45,6 +46,8 @@ public class StartScreenPlayTest : MonoBehaviour
         sm.OpenSkipProloguePrompt();
         // Checks to see if the right buttons are active
         Assert.IsTrue(GameObject.Find("SkipPrologueWindow").activeSelf);
+        // Checks to see if the right buttons ar inactive
+        Assert.IsTrue(GameObject.Find("MainMenuOptions") == null);
         yield return null;
     }
 
@@ -72,7 +75,6 @@ public class StartScreenPlayTest : MonoBehaviour
     {
         sm.SkipPrologue();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StorySelectScene").isLoaded);
-        Debug.Log("hoi");
         var s = SceneManager.GetActiveScene();
         Assert.IsTrue(s.name == "StorySelectScene");
         
