@@ -4,6 +4,7 @@ using System;
 using System.Runtime.InteropServices;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
@@ -50,24 +51,34 @@ public class SelectionManager : MonoBehaviour
     private void EnableSelectionButton()
     {
         var button = confirmSelectionButton;
-        button.gameObject.SetActive(true);
 
         // Set appropriate text whether or not selected character is active
         var text = button.GetComponentInChildren<TMP_Text>();
         string characterName = scroller.SelectedCharacter.characterName;
+        
+        // Button text should not be interactable if character is not active
         if (scroller.SelectedCharacter.isActive)
         {
-            text.text = $"Talk to {characterName}";
             button.interactable = true;
+
+            // Set the button text depending on the gameState
+            text.text = GameManager.gm.gameState == GameManager.GameState.CulpritSelect ?
+                    $"Approach {characterName}" : $"Talk to {characterName}";
         }
         else
         {
-            text.text = $"{characterName} {GameManager.gm.story.hintDialogue}";
             button.interactable = false;
+            text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
+
+        // Force the button to change state immediately
+        Canvas.ForceUpdateCanvases();
 
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => ButtonClicked(scroller.SelectedCharacter));
+
+        // Finally, we are ready to activate the button
+        button.gameObject.SetActive(true);
     }
 
     /// <summary>
