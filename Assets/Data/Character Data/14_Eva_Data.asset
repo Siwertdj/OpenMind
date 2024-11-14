@@ -14,7 +14,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Eva
   id: 14
-  avatar: {fileID: 21300000, guid: c165a5871b22e9045a094f3cd780573a, type: 3}
+  avatar: {fileID: 21300000, guid: 854afebe6edd6f84bb555f34546d4551, type: 3}
   voicePitch: 1
-  answers: []
-  greetings: []
+  answers:
+  - question: 1
+    answer:
+    - I am 50 years old.
+    trait:
+    - I am 50 years old.
+  - question: 2
+    answer:
+    - Life is good.
+    - I live together with my husband, we have been married for a couple of years.
+    - I'm working in the legal system.
+    - I'm very passionate about the work I'm doing right now because I am able to
+      help people in difficult positions.
+    trait:
+    - I work in the legal system.
+  - question: 3
+    answer:
+    - Yes! Michelle Obama inspires me.
+    - Athletes too, they are insanely good at what they do.
+    - Sifan Hassan for instance, she is amazing!
+    trait:
+    - Michelle Obama inspires me.
+  - question: 5
+    answer:
+    - Good and bad at the same time.
+    - I like having more free time now that my children have left home and I don't
+      have to take care of them so much anymore.
+    - The freedom is nice but I still need to get used to it.
+    trait:
+    - I'm slowly getting used to not having children at home anymore.
+  - question: 7
+    answer:
+    - I enjoy going to the movies or the theatre and I watch tv and listen to the
+      radio.
+    - I also exercise.
+    trait:
+    - I love going to the movies or the theatre.
+  - question: 9
+    answer:
+    - I'm not religious.
+    - I think it can be comforting for people that really believe in it.
+    - I personally don't believe in it and I can see that it causes a lot of misery
+      in the world.
+    - So I'm ambivalent regarding religion.
+    trait:
+    - I think religion can be comforting for people that really believe in it.
+  - question: 10
+    answer:
+    - I have a master's degree in law.
+    trait:
+    - I have a master's degree.
+  - question: 11
+    answer:
+    - My core values are fairness, leniency and helpfulness.
+    - It's important that people don't think only about themselves and that they
+      ty to empathise with others.
+    trait:
+    - My core values are fairness, leniency and helpfulness.
+  - question: 14
+    answer:
+    - I am caring, considerate and empathetic.
+    trait:
+    - I am caring, considerate and empathetic.
+  - question: 15
+    answer:
+    - I'm gloomy sometimes.
+    - I can have a bit of a negative attitude towards life.
+    trait:
+    - I'm gloomy sometimes.
+  - question: 19
+    answer:
+    - I would buy a house for my mother.
+    - From the remaining money I would set half of it aside to help my children buy
+      a house in the future.
+    - The rest will be donated to charity.
+    - I'm commited to a charity against inequality of opportunity.
+    trait:
+    - If I win the lottery someday I would buy a house for my mother, save some for
+      my children and donate the rest to a charity.
+  - question: 17
+    answer:
+    - I think deporting children is scandalous.
+    - It's not going to solve the migration problem.
+    trait:
+    - I think deporting children is scandalous.
+  greetings:
+  - lines:
+    - Hey, good to see you!

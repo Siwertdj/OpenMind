@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 20_Hidde_Data
+  m_EditorClassIdentifier: 
+  characterName: Hidde
+  id: 20
+  avatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
+  voicePitch: 1
+  answers:
+  - question: 2
+    answer:
+    - "I\u2019m doing well. I still live with my parents and my dog."
+    - "The bachelor degree I\u2019m doing is also very interesting"
+    - and I have a friend group that I hang out with a lot and
+    - 'I always go to them if I have any problems. '
+    trait:
+    - I live with my parents and I have friends I hang out with a lot.
+  - question: 6
+    answer:
+    - I think people are often too passive aggressive when they lose.
+    - "I get they\u2019re not happy but they don\u2019t have to go into the streets
+      and yell. "
+    trait:
+    - I think people get too angry when they lose elections.
+  - question: 7
+    answer:
+    - "I know it\u2019s general but I would have to say just learning new things."
+    - Specifically learning to understand things I find interesting.
+    trait:
+    - I like learning things about things I find interesting.
+  - question: 7
+    answer:
+    - I am agnostic. I do wonder sometimes what comes after death,
+    - "but I don\u2019t think we\u2019ll ever know."
+    trait:
+    - I am agnostic.
+  - question: 13
+    answer:
+    - If I had to choose one person, it would be my dad.
+    - "It\u2019s like he always has a good answer for everything."
+    trait:
+    - My dad is the most important person in my life.
+  - question: 14
+    answer:
+    - "I think I\u2019m caring and a great listener."
+    - My parents would also say I often think things through well.
+    trait:
+    - I'm caring and a good listener.
+  - question: 14
+    answer:
+    - "Sometimes it\u2019s hard for me to be social with other people."
+    trait:
+    - It's hard for me to be social.
+  - question: 16
+    answer:
+    - People are often surprised when they find out I do theater.
+    trait:
+    - People are surprised when they find out I do theater.
+  - question: 16
+    answer:
+    - "I wouldn\u2019t do something like the people from Extinction Rebellion, just
+      blocking roads,"
+    - ' that has nothing to do with the goal of the demonstration.'
+    - I would look for the source of the problem and protest there.
+    trait:
+    - I rather go protest the source of the problem than block roads like Extinction
+      Rebellion.
+  - question: 18
+    answer:
+    - I think the different levels of education are important.
+    - Not everyone is smart, but everyone is smart in their own way.
+    trait:
+    - I think everyone is smart in their own way.
+  greetings:
+  - lines:
+    - Oh, hi.
