@@ -940,7 +940,7 @@ MonoBehaviour:
   text: {fileID: 1804029613}
   delayInSeconds: 0.05
   delayAfterSentence: 1
-  audioEnabled: 0
+  audioEnabled: 1
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0
