@@ -13,6 +13,9 @@ public class NPCSelectScroller : MonoBehaviour
     private bool isNavigating = false;
     private Coroutine scrollCoroutine;
 
+    private GameObject navButtonLeft;
+    private GameObject navButtonRight;
+
     private SwipeDetector swipeDetector;
     public CharacterInstance SelectedCharacter { get; private set; }
 
@@ -32,6 +35,19 @@ public class NPCSelectScroller : MonoBehaviour
 
             // Set selected character
             SelectedCharacter = children[_selectedChild].GetComponentInChildren<SelectOption>().character;
+
+            // Remove correct button if the child is on either edge
+            if (_selectedChild == 0)
+            {
+                navButtonLeft.SetActive(false);
+            }
+            else if (_selectedChild == children.Length - 1)
+                navButtonRight.SetActive(false);
+            else
+            {
+                navButtonLeft.SetActive(true);
+                navButtonRight.SetActive(true);
+            }
         } 
     }
 
@@ -42,9 +58,23 @@ public class NPCSelectScroller : MonoBehaviour
         swipeDetector.OnSwipeLeft.AddListener(NavigateRight);
         swipeDetector.OnSwipeRight.AddListener(NavigateLeft);
 
+        try
+        {
+            navButtonLeft = transform.GetChild(1).gameObject;
+            navButtonRight = transform.GetChild(2).gameObject;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(
+                "NPC Select navigation buttons were not found.\n" +
+                "They should be child index 1 and 2 of the scroller.\n" +
+                e);
+        }
+
         scrollable = transform.GetChild(0);
 
         // Populate list of children
+        Debug.Log("GameManager Instance: " + GameManager.gm);
         children = new Transform[GameManager.gm.currentCharacters.Count];
         for (int i = 0; i < children.Length; i++)
             children[i] = scrollable.GetChild(i);
@@ -56,14 +86,25 @@ public class NPCSelectScroller : MonoBehaviour
     //TODO: Should be replaced by a swiping motion instead of buttons
     public void NavigateLeft()
     {
-        selectedChild -= 1;
-        NavigateToChild(selectedChild);
+        if (selectedChild > 0)
+        {
+            selectedChild -= 1;
+            NavigateToChild(selectedChild);
+        }
     }
 
     public void NavigateRight()
     {
-        selectedChild += 1;
-        NavigateToChild(selectedChild);
+        if (selectedChild < children.Length - 1)
+        {
+            selectedChild += 1;
+            NavigateToChild(selectedChild);
+        }
+    }
+
+    private bool CanNavigate()
+    {
+        return true;
     }
 
     private void NavigateToChild(int childIndex)

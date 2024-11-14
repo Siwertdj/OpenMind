@@ -53,16 +53,16 @@ public class SelectionManager : MonoBehaviour
         button.gameObject.SetActive(true);
 
         // Set appropriate text whether or not selected character is active
-        string text = button.GetComponentInChildren<TMP_Text>().text;
+        var text = button.GetComponentInChildren<TMP_Text>();
         string characterName = scroller.SelectedCharacter.characterName;
         if (scroller.SelectedCharacter.isActive)
         {
-            text = $"Talk to {characterName}";
+            text.text = $"Talk to {characterName}";
             button.interactable = true;
         }
         else
         {
-            text = $"{characterName} {GameManager.gm.story.hintDialogue}";
+            text.text = $"{characterName} {GameManager.gm.story.hintDialogue}";
             button.interactable = false;
         }
 
