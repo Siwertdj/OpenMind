@@ -25,7 +25,10 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public CharacterInstance SelectedCharacter { get; private set; }
 
-    [SerializeField] private float scrollDuration;
+    /// <summary>
+    /// How long should one navigation cycle take?
+    /// </summary>
+    public float scrollDuration;
 
     [NonSerialized] public UnityEvent OnCharacterSelected = new();
     [NonSerialized] public UnityEvent NoCharacterSelected = new();

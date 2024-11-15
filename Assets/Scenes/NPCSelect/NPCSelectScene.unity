@@ -555,7 +555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296175161
@@ -634,7 +634,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 218f590d9a351514cb3c8cf75c8004e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1e5cc998331b5ad4b90e3d4ca7434a57, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -664,6 +664,7 @@ GameObject:
   - component: {fileID: 330808631}
   - component: {fileID: 330808630}
   - component: {fileID: 330808632}
+  - component: {fileID: 330808633}
   m_Layer: 5
   m_Name: Confirm Selection Button
   m_TagString: Untagged
@@ -773,6 +774,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!225 &330808633
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330808627}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &393993541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1306,6 +1319,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7585425dc4798364499888ef9cda4b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonFadeDuration: 0.15
+  scrollDuration: 0.5
   optionPrefab: {fileID: 3812014761830931731, guid: 1fb297297f6b7fa458a2320916ed9a51, type: 3}
   confirmSelectionButton: {fileID: 330808632}
   scroller: {fileID: 1885397429}
@@ -1360,7 +1375,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: 0}
+  m_AnchoredPosition: {x: -100, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1682342663
@@ -1439,7 +1454,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 218f590d9a351514cb3c8cf75c8004e4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1e5cc998331b5ad4b90e3d4ca7434a57, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

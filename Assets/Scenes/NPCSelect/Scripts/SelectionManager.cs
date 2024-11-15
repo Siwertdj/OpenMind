@@ -1,6 +1,7 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ using UnityEngine;
 /// </summary>
 public class SelectionManager : MonoBehaviour
 {
+    [Header("Settings")]
+    [SerializeField] private float buttonFadeDuration;
+    [SerializeField] private float scrollDuration;
+
     [Header("Prefabs")]
     [SerializeField] private GameObject optionPrefab;
 
@@ -28,6 +33,7 @@ public class SelectionManager : MonoBehaviour
 
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
+        scroller.scrollDuration = scrollDuration;
     }
 
     /// <summary>
@@ -73,8 +79,10 @@ public class SelectionManager : MonoBehaviour
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => ButtonClicked(scroller.SelectedCharacter));
 
-        // Finally, we are ready to activate the button
-        button.gameObject.SetActive(true);
+        //if (buttonFadeCoroutine != null)
+        //    StopCoroutine(buttonFadeCoroutine);
+
+        StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
     }
 
     /// <summary>
@@ -83,8 +91,9 @@ public class SelectionManager : MonoBehaviour
     private void DisableSelectionButton()
     {
         var button = confirmSelectionButton;
-        button.gameObject.SetActive(false);
         button.onClick.RemoveAllListeners();
+
+        StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
     }
     
     /// <summary>
@@ -147,5 +156,41 @@ public class SelectionManager : MonoBehaviour
             // No special gamestate, so we start dialogue with the given character
             GameManager.gm.StartDialogue(character);
         }
+    }
+
+    private IEnumerator FadeIn(CanvasGroup cg, float duration)
+    {
+        // First, set the given gameObject to active
+        cg.gameObject.SetActive(true);
+
+        // Make the object interactable in advance to make it more responsive
+        cg.interactable = true;
+
+        float time = 0;
+        while (cg.alpha < 1)
+        {
+            time += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(0, 1, time / duration);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator FadeOut(CanvasGroup cg, float duration)
+    {
+        // Make the object non-interactable to prevent player mistakes
+        cg.interactable = true;
+
+        float time = 0;
+        while (cg.alpha > 0)
+        {
+            time += Time.deltaTime;
+            cg.alpha = Mathf.Lerp(1, 0, time / duration);
+
+            yield return null;
+        }
+
+        // Finally, disable the given gameObject
+        cg.gameObject.SetActive(false);
     }
 }
