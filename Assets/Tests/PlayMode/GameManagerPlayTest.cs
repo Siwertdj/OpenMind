@@ -461,7 +461,7 @@ public class GameManagerPlayTest
                 {
                     culpritGameObjectFound = true;
                     // Simulate choosing the culprit.
-                    sm.ButtonClicked(selectedCharacter);
+                    sm.SelectionButtonClicked(selectedCharacter);
                 }
                 counter++;
             }
@@ -485,7 +485,7 @@ public class GameManagerPlayTest
                     innocentGameObjectFound = true;
                     GameObject innocentObject = go;
                     // Simulate choosing an innocent person.
-                    sm.ButtonClicked(selectedCharacter);
+                    sm.SelectionButtonClicked(selectedCharacter);
                 }
                 counter++;
             }

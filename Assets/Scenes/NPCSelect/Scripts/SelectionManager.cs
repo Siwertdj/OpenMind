@@ -48,55 +48,6 @@ public class SelectionManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Enables the character selection button & sets it to the selected character.
-    /// </summary>
-    private void EnableSelectionButton()
-    {
-        var button = confirmSelectionButton;
-
-        // Set appropriate text whether or not selected character is active
-        var text = button.GetComponentInChildren<TMP_Text>();
-        string characterName = scroller.SelectedCharacter.characterName;
-        
-        // Button text should not be interactable if character is not active
-        if (scroller.SelectedCharacter.isActive)
-        {
-            button.interactable = true;
-
-            // Set the button text depending on the gameState
-            text.text = GameManager.gm.gameState == GameManager.GameState.CulpritSelect ?
-                    $"Approach {characterName}" : $"Talk to {characterName}";
-        }
-        else
-        {
-            button.interactable = false;
-            text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
-        }
-
-        // Force the button to change state immediately
-        Canvas.ForceUpdateCanvases();
-
-        // Add appropriate "start dialogue" button for selected character
-        button.onClick.AddListener(() => ButtonClicked(scroller.SelectedCharacter));
-
-        //if (buttonFadeCoroutine != null)
-        //    StopCoroutine(buttonFadeCoroutine);
-
-        StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
-    }
-
-    /// <summary>
-    /// Disables the character selection button & removes its listeners.
-    /// </summary>
-    private void DisableSelectionButton()
-    {
-        var button = confirmSelectionButton;
-        button.onClick.RemoveAllListeners();
-
-        StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
-    }
-    
-    /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>
     /// <param name="sceneType"> Can take "dialogue" or "decidecriminal" as value. </param>
@@ -127,13 +78,14 @@ public class SelectionManager : MonoBehaviour
             newOption.transform.position = newOption.transform.parent.position;
         }
     }
-    
+
+    #region Selection Button Logic
     /// <summary>
     /// Event for when a character is selected.
     /// </summary>
     /// <param name="option"> The character space on which has been clicked on. </param>
     /// TODO: Add an intermediate choice for the culprit. (if everyone agrees with the storyline epilogue)
-    public void ButtonClicked(CharacterInstance character)
+    public void SelectionButtonClicked(CharacterInstance character)
     {
         // Only active characters can be talked to.
         if (!character.isActive)
@@ -157,7 +109,61 @@ public class SelectionManager : MonoBehaviour
             GameManager.gm.StartDialogue(character);
         }
     }
+    /// <summary>
+    /// Enables the character selection button & sets it to the selected character.
+    /// </summary>
+    private void EnableSelectionButton()
+    {
+        var button = confirmSelectionButton;
 
+        // Set appropriate text whether or not selected character is active
+        var text = button.GetComponentInChildren<TMP_Text>();
+        string characterName = scroller.SelectedCharacter.characterName;
+
+        // Button text should not be interactable if character is not active
+        if (scroller.SelectedCharacter.isActive)
+        {
+            button.interactable = true;
+
+            // Set the button text depending on the gameState
+            text.text = GameManager.gm.gameState == GameManager.GameState.CulpritSelect ?
+                    $"Approach {characterName}" : $"Talk to {characterName}";
+        }
+        else
+        {
+            button.interactable = false;
+            text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
+        }
+
+        // Force the button to change state immediately
+        Canvas.ForceUpdateCanvases();
+
+        // Add appropriate "start dialogue" button for selected character
+        button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
+
+        // Fade the button in
+        StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+    }
+
+    /// <summary>
+    /// Disables the character selection button & removes its listeners.
+    /// </summary>
+    private void DisableSelectionButton()
+    {
+        var button = confirmSelectionButton;
+        button.onClick.RemoveAllListeners();
+
+        // Fade the button out
+        StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+    }
+    #endregion
+
+    #region Fade Logic
+    /// <summary>
+    /// Fades an object in using a canvas group.
+    /// </summary>
+    /// <param name="cg">The canvas group of the object to be faded</param>
+    /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeIn(CanvasGroup cg, float duration)
     {
         // First, set the given gameObject to active
@@ -170,12 +176,19 @@ public class SelectionManager : MonoBehaviour
         while (cg.alpha < 1)
         {
             time += Time.deltaTime;
+
+            // Use lerp to interpolate the fade
             cg.alpha = Mathf.Lerp(0, 1, time / duration);
 
             yield return null;
         }
     }
 
+    /// <summary>
+    /// Fades an object out using a canvas group.
+    /// </summary>
+    /// <param name="cg">The canvas group of the object to be faded</param>
+    /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeOut(CanvasGroup cg, float duration)
     {
         // Make the object non-interactable to prevent player mistakes
@@ -185,6 +198,8 @@ public class SelectionManager : MonoBehaviour
         while (cg.alpha > 0)
         {
             time += Time.deltaTime;
+
+            // Use lerp to interpolate the fade
             cg.alpha = Mathf.Lerp(1, 0, time / duration);
 
             yield return null;
@@ -193,4 +208,5 @@ public class SelectionManager : MonoBehaviour
         // Finally, disable the given gameObject
         cg.gameObject.SetActive(false);
     }
+    #endregion
 }

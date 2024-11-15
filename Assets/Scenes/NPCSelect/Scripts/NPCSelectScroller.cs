@@ -30,7 +30,14 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public float scrollDuration;
 
+    /// <summary>
+    /// This event is invoked when the selected character is in the center of the screen.
+    /// </summary>
     [NonSerialized] public UnityEvent OnCharacterSelected = new();
+
+    /// <summary>
+    /// This event is invoked when the screen moves away from the selected character.
+    /// </summary>
     [NonSerialized] public UnityEvent NoCharacterSelected = new();
 
     private int _selectedChild;
