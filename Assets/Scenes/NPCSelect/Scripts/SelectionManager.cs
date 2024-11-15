@@ -209,4 +209,13 @@ public class SelectionManager : MonoBehaviour
         cg.gameObject.SetActive(false);
     }
     #endregion
+
+    #region Test Variables
+    #if UNITY_INCLUDE_TESTS
+
+    public void FadeIn_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeIn(cg, duration));
+    public void FadeOut_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeOut(cg, duration));
+
+#endif
+    #endregion
 }
