@@ -39,10 +39,10 @@ public class NPCSelectPlayTest
 
     }
 
-    [UnityTearDown]
+    [TearDown]
     public void TearDown()
     {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NPCSelectScene"));
         SceneController.sc.UnloadAdditiveScenes();
     }
 
