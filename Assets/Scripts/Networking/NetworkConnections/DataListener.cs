@@ -8,7 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +20,7 @@ public class DataListener
     private IPEndPoint    endPoint;
     private NetworkEvents onDataReceivedEvents;
     private NetworkEvents respondEvents;
+    private NetworkEvents onReponseSentEvents;
     private List<Socket>  connections;
     private List<bool>    isConnectionReceiving;
    
@@ -29,6 +30,7 @@ public class DataListener
         endPoint = new IPEndPoint(ipAddress, port);
         onDataReceivedEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
+        onReponseSentEvents = new NetworkEvents();
         listener.Bind(endPoint);
         listener.Listen(255);
         connections = new List<Socket>();
@@ -104,11 +106,14 @@ public class DataListener
     public void AddOnDataReceivedEvent(string signature, Action<object> action) =>
         onDataReceivedEvents.Subscribe(signature, action);
     
-    public void Respond<T>(string signature, Func<List<NetworkPackage>, T> response) =>
+    public void AddResponseTo<T>(string signature, Func<List<NetworkPackage>, T> response) =>
         respondEvents.Subscribe(signature,
-            o => Respond(signature, response, ((int, List<NetworkPackage>))o));
+            o => AddResponseTo(signature, response, ((int, List<NetworkPackage>))o));
     
-    private void Respond<T>(string signature, Func<List<NetworkPackage>,T> response, (int, List<NetworkPackage>) socketIndexAndMessage)
+    public void AddOnResponseSentEvent(string signature, Action<object> action) =>
+        onReponseSentEvents.Subscribe(signature, action);
+    
+    private void AddResponseTo<T>(string signature, Func<List<NetworkPackage>,T> response, (int, List<NetworkPackage>) socketIndexAndMessage, bool clearReponseSentEvents = true)
     {
         NetworkPackage sign = NetworkPackage.CreatePackage(signature);
         NetworkPackage resp = NetworkPackage.CreatePackage(response(socketIndexAndMessage.Item2));
@@ -120,6 +125,7 @@ public class DataListener
         if (bytes.Length > NetworkPackage.MaxPackageSize)
             Debug.LogError("Response was too large.");
         
-        connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(t => Debug.Log($"Responded with {t.Result} bytes"));
+        connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
+            t => onReponseSentEvents.Raise(signature, t.Result, clearReponseSentEvents));
     }
 }

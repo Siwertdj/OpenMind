@@ -100,6 +100,9 @@ public class DataSender
     public void AddOnResponseEvent(string signature, Action<object> action) =>
         onResponseEvent.Subscribe(signature, action);
     
+    public void AddOnConnectEvent(Action<object> action) =>
+        onDataSentEvents.Subscribe("Connect", action);
+    
     public IEnumerator ListenForResponse(string signature, bool clearResponses = true)
     {
         bool response = false;

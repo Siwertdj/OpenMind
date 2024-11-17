@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/GameMenuScene.unity
     guid: 5cc5be4e8cc395e4aa78c90bda33ca84
+  - enabled: 1
+    path: Assets/Scenes/Testing/NetworkTesting/NetworkTestScene.unity
+    guid: 0b02d204bed782a4eb7f57da1edc45b4
   m_configObjects: {}
