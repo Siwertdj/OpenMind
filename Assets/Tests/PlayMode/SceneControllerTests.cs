@@ -59,7 +59,7 @@ public class SceneControllerTests
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
-        DisbleAllEventAndAudioListeners();
+        //DisbleAllEventAndAudioListeners();
         GameManager.gm.currentCharacters = new List<CharacterInstance>();
         CharacterData dummyData = ScriptableObject.CreateInstance<CharacterData>();
         dummyData.answers = Array.Empty<KeyValuePair>();
