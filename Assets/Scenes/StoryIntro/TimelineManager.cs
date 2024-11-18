@@ -40,7 +40,7 @@ public class TimelineManager : MonoBehaviour
     public  GameObject   continueButton;
     public Button sendButton; 
     // Variables to keep track of the state of the introduction within this code. 
-    private PlayableDirector currentTimeline; 
+    public PlayableDirector currentTimeline; 
     private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
     private int playerTextIndex = -1; // text[textIndex] is the currently shown text. 
     private int textMessageIndex = 0;
@@ -69,10 +69,10 @@ public class TimelineManager : MonoBehaviour
                     StoryA();
                     break;
                 case 1:
-                    StoryA();
+                    StoryB();
                     break;
                 case 2:
-                    StoryA();
+                    StoryC();
                     break;
                 default:
                     StoryA();
