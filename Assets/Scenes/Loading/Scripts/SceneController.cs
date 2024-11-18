@@ -353,7 +353,7 @@ public class SceneController : MonoBehaviour
             }
             else
             {
-                throw new Exception();
+                throw new Exception("DialogueScene/NPCSelectScene is not loaded.");
             }
             
             // Get the SceneName enum from the activeScene.
