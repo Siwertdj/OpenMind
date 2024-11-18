@@ -44,6 +44,19 @@ public class SceneController : MonoBehaviour
         Unload
     }
     
+    // Dictionary used to convert gameStates into their scene string names.
+    private Dictionary<GameManager.GameState, string> gameStateSceneDict = new Dictionary<GameManager.GameState, string>()
+    {
+        { GameManager.GameState.Loading, "Loading" },
+        { GameManager.GameState.NpcSelect, "NPCSelectScene"},
+        { GameManager.GameState.CulpritSelect, "NPCSelectScene"},
+        { GameManager.GameState.NpcDialogue, "DialogueScene"},
+        { GameManager.GameState.HintDialogue, "DialogueScene"},
+        { GameManager.GameState.GameLoss, "GameOverScene"},
+        { GameManager.GameState.GameWon, "GameWinScene"},
+        { GameManager.GameState.Epilogue, "DialogueScene"}
+    };
+    
     // A static instance of this class
     public static SceneController sc;
 
@@ -197,6 +210,10 @@ public class SceneController : MonoBehaviour
                 break;
             
             case TransitionType.Unload:
+                // Get name of the scene in string format.
+                string scene = GameStateToScene(GameManager.gm.gameState);
+                // Set the previous active scene back to active.
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
                 SceneManager.UnloadSceneAsync(currentScene);
                 break;
             
@@ -324,15 +341,32 @@ public class SceneController : MonoBehaviour
         // If notebook is already open, close it
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
+            Scene activeScene;
+            // Check if the DialogueScene or the NPCSelectScene is loaded.
+            if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+            {
+                activeScene = SceneManager.GetSceneByName("DialogueScene");
+            }
+            else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+            {
+                activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+            }
+            else
+            {
+                throw new Exception();
+            }
+            
             GameManager.gm.IsPaused = false;
             crossOverlay.SetActive(false);
             _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
         }
         else
         {
+            SceneName activeScene = GetSceneName(SceneManager.GetActiveScene());
             GameManager.gm.IsPaused = true;
             crossOverlay.SetActive(true);
-            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
+            _ = TransitionScene(SceneName.DialogueScene, SceneName.NotebookScene, TransitionType.Additive);
+            _ = TransitionScene(activeScene, SceneName.NotebookScene, TransitionType.Additive);
         }
     }
 
@@ -352,6 +386,24 @@ public class SceneController : MonoBehaviour
             // If scene name is not found, throw an error
             Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
             throw;
+        }
+    }
+    
+    /// <summary>
+    /// Method for converting gameStates into their scene string name.
+    /// </summary>
+    /// <param name="gameState"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"> GameState key is given which is not present in the gameStateSceneDict. </exception>
+    public string GameStateToScene(GameManager.GameState gameState)
+    {
+        try
+        {
+            return gameStateSceneDict[gameState];
+        }
+        catch
+        {
+            throw new ArgumentException("GameState does not exist within the dictionary");
         }
     }
 }
