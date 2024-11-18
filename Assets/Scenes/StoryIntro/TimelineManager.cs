@@ -182,9 +182,13 @@ public class TimelineManager : MonoBehaviour
     {
         continueButton.SetActive(false); //This button is not necessary now, because we have another button to continue. 
         PauseCurrentTimeline();
+        // Reset the typing animation object
         typingAnimation.gameObject.SetActive(true);
+        typingAnimation.CancelWriting();
+        // Activate the UI elements for the typing animation
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
+        
         try
         {
             typingText.text = typingTexts[typeIndex];
@@ -193,9 +197,8 @@ public class TimelineManager : MonoBehaviour
         catch
         {
             Debug.LogError("No more typing texts..");
-            typingText.text = typingTexts[0];
-            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
             typeIndex = 0; 
+            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
         }
         typeIndex++;
     }
