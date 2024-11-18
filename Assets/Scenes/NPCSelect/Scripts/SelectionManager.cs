@@ -22,6 +22,8 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private NPCSelectScroller scroller;
     [SerializeField] private TextMeshProUGUI headerText;
 
+    private Coroutine fadeCoroutine;
+
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
@@ -142,7 +144,10 @@ public class SelectionManager : MonoBehaviour
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
 
         // Fade the button in
-        StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
     }
 
     /// <summary>
@@ -154,7 +159,10 @@ public class SelectionManager : MonoBehaviour
         button.onClick.RemoveAllListeners();
 
         // Fade the button out
-        StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
     }
     #endregion
 
@@ -166,22 +174,25 @@ public class SelectionManager : MonoBehaviour
     /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeIn(CanvasGroup cg, float duration)
     {
+        Debug.Log("Fading in");
         // First, set the given gameObject to active
         cg.gameObject.SetActive(true);
 
         // Make the object interactable in advance to make it more responsive
         cg.interactable = true;
 
+        float startingAlpha = cg.alpha;
         float time = 0;
-        while (cg.alpha < 1)
+        while (time <= duration)
         {
             time += Time.deltaTime;
 
             // Use lerp to interpolate the fade
-            cg.alpha = Mathf.Lerp(0, 1, time / duration);
+            cg.alpha = Mathf.Lerp(startingAlpha, 1, time / duration);
 
             yield return null;
         }
+        Debug.Log("Finished fading in");
     }
 
     /// <summary>
@@ -191,22 +202,25 @@ public class SelectionManager : MonoBehaviour
     /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeOut(CanvasGroup cg, float duration)
     {
+        Debug.Log("Fading out");
         // Make the object non-interactable to prevent player mistakes
         cg.interactable = true;
 
+        float startingAlpha = cg.alpha;
         float time = 0;
-        while (cg.alpha > 0)
+        while (time <= duration)
         {
             time += Time.deltaTime;
 
             // Use lerp to interpolate the fade
-            cg.alpha = Mathf.Lerp(1, 0, time / duration);
+            cg.alpha = Mathf.Lerp(startingAlpha, 0, time / duration);
 
             yield return null;
         }
 
         // Finally, disable the given gameObject
         cg.gameObject.SetActive(false);
+        Debug.Log("Finished fading out");
     }
     #endregion
 
