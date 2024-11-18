@@ -103,6 +103,11 @@ public class NPCSelectPlayTest
         // Check if the value is correct at the end
         yield return new WaitForSeconds(duration / 2);
         Assert.AreEqual(0, cg.alpha);
+    }
 
+    [UnityTest]
+    public IEnumerator SelectedCharacterNameTest()
+    {
+        yield return null;
     }
 }
