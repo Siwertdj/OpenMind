@@ -63,8 +63,8 @@ public class SavingLoadingTestFilePaths
         }
     }
     
-    private Saving saving => GameManager.FindObjectOfType<Saving>();
-    private Loading loading => GameManager.FindObjectOfType<Loading>();
+    private Save saving  => Save.Saver;
+    private Load loading => Load.Loader;
     
     /// <summary>
     /// Tests whether the correct error is thrown when gamemanager is null
@@ -75,9 +75,9 @@ public class SavingLoadingTestFilePaths
     {
         //create a saving instance to test the function on.
         //note: afaik there is no way to attach this saving instance to the testing scene, so it has to be created with new
-        Saving saving = new Saving();
+        Save saving = new Save();
         LogAssert.Expect(LogType.Error, "Cannot save data when the gamemanger is not loaded.\nSaving failed");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -88,7 +88,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingErrorHandlingGamemanagerCurrentCharactersIsNull()
     {
         LogAssert.Expect(LogType.Error, "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -101,7 +101,7 @@ public class SavingLoadingTestFilePaths
         GameManager.gm.currentCharacters.Add(GameManager.gm.currentCharacters[0]);
         
         LogAssert.Expect(LogType.Error, "Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -111,7 +111,7 @@ public class SavingLoadingTestFilePaths
     [Property("layer", 2)]
     public void TestInitialSave()
     {
-        saving.Save();
+        saving.SaveGame();
     }
     
     
@@ -123,7 +123,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingNoSaveFile()
     {
         File.Delete(FilePathConstants.GetSaveFileLocation());
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -134,7 +134,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingNoSaveFolder()
     {
         Directory.Delete(FilePathConstants.GetSaveFolderLocation());
-        saving.Save();
+        saving.SaveGame();
     }
     
     
