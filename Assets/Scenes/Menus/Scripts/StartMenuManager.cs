@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using UnityEngine;
@@ -23,6 +23,10 @@ public class StartMenuManager : MonoBehaviour
     [Header("Copyright canvas")]
     public Canvas copyright;
     
+    [Header("Resources")]
+    [SerializeField] AudioClip startMenuMusic;
+    private float startMenuMusicFadeInSpeed = 0f;
+    
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
     /// If there are no saves, disable the button.
@@ -34,6 +38,8 @@ public class StartMenuManager : MonoBehaviour
         
         // Keep the copyright text on the screen in all scenes
         DontDestroyOnLoad(copyright);
+        
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
     
     /// <summary>
@@ -52,7 +58,8 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void ContinueGame()
     {
-        SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
+        //SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
+        SaveData saveData = Load.Loader.GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }
     
@@ -92,5 +99,10 @@ public class StartMenuManager : MonoBehaviour
     public void SkipPrologue()
     {
         SceneManager.LoadScene("StorySelectScene");
+    }
+
+    public void OpenSettings()
+    {
+        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
     }
 }

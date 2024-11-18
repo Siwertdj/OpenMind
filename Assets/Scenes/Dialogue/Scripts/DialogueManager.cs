@@ -267,7 +267,6 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void ContinueTalking()
     {
-        Debug.Log("Continue");
         DestroyButtons();
         for (int i = 0; i < 2; i++)
         {
