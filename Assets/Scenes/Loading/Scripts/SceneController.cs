@@ -368,7 +368,6 @@ public class SceneController : MonoBehaviour
             SceneName activeScene = GetSceneName(SceneManager.GetActiveScene());
             GameManager.gm.IsPaused = true;
             crossOverlay.SetActive(true);
-            _ = TransitionScene(SceneName.DialogueScene, SceneName.NotebookScene, TransitionType.Additive);
             _ = TransitionScene(activeScene, SceneName.NotebookScene, TransitionType.Additive);
         }
     }
