@@ -356,9 +356,12 @@ public class SceneController : MonoBehaviour
                 throw new Exception();
             }
             
+            // Get the SceneName enum from the activeScene.
+            SceneName baseScene = GetSceneName(activeScene);
+            
             GameManager.gm.IsPaused = false;
             crossOverlay.SetActive(false);
-            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
+            _ = TransitionScene(SceneName.NotebookScene, baseScene, TransitionType.Unload);
         }
         else
         {
