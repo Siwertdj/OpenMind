@@ -16,5 +16,108 @@ MonoBehaviour:
   id: 13
   avatar: {fileID: 21300000, guid: 384bb9365c83ebd4dbc7b3fe702cb5dd, type: 3}
   voicePitch: 1
-  answers: []
-  greetings: []
+  answers:
+  - question: 1
+    answer:
+    - I am 30 years old.
+    trait:
+    - I am 30 years old.
+  - question: 2
+    answer:
+    - Good! I am a digital designer and I volunteer.
+    - "I live with my fianc\xE9, cat and bonus child in a small town."
+    - I have lots of friend from different places.
+    - From class, going out and from volunteering.
+    trait:
+    - I am a digital designer.
+  - question: 4
+    answer:
+    - I am bisexual.
+    trait:
+    - I am bisexual.
+  - question: 5
+    answer:
+    - I'm doing pretty good.
+    - This is a weird time in my life.
+    - For the first time I actually have money but I don't have enough time to spend
+      it.
+    - I have the opportunity to do things that I didn't have enough money for in
+      the past, like buying a drum kit!
+    - If I only go to work and come home to eat and sleep I would get really sad.
+    - So busy life it is.
+    trait:
+    - I prefer having a busy life.
+  - question: 6
+    answer:
+    - I'm politically left.
+    - I don't follow all debates but I think it's important to always vote.
+    - I try to encourage other people to vote too.
+    trait:
+    - I think it's very important to vote.
+  - question: 14
+    answer:
+    - I am friendly and creative.
+    trait:
+    - I am creative.
+  - question: 15
+    answer:
+    - I am very chaotic.
+    - In fights I tend to put up a shield quickly.
+    trait:
+    - I am very chaotic.
+  - question: 7
+    answer:
+    - I have too many!
+    - Drawing, painting, needleworl, making music, lots of volunteering and watching
+      cringy tv.
+    - I used to be a DJ and I do all kinds of sports.
+    - It's kind of my pitfall.
+    - I enjoy doing all creative things.
+    - I can learn new things quickly.
+    - I don't have one talent, I can do many things a little.
+    - I don't understand it when people have no hobbies, besides watching Netflix.
+    trait:
+    - I have too many hobbies.
+  - question: 9
+    answer:
+    - No, I am an atheist.
+    trait:
+    - I am an atheist.
+  - question: 13
+    answer:
+    - My boyfriend is the most important person in my life.
+    - We are getting marries soon.
+    trait:
+    - My boyfriend is the most important person in my life.
+  - question: 16
+    answer:
+    - I speak two secret languages.
+    trait:
+    - An odd thing about me is that I speak two secret languages.
+  - question: 19
+    answer:
+    - I would book a huge trip.
+    - After that I wouldn't stop working.
+    - I think I would keep working for 2 or 3 days.
+    trait:
+    - If I win the lottery I would book a huge trip.
+  - question: 20
+    answer:
+    - I prefer eating vegetarian.
+    - I feel healthier and I have ethical reasons too.
+    - I mainly don't agree with the way animals are treated.
+    - We are mass slaughtering them and then they just end up in a packet.
+    - We are so far removed from the reality of what happens to the animals.
+    trait:
+    - I prefer eating vegetarian.
+  - question: 17
+    answer:
+    - I try to support the LGBT community.
+    - If someone says something unjust about the community I will defend it but I
+      wouldn't start the conversation myself.
+    - I'm not really a fighter.
+    trait:
+    - I support the LGBT community.
+  greetings:
+  - lines:
+    - Hey!

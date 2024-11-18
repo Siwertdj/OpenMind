@@ -16,9 +16,6 @@ public class StoryObject : ScriptableObject
     [SerializeField] public GameObject dialogueBackground;
     [SerializeField] public GameObject hintBackground;
     [SerializeField] public GameObject epilogueBackground;
-    [SerializeField] public AudioClip  storyIntroMusic;
-    [SerializeField] public AudioClip  storyGameMusic;
-    [SerializeField] public AudioClip  storyEpilogueMusic;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;

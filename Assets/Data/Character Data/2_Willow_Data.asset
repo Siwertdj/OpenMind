@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Willow
   id: 2
-  avatar: {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
+  avatar: {fileID: 21300000, guid: c784bb95dd6169440864db5e31be884d, type: 3}
   voicePitch: 1.5
   answers:
   - question: 4
@@ -29,7 +29,7 @@ MonoBehaviour:
     - and have them be my top priority.
     trait:
     - I am pansexual and I think I am monogamous but I'm not sure yet.
-  - question: 2
+  - question: 5
     answer:
     - I'm doing great!
     - I am very proud of who I am right now
@@ -76,6 +76,26 @@ MonoBehaviour:
     - to the point I just don't do things I don't feel like doing
     trait:
     - I am very chill person, but sometimes too chill.
+  - question: 11
+    answer:
+    - I think friendship, showing appreciation, independence and confidence are all
+      extremely important
+    trait:
+    - I think friendship, being independent and self-confidence are important.
+  - question: 19
+    answer:
+    - I would buy an appartment or a house and I would go on a vacation with what's
+      left.
+    trait:
+    - If I won the lottery I would buy a house and go on a vacation.
+  - question: 18
+    answer:
+    - I think the education system is made for only one kind of person.
+    - But there's many people that don't fit that label.
+    - 'I think there should be different levels of education '
+    - but what they represent right not has to change.
+    trait:
+    - I think a lot of people don't fit the current education system.
   greetings:
   - lines:
     - Hi

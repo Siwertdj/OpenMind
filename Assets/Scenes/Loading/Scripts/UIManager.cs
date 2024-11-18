@@ -22,13 +22,13 @@ public class UIManager : MonoBehaviour
     private Coroutine transitionCoroutine;
 
     /// <summary>
-    /// Opens the GameMenu-scene, hides the UI buttons
+    /// Opens the menu of the game, hides the UI buttons
     /// </summary>
     public void OpenMenu()
     {
         GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
-        SceneManager.LoadScene("GameMenuScene", LoadSceneMode.Additive);
+        gameMenu.SetActive(true);
     }
 
     /// <summary>
@@ -38,8 +38,13 @@ public class UIManager : MonoBehaviour
     {
         GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
+        gameMenu.SetActive(false);
     }
-    
+
+    public void ReturnToStartScreen()
+    {
+        //_ = SceneController.sc.LoadScene(SceneController.SceneName.StartScreenScene);
+    }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.
