@@ -38,6 +38,7 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public static DialogueManager dm;
     [NonSerialized] public CharacterInstance currentRecipient;
     [NonSerialized] public DialogueObject currentObject;
+    [NonSerialized] public List<Emotion> emotions;
     
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
@@ -122,7 +123,7 @@ public class DialogueManager : MonoBehaviour
 
         // Animator write dialogue to the screen.
         pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, emotions, background, pitch);
+        animator.WriteDialogue(dialogue, background, pitch);
     }
 
     /// <summary>
@@ -139,30 +140,7 @@ public class DialogueManager : MonoBehaviour
 
         // Instantiate new background
         foreach (GameObject element in newBackground)
-        {
             Instantiate(element).transform.parent = parent;
-
-            // Change player sprite to set mood to dialogueObject (nog geen idee hoe )
-            /*
-            if (element.CompareTag("Player"))
-            {
-                switch (currentRecipient.)
-                {
-                    case DialogueObject.Mood.Neutral:
-                        Debug.Log("Feeling neutral");
-                        break;
-                    case DialogueObject.Mood.Happy:
-                        Debug.Log("Feeling happy");
-                        break;
-                    case DialogueObject.Mood.Sad:
-                        Debug.Log("Feeling sad");
-                        break;
-                    case DialogueObject.Mood.Angry:
-                        Debug.Log("Feeling angry");
-                        break;
-                }
-            }*/
-        }
     }
 
     /// <summary>

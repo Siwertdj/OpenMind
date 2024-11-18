@@ -49,7 +49,7 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="moods">The list of moods for sentences></param>
     /// <param name="background">The list of sprites loaded></param>
     /// <param name="pitch">The pitch of the characters voice.</param>
-    public void WriteDialogue(List<string> output, List<Emotion> emotions, GameObject[] background, float pitch = 1)
+    public void WriteDialogue(List<string> output, GameObject[] background, float pitch = 1)
     {
 
 
@@ -63,10 +63,10 @@ public class DialogueAnimator : MonoBehaviour
 
             //currentMood = moods;
             //not every time is mood given, because not always does it matter. Those times it should be neutral expression
-            if (emotions == null)
+            if (DialogueManager.dm.emotions == null)
                 currentEmotion.Add(Emotion.Neutral);
             else
-                currentEmotion = emotions;
+                currentEmotion = DialogueManager.dm.emotions;
 
             this.background = background;
 

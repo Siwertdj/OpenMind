@@ -38,7 +38,8 @@ public class ResponseObject : DialogueObject
         var dm = DialogueManager.dm;
 
         List<string> answer = GetQuestionResponse(question);
-        List<Emotion> emotion = GetQuestionResponseEmotion(question);
+        //List<Emotion> emotion = GetQuestionResponseEmotion(question);
+        DialogueManager.dm.emotions = GetQuestionResponseEmotion(question);
 
         if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionObject(background));
@@ -47,7 +48,7 @@ public class ResponseObject : DialogueObject
             Responses.Add(new TerminateDialogueObject());
 
         dm.ReplaceBackground(background);
-        dm.WriteDialogue(answer, emotion, background, DialogueManager.dm.currentRecipient.pitch);
+        dm.WriteDialogue(answer, DialogueManager.dm.emotions, background, DialogueManager.dm.currentRecipient.pitch);
     }
     /// <summary>
     /// Gets character's response to the given question

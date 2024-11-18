@@ -58,7 +58,6 @@ public class SpeakingObject : DialogueObject
     public SpeakingObject(List<string> dialogue, GameObject[] background)
     {
         this.dialogue = dialogue;
-        this.emotion = emotion;
         this.background = background;
     }
 

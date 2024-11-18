@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Youssef
   id: 5
   avatar:
-  - {fileID: 0}
+  - {fileID: 21300000, guid: 92e54be2948e5b9468339f8b0a8ee432, type: 3}
   - {fileID: 0}
   voicePitch: 1
   answers:
