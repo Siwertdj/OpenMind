@@ -11,11 +11,6 @@ public class DebugDisplayer : MonoBehaviour
     private       TextLog log          = new TextLog(10);
     private const bool    DisplayTrace = false;
     
-    private void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
-    
     void OnEnable()
     {
         Application.logMessageReceived += LogCallback;

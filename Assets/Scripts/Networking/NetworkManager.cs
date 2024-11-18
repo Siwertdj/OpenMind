@@ -40,6 +40,7 @@ public class NetworkManager : MonoBehaviour
         
         IPAddress address = IPConnections.GetOwnIps()[0];
         DataListener dataListener = new DataListener(address, IPConnections.Port);
+        StartCoroutine(dataListener.DisplayAnyDebugs(0.5f));
         dataListener.AddOnDataReceivedEvent("test", ReceiveData);
         dataListener.AddOnResponseSentEvent("test", SentResponse);
         dataListener.AddResponseTo("test", Respond);
