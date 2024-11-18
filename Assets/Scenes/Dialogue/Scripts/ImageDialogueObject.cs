@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ImageDialogueObject : DialogueObject
 {
+    
+    // Use the background for the image
+    // Empty dialogue/lines - displays no text or textwindow
+    // Retain the tap-function to continue.
+    
     public ImageDialogueObject(GameObject[] background)
     {
         this.background = background;
