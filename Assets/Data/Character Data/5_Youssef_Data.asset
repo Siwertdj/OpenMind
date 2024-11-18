@@ -57,6 +57,22 @@ MonoBehaviour:
     - He wanted me to be muslim, like him.
     trait:
     - I am not religious.
+  - question: 10
+    answer:
+    - I went to barber school and I'm currently employed as a barber.
+    trait:
+    - I am a barber.
+  - question: 20
+    answer:
+    - I don't eat pork, but because of any religious reasons.
+    - I just don't like the taste.
+    trait:
+    - I don't eat pork.
+  - question: 15
+    answer:
+    - I'm very impatient.
+    trait:
+    - I am impatient.
   greetings:
   - lines:
     - Oh, hi there!

@@ -66,6 +66,19 @@ MonoBehaviour:
     - It's very hard for me to admit someone is better than me at something.
     trait:
     - I am very competitive.
+  - question: 19
+    answer:
+    - If I won the lottery I would take my parents and my sister on a grand vacation.
+    trait:
+    - If I won the lottery I would take a vacation with my parents and sister.
+  - question: 2
+    answer:
+    - I'm doing well, thanks for asking!
+    - I hang out a lot with my colleagues and friends.
+    - I'm also part of a community for, primarily, Asian people.
+    - But really anyone is welcome to join.
+    trait:
+    - I hang out with my colleagues and friends from a community for Asian people.
   greetings:
   - lines:
     - Hey there!
