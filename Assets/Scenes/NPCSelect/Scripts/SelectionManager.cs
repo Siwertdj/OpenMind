@@ -43,8 +43,11 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void SetSceneType()
     {
-        if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
+        if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft())
+        {
             selectionType = "decidecriminal";
+            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
+        }
         else
             selectionType = "dialogue";
     }
