@@ -20,7 +20,7 @@ public class SelectOption : MonoBehaviour
     {
         avatar = GetComponentInChildren<Image>();
         //if 
-        //avatar.sprite = character.avatar;
+        avatar.sprite = character.avatar[0];
 
         characterNameText = GetComponentInChildren<TMP_Text>();
         characterNameText.text = character.characterName;
