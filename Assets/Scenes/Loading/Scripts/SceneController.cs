@@ -24,13 +24,14 @@ public class SceneController : MonoBehaviour
     /// </summary>
     public enum SceneName
     {
-        StartScreenScene,
         NPCSelectScene,
         DialogueScene,
         GameOverScene,
         GameWinScene,
         Loading,
         NotebookScene,
+        SettingsScene,
+        GameMenuScene
     }
 
     /// <summary>

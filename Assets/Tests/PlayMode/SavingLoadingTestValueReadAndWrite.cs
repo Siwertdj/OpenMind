@@ -22,9 +22,9 @@ using Random = System.Random;
 /// </summary>
 public class SavingLoadingTestValueReadAndWrite
 {
-    Random          random = new Random();
-    private Saving  saving  => GameManager.FindObjectOfType<Saving>();
-    private Loading loading => GameManager.FindObjectOfType<Loading>();
+    Random       random = new Random();
+    private Save saving  => Save.Saver;
+    private Load loading => Load.Loader;
     
     [OneTimeSetUp]
     public void LoadTestingScene()
@@ -192,7 +192,7 @@ public class SavingLoadingTestValueReadAndWrite
     public void SavingLoadingDoesNotChangeContents()
     {
         SaveData saveData = CreateSaveData();
-        saving.Save(saveData);
+        saving.SaveGame(saveData);
         SaveData loaded = loading.GetSaveData();
         
         CompareSaveData(saveData, loaded, "compare change");
@@ -228,7 +228,7 @@ public class SavingLoadingTestValueReadAndWrite
         
         for (int i = 0; i < 5; i++)
         {
-            saving.Save(saveData);
+            saving.SaveGame(saveData);
             SaveData loaded = loading.GetSaveData();
             GameManager.gm.StartGame(null, loaded);
             yield return new WaitUntil(

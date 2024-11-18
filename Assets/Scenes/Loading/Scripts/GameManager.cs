@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            
+
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
@@ -151,6 +151,8 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -164,6 +166,8 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
     
