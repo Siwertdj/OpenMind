@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Suus
   id: 11
-  avatar: {fileID: 21300000, guid: dd0ab3d764f597c469fd063abd62e39b, type: 3}
+  avatar:
+  - {fileID: 21300000, guid: dd0ab3d764f597c469fd063abd62e39b, type: 3}
+  - {fileID: 21300000, guid: ad39759c9bb90c24cb3b9900e0e82862, type: 3}
   voicePitch: 1
   answers: []
   greetings: []

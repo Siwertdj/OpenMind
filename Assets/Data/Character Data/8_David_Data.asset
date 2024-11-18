@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: David
   id: 8
-  avatar: {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
+  avatar:
+  - {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
+  - {fileID: 21300000, guid: 3ac67ae026e3fac4fb2e7b91969aeb42, type: 3}
   voicePitch: 0.6
   answers:
   - question: 1

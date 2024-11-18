@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,8 @@ public class SelectOption : MonoBehaviour
     void Start()
     {
         avatar = GetComponentInChildren<Image>();
-        avatar.sprite = character.avatar;
+        //if 
+        //avatar.sprite = character.avatar;
 
         characterNameText = GetComponentInChildren<TMP_Text>();
         characterNameText.text = character.characterName;

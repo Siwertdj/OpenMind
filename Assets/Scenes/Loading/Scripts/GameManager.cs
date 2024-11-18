@@ -15,13 +15,11 @@ using Random = System.Random;
 public class GameManager : MonoBehaviour
 {
 
-
-
     [Header("Game Resources")]
     [SerializeField] public List<CharacterData> characters; // The full list of characters in the game
 
     [Header("Background Prefabs")]
-    [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
+    [SerializeField] public GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     
     [Header("Events")]
@@ -435,7 +433,7 @@ public class GameManager : MonoBehaviour
 
         if (character != null)
         {
-            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
+            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar[0];
             background_.Add(avatarPrefab);
         }
         return background_.ToArray();

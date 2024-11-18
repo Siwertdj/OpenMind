@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Daan
   id: 21
-  avatar: {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
+  avatar:
+  - {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
+  - {fileID: 21300000, guid: e198eb72ccc10d84185ef72b96c64fb5, type: 3}
   voicePitch: 2
   answers:
   - question: 3

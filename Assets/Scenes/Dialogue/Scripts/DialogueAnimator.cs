@@ -6,6 +6,8 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using Unity.VisualScripting;
+using UnityEngine.TextCore.Text;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -137,8 +139,18 @@ public class DialogueAnimator : MonoBehaviour
         {
             if (bg.CompareTag("Player"))
             {
-                Debug.Log(emotions[dialogueIndex]);
+                Debug.Log(emotions[dialogueIndex]);    
+                if (emotions[dialogueIndex] == Emotion.Neutral)
+                {
+                    bg.GetComponent<SpriteRenderer>().sprite = DialogueManager.dm.currentRecipient.avatar[0];
+                    
+                }
+                else if(emotions[dialogueIndex] == Emotion.Happy)
+                {
+                    bg.GetComponent<SpriteRenderer>().sprite = DialogueManager.dm.currentRecipient.avatar[1];
+                }                
             }
+            DialogueManager.dm.ReplaceBackground(background);
         }
     }
 

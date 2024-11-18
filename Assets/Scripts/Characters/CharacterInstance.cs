@@ -23,7 +23,7 @@ public class CharacterInstance
     
     public string characterName;
     public int id;
-    public Sprite avatar;
+    public Sprite[] avatar;
     public float pitch;
 
     public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
