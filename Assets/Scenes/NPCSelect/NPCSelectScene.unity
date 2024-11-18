@@ -930,10 +930,6 @@ PlayableDirector:
     value: {fileID: 1223515026}
   - key: {fileID: -2002103259123678931, guid: 51620009f1203524e848ce7590897958, type: 2}
     value: {fileID: 1972322075}
-  - key: {fileID: -8247008471873608932, guid: 51620009f1203524e848ce7590897958, type: 2}
-    value: {fileID: 1008719525}
-  - key: {fileID: 1055770566606650817, guid: 51620009f1203524e848ce7590897958, type: 2}
-    value: {fileID: 1635353210}
   - key: {fileID: 510421320581743854, guid: 51620009f1203524e848ce7590897958, type: 2}
     value: {fileID: 1951431981}
   m_ExposedReferences:
@@ -1259,6 +1255,7 @@ MonoBehaviour:
   TutorialTimeline: {fileID: 771824835}
   helpButton: {fileID: 1972322077}
   continueButton: {fileID: 1296799959}
+  notebookHighlight: {fileID: 1008719525}
   tutorialCanvas: {fileID: 1710193541}
   textBox: {fileID: 1391645433}
   tutorialText:
@@ -1326,7 +1323,6 @@ RectTransform:
   - {fileID: 1455406691}
   - {fileID: 620381839}
   - {fileID: 1008719526}
-  - {fileID: 1635353214}
   - {fileID: 1296799960}
   m_Father: {fileID: 1710193542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1351,6 +1347,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: 8d2e98d4b0262c54aa07ce2777616524, type: 2}
     - {fileID: 11400000, guid: 86701d24228c234489a3b4a0fb46f27c, type: 2}
+    - {fileID: 11400000, guid: 525160e454b37bd47a2591329be91c31, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1371,6 +1368,20 @@ MonoBehaviour:
         - m_Target: {fileID: 1059265637}
           m_TargetAssemblyTypeName: TutorialManager, Scripts
           m_MethodName: ShowObjective
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1059265637}
+          m_TargetAssemblyTypeName: TutorialManager, Scripts
+          m_MethodName: ActivateNotebookTutorial
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1998,103 +2009,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1597849842}
   m_CullTransparentMesh: 1
---- !u!1 &1635353210
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1635353214}
-  - component: {fileID: 1635353213}
-  - component: {fileID: 1635353212}
-  - component: {fileID: 1635353211}
-  m_Layer: 5
-  m_Name: CharacterHighlight
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!95 &1635353211
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635353210}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a7db0178250d19643b9cd25e779d8a5c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1635353212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635353210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.009296436, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 51f1f251e90db49448ea10cb613f1e70, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1635353213
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635353210}
-  m_CullTransparentMesh: 1
---- !u!224 &1635353214
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635353210}
-  m_LocalRotation: {x: 0.022865506, y: 0.012988583, z: 0.012450461, w: 0.9995767}
-  m_LocalPosition: {x: 0, y: 0, z: 0.49501}
-  m_LocalScale: {x: 1.0766, y: 1.0766, z: 1.0766}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1223515027}
-  m_LocalEulerAnglesHint: {x: 2.601, y: 1.522, z: 1.462}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -379, y: -566}
-  m_SizeDelta: {x: 174.3532, y: 116.1634}
-  m_Pivot: {x: 1, y: 1}
 --- !u!1 &1659958910
 GameObject:
   m_ObjectHideFlags: 0

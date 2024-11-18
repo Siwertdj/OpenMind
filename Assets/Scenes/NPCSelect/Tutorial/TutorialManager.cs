@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
+using Scene = UnityEngine.SceneManagement.Scene;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
@@ -12,6 +14,10 @@ public class TutorialManager : MonoBehaviour
     
     [SerializeField] private Button     helpButton;
     [SerializeField] private GameObject continueButton;
+    private                  Button     notebookButton;
+    private                  bool       enterNotebook;
+    
+    [SerializeField] private GameObject notebookHighlight; 
     
     [SerializeField] private Canvas tutorialCanvas; 
     [SerializeField] private Image    textBox;       // Background of the text. 
@@ -23,7 +29,32 @@ public class TutorialManager : MonoBehaviour
     // Variables for showing the objective of the game. 
     [SerializeField] private GameObject[] objectives;
     private GameObject objective;
-    private bool objectiveShown = false; 
+    private bool objectiveShown = false;
+    
+    public void Start()
+    {
+        Scene loadingScene = SceneManager.GetSceneByName("Loading");
+        GameObject notebook = GameObject.Find("NotebookButton");
+        notebookButton = notebook.GetComponentInChildren<Button>();
+        notebookButton.enabled = false; 
+    }
+    
+    public void ActivateNotebookTutorial()
+    {
+        PauseTutorial();
+        notebookHighlight.SetActive(true);
+        UpdateText();
+        continueButton.SetActive(false);
+        notebookButton.onClick.AddListener(UpdateText);
+        notebookButton.enabled = true; 
+    }
+    
+    private void DeactivateNotebookTutorial()
+    {
+        notebookHighlight.SetActive(false);
+        notebookButton.onClick.RemoveListener(UpdateText);
+        notebookButton.enabled = false; 
+    }
     
     /// <summary>
     /// This method is called when the help button is clicked. 
@@ -41,6 +72,7 @@ public class TutorialManager : MonoBehaviour
     public void StopTutorial()
     {
         tutorialCanvas.gameObject.SetActive(false);
+        notebookButton.enabled = true; 
     }
     
     /// <summary>
@@ -67,7 +99,9 @@ public class TutorialManager : MonoBehaviour
     public void UpdateText()
     {
         PauseTutorial(); // Pause timeline such that player has time to read the text. 
+        continueButton.SetActive(true);
         objective.gameObject.SetActive(false);
+        DeactivateNotebookTutorial();
         try
         {
             text.text = tutorialText[textIndex];
