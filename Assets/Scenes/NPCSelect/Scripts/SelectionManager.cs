@@ -174,7 +174,6 @@ public class SelectionManager : MonoBehaviour
     /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeIn(CanvasGroup cg, float duration)
     {
-        Debug.Log("Fading in");
         // First, set the given gameObject to active
         cg.gameObject.SetActive(true);
 
@@ -192,7 +191,6 @@ public class SelectionManager : MonoBehaviour
 
             yield return null;
         }
-        Debug.Log("Finished fading in");
     }
 
     /// <summary>
@@ -202,7 +200,6 @@ public class SelectionManager : MonoBehaviour
     /// <param name="duration">The duration of the fade</param>
     private IEnumerator FadeOut(CanvasGroup cg, float duration)
     {
-        Debug.Log("Fading out");
         // Make the object non-interactable to prevent player mistakes
         cg.interactable = true;
 
@@ -220,7 +217,6 @@ public class SelectionManager : MonoBehaviour
 
         // Finally, disable the given gameObject
         cg.gameObject.SetActive(false);
-        Debug.Log("Finished fading out");
     }
     #endregion
 

@@ -4,11 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
 /// An expansion of Unity's built-in button that raises a GameEvent when clicked.
@@ -29,41 +27,5 @@ public class GameButton : Button
     private void RaiseEvent()
     { 
         gameEvent.Raise(this);
-    }
-}
-
-[CustomEditor(typeof(GameButton))]
-public class GameButtonEditor : ButtonEditor
-{
-    public override void OnInspectorGUI()
-    {
-        // Access the target script
-        GameButton gameButton = (GameButton)target;
-
-        // Add a custom field for the GameEvent
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("OnClick GameEvent", EditorStyles.boldLabel);
-
-        // Create GUIContent with a label and a tooltip
-        GUIContent gameEventLabel = new GUIContent(
-            "Game Event",                // Label
-            "This should be set to the \"OnClick\" GameEvent" // Tooltip
-        );
-
-        gameButton.gameEvent = (GameEvent)EditorGUILayout.ObjectField(
-            gameEventLabel,
-            gameButton.gameEvent,
-            typeof(GameEvent),
-            false
-        );
-
-        EditorGUILayout.Space();
-        EditorGUILayout.LabelField("Default Button Settings", EditorStyles.boldLabel);
-        base.OnInspectorGUI(); // Draws the default Button Inspector UI
-
-        if (GUI.changed)
-        {
-            EditorUtility.SetDirty(gameButton); // Mark the object as dirty to save changes
-        }
     }
 }

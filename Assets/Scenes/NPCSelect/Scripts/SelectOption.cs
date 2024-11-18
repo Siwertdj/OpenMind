@@ -11,7 +11,6 @@ public class SelectOption : MonoBehaviour
 {
     public CharacterInstance character;
 
-    [SerializeField] private TMP_Text characterNameText;
     [SerializeField] private Image avatarImage;
 
     /// <summary>
@@ -20,7 +19,6 @@ public class SelectOption : MonoBehaviour
     void Start()
     {
         avatarImage.sprite = character.avatar;
-        characterNameText.text = character.characterName;
 
         if (!character.isActive)
             SetInactive();
@@ -32,7 +30,6 @@ public class SelectOption : MonoBehaviour
     private void SetInactive()
     {
         avatarImage.color = new Color(0.6f,0.6f,0.6f,0.6f);
-        characterNameText.alpha = 0.6f;
     }
     
 }

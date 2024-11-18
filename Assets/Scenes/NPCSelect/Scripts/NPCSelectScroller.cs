@@ -92,7 +92,6 @@ public class NPCSelectScroller : MonoBehaviour
         scrollable = transform.GetChild(0);
 
         // Populate list of children
-        Debug.Log("GameManager Instance: " + GameManager.gm);
         children = new Transform[GameManager.gm.currentCharacters.Count];
         for (int i = 0; i < children.Length; i++)
             children[i] = scrollable.GetChild(i);
