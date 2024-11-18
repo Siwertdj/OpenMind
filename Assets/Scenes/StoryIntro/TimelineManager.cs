@@ -187,12 +187,14 @@ public class TimelineManager : MonoBehaviour
         typingText.gameObject.SetActive(true);
         try
         {
+            typingText.text = typingTexts[typeIndex];
             typingAnimation.WriteDialogue(typingTexts[typeIndex]);
         }
         catch
         {
             Debug.LogError("No more typing texts..");
             typingText.text = typingTexts[0];
+            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
             typeIndex = 0; 
         }
         typeIndex++;
