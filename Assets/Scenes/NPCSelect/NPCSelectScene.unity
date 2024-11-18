@@ -1254,7 +1254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TutorialTimeline: {fileID: 771824835}
   helpButton: {fileID: 1972322077}
-  continueButton: {fileID: 1296799959}
+  continueButtonParent: {fileID: 1296799959}
   notebookHighlight: {fileID: 1008719525}
   tutorialCanvas: {fileID: 1710193541}
   textBox: {fileID: 1391645433}

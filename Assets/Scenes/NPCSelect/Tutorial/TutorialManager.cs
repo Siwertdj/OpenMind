@@ -4,60 +4,45 @@ using TMPro;
 using UnityEditor.Build;
 using UnityEngine;
 using UnityEngine.Playables;
-using UnityEngine.SceneManagement;
-using Scene = UnityEngine.SceneManagement.Scene;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] private PlayableDirector TutorialTimeline;
     
+    [SerializeField] private GameObject notebookHighlight; // Arrow to indicate the notebook button.
     [SerializeField] private Button     helpButton;
-    [SerializeField] private GameObject continueButton;
+    [SerializeField] private GameObject continueButtonParent; // GameObject that stores the continuebutton
+    private                  Button     continueButton; 
     private                  Button     notebookButton;
-    private                  bool       enterNotebook;
-    
-    [SerializeField] private GameObject notebookHighlight; 
     
     [SerializeField] private Canvas tutorialCanvas; 
     [SerializeField] private Image    textBox;       // Background of the text. 
     [SerializeField] private string[] tutorialText;  // Contains the text that will be shown. 
     [SerializeField] private TMP_Text text;          // The gameobject that will show the text on the screen. 
     [SerializeField] private     TMP_Text question;  // The question that is shown on top of the screen in the NPC select scene. 
-    private int textIndex;                 // Keeps track of which text to show.  
+    private int textIndex;                           // Keeps track of which text to show.  
     
     // Variables for showing the objective of the game. 
     [SerializeField] private GameObject[] objectives;
     private GameObject objective;
     private bool objectiveShown = false;
     
+    /// <summary>
+    /// This method is called at the start of the tutorial. It initializes the two buttons. 
+    /// </summary>
     public void Start()
     {
-        Scene loadingScene = SceneManager.GetSceneByName("Loading");
         GameObject notebook = GameObject.Find("NotebookButton");
         notebookButton = notebook.GetComponentInChildren<Button>();
-        notebookButton.enabled = false; 
+        notebookButton.enabled = false;
+        continueButton = continueButtonParent.GetComponentInChildren<Button>();
     }
     
-    public void ActivateNotebookTutorial()
-    {
-        PauseTutorial();
-        notebookHighlight.SetActive(true);
-        UpdateText();
-        continueButton.SetActive(false);
-        notebookButton.onClick.AddListener(UpdateText);
-        notebookButton.enabled = true; 
-    }
-    
-    private void DeactivateNotebookTutorial()
-    {
-        notebookHighlight.SetActive(false);
-        notebookButton.onClick.RemoveListener(UpdateText);
-        notebookButton.enabled = false; 
-    }
     
     /// <summary>
-    /// This method is called when the help button is clicked. 
+    /// This method is called when the help button is clicked.
+    /// It makes sure game elements enter a 'tutorial mode'. 
     /// </summary>
     public void StartTutorial()
     {
@@ -69,10 +54,14 @@ public class TutorialManager : MonoBehaviour
         helpButton.gameObject.SetActive(false); // When tutorial is playing, hide the help button. 
     }
     
+    /// <summary>
+    /// This method is called at the end of the tutorial to make sure all game elements regain
+    /// their normal functionality and exit tutorial mode. 
+    /// </summary>
     public void StopTutorial()
     {
         tutorialCanvas.gameObject.SetActive(false);
-        notebookButton.enabled = true; 
+        notebookButton.enabled = true;
     }
     
     /// <summary>
@@ -81,7 +70,7 @@ public class TutorialManager : MonoBehaviour
     public void PlayTutorial()
     {
         TutorialTimeline.Play();
-        continueButton.SetActive(false);
+        continueButtonParent.SetActive(false);
     }
     
     /// <summary>
@@ -90,7 +79,7 @@ public class TutorialManager : MonoBehaviour
     public void PauseTutorial()
     {
         TutorialTimeline.Pause();
-        continueButton.SetActive(true);
+        continueButtonParent.SetActive(true);
     }
     
     /// <summary>
@@ -99,8 +88,8 @@ public class TutorialManager : MonoBehaviour
     public void UpdateText()
     {
         PauseTutorial(); // Pause timeline such that player has time to read the text. 
-        continueButton.SetActive(true);
         objective.gameObject.SetActive(false);
+        notebookHighlight.SetActive(false);
         DeactivateNotebookTutorial();
         try
         {
@@ -135,4 +124,30 @@ public class TutorialManager : MonoBehaviour
         }
         // This method does nothing when the objective does not need to be shown. 
     }
+    
+    // This region contains methods for the tutorial of the notebook 
+    #region NotebookTutorial
+    
+    /// <summary>
+    /// This method is called when the notebook tutorial needs to be started
+    /// It activates the notebook button and makes sure the right text is loaded. 
+    /// </summary>
+    public void ActivateNotebookTutorial()
+    {
+        PauseTutorial();
+        UpdateText();
+        continueButton.enabled = false;                 // Only the notebook button can be clicked. 
+        notebookButton.onClick.AddListener(UpdateText); // Temporarily add the ability to update the text to the notebookbutton. 
+        notebookButton.enabled = true;                  // Make sure notebook button can be clicked. 
+        notebookHighlight.SetActive(true);
+    }
+    
+    private void DeactivateNotebookTutorial()
+    {
+        notebookButton.onClick.RemoveListener(UpdateText); // Remove the ability to update the text
+        continueButton.enabled = true;                     // Make sure the player can tap the screen to continue again. 
+        notebookButton.enabled = false;                    // Make sure the player can not enter the notebook during the tutorial. 
+    }
+    
+    #endregion
 }
