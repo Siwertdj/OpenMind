@@ -194,11 +194,17 @@ public class NPCSelectScroller : MonoBehaviour
 
     #region Test Variables
 #if UNITY_INCLUDE_TESTS
-    public void Test_InstantNavigate(int childIndex) => InstantNavigate(childIndex);
+    public void Test_InstantNavigate(int childIndex) => StartCoroutine(InstantNavigate(childIndex));
 
-    public Transform[] Children 
+    public Transform[] Test_Children 
     { 
         get { return children; } 
+    }
+
+    public int Test_SelectedChild
+    {
+        get { return selectedChild; }
+        set { selectedChild = value; }
     }
 #endif
     #endregion

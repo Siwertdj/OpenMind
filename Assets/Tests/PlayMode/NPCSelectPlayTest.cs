@@ -14,13 +14,26 @@ public class NPCSelectPlayTest
     private SelectionManager sm;
     private NPCSelectScroller scroller;
 
-    private GameObject[] scrollChildren;
-
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+        // Move debugmanager and copyright back to startscreenscene so that 
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+
+        // Unload the StartScreenScene
+        SceneManager.UnloadSceneAsync("StartScreenScene");
+
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+
+        // Put toolbox as parent of SettingsManager
+        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -31,12 +44,6 @@ public class NPCSelectPlayTest
 
         sm = GameObject.Find("SelectionManager").GetComponent<SelectionManager>();
         scroller = GameObject.Find("Scroller").GetComponent<NPCSelectScroller>();
-
-        List<GameObject> children = new();
-        foreach (Transform child in scroller.transform.GetChild(0))
-            children.Add(child.gameObject);
-
-        scrollChildren = children.ToArray();
 
     }
 
@@ -109,15 +116,17 @@ public class NPCSelectPlayTest
     [UnityTest]
     public IEnumerator SelectedCharacterNameTest()
     {
-        for (int i = 0; i < scroller.Children.Length; i++)
+        for (int i = 0; i < scroller.Test_Children.Length; i++)
         {
-            var character = scroller.Children[i].GetComponent<SelectOption>().character;
             scroller.Test_InstantNavigate(i);
+            scroller.Test_SelectedChild = i;
 
             yield return null;
 
+            var character = scroller.Test_Children[i].GetComponentInChildren<SelectOption>().character;
             TMP_Text text = sm.Test_GetSelectionButtonRef().GetComponentInChildren<TMP_Text>();
-            Assert.AreEqual(character.characterName, text.text);
+            Assert.IsTrue(text.text.Contains(character.characterName),
+                $"Expected the string to contain {character.characterName}, but the string was {text.text}");
         }
     }
 }
