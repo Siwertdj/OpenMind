@@ -226,6 +226,8 @@ public class SelectionManager : MonoBehaviour
     public void FadeIn_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeIn(cg, duration));
     public void FadeOut_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeOut(cg, duration));
 
+    public GameButton Test_GetSelectionButtonRef() => confirmSelectionButton;
+
 #endif
     #endregion
 }

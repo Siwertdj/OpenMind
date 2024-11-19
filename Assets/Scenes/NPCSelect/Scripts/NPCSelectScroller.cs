@@ -19,7 +19,7 @@ public class NPCSelectScroller : MonoBehaviour
     private GameObject navButtonRight;
 
     private SwipeDetector swipeDetector;
-    
+
     /// <summary>
     /// The character which is currently selected in the scroller.
     /// </summary>
@@ -41,10 +41,10 @@ public class NPCSelectScroller : MonoBehaviour
     [NonSerialized] public UnityEvent NoCharacterSelected = new();
 
     private int _selectedChild;
-    private int selectedChild 
-    { 
-        get { return _selectedChild; } 
-        set 
+    private int selectedChild
+    {
+        get { return _selectedChild; }
+        set
         {
             // Make sure the target value is not too big or small
             _selectedChild = Mathf.Clamp(value, 0, children.Length - 1);
@@ -64,7 +64,7 @@ public class NPCSelectScroller : MonoBehaviour
                 navButtonLeft.SetActive(true);
                 navButtonRight.SetActive(true);
             }
-        } 
+        }
     }
 
     private void Start()
@@ -192,9 +192,14 @@ public class NPCSelectScroller : MonoBehaviour
             scrollable.localPosition.y);
     }
 
-#region Test Variables
+    #region Test Variables
 #if UNITY_INCLUDE_TESTS
-    public Vector3 GetTargetPos_Test(int childIndex) => GetTargetPos(childIndex);
+    public void Test_InstantNavigate(int childIndex) => InstantNavigate(childIndex);
+
+    public Transform[] Children 
+    { 
+        get { return children; } 
+    }
 #endif
-#endregion
+    #endregion
 }

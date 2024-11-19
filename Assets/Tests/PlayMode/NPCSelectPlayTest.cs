@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.TextCore.Text;
+using TMPro;
 
 public class NPCSelectPlayTest
 {
@@ -108,6 +109,15 @@ public class NPCSelectPlayTest
     [UnityTest]
     public IEnumerator SelectedCharacterNameTest()
     {
-        yield return null;
+        for (int i = 0; i < scroller.Children.Length; i++)
+        {
+            var character = scroller.Children[i].GetComponent<SelectOption>().character;
+            scroller.Test_InstantNavigate(i);
+
+            yield return null;
+
+            TMP_Text text = sm.Test_GetSelectionButtonRef().GetComponentInChildren<TMP_Text>();
+            Assert.AreEqual(character.characterName, text.text);
+        }
     }
 }
