@@ -85,6 +85,37 @@ public class SystemTests
 
             // Check if we are in the NPC Select scene
             Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+            
+            // Use Notebook if not the first cycle
+            if (i > 0)
+            {
+                // Open Notebook
+                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+
+                // Wait until loaded
+                yield return new WaitUntil(() =>
+                    SceneManager.GetSceneByName("NotebookScene").isLoaded);
+                
+                // Check if we are in the Notebook scene
+                Assert.AreEqual(SceneManager.GetSceneByName("NotebookScene"), SceneManager.GetSceneAt(2));
+                
+                // Open character tab
+                GameObject.Find("NameButton1").GetComponent<Button>().onClick.Invoke();
+                
+                // Log notes
+                GameObject.Find("Button").GetComponent<Button>().onClick.Invoke();
+                
+                // Open personal notes
+                GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
+                
+                // Close notebook
+                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitUntil(() =>
+                    SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+                
+                // Check if we are back in the NPC Select scene
+                Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+            }
 
             // Find an active character and click to talk to them
             foreach (CharacterInstance c in GameManager.gm.currentCharacters)
