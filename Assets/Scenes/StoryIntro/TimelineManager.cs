@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -62,6 +62,8 @@ public class TimelineManager : MonoBehaviour
         {
             // set story-variable
             story = storyObject;
+            // Start the music
+            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null);
             // depending on the chosen storyline, play the intro to the story
             switch (storyObject.storyID)
             {
@@ -180,18 +182,23 @@ public class TimelineManager : MonoBehaviour
     {
         continueButton.SetActive(false); //This button is not necessary now, because we have another button to continue. 
         PauseCurrentTimeline();
+        // Reset the typing animation object
         typingAnimation.gameObject.SetActive(true);
+        typingAnimation.CancelWriting();
+        // Activate the UI elements for the typing animation
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
+        
         try
         {
+            typingText.text = typingTexts[typeIndex];
             typingAnimation.WriteDialogue(typingTexts[typeIndex]);
         }
         catch
         {
             Debug.LogError("No more typing texts..");
-            typingText.text = typingTexts[0];
             typeIndex = 0; 
+            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
         }
         typeIndex++;
     }
