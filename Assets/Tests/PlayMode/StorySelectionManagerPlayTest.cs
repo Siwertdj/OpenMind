@@ -16,18 +16,35 @@ using Unity.Collections.LowLevel.Unsafe;
 public class StorySelectionManagerPlayTest
 {
     private GameManager           gm;
-    private StorySelectionManager sm; 
+    private StorySelectionManager sm;
+    //private TimelineManager       tm; 
     
     #region Setup and Teardown
     
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+        
+        // Move debugmanager and copyright back to startscreenscene so that 
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+        
+        // Unload the StartScreenScene
+        SceneManager.UnloadSceneAsync("StartScreenScene");
+        
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
+        // Put toolbox as parent of SettingsManager
+        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
+        
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+        
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
         SceneManager.LoadScene("StorySelectScene");
@@ -52,7 +69,7 @@ public class StorySelectionManagerPlayTest
     public IEnumerator StartStorySelectionManagerTest()
     {
         // Check if there are stories that can be selected
-        Assert.IsNotEmpty(sm.stories);
+        Assert.IsNotEmpty(sm.stories); 
         yield return null;
     }
     
@@ -74,6 +91,10 @@ public class StorySelectionManagerPlayTest
     public IEnumerator ChooseStoryBTest()
     {
         sm.StoryBSelected();
+        
+        /*TimelineManager tm  = GameObject.Find("IntroStoryScene").GetComponent<TimelineManager>();
+        tm.StartGame();*/
+        
         Assert.AreEqual(sm.stories[1].storyID, gm.story.storyID);
         yield return null;
     }
