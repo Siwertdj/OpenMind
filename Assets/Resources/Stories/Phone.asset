@@ -22,7 +22,7 @@ MonoBehaviour:
   storyEpilogueMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
   victimDialogue: has gone home.
   hintDialogue: '*beep beep* You got a new message!'
-  numberOfCharacters: 4
+  numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0
