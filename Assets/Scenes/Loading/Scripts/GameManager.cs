@@ -77,7 +77,6 @@ public class GameManager : MonoBehaviour
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
         gameState = GameState.Loading;
-        Debug.Log(gameState);
     }
     
     /// <summary>
@@ -161,7 +160,6 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.NpcSelect;
-        Debug.Log(gameState);
     }
 
     /// <summary>
@@ -199,7 +197,6 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.NpcSelect;
-        Debug.Log(gameState);
     }
     
     /// <summary>
@@ -244,7 +241,6 @@ public class GameManager : MonoBehaviour
                 SceneController.TransitionType.Transition);
             //update gamestate
             gameState = GameState.CulpritSelect;
-            Debug.Log(gameState);
         }
     }
     #endregion
@@ -353,7 +349,6 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.Loading;
-        Debug.Log(gameState);
         
         // Reset the characters
         foreach (CharacterInstance character in currentCharacters)
@@ -376,7 +371,6 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.Loading;
-        Debug.Log(gameState);
         
         NewGame();     
     }
@@ -409,7 +403,7 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition);
 
         gameState = GameState.HintDialogue;
-        Debug.Log(gameState);
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -440,7 +434,7 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition);
 
         gameState = GameState.NpcDialogue;
-        Debug.Log(gameState);
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
@@ -502,7 +496,6 @@ public class GameManager : MonoBehaviour
                 
                 //update gamestate
                 gameState = GameState.NpcDialogue;
-                Debug.Log(gameState);
                 
                 // If we want to start dialogue with a different person in the epilogue,
                 // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
@@ -519,7 +512,6 @@ public class GameManager : MonoBehaviour
                         SceneController.SceneName.GameWinScene,
                         SceneController.TransitionType.Transition);
                     gameState = GameState.GameWon;
-                    Debug.Log(gameState);
                 }
                 else
                 {
@@ -529,7 +521,6 @@ public class GameManager : MonoBehaviour
                         SceneController.SceneName.GameLossScene,
                         SceneController.TransitionType.Transition);
                     gameState = GameState.GameLoss;
-                    Debug.Log(gameState);
                 }
             }
         }
@@ -560,7 +551,6 @@ public class GameManager : MonoBehaviour
                 }
             
                 gameState = GameState.NpcSelect;
-                Debug.Log(gameState);
             }
         }
     }
@@ -572,7 +562,6 @@ public class GameManager : MonoBehaviour
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
         gameState = GameState.Epilogue;
-        Debug.Log(gameState);
         
         // Get the epilogue dialogue.
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
