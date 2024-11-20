@@ -143,7 +143,9 @@ public class NPCSelectScroller : MonoBehaviour
     /// <param name="childIndex">The index of the child to navigate to.</param>
     private IEnumerator InstantNavigate(int childIndex)
     {
+        // Wait until the parent objects are scaled properly
         yield return new WaitForEndOfFrame();
+
         scrollable.localPosition = GetTargetPos(childIndex);
         OnCharacterSelected.Invoke();
     }
@@ -158,7 +160,6 @@ public class NPCSelectScroller : MonoBehaviour
 
         isNavigating = true;
         float time = 0;
-        Debug.Log("Target fps: " + Application.targetFrameRate);
 
         var startPos = scrollable.localPosition;
         var endPos = GetTargetPos(childIndex);
@@ -166,8 +167,6 @@ public class NPCSelectScroller : MonoBehaviour
         // This loop containts the actual movement code
         while (time < scrollDuration)
         {
-            Debug.Log("Frames: " + (1 / Time.smoothDeltaTime));
-
             time += Time.unscaledDeltaTime;
 
             // Mathf.SmoothStep makes the "animation" ease in and out
@@ -178,7 +177,7 @@ public class NPCSelectScroller : MonoBehaviour
 
             yield return null;
         }
-
+        
         OnCharacterSelected.Invoke();
         isNavigating = false;
     }
@@ -209,6 +208,10 @@ public class NPCSelectScroller : MonoBehaviour
         get { return selectedChild; }
         set { selectedChild = value; }
     }
+
+    public float Test_ScrollDuration { get { return scrollDuration; } }
+
+    public void Test_NavigateToChild(int childIndex) => NavigateToChild(childIndex);
 #endif
     #endregion
 }

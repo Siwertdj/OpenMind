@@ -1336,7 +1336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonFadeDuration: 0.15
-  scrollDuration: 0.5
+  scrollDuration: 0.2
   optionPrefab: {fileID: 3812014761830931731, guid: 1fb297297f6b7fa458a2320916ed9a51, type: 3}
   confirmSelectionButton: {fileID: 330808632}
   scroller: {fileID: 1885397429}
@@ -1639,7 +1639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0814762a70d9db843a27a44d2ce67ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swipeThreshold: 350
+  swipeThreshold: 200
 --- !u!1 &1951431981
 GameObject:
   m_ObjectHideFlags: 0

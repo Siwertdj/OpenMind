@@ -44,6 +44,7 @@ public class NPCSelectPlayTest
 
         sm = GameObject.Find("SelectionManager").GetComponent<SelectionManager>();
         scroller = GameObject.Find("Scroller").GetComponent<NPCSelectScroller>();
+        scroller.scrollDuration = 0.1f;
 
     }
 
@@ -54,6 +55,9 @@ public class NPCSelectPlayTest
         SceneController.sc.UnloadAdditiveScenes();
     }
 
+    /// <summary>
+    /// Makes sure the NPC Select Scroller is properly structured.
+    /// </summary>
     [UnityTest]
     public IEnumerator StartNPCSelectTest()
     {
@@ -65,8 +69,11 @@ public class NPCSelectPlayTest
         yield return null;
     }
 
+    /// <summary>
+    /// Check if button fading in takes the correct amount of time.
+    /// </summary>
     [UnityTest]
-    public IEnumerator FadeInTest()
+    public IEnumerator ButtonFadeInTest()
     {
         var testObject = new GameObject();
         var cg = testObject.AddComponent<CanvasGroup>();
@@ -89,8 +96,11 @@ public class NPCSelectPlayTest
         Assert.AreEqual(1, cg.alpha);
     }
 
+    /// <summary>
+    /// Check if button fading out takes the correct amount of time.
+    /// </summary>
     [UnityTest] 
-    public IEnumerator FadeOutTest()
+    public IEnumerator ButtonFadeOutTest()
     {
         var testObject = new GameObject();
         var cg = testObject.AddComponent<CanvasGroup>();
@@ -128,5 +138,70 @@ public class NPCSelectPlayTest
             Assert.IsTrue(text.text.Contains(character.characterName),
                 $"Expected the string to contain {character.characterName}, but the string was {text.text}");
         }
+    }
+
+    /// <summary>
+    /// Tests if the selected child is updated properly when navigating.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NavigateToChildSelectsCorrectChildTest()
+    {
+        scroller.Test_SelectedChild = 0;
+        scroller.NavigateRight();
+
+        yield return new WaitForSeconds(scroller.Test_ScrollDuration);
+
+        Assert.AreEqual(1, scroller.Test_SelectedChild);
+        scroller.NavigateLeft();
+
+        yield return new WaitForSeconds(scroller.Test_ScrollDuration);
+        Assert.AreEqual(0, scroller.Test_SelectedChild);
+    }
+
+    /// <summary>
+    /// Tests if the child is moved to the center of the screen.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NavigateToChildSetsCorrectPositionTest()
+    {
+        // Repeat x times
+        int childCount = scroller.Test_Children.Length;
+        for (int i = 0; i < childCount * 8; i++)
+        {
+            int childIndex = Random.Range(0, childCount - 1);
+            scroller.Test_NavigateToChild(childIndex);
+
+            yield return new WaitForSeconds(scroller.scrollDuration);
+
+            // Only test x value, as y value is irrelevant
+            Assert.AreEqual(Screen.width / 2, scroller.Test_Children[childIndex].position.x,
+                $"The child is at x position {scroller.Test_Children[childIndex].position.x}, " +
+                $"but the center of the screen is at {Screen.width / 2}");
+        }
+    }
+
+    /// <summary>
+    /// Makes sure there is never an unavailable child selected.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ScrollerChildBoundsTest()
+    {
+        int minBound = 0;
+        int maxBound = scroller.Test_Children.Length - 1;
+
+        // Repeat x times
+        int random;
+        for (int i = 0; i < 100; i++)
+        {
+            random = Random.Range(-100, 100);
+
+            scroller.Test_SelectedChild = random;
+            Assert.GreaterOrEqual(scroller.Test_SelectedChild, minBound,
+                $"{random} is less than the minimum bound of {minBound}");
+            Assert.LessOrEqual(scroller.Test_SelectedChild, maxBound,
+                $"{random} is more than the maximum bound of {maxBound}");
+        }
+
+        yield return null;
     }
 }
