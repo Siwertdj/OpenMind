@@ -328,7 +328,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        Debug.Log("End game.");
         Application.Quit();
     }
     
@@ -499,7 +498,7 @@ public class GameManager : MonoBehaviour
                     // Transition to the GameOverScene and set the gameState to GameLoss.
                     await SceneController.sc.TransitionScene(
                         SceneController.SceneName.DialogueScene,
-                        SceneController.SceneName.GameOverScene,
+                        SceneController.SceneName.GameLossScene,
                         SceneController.TransitionType.Transition);
                     gameState = GameState.GameLoss;
                 }
@@ -519,9 +518,8 @@ public class GameManager : MonoBehaviour
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
-                    Debug.Log("transition from game loss to npcselect");
                     await sc.TransitionScene(
-                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.GameLossScene, 
                         SceneController.SceneName.NPCSelectScene, 
                         SceneController.TransitionType.Transition);
                 }
@@ -531,7 +529,7 @@ public class GameManager : MonoBehaviour
                             SceneController.SceneName.DialogueScene, 
                             SceneController.SceneName.NPCSelectScene, 
                             SceneController.TransitionType.Transition);
-                    }
+                }
             
                 gameState = GameState.NpcSelect;
             }

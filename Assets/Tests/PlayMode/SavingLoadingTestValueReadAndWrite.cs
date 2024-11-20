@@ -45,6 +45,9 @@ public class SavingLoadingTestValueReadAndWrite
         SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
+        GameManager.gm.gameObject.AddComponent<AudioSource>();
+        GameManager.gm.gameObject.AddComponent<SettingsManager>();
+        
         //initialise gamemanager
         StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
         GameManager.gm.StartGame(null, story);
