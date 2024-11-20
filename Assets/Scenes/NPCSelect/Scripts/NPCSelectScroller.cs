@@ -158,6 +158,7 @@ public class NPCSelectScroller : MonoBehaviour
 
         isNavigating = true;
         float time = 0;
+        Debug.Log("Target fps: " + Application.targetFrameRate);
 
         var startPos = scrollable.localPosition;
         var endPos = GetTargetPos(childIndex);
@@ -165,7 +166,9 @@ public class NPCSelectScroller : MonoBehaviour
         // This loop containts the actual movement code
         while (time < scrollDuration)
         {
-            time += Time.deltaTime;
+            Debug.Log("Frames: " + (1 / Time.smoothDeltaTime));
+
+            time += Time.unscaledDeltaTime;
 
             // Mathf.SmoothStep makes the "animation" ease in and out
             float t = Mathf.SmoothStep(0, 1, Mathf.Clamp01(time / scrollDuration));
