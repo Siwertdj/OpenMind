@@ -604,7 +604,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if more, False if not.</returns>
     public bool EnoughCharactersRemaining()
     {
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        int numberOfActiveCharacters = currentCharacters.Count(c => c.isActive);
         return numberOfActiveCharacters > story.minimumRemaining;
     }
     
