@@ -1271,9 +1271,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1413766659}
-  - component: {fileID: 1413766662}
   - component: {fileID: 1413766661}
   - component: {fileID: 1413766660}
+  - component: {fileID: 1413766662}
   m_Layer: 5
   m_Name: Skip Dialogue Button
   m_TagString: Untagged
@@ -1347,7 +1347,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1413766658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: a397579899c1d93439b3773da34848b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1383,7 +1383,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 826756117}
-        m_TargetAssemblyTypeName: DialogueAnimator, Assembly-CSharp
+        m_TargetAssemblyTypeName: DialogueAnimator, Scripts
         m_MethodName: SkipDialogue
         m_Mode: 1
         m_Arguments:

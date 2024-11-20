@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.
-        var dialogueObject = new SpeakingObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
+        var dialogueObject = new SpeakingDialogueObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
         StartDialogue(dialogueObject);
     }
 
@@ -402,10 +402,10 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(CharacterInstance character)
     {
         GameObject[] background = CreateDialogueBackground(character, story.dialogueBackground);
-        var dialogueObject = new SpeakingObject(
+        var dialogueObject = new SpeakingDialogueObject(
             character.GetGreeting(),
             background);
-        dialogueObject.Responses.Add(new QuestionObject(background));
+        dialogueObject.Responses.Add(new QuestionDialogueObject(background));
 
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
@@ -445,7 +445,7 @@ public class GameManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Called by DialogueManager when dialogue is ended, by execution of a TerminateDialogueObject.
+    /// Called by DialogueManager when dialogue is ended, by execution of a DialogueTerminateObject.
     /// Checks if questions are remaining:
     /// .. if no, end cycle.
     /// .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle.
@@ -466,7 +466,7 @@ public class GameManager : MonoBehaviour
             DialogueManager dm = (DialogueManager)sender;
             var backgroundCulprit = CreateDialogueBackground(culprit, story.epilogueBackground);
             dm.ReplaceBackground(backgroundCulprit);
-            // If the TerminateDialogueObject has a SpeakingObject in the Responses list, start dialogue with a different person.
+            // If the DialogueTerminateObject has a DialogueSpeakingObject in the Responses list, start dialogue with a different person.
             if (currentObject.Responses.Count > 0)
             {
                 // Transition to dialogue with a different person.
@@ -476,7 +476,7 @@ public class GameManager : MonoBehaviour
                     SceneController.TransitionType.Transition);
                 
                 // If we want to start dialogue with a different person in the epilogue,
-                // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
+                // there will be a DialogueSpeakingObject under the Responses list of the DialogueTerminateObject,
                 // which will be used for the dialogue for dialogue with the next person.
                 onDialogueStart.Raise(this, currentObject.Responses[0], culprit);
             }
@@ -562,28 +562,28 @@ public class GameManager : MonoBehaviour
     /// <returns>A <see cref="DialogueObject"/> that is used at the start of the epilogue.</returns>
     DialogueObject GetEpilogueStart(GameObject[] background)
     {
-        var dialogueObject = new SpeakingObject(remainingDialogueScenario[0], background);
+        var dialogueObject = new SpeakingDialogueObject(remainingDialogueScenario[0], background);
         // Remove the first element of the list.
         remainingDialogueScenario.RemoveAt(0);
         if (!hasWon)
         {
             // If the player loses, the dialogue with the wrong person should end,
             // and a new dialogue with the culprit should start.
-            // note: SpeakingObject gets again gets the list at index 0, since the previous
+            // note: DialogueSpeakingObject gets again gets the list at index 0, since the previous
             // dialogue at index 0 gets removed at line 490.
-            TerminateDialogueObject endDialogue = new TerminateDialogueObject();
-            dialogueObject.Responses.Add(endDialogue);
+            TerminateDialogueObject end = new TerminateDialogueObject();
+            dialogueObject.Responses.Add(end);
             
-            SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
+            SpeakingDialogueObject next = new SpeakingDialogueObject(remainingDialogueScenario[0], background);
             // Remove the first element of the list.
             remainingDialogueScenario.RemoveAt(0);
-            endDialogue.Responses.Add(nextDialogue);
+            end.Responses.Add(next);
             
-            nextDialogue.Responses.Add(new OpenResponseObject(background));
+            next.Responses.Add(new OpenResponseDialogueObject(background));
         }
         else
         {
-            dialogueObject.Responses.Add(new OpenResponseObject(background));
+            dialogueObject.Responses.Add(new OpenResponseDialogueObject(background));
         }
         return dialogueObject;
     }

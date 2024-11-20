@@ -80,15 +80,15 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
         
-        // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
-        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
+        // If we are in the Epilogue GameState and the next responseDialogue object is an OpenResponseDialogueObject, create the open question.
+        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseDialogueObject)
             CreateOpenQuestion();
 
         ExecuteNextObject();
     }
 
     /// <summary>
-    /// Gets the current object's first response and executes it.
+    /// Gets the current object's first responseDialogue and executes it.
     /// </summary>
     private void ExecuteNextObject()
     {
@@ -141,11 +141,11 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
-    /// <param name="questionObject">A <see cref="QuestionObject"/> containing the questions and responses</param>
-    public void InstantiatePromptButtons(QuestionObject questionObject)
+    /// <param name="questionDialogueObject">A <see cref="QuestionDialogueObject"/> containing the questions and responses</param>
+    public void InstantiatePromptButtons(QuestionDialogueObject questionDialogueObject)
     {
-        // Instantiate button containing each response
-        foreach (ResponseObject response in questionObject.Responses)
+        // Instantiate button containing each responseDialogue
+        foreach (ResponseDialogueObject response in questionDialogueObject.Responses)
         {
             // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
@@ -176,8 +176,8 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Executed when a question button is pressed.
     /// </summary>
-    /// <param name="response">A <see cref="ResponseObject"/> containing the response</param>
-    public void OnButtonClick(ResponseObject response)
+    /// <param name="responseDialogue">A <see cref="ResponseDialogueObject"/> containing the responseDialogue</param>
+    public void OnButtonClick(ResponseDialogueObject responseDialogue)
     {
         // Remove buttons from screen
         DestroyButtons();
@@ -186,7 +186,7 @@ public class DialogueManager : MonoBehaviour
         questionsField.SetActive(false);
 
         // Write dialogue when button is pressed
-        currentObject = response;
+        currentObject = responseDialogue;
         currentObject.Execute();
     }
 

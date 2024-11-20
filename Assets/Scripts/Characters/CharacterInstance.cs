@@ -99,7 +99,7 @@ public class CharacterInstance
             "I do not want to miss the bus.",
             "Goodbye."
         };
-        // List of lists, where in between each list an OpenResponseObject will be called.
+        // List of lists, where in between each list an OpenResponseDialogueObject will be called.
         List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
         return retval;
     }
@@ -141,7 +141,7 @@ public class CharacterInstance
             "I do not want to miss the bus.",
             "Goodbye." 
         };
-        // List of lists, where in between each list an OpenResponseObject will be called.
+        // List of lists, where in between each list an OpenResponseDialogueObject will be called.
         List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3, speakingText4};
         return retval;
     }

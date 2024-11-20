@@ -5,9 +5,9 @@ using UnityEngine;
 
 /// <summary>
 /// A child of DialogueObject. Executing this object writes a response to the given question to the screen.
-/// A response can be either a new QuestionObject, or a TerminateDialogueObject if there are no more questions available.
+/// A response can be either a new QuestionDialogueObject, or a TerminateDialogueObject if there are no more questions available.
 /// </summary>
-public class ResponseObject : DialogueObject
+public class ResponseDialogueObject : DialogueObject
 {
     public Question question;
 
@@ -16,7 +16,7 @@ public class ResponseObject : DialogueObject
     /// </summary>
     /// <param name="question">The question that this is a response to</param>
     /// <param name="background">The background</param>
-    public ResponseObject(Question question, GameObject[] background)
+    public ResponseDialogueObject(Question question, GameObject[] background)
     {
         this.question = question;
         this.background = background;
@@ -31,7 +31,7 @@ public class ResponseObject : DialogueObject
 
         List<string> answer = GetQuestionResponse(question);
         if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
-            Responses.Add(new QuestionObject(background));
+            Responses.Add(new QuestionDialogueObject(background));
         // If there are no more questions remaining give a TerminateDialogueObject as a response
         else
             Responses.Add(new TerminateDialogueObject());

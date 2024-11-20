@@ -121,9 +121,10 @@ public class DialogueAnimator : MonoBehaviour
         if (GameManager.gm?.IsPaused == true)
             return;
 
+        // Don't do anything if dialogue is not open
         if (!InDialogue)
             return;
-
+        
         if (IsOutputting)
         {
             // Write full sentence and then stop writing

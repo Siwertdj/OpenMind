@@ -7,7 +7,7 @@ using UnityEngine;
 /// <summary>
 /// A child of DialogueObject. Executing this object places questions on the screen, with ResponseObjects as responses.
 /// </summary>
-public class QuestionObject : DialogueObject
+public class QuestionDialogueObject : DialogueObject
 {
     public List<Question> questions = new();
     
@@ -15,7 +15,7 @@ public class QuestionObject : DialogueObject
     /// The constructor.
     /// </summary>
     /// <param name="background">The background</param>
-    public QuestionObject(GameObject[] background)
+    public QuestionDialogueObject(GameObject[] background)
     {
         this.background = background;
     }
@@ -31,7 +31,7 @@ public class QuestionObject : DialogueObject
 
         // Add response to each question to list of responses
         foreach (Question question in questions)
-            Responses.Add(new ResponseObject(question, background));
+            Responses.Add(new ResponseDialogueObject(question, background));
 
         dm.ReplaceBackground(background);
         dm.InstantiatePromptButtons(this);
