@@ -35,8 +35,11 @@ public class Load
         // retrieve savedata, if there is any.
         SaveData saveData = GetSaveData();
         if (saveData is null)
+        {
+            Debug.LogError("Make sure there is savedata before loading a game");
             return;
-        
+        }
+
         if (GameManager.gm is null)
         {
             Debug.LogError("Please activate the gamemanager before loading a game");
@@ -54,8 +57,11 @@ public class Load
         string saveFileLocation = FilePathConstants.GetSaveFileLocation();
         string saveFileJsonContents = FilePathConstants.GetSafeFileContents(saveFileLocation, "Save Data", "Loading");
         if (saveFileJsonContents is null)
-            return null;    
-        
+        {
+            Debug.Log("No savedata was found");
+            return null;
+        }
+
         return JsonConvert.DeserializeObject<SaveData>(saveFileJsonContents);
     }
 }
