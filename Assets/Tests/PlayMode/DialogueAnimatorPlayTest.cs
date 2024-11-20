@@ -186,20 +186,20 @@ public class DialogueAnimatorPlayTest
     {
         string text = "Hello, World!";
         bool dialogueEndCheck = false;
-        animator.OnDialogueComplete.AddListener(() => setBool(ref dialogueEndCheck));
+        animator.OnDialogueComplete.AddListener(() => SetBool(ref dialogueEndCheck));
         animator.WriteDialogue(text);
-
-        // Wait for dialogue to finish
-        yield return new WaitForSeconds(animator.Test_DelayInSeconds * (text.Length + 2));
 
         // End the dialogue
         animator.SkipDialogue();
+        animator.SkipDialogue();
 
-        Assert.IsTrue(dialogueEndCheck);        
+        Assert.IsTrue(dialogueEndCheck);
+
+        yield return null;
     }
 
     /// <summary>
     /// Helper function which simply sets a bool reference to its opposite value.
     /// </summary>
-    private void setBool(ref bool p) => p = !p;
+    private void SetBool(ref bool p) => p = !p;
 }
