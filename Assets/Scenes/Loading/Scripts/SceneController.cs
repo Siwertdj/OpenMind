@@ -24,15 +24,14 @@ public class SceneController : MonoBehaviour
     /// </summary>
     public enum SceneName
     {
-        StartScreenScene,
+        Loading,
         NPCSelectScene,
         DialogueScene,
-        GameOverScene,
-        GameWinScene,
-        Loading,
         NotebookScene,
-        PrologueScene,
-        EpilogueScene
+        GameMenuScene,
+        SettingsScene,
+        GameLossScene,
+        GameWinScene
     }
 
     /// <summary>
@@ -72,12 +71,12 @@ public class SceneController : MonoBehaviour
     {
         //Get the story scene
         Scene loadingScene = SceneManager.GetSceneByName("Loading");
+        
         // Unload all loaded scenes that are not the story scene
         for (int i = 0; i < SceneManager.sceneCount; i++)
         {
             Scene loadedScene = SceneManager.GetSceneAt(i);
-            if (loadedScene != loadingScene) 
-                SceneManager.UnloadSceneAsync(loadedScene.name);
+            if (loadedScene != loadingScene) SceneManager.UnloadSceneAsync(loadedScene.name);
         }
     }
 
@@ -119,6 +118,7 @@ public class SceneController : MonoBehaviour
         //example: NPCSelectScene --> DialogueScene(T), NotebookScene(A), GameOverScene(T), GameWinScene(T)
         const string arrowSeparator = " --> ";
         const string sceneSeparator = ", ";
+        
         // Check the scene before the arrowSeparator is correctly written.
         for(int i = 0; i < fileGraphContentLines.Length; i++)
         {
@@ -126,14 +126,14 @@ public class SceneController : MonoBehaviour
             //check if the scene name is correctly written
             if (!buildScenes.Contains(sceneName))
             {
-                Debug.LogError($"The scene with the name {sceneName} on line {i} of the scene graph file does not exist. " +
-                               "Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                Debug.LogError($"The scene with the name {sceneName} on line {i} of the scene graph file does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
                 validReading = false;
                 fileGraphContentLines = Array.Empty<string>();
                 break;
             }
             sceneToID.Add(sceneName, sceneToID.Count);
         }
+        
         // Check if all scene names are correctly written.
         for (int i = 0; i < fileGraphContentLines.Length; i++)
         {
@@ -148,11 +148,11 @@ public class SceneController : MonoBehaviour
                 //check if the scene name is correctly written
                 if (!buildScenes.Contains(toScene))
                 {
-                    Debug.LogError($"The scene with the name {toScene} on line {i} of the scene graph file after the arrow does not exist. " +
-                                   "Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                    Debug.LogError($"The scene with the name {toScene} on line {i} of the scene graph file after the arrow does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
                     validReading = false;
                     break;
                 }
+                
                 // Set the correct transitiontype
                 bool found = false;
                 char trans = to[^2];
@@ -165,15 +165,15 @@ public class SceneController : MonoBehaviour
                         break;
                     }
                 }
+                
                 if (!found)
                 {
-                    Debug.LogError($"The transition with the letter {trans} on line {i} of the scene graph file " +
-                                   $"belonging to the scene transition {fromTo[0]} --> {toScene} does not exist. " +
-                                   "Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
+                    Debug.LogError($"The transition with the letter {trans} on line {i} of the scene graph file belonging to the scene transition {fromTo[0]} --> {toScene} does not exist. Please check this file for typos. Scene transitions won't be checked unless this is fixed.");
                     validReading = false;
                 }
             }
         }
+        
         // Empty sceneGraph and sceneToID if the transition is invalid.
         if (!validReading)
         {
@@ -223,6 +223,7 @@ public class SceneController : MonoBehaviour
 
         // Start the coroutine
         StartCoroutine(LoadSceneCoroutine(targetScene, tcs));
+        
         // Return the task that will complete when the coroutine ends
         return tcs.Task;
     }
@@ -266,16 +267,16 @@ public class SceneController : MonoBehaviour
         //for example, making a new scene, but forgetting to put it into the scene graph file, should result in an error here.
         if (!sceneToID.ContainsKey(currentScene))
         {
-            Debug.LogError($"The scene with the name {currentScene} cannot be found in the transition graph. " +
-                           "\nPlease add it to the transition graph.");
+            Debug.LogError($"The scene with the name {currentScene} cannot be found in the transition graph. Please add it to the transition graph.");
             return;
         }
+        
         if (!sceneToID.ContainsKey(targetScene))
         {
-            Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. " +
-                           "\nPlease add it to the transition graph.");
+            Debug.LogError($"The scene with the name {targetScene} cannot be found in the transition graph. Please add it to the transition graph.");
             return;
         }
+        
         //cannot load from an unloaded scene
         if (!SceneManager.GetSceneByName(currentScene).isLoaded)
         {
@@ -297,8 +298,7 @@ public class SceneController : MonoBehaviour
     }
     
     //args is the data to transfer
-    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) 
-        => await TransitionScene(from, to, transitionType, Transitioning);
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
         
     /// <summary>
     /// Function to be called when loading the first cycle
@@ -316,9 +316,9 @@ public class SceneController : MonoBehaviour
     /// <summary>
     /// Function to load the notebook.
     /// </summary>
+    // this method is not tested
     public void ToggleNotebookScene(Button button)
     {
-        Debug.Log($"Button: {button.gameObject.name}");
         var crossOverlay = button.transform.GetChild(0).gameObject;
 
         // If notebook is already open, close it

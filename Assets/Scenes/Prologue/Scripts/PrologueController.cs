@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -34,6 +34,9 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private Sprite[] backgrounds; // Stores all the background images
     [SerializeField] private Sprite[] illusions; // Stores all the optical illusion images
     [SerializeField] private string[] receptionistText; // Stores all the text spoken by the receptionist
+
+    [Header("Resources")] 
+    [SerializeField] private AudioClip prologueMusic;
     
     private int textIndex; // Index to keep track of the text that needs to be spoken
     private int backgroundIndex; // Index to keep track of the background that needs to be used
@@ -48,6 +51,9 @@ public class CutsceneController : MonoBehaviour
        // Intialize indices
        textIndex = -1; 
        backgroundIndex = 0;
+       
+       // Set Cutscene-music
+       SettingsManager.sm.SwitchMusic(prologueMusic,null);
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
@@ -145,7 +151,7 @@ public class CutsceneController : MonoBehaviour
     public void OnToggleValueChanged(bool isOn)
     {
         imageToggler.isOn = isOn;  
-        checkmarkTransform.GameObject().SetActive(isOn);
+        checkmarkTransform.gameObject.SetActive(isOn);
         if (isOn) illusionImage.sprite = illusions[0];
         else
         {

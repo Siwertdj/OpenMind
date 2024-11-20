@@ -32,8 +32,6 @@ public class GameEvent : ScriptableObject
    {
       if (!listeners.Contains(listener))
          listeners.Add(listener);
-      else
-          Debug.Log("Listener is already registered");
    }
    
    /// <summary>
@@ -44,8 +42,5 @@ public class GameEvent : ScriptableObject
    {
       if (listeners.Contains(listener))
          listeners.Remove(listener);
-      else
-          Debug.Log("Listener is already registered");
-        
    }
 }

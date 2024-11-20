@@ -6,8 +6,8 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using Random = System.Random;
-
 
 /// <summary>
 /// The manager for the entire game, where most of the magic happens.
@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods
-    public StoryObject story; // Contains information about the current game pertaining to the story
+    
+    public StoryObject
+        story { get; private set; } // Contains information about the current game pertaining to the story
     
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
@@ -118,33 +120,40 @@ public class GameManager : MonoBehaviour
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
-        currentCharacters.AddRange(characters.FindAll(c => 
+        List<CharacterInstance> newCurrentCharacters = characters.FindAll(c => 
             saveData.activeCharacterIds.Contains(c.id) ||
             saveData.inactiveCharacterIds.Contains(c.id)).
-                Select(c => new CharacterInstance(c)));
+                Select(c => new CharacterInstance(c)).ToList();
+        
+        //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
+        //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
+        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+            currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
+        
 
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
             c.isActive = saveData.activeCharacterIds.Contains(c.id);
             c.isCulprit = saveData.culpritId == c.id;
-            // TODO: change the line below, so that even inactive characters get their remainingquestions-list
-            c.RemainingQuestions = c.isActive ? saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2 : new List<Question>();
+
+            c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
             c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
         //assign notebook data
-        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = new Dictionary<CharacterInstance, NotebookPage>();
-        notebookDataPerCharacter.AddRange(saveData.characterNotes.Select(cn =>
+        Dictionary<CharacterInstance, NotebookPage> notebookDataPerCharacter = saveData.characterNotes.Select(cn =>
         {
             CharacterInstance instance = currentCharacters.First(c => c.id == cn.Item1);
             return new KeyValuePair<CharacterInstance, NotebookPage>(instance, new NotebookPage(cn.Item2, instance));
-        }));
+        }).ToDictionary(pair => pair.Key, pair => pair.Value);
         notebookData = new NotebookData(notebookDataPerCharacter, saveData.personalNotes);
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
     }
@@ -158,6 +167,8 @@ public class GameManager : MonoBehaviour
         PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
+        // Start the music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
     
@@ -316,7 +327,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        Debug.Log("End game.");
         Application.Quit();
     }
     
@@ -420,14 +430,17 @@ public class GameManager : MonoBehaviour
     private GameObject[] CreateDialogueBackground(CharacterInstance character = null, GameObject background = null)
     {
         List<GameObject> background_ = new();
+
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
         background_.Add(background == null ? story.dialogueBackground : background);
 
+        // If a character is given, add that as well
         if (character != null)
         {
-            avatarPrefab.GetComponent<SpriteRenderer>().sprite = character.avatar;
+            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
             background_.Add(avatarPrefab);
         }
+
         return background_.ToArray();
     }
     
@@ -483,7 +496,7 @@ public class GameManager : MonoBehaviour
                     // Transition to the GameOverScene and set the gameState to GameLoss.
                     await SceneController.sc.TransitionScene(
                         SceneController.SceneName.DialogueScene,
-                        SceneController.SceneName.GameOverScene,
+                        SceneController.SceneName.GameLossScene,
                         SceneController.TransitionType.Transition);
                     gameState = GameState.GameLoss;
                 }
@@ -498,11 +511,12 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
                     await sc.TransitionScene(
-                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.GameLossScene, 
                         SceneController.SceneName.NPCSelectScene, 
                         SceneController.TransitionType.Transition);
                 }
@@ -512,7 +526,7 @@ public class GameManager : MonoBehaviour
                             SceneController.SceneName.DialogueScene, 
                             SceneController.SceneName.NPCSelectScene, 
                             SceneController.TransitionType.Transition);
-                    }
+                }
             
                 gameState = GameState.NpcSelect;
             }
@@ -587,7 +601,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if more, False if not.</returns>
     public bool EnoughCharactersRemaining()
     {
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        int numberOfActiveCharacters = currentCharacters.Count(c => c.isActive);
         return numberOfActiveCharacters > story.minimumRemaining;
     }
     

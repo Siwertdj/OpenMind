@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -56,6 +56,8 @@ public class TimelineManager : MonoBehaviour
         {
             // set story-variable
             story = storyObject;
+            // Start the music
+            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null);
             // depending on the chosen storyline, play the intro to the story
             switch (storyObject.storyID)
             {

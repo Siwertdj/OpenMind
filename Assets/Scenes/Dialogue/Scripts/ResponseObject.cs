@@ -34,11 +34,7 @@ public class ResponseObject : DialogueObject
             Responses.Add(new QuestionObject(background));
         // If there are no more questions remaining give a TerminateDialogueObject as a response
         else
-        {
-            Debug.LogError("There are no more questions to ask to the recipient " + 
-                           "\n Game probably lasted too long/add more questions to this character");
             Responses.Add(new TerminateDialogueObject());
-        }
 
         dm.ReplaceBackground(background);
         dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
