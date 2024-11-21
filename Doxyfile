@@ -969,7 +969,8 @@ INPUT                  = C:\Users\joost\source\repos\OpenMind\Assets\Scripts \
                          C:\Users\joost\source\repos\OpenMind\Assets\Scenes \
                          C:/Users/joost/source/repos/OpenMind/Assets/LoadGame.cs \
                          C:/Users/joost/source/repos/OpenMind/Assets/SelectionSpace.cs \
-                         C:\Users\joost\source\repos\OpenMind\Assets\Tests
+                         C:\Users\joost\source\repos\OpenMind\Assets\Tests \
+                         Assets\Scripts
 
 # This tag can be used to specify the character encoding of the source files
 # that Doxygen parses. Internally Doxygen uses the UTF-8 encoding. Doxygen uses
