@@ -6,14 +6,6 @@ on:
       - docs/126.2-Documentation-in-github
 
 jobs:
-  analyze:
-    name: Analyze on Dev
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        language: [ 'csharp' ]
-
   deploy:
     runs-on: ubuntu-latest
     permissions:
