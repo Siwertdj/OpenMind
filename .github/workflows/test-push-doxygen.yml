@@ -14,11 +14,18 @@ jobs:
       matrix:
         language: [ 'csharp' ]
 
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Doxygen Action
-        uses: mattnotmitt/doxygen-action@1.9.8
-        with: 
-          doxyfile-path: 'Doxyfile'
+      - uses: DenverCoder1/doxygen-github-pages-action@v2.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: docs/126.2-Documentation-in-github
+          folder: .
+          config_file: Doxyfile
+          doxygen_version: 1.9.6
 
 
 
