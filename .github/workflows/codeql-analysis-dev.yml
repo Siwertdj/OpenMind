@@ -50,10 +50,6 @@ jobs:
         if: failure() || success() && steps.analyze.outputs.alerts && steps.analyze.outputs.alerts > 0
         run: exit 1
 
-                    
-      - name: Doxygen Action
-        uses: mattnotmitt/doxygen-action@1.9.8
-        with: 
-           doxyfile-path: 'docs/Doxygen'
+                
 
 
