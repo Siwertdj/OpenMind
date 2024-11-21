@@ -1,0 +1,23 @@
+name: "test doxygen"
+
+on:
+  push:
+    branches:
+      - docs/126.2-Documentation-in-github
+
+jobs:
+  analyze:
+    name: Analyze on Dev
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        language: [ 'csharp' ]
+
+    steps:                    
+      - name: Doxygen Action
+        uses: mattnotmitt/doxygen-action@1.9.8
+        with: 
+           doxyfile-path: 'Documentation/Doxygen'
+
+
