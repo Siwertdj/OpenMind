@@ -16,35 +16,41 @@ using UnityEngine;
 /// <summary>
 /// Facilitates sending data over a network.
 /// </summary>
-public class DataSender
+public class DataSender : DataNetworker
 {
-    private Socket        sender;
-    private IPEndPoint    endPoint;
-    private NetworkEvents onDataSentEvents;
-    private NetworkEvents onResponseEvent;
+    private bool                      isListeningForResponse;
+    private List<AcknowledgementTime> acknowledgementTimes;
     
-    private string logError, logWarning = "";
+    /// <summary> when a connection is made with the listener, input is the task associated with making the connection </summary>
+    private NetworkEvents onConnectEvents;
+    /// <summary> when data is sent to the listener, input is the amount of bytes that were sent </summary>
+    private NetworkEvents onDataSentEvents;
+    /// <summary> when a response is received from the listener, input is the response obtained </summary>
+    private NetworkEvents onReceiveResponseEvents;
+    /// <summary> when an acknowledgement is received from the listener about a sent message,
+    /// input is the message received with the ack: this is always the signature of the received message by the listener before sending the ack</summary>
+    private NetworkEvents onAckReceievedEvents;
+    /// <summary> when an acknowlegement is not received within the timeout period, input is the signature of the timeout message </summary>
+    private NetworkEvents onAckTimeoutEvents;
+    
     
     /// <summary>
     /// Creates a data sender object using an IPAddress and a port to create an endpoint.
     /// The ipAddress should point to the device you want to send the message to.
     /// </summary>
-    public DataSender([DisallowNull] IPAddress ipAddress, ushort port)
+    public DataSender([DisallowNull] IPAddress ipAddress, ushort port) : base(ipAddress, port)
     {
-        try
-        {
-            sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-        }
-        catch (SocketException e)
-        {
-            Debug.LogError("Created an invalid socket, got error: " + e);
-            sender = null;
-            return;
-        }
-        
-        endPoint = new IPEndPoint(ipAddress, port);
         onDataSentEvents = new NetworkEvents();
-        onResponseEvent = new NetworkEvents();
+        onReceiveResponseEvents = new NetworkEvents();
+        onConnectEvents = new NetworkEvents();
+        onAckReceievedEvents = new NetworkEvents();
+        onAckTimeoutEvents = new NetworkEvents();
+        
+        acknowledgementTimes = new List<AcknowledgementTime>();
+        
+        //when an ack is received, untrack all ackTimes that match the received signature.
+        onAckReceievedEvents.Subscribe("ACK", signature =>
+            acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
     }
     
     /// <summary>
@@ -53,29 +59,34 @@ public class DataSender
     /// <param name="timeoutSeconds">
     /// A debug error is thrown when the sender is not connected with the given endpoint after the given timeout amount.
     /// </param>
-    /// /// <param name="clearDataSentEvents">If set to true, the actions called after connecting with the host are removed from the event.</param>
-    public IEnumerator Connect(float timeoutSeconds, bool clearDataSentEvents = true)
+    /// <param name="clearDataSentEvents">If set to true, the actions called after connecting with the host are removed from the event.</param>
+    public IEnumerator Connect(float timeoutSeconds, bool clearDataSentEvents = false)
     {
+        GiveDisplayWarning();
+        
         //check if you are already connected
-        if (!sender.Connected)
+        if (!socket.Connected)
         {
-            Task connecting = sender.ConnectAsync(endPoint)
+            Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
+                    logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
+                        "onDataSentEvent"));
+            
+            DateTime start = DateTime.Now;
+            while (!connecting.IsCompleted)
+            {
+                double diff = (DateTime.Now - start).TotalMilliseconds;
+                if (diff > timeoutSeconds * 1000)
                 {
-                    try
-                    {
-                        onDataSentEvents.Raise("Connect", t, clearDataSentEvents);
-                    }
-                    catch (Exception e)
-                    {
-                        logError =
-                            $"onDataSentEvent with signature Connect returned exception: {e}";
-                    }
-                });
-            yield return new WaitForSeconds(timeoutSeconds);
-            if (!connecting.IsCompleted)
-                logError = "Failed to connect";
+                    logError = "Failed to connect";
+                    break;
+                }
+                
+                yield return null;
+            }
         }
+        else
+            logWarning = "Socket was already connected, so nothing happened.";
     }
     
     /// <summary>
@@ -87,39 +98,27 @@ public class DataSender
     /// This signature is used to identify the response and use the right function on it.
     /// </param>
     /// <param name="payload">The data to send through the network.</param>
+    /// <param name="acknowledgementTimeoutSeconds">The amount of time to wait for an acknowledge response from the host to confirm the message has been received.</param>
     /// <param name="clearDataSentEvents">If set to true, all events connected to the given signature will be cleared after they are called.</param>
-    public void SendDataAsync(string signature, IList<NetworkPackage> payload, bool clearDataSentEvents = true)
+    public void SendDataAsync(string signature, IEnumerable<NetworkPackage> payload, float acknowledgementTimeoutSeconds, bool clearDataSentEvents = false)
     {
         //cannot send data when not connected
-        if (!sender.Connected)
+        if (!socket.Connected)
         {
-            Debug.LogError("Cannot send data when the socket is not connected.");
+            Debug.LogWarning("Cannot send data when the socket is not connected.");
             return;
         }
         
-        NetworkPackage sign = NetworkPackage.CreatePackage(signature);
-        
-        List<NetworkPackage> networkData = new List<NetworkPackage> { sign };
-        networkData.AddRange(payload);
-        List<string> stringPayload = networkData.Select(np => np.ConvertToString()).ToList();
-        string rawData = JsonConvert.SerializeObject(stringPayload);
-        byte[] bytes = Encoding.UTF8.GetBytes(rawData);
-        if (bytes.Length > NetworkPackage.MaxPackageSize)
-        {
-            Debug.LogError("Package was too large.");
+        if (!TryCreatePackage(signature, payload, out byte[] bytes))
             return;
-        }
-        sender.SendAsync(bytes, SocketFlags.None).ContinueWith(t =>
+        
+        socket.SendAsync(bytes, SocketFlags.None).ContinueWith(t =>
         {
-            try
-            {
-                onDataSentEvents.Raise(signature, t.Result, clearDataSentEvents);
-            }
-            catch (Exception e)
-            {
-                logError =
-                    $"onDataSentEvent with signature {signature} returned exception: {e}";
-            }
+            logError = onDataSentEvents.Raise(signature, t.Result, clearDataSentEvents, "onDataSentEvent");
+            if (logError != "")
+                return;
+            
+            acknowledgementTimes.Add(new AcknowledgementTime(signature, acknowledgementTimeoutSeconds));
         });
     }
     
@@ -127,15 +126,117 @@ public class DataSender
     /// Alias for <see cref="SendDataAsync(string,System.Collections.Generic.IList{NetworkPackage},bool)"/>,
     /// but with a single network package as the payload.
     /// </summary>
-    public void SendDataAsync(string signature, NetworkPackage payload, bool clearEvents = true) =>
-        SendDataAsync(signature, new List<NetworkPackage> { payload }, clearEvents);
+    public void SendDataAsync(string signature, NetworkPackage payload, float acknowledgementTimeoutSeconds, bool clearEvents = false) =>
+        SendDataAsync(signature, new List<NetworkPackage> { payload }, acknowledgementTimeoutSeconds, clearEvents);
     
     /// <summary>
     /// Alias for <see cref="SendDataAsync(string,System.Collections.Generic.IList{NetworkPackage},bool)"/>,
     /// but with no payload.
     /// </summary>
-    public void SendDataAsync(string signature, bool clearEvents = true) =>
-        SendDataAsync(signature, new List<NetworkPackage>(), clearEvents);
+    public void SendDataAsync(string signature, float acknowledgementTimeoutSeconds, bool clearEvents = false) =>
+        SendDataAsync(signature, new List<NetworkPackage>(), acknowledgementTimeoutSeconds, clearEvents);
+    
+    /// <summary>
+    /// Listens for responses in a coroutine.
+    /// Events relating to receiving a response will be called when a response is received.
+    /// After sending a message, an acknowledgement will be sent from the host to confirm the message reached the host.
+    /// No events will be called when the response contains the ACK signature.
+    /// A special onAcknowledgementFail event will be called when no ACK with the signature of the sent messages was received within the timeout.
+    /// </summary>
+    /// <param name="clearResponseEvents">If set to true, the actions called after receiving a response are removed from the event.</param>
+    public IEnumerator ListenForResponse(bool clearResponseEvents = false)
+    {
+        if (!socket.Connected)
+            logWarning = "Cannot listen for a response while not connected with a host";
+        else
+        {
+            isListeningForResponse = true;
+            
+            while (isListeningForResponse)
+            {
+                byte[] buffer = new byte[NetworkPackage.MaxPackageSize];
+                Task task = socket.ReceiveAsync(buffer, SocketFlags.None).ContinueWith(
+                    receivedByteAmount =>
+                    {
+                        //catch all just in case an error slips through
+                        try
+                        {
+                            if (!TryGetConvertData(buffer, receivedByteAmount,
+                                    out List<NetworkPackage> networkData))
+                                return;
+                            
+                            string signature = networkData[0].GetData<string>();
+                            
+                            List<NetworkPackage> receivedTailPackages =
+                                networkData.Skip(1).ToList();
+                            
+                            if (signature == "ACK")
+                            {
+                                //check whether the received message is a signature: 
+                                if (receivedTailPackages.Count != 1)
+                                {
+                                    logError = "ACK was not received with a signature";
+                                    return;
+                                }
+                                
+                                try
+                                {
+                                    logError = onAckReceievedEvents.Raise("ACK",
+                                        receivedTailPackages[0].GetData<string>(),
+                                        clearResponseEvents, "onAckReceivedEvent");
+                                }
+                                catch (InvalidCastException e)
+                                {
+                                    logError =
+                                        $"ACK was not received with a signature, received error {e}";
+                                    return;
+                                }
+                            }
+                            else
+                                logError = onReceiveResponseEvents.Raise(signature,
+                                    receivedTailPackages,
+                                    clearResponseEvents, "onResponseEvent");
+                        }
+                        catch (Exception e)
+                        {
+                            logError = "Receiving message failed with error: " + e;
+                        }
+                    });
+                yield return new WaitUntil(() =>
+                {
+                    CheckForTimeouts();
+                    return task.IsCompleted;
+                });
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Stops the sender from listening for responses
+    /// </summary>
+    public void StopListeningForResponses() => isListeningForResponse = false;
+    
+    /// <summary>
+    /// Checks if any acks have timed out, meaning no ack was received in time.
+    /// </summary>
+    private void CheckForTimeouts()
+    {
+        List<AcknowledgementTime> timeouts =
+            acknowledgementTimes.FindAll(ackt => ackt.HasTimedOut());
+        
+        foreach (var acknowledgementTime in timeouts)
+            logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature, acknowledgementTime.Signature, false, "onAckTimeoutEvents");
+        
+        acknowledgementTimes.RemoveAll(timeouts.Contains);
+    }
+    
+    /// <summary>
+    /// Adds an action to the event of connecting with a host.
+    /// When connecting to a host, the given action is called.
+    /// The object is the task created when attempting to connect with a host.
+    /// </summary>
+    public void AddOnConnectEvent(Action<object> action) =>
+        onConnectEvents.Subscribe("Connect", action);
     
     /// <summary>
     /// Adds an action to the event of completing the send action.
@@ -150,38 +251,22 @@ public class DataSender
     /// When the receiving a package with the given signature, the given action is called.
     /// The object parameter of the action is the data received.
     /// </summary>
-    public void AddOnResponseEvent(string signature, Action<object> action) =>
-        onResponseEvent.Subscribe(signature, action);
+    public void AddOnReceiveResponseEvent(string signature, Action<object> action) =>
+        onReceiveResponseEvents.Subscribe(signature, action);
     
-    public void AddOnConnectEvent(Action<object> action) =>
-        onDataSentEvents.Subscribe("Connect", action);
+    /// <summary>
+    /// Adds an action to the event of connecting with a host.
+    /// When connecting to a host, the given action is called.
+    /// The object is the task created when attempting to connect with a host.
+    /// </summary>
+    public void AddOnAckReceivedEvent(Action<object> action) =>
+        onAckReceievedEvents.Subscribe("ACK", action);
     
-    public IEnumerator ListenForResponse(string signature, bool clearResponses = true)
-    {
-        bool response = false;
-        while (!response)
-        {
-            byte[] buffer = new byte[NetworkPackage.MaxPackageSize];
-            Task task = sender.ReceiveAsync(buffer, SocketFlags.None).ContinueWith(
-                receivedByteAmount =>
-                {
-                    string rawData = Encoding.UTF8.GetString(buffer);
-                    rawData = rawData.TrimEnd('\0');
-                    List<NetworkPackage> networkData =
-                        JsonConvert.DeserializeObject<List<string>>(rawData)
-                            .Select(NetworkPackage.ConvertToPackage).ToList();
-                    NetworkPackage receivedFirstPackage = networkData[0];
-                    
-                    if (signature != receivedFirstPackage.GetData<string>())
-                        return;
-                    
-                    List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
-                    
-                    onResponseEvent.Raise(signature, receivedTailPackages, clearResponses);
-                    response = true;
-                });
-            
-            yield return new WaitUntil(() => task.IsCompleted);
-        }
-    }
+    /// <summary>
+    /// Adds an action to the event of not receiving an ack within the timeout period.
+    /// When not receiving an ack from the host within the given timeout period, the given action is called.
+    /// The object is the signature of the message who was not acknowledged by the host.
+    /// </summary>
+    public void AddOnAckTimeoutEvent(string signature, Action<object> action) =>
+        onAckTimeoutEvents.Subscribe(signature, action);
 }

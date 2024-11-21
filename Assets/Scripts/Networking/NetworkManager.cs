@@ -8,6 +8,7 @@ using System.Net;
 using UnityEngine;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Ping = UnityEngine.Ping;
 
 
@@ -27,8 +28,8 @@ public class NetworkManager : MonoBehaviour
     {
         if (debugMessages.Count > 0)
         {
-            foreach (string debugMessage in debugMessages)
-                Debug.Log(debugMessage);
+            for (int i = 0; i < debugMessages.Count; i++)
+                Debug.Log(debugMessages[i]);
             
             debugMessages.Clear();
         }
@@ -40,53 +41,78 @@ public class NetworkManager : MonoBehaviour
         
         IPAddress address = IPConnections.GetOwnIps()[0];
         DataListener dataListener = new DataListener(address, IPConnections.Port);
-        StartCoroutine(dataListener.DisplayAnyDebugs(0.5f));
-        dataListener.AddOnDataReceivedEvent("test", ReceiveData);
-        dataListener.AddOnResponseSentEvent("test", SentResponse);
-        dataListener.AddResponseTo("test", Respond);
+        StartCoroutine(dataListener.DisplayAnyDebugs(0f));
+        dataListener.AddOnDataReceivedEvent("test", ListenerDataReceived);
+        dataListener.AddOnResponseSentEvent("test", ListenerSentResponse);
+        dataListener.AddOnAcceptConnectionsEvent(ListenerConnect);
+        dataListener.AddOnAckSentEvent(ListenerSentACK);
+        dataListener.AddResponseTo("test", EchoMessage);
         
         sender = new DataSender(address, IPConnections.Port);
-        sender.AddOnConnectEvent(Connected);
-        sender.AddOnResponseEvent("test", ReceieveResponse);
-        sender.AddOnDataSentEvent("test", SendConfirmation);
+        StartCoroutine(sender.DisplayAnyDebugs(0f));
+        sender.AddOnConnectEvent(SenderConnect);
+        sender.AddOnDataSentEvent("test", SenderDataSent);
+        sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
+        sender.AddOnAckReceivedEvent(SenderReceiveACK);
+        sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         
-        StartCoroutine(sender.Connect(5f));
-        StartCoroutine(sender.ListenForResponse("test"));
-        StartCoroutine(dataListener.AcceptIncomingConnections(2f));
-        StartCoroutine(dataListener.ListenForIncomingData("test", 2f));
+        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
+        StartCoroutine(sender.Connect(10f));
+        StartCoroutine(sender.ListenForResponse());
+        StartCoroutine(dataListener.AcceptIncomingConnections(3f));
+        StartCoroutine(dataListener.ListenForIncomingData(0.1f));
         Debug.Log("Ended setup");
     }
     
-    void SentResponse(object o)
+    void SenderConnect(object o)
     {
-        debugMessages.Add($"Sent response package of {(int)o} bytes.");
+        debugMessages.Add("(Sender): Connected with the host");
+        
     }
     
-    void Connected(object o)
+    void SenderDataSent(object o)
     {
-        debugMessages.Add("Connected.");
-        NetworkPackage package = NetworkPackage.CreatePackage("hello");
-        sender.SendDataAsync("test", package);
+        debugMessages.Add($"(Sender): Sent {o} bytes to the host.");
     }
     
-    void ReceiveData(object o)
+    void SenderReceiveResponse(object o)
     {
-        debugMessages.Add($"Received message: {((List<NetworkPackage>)o)[0].GetData<string>()}.");
+        debugMessages.Add($"(Sender): Received response: {((List<NetworkPackage>)o)[0].GetData<string>()}");
     }
     
-    void ReceieveResponse(object o)
+    void SenderReceiveACK(object o)
     {
-        debugMessages.Add($"Received response: {((List<NetworkPackage>)o)[0].GetData<string>()}.");
+        debugMessages.Add($"(Sender): Received ACK with signature \"{o}\"");
     }
     
-    void SendConfirmation(object a)
+    void SenderAckTimeout(object o)
     {
-        debugMessages.Add($"send {a} bytes.");
+        debugMessages.Add($"(Sender): Ack with signature {o} timed out");
     }
     
-    string Respond(List<NetworkPackage> originalMessage)
+    void ListenerConnect(object o)
     {
-        return $"Hello, I got your message \"{originalMessage[0].GetData<string>()}\"!";
+        debugMessages.Add($"(Listener): Connected with socket {((Socket)o).LocalEndPoint}");
+    }
+    
+    void ListenerDataReceived(object o)
+    {
+        debugMessages.Add($"(Listener): Received data: {((List<NetworkPackage>)o)[0].GetData<string>()}");
+    }
+    
+    void ListenerSentResponse(object o)
+    {
+        debugMessages.Add($"(Listener): Sent response package of {o} bytes");
+    }
+    
+    void ListenerSentACK(object o)
+    {
+        debugMessages.Add($"(Listener): Sent ACK of signature \"{(((int, string))o).Item2}\"");
+    }
+    
+    List<NetworkPackage> EchoMessage(List<NetworkPackage> data)
+    {
+        return data;
     }
     
     void GetLocalIPs()

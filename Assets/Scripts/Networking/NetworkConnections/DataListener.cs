@@ -9,48 +9,43 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
 
 /// <summary>
 /// A class to facilitate listening for data.
 /// </summary>
-public class DataListener
+public class DataListener : DataNetworker
 {
-    private Socket        listener;
-    private IPEndPoint    endPoint;
-    private NetworkEvents onDataReceivedEvents;
-    private NetworkEvents respondEvents;
-    private NetworkEvents onReponseSentEvents;
-    private List<Socket>  connections;
-    private List<bool>    isConnectionReceiving;
+    private List<Socket> connections;
+    private List<bool>   isConnectionReceiving;
     
-    private bool   isConnectionListening, isDataListening;
-    private string logError   = "";
-    private string logWarning = "";
+    ///<summary>when a connection is made, input is the socket the connect is made with</summary>
+    private NetworkEvents onAcceptConnectionEvents;
+    ///<summary>when any data is received, input is the data received</summary>
+    private NetworkEvents onDataReceivedEvents;
+    ///<summary>when a response is sent back to the sender of the received data, input is the amount of bytes of the return message</summary>
+    private NetworkEvents onResponseSentEvents;
+    ///<summary>when an ack is sent to the sender to confirm their message has been received, input is a tuple of an int and the received message</summary>
+    private NetworkEvents onAckSentEvents;
+    ///<summary>used to convert received data into a new message</summary>
+    private NetworkEvents respondEvents;
+    
+    private bool isConnectionListening, isDataListening;
    
     /// <summary>
     /// Creates a data listening object using an IPAddress and a port to create an endpoint.
     /// The ipAddress should point to an ipAddress on the local device.
     /// </summary>
-    public DataListener([DisallowNull] IPAddress ipAddress, ushort port)
+    public DataListener([DisallowNull] IPAddress ipAddress, ushort port) : base(ipAddress, port)
     {
-        try
-        {
-            listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-        }
-        catch (SocketException e)
-        {
-            Debug.LogError("Created an invalid socket, got error: " + e);
-            listener = null;
-            return;
-        }
         
-        endPoint = new IPEndPoint(ipAddress, port);
-        
+        onAcceptConnectionEvents = new NetworkEvents();
         onDataReceivedEvents = new NetworkEvents();
+        onResponseSentEvents = new NetworkEvents();
+        onAckSentEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
-        onReponseSentEvents = new NetworkEvents();
         
         if (!IPConnections.GetOwnIps().Contains(ipAddress))
         {
@@ -58,35 +53,19 @@ public class DataListener
             return;
         }
         
-        listener.Bind(endPoint);
-        listener.Listen(255);
+        socket.Bind(endPoint);
+        socket.Listen(255);
         connections = new List<Socket>();
         isConnectionReceiving = new List<bool>();
-    }
-    
-    /// <summary>
-    /// Displays any debug messages that were called during any function.
-    /// When some async functions throw exception, they aren't caught by unit and go unnoticed.
-    /// This function checks every interval whether any Debug messages were called.
-    /// </summary>
-    public IEnumerator DisplayAnyDebugs(float intervalSeconds)
-    {
-        while (true)
-        {
-            if (logError != "")
+        
+        //create the ack respond event with the signature as the message
+        onAckSentEvents.Subscribe("ACK",
+            o =>
             {
-                Debug.LogError(logError);
-                logError = "";
-            }
-            
-            if (logWarning != "")
-            {
-                Debug.LogWarning(logWarning);
-                logWarning = "";
-            }
-            
-            yield return new WaitForSeconds(intervalSeconds);
-        }
+                (int, string) data = ((int, string))o;
+                AddResponseTo("ACK", signature => signature, 
+                    (data.Item1, new List<NetworkPackage>{NetworkPackage.CreatePackage(data.Item2)}));
+            });
     }
     
     /// <summary>
@@ -97,18 +76,22 @@ public class DataListener
     /// Retry accepting new connections each interval.
     /// The interval exists so it doesn't run constantly and take up a lot of resources.
     /// </param>
-    public IEnumerator AcceptIncomingConnections(float intervalSeconds)
+    /// <param name="clearOnAcceptConnectionEvents">If set to true, the actions called after connecting with a client are removed from the event.</param>
+    public IEnumerator AcceptIncomingConnections(float intervalSeconds, bool clearOnAcceptConnectionEvents = false)
     {
+        GiveDisplayWarning();
         isConnectionListening = true;
         
         while (isConnectionListening)
         {
+            Task task = null;
             try
             {
-                listener.AcceptAsync().ContinueWith(t =>
+                task = socket.AcceptAsync().ContinueWith(t =>
                 {
                     connections.Add(t.Result);
                     isConnectionReceiving.Add(false);
+                    logWarning = onAcceptConnectionEvents.Raise("Connect", t.Result, clearOnAcceptConnectionEvents, "onAcceptConnectionEvent");
                 });
             }
             catch (ObjectDisposedException e)
@@ -122,8 +105,7 @@ public class DataListener
                 isConnectionListening = false;
             }
             
-            if (isConnectionListening)
-                yield return new WaitForSeconds(intervalSeconds);
+            yield return new WaitUntil(() => task is null || task.IsCompleted);
         }
     }
     
@@ -134,28 +116,31 @@ public class DataListener
     
     
     /// <summary>
-    /// Listens for incoming data  with the given signature in a coroutine.
+    /// Listens for incoming data in a coroutine.
     /// When data is received, the signature is read and the actions connected to the signature are called.
     /// Actions will be added by adding events using the relevant functions.
     ///
     /// This loop will run infinitely unless cancelled by calling the relevant cancel function.
+    /// <para>Note: A response with the signature "ACK" will always be sent after receiving a message. These ACK events will never be cleared.</para>
     /// </summary>
-    /// <param name="signature">The signature to listen for, all other incoming messages will be ignored.</param>
     /// <param name="intervalSeconds">After each interval a check is made whether any incoming data was received.</param>
     /// <param name="clearDataReceivedEvents">If set to true, the actions called after receiving a package are removed from the event.</param>
     /// <param name="clearRespondEvents">If set to true, the actions called after responding with a message are removed from the event.</param>
-    public IEnumerator ListenForIncomingData([DisallowNull] string signature, float intervalSeconds, bool clearDataReceivedEvents = true, bool clearRespondEvents = true)
+    /// <param name="clearAckSentEvents">If set to true, the actions called after responding with an ack (acknowledement) are removed from the event.</param>
+    public IEnumerator ListenForIncomingData(float intervalSeconds, bool clearDataReceivedEvents = false, bool clearRespondEvents = false, bool clearAckSentEvents = false)
     {
+        GiveDisplayWarning();
         isDataListening = true;
         
         while (isDataListening)
         {
             for (var i = 0; i < connections.Count; i++)
             {
+                //if this socket is already receiving data, ignore it.
                 if (isConnectionReceiving[i])
                     continue;
                 
-                ReceiveData(signature, i, clearDataReceivedEvents, clearRespondEvents);
+                ReceiveData(i, clearDataReceivedEvents, clearRespondEvents);
             }
             
             if (isDataListening)
@@ -171,7 +156,7 @@ public class DataListener
     /// <summary>
     /// A function for handling incoming data, see <see cref="ListenForIncomingData"/> for details.
     /// </summary>
-    private void ReceiveData([DisallowNull] string signature, int index, bool clearDataReceivedEvents, bool clearRespondEvents)
+    private void ReceiveData(int index, bool clearDataReceivedEvents, bool clearRespondEvents)
     {
         isConnectionReceiving[index] = true;
         byte[] buffer = new byte[NetworkPackage.MaxPackageSize];
@@ -181,60 +166,26 @@ public class DataListener
                 //catch all just in case an error slips through
                 try
                 {
-                    if (receivedByteAmount.Result > NetworkPackage.MaxPackageSize)
-                    {
-                        logWarning = $"Received package was too large, expected a package of " +
-                                   $"{NetworkPackage.MaxPackageSize} bytes or less, but got " +
-                                   $"{receivedByteAmount.Result} bytes. The incoming data was rejected.";
+                    if (!TryGetConvertData(buffer, receivedByteAmount,
+                            out List<NetworkPackage> networkData))
                         return;
-                    }
                     
-                    string rawData = Encoding.UTF8.GetString(buffer);
-                    rawData = rawData.TrimEnd('\0');
-                    
-                    List<NetworkPackage> networkData;
-                    try
-                    {
-                        networkData = JsonConvert
-                            .DeserializeObject<List<string>>(rawData)
-                            .Select(NetworkPackage.ConvertToPackage)
-                            .ToList();
-                    }
-                    catch (JsonException e)
-                    {
-                        logWarning = "Reading received message with json failed: " + e;
-                        return;
-                    }
-                    
-                    NetworkPackage receivedFirstPackage = networkData[0];
-                    
-                    if (signature != receivedFirstPackage.GetData<string>())
-                        return;
+                    string signature = networkData[0].GetData<string>();
                     
                     List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
                     
-                    try
-                    {
-                        onDataReceivedEvents.Raise(signature, receivedTailPackages, clearDataReceivedEvents);
-                    }
-                    catch (Exception e)
-                    {
-                        logError =
-                            $"onDataReceivedEvent with signature {signature} returned exception: {e}";
+                    logError = onDataReceivedEvents.Raise(signature, receivedTailPackages, clearDataReceivedEvents, "onDataReceivedEvent");
+                    if (logError != "")
                         return;
-                    }
                     
-                    try
-                    {
-                        respondEvents.Raise(signature, (index, receivedTailPackages),
-                            clearRespondEvents);
-                    }
-                    catch (Exception e)
-                    {
-                        logError =
-                            $"onRespondEvent with signature {signature} returned exception: {e}";
+                    //respond with an ack
+                    logError = onAckSentEvents.Raise("ACK", (index, signature), false, "onAckSentEvent");
+                    if (logError != "")
                         return;
-                    }
+                    
+                    //responds to the sender
+                    logError = respondEvents.Raise(signature, (index, receivedTailPackages),
+                        clearRespondEvents, "respondEvent");
                     
                     isConnectionReceiving[index] = false;
                 }
@@ -246,47 +197,73 @@ public class DataListener
     }
     
     /// <summary>
-    /// Adds an action to the event of receiving a data package
+    /// Adds an action to the event of a sender connecting with this listener.
+    /// When receiving a connection from a socket (DataSender), the given action is called.
+    /// The object parameter of the action is the socket that the connection was made with.
+    /// </summary>
+    public void AddOnAcceptConnectionsEvent(Action<object> action) =>
+        onAcceptConnectionEvents.Subscribe("Connect", action);
+    
+    /// <summary>
+    /// Adds an action to the event of receiving a data package.
     /// When receiving a package with the given signature, the given action is called.
     /// The object parameter of the action is the data that was received.
     /// </summary>
     public void AddOnDataReceivedEvent([DisallowNull] string signature, Action<object> action) =>
         onDataReceivedEvents.Subscribe(signature, action);
     
-    public void AddResponseTo<T>([DisallowNull] string signature, Func<List<NetworkPackage>, T> response) =>
+    /// <summary>
+    /// Adds an action to the event of sending a response.
+    /// When receiving a package and then responding by sending a new package to the sender, the given action is called.
+    /// The object parameter of the action is the amount of byte that a response was sent with.
+    /// </summary>
+    public void AddOnResponseSentEvent([DisallowNull] string signature, Action<object> action) =>
+        onResponseSentEvents.Subscribe(signature, action);
+    
+    /// <summary>
+    /// Adds an action to the event of sending an ACK (acknowledgement message).
+    /// When receiving a package and then responding by sending an ACK to the sender, the given action is called.
+    /// The object parameter of the action is the signature of the received message.
+    /// </summary>
+    public void AddOnAckSentEvent(Action<object> action) =>
+        onAckSentEvents.Subscribe("ACK", action);
+    
+    /// <summary>
+    /// Adds a response to receiving a message with the given signature.
+    /// Response events with the signature "ACK" will always be called regardless of the signature of the received message.
+    /// </summary>
+    /// <param name="signature">The messages with this signature will be responded to.</param>
+    /// <param name="response">Given the received data, create a response with it.</param>
+    public void AddResponseTo([DisallowNull] string signature, Func<List<NetworkPackage>, List<NetworkPackage>> response) =>
         respondEvents.Subscribe(signature,
             o => AddResponseTo(signature, response, ((int, List<NetworkPackage>))o));
     
-    public void AddOnResponseSentEvent([DisallowNull] string signature, Action<object> action) =>
-        onReponseSentEvents.Subscribe(signature, action);
+    /// <summary>
+    /// Same as <see cref="AddResponseTo(string,System.Func{System.Collections.Generic.List{NetworkPackage},System.Collections.Generic.List{NetworkPackage}})"/>
+    /// but with a single package as the response.
+    /// </summary>
+    public void AddResponseTo([DisallowNull] string signature,
+        Func<List<NetworkPackage>, NetworkPackage> response) =>
+        respondEvents.Subscribe(signature,
+            o => AddResponseTo(signature, d => new List<NetworkPackage> { response(d) },
+                ((int, List<NetworkPackage>))o));
     
-    private void AddResponseTo<T>([DisallowNull] string signature, Func<List<NetworkPackage>,T> response, (int, List<NetworkPackage>) socketIndexAndMessage, bool clearResponseSentEvents = true)
+    /// <summary>
+    /// Sends a response after receiving a message.
+    /// </summary>
+    private void AddResponseTo(
+        [DisallowNull] string signature, 
+        Func<List<NetworkPackage>,List<NetworkPackage>> response, 
+        (int, List<NetworkPackage>) socketIndexAndMessage, 
+        bool clearResponseSentEvents = false)
     {
-        NetworkPackage sign = NetworkPackage.CreatePackage(signature);
-        NetworkPackage resp = NetworkPackage.CreatePackage(response(socketIndexAndMessage.Item2));
+        //ACK responses contain the signature as the message
+        List<NetworkPackage> resp = response(socketIndexAndMessage.Item2);
         
-        List<string> networkData = new List<NetworkPackage> { sign, resp }
-            .Select(np => np.ConvertToString()).ToList();
-        string rawData = JsonConvert.SerializeObject(networkData);
-        byte[] bytes = Encoding.UTF8.GetBytes(rawData);
-        if (bytes.Length > NetworkPackage.MaxPackageSize)
-        {
-            logError = "Response was too large.";
+        if (!TryCreatePackage(signature, resp, out byte[] bytes))
             return;
-        }
         
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
-            t =>
-            {
-                try
-                {
-                    onReponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents);
-                }
-                catch (Exception e)
-                {
-                    logError =
-                        $"onResponseSentEvent with signature {signature} returned exception: {e}";
-                }
-            });
+            t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }
 }
