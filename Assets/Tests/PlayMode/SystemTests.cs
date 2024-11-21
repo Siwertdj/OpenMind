@@ -281,6 +281,7 @@ public class SystemTests
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
         // Check if we are in the Dialogue scene
+        // TODO: check for isloaded.
         Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
 
         yield return new WaitForSeconds(1);
@@ -300,9 +301,18 @@ public class SystemTests
                 GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
         }
         
+        // Open the menu
+        GameObject.Find("MenuButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Save the game
+        GameObject.Find("SaveButton").GetComponent<Button>().onClick.Invoke();
         
         
         
+        // Load the game
+        GameObject.Find("QuitButton").GetComponent<Button>().onClick.Invoke();
+        
+        // TODO: check the save file
         yield return null;
     }
 
