@@ -9,6 +9,7 @@ using TMPro;
 using System;
 using System.IO;
 using System.Net;
+using UnityEngine.Android;
 using UnityEngine.Events;
 
 /// <summary>
@@ -248,7 +249,11 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void SaveAnswers()
     {
-        File.WriteAllLines(Path.Combine(Application.persistentDataPath, "answers.txt"),playerAnswers);
+        if (!Permission.HasUserAuthorizedPermission(Permission.ExternalStorageWrite))
+            Permission.RequestUserPermission(Permission.ExternalStorageWrite);
+        
+        string downloadsPath = "/storage/emulated/0/download";
+        File.WriteAllLines(Path.Combine(downloadsPath, "answers.txt"),playerAnswers);
     }
     
     /// <summary>
