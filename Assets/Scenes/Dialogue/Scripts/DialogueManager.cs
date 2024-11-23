@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.IO;
 using UnityEngine.Events;
 
 /// <summary>
@@ -30,10 +31,13 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
 
-    [NonSerialized] public string inputText;
-    [NonSerialized] public static DialogueManager dm;
-    [NonSerialized] public CharacterInstance currentRecipient;
-    [NonSerialized] public DialogueObject currentObject;
+    public UnityEvent onEpilogueEnd;
+
+    [NonSerialized] public        string            inputText;
+    [NonSerialized] public        List<string>      playerAnswers;
+    [NonSerialized] public static DialogueManager   dm;
+    [NonSerialized] public        CharacterInstance currentRecipient;
+    [NonSerialized] public        DialogueObject    currentObject;
     
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
@@ -63,12 +67,17 @@ public class DialogueManager : MonoBehaviour
         {
             characterNameField.SetActive(false);
         }
+
+        // Initialise the list of answers giving in the epilogue
+        playerAnswers = new List<string>();
+        Debug.Log(Application.persistentDataPath);
         
         // Execute the starting object
         currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
+        onEpilogueEnd.AddListener(SaveAnswers);
     }
 
     /// <summary>
@@ -223,6 +232,7 @@ public class DialogueManager : MonoBehaviour
         // Assign the text from the inputField to inputText.
         // TODO: can write the answers from the open questions to somewhere.
         inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
+        playerAnswers.Add(inputText);
         
         // Disable the input field.
         inputField.SetActive(false);
@@ -231,6 +241,14 @@ public class DialogueManager : MonoBehaviour
         inputText = "";
 
         ExecuteNextObject();
+    }
+    
+    /// <summary>
+    /// Save the answers that the player has given to a file
+    /// </summary>
+    public void SaveAnswers()
+    {
+        File.WriteAllLines(Path.Combine(Application.persistentDataPath, "answers.txt"),playerAnswers);
     }
     
     /// <summary>
