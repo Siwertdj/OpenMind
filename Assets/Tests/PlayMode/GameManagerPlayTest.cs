@@ -695,5 +695,91 @@ public class GameManagerPlayTest
         yield return null;
     }
     
+    /// <summary>
+    /// Check if the transition from NpcSelect to NpcDialogue GameState is done correctly.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NpcSelectToNpcDialogueGameStateTest()
+    {
+        // Start the game cycle
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
+    }
     
+    /// <summary>
+    /// Check if the transition from NpcDialogue to NpcSelect GameState is done correctly.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NpcDialogueToNPCSelectGameStateTest()
+    {
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
+
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
+    }
+    
+    /// <summary>
+    /// Check if the transition from NpcDialogue/NpcSelect to HintDialogue GameState is done correctly.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NpcDialogueToHintDialogueGameStateTest()
+    {
+        // Set this to maxValue in order to make sure that no more questions can be asked.
+        // This will cause the EndCycle method to be called once the dialogue ends.
+        gm.numQuestionsAsked = int.MaxValue;
+        
+        // Start dialogue with a character, then go back to NpcSelect scene in order to apply the changes of the variables.
+        CharacterInstance character = gm.currentCharacters[0];
+        gm.StartDialogue(character);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+
+        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager.
+        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
+
+        // End the NpcDialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        // Check if we are in the correct gameState.
+        Assert.AreEqual(GameManager.GameState.HintDialogue, gm.gameState);
+    }
 }

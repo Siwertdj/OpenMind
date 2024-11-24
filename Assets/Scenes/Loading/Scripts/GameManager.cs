@@ -235,12 +235,14 @@ public class GameManager : MonoBehaviour
         // Select the Culprit
         else
         {
+            //update gamestate
+            gameState = GameState.CulpritSelect;
+            Debug.Log("Culprit select");
+            
             _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
-            //update gamestate
-            gameState = GameState.CulpritSelect;
         }
     }
     #endregion
@@ -396,14 +398,15 @@ public class GameManager : MonoBehaviour
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(DialogueObject dialogueObject)
     {
+        gameState = GameState.HintDialogue;
+        Debug.Log("hint dialogue");
+        
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-
-        gameState = GameState.HintDialogue;
-
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -425,16 +428,18 @@ public class GameManager : MonoBehaviour
             background);
         dialogueObject.Responses.Add(new QuestionObject(background));
 
-        // Until DialogueManager gets its information, it shouldnt do anything there.
+        // Until DialogueManager gets its information, it shouldn't do anything there.
         var dialogueRecipient = character;
+        
+        gameState = GameState.NpcDialogue;
+        Debug.Log("npc dialogue");
+        
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-
-        gameState = GameState.NpcDialogue;
-
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
