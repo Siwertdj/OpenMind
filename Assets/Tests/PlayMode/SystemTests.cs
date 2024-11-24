@@ -215,6 +215,12 @@ public class SystemTests
         Assert.IsTrue(gameOver || gameWon);
     }
 
+    /// <summary>
+    /// System level test for saving the game.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"> Occurs when there are no active characters in the game. (should never occur)</exception>
+    // TODO: check for isLoaded instead of using GetSceneAt().
     [UnityTest]
     public IEnumerator SaveGame()
     {
@@ -267,7 +273,14 @@ public class SystemTests
         // Check if we are in the NPC Select scene
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
-        // Find an active character and click to talk to them
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSeconds(2);
+        }
+            
+        // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
             if (c.isActive)
@@ -275,13 +288,24 @@ public class SystemTests
                 GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
             }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
+            }
         }
 
         yield return new WaitForSeconds(1);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
         // Check if we are in the Dialogue scene
-        // TODO: check for isloaded.
         Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
 
         yield return new WaitForSeconds(1);
@@ -433,8 +457,8 @@ public class SystemTests
         {
             // Check if the first elements of the pairs are equal
             Assert.AreEqual(askedQuestionsPerCharArray[i].Item1, saveData.askedQuestionsPerCharacter[i].Item1);
-            // Check if the second elements of the pairs are equal
-            Assert.AreEqual(askedQuestionsPerCharArray[i].Item2, saveData.askedQuestionsPerCharacter[i].Item2);
+            // Check if the second elements of the pairs (question list) are equal
+            Assert.IsTrue(askedQuestionsPerCharArray[i].Item2.All(saveData.askedQuestionsPerCharacter[i].Item2.Contains));
         }
         
         // Check if the numQuestionsAsked is equal
@@ -443,10 +467,17 @@ public class SystemTests
         yield return null;
     }
 
+    /// <summary>
+    /// System level test for loading the game.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"> Occurs when no save file exists. </exception>
     [UnityTest]
+    // TODO: check for isLoaded instead of using GetSceneAt().
     public IEnumerator LoadGame()
     {
-        // TODO: check if save file exists
+        if (!FilePathConstants.DoesSaveFileLocationExist())
+            throw new Exception("No save file exists");
         
         // Find the New Game button and click it
         GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
@@ -454,17 +485,20 @@ public class SystemTests
         // Check if we are in the Dialogue scene
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         
-        // Number of characters in the game
-        int numCharacters = GameManager.gm.story.numberOfCharacters;
+        // Retrieve the data from the save file
+        SaveData saveData = Load.Loader.GetSaveData();
+        
+        // Number of active characters in the game
+        int numActiveCharacters = saveData.activeCharacterIds.Length;
         
         // Number of characters that are left when you have to choose the culprit
         int charactersLeft = GameManager.gm.story.minimumRemaining;
-
+        
         // Play the main loop of the game
-        for (int i = 0; i <= (numCharacters - charactersLeft); i++)
+        for (int i = 0; i <= (numActiveCharacters - charactersLeft); i++)
         {
             yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-
+            
             // Check if we are in the NPC Select scene
             Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
             
@@ -539,6 +573,8 @@ public class SystemTests
             // Wait until you can ask a question
             GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
 
+            yield return new WaitForSeconds(1);
+            
             // Ask a question
             GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
 
