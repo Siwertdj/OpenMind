@@ -272,8 +272,7 @@ public class SystemTests
         {
             if (c.isActive)
             {
-                string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
             }
         }
@@ -332,28 +331,115 @@ public class SystemTests
         yield return new WaitUntil(() =>
             SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         
-        //notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
-        //string notebookTextPosterior = notebookManager.inputField.GetComponent<TMP_InputField>().text;
-        //Debug.Log("posterior = " + notebookTextPosterior);
-        
         // Check if we are back in the NPC Select scene
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
         // Open the menu
         GameObject.Find("MenuButton").GetComponent<Button>().onClick.Invoke();
         
+        // Wait until loaded
+        yield return new WaitUntil(() =>
+            SceneManager.GetSceneByName("GameMenuScene").isLoaded);
+
+        yield return new WaitForSeconds(1);
+        
         // Save the game
         GameObject.Find("SaveButton").GetComponent<Button>().onClick.Invoke();
         
         // Wait for the data to be saved
-        //yield return new WaitForSeconds(3);
-
-        //SaveData saveData = Loading.GetSaveData();
+        yield return new WaitForSeconds(3);
         
-        // Load the game
-        GameObject.Find("QuitButton").GetComponent<Button>().onClick.Invoke();
+        bool saveFileExists = FilePathConstants.DoesSaveFileLocationExist();
+        Assert.IsTrue(saveFileExists);
         
-        // TODO: check the save file
+        // Retrieve the data from the save file
+        SaveData saveData = Load.Loader.GetSaveData();
+        
+        // Check if the following variables are equal to the saved data
+        var gm = GameManager.gm;
+        
+        // Check if storyID is equal
+        Assert.AreEqual(gm.story.storyID, saveData.storyId);
+        
+        // Check if the activeCharacterIds are equal by checking the following 2 properties:
+        // 1: Check if the array of activeCharacterIds has the same length as the array of
+        // activeCharacterIds from the saveData.
+        // 2: Check if both arrays contain the same elements.
+        int[] activeCharIdArray = gm.currentCharacters.FindAll(c => c.isActive).ToArray().Select(c => c.id).ToArray();
+        // Check if the arrays have the same length
+        Assert.AreEqual(activeCharIdArray.Length, saveData.activeCharacterIds.Length);
+        // Check if both arrays contain the same elements
+        Assert.IsTrue(activeCharIdArray.All(saveData.activeCharacterIds.Contains));
+        
+        // Check if the inactiveCharacterIds are equal by checking the following 2 properties:
+        // 1: Check if the array of inactiveCharacterIds has the same length as the array of
+        // inactiveCharacterIds from the saveData.
+        // 2: Check if both arrays contain the same elements.
+        int[] inactiveCharIdArray = gm.currentCharacters.FindAll(c => !c.isActive).ToArray().Select(c => c.id).ToArray();
+        // Check if the arrays have the same length
+        Assert.AreEqual(inactiveCharIdArray.Length, saveData.inactiveCharacterIds.Length);
+        // Check if both arrays contain the same elements
+        Assert.IsTrue(inactiveCharIdArray.All(saveData.inactiveCharacterIds.Contains));
+        
+        // Check if the culpritId is equal
+        Assert.AreEqual(gm.GetCulprit().id, saveData.culpritId);
+        
+        // Check if the remainingQuestions are equal by checking the following 2 properties:
+        // 1: Check if the array of remainingQuestions has the same length as the array of
+        // remainingQuestions from the saveData.
+        // 2: Check if both arrays contain the same elements.
+        (int, List<Question>)[] remainingQuestionsArray = gm.currentCharacters.Select(a => (a.id, a.RemainingQuestions)).ToArray();
+        // Check if the arrays have the same length
+        Assert.AreEqual(remainingQuestionsArray.Length, saveData.remainingQuestions.Length);
+        // Check if both arrays contain the same elements
+        for (int i = 0; i < remainingQuestionsArray.Length; i++)
+        {
+            // Check if the first elements of the pairs are equal
+            Assert.AreEqual(remainingQuestionsArray[i].Item1, saveData.remainingQuestions[i].Item1);
+            // Check if the second elements of the pairs (question list) are equal
+            Assert.IsTrue(remainingQuestionsArray[i].Item2.All(saveData.remainingQuestions[i].Item2.Contains));
+        }
+        
+        // Check if the personalNotes are equal
+        Assert.AreEqual(gm.notebookData.GetPersonalNotes(), saveData.personalNotes);
+        
+        // Check if the characterNotes are equal by checking the following 2 properties:
+        // 1: Check if the array of characterNotes has the same length as the array of
+        // characterNotes from the saveData.
+        // 2: Check if both arrays contain the same elements.
+        (int, string)[] characterNotes = gm.currentCharacters
+            .Select(c => (c.id, gm.notebookData.GetCharacterNotes(c))).ToArray();
+        // Check if the arrays have the same length
+        Assert.AreEqual(characterNotes.Length, saveData.characterNotes.Length);
+        // Check if both arrays contain the same elements
+        for (int i = 0; i < characterNotes.Length; i++)
+        {
+            // Check if the first elements of the pairs are equal
+            Assert.AreEqual(characterNotes[i].Item1, saveData.characterNotes[i].Item1);
+            // Check if the second elements of the pairs are equal
+            Assert.AreEqual(characterNotes[i].Item2, saveData.characterNotes[i].Item2);
+        }
+        
+        // Check if the askedQuestionsPerCharacter are equal by checking the following 2 properties:
+        // 1: Check if the array of askedQuestionsPerCharacter has the same length as the array of
+        // askedQuestionsPerCharacter from the saveData.
+        // 2: Check if both arrays contain the same elements.
+        (int, List<Question>)[] askedQuestionsPerCharArray =
+            gm.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
+        // Check if the arrays have the same length
+        Assert.AreEqual(askedQuestionsPerCharArray.Length, saveData.askedQuestionsPerCharacter.Length);
+        // Check if both arrays contain the same elements
+        for (int i = 0; i < askedQuestionsPerCharArray.Length; i++)
+        {
+            // Check if the first elements of the pairs are equal
+            Assert.AreEqual(askedQuestionsPerCharArray[i].Item1, saveData.askedQuestionsPerCharacter[i].Item1);
+            // Check if the second elements of the pairs are equal
+            Assert.AreEqual(askedQuestionsPerCharArray[i].Item2, saveData.askedQuestionsPerCharacter[i].Item2);
+        }
+        
+        // Check if the numQuestionsAsked is equal
+        Assert.AreEqual(gm.numQuestionsAsked, saveData.numQuestionsAsked);
+        
         yield return null;
     }
 
