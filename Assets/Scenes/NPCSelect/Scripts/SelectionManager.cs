@@ -21,10 +21,6 @@ public class SelectionManager : MonoBehaviour
 
     private SceneController sc;
     
-    // Button that activates the tutorial for the player. 
-    public         Button TutorialButton;
-    private static bool   tutorialIsShown = false; // Keeps track of whether the tutorial has been shown or not. 
-    
     // Variable which helps to decide whether the npcselect screen should be treated
     // as dialogue or as for deciding the criminal.
     // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
@@ -39,13 +35,6 @@ public class SelectionManager : MonoBehaviour
         SetSceneType();
         SetHeaderText(selectionType);
         GenerateOptions();
-        
-        // If it is the first time the selection scene is loaded, the tutorial needs to be activated. 
-        if (!tutorialIsShown)
-        {
-            TutorialButton.onClick.Invoke();
-            tutorialIsShown = true; 
-        }
     }
 
     /// <summary>
