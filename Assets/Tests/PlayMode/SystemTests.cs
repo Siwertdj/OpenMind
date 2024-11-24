@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using NUnit.Framework;
+using TMPro;
 using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -301,13 +302,53 @@ public class SystemTests
                 GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
         }
         
+        // Open Notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+
+        // Wait until loaded
+        yield return new WaitUntil(() =>
+            SceneManager.GetSceneByName("NotebookScene").isLoaded);
+                
+        // Check if we are in the Notebook scene
+        Assert.AreEqual(SceneManager.GetSceneByName("NotebookScene"), SceneManager.GetSceneAt(2));
+                
+        // Open character tab
+        GameObject.Find("NameButton1").GetComponent<Button>().onClick.Invoke();
+                
+        // Log notes
+        GameObject.Find("Button").GetComponent<Button>().onClick.Invoke();
+                
+        // Open personal notes
+        GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Write down notes
+        string notebookTextPrior = "hello";
+        var notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
+        notebookManager.inputField.GetComponent<TMP_InputField>().text = notebookTextPrior;
+        notebookManager.inputField.GetComponent<TMP_InputField>().onEndEdit.Invoke(notebookTextPrior);
+        
+        // Close notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitUntil(() =>
+            SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        
+        //notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
+        //string notebookTextPosterior = notebookManager.inputField.GetComponent<TMP_InputField>().text;
+        //Debug.Log("posterior = " + notebookTextPosterior);
+        
+        // Check if we are back in the NPC Select scene
+        Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+        
         // Open the menu
         GameObject.Find("MenuButton").GetComponent<Button>().onClick.Invoke();
         
         // Save the game
         GameObject.Find("SaveButton").GetComponent<Button>().onClick.Invoke();
         
-        
+        // Wait for the data to be saved
+        //yield return new WaitForSeconds(3);
+
+        //SaveData saveData = Loading.GetSaveData();
         
         // Load the game
         GameObject.Find("QuitButton").GetComponent<Button>().onClick.Invoke();
