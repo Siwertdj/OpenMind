@@ -13,7 +13,7 @@ using UnityEngine.UI;
 /// </summary>
 public class GameButton : Button
 {
-    private GameEvent gameEvent;
+    public GameEvent gameEvent;
 
     private new void Start()
     {
