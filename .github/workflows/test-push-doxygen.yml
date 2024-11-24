@@ -3,7 +3,7 @@ name: "test doxygen"
 on:
   push:
     branches:
-      - docs/126.2-Documentation-in-github
+      - dev
 
 jobs:
   deploy:
