@@ -446,6 +446,191 @@ public class SystemTests
     [UnityTest]
     public IEnumerator LoadGame()
     {
+        // TODO: check if save file exists
+        
+        // Find the New Game button and click it
+        GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Check if we are in the Dialogue scene
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        
+        // Number of characters in the game
+        int numCharacters = GameManager.gm.story.numberOfCharacters;
+        
+        // Number of characters that are left when you have to choose the culprit
+        int charactersLeft = GameManager.gm.story.minimumRemaining;
+
+        // Play the main loop of the game
+        for (int i = 0; i <= (numCharacters - charactersLeft); i++)
+        {
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+
+            // Check if we are in the NPC Select scene
+            Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+            
+            // Use Notebook if not the first cycle
+            if (i > 0)
+            {
+                // Open Notebook
+                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+
+                // Wait until loaded
+                yield return new WaitUntil(() =>
+                    SceneManager.GetSceneByName("NotebookScene").isLoaded);
+                
+                // Check if we are in the Notebook scene
+                Assert.AreEqual(SceneManager.GetSceneByName("NotebookScene"), SceneManager.GetSceneAt(2));
+                
+                // Open character tab
+                GameObject.Find("NameButton1").GetComponent<Button>().onClick.Invoke();
+                
+                // Log notes
+                GameObject.Find("Button").GetComponent<Button>().onClick.Invoke();
+                
+                // Open personal notes
+                GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
+                
+                // Close notebook
+                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitUntil(() =>
+                    SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+                
+                // Check if we are back in the NPC Select scene
+                Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+            }
+            
+            // Start at the leftmost character
+            while (GameObject.Find("NavLeft"))
+            {
+                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitForSeconds(2);
+            }
+            
+            // Find an active character and click to choose them
+            foreach (CharacterInstance c in GameManager.gm.currentCharacters)
+            {
+                if (c.isActive)
+                {
+                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
+                    break;
+                }
+                else
+                {
+                    if (GameObject.Find("NavRight"))
+                    {
+                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                        yield return new WaitForSeconds(2);
+                    }
+                    else
+                    {
+                        throw new Exception("There are no active characters");
+                    }
+                }
+            }
+
+            yield return new WaitForSeconds(1);
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
+
+            // Check if we are in the Dialogue scene
+            Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
+
+            yield return new WaitForSeconds(1);
+            
+            // Wait until you can ask a question
+            GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+
+            // Ask a question
+            GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+
+            // Skip dialogue until new cycle starts
+            while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("NPCSelectScene"))
+            {
+                yield return new WaitForSeconds(1);
+                
+                if (GameObject.Find("Skip Dialogue Button") != null)
+                    GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+            }
+        }
+
+        // Check if we have to choose a culprit
+        Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+        
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSeconds(2);
+        }
+            
+        // Find an active character and click to choose them
+        foreach (CharacterInstance c in GameManager.gm.currentCharacters)
+        {
+            if (c.isActive)
+            {
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
+                break;
+            }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
+            }
+        }
+
+        // Check if we are in the Dialogue scene
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
+        Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
+        
+        // Skip dialogue until first reflection moment
+        while (GameObject.Find("Input Field") == null)
+        {
+            yield return new WaitForSeconds(1);
+                
+            if (GameObject.Find("Skip Dialogue Button") != null)
+                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+        }
+        
+        // Click on submit input button
+        yield return new WaitForSeconds(1);
+        GameObject.Find("Submit input Button").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        
+        // Skip dialogue until second reflection moment
+        while (GameObject.Find("Input Field") == null)
+        {
+            yield return new WaitForSeconds(1);
+                
+            if (GameObject.Find("Skip Dialogue Button") != null)
+                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+        }
+        
+        // Click on submit input button
+        yield return new WaitForSeconds(1);
+        GameObject.Find("Submit input Button").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        
+        // Skip dialogue until GameOver or GameWin
+        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameOverScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
+        {
+            yield return new WaitForSeconds(1);
+                
+            if (GameObject.Find("Skip Dialogue Button") != null)
+                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+        }
+
+        // Check if we are in the GameWin or GameOver scene
+        yield return new WaitForSeconds(3);
+        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameOverScene");
+        var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
+        Assert.IsTrue(gameOver || gameWon);
+        
         yield return null;
     }
 
