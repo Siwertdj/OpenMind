@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using System.IO;
+using System.Net;
 using UnityEngine.Events;
 
 /// <summary>
@@ -29,11 +31,13 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Events")]
     public GameEvent onEndDialogue;
+    public UnityEvent onEpilogueEnd;
 
-    [NonSerialized] public string inputText;
-    [NonSerialized] public static DialogueManager dm;
-    [NonSerialized] public CharacterInstance currentRecipient;
-    [NonSerialized] public DialogueObject currentObject;
+    [NonSerialized] public        string            inputText;
+    [NonSerialized] public        List<string>      playerAnswers;
+    [NonSerialized] public static DialogueManager   dm;
+    [NonSerialized] public        CharacterInstance currentRecipient;
+    [NonSerialized] public        DialogueObject    currentObject;
     
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
@@ -63,12 +67,17 @@ public class DialogueManager : MonoBehaviour
         {
             characterNameField.SetActive(false);
         }
+    
+        // Initialize the list of answers giving in the epilogue
+        playerAnswers = new List<string>();
+        Debug.Log(Application.persistentDataPath);
         
         // Execute the starting object
         currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
+        onEpilogueEnd.AddListener(SaveAnswers);
     }
 
     /// <summary>
@@ -220,9 +229,10 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void AnswerOpenQuestion()
     {        
-        // Assign the text from the inputField to inputText.
+        // Assign the text from the inputField to inputText and add it to the list of answers.
         // TODO: can write the answers from the open questions to somewhere.
         inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
+        playerAnswers.Add(inputText);
         
         // Disable the input field.
         inputField.SetActive(false);
@@ -231,6 +241,14 @@ public class DialogueManager : MonoBehaviour
         inputText = "";
 
         ExecuteNextObject();
+    }
+
+    /// <summary>
+    /// Save the answers that the player has given to a file
+    /// </summary>
+    public void SaveAnswers()
+    {
+        File.WriteAllLines(Path.Combine(Application.persistentDataPath, "answers.txt"),playerAnswers);
     }
     
     /// <summary>
@@ -267,7 +285,6 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void ContinueTalking()
     {
-        Debug.Log("Continue");
         DestroyButtons();
         for (int i = 0; i < 2; i++)
         {

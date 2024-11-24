@@ -10,12 +10,15 @@ using UnityEngine;
 public class StoryObject : ScriptableObject
 {
     [SerializeField] private string storyName;
-    [SerializeField] public int storyID;
+    [SerializeField] public  int    storyID;
     
     [Header("Story Assets")]
     [SerializeField] public GameObject dialogueBackground;
     [SerializeField] public GameObject hintBackground;
     [SerializeField] public GameObject epilogueBackground;
+    [SerializeField] public AudioClip  storyIntroMusic;
+    [SerializeField] public AudioClip  storyGameMusic;
+    [SerializeField] public AudioClip  storyEpilogueMusic;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;
