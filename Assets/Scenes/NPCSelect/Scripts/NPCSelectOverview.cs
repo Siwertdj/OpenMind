@@ -19,7 +19,7 @@ public class NPCSelectOverview : MonoBehaviour
     // GameManager instance for easy access
     private GameManager gm = GameManager.gm;
     private List<CharacterIcon> icons = new();
-    private int selectedCharacter = -1;
+    private int selectedCharacter = -1; // Set to -1, the code will set a correct value later
 
     void Start()
     {
@@ -44,6 +44,10 @@ public class NPCSelectOverview : MonoBehaviour
         scroller.OnCharacterSelected.AddListener(SelectCharacter);
     }
 
+    /// <summary>
+    /// What to do when a new character is selected. 
+    /// Should be a listener of <see cref="NPCSelectScroller.OnCharacterSelected"/>.
+    /// </summary>
     private void SelectCharacter()
     {
         // If there is no previously selected character, skip this
@@ -59,7 +63,11 @@ public class NPCSelectOverview : MonoBehaviour
         icon.background.color = selectedColor;        
     }
 
-    struct CharacterIcon
+    /// <summary>
+    /// Struct to hold data for character icons.
+    /// Contains a reference to the object, the background/mask image, and the icon's character.
+    /// </summary>
+    private struct CharacterIcon
     {
         public CharacterIcon(GameObject gameObject, Image background, CharacterInstance character)
         {
