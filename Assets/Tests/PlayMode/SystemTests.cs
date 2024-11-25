@@ -18,12 +18,42 @@ using Scene = UnityEngine.SceneManagement.Scene;
 
 public class SystemTests
 {
+    /// <summary>
+    /// Set up for each of the system level tests.
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        // Load the StartScreenScene
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+        
+        // Move DebugManager and copyright back to StartScreenScene so that 
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+                
         yield return null;
+    }
+
+    /// <summary>
+    /// Tear down for each of the system level tests. Move the toolbox under loading as a child,
+    /// then remove all scenes. This ensures that the toolbox gets removed before a new test starts.
+    /// </summary>
+    [TearDown]
+    public void TearDown()
+    {
+        // TODO: perhaps check if there is anything under ddol, then move the objects if so.
+        // Move the Toolbox and the SettingsManager to be not in ddol
+        if(GameObject.Find("Toolbox"))
+            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
+        
+        if(GameObject.Find("SettingsManager"))
+            SceneManager.MoveGameObjectToScene(GameObject.Find("SettingsManager"), SceneManager.GetSceneAt(0));
+        
+        // Unload additive scenes.
+        if(SceneController.sc != null)
+            SceneController.sc.UnloadAdditiveScenes();
     }
 
     [UnityTest]
