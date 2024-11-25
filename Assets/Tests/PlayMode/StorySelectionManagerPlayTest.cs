@@ -12,19 +12,18 @@ using UnityEngine.UI;
 using TMPro;
 using TMPro.Examples;
 using Unity.Collections.LowLevel.Unsafe;
+using Object = UnityEngine.Object;
 
 public class StorySelectionManagerPlayTest
 {
     private GameManager           gm;
     private StorySelectionManager sm;
-    //private TimelineManager       tm; 
     
     #region Setup and Teardown
     
     [UnitySetUp]
     public IEnumerator Setup()
     {
-        
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
@@ -34,7 +33,7 @@ public class StorySelectionManagerPlayTest
         SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
         
         // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
+        //SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
@@ -56,8 +55,12 @@ public class StorySelectionManagerPlayTest
     [TearDown]
     public void TearDown()
     {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("StorySelectScene"));
         SceneController.sc.UnloadAdditiveScenes();
+        // Start new test with clean slate. 
+        foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            Object.DestroyImmediate(obj); 
+        }
     }
     
     #endregion
@@ -74,39 +77,50 @@ public class StorySelectionManagerPlayTest
     }
     
     /// <summary>
-    /// Checks if the story in gamemanager becomes story A when A is selected
+    /// Checks if the story becomes story A when A is selected
     /// </summary>
     [UnityTest]
     public IEnumerator ChooseStoryATest()
     {
-        sm.StoryASelected();
-        Assert.AreEqual(sm.stories[0].storyID, gm.story.storyID);
+        sm.StoryASelected(); // This method also loads the introduction scene.
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
+        // In TimelineManager the introduction is determined by the StorySelect scene.
+        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        // We therefore check if the loaded introduction is indeed the correct one. 
+        Assert.AreEqual(tm.introStoryA,tm.currentTimeline);
+        //Assert.AreEqual(sm.stories[0].storyID, gm.story.storyID);
         yield return null;
     }
     
     /// <summary>
-    /// Checks if the story in gamemanager becomes story B when B is selected
+    /// Checks if the story becomes story B when B is selected
     /// </summary>
     [UnityTest]
     public IEnumerator ChooseStoryBTest()
     {
+        // This test works exactly the same as ChooseStoryATest
         sm.StoryBSelected();
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
+         
+        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
         
-        /*TimelineManager tm  = GameObject.Find("IntroStoryScene").GetComponent<TimelineManager>();
-        tm.StartGame();*/
-        
-        Assert.AreEqual(sm.stories[1].storyID, gm.story.storyID);
+        Assert.AreEqual(tm.introStoryB,tm.currentTimeline);
         yield return null;
     }
     
     /// <summary>
-    /// Checks if the story in gamemanager becomes story C when C is selected
+    /// Checks if the story becomes story C when C is selected
     /// </summary>
     [UnityTest]
     public IEnumerator ChooseStoryCTest()
     {
+        // This test works exactly the same as ChooseStoryATest
         sm.StoryCSelected();
-        Assert.AreEqual(sm.stories[2].storyID, gm.story.storyID);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
+        
+        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        
+        Assert.AreEqual(tm.introStoryC, tm.currentTimeline);
         yield return null;
     }
     
