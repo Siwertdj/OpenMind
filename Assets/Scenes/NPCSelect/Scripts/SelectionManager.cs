@@ -29,8 +29,8 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SetSceneType();
         SetHeaderText();
+        SetSceneType();
         GenerateOptions();
 
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
@@ -46,7 +46,9 @@ public class SelectionManager : MonoBehaviour
     private void SetSceneType()
     {
         if (!GameManager.gm.EnoughCharactersRemaining())
+        {
             GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
+        }
     }
 
     /// <summary>
@@ -136,9 +138,6 @@ public class SelectionManager : MonoBehaviour
             button.interactable = false;
             text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
-
-        // Force the button to change state immediately
-        Canvas.ForceUpdateCanvases();
 
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
