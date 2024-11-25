@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using NUnit.Framework;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
-using TMPro.Examples;
 using UnityEngine.Playables;
 using Assert = UnityEngine.Assertions.Assert;
 
@@ -23,6 +16,12 @@ public class TutorialManagerPlayTest
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        // Start new test with clean slate. 
+        foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            Object.DestroyImmediate(obj);
+        }
+        
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);

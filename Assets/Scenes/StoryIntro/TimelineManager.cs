@@ -281,7 +281,6 @@ public class TimelineManager : MonoBehaviour
         StartCoroutine(LoadGame());
     }
     
-
     /// <summary>
     /// Loads the game.
     /// </summary>

@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using NUnit.Framework;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
-using TMPro.Examples;
-using Unity.Collections.LowLevel.Unsafe;
 using Object = UnityEngine.Object;
 
 public class StorySelectionManagerPlayTest
