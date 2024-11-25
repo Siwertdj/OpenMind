@@ -1065,7 +1065,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &2113601864
 MonoBehaviour:
@@ -1084,6 +1084,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: d78521ba7992c9049888e6909ce33fe2, type: 2}
     - {fileID: 11400000, guid: 18e63c021bb39b045a13b3cb0623f40d, type: 2}
     - {fileID: 11400000, guid: 7041d1b08dd88ef4f90a00b15360c272, type: 2}
+    - {fileID: 11400000, guid: bde1146e323ab904887a5a8af0eb4671, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1118,6 +1119,20 @@ MonoBehaviour:
         - m_Target: {fileID: 475655577}
           m_TargetAssemblyTypeName: TutorialManager, Scripts
           m_MethodName: StopTutorial
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 475655577}
+          m_TargetAssemblyTypeName: TutorialManager, Scripts
+          m_MethodName: ActivateNotebookTutorial
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

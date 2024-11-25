@@ -22,15 +22,34 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private Image    objectiveBox;
     [SerializeField] private TMP_Text objectiveText;
     
-    private Button tutorialButton; 
+    private Button tutorialButton;
+    private Button notebookButton; 
     
     private void Start()
     {
         StartTutorial();
         GameObject tutorial = GameObject.Find("HelpButton");
         tutorialButton = tutorial.GetComponentInChildren<Button>();
+        
+        GameObject notebook = GameObject.Find("NotebookButton");
+        notebookButton = notebook.GetComponentInChildren<Button>();
     }
     
+    public void ActivateNotebookTutorial()
+    {
+        PauseTutorial();
+        UpdateTutorialText();
+        continueButton.enabled = false;                         // Only the notebook button can be clicked. 
+        notebookButton.onClick.AddListener(UpdateTutorialText); // Temporarily add the ability to update the text to the notebookbutton. 
+        //notebookButton.enabled = true;                          // Make sure notebook button can be clicked. 
+    }
+    
+    private void DeactivateNotebookTutorial()
+    {
+        notebookButton.onClick.RemoveListener(UpdateTutorialText); // Remove the ability to update the text
+        continueButton.enabled = true;                     // Make sure the player can tap the screen to continue again. 
+        //notebookButton.enabled = false;                    // Make sure the player can not enter the notebook during the tutorial. 
+    }
     
     /// <summary>
     /// This method is called when the help button is clicked.
@@ -73,6 +92,7 @@ public class TutorialManager : MonoBehaviour
     {
         PauseTutorial(); // Pause timeline such that player has time to read the text. 
         objectiveBox.gameObject.SetActive(false);
+        DeactivateNotebookTutorial();
         try
         {
             text.text = tutorialText[textIndex];
