@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+ 
 
     public bool IsPaused { get; set; } = false;
     
@@ -486,6 +487,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                DialogueManager.dm.onEpilogueEnd.Invoke();
                 if (hasWon)
                 {
                     // Transition to the GameWinScene and set the gameState to GameWon.
@@ -515,6 +517,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                
                 // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
