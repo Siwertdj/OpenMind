@@ -940,7 +940,7 @@ MonoBehaviour:
   text: {fileID: 1804029613}
   delayInSeconds: 0.05
   delayAfterSentence: 1
-  audioEnabled: 0
+  audioEnabled: 1
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -988,7 +988,7 @@ AudioSource:
   m_GameObject: {fileID: 826756115}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4082087596108505959, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
   m_audioClip: {fileID: 8300000, guid: fd4c3aa0b9a754946a5dd01d1a49a8b2, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.1

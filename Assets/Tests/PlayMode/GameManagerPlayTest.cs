@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,8 +47,23 @@ public class GameManagerPlayTest
     [UnitySetUp]
     public IEnumerator SetUp()
     {
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+        // Move debugmanager and copyright back to startscreenscene so that 
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+        
+        // Unload the StartScreenScene
+        SceneManager.UnloadSceneAsync("StartScreenScene");
+        
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded); // Wait for scene to load.
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+
+        // Put toolbox as parent of SettingsManager
+        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Get a StoryObject.
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
@@ -456,13 +471,12 @@ public class GameManagerPlayTest
             {
                 string path = "characterspace " + counter;
                 GameObject go = GameObject.Find(path);
-                SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
-                if (selectOption.character.characterName == gm.GetCulprit().characterName)
+                CharacterInstance selectedCharacter = go.GetComponentInChildren<SelectOption>().character;
+                if (selectedCharacter.characterName == gm.GetCulprit().characterName)
                 {
                     culpritGameObjectFound = true;
-                    GameObject culpritObject = go;
                     // Simulate choosing the culprit.
-                    sm.ButtonClicked(culpritObject);
+                    sm.SelectionButtonClicked(selectedCharacter);
                 }
                 counter++;
             }
@@ -479,14 +493,14 @@ public class GameManagerPlayTest
             {
                 string path = "characterspace " + counter;
                 GameObject go = GameObject.Find(path);
-                SelectOption selectOption = go.GetComponentInChildren<SelectOption>();
+                CharacterInstance selectedCharacter = go.GetComponentInChildren<SelectOption>().character;
                 // Choose an innocent person that is not dead and is not the culprit.
-                if (selectOption.character.characterName != gm.GetCulprit().characterName && selectOption.character.isActive)
+                if (selectedCharacter.characterName != gm.GetCulprit().characterName && selectedCharacter.isActive)
                 {
                     innocentGameObjectFound = true;
                     GameObject innocentObject = go;
                     // Simulate choosing an innocent person.
-                    sm.ButtonClicked(innocentObject);
+                    sm.SelectionButtonClicked(selectedCharacter);
                 }
                 counter++;
             }
