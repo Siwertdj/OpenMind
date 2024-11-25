@@ -8,13 +8,13 @@ using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
-    [SerializeField] private PlayableDirector TutorialTimeline;
+    [SerializeField] public PlayableDirector TutorialTimeline;
     
-    [SerializeField] private Button continueButton; 
+    [SerializeField] public Button continueButton; 
     
     [SerializeField] private Image    textBox;       // Background of the text. 
-    [SerializeField] private string[] tutorialText;  // Contains the text that will be shown. 
-    [SerializeField] private TMP_Text text;          // The gameobject that will show the text on the screen. 
+    [SerializeField] public string[] tutorialText;  // Contains the text that will be shown. 
+    [SerializeField] public TMP_Text text;          // The gameobject that will show the text on the screen. 
     private int textIndex;                           // Keeps track of which text to show.  
     
     // Variables for showing the objective of the game. 
