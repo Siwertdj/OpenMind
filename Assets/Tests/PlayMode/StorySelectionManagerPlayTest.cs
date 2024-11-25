@@ -24,6 +24,12 @@ public class StorySelectionManagerPlayTest
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        // Start new test with clean slate. 
+        foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
+        {
+            Object.DestroyImmediate(obj);
+        }
+        
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
@@ -56,11 +62,6 @@ public class StorySelectionManagerPlayTest
     public void TearDown()
     {
         SceneController.sc.UnloadAdditiveScenes();
-        // Start new test with clean slate. 
-        foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
-        {
-            Object.DestroyImmediate(obj); 
-        }
     }
     
     #endregion
