@@ -253,7 +253,7 @@ public class SystemTests
     /// <returns></returns>
     /// <exception cref="Exception"> Occurs when there are no active characters in the game. (should never occur)</exception>
     // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
-    [UnityTest]
+    [UnityTest, Order(1)]
     public IEnumerator SaveGame()
     {
         // Find the New Game button and click it
@@ -505,7 +505,7 @@ public class SystemTests
     /// <returns></returns>
     /// <exception cref="Exception"> Occurs when no save file exists. </exception>
     /// // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
-    [UnityTest]
+    [UnityTest, Order(2)]
     public IEnumerator LoadGame()
     {
         if (!FilePathConstants.DoesSaveFileLocationExist())
