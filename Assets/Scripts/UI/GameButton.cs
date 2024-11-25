@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -13,12 +13,12 @@ using UnityEngine.UI;
 /// </summary>
 public class GameButton : Button
 {
-    private GameEvent gameEvent;
+    public GameEvent gameEvent;
 
     private new void Start()
     {
         // Retrieve gameevent from assets folder to reference
-        gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
+        //gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
         // add method below to listeners of the onclick.
         // This method raises the aforementioned event 
         onClick.AddListener(RaiseEvent);
@@ -26,6 +26,6 @@ public class GameButton : Button
     
     private void RaiseEvent()
     { 
-        gameEvent.Raise(this);
+        //gameEvent.Raise(this);
     }
 }
