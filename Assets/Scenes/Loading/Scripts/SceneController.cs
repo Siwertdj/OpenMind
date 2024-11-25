@@ -343,7 +343,7 @@ public class SceneController : MonoBehaviour
     // this method is not tested
     public void ToggleTutorialScene(Button button)
     { 
-       // If notebook is already open, close it
+       // If tutorial is already open, close it
        if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
        {
            GameManager.gm.IsPaused = false;
