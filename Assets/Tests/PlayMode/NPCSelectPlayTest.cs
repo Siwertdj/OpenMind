@@ -123,6 +123,7 @@ public class NPCSelectPlayTest
         Assert.AreEqual(0, cg.alpha);
     }
 
+    #region Scroller Tests
     [UnityTest]
     public IEnumerator SelectedCharacterNameTest()
     {
@@ -164,6 +165,9 @@ public class NPCSelectPlayTest
     [UnityTest]
     public IEnumerator NavigateToChildSetsCorrectPositionTest()
     {
+        float prevDuration = scroller.Test_ScrollDuration;
+
+        scroller.Test_ScrollDuration = 0.05f;
         // Repeat x times
         int childCount = scroller.Test_Children.Length;
         for (int i = 0; i < childCount * 8; i++)
@@ -178,6 +182,9 @@ public class NPCSelectPlayTest
                 $"The child is at x position {scroller.Test_Children[childIndex].position.x}, " +
                 $"but the center of the screen is at {Screen.width / 2}");
         }
+
+        // Reset scroll duration
+        scroller.Test_ScrollDuration = prevDuration;
     }
 
     /// <summary>
@@ -203,5 +210,21 @@ public class NPCSelectPlayTest
         }
 
         yield return null;
+    }
+    #endregion
+
+    [UnityTest]
+    public IEnumerator CharacterInactiveTest()
+    {
+        gm.currentCharacters[0].isActive = false;
+
+        scroller.Test_SelectedChild = 0;
+        scroller.Test_InstantNavigate(0);
+
+        yield return null;
+
+        var text = sm.Test_GetSelectionButtonRef().GetComponentInChildren<TMP_Text>();
+        Assert.IsTrue(text.text.Contains(gm.story.victimDialogue),
+            $"Expected the string to contain {gm.story.victimDialogue}, but the string was {text.text}");
     }
 }

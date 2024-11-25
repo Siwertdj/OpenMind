@@ -219,7 +219,11 @@ public class NPCSelectScroller : MonoBehaviour
         set { SelectedChild = value; }
     }
 
-    public float Test_ScrollDuration { get { return scrollDuration; } }
+    public float Test_ScrollDuration 
+    { 
+        get { return scrollDuration; }
+        set { scrollDuration = value; }
+    }
 
     public void Test_NavigateToChild(int childIndex) => NavigateToChild(childIndex);
 #endif
