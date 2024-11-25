@@ -31,7 +31,8 @@ public class SceneController : MonoBehaviour
         GameMenuScene,
         SettingsScene,
         GameLossScene,
-        GameWinScene
+        GameWinScene,
+        TutorialScene
     }
 
     /// <summary>
@@ -320,7 +321,7 @@ public class SceneController : MonoBehaviour
     public void ToggleNotebookScene(Button button)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
-
+        
         // If notebook is already open, close it
         if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
         {
@@ -334,6 +335,25 @@ public class SceneController : MonoBehaviour
             crossOverlay.SetActive(true);
             _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
         }
+    }
+    
+    /// <summary>
+    /// Function to load the tutorial.
+    /// </summary>
+    // this method is not tested
+    public void ToggleTutorialScene(Button button)
+    { 
+       // If notebook is already open, close it
+       if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
+       {
+           GameManager.gm.IsPaused = false;
+           _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
+       }
+       else
+       {
+           GameManager.gm.IsPaused = true;
+           _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
+       }
     }
 
     /// <summary>
