@@ -60,7 +60,7 @@ public class NPCSelectOverview : MonoBehaviour
 
         selectedCharacter = scroller.SelectedChild;
         var icon = icons[selectedCharacter];
-        icon.background.color = selectedColor;        
+        icon.background.color = selectedColor;   
     }
 
     /// <summary>
@@ -74,9 +74,6 @@ public class NPCSelectOverview : MonoBehaviour
             this.gameObject = gameObject;
             this.background = background;
             this.character = character;
-
-            // Set the character's icon to their face
-            gameObject.transform.GetChild(0).GetComponent<Image>().sprite = character.avatar;
         }
 
         public GameObject gameObject;
