@@ -27,7 +27,7 @@ public class SelectionManager : MonoBehaviour
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         SetSceneType();
         SetHeaderText();
