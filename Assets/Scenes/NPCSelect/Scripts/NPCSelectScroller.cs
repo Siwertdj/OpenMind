@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -94,12 +95,12 @@ public class NPCSelectScroller : MonoBehaviour
 
         // Get reference to scroll background
         scrollable = transform.GetChild(0);
+        var layout = scrollable.GetChild(0);
 
         // Populate list of children
         Children = new Transform[GameManager.gm.currentCharacters.Count];
         for (int i = 0; i < Children.Length; i++)
-            Children[i] = scrollable.GetChild(i);
-
+            Children[i] = layout.GetChild(i);
     }
 
     private void Start()

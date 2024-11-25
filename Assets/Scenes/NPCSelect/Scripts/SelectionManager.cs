@@ -24,11 +24,17 @@ public class SelectionManager : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
+    private Transform scrollable;
+    private Transform layout;
+
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
     private void Awake()
     {
+        scrollable = scroller.transform.GetChild(0);
+        layout = scrollable.GetChild(0);
+
         SetHeaderText();
         SetSceneType();
         GenerateOptions();
@@ -78,7 +84,7 @@ public class SelectionManager : MonoBehaviour
             newOption.character = character;
 
             // Set the parent & position of the object
-            newOption.transform.SetParent(scroller.transform.GetChild(0).GetChild(i), false);
+            newOption.transform.SetParent(layout.GetChild(i), false);
             newOption.transform.position = newOption.transform.parent.position;
         }
     }
