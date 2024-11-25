@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using JetBrains.Annotations;
@@ -83,8 +83,11 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        SettingsManager.sm.SetSfxVolume(volume);
-        
+        SettingsManager.sm.SetSfxVolume(volume);        
     }
 
+    public void SetTalkingSpeed(float multiplier)
+    {
+        SettingsManager.sm.SetTalkingSpeed(multiplier);
+    }
 }

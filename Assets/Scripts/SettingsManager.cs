@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -15,6 +15,8 @@ public class SettingsManager : MonoBehaviour
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
+
+    public float TalkingDelay {  get; private set; }
     
     private AudioSource musicSource;
 
@@ -101,4 +103,9 @@ public class SettingsManager : MonoBehaviour
         }
     }
     #endregion
+
+    public void SetTalkingSpeed(float multiplier) 
+    { 
+        TalkingDelay = 0.05f * multiplier;
+    }
 }
