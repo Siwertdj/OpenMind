@@ -300,6 +300,11 @@ public class TimelineManager : MonoBehaviour
         
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary
+        
+        // Make sure tutorial is automatically loaded when the game starts. 
+        GameObject tutorial = GameObject.Find("HelpButton");
+        Button helpButton = tutorial.GetComponentInChildren<Button>();
+        helpButton.onClick.Invoke();
     }
     #endregion
    
