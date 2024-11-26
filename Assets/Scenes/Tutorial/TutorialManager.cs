@@ -4,14 +4,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TutorialManager : MonoBehaviour
 {
     [SerializeField] public PlayableDirector TutorialTimeline;
     
-    [SerializeField] public Button continueButton; 
+    [SerializeField] public  Button     continueButton;
+    [SerializeField] private GameObject notebookHighlight; 
     
+    // Variables for the tutorial text
     [SerializeField] private Image    textBox;       // Background of the text. 
     [SerializeField] public string[] tutorialText;  // Contains the text that will be shown. 
     [SerializeField] public TMP_Text text;          // The gameobject that will show the text on the screen. 
@@ -39,16 +42,26 @@ public class TutorialManager : MonoBehaviour
     {
         PauseTutorial();
         UpdateTutorialText();
-        continueButton.enabled = false;                         // Only the notebook button can be clicked. 
-        notebookButton.onClick.AddListener(UpdateTutorialText); // Temporarily add the ability to update the text to the notebookbutton. 
-        //notebookButton.enabled = true;                          // Make sure notebook button can be clicked. 
+        notebookHighlight.SetActive(true);
+        // Make sure the player has to open the notebook. 
+        continueButton.enabled = false;                                 // Only the notebook button can be clicked. 
+        notebookButton.onClick.AddListener(UpdateTutorialText);         // Temporarily add the ability to update the text to the notebookbutton. 
+        notebookButton.onClick.AddListener(DisableNotebookHighlight);   // Temporarily add the ability to deactivate the highlight to the notebookbutton. 
+        
     }
     
     private void DeactivateNotebookTutorial()
     {
-        notebookButton.onClick.RemoveListener(UpdateTutorialText); // Remove the ability to update the text
-        continueButton.enabled = true;                     // Make sure the player can tap the screen to continue again. 
-        //notebookButton.enabled = false;                    // Make sure the player can not enter the notebook during the tutorial. 
+        notebookButton.onClick
+            .RemoveListener(UpdateTutorialText);        // Remove the ability to update the text
+        notebookButton.onClick
+            .RemoveListener(DisableNotebookHighlight);  // Remove the ability to deactivate the notebook highlight
+        continueButton.enabled = true; // Make sure the player can tap the screen to continue again. 
+    }
+    
+    private void DisableNotebookHighlight()
+    {
+        notebookHighlight.SetActive(false);
     }
     
     /// <summary>
