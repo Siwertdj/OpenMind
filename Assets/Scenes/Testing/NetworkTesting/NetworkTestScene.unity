@@ -395,6 +395,8 @@ GameObject:
   - component: {fileID: 1504598164}
   - component: {fileID: 1504598166}
   - component: {fileID: 1504598165}
+  - component: {fileID: 1504598168}
+  - component: {fileID: 1504598167}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -442,6 +444,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textfield: {fileID: 1582678105}
+--- !u!114 &1504598167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504598163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5376684a91ad5408803d9a2fa515bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Identifier: OpenMindDiscovery
+  ProbeIntervalSeconds: 8
+--- !u!114 &1504598168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504598163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91742b550977d524d8aba5b14dad2641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Identifier: OpenMindDiscovery
 --- !u!1 &1582678103
 GameObject:
   m_ObjectHideFlags: 0

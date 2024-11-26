@@ -21,7 +21,7 @@ public class NetworkManager : MonoBehaviour
     void Start()
     {
         GetLocalIPs();
-        SetupNetworkTest();
+        SetupBroadcastTest();
     }
     
     void Update()
@@ -33,6 +33,44 @@ public class NetworkManager : MonoBehaviour
             
             debugMessages.Clear();
         }
+    }
+    
+    void FindNearbyIpsTest()
+    {
+        DeviceFinder deviceFinder = new DeviceFinder(7777);
+        StartCoroutine(deviceFinder.PingAllRoutine(400));
+    }
+    
+    void SetupBroadcastTest()
+    {
+        Beacon beacon = gameObject.GetComponent<Beacon>();
+        Probe probe = gameObject.GetComponent<Probe>();
+        beacon.enabled = true;
+        probe.enabled = true;
+        StartCoroutine(WaitSeconds(10f, () =>
+        {
+            string foundIps = "";
+            foreach (var beaconFoundDevice in beacon.FoundDevices)
+            {
+                foundIps += $"{beaconFoundDevice}, ";
+            }
+            Debug.Log($"beacon found IPs: {foundIps}");
+            
+            foundIps = "";
+            foreach (var probeFoundDevice in probe.FoundDevices)
+            {
+                foundIps += $"{probeFoundDevice}, ";
+            }
+            Debug.Log($"probe found IPs: {foundIps}");
+            beacon.enabled = false;
+            probe.enabled = false;
+        }));
+    }
+    
+    IEnumerator WaitSeconds(float secs, Action action)
+    {
+        yield return new WaitForSeconds(secs);
+        action();
     }
     
     void SetupNetworkTest()
