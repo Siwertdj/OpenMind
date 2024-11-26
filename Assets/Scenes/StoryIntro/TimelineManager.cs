@@ -146,9 +146,8 @@ public class TimelineManager : MonoBehaviour
     
     #endregion
     
-    // This region contains methods that manipulate UI elements of the scene.
-    #region UIManipulators
-    
+    // This region contains methods regarding introduction A.
+    #region Introduction A
     /// <summary>
     /// Depending on the value of show, this method either hides of shows the text messages on the screen.
     /// </summary>
@@ -259,7 +258,6 @@ public class TimelineManager : MonoBehaviour
         }
         typeIndex++;
     }
-    
     #endregion
     
     // This region contains methods that directly manipulate the timeline
