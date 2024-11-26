@@ -44,19 +44,6 @@ public class SceneController : MonoBehaviour
         Unload
     }
     
-    // Dictionary used to convert gameStates into their scene string names.
-    private Dictionary<GameManager.GameState, string> gameStateSceneDict = new Dictionary<GameManager.GameState, string>()
-    {
-        { GameManager.GameState.Loading, "Loading" },
-        { GameManager.GameState.NpcSelect, "NPCSelectScene"},
-        { GameManager.GameState.CulpritSelect, "NPCSelectScene"},
-        { GameManager.GameState.NpcDialogue, "DialogueScene"},
-        { GameManager.GameState.HintDialogue, "DialogueScene"},
-        { GameManager.GameState.GameLoss, "GameOverScene"},
-        { GameManager.GameState.GameWon, "GameWinScene"},
-        { GameManager.GameState.Epilogue, "DialogueScene"}
-    };
-    
     // A static instance of this class
     public static SceneController sc;
 
@@ -207,13 +194,12 @@ public class SceneController : MonoBehaviour
         {
             case TransitionType.Additive:
                 await LoadScene(targetScene);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 break;
             
             case TransitionType.Unload:
-                // Get name of the scene in string format.
-                string scene = GameStateToScene(GameManager.gm.gameState);
                 // Set the previous active scene back to active.
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(scene));
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 SceneManager.UnloadSceneAsync(currentScene);
                 break;
             
@@ -221,6 +207,7 @@ public class SceneController : MonoBehaviour
                 await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
                 await LoadScene(targetScene); // Load new scene
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 _ = TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade back into game
                 break;
         }
@@ -388,24 +375,6 @@ public class SceneController : MonoBehaviour
             // If scene name is not found, throw an error
             Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
             throw;
-        }
-    }
-    
-    /// <summary>
-    /// Method for converting gameStates into their scene string name.
-    /// </summary>
-    /// <param name="gameState"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"> GameState key is given which is not present in the gameStateSceneDict. </exception>
-    public string GameStateToScene(GameManager.GameState gameState)
-    {
-        try
-        {
-            return gameStateSceneDict[gameState];
-        }
-        catch
-        {
-            throw new ArgumentException("GameState does not exist within the dictionary");
         }
     }
 }
