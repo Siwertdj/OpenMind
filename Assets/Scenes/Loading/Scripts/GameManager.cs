@@ -198,6 +198,7 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.NpcSelect;
+        Debug.Log("npc select");
     }
     
     /// <summary>
@@ -236,12 +237,14 @@ public class GameManager : MonoBehaviour
         // Select the Culprit
         else
         {
+            //update gamestate
+            gameState = GameState.CulpritSelect;
+            Debug.Log("Culprit select");
+            
             _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
-            //update gamestate
-            gameState = GameState.CulpritSelect;
         }
     }
     #endregion
@@ -350,6 +353,7 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.Loading;
+        Debug.Log("loading");
         
         // Reset the characters
         foreach (CharacterInstance character in currentCharacters)
@@ -372,6 +376,7 @@ public class GameManager : MonoBehaviour
         
         //update gamestate
         gameState = GameState.Loading;
+        Debug.Log("loading");
         
         NewGame();     
     }
@@ -397,14 +402,15 @@ public class GameManager : MonoBehaviour
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(DialogueObject dialogueObject)
     {
+        gameState = GameState.HintDialogue;
+        Debug.Log("hint dialogue");
+        
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-
-        gameState = GameState.HintDialogue;
-
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -426,16 +432,18 @@ public class GameManager : MonoBehaviour
             background);
         dialogueObject.Responses.Add(new QuestionObject(background));
 
-        // Until DialogueManager gets its information, it shouldnt do anything there.
+        // Until DialogueManager gets its information, it shouldn't do anything there.
         var dialogueRecipient = character;
+        
+        gameState = GameState.NpcDialogue;
+        Debug.Log("npc dialogue");
+        
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-
-        gameState = GameState.NpcDialogue;
-
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
@@ -497,6 +505,7 @@ public class GameManager : MonoBehaviour
                 
                 //update gamestate
                 gameState = GameState.NpcDialogue;
+                Debug.Log("npc dialogue");
                 
                 // If we want to start dialogue with a different person in the epilogue,
                 // there will be a SpeakingObject under the Responses list of the TerminateDialogueObject,
@@ -508,21 +517,26 @@ public class GameManager : MonoBehaviour
                 DialogueManager.dm.onEpilogueEnd.Invoke();
                 if (hasWon)
                 {
+                    gameState = GameState.GameWon;
+                    Debug.Log("game won");
+                    
                     // Transition to the GameWinScene and set the gameState to GameWon.
                     await SceneController.sc.TransitionScene(
                         SceneController.SceneName.DialogueScene,
                         SceneController.SceneName.GameWinScene,
                         SceneController.TransitionType.Transition);
-                    gameState = GameState.GameWon;
+                    
                 }
                 else
                 {
+                    gameState = GameState.GameLoss;
+                    Debug.Log("game loss");
+                    
                     // Transition to the GameOverScene and set the gameState to GameLoss.
                     await SceneController.sc.TransitionScene(
                         SceneController.SceneName.DialogueScene,
                         SceneController.SceneName.GameLossScene,
                         SceneController.TransitionType.Transition);
-                    gameState = GameState.GameLoss;
                 }
             }
         }
@@ -554,6 +568,7 @@ public class GameManager : MonoBehaviour
                 }
             
                 gameState = GameState.NpcSelect;
+                Debug.Log("npc select");
             }
         }
     }
@@ -565,6 +580,7 @@ public class GameManager : MonoBehaviour
     public async void StartEpilogueDialogue(CharacterInstance character)
     {
         gameState = GameState.Epilogue;
+        Debug.Log("epilogue");
         
         // Get the epilogue dialogue.
         remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
