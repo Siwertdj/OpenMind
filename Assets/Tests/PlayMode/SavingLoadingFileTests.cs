@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +42,9 @@ public class SavingLoadingTestFilePaths
         
         if (layer > 1)
         {
+            GameManager.gm.gameObject.AddComponent<AudioSource>();
+            GameManager.gm.gameObject.AddComponent<SettingsManager>();
+
             //initialise gamemanager
             StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
             GameManager.gm.StartGame(null, story);
@@ -54,13 +57,14 @@ public class SavingLoadingTestFilePaths
     public IEnumerator RemoveGameManager()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
-        GameManager.gm = null;
         
         if (layer > 0)
         {
             SceneManager.UnloadSceneAsync("Loading");
             yield return new WaitUntil(() => !SceneManager.GetSceneByName("Loading").isLoaded);
         }
+
+        GameManager.gm = null;
     }
     
     private Save saving  => Save.Saver;

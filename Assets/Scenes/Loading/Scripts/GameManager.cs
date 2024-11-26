@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+ 
 
     public bool IsPaused { get; set; } = false;
     
@@ -327,7 +328,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndGame()
     {
-        Debug.Log("End game.");
         Application.Quit();
     }
     
@@ -483,6 +483,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                DialogueManager.dm.onEpilogueEnd.Invoke();
                 if (hasWon)
                 {
                     // Transition to the GameWinScene and set the gameState to GameWon.
@@ -497,7 +498,7 @@ public class GameManager : MonoBehaviour
                     // Transition to the GameOverScene and set the gameState to GameLoss.
                     await SceneController.sc.TransitionScene(
                         SceneController.SceneName.DialogueScene,
-                        SceneController.SceneName.GameOverScene,
+                        SceneController.SceneName.GameLossScene,
                         SceneController.TransitionType.Transition);
                     gameState = GameState.GameLoss;
                 }
@@ -512,13 +513,13 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                
                 // TODO: this if statement serves no purpose i think, so it should be removed.
                 // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
                 if (gameState == GameState.GameLoss)
                 {
-                    Debug.Log("transition from game loss to npcselect");
                     await sc.TransitionScene(
-                        SceneController.SceneName.GameOverScene, 
+                        SceneController.SceneName.GameLossScene, 
                         SceneController.SceneName.NPCSelectScene, 
                         SceneController.TransitionType.Transition);
                 }
@@ -528,7 +529,7 @@ public class GameManager : MonoBehaviour
                             SceneController.SceneName.DialogueScene, 
                             SceneController.SceneName.NPCSelectScene, 
                             SceneController.TransitionType.Transition);
-                    }
+                }
             
                 gameState = GameState.NpcSelect;
             }
@@ -603,7 +604,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if more, False if not.</returns>
     public bool EnoughCharactersRemaining()
     {
-        int numberOfActiveCharacters = GameManager.gm.currentCharacters.Count(c => c.isActive);
+        int numberOfActiveCharacters = currentCharacters.Count(c => c.isActive);
         return numberOfActiveCharacters > story.minimumRemaining;
     }
     

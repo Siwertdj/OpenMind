@@ -30,7 +30,6 @@ public class TransitionAnimator : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //Debug.Log("hi2");
         i = this;
     }
     
