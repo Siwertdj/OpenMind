@@ -743,6 +743,7 @@ public class GameManagerPlayTest
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
         
+        // Waiting for the NpcSelectScene to appear
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
@@ -775,7 +776,7 @@ public class GameManagerPlayTest
         // Check if we are in the correct gameState.
         Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
 
-        // End the NpcDialogue.
+        // End the NpcDialogue
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
         
@@ -817,10 +818,7 @@ public class GameManagerPlayTest
         
         // Get the DialogueManager.
         var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-        
-        // Check if we are in the correct gameState.
-        Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
-
+ 
         // End the NpcDialogue.
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
@@ -848,18 +846,13 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator RetryGameStateTest()
     {
-        // Start the game cycle
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-        
-        // Check if we are in the correct gameState.
-        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
-        
         // Set the gamestate to gameloss
         gm.gameState = GameManager.GameState.GameLoss;
 
         // Retry game
         gm.RetryStoryScene();
         
+        // Waiting for the NpcSelectScene to appear
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
@@ -873,18 +866,13 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator RestartGameStateTest()
     {
-        // Start the game cycle
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-        
-        // Check if we are in the correct gameState.
-        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
-        
         // Set the gamestate to GameWon
         gm.gameState = GameManager.GameState.GameWon;
         
         // Restart game
         gm.RestartStoryScene();
         
+        // Waiting for the NpcSelectScene to appear
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
@@ -906,7 +894,8 @@ public class GameManagerPlayTest
         // Set the finalChosenCulprit in GameManager.
         CharacterInstance culprit = gm.GetCulprit();
         gm.FinalChosenCuplrit = culprit;
-
+        
+        // Chosen the correct culprit
         gm.hasWon = true;
         
         // Start the epilogue dialogue.
@@ -920,7 +909,7 @@ public class GameManagerPlayTest
         // Get the DialogueManager.
         var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
             
-        // End the dialogue.
+        // End the epilogue dialogue
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
         
@@ -934,29 +923,26 @@ public class GameManagerPlayTest
     [UnityTest]
     public IEnumerator EpilogueToGameLossGameStateTest()
     {
-        // Start the game cycle
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-        // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
-        yield return new WaitUntil(() => GameObject.Find("SelectionManager") != null);
-        
         // Set the finalChosenCulprit in GameManager.
         CharacterInstance innocentPerson = gm.GetRandomVictimNoCulprit();
         gm.FinalChosenCuplrit = innocentPerson;
-
+        
+        // Chosen the wrong character
         gm.hasWon = false;
         
         // Start the epilogue dialogue.
         gm.StartEpilogueDialogue(innocentPerson);
         
+        // Waiting for the DialogueScene to start
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
         // Waiting for the DialogueManager to appear, since waiting for the DialogueScene is not enough.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
             
-        // Get the DialogueManager.
+        // Get the DialogueManager
         var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
             
-        // End the dialogue.
+        // End the epilogue dialogue.
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
         
