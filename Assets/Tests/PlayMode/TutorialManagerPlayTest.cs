@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 using Assert = UnityEngine.Assertions.Assert;
 
 public class TutorialManagerPlayTest
 {
     private GameManager     gm;
-    private TutorialManager tm; 
+    private TutorialManager tm;
+    private Button          notebookButton;
+    private Button          helpButton;
         
     #region Setup and Teardown
     
@@ -40,14 +43,21 @@ public class TutorialManagerPlayTest
         // Put toolbox as parent of SettingsManager
         GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
+        // Initialize GameManager and start the game. 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
+        // Initialize the TutorialManager
         SceneManager.LoadScene("TutorialScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("TutorialScene").isLoaded);
-        
         tm = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
+        
+        // Initialize required buttons
+        GameObject notebook = GameObject.Find("NotebookButton");
+        notebookButton = notebook.GetComponentInChildren<Button>();
+        
+        GameObject tutorial = GameObject.Find("HelpButton");
+        helpButton = tutorial.GetComponentInChildren<Button>();
     }
     
     [TearDown]
@@ -59,6 +69,8 @@ public class TutorialManagerPlayTest
     
     #endregion
     
+    // This region contains tests regarding the starting, stopping, pausing and ending of the tutorial. 
+    #region StartPlayPauseStopEnd
     /// <summary>
     /// Checks if the tutorial is correctly set up when it is started. 
     /// </summary>
@@ -72,6 +84,8 @@ public class TutorialManagerPlayTest
         Assert.AreEqual(0,tm.TutorialTimeline.time);
         // When the tutorial is started it should be playing. 
         Assert.AreEqual(PlayState.Playing,tm.TutorialTimeline.state);
+        // Check that notebook button is disabled at the start of the tutorial.
+        Assert.IsFalse(notebookButton.enabled);
         yield return null;
     }
     
@@ -102,6 +116,40 @@ public class TutorialManagerPlayTest
     }
     
     /// <summary>
+    /// Checks if the tutorial is properly closed after it has been manually stopped.  
+    /// </summary>
+    [UnityTest]
+    public IEnumerator StopTutorialTest()
+    {
+        tm.StartTutorial();
+        Assert.IsFalse(notebookButton.enabled); // Check that notebook is in tutorial mode. 
+        Assert.AreEqual(PlayState.Playing,tm.TutorialTimeline.state);
+        helpButton.onClick.Invoke();           // Manually stop the tutorial.
+        Assert.IsTrue(notebookButton.enabled); // Check that notebook regains normal functionality.
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the tutorial is properly closed after it has ended.  
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndTutorialTest()
+    {
+        tm.StartTutorial();
+        Assert.IsFalse(notebookButton.enabled); // Check that notebook is in tutorial mode. 
+        Assert.AreEqual(PlayState.Playing,tm.TutorialTimeline.state);
+        tm.StopTutorial();                      // Method that is called at the end of the tutorial.  
+        Assert.IsTrue(notebookButton.enabled);  // Check that notebook regains normal functionality.
+        yield return null;
+    }
+    
+    
+    #endregion
+    
+    // This region contains tests regarding the text shown during the tutorial. 
+    #region TutorialText
+    
+    /// <summary>
     /// Checks if the tutorial can be played. 
     /// </summary>
     [UnityTest]
@@ -114,6 +162,31 @@ public class TutorialManagerPlayTest
         Assert.AreEqual(PlayState.Paused,tm.TutorialTimeline.state);
         // Check whether the text changed. 
         Assert.AreNotEqual(text, tm.text.text);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the objective that is shown during the tutorial belongs to the story. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ObjectiveTextTest()
+    {
+        tm.ShowObjective();
+        Assert.AreEqual(tm.objectives[gm.story.storyID], tm.objectiveText.text);
+        yield return null;
+    }
+    #endregion
+    
+    /// <summary>
+    /// Checks if the notebook can be opened during the notebook tutorial. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator NotebookTutorialTest()
+    {
+        tm.ActivateNotebookTutorial();
+        // Check that notebook button is the only button that can be clicked.
+        Assert.IsFalse(tm.continueButton.IsActive()); 
+        Assert.IsTrue(notebookButton.enabled);
         yield return null;
     }
     

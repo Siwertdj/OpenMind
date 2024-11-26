@@ -21,9 +21,9 @@ public class TutorialManager : MonoBehaviour
     private int textIndex;                          // Keeps track of which text to show.  
     
     // Variables for showing the objective of the game. 
-    [SerializeField] private string[] objectives;
+    [SerializeField] public string[] objectives;
     [SerializeField] private Image    objectiveBox;
-    [SerializeField] private TMP_Text objectiveText;
+    [SerializeField] public TMP_Text objectiveText;
     
     private Button tutorialButton;
     private Button notebookButton;
