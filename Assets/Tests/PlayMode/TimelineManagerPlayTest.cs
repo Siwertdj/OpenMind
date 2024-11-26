@@ -63,7 +63,6 @@ public class TimelineManagerPlayTest
     
     #endregion
     
-    
     /// <summary>
     /// Checks some basic properties of the introduction. 
     /// </summary>
@@ -73,12 +72,11 @@ public class TimelineManagerPlayTest
         // Lists containing necessary elements should not be empty
         Assert.AreNotEqual(0, tm.backgrounds.Length);
         Assert.AreNotEqual(0, tm.storyText.Length);
-        Assert.AreNotEqual(0, tm.textMessages.Length);
+        //Assert.AreNotEqual(0, tm.textMessages.Length);
         Assert.AreNotEqual(0, tm.messageLocations.Length);
         Assert.AreNotEqual(0, tm.typingTexts.Length);
         yield return null;
     }
-    
     
     /// <summary>
     /// Checks if the introduction can be played. 

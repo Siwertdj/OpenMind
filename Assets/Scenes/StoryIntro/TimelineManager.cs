@@ -13,8 +13,6 @@ using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Vector2 = System.Numerics.Vector2;
 
-// hallo
-
 /// <summary>
 /// Manager class for timelines.
 /// </summary>
@@ -27,10 +25,11 @@ public class TimelineManager : MonoBehaviour
     
     public Sprite[]     backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]     storyText;   // Stores all the used text for the introduction. 
-    public GameObject[] textMessages;
-    public GameObject[] messageLocations;
-    public string[]     typingTexts;
-    public TMP_Text     typingText; 
+    //public GameObject[] textMessages;
+    private GameObject[] textMessages; 
+    public  GameObject[] messageLocations;
+    public  string[]     typingTexts;
+    public  TMP_Text     typingText; 
 
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
@@ -40,7 +39,7 @@ public class TimelineManager : MonoBehaviour
     public  GameObject   continueButton;
     public Button sendButton; 
     // Variables to keep track of the state of the introduction within this code. 
-    public PlayableDirector currentTimeline; 
+    public PlayableDirector currentTimeline; // public for testing purposes
     private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
     private int playerTextIndex = -1; // text[textIndex] is the currently shown text. 
     private int textMessageIndex = 0;
@@ -49,7 +48,16 @@ public class TimelineManager : MonoBehaviour
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
-
+    
+    public                  Transform     canvasTransform;
+    [SerializeField] public TextMessage[] texts;
+    
+    [SerializeField] private GameObject emptyPrefab;
+    [SerializeField] private GameObject largeCulpritPrefab;
+    [SerializeField] private GameObject smallCulpritPrefab;
+    [SerializeField] private GameObject largePlayerPrefab;
+    [SerializeField] private GameObject smallPlayerPrefab;
+    
     /// <summary>
     /// Starts the proper intro.
     /// </summary>
@@ -84,8 +92,24 @@ public class TimelineManager : MonoBehaviour
         else
         {
             Debug.LogError("Error: Illegal data passed to Introduction-scene. Returning to StorySelectScene to retry.");
-            // Return to StorySelectScene adn try again.
+            // Return to StorySelectScene and try again.
             SceneManager.LoadScene("StorySelectScene");
+        }
+    }
+    
+    public void Start()
+    {
+        textMessages = new GameObject[texts.Length];
+        for(int i = 0; i < texts.Length; i++)
+        {
+            GameObject instantiatedMessage = Instantiate(texts[i].message, canvasTransform);
+            TMP_Text tmpText = instantiatedMessage.GetComponentInChildren<TMP_Text>();
+            if (tmpText != null)
+            {
+                tmpText.text = texts[i].messageContent;
+            }
+            instantiatedMessage.transform.SetSiblingIndex(canvasTransform.childCount - 6);
+            textMessages[i] = instantiatedMessage; 
         }
     }
     
@@ -125,7 +149,7 @@ public class TimelineManager : MonoBehaviour
         // Make sure the four most recent texts are shown on the screen. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
-            textMessages[i].transform.position = messageLocations[i-textMessageIndex].transform.position; 
+            textMessages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
             textMessages[i].SetActive(true);
         }
         HideOrShowTexts(true); // Show the new texts. 
@@ -236,43 +260,9 @@ public class TimelineManager : MonoBehaviour
     }
 
     #endregion
-
-    // This region contains methods that regulate the different storylines. 
-    #region StoryLines
-
-    /// <summary>
-    /// Method that prepares the scene to play storyline A. 
-    /// </summary>
-    private void StoryA()
-    {
-        currentTimeline = introStoryA;
-        currentTimeline.Play();
-        backgroundIndex = 0;
-        background.sprite = backgrounds[backgroundIndex];
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline B. 
-    /// </summary>
-    private void StoryB()
-    {
-        currentTimeline = introStoryB;
-        currentTimeline.Play();
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline C. 
-    /// </summary>
-    private void StoryC()
-    {
-        currentTimeline = introStoryC;
-        currentTimeline.Play();
-    }
-
-    #endregion
     
     // This region contains methods that handle the starting of the game at the end of the introduction
-    #region StartGame 
+    #region StartGame
     /// <summary>
     /// Starts the game once the intro is over.
     /// </summary>
@@ -306,6 +296,40 @@ public class TimelineManager : MonoBehaviour
         Button helpButton = tutorial.GetComponentInChildren<Button>();
         helpButton.onClick.Invoke();
     }
+    #endregion
+    
+    // This region contains methods that regulate the different storylines. 
+    #region StoryLines
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline A. 
+    /// </summary>
+    private void StoryA()
+    {
+        currentTimeline = introStoryA;
+        currentTimeline.Play();
+        backgroundIndex = 0;
+        background.sprite = backgrounds[backgroundIndex];
+    }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline B. 
+    /// </summary>
+    private void StoryB()
+    {
+        currentTimeline = introStoryB;
+        currentTimeline.Play();
+    }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline C. 
+    /// </summary>
+    private void StoryC()
+    {
+        currentTimeline = introStoryC;
+        currentTimeline.Play();
+    }
+    
     #endregion
    
 }
