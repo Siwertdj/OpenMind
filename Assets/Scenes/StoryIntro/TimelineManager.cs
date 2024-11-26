@@ -97,7 +97,13 @@ public class TimelineManager : MonoBehaviour
         }
     }
     
-    public void Start()
+    // This region contains methods that regulate the different storylines. 
+    #region StoryLines
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline A. 
+    /// </summary>
+    private void StoryA()
     {
         textMessages = new GameObject[texts.Length];
         for(int i = 0; i < texts.Length; i++)
@@ -108,10 +114,37 @@ public class TimelineManager : MonoBehaviour
             {
                 tmpText.text = texts[i].messageContent;
             }
+            // Make sure the messages end up at the correct location in the hierarchy. Otherwise
+            // it might be the case that they will overlap with other game objects. 
             instantiatedMessage.transform.SetSiblingIndex(canvasTransform.childCount - 6);
-            textMessages[i] = instantiatedMessage; 
+            textMessages[i] = instantiatedMessage;
         }
+        
+        currentTimeline = introStoryA;
+        currentTimeline.Play();
+        backgroundIndex = 0;
+        background.sprite = backgrounds[backgroundIndex];
     }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline B. 
+    /// </summary>
+    private void StoryB()
+    {
+        currentTimeline = introStoryB;
+        currentTimeline.Play();
+    }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline C. 
+    /// </summary>
+    private void StoryC()
+    {
+        currentTimeline = introStoryC;
+        currentTimeline.Play();
+    }
+    
+    #endregion
     
     // This region contains methods that manipulate UI elements of the scene.
     #region UIManipulators
@@ -298,38 +331,6 @@ public class TimelineManager : MonoBehaviour
     }
     #endregion
     
-    // This region contains methods that regulate the different storylines. 
-    #region StoryLines
     
-    /// <summary>
-    /// Method that prepares the scene to play storyline A. 
-    /// </summary>
-    private void StoryA()
-    {
-        currentTimeline = introStoryA;
-        currentTimeline.Play();
-        backgroundIndex = 0;
-        background.sprite = backgrounds[backgroundIndex];
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline B. 
-    /// </summary>
-    private void StoryB()
-    {
-        currentTimeline = introStoryB;
-        currentTimeline.Play();
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline C. 
-    /// </summary>
-    private void StoryC()
-    {
-        currentTimeline = introStoryC;
-        currentTimeline.Play();
-    }
-    
-    #endregion
    
 }
