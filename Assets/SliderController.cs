@@ -17,7 +17,6 @@ public class SliderController : MonoBehaviour
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text valueText;
 
-    // Start is called before the first frame update
     void Awake()
     {
         slider.onValueChanged.AddListener(UpdateSlider);

@@ -12,6 +12,8 @@ public class SettingsManager : MonoBehaviour
 {
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
+
+    public TextToSpeechParent tts;
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
@@ -30,6 +32,19 @@ public class SettingsManager : MonoBehaviour
         
         // Set reference to music-audiosource by component
         musicSource = GetComponents<AudioSource>()[0];
+
+        InitTextToSpeech();
+        tts.Speak("Hello, World!");
+        StartCoroutine(LoopSpeaking("Dear gumbus, it has been many a day..."));
+    }
+
+    private IEnumerator LoopSpeaking(string text)
+    {
+        yield return new WaitForSeconds(5);
+
+        tts.Speak(text);
+
+        StartCoroutine(LoopSpeaking(text));
     }
 
 
@@ -107,5 +122,26 @@ public class SettingsManager : MonoBehaviour
     public void SetTalkingSpeed(float multiplier) 
     { 
         TalkingDelay = 0.05f * multiplier;
+        //tts.Speak("Hello, World!");
     }
+
+    private void InitTextToSpeech()
+    {
+        switch (Application.platform)
+        {
+            case RuntimePlatform.Android: tts = new AndroidTTS(); break;
+            case RuntimePlatform.IPhonePlayer: tts = new iosTTS(); break;
+            case RuntimePlatform.WindowsPlayer: tts = new WindowsTTS(); break;
+            case RuntimePlatform.WindowsEditor: tts = new WindowsTTS(); break;
+            default:
+                Debug.LogWarning(
+                $"Text to speech is not supported on {Application.platform}" +
+                "There will be no text to speech."); break;
+        }
+    }
+}
+
+public abstract class TextToSpeechParent
+{
+    public abstract void Speak(string text);
 }
