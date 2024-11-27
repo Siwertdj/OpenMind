@@ -1,4 +1,4 @@
-﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -24,13 +24,14 @@ public class SceneController : MonoBehaviour
     /// </summary>
     public enum SceneName
     {
-        StartScreenScene,
+        Loading,
         NPCSelectScene,
         DialogueScene,
-        GameOverScene,
-        GameWinScene,
-        Loading,
         NotebookScene,
+        GameMenuScene,
+        SettingsScene,
+        GameLossScene,
+        GameWinScene
     }
 
     /// <summary>
@@ -318,7 +319,6 @@ public class SceneController : MonoBehaviour
     // this method is not tested
     public void ToggleNotebookScene(Button button)
     {
-        Debug.Log($"Button: {button.gameObject.name}");
         var crossOverlay = button.transform.GetChild(0).gameObject;
 
         // If notebook is already open, close it

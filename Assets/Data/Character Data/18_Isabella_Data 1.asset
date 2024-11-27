@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 18_Isabella_Data 1
+  m_EditorClassIdentifier: 
+  characterName: Isabella
+  id: 18
+  avatar: {fileID: 21300000, guid: a0364568eb7954d45ab14fc330033a75, type: 3}
+  voicePitch: 1.6
+  answers:
+  - question: 1
+    answer:
+    - I'm 58.
+    trait:
+    - I'm 58 years old.
+  - question: 2
+    answer:
+    - I am a secretary and I have my own art studio.
+    - I have been living with my partner for a long time but we aren't married.
+    - So I'm enjoying life right now but I loved it even more when my son was a small
+      child.
+    - You automatically feel so useful.
+    trait:
+    - I am not married to my partner.
+  - question: 6
+    answer:
+    - I'm left-wing.
+    - I listen to the radio a lot to keep up with politics.
+    - I'm opposed to the patriarchy and men in positions of power.
+    - Power corrupts and I think going against that creates more equality.
+    trait:
+    - I'm opposed to the patriarchy.
+  - question: 7
+    answer:
+    - As an artist I have turned my hobby into my job.
+    - Additionally I like to read, especially English books.
+    - I also like watching TLC TV, to me it's the ultimate relaxation activity.
+    - I exercise as well but that's really only because it's necessary.
+    trait:
+    - One of my hobbies is reading.
+  - question: 9
+    answer:
+    - Not at all!
+    - I was raised Catholic but I never believed in it myself.
+    - It has never brought me anything good.
+    - I thought it was very dogmatic and too suffocating.
+    trait:
+    - I was raised Catholic.
+  - question: 10
+    answer:
+    - I have tried many different things, but I didn't finish most of them.
+    - Except art school.
+    - I'm very passionate about art.
+    - I love the classics and any type of art that is comforting.
+    - I don't need art to be shocking.
+    trait:
+    - I have tried many different studies, but I didn't finish most of them.
+  - question: 11
+    answer:
+    - I find it hard to understand that some people judge other groups of people.
+    - I think, "Why does it matter to you?"
+    - Just accept everyone the way they are, don't judge them.
+    - I think it's important to think about the future and the environment.
+    trait:
+    - I think it's important to think about the future and the environment.
+  - question: 13
+    answer:
+    - My partner, my son and my sister.
+    - I always go to my sister when I have a problem.
+    trait:
+    - The most important person in my life are my partner, my son and my sister.
+  - question: 14
+    answer:
+    - I'm kind, creative and humorous.
+    trait:
+    - I'm a kind and humorous person.
+  - question: 15
+    answer:
+    - I'm impatient and I lack perseverance sometimes.
+    - I'm also overstimulated quickly.
+    trait:
+    - I am an impatient person.
+  - question: 19
+    answer:
+    - I would create more space for other artists.
+    trait:
+    - If I win the lottery I would create more space for artists.
+  - question: 20
+    answer:
+    - I often buy organic foods, for environmental reasons.
+    - And I have a sweet tooth!
+    trait:
+    - I buy a lot of organic foods.
+  - question: 17
+    answer:
+    - Definitely the asylum policy.
+    - I think we need to realise how great it is here and that human beings never
+      flee their country to seek fortune.
+    - They don't leave if they aren't in danger.
+    - It annoys me that many people aren't that open minded.
+    - What are they afraid of?
+    trait:
+    - A social issue I'm interested in is the asylum policy.
+  greetings:
+  - lines:
+    - Good day.

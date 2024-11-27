@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -42,6 +42,9 @@ public class SavingLoadingTestFilePaths
         
         if (layer > 1)
         {
+            GameManager.gm.gameObject.AddComponent<AudioSource>();
+            GameManager.gm.gameObject.AddComponent<SettingsManager>();
+
             //initialise gamemanager
             StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
             GameManager.gm.StartGame(null, story);
@@ -54,17 +57,18 @@ public class SavingLoadingTestFilePaths
     public IEnumerator RemoveGameManager()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
-        GameManager.gm = null;
         
         if (layer > 0)
         {
             SceneManager.UnloadSceneAsync("Loading");
             yield return new WaitUntil(() => !SceneManager.GetSceneByName("Loading").isLoaded);
         }
+
+        GameManager.gm = null;
     }
     
-    private Saving saving => GameManager.FindObjectOfType<Saving>();
-    private Loading loading => GameManager.FindObjectOfType<Loading>();
+    private Save saving  => Save.Saver;
+    private Load loading => Load.Loader;
     
     /// <summary>
     /// Tests whether the correct error is thrown when gamemanager is null
@@ -75,9 +79,9 @@ public class SavingLoadingTestFilePaths
     {
         //create a saving instance to test the function on.
         //note: afaik there is no way to attach this saving instance to the testing scene, so it has to be created with new
-        Saving saving = new Saving();
+        Save saving = new Save();
         LogAssert.Expect(LogType.Error, "Cannot save data when the gamemanger is not loaded.\nSaving failed");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -88,7 +92,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingErrorHandlingGamemanagerCurrentCharactersIsNull()
     {
         LogAssert.Expect(LogType.Error, "Cannot save data when gameManager.currentCharacters has not been assigned yet.\nSaving failed");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -101,7 +105,7 @@ public class SavingLoadingTestFilePaths
         GameManager.gm.currentCharacters.Add(GameManager.gm.currentCharacters[0]);
         
         LogAssert.Expect(LogType.Error, "Not all character ids were unique, this is going to cause issues when loading characters.\nSaving failed.");
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -111,7 +115,7 @@ public class SavingLoadingTestFilePaths
     [Property("layer", 2)]
     public void TestInitialSave()
     {
-        saving.Save();
+        saving.SaveGame();
     }
     
     
@@ -123,7 +127,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingNoSaveFile()
     {
         File.Delete(FilePathConstants.GetSaveFileLocation());
-        saving.Save();
+        saving.SaveGame();
     }
     
     /// <summary>
@@ -134,7 +138,7 @@ public class SavingLoadingTestFilePaths
     public void TestSavingNoSaveFolder()
     {
         Directory.Delete(FilePathConstants.GetSaveFolderLocation());
-        saving.Save();
+        saving.SaveGame();
     }
     
     
