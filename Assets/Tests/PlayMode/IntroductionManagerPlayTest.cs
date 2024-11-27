@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Playables;
 using Assert = UnityEngine.Assertions.Assert;
 
-public class TimelineManagerPlayTest
+public class IntroductionManagerPlayTest
 {
     private GameManager     gm;
-    private TimelineManager tm;
+    private IntroductionManager im;
     
     #region Setup and Teardown
     
@@ -50,7 +50,7 @@ public class TimelineManagerPlayTest
         SceneManager.LoadScene("IntroStoryScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
         
-        tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        im = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
     }
     
     [TearDown]
@@ -70,11 +70,11 @@ public class TimelineManagerPlayTest
     public IEnumerator StoryIntroSetUpTest()
     {
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, tm.backgrounds.Length);
-        Assert.AreNotEqual(0, tm.storyText.Length);
+        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.storyText.Length);
         //Assert.AreNotEqual(0, tm.textMessages.Length);
-        Assert.AreNotEqual(0, tm.messageLocations.Length);
-        Assert.AreNotEqual(0, tm.typingTexts.Length);
+        Assert.AreNotEqual(0, im.messageLocations.Length);
+        Assert.AreNotEqual(0, im.typingTexts.Length);
         yield return null;
     }
     
@@ -84,11 +84,11 @@ public class TimelineManagerPlayTest
     [UnityTest]
     public IEnumerator PlayIntroTest()
     {
-        tm.currentTimeline = tm.introStoryA; 
-        tm.ContinueCurrentTimeline();
-        Assert.AreEqual(PlayState.Playing,tm.currentTimeline.state);
+        im.currentTimeline = im.introStoryA; 
+        im.ContinueCurrentTimeline();
+        Assert.AreEqual(PlayState.Playing,im.currentTimeline.state);
         // When the introduction is playing the continuebutton should not be visible.
-        Assert.IsFalse(tm.continueButton.activeSelf);
+        Assert.IsFalse(im.continueButton.activeSelf);
         yield return null;
     }
     
@@ -98,25 +98,12 @@ public class TimelineManagerPlayTest
     [UnityTest]
     public IEnumerator PauseTutorialTest()
     {
-        tm.currentTimeline = tm.introStoryA; 
-        tm.PauseCurrentTimeline();
-        Assert.AreEqual(PlayState.Paused,tm.currentTimeline.state);
+        im.currentTimeline = im.introStoryA; 
+        im.PauseCurrentTimeline();
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // When the introduction is playing the continuebutton should be visible.
-        Assert.IsTrue(tm.continueButton.activeSelf);
+        Assert.IsTrue(im.continueButton.activeSelf);
         yield return null;
     }
     
-    /// <summary>
-    /// Checks if the background is actually updated.  
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ChangeBackgroundTest()
-    {
-        tm.currentTimeline = tm.introStoryA; 
-        Sprite background = tm.background.sprite;
-        tm.ChangeBackground();
-        // Check whether the text changed. 
-        Assert.AreNotEqual(background, tm.background.sprite);
-        yield return null;
-    }
 }

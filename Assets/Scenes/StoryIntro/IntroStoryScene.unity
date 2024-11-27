@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 1187182886}
   - component: {fileID: 1187182887}
   m_Layer: 0
-  m_Name: TimelineManager
+  m_Name: IntroductionManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1010,13 +1010,6 @@ MonoBehaviour:
   - I do!
   - Okay!
   typingText: {fileID: 1242056052}
-  dialogueAnimator: {fileID: 228368350}
-  typingAnimation: {fileID: 21481127}
-  background: {fileID: 1208453420}
-  continueButton: {fileID: 315456856}
-  sendButton: {fileID: 1300033502}
-  currentTimeline: {fileID: 0}
-  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   canvasTransform: {fileID: 1238301442}
   TextMessages:
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}
@@ -1038,11 +1031,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 633b4e58cfe330f49bde22fd6c8bebeb, type: 2}
   - {fileID: 11400000, guid: 2e94e083227a2ad4fa9ff09442eae189, type: 2}
   - {fileID: 11400000, guid: fa81f4a9ebda99a40aa6a715969fe020, type: 2}
-  emptyPrefab: {fileID: 8656254830752985713, guid: c2bddb6adfe13ac449bdcc63d856cc65, type: 3}
-  largeCulpritPrefab: {fileID: 3207015520342109000, guid: 3812a612c2307564692381494a1548ed, type: 3}
-  smallCulpritPrefab: {fileID: 3137653508699963683, guid: 1722ee2a2e2029543aa375216ac2bdb8, type: 3}
-  largePlayerPrefab: {fileID: 7612559206328335424, guid: 02a56b658b068504f8ea40bdd350428c, type: 3}
-  smallPlayerPrefab: {fileID: 8264553757527369740, guid: bac80bfeb57eab24ca719e4b3c135155, type: 3}
+  dialogueAnimator: {fileID: 228368350}
+  typingAnimation: {fileID: 21481127}
+  background: {fileID: 1208453420}
+  continueButton: {fileID: 315456856}
+  sendButton: {fileID: 1300033502}
+  currentTimeline: {fileID: 0}
+  onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
 --- !u!114 &1187182887
 MonoBehaviour:
   m_ObjectHideFlags: 0

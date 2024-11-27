@@ -14,9 +14,9 @@ using UnityEngine.UI;
 using Vector2 = System.Numerics.Vector2;
 
 /// <summary>
-/// Manager class for timelines.
+/// Manager class for the introduction.
 /// </summary>
-public class TimelineManager : MonoBehaviour
+public class IntroductionManager : MonoBehaviour
 {
     // PlayableDirectors manage the different timelines for the different stories
     public PlayableDirector introStoryA;
