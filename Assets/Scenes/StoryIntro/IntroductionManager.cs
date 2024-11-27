@@ -27,7 +27,7 @@ public class IntroductionManager : MonoBehaviour
     public String[]     storyText;   // Stores all the used text for the introduction. 
     private GameObject[] messages; 
     public  GameObject[] messageLocations;
-    public  string[]     typingTexts;
+    //public  string[]     typingTexts;
     public  TMP_Text     typingText;
     [SerializeField] private Transform    canvasTransform;
     [SerializeField] public TextMessage[] TextMessages;
@@ -50,12 +50,6 @@ public class IntroductionManager : MonoBehaviour
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
     private StoryObject story;
-    
-    /*[SerializeField] private GameObject emptyPrefab;
-    [SerializeField] private GameObject largeCulpritPrefab;
-    [SerializeField] private GameObject smallCulpritPrefab;
-    [SerializeField] private GameObject largePlayerPrefab;
-    [SerializeField] private GameObject smallPlayerPrefab;*/
     
     /// <summary>
     /// Starts the proper intro.
@@ -177,8 +171,9 @@ public class IntroductionManager : MonoBehaviour
         typingText.gameObject.SetActive(false);
         background.sprite = backgrounds[3]; // Change the background to the phone background. 
         textMessageIndex++;
-        if (textMessageIndex > 4) HideOrShowTexts(false); // More than 4 messages means that old ones need to be removed. 
+        
         // Make sure the four most recent texts are shown on the screen. 
+        HideOrShowTexts(false); // Old messages need to be removed. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
             messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
@@ -244,19 +239,9 @@ public class IntroductionManager : MonoBehaviour
         // Activate the UI elements for the typing animation
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
-        
-        try
-        {
-            typingText.text = typingTexts[typeIndex];
-            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
-        }
-        catch
-        {
-            Debug.LogError("No more typing texts..");
-            typeIndex = 0; 
-            typingAnimation.WriteDialogue(typingTexts[typeIndex]);
-        }
-        typeIndex++;
+        // Write the next message, '+ messageLocations.Length' is to account for the empty messages. 
+        typingText.text = TextMessages[textMessageIndex + messageLocations.Length].messageContent;
+        typingAnimation.WriteDialogue(TextMessages[textMessageIndex + messageLocations.Length].messageContent);
     }
     #endregion
     

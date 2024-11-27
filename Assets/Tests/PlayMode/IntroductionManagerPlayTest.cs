@@ -74,7 +74,6 @@ public class IntroductionManagerPlayTest
         Assert.AreNotEqual(0, im.storyText.Length);
         //Assert.AreNotEqual(0, tm.textMessages.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
-        Assert.AreNotEqual(0, im.typingTexts.Length);
         yield return null;
     }
     
