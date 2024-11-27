@@ -1005,13 +1005,9 @@ MonoBehaviour:
   - {fileID: 1875904328}
   - {fileID: 1893652347}
   - {fileID: 1751352165}
-  typingTexts:
-  - Hey! I'm going in now!
-  - I do!
-  - Okay!
   typingText: {fileID: 1242056052}
   canvasTransform: {fileID: 1238301442}
-  TextMessages:
+  textMessages:
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}

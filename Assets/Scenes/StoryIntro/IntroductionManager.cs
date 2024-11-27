@@ -23,28 +23,27 @@ public class IntroductionManager : MonoBehaviour
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    public Sprite[]     backgrounds; // Stores all the used backgrounds for the introduction.
-    public String[]     storyText;   // Stores all the used text for the introduction. 
-    private GameObject[] messages; 
-    public  GameObject[] messageLocations;
-    public  TMP_Text     typingText;
-    [SerializeField] private Transform    canvasTransform;
-    [SerializeField] public TextMessage[] TextMessages;
+    public                       Sprite[]      backgrounds; // Stores all the used backgrounds for the introduction.
+    public                       String[]      storyText;   // Stores all the used text for the introduction. 
+    private                      GameObject[]  messages; 
+    public                       GameObject[]  messageLocations;
+    public                       TMP_Text      typingText;
+    [SerializeField] private Transform     canvasTransform;
+    [SerializeField] public  TextMessage[] textMessages;
 
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
     [SerializeField] private DialogueAnimator typingAnimation;
     
-    public  Image    background;
-    public  GameObject   continueButton;
+    public Image    background;
+    public GameObject continueButton;
     public Button sendButton; 
     
     // Variables to keep track of the state of the introduction within this code. 
     public PlayableDirector currentTimeline; // public for testing purposes
-    private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
-    private int playerTextIndex = -1; // text[textIndex] is the currently shown text. 
-    private int textMessageIndex = 0;
-    private int typeIndex = 0; 
+    public int backgroundIndex { get; set; } = 0;         // backgrounds[backgroundIndex] is the currently shown background.
+    public int playerTextIndex { get; set; } = 0;         // text[textIndex] is the currently shown text. 
+    public int textMessageIndex { get; set; } = 0;
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
@@ -95,17 +94,17 @@ public class IntroductionManager : MonoBehaviour
     /// <summary>
     /// Method that prepares the scene to play storyline A. 
     /// </summary>
-    private void StoryA()
+    public void StoryA()
     {
-        messages = new GameObject[TextMessages.Length];
-        for(int i = 0; i < TextMessages.Length; i++)
+        messages = new GameObject[textMessages.Length];
+        for(int i = 0; i < textMessages.Length; i++)
         {
             // Instantiate the TextMessages
-            GameObject instantiatedMessage = Instantiate(TextMessages[i].message, canvasTransform);
+            GameObject instantiatedMessage = Instantiate(textMessages[i].message, canvasTransform);
             TMP_Text tmpText = instantiatedMessage.GetComponentInChildren<TMP_Text>();
             if (tmpText != null) // When the text component is null, it is an empty text
             {
-                tmpText.text = TextMessages[i].messageContent; // Change the content to the correct content
+                tmpText.text = textMessages[i].messageContent; // Change the content to the correct content
             }
             // Make sure the messages end up at the correct location in the hierarchy. 
             // Otherwise, it might be the case that they will overlap with other game objects. 
@@ -122,7 +121,7 @@ public class IntroductionManager : MonoBehaviour
     /// <summary>
     /// Method that prepares the scene to play storyline B. 
     /// </summary>
-    private void StoryB()
+    public void StoryB()
     {
         currentTimeline = introStoryB;
         currentTimeline.Play();
@@ -131,7 +130,7 @@ public class IntroductionManager : MonoBehaviour
     /// <summary>
     /// Method that prepares the scene to play storyline C. 
     /// </summary>
-    private void StoryC()
+    public void StoryC()
     {
         currentTimeline = introStoryC;
         currentTimeline.Play();
@@ -175,7 +174,6 @@ public class IntroductionManager : MonoBehaviour
         HideOrShowTexts(false); // Old messages need to be removed. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
-            //messages[i].transform.SetParent(messageLocations[i - textMessageIndex].transform);
             messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
             messages[i].SetActive(true);
         }
@@ -190,7 +188,6 @@ public class IntroductionManager : MonoBehaviour
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
         dialogueAnimator.gameObject.SetActive(true);
-        playerTextIndex++; // Keep track of which text needs to be shown. 
         try
         {
             dialogueAnimator.WriteDialogue(storyText[playerTextIndex]);
@@ -200,6 +197,7 @@ public class IntroductionManager : MonoBehaviour
             playerTextIndex = 0;
             Debug.LogError("Error: No more text to speak.");
         }
+        playerTextIndex++; // Keep track of which text needs to be shown. 
     }
     
     /// <summary>
@@ -240,8 +238,8 @@ public class IntroductionManager : MonoBehaviour
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
         // Write the next message, '+ messageLocations.Length' is to account for the empty messages. 
-        typingText.text = TextMessages[textMessageIndex + messageLocations.Length].messageContent;
-        typingAnimation.WriteDialogue(TextMessages[textMessageIndex + messageLocations.Length].messageContent);
+        typingText.text = textMessages[textMessageIndex + messageLocations.Length].messageContent;
+        typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
     }
     #endregion
     
