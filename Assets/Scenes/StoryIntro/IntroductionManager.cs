@@ -27,7 +27,6 @@ public class IntroductionManager : MonoBehaviour
     public String[]     storyText;   // Stores all the used text for the introduction. 
     private GameObject[] messages; 
     public  GameObject[] messageLocations;
-    //public  string[]     typingTexts;
     public  TMP_Text     typingText;
     [SerializeField] private Transform    canvasTransform;
     [SerializeField] public TextMessage[] TextMessages;
@@ -176,6 +175,7 @@ public class IntroductionManager : MonoBehaviour
         HideOrShowTexts(false); // Old messages need to be removed. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
+            //messages[i].transform.SetParent(messageLocations[i - textMessageIndex].transform);
             messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
             messages[i].SetActive(true);
         }
