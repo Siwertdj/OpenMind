@@ -167,33 +167,39 @@ public class DataListener : DataNetworker
                 try
                 {
                     if (!TryGetConvertData(buffer, receivedByteAmount,
-                            out List<NetworkPackage> networkData))
+                            out List<List<NetworkPackage>> networkData))
                         return;
                     
-                    string signature = networkData[0].GetData<string>();
-                    
-                    List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
-                    
-                    logError = onDataReceivedEvents.Raise(signature, receivedTailPackages, clearDataReceivedEvents, "onDataReceivedEvent");
-                    if (logError != "")
-                        return;
-                    
-                    //respond with an ack
-                    logError = onAckSentEvents.Raise("ACK", (index, signature), false, "onAckSentEvent");
-                    if (logError != "")
-                        return;
-                    
-                    //responds to the sender
-                    logError = respondEvents.Raise(signature, (index, receivedTailPackages),
-                        clearRespondEvents, "respondEvent");
-                    
-                    isConnectionReceiving[index] = false;
+                    foreach (var networkPackage in networkData)
+                        HandleReceivedData(networkPackage, index, clearDataReceivedEvents, clearRespondEvents);
                 }
                 catch (Exception e)
                 {
                     logError = "Receiving message failed with error: " + e;
                 }
             });
+    }
+    
+    private void HandleReceivedData(List<NetworkPackage> networkData, int index, bool clearDataReceivedEvents, bool clearRespondEvents)
+    {
+        string signature = networkData[0].GetData<string>();
+        
+        List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
+        
+        logError = onDataReceivedEvents.Raise(signature, receivedTailPackages, clearDataReceivedEvents, "onDataReceivedEvent");
+        if (logError != "")
+            return;
+        
+        //respond with an ack
+        logError = onAckSentEvents.Raise("ACK", (index, signature), false, "onAckSentEvent");
+        if (logError != "")
+            return;
+        
+        //responds to the sender
+        logError = respondEvents.Raise(signature, (index, receivedTailPackages),
+            clearRespondEvents, "respondEvent");
+        
+        isConnectionReceiving[index] = false;
     }
     
     /// <summary>

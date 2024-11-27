@@ -21,8 +21,8 @@ public class NetworkManager : MonoBehaviour
     void Start()
     {
         GetLocalIPs();
-        SetupBroadcastTest();
-        //SetupNetworkTest();
+        //SetupBroadcastTest();
+        SetupNetworkTest();
     }
     
     void Update()
@@ -44,27 +44,27 @@ public class NetworkManager : MonoBehaviour
     
     void SetupBroadcastTest()
     {
-        //Beacon beacon = gameObject.GetComponent<Beacon>();
-        Probe probe = gameObject.GetComponent<Probe>();
-        //beacon.enabled = true;
-        probe.enabled = true;
-        StartCoroutine(WaitSeconds(10f, () =>
+        Beacon beacon = gameObject.GetComponent<Beacon>();
+        // Probe probe = gameObject.GetComponent<Probe>();
+        beacon.enabled = true;
+        // probe.enabled = true;
+        StartCoroutine(WaitSeconds(300f, () =>
         {
             string foundIps = "";
-            // foreach (var beaconFoundDevice in beacon.FoundDevices)
-            // {
-            //     foundIps += $"{beaconFoundDevice}, ";
-            // }
-            // Debug.Log($"beacon found IPs: {foundIps}");
-            
-            foundIps = "";
-            foreach (var probeFoundDevice in probe.FoundDevices)
+            foreach (var beaconFoundDevice in beacon.FoundDevices)
             {
-                foundIps += $"{probeFoundDevice}, ";
+                foundIps += $"{beaconFoundDevice}, ";
             }
-            Debug.Log($"probe found IPs: {foundIps}");
-            //beacon.enabled = false;
-            probe.enabled = false;
+            Debug.Log($"beacon found IPs: {foundIps}");
+            
+            // foundIps = "";
+            // foreach (var probeFoundDevice in probe.FoundDevices)
+            // {
+            //     foundIps += $"{probeFoundDevice}, ";
+            // }
+            // Debug.Log($"probe found IPs: {foundIps}");
+            beacon.enabled = false;
+            // probe.enabled = false;
         }));
     }
     
@@ -87,17 +87,17 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddOnAckSentEvent(ListenerSentACK);
         dataListener.AddResponseTo("test", EchoMessage);
         
-        sender = new DataSender(address, IPConnections.Port);
-        StartCoroutine(sender.DisplayAnyDebugs(0f));
-        sender.AddOnConnectEvent(SenderConnect);
-        sender.AddOnDataSentEvent("test", SenderDataSent);
-        sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
-        sender.AddOnAckReceivedEvent(SenderReceiveACK);
-        sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
-        
-        
-        StartCoroutine(sender.Connect(10f));
-        StartCoroutine(sender.ListenForResponse());
+        // sender = new DataSender(address, IPConnections.Port);
+        // StartCoroutine(sender.DisplayAnyDebugs(0f));
+        // sender.AddOnConnectEvent(SenderConnect);
+        // sender.AddOnDataSentEvent("test", SenderDataSent);
+        // sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
+        // sender.AddOnAckReceivedEvent(SenderReceiveACK);
+        // sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
+        //
+        //
+        // StartCoroutine(sender.Connect(10f));
+        // StartCoroutine(sender.ListenForResponse());
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
         StartCoroutine(dataListener.ListenForIncomingData(0.1f));
         Debug.Log("Ended setup");
@@ -106,7 +106,7 @@ public class NetworkManager : MonoBehaviour
     void SenderConnect(object o)
     {
         debugMessages.Add("(Sender): Connected with the host");
-        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
+        // sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
     }
     
     void SenderDataSent(object o)

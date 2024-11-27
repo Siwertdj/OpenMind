@@ -34,12 +34,13 @@ public abstract class UdpDeviceReceiver
                 byte[] buffer = t.Result.Buffer;
                 string receivedIdentifier = Encoding.UTF8.GetString(buffer);
                 char type = receivedIdentifier[^1];
-                if (receivedIdentifier == identifier + type)
+                if (receivedIdentifier != identifier + type)
                     ReceiveMessage(t.Result.RemoteEndPoint, type);
             });
             
             //wait until receiving is finished
             yield return new WaitUntil(() => task.IsCompleted || !isReceiving);
+            // yield return null;
         }
     }
     

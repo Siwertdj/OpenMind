@@ -43,7 +43,7 @@ public abstract class DataNetworker : NetworkDebugger
     /// Attempts to deconstruct network bytes into a list of networkpackages
     /// </summary>
     /// <returns>true if the conversion succeeded, otherwise false</returns>
-    protected bool TryGetConvertData(byte[] buffer, Task<int> receivedByteAmount, out List<NetworkPackage> networkData)
+    protected bool TryGetConvertData(byte[] buffer, Task<int> receivedByteAmount, out List<List<NetworkPackage>> networkData)
     {
         networkData = null;
         
@@ -57,19 +57,26 @@ public abstract class DataNetworker : NetworkDebugger
         
         string rawData = Encoding.UTF8.GetString(buffer);
         rawData = rawData.TrimEnd('\0');
+        string[] receivedRawDatas = rawData.Split('\u0004');
+        networkData = new List<List<NetworkPackage>>();
         
-        try
+        foreach (string receivedRawData in receivedRawDatas)
         {
-            networkData = JsonConvert
-                .DeserializeObject<List<string>>(rawData)
-                .Select(NetworkPackage.ConvertToPackage)
-                .ToList();
+            networkData.Add(new List<NetworkPackage>());
+            try
+            {
+                networkData[^1] = JsonConvert
+                    .DeserializeObject<List<string>>(receivedRawData)
+                    .Select(NetworkPackage.ConvertToPackage)
+                    .ToList();
+            }
+            catch (JsonException e)
+            {
+                logWarning = "Reading received response with json failed: " + e;
+                return false;
+            }
         }
-        catch (JsonException e)
-        {
-            logWarning = "Reading received response with json failed: " + e;
-            return false;
-        }
+        
         
         return true;
     }
@@ -85,7 +92,7 @@ public abstract class DataNetworker : NetworkDebugger
         List<NetworkPackage> networkData = new List<NetworkPackage> { sign };
         networkData.AddRange(data);
         List<string> stringPayload = networkData.Select(np => np.ConvertToString()).ToList();
-        string rawData = JsonConvert.SerializeObject(stringPayload);
+        string rawData = JsonConvert.SerializeObject(stringPayload) + '\u0004';
         buffer = Encoding.UTF8.GetBytes(rawData);
         if (buffer.Length > NetworkPackage.MaxPackageSize)
         {

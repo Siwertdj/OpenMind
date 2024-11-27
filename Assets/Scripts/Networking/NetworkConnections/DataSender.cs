@@ -144,16 +144,20 @@ public class DataSender : DataNetworker
     /// A special onAcknowledgementFail event will be called when no ACK with the signature of the sent messages was received within the timeout.
     /// </summary>
     /// <param name="clearResponseEvents">If set to true, the actions called after receiving a response are removed from the event.</param>
-    public IEnumerator ListenForResponse(bool clearResponseEvents = false)
+    public IEnumerator ListenForResponse(float socketNotConenctedWarningInterval, bool clearResponseEvents = false)
     {
-        if (!socket.Connected)
-            logWarning = "Cannot listen for a response while not connected with a host";
-        else
+        isListeningForResponse = true;
+
+        while (isListeningForResponse)
         {
-            isListeningForResponse = true;
-            
-            while (isListeningForResponse)
+            if (!socket.Connected)
             {
+                logWarning = "Cannot listen for a response while not connected with a host";
+                yield return new WaitForSeconds(socketNotConenctedWarningInterval);
+            }
+            else
+            {
+                
                 byte[] buffer = new byte[NetworkPackage.MaxPackageSize];
                 Task task = socket.ReceiveAsync(buffer, SocketFlags.None).ContinueWith(
                     receivedByteAmount =>
@@ -162,40 +166,11 @@ public class DataSender : DataNetworker
                         try
                         {
                             if (!TryGetConvertData(buffer, receivedByteAmount,
-                                    out List<NetworkPackage> networkData))
+                                    out List<List<NetworkPackage>> networkData))
                                 return;
                             
-                            string signature = networkData[0].GetData<string>();
-                            
-                            List<NetworkPackage> receivedTailPackages =
-                                networkData.Skip(1).ToList();
-                            
-                            if (signature == "ACK")
-                            {
-                                //check whether the received message is a signature: 
-                                if (receivedTailPackages.Count != 1)
-                                {
-                                    logError = "ACK was not received with a signature";
-                                    return;
-                                }
-                                
-                                try
-                                {
-                                    logError = onAckReceievedEvents.Raise("ACK",
-                                        receivedTailPackages[0].GetData<string>(),
-                                        clearResponseEvents, "onAckReceivedEvent");
-                                }
-                                catch (InvalidCastException e)
-                                {
-                                    logError =
-                                        $"ACK was not received with a signature, received error {e}";
-                                    return;
-                                }
-                            }
-                            else
-                                logError = onReceiveResponseEvents.Raise(signature,
-                                    receivedTailPackages,
-                                    clearResponseEvents, "onResponseEvent");
+                            foreach (var networkPackage in networkData)
+                                HandleReceivedData(networkPackage, clearResponseEvents);
                         }
                         catch (Exception e)
                         {
@@ -215,6 +190,41 @@ public class DataSender : DataNetworker
     /// Stops the sender from listening for responses
     /// </summary>
     public void StopListeningForResponses() => isListeningForResponse = false;
+    
+    private void HandleReceivedData(List<NetworkPackage> networkData, bool clearResponseEvents)
+    {
+        string signature = networkData[0].GetData<string>();
+        
+        List<NetworkPackage> receivedTailPackages =
+            networkData.Skip(1).ToList();
+        
+        if (signature == "ACK")
+        {
+            //check whether the received message is a signature: 
+            if (receivedTailPackages.Count != 1)
+            {
+                logError = "ACK was not received with a signature";
+                return;
+            }
+            
+            try
+            {
+                logError = onAckReceievedEvents.Raise("ACK",
+                    receivedTailPackages[0].GetData<string>(),
+                    clearResponseEvents, "onAckReceivedEvent");
+            }
+            catch (InvalidCastException e)
+            {
+                logError =
+                    $"ACK was not received with a signature, received error {e}";
+                return;
+            }
+        }
+        else
+            logError = onReceiveResponseEvents.Raise(signature,
+                receivedTailPackages,
+                clearResponseEvents, "onResponseEvent");
+    }
     
     /// <summary>
     /// Checks if any acks have timed out, meaning no ack was received in time.
