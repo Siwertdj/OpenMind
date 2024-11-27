@@ -543,7 +543,7 @@ public class GameManagerPlayTest
         dm.currentObject = new TerminateDialogueObject();
         List<string> text = new List<string>(){"hello"};
         GameObject[] background = new GameObject[1]{gm.story.hintBackground};
-        dm.currentObject.Responses.Add(new SpeakingDialogueObject(text, background));
+        dm.currentObject.Responses.Add(new ContentDialogueObject(text, null, background));
         dm.currentObject.Execute();
         
         // Check if the DialogueObjects in the responses list of the currentObject

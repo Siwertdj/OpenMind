@@ -212,7 +212,7 @@ public class GameManager : MonoBehaviour
         };
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.
-        var dialogueObject = new SpeakingDialogueObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
+        var dialogueObject = new ContentDialogueObject(dialogue, null, CreateDialogueBackground(null, story.hintBackground));
         StartDialogue(dialogueObject);
     }
 
@@ -403,8 +403,9 @@ public class GameManager : MonoBehaviour
     public async void StartDialogue(CharacterInstance character)
     {
         GameObject[] background = CreateDialogueBackground(character, story.dialogueBackground);
-        var dialogueObject = new SpeakingDialogueObject(
+        var dialogueObject = new ContentDialogueObject(
             character.GetGreeting(),
+            null,
             background);
         dialogueObject.Responses.Add(new QuestionDialogueObject(background));
 
@@ -565,7 +566,7 @@ public class GameManager : MonoBehaviour
     /// <returns>A <see cref="DialogueObject"/> that is used at the start of the epilogue.</returns>
     DialogueObject GetEpilogueStart(GameObject[] background)
     {
-        var dialogueObject = new SpeakingDialogueObject(remainingDialogueScenario[0], background);
+        var dialogueObject = new ContentDialogueObject(remainingDialogueScenario[0], null, background);
         // Remove the first element of the list.
         remainingDialogueScenario.RemoveAt(0);
         if (!hasWon)
@@ -577,7 +578,7 @@ public class GameManager : MonoBehaviour
             TerminateDialogueObject end = new TerminateDialogueObject();
             dialogueObject.Responses.Add(end);
             
-            SpeakingDialogueObject next = new SpeakingDialogueObject(remainingDialogueScenario[0], background);
+            ContentDialogueObject next = new ContentDialogueObject(remainingDialogueScenario[0], null, background);
             // Remove the first element of the list.
             remainingDialogueScenario.RemoveAt(0);
             end.Responses.Add(next);

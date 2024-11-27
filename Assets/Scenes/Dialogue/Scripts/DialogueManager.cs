@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Net;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// The manager for the dialogue scene
@@ -21,24 +22,44 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Fields")]
     [SerializeField] private GameObject dialogueField;
+    [SerializeField] private GameObject imageField;
     [SerializeField] private GameObject questionsField;
     [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
+    [SerializeField] private EventSystem eventPrefab;
     [SerializeField] private GameObject buttonPrefab;
 
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
 
+    
+    [FormerlySerializedAs("testDialogueObject")]
+    [Header("Test variables")]
+    [SerializeField] private DialogueContainer testDialogueContainer;
+    
+    // Variables
     [NonSerialized] public        string            inputText;
     [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
+    private                       Component         dialogueStarter;
     
+    // In this awake, we initialize some components in case it is loaded in isolation.
+    // It does not need to rely on GameManager to be active, but it needs an eventsystem
+    private void Awake()
+    {
+        if (GameObject.Find("EventSystem") == null)
+        {
+            Instantiate(eventPrefab);
+            StartDialogue(null, testDialogueContainer.GetDialogue());
+        }
+    }
+
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
     /// </summary>
@@ -49,6 +70,8 @@ public class DialogueManager : MonoBehaviour
     {
         // Set static DialogueManager instance
         dm = this;
+        // Save the sender of the event that started dialogue
+        dialogueStarter = sender;
 
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
@@ -67,17 +90,13 @@ public class DialogueManager : MonoBehaviour
         {
             characterNameField.SetActive(false);
         }
-    
-        // Initialize the list of answers giving in the epilogue
-        playerAnswers = new List<string>();
-        Debug.Log(Application.persistentDataPath);
-        
-        // Execute the starting object
-        currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
         onEpilogueEnd.AddListener(SaveAnswers);
+        
+        // Execute the starting object to begin dialogue
+        currentObject.Execute();
     }
 
     /// <summary>
@@ -89,9 +108,15 @@ public class DialogueManager : MonoBehaviour
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
         
-        // If we are in the Epilogue GameState and the next responseDialogue object is an OpenResponseDialogueObject, create the open question.
-        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseDialogueObject)
-            CreateOpenQuestion();
+        // TODO: Decouple from Epilogue
+        if (dialogueStarter != null )
+            if (dialogueStarter.GetComponent<GameManager>() != null)
+            {
+                // If we are in the Epilogue GameState and the next responseDialogue object is an OpenResponseDialogueObject, create the open question.
+                if (GameManager.gm.gameState == GameManager.GameState.Epilogue &&
+                    currentObject.Responses[0] is OpenResponseDialogueObject)
+                    CreateOpenQuestion();
+            }
 
         ExecuteNextObject();
     }
@@ -112,21 +137,44 @@ public class DialogueManager : MonoBehaviour
     /// <param name="pitch">The pitch of the character</param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
-        // Enable the dialogue field
-        dialogueField.SetActive(true);
-        
-        // Adjust the box containing the character's name
-        if (currentRecipient != null)
+        if (dialogue == null)
         {
-            characterNameField.SetActive(true);
-            characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
+            Debug.Log("Dialogue lines are null:  dialogue invisible");
+            dialogueField.SetActive(false);
         }
+        else
+        {
+            // Enable the dialogue field
+            dialogueField.SetActive(true);
 
-        // Animator write dialogue to the screen.
-        pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, pitch);
+            // Adjust the box containing the character's name
+            if (currentRecipient != null)
+            {
+                characterNameField.SetActive(true);
+                characterNameField.GetComponentInChildren<TMP_Text>().text =
+                    currentRecipient.characterName;
+            }
+
+            // Animator write dialogue to the screen.
+            pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
+            animator.WriteDialogue(dialogue, pitch);
+        }
     }
 
+    public void PrintImage(Sprite newImage)
+    {
+        if (newImage == null)
+            imageField.SetActive(false);
+        else
+        {
+            // Enable the image field
+            imageField.SetActive(true);
+
+            // Set the content of the image
+            imageField.GetComponent<Image>().sprite = newImage;
+        }
+    }
+    
     /// <summary>
     /// Replaces the current dialogue background with the given background.
     /// </summary>

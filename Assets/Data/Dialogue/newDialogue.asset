@@ -14,9 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   voicePitch: 1
   lines:
-  - text: This is the prologue
+  - line: I want to show you something!
     image: {fileID: 0}
-  - text: 
-    image: {fileID: 21300000, guid: 2720b22725212124991e2405d6c00046, type: 3}
-  - text: Those were clouds.
+  - line: 
+    image: {fileID: 21300000, guid: 1a77c20e9fef1e342b529f11c59eb238, type: 3}
+  - line: That's my goat!
+    image: {fileID: 21300000, guid: 1a77c20e9fef1e342b529f11c59eb238, type: 3}
+  - line: 
     image: {fileID: 0}
+  - line: Goodbye!
+    image: {fileID: 0}
+  background:
+  - {fileID: 3448788318129469726, guid: 433afa755917b2046af2f0420245ff84, type: 3}

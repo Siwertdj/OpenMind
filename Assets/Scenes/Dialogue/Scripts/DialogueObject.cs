@@ -3,11 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
 /// An abstract class containing the blueprint for the possible dialogue options.
-/// Possible children are: SpeakingDialogueObject, DialogueDialogueQuestionObject, ResponseDialogueObject, and TerminateDialogueObject.
+/// Possible children are: ContentDialogueObject, DialogueDialogueQuestionObject, ResponseDialogueObject, and TerminateDialogueObject.
 /// </summary>
 public abstract class DialogueObject
 {
@@ -28,19 +29,21 @@ public abstract class DialogueObject
 /// A child of DialogueObject. Executing this object simply writes its text to the screen.
 /// A response must be set manually, otherwise the response is a TerminateDialogueObject.
 /// </summary>
-public class SpeakingDialogueObject : DialogueObject
+public class ContentDialogueObject : DialogueObject
 {
-    public List<string> dialogue;
+    [CanBeNull] public List<string> dialogue;
+    [CanBeNull] public Sprite   image; 
 
     /// <summary>
-    /// The constructor for <see cref="SpeakingDialogueObject"/>.
+    /// The constructor for <see cref="ContentDialogueObject"/>.
     /// </summary>
     /// <param name="dialogue">The text</param>
     /// <param name="background">The background</param>
-    public SpeakingDialogueObject(List<string> dialogue, GameObject[] background)
+    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background)
     {
         // Set this object's local variables to match the parameter-values of the constructor
         this.dialogue = dialogue;
+        this.image = image; 
         this.background = background;
     }
 
@@ -52,40 +55,8 @@ public class SpeakingDialogueObject : DialogueObject
         var dm = DialogueManager.dm;
 
         dm.ReplaceBackground(background);
+        dm.PrintImage(image);
         dm.WriteDialogue(dialogue);
-
-        // If no response is given, terminate dialogue
-        if (Responses.Count <= 0)
-            Responses.Add(new TerminateDialogueObject());
-    }
-}
-
-/// <summary>
-/// A child of DialogueObject. Executing this object works similarly to the SpeakingDialogueObject,
-/// but does not write anything to the screen. This way, we only have an image.
-/// A response must be set manually, otherwise the response is a TerminateDialogueObject.
-/// </summary>
-public class ImageDialogueObject : DialogueObject
-{
-    /// <summary>
-    /// The constructor for <see cref="ImageDialogueObject"/>.
-    /// </summary>
-    /// <param name="dialogue">The text</param>
-    /// <param name="background">The background</param>
-    public ImageDialogueObject(Sprite image, GameObject[] background)
-    {
-        // Set this object's local variables to match the parameter-values of the constructor
-        this.background = background;
-    }
-
-    /// <summary>
-    /// Writes the text to the screen
-    /// </summary>
-    public override void Execute()
-    {
-        var dm = DialogueManager.dm;
-
-        dm.ReplaceBackground(background);
 
         // If no response is given, terminate dialogue
         if (Responses.Count <= 0)

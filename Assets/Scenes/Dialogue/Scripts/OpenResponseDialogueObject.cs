@@ -41,15 +41,15 @@ public class OpenResponseDialogueObject : DialogueObject
             gm.remainingDialogueScenario.RemoveAt(0);
             
             // Create the DialogueObject to add as response for the current object
-            // and add another OpenResponseDialogueObject as response for the SpeakingDialogueObject.
-            DialogueObject next = new SpeakingDialogueObject(speakingObjectText, background);
+            // and add another OpenResponseDialogueObject as response for the ContentDialogueObject.
+            DialogueObject next = new ContentDialogueObject(speakingObjectText,null, background);
             next.Responses.Add(new OpenResponseDialogueObject(background));
             Responses.Add(next);
         }
         else
         {
-            // Add a SpeakingDialogueObject with the last part of the dialogue as parameter.
-            Responses.Add(new SpeakingDialogueObject(gm.remainingDialogueScenario[0], background));
+            // Add a ContentDialogueObject with the last part of the dialogue as parameter.
+            Responses.Add(new ContentDialogueObject(gm.remainingDialogueScenario[0],null, background));
         }
     }
 }
