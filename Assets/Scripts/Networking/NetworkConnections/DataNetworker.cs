@@ -62,13 +62,14 @@ public abstract class DataNetworker : NetworkDebugger
         
         foreach (string receivedRawData in receivedRawDatas)
         {
-            networkData.Add(new List<NetworkPackage>());
+            if (receivedRawData == "")
+                continue;
             try
             {
-                networkData[^1] = JsonConvert
+                networkData.Add(JsonConvert
                     .DeserializeObject<List<string>>(receivedRawData)
                     .Select(NetworkPackage.ConvertToPackage)
-                    .ToList();
+                    .ToList());
             }
             catch (JsonException e)
             {

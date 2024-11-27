@@ -61,7 +61,8 @@ public class DataSender : DataNetworker
     /// </param>
     /// <param name="clearDataSentEvents">If set to true, the actions called after connecting with the host are removed from the event.</param>
     public IEnumerator Connect(float timeoutSeconds, bool clearDataSentEvents = false)
-    { 
+    {
+        bool timeout = false;
         GiveDisplayWarning();
         
         //check if you are already connected
@@ -69,8 +70,11 @@ public class DataSender : DataNetworker
         {
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
-                    logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
-                        "onDataSentEvent"));
+                {
+                    if (!timeout && t.Status == TaskStatus.RanToCompletion)
+                        logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
+                            "onDataSentEvent");
+                });
             
             DateTime start = DateTime.Now;
             while (!connecting.IsCompleted)
@@ -79,6 +83,7 @@ public class DataSender : DataNetworker
                 if (diff > timeoutSeconds * 1000)
                 {
                     logError = "Failed to connect";
+                    timeout = true;
                     break;
                 }
                 
@@ -150,7 +155,7 @@ public class DataSender : DataNetworker
 
         while (isListeningForResponse)
         {
-            if (!socket.Connected)
+            if (!socket.Connected && false)
             {
                 logWarning = "Cannot listen for a response while not connected with a host";
                 yield return new WaitForSeconds(socketNotConenctedWarningInterval);

@@ -77,7 +77,13 @@ public class NetworkManager : MonoBehaviour
     void SetupNetworkTest()
     {
         Debug.Log("Starting setup");
-        
+        //SetupListener();
+        SetupSender();
+        Debug.Log("Ended setup");
+    }
+    
+    void SetupListener()
+    {
         IPAddress address = IPConnections.GetOwnIps()[0];
         DataListener dataListener = new DataListener(address, IPConnections.Port);
         StartCoroutine(dataListener.DisplayAnyDebugs(0f));
@@ -87,26 +93,29 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddOnAckSentEvent(ListenerSentACK);
         dataListener.AddResponseTo("test", EchoMessage);
         
-        // sender = new DataSender(address, IPConnections.Port);
-        // StartCoroutine(sender.DisplayAnyDebugs(0f));
-        // sender.AddOnConnectEvent(SenderConnect);
-        // sender.AddOnDataSentEvent("test", SenderDataSent);
-        // sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
-        // sender.AddOnAckReceivedEvent(SenderReceiveACK);
-        // sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
-        //
-        //
-        // StartCoroutine(sender.Connect(10f));
-        // StartCoroutine(sender.ListenForResponse());
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
         StartCoroutine(dataListener.ListenForIncomingData(0.1f));
-        Debug.Log("Ended setup");
+    }
+    
+    void SetupSender()
+    {
+        IPAddress address = IPAddress.Parse("145.107.80.179");
+        sender = new DataSender(address, IPConnections.Port);
+        StartCoroutine(sender.DisplayAnyDebugs(0f));
+        sender.AddOnConnectEvent(SenderConnect);
+        sender.AddOnDataSentEvent("test", SenderDataSent);
+        sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
+        sender.AddOnAckReceivedEvent(SenderReceiveACK);
+        sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
+        
+        StartCoroutine(sender.Connect(10f));
+        // StartCoroutine(sender.ListenForResponse(3f));
     }
     
     void SenderConnect(object o)
     {
         debugMessages.Add("(Sender): Connected with the host");
-        // sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
+        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
     }
     
     void SenderDataSent(object o)
