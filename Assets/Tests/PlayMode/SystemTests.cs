@@ -299,7 +299,46 @@ public class SystemTests
     [UnityTest]
     public IEnumerator ChangeSettings()
     {
-        yield return null;
+        // Load settings menu
+        GameObject.Find("SettingsButton").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("SettingsScene").isLoaded);
+        
+        // Check if we're in the settings menu
+        Assert.AreEqual(SceneManager.GetSceneByName("SettingsScene"), SceneManager.GetSceneAt(1));
+        
+        // Go to audio settings
+        GameObject.Find("AudioButton").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForSeconds(1);
+
+        // Check if we're in the audio menu
+        var inAudioMenu = GameObject.Find("SettingsMenu") == null &&
+                          GameObject.Find("AudioMenu").activeSelf;
+        Assert.IsTrue(inAudioMenu);
+
+        if (inAudioMenu)
+        {
+            // Change settings
+            var slider = GameObject.Find("SettingsMenuManager").GetComponent<SettingsMenuManager>();
+            slider.SetMasterVolume(0.5f);
+            yield return new WaitForSeconds(1);
+            
+            // Get back to the settings menu
+            GameObject.Find("ReturnButton").GetComponent<Button>().onClick.Invoke();
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // Check if we're in the settings menu
+        var inSettingsMenu = GameObject.Find("SettingsMenu").activeSelf &&
+                          GameObject.Find("AudioMenu") == null;
+        Assert.IsTrue(inAudioMenu);
+        
+        // Get back to the main menu
+        GameObject.Find("ReturnButton").GetComponent<Button>().onClick.Invoke();
+        yield return new WaitForSeconds(1);
+        
+        // Check if we're in the main menu
+        Assert.AreEqual(SceneManager.GetSceneByName("StartScreenScene"), SceneManager.GetActiveScene());
     }
 
     [UnityTest]
