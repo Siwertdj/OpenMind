@@ -12,7 +12,8 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] public PlayableDirector TutorialTimeline;
     
     [SerializeField] public  Button     continueButton;
-    [SerializeField] private GameObject notebookHighlight; 
+    [SerializeField] private GameObject notebookHighlight;
+    [SerializeField] private GameObject helpHighlight;
     
     // Variables for the tutorial text
     [SerializeField] private Image    textBox;      // Background of the text. 
@@ -33,8 +34,10 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        textBox.gameObject.SetActive(false);   // Make sure no text is visible. 
-        TutorialTimeline.Pause();              // Make sure nothing automatically plays. 
+        // Make sure nothing from 'previous' tutorial is active. 
+        helpHighlight.SetActive(false);       
+        textBox.gameObject.SetActive(false);   
+        TutorialTimeline.Pause();              
         
         // The type of tutorial that is shown, depends on the scene that is currently loaded. 
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
@@ -62,6 +65,11 @@ public class TutorialManager : MonoBehaviour
             // Start the tutorial
             StartTutorial();
         }
+    }
+    
+    public void HighlightHelp()
+    {
+        helpHighlight.gameObject.SetActive(true);
     }
     
     // This region contains methods regarding the starting, stopping and pausing of the tutorial.

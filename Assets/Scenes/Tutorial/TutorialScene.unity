@@ -367,6 +367,7 @@ MonoBehaviour:
   TutorialTimeline: {fileID: 1420621289}
   continueButton: {fileID: 1789511521}
   notebookHighlight: {fileID: 817959670}
+  helpHighlight: {fileID: 516136816}
   textBox: {fileID: 351138876}
   tutorialText:
   - 'You can ask questions to each character in this room. '
@@ -377,7 +378,8 @@ MonoBehaviour:
     'log'.
   - You can also write down your own thoughts.
   - 'Now exit the notebook by clicking on the icon again. '
-  - You now know everything to start solving the mystery. Good luck!
+  - 'You now know everything to start solving the mystery. '
+  - Exit the tutorial by clicking the help button. Good luck!
   text: {fileID: 573016200}
   objectives:
   - ' Find out who is sending you the messages. You will receive messages with hints.
@@ -402,6 +404,129 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &516136815
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2113601860}
+    m_Modifications:
+    - target: {fileID: 3245207881684152226, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Name
+      value: HelpHighlight
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245207881684152226, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Color.b
+      value: 0.35087606
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Color.g
+      value: 0.68028456
+      objectReference: {fileID: 0}
+    - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Color.r
+      value: 0.98742133
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 251.13586
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 270.05493
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.75057596
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.66078424
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 287
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 280
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 82.719
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+--- !u!1 &516136816 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3245207881684152226, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+  m_PrefabInstance: {fileID: 516136815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &516136817 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
+  m_PrefabInstance: {fileID: 516136815}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &573016198
 GameObject:
   m_ObjectHideFlags: 0
@@ -664,15 +789,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_Color.b
-      value: 0.69295114
+      value: 0.35087606
       objectReference: {fileID: 0}
     - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_Color.g
-      value: 0.9622642
+      value: 0.68028456
       objectReference: {fileID: 0}
     - target: {fileID: 6207300615517828861, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_Color.r
-      value: 0.87308335
+      value: 0.98742133
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_Pivot.x
@@ -1276,6 +1401,7 @@ RectTransform:
   - {fileID: 1393315985}
   - {fileID: 1789511518}
   - {fileID: 817959669}
+  - {fileID: 516136817}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1364,6 +1490,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 18e63c021bb39b045a13b3cb0623f40d, type: 2}
     - {fileID: 11400000, guid: 7041d1b08dd88ef4f90a00b15360c272, type: 2}
     - {fileID: 11400000, guid: bde1146e323ab904887a5a8af0eb4671, type: 2}
+    - {fileID: 11400000, guid: ba0347db86d981749bf60c1b5a31eeda, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1412,6 +1539,20 @@ MonoBehaviour:
         - m_Target: {fileID: 475655577}
           m_TargetAssemblyTypeName: TutorialManager, Scripts
           m_MethodName: ActivateNotebookTutorial
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 475655577}
+          m_TargetAssemblyTypeName: TutorialManager, Scripts
+          m_MethodName: HighlightHelp
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
