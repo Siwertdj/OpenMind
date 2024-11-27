@@ -1018,7 +1018,7 @@ MonoBehaviour:
   currentTimeline: {fileID: 0}
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   canvasTransform: {fileID: 1238301442}
-  texts:
+  TextMessages:
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}
   - {fileID: 11400000, guid: 690ed603cc0f42c49abf7ac573c2c0ed, type: 2}

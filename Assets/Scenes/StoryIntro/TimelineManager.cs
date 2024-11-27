@@ -25,11 +25,12 @@ public class TimelineManager : MonoBehaviour
     
     public Sprite[]     backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]     storyText;   // Stores all the used text for the introduction. 
-    //public GameObject[] textMessages;
-    private GameObject[] textMessages; 
+    private GameObject[] messages; 
     public  GameObject[] messageLocations;
     public  string[]     typingTexts;
-    public  TMP_Text     typingText; 
+    public  TMP_Text     typingText;
+    [SerializeField] private Transform    canvasTransform;
+    [SerializeField] public TextMessage[] TextMessages;
 
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
@@ -38,6 +39,7 @@ public class TimelineManager : MonoBehaviour
     public  Image    background;
     public  GameObject   continueButton;
     public Button sendButton; 
+    
     // Variables to keep track of the state of the introduction within this code. 
     public PlayableDirector currentTimeline; // public for testing purposes
     private int backgroundIndex = 0; // backgrounds[backgroundIndex] is the currently shown background.
@@ -49,14 +51,11 @@ public class TimelineManager : MonoBehaviour
     public GameEvent onGameLoaded;
     private StoryObject story;
     
-    public                  Transform     canvasTransform;
-    [SerializeField] public TextMessage[] texts;
-    
-    [SerializeField] private GameObject emptyPrefab;
+    /*[SerializeField] private GameObject emptyPrefab;
     [SerializeField] private GameObject largeCulpritPrefab;
     [SerializeField] private GameObject smallCulpritPrefab;
     [SerializeField] private GameObject largePlayerPrefab;
-    [SerializeField] private GameObject smallPlayerPrefab;
+    [SerializeField] private GameObject smallPlayerPrefab;*/
     
     /// <summary>
     /// Starts the proper intro.
@@ -105,21 +104,22 @@ public class TimelineManager : MonoBehaviour
     /// </summary>
     private void StoryA()
     {
-        textMessages = new GameObject[texts.Length];
-        for(int i = 0; i < texts.Length; i++)
+        messages = new GameObject[TextMessages.Length];
+        for(int i = 0; i < TextMessages.Length; i++)
         {
-            GameObject instantiatedMessage = Instantiate(texts[i].message, canvasTransform);
+            // Instantiate the TextMessages
+            GameObject instantiatedMessage = Instantiate(TextMessages[i].message, canvasTransform);
             TMP_Text tmpText = instantiatedMessage.GetComponentInChildren<TMP_Text>();
-            if (tmpText != null)
+            if (tmpText != null) // When the text component is null, it is an empty text
             {
-                tmpText.text = texts[i].messageContent;
+                tmpText.text = TextMessages[i].messageContent; // Change the content to the correct content
             }
-            // Make sure the messages end up at the correct location in the hierarchy. Otherwise
-            // it might be the case that they will overlap with other game objects. 
+            // Make sure the messages end up at the correct location in the hierarchy. 
+            // Otherwise, it might be the case that they will overlap with other game objects. 
             instantiatedMessage.transform.SetSiblingIndex(canvasTransform.childCount - 6);
-            textMessages[i] = instantiatedMessage;
+            messages[i] = instantiatedMessage; // Add the instantiated message to the textMessage array
         }
-        
+        // Initialize the right timeline and indices for story A. 
         currentTimeline = introStoryA;
         currentTimeline.Play();
         backgroundIndex = 0;
@@ -160,7 +160,7 @@ public class TimelineManager : MonoBehaviour
         }
         if (!show) // If the messages need to be hidden, make sure old messages are hidden as well. 
         {
-            foreach(GameObject message in textMessages)
+            foreach(GameObject message in messages)
             {
                 message.SetActive(false);
             }
@@ -181,8 +181,8 @@ public class TimelineManager : MonoBehaviour
         // Make sure the four most recent texts are shown on the screen. 
         for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
         {
-            textMessages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
-            textMessages[i].SetActive(true);
+            messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
+            messages[i].SetActive(true);
         }
         HideOrShowTexts(true); // Show the new texts. 
     }
