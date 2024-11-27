@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Speech.Synthesis;
 
-public class WindowsTTS : TextToSpeechParent
+public class WindowsTTS : TextToSpeech
 {
     SpeechSynthesizer synthesizer;
 
@@ -15,6 +15,5 @@ public class WindowsTTS : TextToSpeechParent
     public override void Speak(string text)
     {
         Debug.Log("Windows speaking");
-        synthesizer.Speak(text);
     }
 }

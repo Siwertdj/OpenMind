@@ -13,7 +13,7 @@ public class SettingsManager : MonoBehaviour
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
 
-    public TextToSpeechParent tts;
+    public TextToSpeech tts;
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
@@ -34,17 +34,6 @@ public class SettingsManager : MonoBehaviour
         musicSource = GetComponents<AudioSource>()[0];
 
         InitTextToSpeech();
-        tts.Speak("Hello, World!");
-        StartCoroutine(LoopSpeaking("Dear gumbus, it has been many a day..."));
-    }
-
-    private IEnumerator LoopSpeaking(string text)
-    {
-        yield return new WaitForSeconds(5);
-
-        tts.Speak(text);
-
-        StartCoroutine(LoopSpeaking(text));
     }
 
 
@@ -141,7 +130,7 @@ public class SettingsManager : MonoBehaviour
     }
 }
 
-public abstract class TextToSpeechParent
+public abstract class TextToSpeech
 {
     public abstract void Speak(string text);
 }

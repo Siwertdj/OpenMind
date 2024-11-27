@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class iosTTS : TextToSpeechParent
+public class iosTTS : TextToSpeech
 {
     public override void Speak(string text)
     {
