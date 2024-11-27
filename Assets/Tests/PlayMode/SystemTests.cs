@@ -18,12 +18,43 @@ using Scene = UnityEngine.SceneManagement.Scene;
 
 public class SystemTests
 {
+    /// <summary>
+    /// Set up for each of the system level tests.
+    /// </summary>
+    /// <returns></returns>
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        // Load the StartScreenScene
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+        
+        // Move DebugManager and copyright back to StartScreenScene so that 
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+                
         yield return null;
+    }
+
+    /// <summary>
+    /// Tear down for each of the system level tests. Move the toolbox under loading as a child,
+    /// then remove all scenes. This ensures that the toolbox gets removed before a new test starts.
+    /// </summary>
+    
+    [TearDown]
+    public void TearDown()
+    {
+        // TODO: perhaps check if there is anything under ddol, then move the objects if so.
+        // Move the Toolbox and the SettingsManager to be not in ddol
+        if(GameObject.Find("Toolbox"))
+            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
+        
+        if(GameObject.Find("SettingsManager"))
+            SceneManager.MoveGameObjectToScene(GameObject.Find("SettingsManager"), SceneManager.GetSceneAt(0));
+        
+        // Unload additive scenes.
+        if(SceneController.sc != null)
+            SceneController.sc.UnloadAdditiveScenes();
     }
 
     [UnityTest]
@@ -119,13 +150,32 @@ public class SystemTests
             }
 
             // Find an active character and click to talk to them
+            // Start at the leftmost character
+            while (GameObject.Find("NavLeft"))
+            {
+                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitForSeconds(2);
+            }
+            
+            // Find an active character and click to choose them
             foreach (CharacterInstance c in GameManager.gm.currentCharacters)
             {
                 if (c.isActive)
                 {
-                    string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                    GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                     break;
+                }
+                else
+                {
+                    if (GameObject.Find("NavRight"))
+                    {
+                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                        yield return new WaitForSeconds(2);
+                    }
+                    else
+                    {
+                        throw new Exception("There are no active characters");
+                    }
                 }
             }
 
@@ -157,13 +207,32 @@ public class SystemTests
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
         // Find an active character and click to choose them
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSeconds(2);
+        }
+            
+        // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
             if (c.isActive)
             {
-                string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
+            }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
             }
         }
 
@@ -200,7 +269,7 @@ public class SystemTests
         yield return new WaitForSeconds(1);
         
         // Skip dialogue until GameOver or GameWin
-        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameOverScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
+        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameLossScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
         {
             yield return new WaitForSeconds(1);
                 
@@ -210,7 +279,7 @@ public class SystemTests
 
         // Check if we are in the GameWin or GameOver scene
         yield return new WaitForSeconds(3);
-        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameOverScene");
+        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameLossScene");
         var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
         Assert.IsTrue(gameOver || gameWon);
     }
@@ -338,13 +407,32 @@ public class SystemTests
             }
 
             // Find an active character and click to talk to them
+            // Start at the leftmost character
+            while (GameObject.Find("NavLeft"))
+            {
+                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitForSeconds(2);
+            }
+            
+            // Find an active character and click to choose them
             foreach (CharacterInstance c in GameManager.gm.currentCharacters)
             {
                 if (c.isActive)
                 {
-                    string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                    GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                     break;
+                }
+                else
+                {
+                    if (GameObject.Find("NavRight"))
+                    {
+                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                        yield return new WaitForSeconds(2);
+                    }
+                    else
+                    {
+                        throw new Exception("There are no active characters");
+                    }
                 }
             }
 
@@ -376,13 +464,32 @@ public class SystemTests
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
         // Find an active character and click to choose them
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSeconds(2);
+        }
+            
+        // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
             if (c.isActive)
             {
-                string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
+            }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
             }
         }
 
@@ -419,7 +526,7 @@ public class SystemTests
         yield return new WaitForSeconds(1);
         
         // Skip dialogue until GameOver or GameWin
-        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameOverScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
+        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameLossScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
         {
             yield return new WaitForSeconds(1);
                 
@@ -429,7 +536,7 @@ public class SystemTests
 
         // Check if we are in the GameWin or GameOver scene
         yield return new WaitForSeconds(3);
-        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameOverScene");
+        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameLossScene");
         var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
         Assert.IsTrue(gameOver || gameWon);
 
@@ -595,13 +702,32 @@ public class SystemTests
             }
 
             // Find an active character and click to talk to them
+            // Start at the leftmost character
+            while (GameObject.Find("NavLeft"))
+            {
+                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitForSeconds(2);
+            }
+            
+            // Find an active character and click to choose them
             foreach (CharacterInstance c in GameManager.gm.currentCharacters)
             {
                 if (c.isActive)
                 {
-                    string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                    GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                     break;
+                }
+                else
+                {
+                    if (GameObject.Find("NavRight"))
+                    {
+                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                        yield return new WaitForSeconds(2);
+                    }
+                    else
+                    {
+                        throw new Exception("There are no active characters");
+                    }
                 }
             }
 
@@ -633,13 +759,32 @@ public class SystemTests
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
         // Find the first character that is not the culprit
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+            yield return new WaitForSeconds(2);
+        }
+            
+        // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
             if (c.isActive && !c.isCulprit)
             {
-                string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
+            }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
             }
         }
 
@@ -676,7 +821,7 @@ public class SystemTests
         yield return new WaitForSeconds(1);
         
         // Skip dialogue until GameOver or GameWin
-        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameOverScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
+        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameLossScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
         {
             yield return new WaitForSeconds(1);
                 
@@ -686,7 +831,7 @@ public class SystemTests
 
         // Check if we are in the GameWin or GameOver scene
         yield return new WaitForSeconds(3);
-        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameOverScene");
+        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameLossScene");
         var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
         Assert.IsTrue(gameOver || gameWon);
         
