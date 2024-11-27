@@ -30,24 +30,12 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        SetSceneType();
         SetHeaderText();
         GenerateOptions();
 
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
         scroller.scrollDuration = scrollDuration;
-    }
-
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
     }
 
     /// <summary>
