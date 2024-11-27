@@ -22,6 +22,7 @@ public class NetworkManager : MonoBehaviour
     {
         GetLocalIPs();
         SetupBroadcastTest();
+        //SetupNetworkTest();
     }
     
     void Update()
@@ -43,18 +44,18 @@ public class NetworkManager : MonoBehaviour
     
     void SetupBroadcastTest()
     {
-        Beacon beacon = gameObject.GetComponent<Beacon>();
+        //Beacon beacon = gameObject.GetComponent<Beacon>();
         Probe probe = gameObject.GetComponent<Probe>();
-        beacon.enabled = true;
+        //beacon.enabled = true;
         probe.enabled = true;
         StartCoroutine(WaitSeconds(10f, () =>
         {
             string foundIps = "";
-            foreach (var beaconFoundDevice in beacon.FoundDevices)
-            {
-                foundIps += $"{beaconFoundDevice}, ";
-            }
-            Debug.Log($"beacon found IPs: {foundIps}");
+            // foreach (var beaconFoundDevice in beacon.FoundDevices)
+            // {
+            //     foundIps += $"{beaconFoundDevice}, ";
+            // }
+            // Debug.Log($"beacon found IPs: {foundIps}");
             
             foundIps = "";
             foreach (var probeFoundDevice in probe.FoundDevices)
@@ -62,7 +63,7 @@ public class NetworkManager : MonoBehaviour
                 foundIps += $"{probeFoundDevice}, ";
             }
             Debug.Log($"probe found IPs: {foundIps}");
-            beacon.enabled = false;
+            //beacon.enabled = false;
             probe.enabled = false;
         }));
     }
@@ -94,7 +95,7 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnAckReceivedEvent(SenderReceiveACK);
         sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         
-        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
+        
         StartCoroutine(sender.Connect(10f));
         StartCoroutine(sender.ListenForResponse());
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
@@ -105,7 +106,7 @@ public class NetworkManager : MonoBehaviour
     void SenderConnect(object o)
     {
         debugMessages.Add("(Sender): Connected with the host");
-        
+        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
     }
     
     void SenderDataSent(object o)
