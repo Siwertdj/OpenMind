@@ -7,13 +7,18 @@ using UnityEngine.Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class SettingsMenuManager : MonoBehaviour
 {
     // SLIDERS
     [SerializeField] private GameObject sliderGroup;
-    
+
+    private Slider musicVolumeSlider;
+    private Slider sfxVolumeSlider;
+
+    private float musicVolume;
+    private float sfxVolume;
 
     /// <summary>
     /// This method is intended to correct the sliders when opening the menu, so the sliders
@@ -24,20 +29,45 @@ public class SettingsMenuManager : MonoBehaviour
     {
         // Get the sliders
         Slider[] sliders = sliderGroup.GetComponentsInChildren<Slider>();
-        Slider masterVolumeSlider = sliders[0];
-        Slider musicVolumeSlider = sliders[1];
-        Slider sfxVolumeSlider = sliders[2];
+        musicVolumeSlider = sliders[0];
+        sfxVolumeSlider = sliders[1];
         
         // Fetch the values from the audiomixer
-        SettingsManager.sm.audioMixer.GetFloat("MasterVolume", out float masterVolume);
         SettingsManager.sm.audioMixer.GetFloat("MusicVolume", out float musicVolume);
         SettingsManager.sm.audioMixer.GetFloat("SfxVolume", out float sfxVolume);
         // Set the values
-        masterVolumeSlider.SetValueWithoutNotify(masterVolume);
+
+        PlayerPrefs.GetFloat(nameof(musicVolume), musicVolume);
+
         musicVolumeSlider.SetValueWithoutNotify(musicVolume);
         sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
     }
-    
+
+    private void Start()
+    {
+        // Get the sliders
+        Slider[] sliders = sliderGroup.GetComponentsInChildren<Slider>();
+        musicVolumeSlider = sliders[0];
+        sfxVolumeSlider = sliders[1];
+
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+
+        // Set the values
+        SettingsManager.sm.audioMixer.SetFloat(nameof(musicVolume), musicVolume);
+        SettingsManager.sm.audioMixer.SetFloat(nameof(sfxVolume), sfxVolume);
+
+        musicVolumeSlider.SetValueWithoutNotify(musicVolume);
+        sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
+    }
+
+    private void OnDestroy()
+    {
+        Debug.Log($"Slider value: {musicVolumeSlider.value}, Value to be saved: {musicVolume}");
+        PlayerPrefs.SetFloat(nameof(musicVolume), musicVolumeSlider.value);
+        PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolumeSlider.value);
+    }
+
     /// <summary>
     /// Called to exit the settingsmenu. It sets any other menu overlays to 'active',
     /// such as the notebook- and menu-buttons in the game, and unloads its own scene.

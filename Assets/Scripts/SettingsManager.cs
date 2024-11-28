@@ -36,7 +36,6 @@ public class SettingsManager : MonoBehaviour
         InitTextToSpeech();
     }
 
-
     #region Audio
     /// <summary>
     /// Called through SettingsMenuManager to set the volume of the Master-channel of the Audiomixer.
