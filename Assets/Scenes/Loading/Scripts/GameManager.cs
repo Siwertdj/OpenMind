@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     // EPILOGUE VARIABLES
     public bool hasWon;     // Set this bool to true if the correct character has been chosen at the end, else false.
     public CharacterInstance IntermediateChosenCuplrit; // Save the character that has been chosen during the intermediate choice moment.
-    public CharacterInstance FinalChosenCuplrit;    // Save the character that has been chosen at the end of the game.
+    public CharacterInstance FinalChosenCuplrit;        // Save the character that has been chosen at the end of the game.
     public List<List<string>> remainingDialogueScenario; // Holds the remainder of the conversation in the epilogue.
     
     // Instances
@@ -613,9 +613,9 @@ public class GameManager : MonoBehaviour
             SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
             // Remove the first element of the list.
             remainingDialogueScenario.RemoveAt(0);
-            endDialogue.Responses.Add(nextDialogue);
             
-            nextDialogue.Responses.Add(new OpenResponseObject(background));
+            endDialogue.Responses.Add(nextDialogue);
+            dialogueObject.Responses.Add(new OpenResponseObject(background));
         }
         else
         {
