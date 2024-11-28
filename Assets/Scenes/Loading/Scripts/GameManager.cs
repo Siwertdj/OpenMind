@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
+
+        // Set the target frame rate to the screen's refresh rate
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+            
         gameState = GameState.Loading;
     }
     
