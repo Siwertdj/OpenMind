@@ -2,11 +2,14 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
+    public Canvas     loadingIconCanvas;
+    public GameButton saveButton;
     /// <summary>
     /// Closes the GameMenu-scene, and calls the UIManager.CloseMenu()-method.
     /// </summary>
@@ -41,7 +44,13 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
+        loadingIconCanvas.enabled = true;
+        new WaitForSeconds(2);
         Save.Saver.SaveGame();
+        saveButton.interactable = false;
+        var saveButtonTextbox = saveButton.GetComponentInChildren<TextMeshProUGUI>();
+        saveButtonTextbox.text = "Game Saved!";
+        loadingIconCanvas.enabled = false;
     }
 
     /// <summary>
