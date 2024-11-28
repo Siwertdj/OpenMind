@@ -54,6 +54,7 @@ public class DataListener : DataNetworker
         }
         
         socket.Bind(endPoint);
+        Debug.Log("Local: " + socket.LocalEndPoint);
         socket.Listen(255);
         connections = new List<Socket>();
         isConnectionReceiving = new List<bool>();
@@ -265,5 +266,22 @@ public class DataListener : DataNetworker
         
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
+    }
+
+    protected override bool IsDisconnected(out Socket info)
+    {
+        for (var i = 0; i < connections.Count; i++)
+        {
+            if (!connections[i].Connected)
+            {
+                info = connections[i];
+                connections.Remove(connections[i]);
+                
+                return true;
+            }
+        }
+
+        info = null;
+        return false;
     }
 }
