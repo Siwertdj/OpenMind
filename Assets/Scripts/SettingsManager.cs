@@ -17,13 +17,23 @@ public class SettingsManager : MonoBehaviour
     public AudioMixer audioMixer;
     
     private AudioSource musicSource;
-
+    
+    public TextSize textSize;
+    
+    public enum TextSize
+    {
+        Small,
+        Medium,
+        Large
+    }
+    
     [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     
     private void Awake()
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
+        textSize = TextSize.Medium;
         DontDestroyOnLoad(this.gameObject);
         
         // Set reference to music-audiosource by component

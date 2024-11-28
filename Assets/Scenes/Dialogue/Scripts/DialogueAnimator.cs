@@ -50,10 +50,29 @@ public class DialogueAnimator : MonoBehaviour
             return;
 
         text.enableAutoSizing = false;
-        text.fontSize = 40;
+        SetFontSize();
         audioSource = GetComponent<AudioSource>();
     }
 
+    /// <summary>
+    /// Set the fontSize of the dialogue text.
+    /// </summary>
+    private void SetFontSize()
+    {
+        if (SettingsManager.sm.textSize == SettingsManager.TextSize.Small)
+        {
+            text.fontSize = 20;
+        }
+        else if (SettingsManager.sm.textSize == SettingsManager.TextSize.Medium)
+        {
+            text.fontSize = 40;
+        }
+        else
+        {
+            text.fontSize = 60;
+        }
+    }
+    
     /// <summary>
     /// Puts dialogue on screen.
     /// </summary>
