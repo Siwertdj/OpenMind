@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Random = System.Random;
 
 public class MultiplayerMenuManager : MonoBehaviour
 {
@@ -14,13 +15,16 @@ public class MultiplayerMenuManager : MonoBehaviour
     [SerializeField] private GameObject hostCanvas;
     [SerializeField] private GameObject joinCanvas;
     [SerializeField] private GameObject storyCanvas;
+    [SerializeField] private GameObject lobbyCanvas;
 
 
     [Header("Paramaters")] 
     [SerializeField] private float maxPlayers = 10;
     [SerializeField] private TextMeshProUGUI maxPlayersText;
+    [SerializeField] private TextMeshProUGUI code;
     
     private string classCode;
+    private int    storyid;
     
 
     /// <summary>
@@ -74,7 +78,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// Starts the game as the host.
     /// The host has to choose a story first
     /// </summary>
-    public void StartAsHost()
+    public void CreateAsHost()
     {
         hostCanvas.SetActive(false);
         storyCanvas.SetActive(true);
@@ -85,17 +89,38 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     public void StoryA()
     {
-        
+        HostGame(0);
     }
 
     public void StoryB()
     {
-        
+        HostGame(1);
     }
 
     public void StoryC()
     {
-        
+        HostGame(2);
+    }
+
+    /// <summary>
+    /// Enter a waiting lobby to allow players to join before starting the game.
+    /// </summary>
+    /// <param name="storyid">the chosen story</param>
+    public void HostGame(int id)
+    {
+        storyid = id;
+        Random rnd = new Random();
+        classCode = rnd.Next(100000, 999999).ToString();
+        storyCanvas.SetActive(false);
+        lobbyCanvas.SetActive(true);
+    }
+
+    /// <summary>
+    /// Starts the game when you're in the waiting lobby
+    /// </summary>
+    public void StartAsHost()
+    {
+        // TODO: This is the method to start the game as a host 
     }
 
     #endregion
@@ -137,5 +162,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void Update()
     {
         maxPlayersText.text = maxPlayers.ToString();
+        code.text = classCode;
     }
 }
