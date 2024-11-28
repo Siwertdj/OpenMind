@@ -19,7 +19,9 @@ using UnityEngine;
 public class DataSender : DataNetworker
 {
     private bool                      isListeningForResponse;
+    private bool                      connected;
     private List<AcknowledgementTime> acknowledgementTimes;
+    
     
     /// <summary> when a connection is made with the listener, input is the task associated with making the connection </summary>
     private NetworkEvents onConnectEvents;
@@ -71,15 +73,12 @@ public class DataSender : DataNetworker
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
                 {
-                    if (!timeout && t.Status == TaskStatus.RanToCompletion)
+                    if (!timeout || true)
+                    {
+                        connected = true;
                         logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
                             "onDataSentEvent");
-                });
-            
-                {
-                    if (!timeout && t.Status == TaskStatus.RanToCompletion)
-                        logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
-                            "onDataSentEvent");
+                    }
                 });
 
             DateTime start = DateTime.Now;
@@ -164,7 +163,7 @@ public class DataSender : DataNetworker
 
         while (isListeningForResponse)
         {
-            if (!socket.Connected && false)
+            if (!socket.Connected)
             {
                 logWarning = "Cannot listen for a response while not connected with a host";
                 yield return new WaitForSeconds(socketNotConenctedWarningInterval);
@@ -296,8 +295,9 @@ public class DataSender : DataNetworker
 
     protected override bool IsDisconnected(out Socket info)
     {
-        if (!socket.Connected)
+        if (!socket.Connected && connected)
         {
+            connected = false;
             info = socket;
             return true;
         }

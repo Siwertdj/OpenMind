@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 
 public class NetworkManager : MonoBehaviour
@@ -74,13 +75,14 @@ public class NetworkManager : MonoBehaviour
     void SetupNetworkTest()
     {
         Debug.Log("Starting setup");
-        SetupListener();
-        //SetupSender();
+        //SetupListener();
+        SetupSender();
         Debug.Log("Ended setup");
     }
     
     void SetupListener()
     {
+        Debug.Log("Setting up listener.");
         IPAddress address = IPConnections.GetOwnIps()[0];
         DataListener dataListener = new DataListener(address, IPConnections.Port);
         StartCoroutine(dataListener.DisplayAnyDebugs(0f));
@@ -89,15 +91,17 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddOnAcceptConnectionsEvent(ListenerConnect);
         dataListener.AddOnAckSentEvent(ListenerSentACK);
         dataListener.AddResponseTo("test", EchoMessage);
+        dataListener.AddOnDisconnectedEvent(ListenerDisconnect);
         
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
-        StartCoroutine(dataListener.ListenForIncomingData(0.1f));
+        //StartCoroutine(dataListener.ListenForIncomingData(0.1f));
+        //StartCoroutine(dataListener.IsDisconnected(1f));
     }
     
     void SetupSender()
     {
         Debug.Log("Setting up sender");
-        IPAddress address = IPAddress.Parse("145.107.80.179");
+        IPAddress address = IPAddress.Parse("145.136.157.36");
         sender = new DataSender(address, IPConnections.Port);
         StartCoroutine(sender.DisplayAnyDebugs(0f));
         sender.AddOnConnectEvent(SenderConnect);
@@ -105,14 +109,26 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
         sender.AddOnAckReceivedEvent(SenderReceiveACK);
         sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
+        sender.AddOnDisconnectedEvent(SenderDisconnect);
         
         StartCoroutine(sender.Connect(10f));
-        StartCoroutine(sender.ListenForResponse());
+        StartCoroutine(sender.ListenForResponse(3f));
+        StartCoroutine(sender.IsDisconnected(1f));
+    }
+    
+    void SenderDisconnect(object o)
+    {
+        debugMessages.Add($"(Sender): The socket {o} got disconnected.");
+    }
+    
+    void ListenerDisconnect(object o)
+    {
+        debugMessages.Add($"(Listener): The socket {o} got disconnected.");
     }
     
     void SenderConnect(object o)
     {
-        debugMessages.Add("(Sender): Connected with the host");
+        debugMessages.Add($"(Sender): Connected with the host with task status {((Task)o).Status}");
         sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
     }
     

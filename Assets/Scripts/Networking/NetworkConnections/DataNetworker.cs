@@ -42,6 +42,7 @@ public abstract class DataNetworker : NetworkDebugger
         }
         
         endPoint = new IPEndPoint(ipAddress, port);
+        onDisconnectedEvents = new NetworkEvents();
     }
     
     /// <summary>
