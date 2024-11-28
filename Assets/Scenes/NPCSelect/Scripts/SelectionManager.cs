@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
@@ -36,25 +37,11 @@ public class SelectionManager : MonoBehaviour
         layout = scrollable.GetChild(0);
 
         SetHeaderText();
-        SetSceneType();
         GenerateOptions();
 
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
         scroller.scrollDuration = scrollDuration;
-    }
-
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-        {
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
-        }
     }
 
     /// <summary>
