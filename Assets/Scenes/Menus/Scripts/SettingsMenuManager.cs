@@ -11,61 +11,62 @@ using UnityEngine.UI;
 
 public class SettingsMenuManager : MonoBehaviour
 {
-    // SLIDERS
-    [SerializeField] private GameObject sliderGroup;
+    #region Audio Variables
+    [Header("Audio References")]
+    [SerializeField] private GameObject audioSliderGroup;
 
     private Slider musicVolumeSlider;
     private Slider sfxVolumeSlider;
 
     private float musicVolume;
     private float sfxVolume;
+    #endregion
 
-    /// <summary>
-    /// This method is intended to correct the sliders when opening the menu, so the sliders
-    /// correspond with the values of the audiomixer.
-    /// TODO: Currently doesnt work.
-    /// </summary>
-    public void CorrectSliderValues()
-    {
-        // Get the sliders
-        Slider[] sliders = sliderGroup.GetComponentsInChildren<Slider>();
-        musicVolumeSlider = sliders[0];
-        sfxVolumeSlider = sliders[1];
-        
-        // Fetch the values from the audiomixer
-        SettingsManager.sm.audioMixer.GetFloat("MusicVolume", out float musicVolume);
-        SettingsManager.sm.audioMixer.GetFloat("SfxVolume", out float sfxVolume);
-        // Set the values
+    #region Accessibility Variables
+    [Header("Accessibility References")]
+    [SerializeField] private GameSlider talkingSpeedSlider;
+    [SerializeField] private Toggle textToSpeechToggle;
 
-        PlayerPrefs.GetFloat(nameof(musicVolume), musicVolume);
-
-        musicVolumeSlider.SetValueWithoutNotify(musicVolume);
-        sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
-    }
+    private float talkingSpeed;
+    private bool ttsEnabled;
+    #endregion
 
     private void Start()
     {
         // Get the sliders
-        Slider[] sliders = sliderGroup.GetComponentsInChildren<Slider>();
+        Slider[] sliders = audioSliderGroup.GetComponentsInChildren<Slider>();
         musicVolumeSlider = sliders[0];
         sfxVolumeSlider = sliders[1];
 
+        // Get the saved values
         musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
         sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
+        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
 
-        // Set the values
-        SettingsManager.sm.audioMixer.SetFloat(nameof(musicVolume), musicVolume);
-        SettingsManager.sm.audioMixer.SetFloat(nameof(sfxVolume), sfxVolume);
+        // Apply the saved values
+        SetMusicVolume(musicVolume);
+        SetSfxVolume(sfxVolume);
+        SetTalkingSpeed(talkingSpeed);
 
+        // Set the values on the UI elements
         musicVolumeSlider.SetValueWithoutNotify(musicVolume);
         sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
+        talkingSpeedSlider.slider.SetValueWithoutNotify(talkingSpeed);
+        textToSpeechToggle.SetIsOnWithoutNotify(ttsEnabled);
+        
     }
 
+    /// <summary>
+    /// Called when the scene is unloaded.
+    /// Saves the values which were set in the settings screen.
+    /// </summary>
     private void OnDestroy()
     {
-        Debug.Log($"Slider value: {musicVolumeSlider.value}, Value to be saved: {musicVolume}");
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolumeSlider.value);
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolumeSlider.value);
+        PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeedSlider.slider.value);
+        PlayerPrefs.SetInt(nameof(ttsEnabled), textToSpeechToggle.isOn ? 1 : 0);
     }
 
     /// <summary>

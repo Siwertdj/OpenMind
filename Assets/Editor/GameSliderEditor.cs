@@ -15,6 +15,7 @@ public class GameSliderEditor : Editor
     private SerializedProperty valueInfo;
     private SerializedProperty defaultValue;
     private SerializedProperty defaultValueRef;
+    private SerializedProperty sliderComponentRef;
 
     private bool valueTextGroup = false;
     private bool defaultValueGroup = false;
@@ -28,6 +29,7 @@ public class GameSliderEditor : Editor
         valueInfo = serializedObject.FindProperty(nameof(valueInfo));
         valueRounding = serializedObject.FindProperty(nameof(valueRounding));
         defaultValueRef = serializedObject.FindProperty(nameof(defaultValueRef));
+        sliderComponentRef = serializedObject.FindProperty(nameof(sliderComponentRef));
     }
 
     public override void OnInspectorGUI()
@@ -39,6 +41,7 @@ public class GameSliderEditor : Editor
         EditorGUILayout.LabelField("Game Slider Settings", EditorStyles.boldLabel);
 
         EditorGUILayout.PropertyField(step);
+        EditorGUILayout.PropertyField(sliderComponentRef);
 
         valueTextGroup = EditorGUILayout.BeginFoldoutHeaderGroup(valueTextGroup, "Value Text Settings");
         if (valueTextGroup)

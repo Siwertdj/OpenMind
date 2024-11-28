@@ -13,12 +13,13 @@ public class GameSlider : MonoBehaviour
     [SerializeField] private int valueRounding;
     [SerializeField] private float defaultValue;
     [SerializeField] private RectTransform defaultValueRef;
+    [SerializeField] private Slider sliderComponentRef;
 
-    private Slider slider;
+    public Slider slider { get { return sliderComponentRef; } }
 
     private void Awake()
     {
-        slider = GetComponent<Slider>();
+        //slider = GetComponent<Slider>();
         slider.onValueChanged.AddListener(UpdateSlider);
         UpdateSlider(slider.value);
         Debug.Log($"Default: {defaultValue}, Max: {slider.maxValue}");
