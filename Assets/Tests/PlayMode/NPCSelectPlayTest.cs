@@ -124,6 +124,9 @@ public class NPCSelectPlayTest
     }
 
     #region Scroller Tests
+    /// <summary>
+    /// Check if the selection button contains the correct text based on the selected character.
+    /// </summary>
     [UnityTest]
     public IEnumerator SelectedCharacterNameTest()
     {
@@ -213,6 +216,9 @@ public class NPCSelectPlayTest
     }
     #endregion
 
+    /// <summary>
+    /// Tests if button text is correctly changed when a character is inactive.
+    /// </summary>
     [UnityTest]
     public IEnumerator CharacterInactiveTest()
     {
