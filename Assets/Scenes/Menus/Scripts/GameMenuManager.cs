@@ -16,16 +16,21 @@ public class GameMenuManager : MonoBehaviour
         // which we choose by getting the activescene. 
         // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
 
-        Scene activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+        Scene activeScene = SceneManager.GetSceneByName("NoteBookScene");
         if (!activeScene.isLoaded)
         {
-            activeScene = SceneManager.GetSceneByName("DialogueScene");
+            activeScene = SceneManager.GetSceneByName("NPCSelectScene");
             if (!activeScene.isLoaded)
             {
-                Debug.LogError("GameMenu can not be closed, as Dialogue and NPCSelect are not loaded.");
-                return;
+                activeScene = SceneManager.GetSceneByName("DialogueScene");
+                if (!activeScene.isLoaded)
+                {
+                    Debug.LogError("GameMenu can not be closed, as Dialogue and NPCSelect are not loaded.");
+                    return;
+                }
             }
         }
+        
         
         // transition.
         await SceneController.sc.TransitionScene(
