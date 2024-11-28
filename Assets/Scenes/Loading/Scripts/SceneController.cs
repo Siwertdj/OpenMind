@@ -195,12 +195,9 @@ public class SceneController : MonoBehaviour
         {
             case TransitionType.Additive:
                 await LoadScene(targetScene);
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 break;
             
             case TransitionType.Unload:
-                // Set the previous active scene back to active.
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 SceneManager.UnloadSceneAsync(currentScene);
                 break;
             
@@ -208,7 +205,6 @@ public class SceneController : MonoBehaviour
                 await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene); // Unload old scene
                 await LoadScene(targetScene); // Load new scene
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
                 _ = TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade back into game
                 break;
         }
@@ -317,6 +313,20 @@ public class SceneController : MonoBehaviour
         string currentScene = start.ToString();
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
     }
+
+    public SceneName? FindLoadedSceneOfSelection(params SceneName[] scenes)
+    {
+        foreach (SceneName sceneName in scenes)
+        {
+            Scene scene = SceneManager.GetSceneByName(sceneName.ToString());
+            if (scene.isLoaded)
+            {
+                return sceneName;
+            }
+        }
+
+        return null;
+    }
     
     /// <summary>
     /// Function to load the notebook.
@@ -326,38 +336,21 @@ public class SceneController : MonoBehaviour
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
-        // If notebook is already open, close it
-        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-        {
-            Scene activeScene;
-            // Check if the DialogueScene or the NPCSelectScene is loaded.
-            if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+            // If notebook is already open, close it
+            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
             {
-                activeScene = SceneManager.GetSceneByName("DialogueScene");
+                GameManager.gm.IsPaused = false;
+                crossOverlay.SetActive(false);
+                _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
+                    TransitionType.Unload);
             }
-            else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+            else // Notebook is NOT loaded.. so open it
             {
-                activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+                GameManager.gm.IsPaused = true;
+                crossOverlay.SetActive(true);
+                _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
+                    TransitionType.Additive);
             }
-            else
-            {
-                throw new Exception("DialogueScene/NPCSelectScene is not loaded.");
-            }
-            
-            // Get the SceneName enum from the activeScene.
-            SceneName baseScene = GetSceneName(activeScene);
-            
-            GameManager.gm.IsPaused = false;
-            crossOverlay.SetActive(false);
-            _ = TransitionScene(SceneName.NotebookScene, baseScene, TransitionType.Unload);
-        }
-        else
-        {
-            SceneName activeScene = GetSceneName(SceneManager.GetActiveScene());
-            GameManager.gm.IsPaused = true;
-            crossOverlay.SetActive(true);
-            _ = TransitionScene(activeScene, SceneName.NotebookScene, TransitionType.Additive);
-        }
     }
     
     /// <summary>
