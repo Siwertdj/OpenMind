@@ -15,7 +15,7 @@ public static class IPConnections
     /// <summary>
     /// The port every connection uses
     /// </summary>
-    public const ushort Port = 7777;
+    public const ushort Port = 64413;
     
     /// <summary>
     /// Gets all local ips assigned to the current device

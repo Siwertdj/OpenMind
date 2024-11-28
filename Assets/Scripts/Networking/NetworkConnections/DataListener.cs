@@ -57,6 +57,7 @@ public class DataListener : DataNetworker
         socket.Listen(255);
         connections = new List<Socket>();
         isConnectionReceiving = new List<bool>();
+        Debug.Log(socket.LocalEndPoint);
         
         //create the ack respond event with the signature as the message
         onAckSentEvents.Subscribe("ACK",
@@ -166,8 +167,7 @@ public class DataListener : DataNetworker
                 //catch all just in case an error slips through
                 try
                 {
-                    if (!TryGetConvertData(buffer, receivedByteAmount,
-                            out List<List<NetworkPackage>> networkData))
+                    if (!TryGetConvertData(buffer, receivedByteAmount, out List<List<NetworkPackage>> networkData))
                         return;
                     
                     foreach (var networkPackage in networkData)

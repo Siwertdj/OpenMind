@@ -92,6 +92,9 @@ public class DataSender : DataNetworker
         }
         else
             logWarning = "Socket was already connected, so nothing happened.";
+        
+        Debug.Log("remote: " + socket.RemoteEndPoint);
+        Debug.Log("local: " + socket.LocalEndPoint);
     }
     
     /// <summary>

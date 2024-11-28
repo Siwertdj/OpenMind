@@ -104,4 +104,6 @@ public abstract class DataNetworker : NetworkDebugger
         
         return true;
     }
+    
+    protected abstract bool IsDisconnected(out Socket info);
 }

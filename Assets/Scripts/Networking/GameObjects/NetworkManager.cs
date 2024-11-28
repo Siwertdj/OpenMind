@@ -6,10 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using UnityEngine;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Threading.Tasks;
-using Ping = UnityEngine.Ping;
 
 
 public class NetworkManager : MonoBehaviour
@@ -77,8 +74,8 @@ public class NetworkManager : MonoBehaviour
     void SetupNetworkTest()
     {
         Debug.Log("Starting setup");
-        //SetupListener();
-        SetupSender();
+        SetupListener();
+        //SetupSender();
         Debug.Log("Ended setup");
     }
     
@@ -99,7 +96,7 @@ public class NetworkManager : MonoBehaviour
     
     void SetupSender()
     {
-        IPAddress address = IPAddress.Parse("145.107.80.179");
+        IPAddress address = IPAddress.Parse("145.107.80.218");
         sender = new DataSender(address, IPConnections.Port);
         StartCoroutine(sender.DisplayAnyDebugs(0f));
         sender.AddOnConnectEvent(SenderConnect);
@@ -140,7 +137,7 @@ public class NetworkManager : MonoBehaviour
     
     void ListenerConnect(object o)
     {
-        debugMessages.Add($"(Listener): Connected with socket {((Socket)o).LocalEndPoint}");
+        debugMessages.Add($"(Listener): Connected with socket {((Socket)o).RemoteEndPoint}");
     }
     
     void ListenerDataReceived(object o)
