@@ -94,8 +94,8 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddOnDisconnectedEvent(ListenerDisconnect);
         
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
-        //StartCoroutine(dataListener.ListenForIncomingData(0.1f));
-        //StartCoroutine(dataListener.IsDisconnected(1f));
+        StartCoroutine(dataListener.ListenForIncomingData(0.1f));
+        StartCoroutine(dataListener.IsDisconnected(1f));
     }
     
     void SetupSender()
