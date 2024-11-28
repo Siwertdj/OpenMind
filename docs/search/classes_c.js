@@ -16,5 +16,6 @@ var searchData=
   ['startscreentest_13',['StartScreenTest',['../classStartScreenTest.html',1,'']]],
   ['storyobject_14',['StoryObject',['../classStoryObject.html',1,'']]],
   ['storyselectionmanager_15',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
-  ['swipedetector_16',['SwipeDetector',['../classSwipeDetector.html',1,'']]]
+  ['storyselectionmanagerplaytest_16',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
+  ['swipedetector_17',['SwipeDetector',['../classSwipeDetector.html',1,'']]]
 ];

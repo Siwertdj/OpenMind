@@ -14,8 +14,10 @@ var searchData=
   ['togglecharacterinfo_11',['ToggleCharacterInfo',['../classNotebookManager.html#a3cdbd3b4764a609baf7ddb5f1c09127d',1,'NotebookManager']]],
   ['togglecharacterinfotest_12',['ToggleCharacterInfoTest',['../classNotebookManagerEditTest.html#ad8e2bf571162ba9d5debeb5c1c2d32f9',1,'NotebookManagerEditTest']]],
   ['togglenotebookscene_13',['ToggleNotebookScene',['../classSceneController.html#a691188ae1cf2ebf7e133ba6190123076',1,'SceneController']]],
-  ['transition_14',['Transition',['../classUIManager.html#a518af48c433a734ad76e1310be143222',1,'UIManager']]],
-  ['transitionanimation_15',['TransitionAnimation',['../classUIManager.html#a62e8e87aeda96e991b1f77d74da62f1c',1,'UIManager']]],
-  ['transitioning_16',['Transitioning',['../classSceneController.html#ab3399797d5a08b2f9a47157dad6023fa',1,'SceneController']]],
-  ['transitionscene_17',['TransitionScene',['../classSceneController.html#ace56faf58d214c72d6274a140b214ed6',1,'SceneController']]]
+  ['toggletutorialscene_14',['ToggleTutorialScene',['../classSceneController.html#ad960129d0fdb5a6a7d30012f0f60ecd3',1,'SceneController']]],
+  ['transition_15',['Transition',['../classUIManager.html#a518af48c433a734ad76e1310be143222',1,'UIManager']]],
+  ['transitionanimation_16',['TransitionAnimation',['../classUIManager.html#a62e8e87aeda96e991b1f77d74da62f1c',1,'UIManager']]],
+  ['transitioning_17',['Transitioning',['../classSceneController.html#ab3399797d5a08b2f9a47157dad6023fa',1,'SceneController']]],
+  ['transitionscene_18',['TransitionScene',['../classSceneController.html#ace56faf58d214c72d6274a140b214ed6',1,'SceneController']]],
+  ['typeanimation_19',['TypeAnimation',['../classTimelineManager.html#a7b712712fd2f3e1b5649a60816cc8b01',1,'TimelineManager']]]
 ];

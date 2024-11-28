@@ -13,9 +13,10 @@ var searchData=
   ['notebookpage_10',['NotebookPage',['../classNotebookPage.html',1,'NotebookPage'],['../classNotebookPage.html#a4e741a7d9e0dc6b6edc0df01e7a28b8b',1,'NotebookPage.NotebookPage(CharacterInstance character)'],['../classNotebookPage.html#ac8535d73d560f863cf00a5a91390d12c',1,'NotebookPage.NotebookPage(string notes, CharacterInstance character)']]],
   ['notebookpagedatatest_11',['NotebookPageDataTest',['../classNotebookPageDataTest.html',1,'']]],
   ['notebookpageedittest_12',['NotebookPageEditTest',['../classNotebookPageEditTest.html',1,'']]],
-  ['npcdialoguetohintdialoguegamestatetest_13',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
-  ['npcdialoguetonpcselectgamestatetest_14',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
-  ['npcselectplaytest_15',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
-  ['npcselectscroller_16',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]],
-  ['npcselecttonpcdialoguegamestatetest_17',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
+  ['notebooktutorialtest_13',['NotebookTutorialTest',['../classTutorialManagerPlayTest.html#a140a1b98c25f35edf23a7866b6ebf13e',1,'TutorialManagerPlayTest']]],
+  ['npcdialoguetohintdialoguegamestatetest_14',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
+  ['npcdialoguetonpcselectgamestatetest_15',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
+  ['npcselectplaytest_16',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
+  ['npcselectscroller_17',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]],
+  ['npcselecttonpcdialoguegamestatetest_18',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
 ];

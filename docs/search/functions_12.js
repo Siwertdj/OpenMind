@@ -9,5 +9,7 @@ var searchData=
   ['updatepersonalnotes_6',['UpdatePersonalNotes',['../classNotebookData.html#a0b1dae68770e75eacce2fda7dda5ae56',1,'NotebookData']]],
   ['updatepersonalnotestest_7',['UpdatePersonalNotesTest',['../classNotebookPageDataTest.html#a57fc657b47f324e9b83814b26b7cf733',1,'NotebookPageDataTest']]],
   ['updatetext_8',['UpdateText',['../classCutsceneController.html#aa3c6bcbd0b04bc08c00136cd9498de21',1,'CutsceneController']]],
-  ['updatetransitiontext_9',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]]
+  ['updatetransitiontext_9',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
+  ['updatetutorialtest_10',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
+  ['updatetutorialtext_11',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]]
 ];

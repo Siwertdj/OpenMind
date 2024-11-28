@@ -1,10 +1,12 @@
 var searchData=
 [
   ['deactivatedialog_0',['DeactivateDialog',['../classCutsceneController.html#a826419cae34eed0882b68a59e107d194',1,'CutsceneController']]],
-  ['destroybuttons_1',['DestroyButtons',['../classDialogueManager.html#adda0ca522ce4b98d1ee991e271b98697',1,'DialogueManager']]],
-  ['didtransitionhappen_2',['DidTransitionHappen',['../classSceneControllerTests.html#a918f5dd93e4987d70bc9cf4ed208809d',1,'SceneControllerTests']]],
-  ['disableselectionbutton_3',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
-  ['disblealleventandaudiolisteners_4',['DisbleAllEventAndAudioListeners',['../classSceneControllerTests.html#a090fc9965dea4327ae4304fda502bfcf',1,'SceneControllerTests']]],
-  ['doescurrentsavefilework_5',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['doessavefilelocationexist_6',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]]
+  ['deactivatenotebooktutorial_1',['DeactivateNotebookTutorial',['../classTutorialManager.html#abf7f8ff1296ca04829b2bb0fad4d7d71',1,'TutorialManager']]],
+  ['destroybuttons_2',['DestroyButtons',['../classDialogueManager.html#adda0ca522ce4b98d1ee991e271b98697',1,'DialogueManager']]],
+  ['didtransitionhappen_3',['DidTransitionHappen',['../classSceneControllerTests.html#a918f5dd93e4987d70bc9cf4ed208809d',1,'SceneControllerTests']]],
+  ['disablenotebookhighlight_4',['DisableNotebookHighlight',['../classTutorialManager.html#a6717f192d0fad56fba3286627c70cc1a',1,'TutorialManager']]],
+  ['disableselectionbutton_5',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
+  ['disblealleventandaudiolisteners_6',['DisbleAllEventAndAudioListeners',['../classSceneControllerTests.html#a090fc9965dea4327ae4304fda502bfcf',1,'SceneControllerTests']]],
+  ['doescurrentsavefilework_7',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['doessavefilelocationexist_8',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]]
 ];
