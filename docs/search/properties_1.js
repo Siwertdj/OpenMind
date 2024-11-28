@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['responses_0',['Responses',['../classDialogueObject.html#a5064daecff9f6c4aec7c401e2246fe16',1,'DialogueObject']]]
+  ['indialogue_0',['InDialogue',['../classDialogueAnimator.html#aa994724b720afb8f25b9636f9aaa5633',1,'DialogueAnimator']]],
+  ['isoutputting_1',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]]
 ];

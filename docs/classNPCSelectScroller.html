@@ -119,12 +119,19 @@ Properties</h2></td></tr>
 <a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>SelectedCharacter</b><code> [get, private set]</code></td></tr>
 <tr class="memdesc:a4900aec4855a9af87ec26c312c2458f5"><td class="mdescLeft">&#160;</td><td class="mdescRight">The character which is currently selected in the scroller. <br /></td></tr>
 <tr class="separator:a4900aec4855a9af87ec26c312c2458f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1982b686a2a953dda26e59931191e5d"><td class="memItemLeft" align="right" valign="top"><a id="ae1982b686a2a953dda26e59931191e5d" name="ae1982b686a2a953dda26e59931191e5d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChild</b><code> [get, set]</code></td></tr>
-<tr class="separator:ae1982b686a2a953dda26e59931191e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e3b934c625d034acf9890b6f3c5b20b"><td class="memItemLeft" align="right" valign="top"><a id="a6e3b934c625d034acf9890b6f3c5b20b" name="a6e3b934c625d034acf9890b6f3c5b20b"></a>
+Transform[]&#160;</td><td class="memItemRight" valign="bottom"><b>Children</b><code> [get, private set]</code></td></tr>
+<tr class="memdesc:a6e3b934c625d034acf9890b6f3c5b20b"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transforms of all the characterspace children. <br /></td></tr>
+<tr class="separator:a6e3b934c625d034acf9890b6f3c5b20b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49328744dc9a23003811bc8e99400df9"><td class="memItemLeft" align="right" valign="top"><a id="a49328744dc9a23003811bc8e99400df9" name="a49328744dc9a23003811bc8e99400df9"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>SelectedChild</b><code> [get, private set]</code></td></tr>
+<tr class="separator:a49328744dc9a23003811bc8e99400df9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
+<tr class="memitem:a0916368a8cf14381e2c9e9a1255606ef"><td class="memItemLeft" align="right" valign="top"><a id="a0916368a8cf14381e2c9e9a1255606ef" name="a0916368a8cf14381e2c9e9a1255606ef"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
+<tr class="separator:a0916368a8cf14381e2c9e9a1255606ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a985447ae790f144c9df67de49275f2f1"><td class="memItemLeft" align="right" valign="top"><a id="a985447ae790f144c9df67de49275f2f1" name="a985447ae790f144c9df67de49275f2f1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
 <tr class="separator:a985447ae790f144c9df67de49275f2f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -146,9 +153,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:a9c2ef8fa2b4c9a97997e5853776e98b9"><td class="memItemLeft" align="right" valign="top"><a id="a9c2ef8fa2b4c9a97997e5853776e98b9" name="a9c2ef8fa2b4c9a97997e5853776e98b9"></a>
 Transform&#160;</td><td class="memItemRight" valign="bottom"><b>scrollable</b></td></tr>
 <tr class="separator:a9c2ef8fa2b4c9a97997e5853776e98b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2afd472276ba1fbdc93c7fb9d832b81"><td class="memItemLeft" align="right" valign="top"><a id="ab2afd472276ba1fbdc93c7fb9d832b81" name="ab2afd472276ba1fbdc93c7fb9d832b81"></a>
-Transform[]&#160;</td><td class="memItemRight" valign="bottom"><b>children</b></td></tr>
-<tr class="separator:ab2afd472276ba1fbdc93c7fb9d832b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac7f7c9849b88c4aa03103d14793a915b"><td class="memItemLeft" align="right" valign="top"><a id="ac7f7c9849b88c4aa03103d14793a915b" name="ac7f7c9849b88c4aa03103d14793a915b"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isNavigating</b> = false</td></tr>
 <tr class="separator:ac7f7c9849b88c4aa03103d14793a915b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -164,9 +168,9 @@ GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>navButtonRight<
 <tr class="memitem:abea7070ec03ef4bbab637fc7239c9e58"><td class="memItemLeft" align="right" valign="top"><a id="abea7070ec03ef4bbab637fc7239c9e58" name="abea7070ec03ef4bbab637fc7239c9e58"></a>
 <a class="el" href="classSwipeDetector.html">SwipeDetector</a>&#160;</td><td class="memItemRight" valign="bottom"><b>swipeDetector</b></td></tr>
 <tr class="separator:abea7070ec03ef4bbab637fc7239c9e58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cf0e77985520571390e67b58dbaa46e"><td class="memItemLeft" align="right" valign="top"><a id="a4cf0e77985520571390e67b58dbaa46e" name="a4cf0e77985520571390e67b58dbaa46e"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>_selectedChild</b></td></tr>
-<tr class="separator:a4cf0e77985520571390e67b58dbaa46e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1982b686a2a953dda26e59931191e5d"><td class="memItemLeft" align="right" valign="top"><a id="ae1982b686a2a953dda26e59931191e5d" name="ae1982b686a2a953dda26e59931191e5d"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChild</b></td></tr>
+<tr class="separator:ae1982b686a2a953dda26e59931191e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="afa52ee14117b0e1c114c69478d527ef0" name="afa52ee14117b0e1c114c69478d527ef0"></a>

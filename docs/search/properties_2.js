@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['selectedcharacter_0',['SelectedCharacter',['../classNPCSelectScroller.html#a4900aec4855a9af87ec26c312c2458f5',1,'NPCSelectScroller']]]
+  ['responses_0',['Responses',['../classDialogueObject.html#a5064daecff9f6c4aec7c401e2246fe16',1,'DialogueObject']]]
 ];

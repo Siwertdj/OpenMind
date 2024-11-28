@@ -7,5 +7,5 @@ var searchData=
   ['activecharacterstest_4',['ActiveCharactersTest',['../classGameManagerPlayTest.html#ad448e2e588505a3beece4badc02782a4',1,'GameManagerPlayTest']]],
   ['animationcoroutine_5',['AnimationCoroutine',['../classTransitionAnimator.html#a40b3f28d4477f342da0af6ac11850d69',1,'TransitionAnimator']]],
   ['answeropenquestion_6',['AnswerOpenQuestion',['../classDialogueManager.html#abb6f39f919eda143a1f4a6b300038afa',1,'DialogueManager']]],
-  ['awake_7',['Awake',['../classDialogueAnimator.html#a27adbfbcbec50038ef7dca9415ea9720',1,'DialogueAnimator.Awake()'],['../classGameManager.html#a2959177ee51ac31badbf8b1bc8f7f637',1,'GameManager.Awake()'],['../classSceneController.html#a9757c396c158689c379467d22cebb49f',1,'SceneController.Awake()']]]
+  ['awake_7',['Awake',['../classDialogueAnimator.html#a27adbfbcbec50038ef7dca9415ea9720',1,'DialogueAnimator.Awake()'],['../classGameManager.html#a2959177ee51ac31badbf8b1bc8f7f637',1,'GameManager.Awake()'],['../classSceneController.html#a9757c396c158689c379467d22cebb49f',1,'SceneController.Awake()'],['../classSelectionManager.html#a6cbd06a30d1d6036628d6d5aa7ac014e',1,'SelectionManager.Awake()']]]
 ];
