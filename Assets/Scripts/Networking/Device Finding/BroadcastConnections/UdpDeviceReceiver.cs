@@ -20,7 +20,7 @@ public abstract class UdpDeviceReceiver
         this.identifier = identifier;
         
         udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-        udp.Client.Bind(new IPEndPoint(IPConnections.GetOwnIps()[0], IPConnections.Port));
+        udp.Client.Bind(new IPEndPoint(IPAddress.Any, IPConnections.Port));
     }
     
     public IEnumerator StartReceivingResponses()

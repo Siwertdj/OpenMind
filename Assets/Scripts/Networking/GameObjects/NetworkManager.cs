@@ -96,7 +96,8 @@ public class NetworkManager : MonoBehaviour
     
     void SetupSender()
     {
-        IPAddress address = IPAddress.Parse("145.107.80.218");
+        Debug.Log("Setting up sender");
+        IPAddress address = IPAddress.Parse("145.107.80.179");
         sender = new DataSender(address, IPConnections.Port);
         StartCoroutine(sender.DisplayAnyDebugs(0f));
         sender.AddOnConnectEvent(SenderConnect);
@@ -106,7 +107,7 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         
         StartCoroutine(sender.Connect(10f));
-        // StartCoroutine(sender.ListenForResponse(3f));
+        StartCoroutine(sender.ListenForResponse());
     }
     
     void SenderConnect(object o)

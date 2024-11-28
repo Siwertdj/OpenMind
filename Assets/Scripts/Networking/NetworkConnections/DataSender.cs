@@ -76,6 +76,12 @@ public class DataSender : DataNetworker
                             "onDataSentEvent");
                 });
             
+                {
+                    if (!timeout && t.Status == TaskStatus.RanToCompletion)
+                        logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
+                            "onDataSentEvent");
+                });
+
             DateTime start = DateTime.Now;
             while (!connecting.IsCompleted)
             {
@@ -287,4 +293,16 @@ public class DataSender : DataNetworker
     /// </summary>
     public void AddOnAckTimeoutEvent(string signature, Action<object> action) =>
         onAckTimeoutEvents.Subscribe(signature, action);
+
+    protected override bool IsDisconnected(out Socket info)
+    {
+        if (!socket.Connected)
+        {
+            info = socket;
+            return true;
+        }
+
+        info = null;
+        return false;
+    }
 }

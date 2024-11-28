@@ -1,6 +1,7 @@
 // This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -22,6 +23,10 @@ public abstract class DataNetworker : NetworkDebugger
 {
     protected Socket     socket;
     protected IPEndPoint endPoint;
+
+    private NetworkEvents onDisconnectedEvents;
+
+    private bool isCheckingForDisconnection;
     
     protected DataNetworker([DisallowNull] IPAddress ipAddress, ushort port)
     {
@@ -78,7 +83,6 @@ public abstract class DataNetworker : NetworkDebugger
             }
         }
         
-        
         return true;
     }
     
@@ -104,6 +108,25 @@ public abstract class DataNetworker : NetworkDebugger
         
         return true;
     }
-    
+
+    public IEnumerator IsDisconnected(float intervalSeconds)
+    {
+        isCheckingForDisconnection = true;
+        
+        while (isCheckingForDisconnection)
+        {
+            if (IsDisconnected(out Socket disconnectedSocket))
+            {
+                logError = onDisconnectedEvents.Raise("Disconnect", disconnectedSocket, false, "onDisconnectedEvents");
+            }
+            
+            if (isCheckingForDisconnection)
+                yield return new WaitForSeconds(intervalSeconds);
+        }
+    }
+
     protected abstract bool IsDisconnected(out Socket info);
+    
+    public void AddOnDisconnectedEvent(Action<object> action) =>
+        onDisconnectedEvents.Subscribe("Disconnect", action);
 }
