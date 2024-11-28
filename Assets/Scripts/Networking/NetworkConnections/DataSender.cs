@@ -61,7 +61,7 @@ public class DataSender : DataNetworker
     /// </param>
     /// <param name="clearDataSentEvents">If set to true, the actions called after connecting with the host are removed from the event.</param>
     public IEnumerator Connect(float timeoutSeconds, bool clearDataSentEvents = false)
-    {
+    { 
         GiveDisplayWarning();
         
         //check if you are already connected
