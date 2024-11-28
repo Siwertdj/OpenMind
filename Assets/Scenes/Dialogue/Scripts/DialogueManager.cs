@@ -87,10 +87,16 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-        
+
+
         // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
+        Debug.Log(GameManager.gm.gameState);
+        Debug.Log(currentObject.Responses[0] is OpenResponseObject);
         if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
+        {
             CreateOpenQuestion();
+        }
+            
 
         ExecuteNextObject();
     }

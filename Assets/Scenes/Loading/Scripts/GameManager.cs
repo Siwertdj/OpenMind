@@ -610,12 +610,13 @@ public class GameManager : MonoBehaviour
             TerminateDialogueObject endDialogue = new TerminateDialogueObject();
             dialogueObject.Responses.Add(endDialogue);
             
+            // go to dialogue of actual culprit
             SpeakingObject nextDialogue = new SpeakingObject(remainingDialogueScenario[0], background);
             // Remove the first element of the list.
             remainingDialogueScenario.RemoveAt(0);
             
             endDialogue.Responses.Add(nextDialogue);
-            dialogueObject.Responses.Add(new OpenResponseObject(background));
+            nextDialogue.Responses.Add(new OpenResponseObject(background));
         }
         else
         {
