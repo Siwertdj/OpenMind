@@ -19,8 +19,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     [Header("Paramaters")] 
     [SerializeField] private float maxPlayers = 10;
     [SerializeField] private TextMeshProUGUI maxPlayersText;
-
-
+    
     private string classCode;
     
 
