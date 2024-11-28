@@ -72,7 +72,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classSelectionManager-members.html">List of all members</a>  </div>
@@ -91,18 +90,9 @@ Inheritance diagram for SelectionManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a902cea1ad70d41429e206a4f13a7aba3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a902cea1ad70d41429e206a4f13a7aba3">ButtonClicked</a> (GameObject option)</td></tr>
-<tr class="memdesc:a902cea1ad70d41429e206a4f13a7aba3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event for when a character is selected.  <br /></td></tr>
-<tr class="separator:a902cea1ad70d41429e206a4f13a7aba3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
-Public Attributes</h2></td></tr>
-<tr class="memitem:ace4f6341dbca4aa410a6abb6002f2fa8"><td class="memItemLeft" align="right" valign="top"><a id="ace4f6341dbca4aa410a6abb6002f2fa8" name="ace4f6341dbca4aa410a6abb6002f2fa8"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>parent</b></td></tr>
-<tr class="separator:ace4f6341dbca4aa410a6abb6002f2fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a909cd0ba730b2f09199f59108de2704b"><td class="memItemLeft" align="right" valign="top"><a id="a909cd0ba730b2f09199f59108de2704b" name="a909cd0ba730b2f09199f59108de2704b"></a>
-TextMeshProUGUI&#160;</td><td class="memItemRight" valign="bottom"><b>headerText</b></td></tr>
-<tr class="separator:a909cd0ba730b2f09199f59108de2704b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66664a2dfafb6223db5a2aec1b1e1319"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a66664a2dfafb6223db5a2aec1b1e1319">SelectionButtonClicked</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
+<tr class="memdesc:a66664a2dfafb6223db5a2aec1b1e1319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event for when a character is selected.  <br /></td></tr>
+<tr class="separator:a66664a2dfafb6223db5a2aec1b1e1319"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -110,44 +100,156 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
 <tr class="memdesc:a72967a2f50fa7f3bc861242cc07c7e92"><td class="mdescLeft">&#160;</td><td class="mdescRight">On startup, set the selectionType of the scene, set the headertext and generate the selectable options. <br /></td></tr>
 <tr class="separator:a72967a2f50fa7f3bc861242cc07c7e92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="memItemLeft" align="right" valign="top"><a id="a2566b73cbca5ce314d2eb83992cf4ab2" name="a2566b73cbca5ce314d2eb83992cf4ab2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSceneType</b> ()</td></tr>
-<tr class="memdesc:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the selectionType variable. If the number of characters has reached the minimum amount, and the player has no more questions left, set the selectionType variable to decidecriminal. <br /></td></tr>
-<tr class="separator:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f0a468e9de7245197d5ae51bae676d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a3f0a468e9de7245197d5ae51bae676d3">SetHeaderText</a> (string sceneType)</td></tr>
-<tr class="memdesc:a3f0a468e9de7245197d5ae51bae676d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the Header text if the culprit needs to be chosen.  <br /></td></tr>
-<tr class="separator:a3f0a468e9de7245197d5ae51bae676d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a691c7a75f75e60f9bfd4b7ee0b1df591">SetHeaderText</a> ()</td></tr>
+<tr class="memdesc:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the Header text if the culprit needs to be chosen.  <br /></td></tr>
+<tr class="separator:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a822ce8fcd043b4e66269f6f6eff2e6ab"><td class="memItemLeft" align="right" valign="top"><a id="a822ce8fcd043b4e66269f6f6eff2e6ab" name="a822ce8fcd043b4e66269f6f6eff2e6ab"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>GenerateOptions</b> ()</td></tr>
 <tr class="memdesc:a822ce8fcd043b4e66269f6f6eff2e6ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the selectOption objects for the characters. <br /></td></tr>
 <tr class="separator:a822ce8fcd043b4e66269f6f6eff2e6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa89f4ed1ad95e270e93cc96d9226dcf7"><td class="memItemLeft" align="right" valign="top"><a id="aa89f4ed1ad95e270e93cc96d9226dcf7" name="aa89f4ed1ad95e270e93cc96d9226dcf7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>EnableSelectionButton</b> ()</td></tr>
+<tr class="memdesc:aa89f4ed1ad95e270e93cc96d9226dcf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables the character selection button &amp; sets it to the selected character. <br /></td></tr>
+<tr class="separator:aa89f4ed1ad95e270e93cc96d9226dcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae52b59951a6abb7bcf6c1800a47edca"><td class="memItemLeft" align="right" valign="top"><a id="aae52b59951a6abb7bcf6c1800a47edca" name="aae52b59951a6abb7bcf6c1800a47edca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DisableSelectionButton</b> ()</td></tr>
+<tr class="memdesc:aae52b59951a6abb7bcf6c1800a47edca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disables the character selection button &amp; removes its listeners. <br /></td></tr>
+<tr class="separator:aae52b59951a6abb7bcf6c1800a47edca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b92a84d06a361db110abab62a80aa2c"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a0b92a84d06a361db110abab62a80aa2c">FadeIn</a> (CanvasGroup cg, float duration)</td></tr>
+<tr class="memdesc:a0b92a84d06a361db110abab62a80aa2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades an object in using a canvas group.  <br /></td></tr>
+<tr class="separator:a0b92a84d06a361db110abab62a80aa2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07094b5672af9685afa72e26e17c8e80"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a07094b5672af9685afa72e26e17c8e80">FadeOut</a> (CanvasGroup cg, float duration)</td></tr>
+<tr class="memdesc:a07094b5672af9685afa72e26e17c8e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades an object out using a canvas group.  <br /></td></tr>
+<tr class="separator:a07094b5672af9685afa72e26e17c8e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a80f6b96ed23da9ce044bacc29bf39820"><td class="memItemLeft" align="right" valign="top"><a id="a80f6b96ed23da9ce044bacc29bf39820" name="a80f6b96ed23da9ce044bacc29bf39820"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>selectionOption</b></td></tr>
-<tr class="separator:a80f6b96ed23da9ce044bacc29bf39820"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a22bac1a2ede5051dee141c0c53fd70c8"><td class="memItemLeft" align="right" valign="top"><a id="a22bac1a2ede5051dee141c0c53fd70c8" name="a22bac1a2ede5051dee141c0c53fd70c8"></a>
-<a class="el" href="classSceneController.html">SceneController</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sc</b></td></tr>
-<tr class="separator:a22bac1a2ede5051dee141c0c53fd70c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a490fb2d244b20960bf2fef8fd790ebce"><td class="memItemLeft" align="right" valign="top"><a id="a490fb2d244b20960bf2fef8fd790ebce" name="a490fb2d244b20960bf2fef8fd790ebce"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>selectionType</b></td></tr>
-<tr class="separator:a490fb2d244b20960bf2fef8fd790ebce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff502c7909b648df55b2d2b850e43d9a"><td class="memItemLeft" align="right" valign="top"><a id="aff502c7909b648df55b2d2b850e43d9a" name="aff502c7909b648df55b2d2b850e43d9a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>buttonFadeDuration</b></td></tr>
+<tr class="separator:aff502c7909b648df55b2d2b850e43d9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2096f52d597792f030a6ddc3f747311"><td class="memItemLeft" align="right" valign="top"><a id="af2096f52d597792f030a6ddc3f747311" name="af2096f52d597792f030a6ddc3f747311"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>scrollDuration</b></td></tr>
+<tr class="separator:af2096f52d597792f030a6ddc3f747311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92789de637f93c5325db5a9ac035055e"><td class="memItemLeft" align="right" valign="top"><a id="a92789de637f93c5325db5a9ac035055e" name="a92789de637f93c5325db5a9ac035055e"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>optionPrefab</b></td></tr>
+<tr class="separator:a92789de637f93c5325db5a9ac035055e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab03f3abe4368712023a6efe83273af62"><td class="memItemLeft" align="right" valign="top"><a id="ab03f3abe4368712023a6efe83273af62" name="ab03f3abe4368712023a6efe83273af62"></a>
+<a class="el" href="classGameButton.html">GameButton</a>&#160;</td><td class="memItemRight" valign="bottom"><b>confirmSelectionButton</b></td></tr>
+<tr class="separator:ab03f3abe4368712023a6efe83273af62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e8188ca55adfb629e1c27578b5e6ad2"><td class="memItemLeft" align="right" valign="top"><a id="a9e8188ca55adfb629e1c27578b5e6ad2" name="a9e8188ca55adfb629e1c27578b5e6ad2"></a>
+<a class="el" href="classNPCSelectScroller.html">NPCSelectScroller</a>&#160;</td><td class="memItemRight" valign="bottom"><b>scroller</b></td></tr>
+<tr class="separator:a9e8188ca55adfb629e1c27578b5e6ad2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a909cd0ba730b2f09199f59108de2704b"><td class="memItemLeft" align="right" valign="top"><a id="a909cd0ba730b2f09199f59108de2704b" name="a909cd0ba730b2f09199f59108de2704b"></a>
+TextMeshProUGUI&#160;</td><td class="memItemRight" valign="bottom"><b>headerText</b></td></tr>
+<tr class="separator:a909cd0ba730b2f09199f59108de2704b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b78d84f2e27cbca5e1593a739dbc4f9"><td class="memItemLeft" align="right" valign="top"><a id="a7b78d84f2e27cbca5e1593a739dbc4f9" name="a7b78d84f2e27cbca5e1593a739dbc4f9"></a>
+Coroutine&#160;</td><td class="memItemRight" valign="bottom"><b>fadeCoroutine</b></td></tr>
+<tr class="separator:a7b78d84f2e27cbca5e1593a739dbc4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manager class for the NPCSelect scene. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a902cea1ad70d41429e206a4f13a7aba3" name="a902cea1ad70d41429e206a4f13a7aba3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a902cea1ad70d41429e206a4f13a7aba3">&#9670;&#160;</a></span>ButtonClicked()</h2>
+<a id="a0b92a84d06a361db110abab62a80aa2c" name="a0b92a84d06a361db110abab62a80aa2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b92a84d06a361db110abab62a80aa2c">&#9670;&#160;</a></span>FadeIn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerator SelectionManager.FadeIn </td>
+          <td>(</td>
+          <td class="paramtype">CanvasGroup&#160;</td>
+          <td class="paramname"><em>cg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>duration</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fades an object in using a canvas group. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cg</td><td>The canvas group of the object to be faded</td></tr>
+    <tr><td class="paramname">duration</td><td>The duration of the fade</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a07094b5672af9685afa72e26e17c8e80" name="a07094b5672af9685afa72e26e17c8e80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07094b5672af9685afa72e26e17c8e80">&#9670;&#160;</a></span>FadeOut()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerator SelectionManager.FadeOut </td>
+          <td>(</td>
+          <td class="paramtype">CanvasGroup&#160;</td>
+          <td class="paramname"><em>cg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>duration</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Fades an object out using a canvas group. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cg</td><td>The canvas group of the object to be faded</td></tr>
+    <tr><td class="paramname">duration</td><td>The duration of the fade</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a66664a2dfafb6223db5a2aec1b1e1319" name="a66664a2dfafb6223db5a2aec1b1e1319"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66664a2dfafb6223db5a2aec1b1e1319">&#9670;&#160;</a></span>SelectionButtonClicked()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void SelectionManager.ButtonClicked </td>
+          <td class="memname">void SelectionManager.SelectionButtonClicked </td>
           <td>(</td>
-          <td class="paramtype">GameObject&#160;</td>
-          <td class="paramname"><em>option</em></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td>
+          <td class="paramname"><em>character</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -164,8 +266,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>selectionType</b></
 
 </div>
 </div>
-<a id="a3f0a468e9de7245197d5ae51bae676d3" name="a3f0a468e9de7245197d5ae51bae676d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f0a468e9de7245197d5ae51bae676d3">&#9670;&#160;</a></span>SetHeaderText()</h2>
+<a id="a691c7a75f75e60f9bfd4b7ee0b1df591" name="a691c7a75f75e60f9bfd4b7ee0b1df591"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a691c7a75f75e60f9bfd4b7ee0b1df591">&#9670;&#160;</a></span>SetHeaderText()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,8 +278,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>selectionType</b></
         <tr>
           <td class="memname">void SelectionManager.SetHeaderText </td>
           <td>(</td>
-          <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>sceneType</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>

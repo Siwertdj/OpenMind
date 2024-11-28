@@ -13,7 +13,8 @@ var searchData=
   ['dialogueobject_10',['DialogueObject',['../classDialogueObject.html',1,'']]],
   ['didtransitionhappen_11',['DidTransitionHappen',['../classSceneControllerTests.html#a918f5dd93e4987d70bc9cf4ed208809d',1,'SceneControllerTests']]],
   ['disablepopups_12',['DisablePopups',['../classDebugManager.html#a8a087503657aa97d398fa649c4d7f280',1,'DebugManager']]],
-  ['disblealleventandaudiolisteners_13',['DisbleAllEventAndAudioListeners',['../classSceneControllerTests.html#a090fc9965dea4327ae4304fda502bfcf',1,'SceneControllerTests']]],
-  ['doescurrentsavefilework_14',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['doessavefilelocationexist_15',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]]
+  ['disableselectionbutton_13',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
+  ['disblealleventandaudiolisteners_14',['DisbleAllEventAndAudioListeners',['../classSceneControllerTests.html#a090fc9965dea4327ae4304fda502bfcf',1,'SceneControllerTests']]],
+  ['doescurrentsavefilework_15',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['doessavefilelocationexist_16',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]]
 ];

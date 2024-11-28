@@ -28,7 +28,10 @@ public class UIManager : MonoBehaviour
     {
         GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
-        SceneManager.LoadScene("GameMenuScene", LoadSceneMode.Additive);
+        // '_ =' throws away the await
+        _ = SceneController.sc.TransitionScene(SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.GameMenuScene,
+            SceneController.TransitionType.Additive);
     }
 
     /// <summary>

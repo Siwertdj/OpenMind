@@ -26,7 +26,8 @@ var searchData=
   ['createopenquestion_23',['CreateOpenQuestion',['../classDialogueManager.html#adfad4704a99f9f0b386df1f65630ed19',1,'DialogueManager']]],
   ['createsavedata_24',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
   ['culpritselectepiloguetransition_25',['CulpritSelectEpilogueTransition',['../classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563',1,'GameManagerPlayTest']]],
-  ['customgameevent_26',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
-  ['cutscenecontroller_27',['CutsceneController',['../classCutsceneController.html',1,'']]],
-  ['cycletransition_28',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
+  ['culpritselecttoepiloguegamestatetest_26',['CulpritSelectToEpilogueGameStateTest',['../classGameManagerPlayTest.html#a4bf2a061576d4b445973e7c233751566',1,'GameManagerPlayTest']]],
+  ['customgameevent_27',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
+  ['cutscenecontroller_28',['CutsceneController',['../classCutsceneController.html',1,'']]],
+  ['cycletransition_29',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
 ];
