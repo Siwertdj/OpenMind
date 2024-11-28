@@ -401,6 +401,7 @@ public class GameManager : MonoBehaviour
         // Change the gamestate
         gameState = GameState.HintDialogue;
         
+        // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),

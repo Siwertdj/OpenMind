@@ -50,7 +50,7 @@ public class DialogueAnimator : MonoBehaviour
             return;
 
         text.enableAutoSizing = false;
-        text.fontSize = 40;
+        text.fontSize = 50;
         audioSource = GetComponent<AudioSource>();
     }
 
