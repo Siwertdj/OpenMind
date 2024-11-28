@@ -21,7 +21,8 @@ public class NetworkManager : MonoBehaviour
     void Start()
     {
         GetLocalIPs();
-        SetupBroadcastTest();
+        //SetupBroadcastTest();
+        SetupNetworkTest();
     }
     
     void Update()
@@ -76,7 +77,30 @@ public class NetworkManager : MonoBehaviour
     void SetupNetworkTest()
     {
         Debug.Log("Starting setup");
+        // SetupListener();
+        SetupSender();
+        Debug.Log("Ended setup");
+    }
+    
+    void SetupSender()
+    {
+        Debug.Log("Setting up sender");
+        IPAddress address = IPAddress.Parse("145.107.80.179");
+        sender = new DataSender(address, IPConnections.Port);
+        StartCoroutine(sender.DisplayAnyDebugs(0f));
+        sender.AddOnConnectEvent(SenderConnect);
+        sender.AddOnDataSentEvent("test", SenderDataSent);
+        sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
+        sender.AddOnAckReceivedEvent(SenderReceiveACK);
+        sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         
+        StartCoroutine(sender.Connect(10f));
+        StartCoroutine(sender.ListenForResponse());
+    }
+    
+    void SetupListener()
+    {
+        Debug.Log("Setting up listener");
         IPAddress address = IPConnections.GetOwnIps()[0];
         DataListener dataListener = new DataListener(address, IPConnections.Port);
         StartCoroutine(dataListener.DisplayAnyDebugs(0f));
@@ -86,26 +110,14 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddOnAckSentEvent(ListenerSentACK);
         dataListener.AddResponseTo("test", EchoMessage);
         
-        sender = new DataSender(address, IPConnections.Port);
-        StartCoroutine(sender.DisplayAnyDebugs(0f));
-        sender.AddOnConnectEvent(SenderConnect);
-        sender.AddOnDataSentEvent("test", SenderDataSent);
-        sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
-        sender.AddOnAckReceivedEvent(SenderReceiveACK);
-        sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
-        
-        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
-        StartCoroutine(sender.Connect(10f));
-        StartCoroutine(sender.ListenForResponse());
         StartCoroutine(dataListener.AcceptIncomingConnections(3f));
         StartCoroutine(dataListener.ListenForIncomingData(0.1f));
-        Debug.Log("Ended setup");
     }
     
     void SenderConnect(object o)
     {
         debugMessages.Add("(Sender): Connected with the host");
-        
+        sender.SendDataAsync("test", NetworkPackage.CreatePackage("Justin is smart"), 10f);
     }
     
     void SenderDataSent(object o)
@@ -130,7 +142,7 @@ public class NetworkManager : MonoBehaviour
     
     void ListenerConnect(object o)
     {
-        debugMessages.Add($"(Listener): Connected with socket {((Socket)o).LocalEndPoint}");
+        debugMessages.Add($"(Listener): Connected with socket {((Socket)o).RemoteEndPoint}");
     }
     
     void ListenerDataReceived(object o)
