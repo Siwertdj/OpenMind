@@ -62,16 +62,20 @@ public class DataSender : DataNetworker
     /// <param name="clearDataSentEvents">If set to true, the actions called after connecting with the host are removed from the event.</param>
     public IEnumerator Connect(float timeoutSeconds, bool clearDataSentEvents = false)
     { 
+        bool timeout = false;
         GiveDisplayWarning();
-        
+
         //check if you are already connected
         if (!socket.Connected)
         {
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
-                    logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
-                        "onDataSentEvent"));
-            
+                {
+                    if (!timeout && t.Status == TaskStatus.RanToCompletion)
+                        logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
+                            "onDataSentEvent");
+                });
+
             DateTime start = DateTime.Now;
             while (!connecting.IsCompleted)
             {
@@ -79,14 +83,18 @@ public class DataSender : DataNetworker
                 if (diff > timeoutSeconds * 1000)
                 {
                     logError = "Failed to connect";
+                    timeout = true;
                     break;
                 }
-                
+
                 yield return null;
             }
         }
         else
             logWarning = "Socket was already connected, so nothing happened.";
+
+        Debug.Log("remote: " + socket.RemoteEndPoint);
+        Debug.Log("local: " + socket.LocalEndPoint);
     }
     
     /// <summary>
@@ -269,4 +277,16 @@ public class DataSender : DataNetworker
     /// </summary>
     public void AddOnAckTimeoutEvent(string signature, Action<object> action) =>
         onAckTimeoutEvents.Subscribe(signature, action);
+
+    protected override bool IsDisconnected(out Socket info)
+    {
+        if (!socket.Connected)
+        {
+            info = socket;
+            return true;
+        }
+
+        info = null;
+        return false;
+    }
 }

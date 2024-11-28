@@ -97,11 +97,12 @@ public class NetworkManager : MonoBehaviour
         StartCoroutine(sender.Connect(10f));
         StartCoroutine(sender.ListenForResponse());
     }
-    
+
     void SetupListener()
     {
-        Debug.Log("Setting up listener");
+        Debug.Log("Setup Listener");
         IPAddress address = IPConnections.GetOwnIps()[0];
+        Debug.Log(address);
         DataListener dataListener = new DataListener(address, IPConnections.Port);
         StartCoroutine(dataListener.DisplayAnyDebugs(0f));
         dataListener.AddOnDataReceivedEvent("test", ListenerDataReceived);
