@@ -59,6 +59,7 @@ public class SystemTests
 
     
     [UnityTest]
+    [Timeout(100000000)]
     public IEnumerator PlayTheGameA()
     {
         // Find the New Game button and click it
@@ -218,7 +219,7 @@ public class SystemTests
         // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
-            if (c.isActive)
+            if (c.isActive && !c.isCulprit)
             {
                 GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
@@ -292,6 +293,7 @@ public class SystemTests
     /// <exception cref="Exception"> Occurs when there are no active characters in the game. (should never occur)</exception>
     // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
     [UnityTest, Order(1)]
+    [Timeout(100000000)]
     public IEnumerator SaveGame()
     {
         // Find the New Game button and click it
@@ -544,6 +546,7 @@ public class SystemTests
     /// <exception cref="Exception"> Occurs when no save file exists. </exception>
     /// // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
     [UnityTest, Order(2)]
+    [Timeout(100000000)]
     public IEnumerator LoadGame()
     {
         if (!FilePathConstants.DoesSaveFileLocationExist())
@@ -740,6 +743,7 @@ public class SystemTests
     }
 
     [UnityTest]
+    [Timeout(100000000)]
     public IEnumerator ChangeSettings()
     {
         yield return null;
