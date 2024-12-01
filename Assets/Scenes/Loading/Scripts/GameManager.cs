@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        Debug.Log("popup here!");
     }
 
     /// <summary>
