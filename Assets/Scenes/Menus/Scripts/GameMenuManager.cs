@@ -15,7 +15,7 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public async void ReturnToGame()
     {
-        // Close the GameMenu, and return to the active scene ( Dialogue or NPCSelect),
+        // Close the GameMenu, and return to the active scene (Dialogue or NPCSelect),
         // which we choose by getting the activescene. 
         // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
 
@@ -37,6 +37,8 @@ public class GameMenuManager : MonoBehaviour
             SceneController.TransitionType.Unload);
         
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
+
+        
     }
 
     /// <summary>
@@ -44,13 +46,10 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void SaveGame()
     {
-        loadingIconCanvas.enabled = true;
-        new WaitForSeconds(2);
         Save.Saver.SaveGame();
         saveButton.interactable = false;
         var saveButtonTextbox = saveButton.GetComponentInChildren<TextMeshProUGUI>();
         saveButtonTextbox.text = "Game Saved!";
-        loadingIconCanvas.enabled = false;
     }
 
     /// <summary>

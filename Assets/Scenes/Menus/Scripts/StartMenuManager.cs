@@ -16,6 +16,7 @@ public class StartMenuManager : MonoBehaviour
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
+    [SerializeField] private GameObject popUpCanvas;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
@@ -38,6 +39,9 @@ public class StartMenuManager : MonoBehaviour
         
         // Keep the copyright text on the screen in all scenes
         DontDestroyOnLoad(copyright);
+
+        // Make popup available at any point in the game
+        DontDestroyOnLoad(popUpCanvas);
         
         SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
