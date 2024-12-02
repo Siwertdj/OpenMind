@@ -71,7 +71,6 @@ public class DialogueManager : MonoBehaviour
     
         // Initialize the list of answers giving in the epilogue
         playerAnswers = new List<string>();
-        Debug.Log(Application.persistentDataPath);
         
         // Execute the starting object
         currentObject.Execute();
