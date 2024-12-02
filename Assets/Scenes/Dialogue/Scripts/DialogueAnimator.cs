@@ -110,6 +110,9 @@ public class DialogueAnimator : MonoBehaviour
             IsOutputting = true;
             currentSentence = output;
             outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
+
+            if (SettingsManager.sm.ttsEnabled)
+                SettingsManager.sm.tts.Speak(currentSentence);
         }
     }
 

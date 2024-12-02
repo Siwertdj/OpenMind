@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,19 +21,12 @@ public class GameSlider : MonoBehaviour
         //slider = GetComponent<Slider>();
         slider.onValueChanged.AddListener(UpdateSlider);
         UpdateSlider(slider.value);
-        Debug.Log($"Default: {defaultValue}, Max: {slider.maxValue}");
 
-        StartCoroutine(SetDefaultValuePos());
-    }
-
-    private IEnumerator SetDefaultValuePos()
-    {
-        yield return new WaitForEndOfFrame();
-
+        // Set the default value sample to the correct position
         var rectTransform = (RectTransform)defaultValueRef.transform.parent;
         Debug.Log($"{rectTransform.gameObject.name} is {rectTransform.rect.width}");
         defaultValueRef.localPosition = new Vector2(
-            defaultValue / (slider.maxValue + slider.minValue) * rectTransform.rect.width - rectTransform.rect.width * rectTransform.pivot.x,
+            -rectTransform.rect.width * (defaultValue / (slider.maxValue + slider.minValue)),
             defaultValueRef.localPosition.y);
     }
 

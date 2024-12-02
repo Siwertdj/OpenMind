@@ -1,6 +1,5 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
-using Codice.Client.BaseCommands.Filters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,6 +46,8 @@ public class SettingsManager : MonoBehaviour
     private void Start()
     {
         ApplySavedSettings();
+
+        tts.Speak("Hello, World!");
     }
 
     private void ApplySavedSettings()
@@ -156,18 +157,37 @@ public class SettingsManager : MonoBehaviour
         {
             case RuntimePlatform.Android: tts = new AndroidTTS(); break;
             case RuntimePlatform.IPhonePlayer: tts = new iosTTS(); break;
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
             case RuntimePlatform.WindowsPlayer: tts = new WindowsTTS(); break;
             case RuntimePlatform.WindowsEditor: tts = new WindowsTTS(); break;
+#endif
             default:
+                tts = new DisabledTTS();
                 Debug.LogWarning(
-                $"Text to speech is not supported on {Application.platform}" +
-                "There will be no text to speech."); break;
+                    $"Text to speech is not supported on {Application.platform}" +
+                    "There will be no text to speech.");
+                break;
         }
     }
-    #endregion
+#endregion
 }
 
+/// <summary>
+/// The abstract Text To Speech class.
+/// </summary>
 public abstract class TextToSpeech
 {
+    /// <summary>
+    /// Will use the specified text to speech instance to say some text.
+    /// </summary>
+    /// <param name="text">The text to be said by the TTS.</param>
     public abstract void Speak(string text);
+}
+
+public class DisabledTTS : TextToSpeech
+{
+    public override void Speak(string text)
+    {
+        Debug.Log("Attempted to speak, but text-to-speech is not supported on this device");
+    }
 }

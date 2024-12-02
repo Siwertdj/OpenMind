@@ -1,19 +1,16 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Speech.Synthesis;
+using SpeechLib;
+#endif
 
 public class WindowsTTS : TextToSpeech
 {
-    SpeechSynthesizer synthesizer;
-
-    public WindowsTTS()
-    {
-        synthesizer = new SpeechSynthesizer();
-    }
+    private SpVoice voice = new();
 
     public override void Speak(string text)
     {
-        Debug.Log("Windows speaking");
+        voice.Speak(text, SpeechVoiceSpeakFlags.SVSFlagsAsync | SpeechVoiceSpeakFlags.SVSFPurgeBeforeSpeak);
     }
 }
