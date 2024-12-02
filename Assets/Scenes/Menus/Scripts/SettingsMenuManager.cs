@@ -97,4 +97,9 @@ public class SettingsMenuManager : MonoBehaviour
     {
         SettingsManager.sm.SetTalkingSpeed(multiplier);
     }
+
+    public void SetTextToSpeech(bool isEnabled)
+    {
+        SettingsManager.sm.ttsEnabled = isEnabled;
+    }
 }

@@ -66,7 +66,6 @@ public class SettingsManager : MonoBehaviour
     public void SaveSettings()
     {
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
-        Debug.Log($"Saved value: {musicVolume}");
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
         PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
