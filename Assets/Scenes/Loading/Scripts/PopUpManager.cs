@@ -22,7 +22,9 @@ public class PopUpManager : MonoBehaviour
 
     IEnumerator IconWait()
     {
-        yield return new WaitForSeconds(guaranteeLoadDuration);
+        if (popUpCanvas.enabled)
+            yield return new WaitForSeconds(guaranteeLoadDuration);
+
 
         Debug.Log("close popup");
         popUpCanvas.enabled = false;
