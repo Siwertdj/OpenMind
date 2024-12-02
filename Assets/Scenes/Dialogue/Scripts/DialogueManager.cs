@@ -302,6 +302,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
+    /// TODO: This button should take into account other situations dialgoue may appear beside in the gameloop
     /// </summary>
     private void BacktoNPCScreen()
     {

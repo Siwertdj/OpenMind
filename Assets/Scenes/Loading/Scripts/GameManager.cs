@@ -536,29 +536,6 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    
-    /// <summary>
-    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
-    /// </summary>
-    /// <param name="character"> The character which has been chosen. </param>
-    public async void StartEpilogueDialogue(CharacterInstance character)
-    {
-        gameState = GameState.Epilogue;
-        // Get the epilogue dialogue.
-        remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
-
-        // Create the DialogueObject and corresponding children.
-        // This background displays the suspected culprit over the Dialogue-background
-        var background = CreateDialogueBackground(character, story.dialogueBackground);
-        var dialogueObject = GetEpilogueStart(background);
-        
-        // Transition to the dialogue scene.
-        await SceneController.sc.TransitionScene(
-            SceneController.SceneName.NPCSelectScene,
-            SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
-        onDialogueStart.Raise(this, dialogueObject, character);
-    }
 
     /// <summary>
     /// Method which returns the DialogueObjects that need to be used at the start of the epilogue.
