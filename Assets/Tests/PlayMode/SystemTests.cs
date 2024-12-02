@@ -217,11 +217,17 @@ public class SystemTests
             GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
             yield return new WaitForSeconds(2);
         }
-            
+        
         // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
-            if (c.isActive && hasChosenCulprit)
+            bool selectCulprit;
+            if (hasChosenCulprit)
+                selectCulprit = c.isActive && c.isCulprit;
+            else
+                selectCulprit = c.isActive && !c.isCulprit;
+            
+            if (selectCulprit)
             {
                 GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
