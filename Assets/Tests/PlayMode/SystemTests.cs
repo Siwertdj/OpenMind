@@ -57,10 +57,12 @@ public class SystemTests
             SceneController.sc.UnloadAdditiveScenes();
     }
 
+    // Input parameters for testing different inputs.
+    static bool[] bools = new bool[] { true, false };
     
     [UnityTest]
     [Timeout(100000000)]
-    public IEnumerator PlayTheGameA()
+    public IEnumerator PlayTheGameA([ValueSource(nameof(bools))] bool hasChosenCulprit)
     {
         // Find the New Game button and click it
         GameObject.Find("NewGameButton").GetComponent<Button>().onClick.Invoke();
@@ -219,7 +221,7 @@ public class SystemTests
         // Find an active character and click to choose them
         foreach (CharacterInstance c in GameManager.gm.currentCharacters)
         {
-            if (c.isActive && !c.isCulprit)
+            if (c.isActive && hasChosenCulprit)
             {
                 GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                 break;
