@@ -32,13 +32,14 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
+    public GameEvent stopLoadIcon;
 
     [NonSerialized] public        string            inputText;
     [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
-    
+
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
     /// </summary>

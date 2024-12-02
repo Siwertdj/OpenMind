@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
- 
+    public GameEvent stopLoadIcon;
 
     public bool IsPaused { get; set; } = false;
     
@@ -156,9 +156,10 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         // Start the music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+
+        
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
-        Debug.Log("popup here!");
     }
 
     /// <summary>

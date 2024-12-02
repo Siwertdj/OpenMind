@@ -12,6 +12,7 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
+    public GameObject PopUpManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
@@ -20,6 +21,7 @@ public class StartMenuManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+    public GameEvent startLoadIcon;
 
     [Header("Copyright canvas")]
     public Canvas copyright;

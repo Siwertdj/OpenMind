@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
@@ -8,8 +8,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public Canvas     loadingIconCanvas;
     public GameButton saveButton;
+    public GameEvent startLoadIcon;
     /// <summary>
     /// Closes the GameMenu-scene, and calls the UIManager.CloseMenu()-method.
     /// </summary>
@@ -59,8 +59,12 @@ public class GameMenuManager : MonoBehaviour
     {
         // Call ReturnToGame(), so the menu closes, the buttons return, and the game is unpaused.
         ReturnToGame();
+
+        startLoadIcon.Raise(this);
+
         // Load Game
         Load.Loader.LoadButtonPressed();
+
     }
 
     /// <summary>

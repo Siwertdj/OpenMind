@@ -22,6 +22,9 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private NPCSelectScroller scroller;
     [SerializeField] private TextMeshProUGUI headerText;
 
+    [Header("Events")]
+    [SerializeField] private GameEvent stopLoadIcon;
+
     private Coroutine fadeCoroutine;
 
     /// <summary>
@@ -29,6 +32,8 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        stopLoadIcon.Raise(this);
+
         SetSceneType();
         SetHeaderText();
         GenerateOptions();
