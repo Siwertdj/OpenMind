@@ -64,7 +64,6 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void ContinueGame()
     {
-        //SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
         SaveData saveData = Load.Loader.GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }

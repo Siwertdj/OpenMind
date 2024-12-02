@@ -7,13 +7,12 @@ using UnityEngine.UIElements;
 public class PopUpManager : MonoBehaviour
 {
     public Canvas popUpCanvas;
-    public bool guaranteeIcon;
+    public float guaranteeLoadDuration;
 
     public void OpenPopUp()
     {
         Debug.Log("popup");
         popUpCanvas.enabled = true;
-        
     }
 
     public void ClosePopUp()
@@ -23,9 +22,7 @@ public class PopUpManager : MonoBehaviour
 
     IEnumerator IconWait()
     {
-        if (guaranteeIcon)
-            yield return new WaitForSeconds(2);
-
+        yield return new WaitForSeconds(guaranteeLoadDuration);
 
         Debug.Log("close popup");
         popUpCanvas.enabled = false;

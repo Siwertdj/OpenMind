@@ -34,7 +34,6 @@ public class SelectionManager : MonoBehaviour
     {
         stopLoadIcon.Raise(this);
 
-        SetSceneType();
         SetHeaderText();
         GenerateOptions();
 
