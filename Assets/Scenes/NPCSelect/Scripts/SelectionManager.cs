@@ -32,6 +32,7 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        // stop loading animation (if it is playing)
         stopLoadIcon.Raise(this);
 
         SetHeaderText();

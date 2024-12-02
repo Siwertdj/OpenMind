@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
-    public GameEvent stopLoadIcon;
 
     public bool IsPaused { get; set; } = false;
     

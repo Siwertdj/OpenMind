@@ -8,8 +8,9 @@ using UnityEngine.SceneManagement;
 
 public class GameMenuManager : MonoBehaviour
 {
-    public GameButton saveButton;
-    public GameEvent startLoadIcon;
+    public GameButton saveButton; // savebutton reference to change text when clicked
+    public GameEvent startLoadIcon; // Event to raise to start loading anim
+
     /// <summary>
     /// Closes the GameMenu-scene, and calls the UIManager.CloseMenu()-method.
     /// </summary>
@@ -42,11 +43,13 @@ public class GameMenuManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Calls Save.SaveGame() to save the game.
+    /// Calls Save.SaveGame() to save the game and changes button for feedback.
     /// </summary>
     public void SaveGame()
     {
         Save.Saver.SaveGame();
+
+        // grey out save button and change text to show player game was saved
         saveButton.interactable = false;
         var saveButtonTextbox = saveButton.GetComponentInChildren<TextMeshProUGUI>();
         saveButtonTextbox.text = "Game Saved!";
@@ -60,6 +63,7 @@ public class GameMenuManager : MonoBehaviour
         // Call ReturnToGame(), so the menu closes, the buttons return, and the game is unpaused.
         ReturnToGame();
 
+        // Start loading animation
         startLoadIcon.Raise(this);
 
         // Load Game
