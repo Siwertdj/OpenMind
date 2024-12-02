@@ -11,25 +11,15 @@ using UnityEngine.UI;
 
 public class SettingsMenuManager : MonoBehaviour
 {
-    #region Audio Variables
     [Header("Audio References")]
     [SerializeField] private GameObject audioSliderGroup;
 
     private Slider musicVolumeSlider;
     private Slider sfxVolumeSlider;
 
-    private float musicVolume;
-    private float sfxVolume;
-    #endregion
-
-    #region Accessibility Variables
     [Header("Accessibility References")]
     [SerializeField] private GameSlider talkingSpeedSlider;
     [SerializeField] private Toggle textToSpeechToggle;
-
-    private float talkingSpeed;
-    private bool ttsEnabled;
-    #endregion
 
     private void Start()
     {
@@ -38,22 +28,11 @@ public class SettingsMenuManager : MonoBehaviour
         musicVolumeSlider = sliders[0];
         sfxVolumeSlider = sliders[1];
 
-        // Get the saved values
-        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
-        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
-        talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
-        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
-
-        // Apply the saved values
-        SetMusicVolume(musicVolume);
-        SetSfxVolume(sfxVolume);
-        SetTalkingSpeed(talkingSpeed);
-
         // Set the values on the UI elements
-        musicVolumeSlider.SetValueWithoutNotify(musicVolume);
-        sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
-        talkingSpeedSlider.slider.SetValueWithoutNotify(talkingSpeed);
-        textToSpeechToggle.SetIsOnWithoutNotify(ttsEnabled);
+        musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
+        sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
+        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);
+        textToSpeechToggle.SetIsOnWithoutNotify(SettingsManager.sm.ttsEnabled);
         
     }
 
@@ -63,10 +42,7 @@ public class SettingsMenuManager : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        PlayerPrefs.SetFloat(nameof(musicVolume), musicVolumeSlider.value);
-        PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolumeSlider.value);
-        PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeedSlider.slider.value);
-        PlayerPrefs.SetInt(nameof(ttsEnabled), textToSpeechToggle.isOn ? 1 : 0);
+        SettingsManager.sm.SaveSettings();
     }
 
     /// <summary>
