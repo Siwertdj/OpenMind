@@ -108,6 +108,42 @@ public class SystemTests
                 GameObject.Find("Button parent").GetComponent<Button>().onClick.Invoke();
         }
 
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // Open Notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // Close Notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
         // Number of characters in the game
         int numCharacters = GameManager.gm.story.numberOfCharacters;
         
@@ -347,6 +383,42 @@ public class SystemTests
             if (GameObject.Find("Button parent") != null)
                 GameObject.Find("Button parent").GetComponent<Button>().onClick.Invoke();
         }
+        
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // Open Notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
+        
+        // Close Notebook
+        GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
+        
+        // Skip the tutorial
+        while (GameObject.Find("ContinueButton") != null)
+        {
+            GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+            
+            yield return new WaitForSeconds(1);
+        }
+        
+        yield return new WaitForSeconds(1);
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
 

@@ -1034,7 +1034,7 @@ GameObject:
   - component: {fileID: 1471520193}
   - component: {fileID: 1471520192}
   m_Layer: 0
-  m_Name: ContinueButton
+  m_Name: ContinueButtonSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
