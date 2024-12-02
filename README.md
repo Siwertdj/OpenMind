@@ -7,6 +7,9 @@ During the game the player meets multiple characters and learns about these char
 The goal of the game is to teach students perspective-taking skills. This goal is achieved by implementing the game in an educational setting. 
 Moreover, by using role play and cooperative game mechanics, development of these skills is encouraged. 
 
+**Documentation**
+
+Click [Here](https://siwertdj.github.io/OpenMind/) to read the full documentation.
 
 **Project Description**
 
@@ -56,5 +59,15 @@ The project is made using Unity version 2022.3.45f1. To install and edit the pro
 Leanne (Artist)
 
 Xerabi (Artist)
+
+
+**Architecture**
+
+Scene Flow Diagram
+![SceneFlow Diagram](Resources/SceneFlowDiagram.png)
+
+
+System Architecture
+![System Architecture](Resources/SystemArchitecture.png)
 
 
