@@ -997,6 +997,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliderGroup: {fileID: 596109509}
   buttonGroup: {fileID: 1597976972}
+  onTextSizeChanged: {fileID: 11400000, guid: 404147e3a52ffa84ebc0b32e87811b17, type: 2}
 --- !u!1 &222811921
 GameObject:
   m_ObjectHideFlags: 0

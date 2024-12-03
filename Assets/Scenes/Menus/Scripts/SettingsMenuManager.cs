@@ -22,6 +22,8 @@ public class SettingsMenuManager : MonoBehaviour
     
     // Chosen text size
     private SettingsManager.TextSize size;
+
+    [SerializeField] GameEvent onTextSizeChanged; 
     
     void Awake()
     {
@@ -60,7 +62,6 @@ public class SettingsMenuManager : MonoBehaviour
     /// </summary>
     public void ExitSettings()
     {
-        SettingsManager.sm.textSize = size;
         // If a scenecontroller exists, we exit the settings using the transition-graph.
         if (SceneController.sc != null)
         {
@@ -115,15 +116,23 @@ public class SettingsMenuManager : MonoBehaviour
     public void SetActiveSize(GameButton button)
     {
         GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
+        
         // Set all buttons (excluding return button) to the color white.
         for (int i = 0; i < children.Length - 1; i++)
         {
             children[i].GetComponent<Image>().color = Color.white;
         }
+        
         // Set the chosen size to a green color.
         activeButton = button;
+        SetActiveButton(button);
         size = GetTextSize(button);
-        button.GetComponent<Image>().color = Color.green;
+        
+        // Change the textSize from SettingsManager
+        SettingsManager.sm.textSize = size;
+        
+        // Raise the onTextSizeChanged event to change the text size
+        onTextSizeChanged.Raise(null, SettingsManager.sm.GetFontSize());
     }
     
     /// <summary>
@@ -134,7 +143,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         button.GetComponent<Image>().color = Color.green;
     }
-    
     
     /// <summary>
     /// Get the GameButton corresponding to the TextSize

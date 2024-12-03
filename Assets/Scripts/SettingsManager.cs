@@ -18,6 +18,7 @@ public class SettingsManager : MonoBehaviour
     
     private AudioSource musicSource;
     
+    // Text size to be used for the text components
     public TextSize textSize;
     
     public enum TextSize
@@ -33,13 +34,34 @@ public class SettingsManager : MonoBehaviour
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
-        textSize = TextSize.Medium;
         DontDestroyOnLoad(this.gameObject);
+        
+        // Set the default textSize to medium.
+        textSize = TextSize.Medium;
         
         // Set reference to music-audiosource by component
         musicSource = GetComponents<AudioSource>()[0];
     }
+    
+    #region TextSize
 
+    /// <summary>
+    /// Get the fontSize of the dialogue text.
+    /// </summary>
+    public int GetFontSize()
+    {
+        switch (textSize)
+        {
+            case TextSize.Small:
+                return 20;
+            case TextSize.Medium:
+                return 40;
+            default:
+                return 60;
+        }
+    }
+
+    #endregion
 
     #region Audio
     /// <summary>
