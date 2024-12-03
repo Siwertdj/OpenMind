@@ -21,9 +21,11 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
     [SerializeField] private bool audioEnabled = true;
+    [SerializeField] private float inputDelay = 0.5f; // Time in seconds between accepted inputs
 
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
+    private float recentInputTime;
 
     /// <summary>
     /// Is there dialogue currently on the screen?
@@ -124,22 +126,29 @@ public class DialogueAnimator : MonoBehaviour
         if (!InDialogue)
             return;
 
-        if (IsOutputting)
+        // Check if enough time has passed since previous skip dialogue
+        if (Time.time - recentInputTime > inputDelay)
         {
-            // Write full sentence and then stop writing
-            IsOutputting = false;
-            StopCoroutine(outputCoroutine);
-            text.text = currentSentence;
-            dialogueIndex++;
+            if (IsOutputting)
+            {
+                // Write full sentence and then stop writing
+                IsOutputting = false;
+                StopCoroutine(outputCoroutine);
+                text.text = currentSentence;
+                dialogueIndex++;
+            }
+            else if (dialogueIndex < currentDialogue.Count)
+            {
+                WriteSentence(currentDialogue[dialogueIndex]);
+            }
+            else
+            {
+                EndDialogue();
+            }
+
+            recentInputTime = Time.time;
         }
-        else if (dialogueIndex < currentDialogue.Count)
-        {
-            WriteSentence(currentDialogue[dialogueIndex]);
-        }
-        else
-        {
-            EndDialogue();
-        }
+        
     }
 
     /// <summary>
