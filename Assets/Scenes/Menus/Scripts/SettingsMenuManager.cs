@@ -78,7 +78,7 @@ public class SettingsMenuManager : MonoBehaviour
         {
             // '_ =' throws away the await
             _ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
-                SceneController.SceneName.GameMenuScene,
+                SceneController.SceneName.Loading,
                 SceneController.TransitionType.Unload);
         }
         // otherwise, we use the built-in SceneManager to unload.

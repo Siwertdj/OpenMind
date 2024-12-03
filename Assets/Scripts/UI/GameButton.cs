@@ -26,6 +26,6 @@ public class GameButton : Button
     
     private void RaiseEvent()
     { 
-        gameEvent.Raise(this);
+        //gameEvent.Raise(this);
     }
 }

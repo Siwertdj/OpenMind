@@ -9,7 +9,6 @@ using UnityEngine.Events;
 public class NPCSelectScroller : MonoBehaviour
 {
     private Transform scrollable;
-    private Transform[] children;
 
     private bool isNavigating = false;
     private Coroutine scrollCoroutine;
@@ -26,6 +25,11 @@ public class NPCSelectScroller : MonoBehaviour
     public CharacterInstance SelectedCharacter { get; private set; }
 
     /// <summary>
+    /// The transforms of all the characterspace children
+    /// </summary>
+    public Transform[] Children { get; private set; }
+
+    /// <summary>
     /// How long should one navigation cycle take?
     /// </summary>
     public float scrollDuration;
@@ -40,24 +44,24 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     [NonSerialized] public UnityEvent NoCharacterSelected = new();
 
-    private int _selectedChild;
-    private int selectedChild
+    private int selectedChild;
+    public int SelectedChild
     {
-        get { return _selectedChild; }
-        set
+        get { return selectedChild; }
+        private set
         {
             // Make sure the target value is not too big or small
-            _selectedChild = Mathf.Clamp(value, 0, children.Length - 1);
+            selectedChild = Mathf.Clamp(value, 0, Children.Length - 1);
 
             // Set selected character
-            SelectedCharacter = children[_selectedChild].GetComponentInChildren<SelectOption>().character;
+            SelectedCharacter = Children[selectedChild].GetComponentInChildren<SelectOption>().character;
 
             // Remove button if the child is on either edge
-            if (_selectedChild == 0)
+            if (selectedChild == 0)
             {
                 navButtonLeft.SetActive(false);
             }
-            else if (_selectedChild == children.Length - 1)
+            else if (selectedChild == Children.Length - 1)
                 navButtonRight.SetActive(false);
             else
             {
@@ -67,7 +71,7 @@ public class NPCSelectScroller : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         // Add swipe listeners
         swipeDetector = GetComponent<SwipeDetector>();
@@ -90,14 +94,19 @@ public class NPCSelectScroller : MonoBehaviour
 
         // Get reference to scroll background
         scrollable = transform.GetChild(0);
+        var layout = scrollable.GetChild(0);
 
         // Populate list of children
-        children = new Transform[GameManager.gm.currentCharacters.Count];
-        for (int i = 0; i < children.Length; i++)
-            children[i] = scrollable.GetChild(i);
+        Children = new Transform[GameManager.gm.currentCharacters.Count];
+        for (int i = 0; i < Children.Length; i++)
+            Children[i] = layout.GetChild(i);
+    }
 
-        selectedChild = children.Length / 2;
-        StartCoroutine(InstantNavigate(selectedChild));
+    private void Start()
+    {
+        // Set the initially selected child
+        SelectedChild = Children.Length / 2;
+        StartCoroutine(InstantNavigate(SelectedChild));
     }
 
     /// <summary>
@@ -105,10 +114,10 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public void NavigateLeft()
     {
-        if (selectedChild > 0)
+        if (SelectedChild > 0)
         {
-            selectedChild -= 1;
-            NavigateToChild(selectedChild);
+            SelectedChild -= 1;
+            NavigateToChild(SelectedChild);
         }
     }
 
@@ -117,10 +126,10 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public void NavigateRight()
     {
-        if (selectedChild < children.Length - 1)
+        if (SelectedChild < Children.Length - 1)
         {
-            selectedChild += 1;
-            NavigateToChild(selectedChild);
+            SelectedChild += 1;
+            NavigateToChild(SelectedChild);
         }
     }
 
@@ -143,7 +152,9 @@ public class NPCSelectScroller : MonoBehaviour
     /// <param name="childIndex">The index of the child to navigate to.</param>
     private IEnumerator InstantNavigate(int childIndex)
     {
+        // Wait until the parent objects are scaled properly
         yield return new WaitForEndOfFrame();
+
         scrollable.localPosition = GetTargetPos(childIndex);
         OnCharacterSelected.Invoke();
     }
@@ -165,7 +176,7 @@ public class NPCSelectScroller : MonoBehaviour
         // This loop containts the actual movement code
         while (time < scrollDuration)
         {
-            time += Time.deltaTime;
+            time += Time.unscaledDeltaTime;
 
             // Mathf.SmoothStep makes the "animation" ease in and out
             float t = Mathf.SmoothStep(0, 1, Mathf.Clamp01(time / scrollDuration));
@@ -175,7 +186,7 @@ public class NPCSelectScroller : MonoBehaviour
 
             yield return null;
         }
-
+        
         OnCharacterSelected.Invoke();
         isNavigating = false;
     }
@@ -188,7 +199,7 @@ public class NPCSelectScroller : MonoBehaviour
     private Vector3 GetTargetPos(int childIndex)
     {
         return new Vector2(
-            -children[childIndex].localPosition.x,
+            -Children[childIndex].localPosition.x,
             scrollable.localPosition.y);
     }
 
@@ -198,14 +209,22 @@ public class NPCSelectScroller : MonoBehaviour
 
     public Transform[] Test_Children 
     { 
-        get { return children; } 
+        get { return Children; } 
     }
 
     public int Test_SelectedChild
     {
-        get { return selectedChild; }
-        set { selectedChild = value; }
+        get { return SelectedChild; }
+        set { SelectedChild = value; }
     }
+
+    public float Test_ScrollDuration 
+    { 
+        get { return scrollDuration; }
+        set { scrollDuration = value; }
+    }
+
+    public void Test_NavigateToChild(int childIndex) => NavigateToChild(childIndex);
 #endif
     #endregion
 }

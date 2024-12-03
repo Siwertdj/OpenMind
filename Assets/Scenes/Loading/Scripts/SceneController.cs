@@ -31,7 +31,8 @@ public class SceneController : MonoBehaviour
         GameMenuScene,
         SettingsScene,
         GameLossScene,
-        GameWinScene
+        GameWinScene,
+        TutorialScene
     }
 
     /// <summary>
@@ -312,6 +313,20 @@ public class SceneController : MonoBehaviour
         string currentScene = start.ToString();
         SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
     }
+
+    public SceneName? FindLoadedSceneOfSelection(params SceneName[] scenes)
+    {
+        foreach (SceneName sceneName in scenes)
+        {
+            Scene scene = SceneManager.GetSceneByName(sceneName.ToString());
+            if (scene.isLoaded)
+            {
+                return sceneName;
+            }
+        }
+
+        return null;
+    }
     
     /// <summary>
     /// Function to load the notebook.
@@ -320,20 +335,41 @@ public class SceneController : MonoBehaviour
     public void ToggleNotebookScene(Button button)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
-
-        // If notebook is already open, close it
-        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-        {
-            GameManager.gm.IsPaused = false;
-            crossOverlay.SetActive(false);
-            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading, TransitionType.Unload);
-        }
-        else
-        {
-            GameManager.gm.IsPaused = true;
-            crossOverlay.SetActive(true);
-            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene, TransitionType.Additive);
-        }
+        
+            // If notebook is already open, close it
+            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+            {
+                GameManager.gm.IsPaused = false;
+                crossOverlay.SetActive(false);
+                _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
+                    TransitionType.Unload);
+            }
+            else // Notebook is NOT loaded.. so open it
+            {
+                GameManager.gm.IsPaused = true;
+                crossOverlay.SetActive(true);
+                _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
+                    TransitionType.Additive);
+            }
+    }
+    
+    /// <summary>
+    /// Function to load the tutorial.
+    /// </summary>
+    // this method is not tested
+    public void ToggleTutorialScene(Button button)
+    { 
+       // If tutorial is already open, close it
+       if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
+       {
+           GameManager.gm.IsPaused = false;
+           _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
+       }
+       else
+       {
+           GameManager.gm.IsPaused = true;
+           _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
+       }
     }
 
     /// <summary>
