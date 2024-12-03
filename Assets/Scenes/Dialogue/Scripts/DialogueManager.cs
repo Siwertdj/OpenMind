@@ -310,6 +310,9 @@ public class DialogueManager : MonoBehaviour
             Destroy(buttons[i]);
     }
 
+
+    #region TextSize
+
     /// <summary>
     /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
     /// </summary>
@@ -343,6 +346,8 @@ public class DialogueManager : MonoBehaviour
         characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
         animator.ChangeTextSize(fontSize);
     }
+
+    #endregion
     
     /// <summary>
     /// Gets the text for the buttons that prompt specific questions.

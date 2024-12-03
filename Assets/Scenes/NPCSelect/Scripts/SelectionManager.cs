@@ -44,6 +44,8 @@ public class SelectionManager : MonoBehaviour
         scroller.scrollDuration = scrollDuration;
     }
     
+    #region TextSize
+
     /// <summary>
     /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
     /// </summary>
@@ -73,6 +75,8 @@ public class SelectionManager : MonoBehaviour
         // Change the fontSize of the headerText
         headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
     }
+
+    #endregion
     
     /// <summary>
     /// Set the selectionType variable.
