@@ -128,13 +128,14 @@ public class SettingsMenuManager : MonoBehaviour
     {
         GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
         
-        // Set all buttons (excluding return button) to the color white.
+        // Set all buttons (excluding return button) to the color white and disable all arrows.
         for (int i = 0; i < children.Length - 1; i++)
         {
             children[i].GetComponent<Image>().color = Color.white;
+            children[i].transform.GetChild(1).gameObject.SetActive(false);
         }
         
-        // Set the chosen size to a green color.
+        // Set the chosen size to a green color and enable the arrow.
         activeButton = button;
         SetActiveButton(button);
         size = GetTextSize(button);
@@ -155,7 +156,10 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="button"></param>
     private void SetActiveButton(GameButton button)
     {
+        // Set the chosen size to a green color
         button.GetComponent<Image>().color = Color.green;
+        // Enable the arrow
+        button.transform.GetChild(1).gameObject.SetActive(true);
     }
     
     /// <summary>
