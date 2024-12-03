@@ -49,7 +49,7 @@ public class DialogueAnimator : MonoBehaviour
         if (text == null)
             return;
         text.enableAutoSizing = false;
-        ChangeFontSize(SettingsManager.sm.GetFontSize());
+        ChangeTextSize(SettingsManager.sm.GetFontSize());
         audioSource = GetComponent<AudioSource>();
     }
     
@@ -57,7 +57,7 @@ public class DialogueAnimator : MonoBehaviour
     /// Change the fontSize of the text
     /// </summary>
     /// <param name="fontSize"></param>
-    public void ChangeFontSize(int fontSize)
+    public void ChangeTextSize(int fontSize)
     {
         // Set the fontSize.
         text.fontSize = fontSize;

@@ -30,14 +30,50 @@ public class SelectionManager : MonoBehaviour
     private void Start()
     {
         SetSceneType();
+        
+        // Change the text size
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+        
         SetHeaderText();
         GenerateOptions();
-
+        
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
         scroller.scrollDuration = scrollDuration;
     }
-
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data"></param>
+    public void OnChangedTextSize(Component sender, params object[] data)
+    {
+        // Set the fontSize.
+        if (data[0] is int fontSize)
+        {
+            // Change the fontSize of the confirmSelectionButton
+            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            // Change the fontSize of the headerText
+            headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        }
+    }
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components
+    /// </summary>
+    public void ChangeTextSize()
+    {
+        int fontSize = SettingsManager.sm.GetFontSize();
+        // Change the fontSize of the confirmSelectionButton
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        
+        // Change the fontSize of the headerText
+        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+    }
+    
     /// <summary>
     /// Set the selectionType variable.
     /// If the number of characters has reached the minimum amount, and the player has no more questions left,
