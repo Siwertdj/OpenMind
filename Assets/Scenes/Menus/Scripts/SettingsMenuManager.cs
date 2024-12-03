@@ -2,6 +2,7 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEditor;
 using UnityEngine.Audio;
 using UnityEngine;
@@ -23,6 +24,11 @@ public class SettingsMenuManager : MonoBehaviour
     // Chosen text size
     private SettingsManager.TextSize size;
 
+    // Example tmp_text objects
+    [SerializeField] private TMP_Text characterNameField;
+    [SerializeField] private TMP_Text dialogueBox;
+    
+    // Events
     [SerializeField] GameEvent onTextSizeChanged; 
     
     void Awake()
@@ -31,6 +37,11 @@ public class SettingsMenuManager : MonoBehaviour
         size = SettingsManager.sm.textSize;
         activeButton = GetButton(SettingsManager.sm.textSize);
         SetActiveButton(activeButton);
+        
+        // Change the text size
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
     }
 
     /// <summary>
@@ -131,6 +142,9 @@ public class SettingsMenuManager : MonoBehaviour
         // Change the textSize from SettingsManager
         SettingsManager.sm.textSize = size;
         
+        // Change the fontSize of the example
+        ChangeTextSize();
+        
         // Raise the onTextSizeChanged event to change the text size
         onTextSizeChanged.Raise(null, SettingsManager.sm.GetFontSize());
     }
@@ -142,6 +156,19 @@ public class SettingsMenuManager : MonoBehaviour
     private void SetActiveButton(GameButton button)
     {
         button.GetComponent<Image>().color = Color.green;
+    }
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components
+    /// </summary>
+    private void ChangeTextSize()
+    {
+        int fontSize = SettingsManager.sm.GetFontSize();
+        // Change the fontSize of the confirmSelectionButton
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        
+        // Change the fontSize of the headerText
+        dialogueBox.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
     }
     
     /// <summary>
