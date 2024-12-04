@@ -13,6 +13,7 @@ var searchData=
   ['playtutorialtest_10',['PlayTutorialTest',['../classTutorialManagerPlayTest.html#ab1bb7a5e62c52f301a6b599310c8c6ae',1,'TutorialManagerPlayTest']]],
   ['populatecharacters_11',['PopulateCharacters',['../classGameManager.html#ad29c230fddbac5e5008cac3fb9eaa93c',1,'GameManager']]],
   ['populatecharacterstest_12',['PopulateCharactersTest',['../classGameManagerPlayTest.html#abb8c7381c8a07dc71afd3169507b2f49',1,'GameManagerPlayTest']]],
-  ['prologuetest_13',['PrologueTest',['../classStartScreenPlayTest.html#a40d7240f03060a0b52f42c3471c49eb3',1,'StartScreenPlayTest']]],
-  ['promptbuttonstest_14',['PromptButtonsTest',['../classDialogueManagerPlayTest.html#a3cb13d03bc44e8144749e218134eccdc',1,'DialogueManagerPlayTest']]]
+  ['popupmanager_13',['PopUpManager',['../classPopUpManager.html',1,'']]],
+  ['prologuetest_14',['PrologueTest',['../classStartScreenPlayTest.html#a40d7240f03060a0b52f42c3471c49eb3',1,'StartScreenPlayTest']]],
+  ['promptbuttonstest_15',['PromptButtonsTest',['../classDialogueManagerPlayTest.html#a3cb13d03bc44e8144749e218134eccdc',1,'DialogueManagerPlayTest']]]
 ];

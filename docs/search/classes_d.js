@@ -1,11 +1,22 @@
 var searchData=
 [
-  ['terminatedialogueobject_0',['TerminateDialogueObject',['../classTerminateDialogueObject.html',1,'']]],
-  ['testsetupeditmode_1',['TestSetupEditMode',['../classTestSetupEditMode.html',1,'']]],
-  ['testsetupplaymode_2',['TestSetupPlayMode',['../classTestSetupPlayMode.html',1,'']]],
-  ['timelinemanager_3',['TimelineManager',['../classTimelineManager.html',1,'']]],
-  ['timelinemanagerplaytest_4',['TimelineManagerPlayTest',['../classTimelineManagerPlayTest.html',1,'']]],
-  ['transitionanimator_5',['TransitionAnimator',['../classTransitionAnimator.html',1,'']]],
-  ['tutorialmanager_6',['TutorialManager',['../classTutorialManager.html',1,'']]],
-  ['tutorialmanagerplaytest_7',['TutorialManagerPlayTest',['../classTutorialManagerPlayTest.html',1,'']]]
+  ['save_0',['Save',['../classSave.html',1,'']]],
+  ['savedata_1',['SaveData',['../classSaveData.html',1,'']]],
+  ['savingloadingtestfilepaths_2',['SavingLoadingTestFilePaths',['../classSavingLoadingTestFilePaths.html',1,'']]],
+  ['savingloadingtestvaluereadandwrite_3',['SavingLoadingTestValueReadAndWrite',['../classSavingLoadingTestValueReadAndWrite.html',1,'']]],
+  ['scenecontroller_4',['SceneController',['../classSceneController.html',1,'']]],
+  ['scenecontrollertests_5',['SceneControllerTests',['../classSceneControllerTests.html',1,'']]],
+  ['selectionmanager_6',['SelectionManager',['../classSelectionManager.html',1,'']]],
+  ['selectoption_7',['SelectOption',['../classSelectOption.html',1,'']]],
+  ['settingsedittest_8',['SettingsEditTest',['../classSettingsEditTest.html',1,'']]],
+  ['settingsmanager_9',['SettingsManager',['../classSettingsManager.html',1,'']]],
+  ['settingsmenumanager_10',['SettingsMenuManager',['../classSettingsMenuManager.html',1,'']]],
+  ['speakingobject_11',['SpeakingObject',['../classSpeakingObject.html',1,'']]],
+  ['startmenumanager_12',['StartMenuManager',['../classStartMenuManager.html',1,'']]],
+  ['startscreenplaytest_13',['StartScreenPlayTest',['../classStartScreenPlayTest.html',1,'']]],
+  ['startscreentest_14',['StartScreenTest',['../classStartScreenTest.html',1,'']]],
+  ['storyobject_15',['StoryObject',['../classStoryObject.html',1,'']]],
+  ['storyselectionmanager_16',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
+  ['storyselectionmanagerplaytest_17',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
+  ['swipedetector_18',['SwipeDetector',['../classSwipeDetector.html',1,'']]]
 ];

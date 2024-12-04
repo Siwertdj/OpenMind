@@ -13,7 +13,8 @@ var searchData=
   ['openmenu_10',['OpenMenu',['../classUIManager.html#a78494fd17bf0cc867abab837f1f78d1d',1,'UIManager']]],
   ['openpersonalnotes_11',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
   ['openpersonalnotestest_12',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
-  ['openresponseobject_13',['OpenResponseObject',['../classOpenResponseObject.html#a0f8265059932c25047bb3765d35eb3cc',1,'OpenResponseObject']]],
-  ['opensettings_14',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
-  ['openskipprologueprompt_15',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]]
+  ['openpopup_13',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
+  ['openresponseobject_14',['OpenResponseObject',['../classOpenResponseObject.html#a0f8265059932c25047bb3765d35eb3cc',1,'OpenResponseObject']]],
+  ['opensettings_15',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
+  ['openskipprologueprompt_16',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]]
 ];

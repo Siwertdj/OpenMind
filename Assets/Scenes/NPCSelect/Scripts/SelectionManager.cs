@@ -23,6 +23,9 @@ public class SelectionManager : MonoBehaviour
     [SerializeField] private NPCSelectScroller scroller;
     [SerializeField] private TextMeshProUGUI headerText;
 
+    [Header("Events")]
+    [SerializeField] private GameEvent stopLoadIcon;
+
     private Coroutine fadeCoroutine;
 
     private Transform scrollable;
@@ -33,6 +36,9 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        // stop loading animation (if it is playing)
+        stopLoadIcon.Raise(this);
+
         scrollable = scroller.transform.GetChild(0);
         layout = scrollable.GetChild(0);
 
