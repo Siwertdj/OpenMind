@@ -21,7 +21,7 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
     [SerializeField] private bool audioEnabled = true;
-    [SerializeField] private float inputDelay = 0.5f; // Time in seconds between accepted inputs
+    [SerializeField] public float inputDelay = 0.5f; // Time in seconds between accepted inputs
 
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
