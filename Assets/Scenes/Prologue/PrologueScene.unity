@@ -564,6 +564,7 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 0
+  overrideDefaultSpeed: 0
 --- !u!1 &546638289
 GameObject:
   m_ObjectHideFlags: 0

@@ -941,6 +941,7 @@ MonoBehaviour:
   delayInSeconds: 0.05
   delayAfterSentence: 1
   audioEnabled: 1
+  overrideDefaultSpeed: 0
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1113,6 +1114,9 @@ MonoBehaviour:
   characterNameField: {fileID: 1457778585}
   buttonPrefab: {fileID: 8759125814851348667, guid: 93c941f2b4f62754c85de6288266973e, type: 3}
   onEndDialogue: {fileID: 11400000, guid: 6b7362dc0caed36479c10cec7b2f5792, type: 2}
+  onEpilogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1061845840
 Transform:
   m_ObjectHideFlags: 0
