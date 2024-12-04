@@ -22,13 +22,12 @@ var searchData=
   ['continuegame_19',['ContinueGame',['../classStartMenuManager.html#a90cb33482dfc0185ad9b238f9a3f779f',1,'StartMenuManager']]],
   ['continuetalking_20',['ContinueTalking',['../classDialogueManager.html#a2ce173f6c3ce12c042d519611c133580',1,'DialogueManager']]],
   ['continuetimeline_21',['ContinueTimeline',['../classCutsceneController.html#aaa3b7c765271afae505d43754e0491cb',1,'CutsceneController']]],
-  ['correctslidervalues_22',['CorrectSliderValues',['../classSettingsMenuManager.html#a85481e337c60ddbdbb249138f1b48505',1,'SettingsMenuManager']]],
-  ['createbackbutton_23',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],
-  ['createcontinuebutton_24',['CreateContinueButton',['../classDialogueManager.html#a05c8f1b313240a670d3198a5c511b5b5',1,'DialogueManager']]],
-  ['createdialoguebackground_25',['CreateDialogueBackground',['../classGameManager.html#acae2a408422aad42da5ef4648b7a62d1',1,'GameManager']]],
-  ['createopenquestion_26',['CreateOpenQuestion',['../classDialogueManager.html#adfad4704a99f9f0b386df1f65630ed19',1,'DialogueManager']]],
-  ['createsavedata_27',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['culpritselectepiloguetransition_28',['CulpritSelectEpilogueTransition',['../classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563',1,'GameManagerPlayTest']]],
-  ['culpritselecttoepiloguegamestatetest_29',['CulpritSelectToEpilogueGameStateTest',['../classGameManagerPlayTest.html#a4bf2a061576d4b445973e7c233751566',1,'GameManagerPlayTest']]],
-  ['cycletransition_30',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
+  ['createbackbutton_22',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],
+  ['createcontinuebutton_23',['CreateContinueButton',['../classDialogueManager.html#a05c8f1b313240a670d3198a5c511b5b5',1,'DialogueManager']]],
+  ['createdialoguebackground_24',['CreateDialogueBackground',['../classGameManager.html#acae2a408422aad42da5ef4648b7a62d1',1,'GameManager']]],
+  ['createopenquestion_25',['CreateOpenQuestion',['../classDialogueManager.html#adfad4704a99f9f0b386df1f65630ed19',1,'DialogueManager']]],
+  ['createsavedata_26',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['culpritselectepiloguetransition_27',['CulpritSelectEpilogueTransition',['../classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563',1,'GameManagerPlayTest']]],
+  ['culpritselecttoepiloguegamestatetest_28',['CulpritSelectToEpilogueGameStateTest',['../classGameManagerPlayTest.html#a4bf2a061576d4b445973e7c233751566',1,'GameManagerPlayTest']]],
+  ['cycletransition_29',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
 ];

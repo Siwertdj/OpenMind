@@ -74,6 +74,7 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classSettingsManager-members.html">List of all members</a>  </div>
@@ -89,6 +90,9 @@ Inheritance diagram for SettingsManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aecdc1547311f1bf10c23037743f10aaf"><td class="memItemLeft" align="right" valign="top"><a id="aecdc1547311f1bf10c23037743f10aaf" name="aecdc1547311f1bf10c23037743f10aaf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SaveSettings</b> ()</td></tr>
+<tr class="separator:aecdc1547311f1bf10c23037743f10aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12a365111f36edf0424015041786eee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsManager.html#a12a365111f36edf0424015041786eee6">SetMasterVolume</a> (float volume)</td></tr>
 <tr class="memdesc:a12a365111f36edf0424015041786eee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called through <a class="el" href="classSettingsMenuManager.html">SettingsMenuManager</a> to set the volume of the Master-channel of the Audiomixer.  <br /></td></tr>
 <tr class="separator:a12a365111f36edf0424015041786eee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -102,12 +106,27 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SwitchMusic</b> (AudioClip newClip, float? fadeTime)</td></tr>
 <tr class="memdesc:aa0c07173daa0726657e0b831fc41f802"><td class="mdescLeft">&#160;</td><td class="mdescRight">this method should fade-out the previous track, then fade-in the new track <br /></td></tr>
 <tr class="separator:aa0c07173daa0726657e0b831fc41f802"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c8bbea7e4900d63f15794807f3c86a"><td class="memItemLeft" align="right" valign="top"><a id="a07c8bbea7e4900d63f15794807f3c86a" name="a07c8bbea7e4900d63f15794807f3c86a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTalkingSpeed</b> (float multiplier)</td></tr>
+<tr class="separator:a07c8bbea7e4900d63f15794807f3c86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a0ecafb8e1a3063786beb613762c80c75"><td class="memItemLeft" align="right" valign="top"><a id="a0ecafb8e1a3063786beb613762c80c75" name="a0ecafb8e1a3063786beb613762c80c75"></a>
 AudioMixer&#160;</td><td class="memItemRight" valign="bottom"><b>audioMixer</b></td></tr>
 <tr class="separator:a0ecafb8e1a3063786beb613762c80c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8267f15f424ede8a57cd8beb7830e947"><td class="memItemLeft" align="right" valign="top"><a id="a8267f15f424ede8a57cd8beb7830e947" name="a8267f15f424ede8a57cd8beb7830e947"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>musicVolume</b> = 0</td></tr>
+<tr class="separator:a8267f15f424ede8a57cd8beb7830e947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad33c266b3c82624ef0828fae3a78fb1a"><td class="memItemLeft" align="right" valign="top"><a id="ad33c266b3c82624ef0828fae3a78fb1a" name="ad33c266b3c82624ef0828fae3a78fb1a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>sfxVolume</b> = 0</td></tr>
+<tr class="separator:ad33c266b3c82624ef0828fae3a78fb1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2605ec3812115d22411496753e953d0"><td class="memItemLeft" align="right" valign="top"><a id="aa2605ec3812115d22411496753e953d0" name="aa2605ec3812115d22411496753e953d0"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>talkingSpeed</b> = 1</td></tr>
+<tr class="separator:aa2605ec3812115d22411496753e953d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d6a65a1a2614701e58c1c06d4e81f3d"><td class="memItemLeft" align="right" valign="top"><a id="a6d6a65a1a2614701e58c1c06d4e81f3d" name="a6d6a65a1a2614701e58c1c06d4e81f3d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>ttsEnabled</b> = false</td></tr>
+<tr class="separator:a6d6a65a1a2614701e58c1c06d4e81f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -115,11 +134,23 @@ Static Public Attributes</h2></td></tr>
 static <a class="el" href="classSettingsManager.html">SettingsManager</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sm</b></td></tr>
 <tr class="separator:ace5ec38e89ca47be1b13a1577fc35c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memItemLeft" align="right" valign="top"><a id="ac026b1a753f14d28ac4d4a96759b4bca" name="ac026b1a753f14d28ac4d4a96759b4bca"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>TalkingDelay</b><code> [get, private set]</code></td></tr>
+<tr class="separator:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a37d3f3368bbd54fbad960cf531b59eaf"><td class="memItemLeft" align="right" valign="top"><a id="a37d3f3368bbd54fbad960cf531b59eaf" name="a37d3f3368bbd54fbad960cf531b59eaf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
 <tr class="separator:a37d3f3368bbd54fbad960cf531b59eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4723633cf92b5efcbfdf4cea23786805"><td class="memItemLeft" align="right" valign="top"><a id="a4723633cf92b5efcbfdf4cea23786805" name="a4723633cf92b5efcbfdf4cea23786805"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
+<tr class="separator:a4723633cf92b5efcbfdf4cea23786805"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92e3194ad40c157b73775c22221d591e"><td class="memItemLeft" align="right" valign="top"><a id="a92e3194ad40c157b73775c22221d591e" name="a92e3194ad40c157b73775c22221d591e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ApplySavedSettings</b> ()</td></tr>
+<tr class="separator:a92e3194ad40c157b73775c22221d591e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa65144c4be7c744b43560487925f556d"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsManager.html#aa65144c4be7c744b43560487925f556d">FadeOutMusic</a> (AudioClip newClip, float fadeTime)</td></tr>
 <tr class="memdesc:aa65144c4be7c744b43560487925f556d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fades out currently playing Audioclip, then fades in Audioclip passed as argument. Speed of fade depends on fadetime.  <br /></td></tr>
 <tr class="separator:aa65144c4be7c744b43560487925f556d"><td class="memSeparator" colspan="2">&#160;</td></tr>
