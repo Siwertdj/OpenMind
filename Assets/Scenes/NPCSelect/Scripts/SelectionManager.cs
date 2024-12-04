@@ -36,6 +36,13 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        SetSceneType();
+        
+        // Change the text size
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+        
         // stop loading animation (if it is playing)
         stopLoadIcon.Raise(this);
 
@@ -44,10 +51,57 @@ public class SelectionManager : MonoBehaviour
 
         SetHeaderText();
         GenerateOptions();
-
+        
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
         scroller.scrollDuration = scrollDuration;
+    }
+    
+    #region TextSize
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data"></param>
+    // TODO: could be made private.
+    public void OnChangedTextSize(Component sender, params object[] data)
+    {
+        // Set the fontSize.
+        if (data[0] is int fontSize)
+        {
+            // Change the fontSize of the confirmSelectionButton
+            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            // Change the fontSize of the headerText
+            headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        }
+    }
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components
+    /// </summary>
+    // TODO: could be made private.
+    public void ChangeTextSize()
+    {
+        int fontSize = SettingsManager.sm.GetFontSize();
+        // Change the fontSize of the confirmSelectionButton
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        
+        // Change the fontSize of the headerText
+        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+    }
+
+    #endregion
+    
+    /// <summary>
+    /// Set the selectionType variable.
+    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
+    /// set the selectionType variable to decidecriminal.
+    /// </summary>
+    private void SetSceneType()
+    {
+        if (!GameManager.gm.EnoughCharactersRemaining())
+            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
     }
 
     /// <summary>

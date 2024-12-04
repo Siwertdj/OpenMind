@@ -2,12 +2,13 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using JetBrains.Annotations;
+using TMPro;
 using UnityEditor;
 using UnityEngine.Audio;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class SettingsMenuManager : MonoBehaviour
 {
@@ -16,6 +17,37 @@ public class SettingsMenuManager : MonoBehaviour
 
     private Slider musicVolumeSlider;
     private Slider sfxVolumeSlider;
+    // SLIDERS
+    [SerializeField] private GameObject sliderGroup;
+    
+    // Buttons from TextMenuOptions
+    [SerializeField] private GameObject buttonGroup;
+    
+    // The active size for the text settings (default: medium)
+    private GameButton activeButton;
+    
+    // Chosen text size
+    private SettingsManager.TextSize size;
+
+    // Example tmp_text objects
+    [SerializeField] private TMP_Text characterNameField;
+    [SerializeField] private TMP_Text dialogueBox;
+    
+    // Events
+    [SerializeField] GameEvent onTextSizeChanged; 
+    
+    void Awake()
+    {
+        // Set the active button.
+        size = SettingsManager.sm.textSize;
+        activeButton = GetButton(SettingsManager.sm.textSize);
+        SetActiveButton(activeButton);
+        
+        // Change the text size
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+    }
 
     [Header("Accessibility References")]
     [SerializeField] private GameSlider talkingSpeedSlider;
@@ -102,4 +134,114 @@ public class SettingsMenuManager : MonoBehaviour
     {
         SettingsManager.sm.ttsEnabled = isEnabled;
     }
+    
+    #region TextSettings
+    
+    // TODO: add a dialogue box showing the difference in text sizes.
+    
+    /// <summary>
+    /// Give the chosen text-size a color indicating that it is chosen.
+    /// </summary>
+    /// <param name="index"></param>
+    public void SetActiveSize(GameButton button)
+    {
+        GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
+        
+        // Set all buttons (excluding return button) to the color white and disable all arrows.
+        for (int i = 0; i < children.Length - 1; i++)
+        {
+            children[i].GetComponent<Image>().color = Color.white;
+            children[i].transform.GetChild(1).gameObject.SetActive(false);
+        }
+        
+        // Set the chosen size to a green color and enable the arrow.
+        activeButton = button;
+        SetActiveButton(button);
+        size = GetTextSize(button);
+        
+        // Change the textSize from SettingsManager
+        SettingsManager.sm.textSize = size;
+        
+        // Change the fontSize of the example
+        ChangeTextSize();
+        
+        // Raise the onTextSizeChanged event to change the text size
+        onTextSizeChanged.Raise(null, SettingsManager.sm.GetFontSize());
+    }
+    
+    /// <summary>
+    /// Set the button corresponding to the TextSize to active.
+    /// </summary>
+    /// <param name="button"></param>
+    private void SetActiveButton(GameButton button)
+    {
+        // Set the chosen size to a green color
+        button.GetComponent<Image>().color = Color.green;
+        // Enable the arrow
+        button.transform.GetChild(1).gameObject.SetActive(true);
+    }
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components
+    /// </summary>
+    private void ChangeTextSize()
+    {
+        int fontSize = SettingsManager.sm.GetFontSize();
+        // Change the fontSize of the confirmSelectionButton
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        
+        // Change the fontSize of the headerText
+        dialogueBox.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+    }
+    
+    /// <summary>
+    /// Get the GameButton corresponding to the TextSize
+    /// </summary>
+    /// <param name="size"></param>
+    /// <returns></returns>
+    private GameButton GetButton(SettingsManager.TextSize size)
+    {
+        GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
+        if (size == SettingsManager.TextSize.Small)
+        {
+            // Small button
+            return children[0];
+        }
+        else if (size == SettingsManager.TextSize.Medium)
+        {
+            // Medium button
+            return children[1];
+        }
+        else
+        {
+            // Large button
+            return children[2];
+        }
+    }
+    
+    /// <summary>
+    /// Get the TextSize corresponding to the GameButton
+    /// </summary>
+    /// <param name="button"></param>
+    /// <returns></returns>
+    private SettingsManager.TextSize GetTextSize(GameButton button)
+    {
+        if (button.name == "SmallButton")
+        {
+            // Small TextSize
+            return SettingsManager.TextSize.Small;
+        }
+        else if (button.name == "MediumButton")
+        {
+            // Medium TextSize
+            return SettingsManager.TextSize.Medium;
+        }
+        else
+        {
+            // Large TextSize
+            return SettingsManager.TextSize.Large;
+        }
+    }
+
+    #endregion
 }

@@ -90,6 +90,13 @@ Inheritance diagram for SelectionManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a7d8811132eefe9815b7ca8fb242cf388"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a7d8811132eefe9815b7ca8fb242cf388">OnChangedTextSize</a> (Component sender, params object[] data)</td></tr>
+<tr class="memdesc:a7d8811132eefe9815b7ca8fb242cf388"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu.  <br /></td></tr>
+<tr class="separator:a7d8811132eefe9815b7ca8fb242cf388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8301ed2681e9731837bf4aab5f4dc06a"><td class="memItemLeft" align="right" valign="top"><a id="a8301ed2681e9731837bf4aab5f4dc06a" name="a8301ed2681e9731837bf4aab5f4dc06a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ChangeTextSize</b> ()</td></tr>
+<tr class="memdesc:a8301ed2681e9731837bf4aab5f4dc06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the fontSize of the tmp_text components. <br /></td></tr>
+<tr class="separator:a8301ed2681e9731837bf4aab5f4dc06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66664a2dfafb6223db5a2aec1b1e1319"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a66664a2dfafb6223db5a2aec1b1e1319">SelectionButtonClicked</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
 <tr class="memdesc:a66664a2dfafb6223db5a2aec1b1e1319"><td class="mdescLeft">&#160;</td><td class="mdescRight">Event for when a character is selected.  <br /></td></tr>
 <tr class="separator:a66664a2dfafb6223db5a2aec1b1e1319"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -100,6 +107,10 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
 <tr class="memdesc:a6cbd06a30d1d6036628d6d5aa7ac014e"><td class="mdescLeft">&#160;</td><td class="mdescRight">On startup, set the selectionType of the scene, set the headertext and generate the selectable options. <br /></td></tr>
 <tr class="separator:a6cbd06a30d1d6036628d6d5aa7ac014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="memItemLeft" align="right" valign="top"><a id="a2566b73cbca5ce314d2eb83992cf4ab2" name="a2566b73cbca5ce314d2eb83992cf4ab2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSceneType</b> ()</td></tr>
+<tr class="memdesc:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the selectionType variable. If the number of characters has reached the minimum amount, and the player has no more questions left, set the selectionType variable to decidecriminal. <br /></td></tr>
+<tr class="separator:a2566b73cbca5ce314d2eb83992cf4ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSelectionManager.html#a691c7a75f75e60f9bfd4b7ee0b1df591">SetHeaderText</a> ()</td></tr>
 <tr class="memdesc:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the Header text if the culprit needs to be chosen.  <br /></td></tr>
 <tr class="separator:a691c7a75f75e60f9bfd4b7ee0b1df591"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -242,6 +253,43 @@ Transform&#160;</td><td class="memItemRight" valign="bottom"><b>layout</b></td><
   <table class="params">
     <tr><td class="paramname">cg</td><td>The canvas group of the object to be faded</td></tr>
     <tr><td class="paramname">duration</td><td>The duration of the fade</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7d8811132eefe9815b7ca8fb242cf388" name="a7d8811132eefe9815b7ca8fb242cf388"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d8811132eefe9815b7ca8fb242cf388">&#9670;&#160;</a></span>OnChangedTextSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SelectionManager.OnChangedTextSize </td>
+          <td>(</td>
+          <td class="paramtype">Component&#160;</td>
+          <td class="paramname"><em>sender</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">params object[]&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sender</td><td></td></tr>
+    <tr><td class="paramname">data</td><td></td></tr>
   </table>
   </dd>
 </dl>

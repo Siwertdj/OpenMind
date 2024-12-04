@@ -70,6 +70,78 @@ public class NPCSelectPlayTest
     }
 
     /// <summary>
+    /// Test whether the text scales correctly based on the textSize from the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    [UnityTest]
+    public IEnumerator ChangeTextSizeTest()
+    {
+        // Set the textSize to small.
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Small;
+        int fontSizePrior = SettingsManager.sm.GetFontSize();
+        
+        // Find the objects that contain tmp_text component.
+        GameObject confirmSelectionButton = GameObject.Find("Confirm Selection Button");
+        TextMeshProUGUI headerText = GameObject.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+
+        // Set the fontSizes to small
+        headerText.fontSize = fontSizePrior;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSizePrior;
+        
+        // Set the textSize to medium
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Medium;
+        
+        // Change the text size of the components.
+        sm.ChangeTextSize();
+        
+        // Search for the components.
+        confirmSelectionButton = GameObject.Find("Confirm Selection Button");
+        headerText = GameObject.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+        
+        // Check if the fontSizes are bigger than before.
+        Assert.Greater(confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize, fontSizePrior);
+        Assert.Greater(headerText.fontSize, fontSizePrior);
+        
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Test whether the text scales correctly when the TextSize is changed in the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    [UnityTest]
+    public IEnumerator OnChangedTextSizeTest()
+    {
+        // Set the textSize to small.
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Small;
+        int fontSizePrior = SettingsManager.sm.GetFontSize();
+        
+        // Find the objects that contain tmp_text component.
+        GameObject confirmSelectionButton = GameObject.Find("Confirm Selection Button");
+        TextMeshProUGUI headerText = GameObject.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+
+        // Set the fontSizes to small
+        headerText.fontSize = fontSizePrior;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSizePrior;
+        
+        // Set the textSize to medium
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Medium;
+        
+        // Change the text size of the components.
+        sm.OnChangedTextSize(null, SettingsManager.sm.GetFontSize());
+        
+        // Search for the components.
+        confirmSelectionButton = GameObject.Find("Confirm Selection Button");
+        headerText = GameObject.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+        
+        // Check if the fontSizes are bigger than before.
+        Assert.Greater(confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize, fontSizePrior);
+        Assert.Greater(headerText.fontSize, fontSizePrior);
+        
+        yield return null;
+    }
+    
+    /// <summary>
     /// Check if button fading in takes the correct amount of time.
     /// </summary>
     [UnityTest]

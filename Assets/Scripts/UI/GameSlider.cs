@@ -39,7 +39,6 @@ public class GameSlider : MonoBehaviour
         slider.value = steppedValue;
 
         var rectTransform = (RectTransform)defaultValueRef.transform.parent;
-        Debug.Log(rectTransform.gameObject.name + " " + rectTransform.rect.width);
 
         valueText.text = steppedValue.ToString($"F{valueRounding}") + valueInfo;
     }
