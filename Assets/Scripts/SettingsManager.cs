@@ -21,10 +21,10 @@ public class SettingsManager : MonoBehaviour
     private AudioSource musicSource;
 
     #region Settings Variables
-    public float musicVolume;
-    public float sfxVolume;
-    public float talkingSpeed;
-    public bool ttsEnabled;
+    [NonSerialized] public float musicVolume = 0;
+    [NonSerialized] public float sfxVolume = 0;
+    [NonSerialized] public float talkingSpeed = 1;
+    [NonSerialized] public bool ttsEnabled = false;
     #endregion
 
     [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;

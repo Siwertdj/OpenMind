@@ -44,7 +44,6 @@ public class NPCSelectPlayTest
 
         sm = GameObject.Find("SelectionManager").GetComponent<SelectionManager>();
         scroller = GameObject.Find("Scroller").GetComponent<NPCSelectScroller>();
-
     }
 
     [TearDown]
