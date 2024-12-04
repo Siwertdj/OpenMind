@@ -105,4 +105,9 @@ public class StartMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
     }
+
+    public void OpenMultiplayer()
+    {
+        SceneManager.LoadScene("MultiplayerScreenScene", LoadSceneMode.Additive);
+    }
 }
