@@ -519,7 +519,7 @@ public class GameManagerPlayTest
         yield return null;
     }
     
-    /// <summary>
+    /*/// <summary>
     /// Check if the transition from the losing scenario works as intended when the dialogue switches from innocent person to culprit.
     /// </summary>
     [UnityTest]
@@ -564,7 +564,7 @@ public class GameManagerPlayTest
         Assert.AreEqual(gm.GetCulprit().characterName, dm.currentRecipient.characterName);
 
         yield return null;
-    }
+    }*/
     
     /*
     /// <summary>

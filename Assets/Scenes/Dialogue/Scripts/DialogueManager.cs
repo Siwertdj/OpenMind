@@ -31,6 +31,8 @@ public class DialogueManager : MonoBehaviour
     [Header("Prefabs")]
     [SerializeField] private EventSystem eventPrefab;
     [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
+    [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
 
     [Header("Events")]
     public GameEvent onEndDialogue;
@@ -43,7 +45,6 @@ public class DialogueManager : MonoBehaviour
     
     // Variables
     [NonSerialized] public        string            inputText;
-    [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
@@ -58,6 +59,9 @@ public class DialogueManager : MonoBehaviour
             Instantiate(eventPrefab);
             StartDialogue(null, testDialogueContainer.GetDialogue());
         }
+        
+        // Set static DialogueManager instance
+        dm = this;
     }
 
     /// <summary>
@@ -68,8 +72,6 @@ public class DialogueManager : MonoBehaviour
     /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
     {
-        // Set static DialogueManager instance
-        dm = this;
         // Save the sender of the event that started dialogue
         dialogueStarter = sender;
 
@@ -93,7 +95,6 @@ public class DialogueManager : MonoBehaviour
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-        onEpilogueEnd.AddListener(SaveAnswers);
         
         // Execute the starting object to begin dialogue
         currentObject.Execute();
@@ -107,16 +108,6 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-        
-        // TODO: Decouple from Epilogue
-        if (dialogueStarter != null )
-            if (dialogueStarter.GetComponent<GameManager>() != null)
-            {
-                // If we are in the Epilogue GameState and the next responseDialogue object is an OpenResponseDialogueObject, create the open question.
-                if (GameManager.gm.gameState == GameManager.GameState.Epilogue &&
-                    currentObject.Responses[0] is OpenResponseDialogueObject)
-                    CreateOpenQuestion();
-            }
 
         ExecuteNextObject();
     }
@@ -139,7 +130,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogue == null)
         {
-            Debug.Log("Dialogue lines are null:  dialogue invisible");
+            Debug.Log("Dialogue segments are null:  dialogue invisible");
             dialogueField.SetActive(false);
         }
         else
@@ -173,6 +164,30 @@ public class DialogueManager : MonoBehaviour
             // Set the content of the image
             imageField.GetComponent<Image>().sprite = newImage;
         }
+    }
+    
+    /// <summary>
+    /// Creates a background for the coming dialogue.
+    /// </summary>
+    /// <param name="story">The storyobject that contains the backgrounds for the dialogue.</param>
+    /// <param name="character">The character the dialogue will be with.</param>
+    /// <param name="background">The background for the dialogue.</param>
+    /// <returns></returns>
+    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, GameObject background = null)
+    {
+        List<GameObject> background_ = new();
+
+        // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
+        background_.Add(background == null ? story.dialogueBackground : background);
+
+        // If a character is given, add that as well
+        if (character != null)
+        {
+            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
+            background_.Add(avatarPrefab);
+        }
+
+        return background_.ToArray();
     }
     
     /// <summary>
@@ -250,7 +265,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Creates the buttons and the text field for the open questions.
     /// </summary>
-    private void CreateOpenQuestion()
+    public void CreateOpenQuestion()
     {
         // Enable the input field.
         inputField.SetActive(true);
@@ -278,10 +293,9 @@ public class DialogueManager : MonoBehaviour
     public void AnswerOpenQuestion()
     {        
         // Assign the text from the inputField to inputText and add it to the list of answers.
-        // TODO: can write the answers from the open questions to somewhere.
         inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
-        playerAnswers.Add(inputText);
-        
+        // Can use this to write the inputText to somewhere, here..
+
         // Disable the input field.
         inputField.SetActive(false);
         
@@ -291,13 +305,6 @@ public class DialogueManager : MonoBehaviour
         ExecuteNextObject();
     }
 
-    /// <summary>
-    /// Save the answers that the player has given to a file
-    /// </summary>
-    public void SaveAnswers()
-    {
-        File.WriteAllLines(Path.Combine(Application.persistentDataPath, "answers.txt"),playerAnswers);
-    }
     
     /// <summary>
     /// Helper function for CreateBackButton.

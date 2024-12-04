@@ -27,29 +27,9 @@ public class OpenResponseDialogueObject : DialogueObject
     /// </summary>
     public override void Execute()
     {
-        GameManager gm = GameManager.gm;
-
-        // Bool which ensures that an OpenResponseDialogueObject as response only gets added if there is more than 1 speakingObjectText remaining.
-        // (The epilogue should not end with the open question and then go straight to the GameWin/GameOver scene)
-        if (gm.remainingDialogueScenario.Count > 1)
-        {
-            List<string> speakingObjectText = new List<string>();
-            // Assign the first element of the list to speakingObjectText.
-            if (gm.remainingDialogueScenario.Count > 0)
-                speakingObjectText = gm.remainingDialogueScenario[0];
-            // Remove the first element of the list (so that the remainder of the list can be passed to OpenResponseDialogueObject).
-            gm.remainingDialogueScenario.RemoveAt(0);
-            
-            // Create the DialogueObject to add as response for the current object
-            // and add another OpenResponseDialogueObject as response for the ContentDialogueObject.
-            DialogueObject next = new ContentDialogueObject(speakingObjectText,null, background);
-            next.Responses.Add(new OpenResponseDialogueObject(background));
-            Responses.Add(next);
-        }
-        else
-        {
-            // Add a ContentDialogueObject with the last part of the dialogue as parameter.
-            Responses.Add(new ContentDialogueObject(gm.remainingDialogueScenario[0],null, background));
-        }
+        // TODO: Print segments/text at the same time.. or print, and when its done typewriting, open the openanswerbox below.
+        
+        // Asks Dialoguemanager to open an openquestion-textbox
+        DialogueManager.dm.CreateOpenQuestion();
     }
 }

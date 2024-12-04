@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class EpilogueManager : MonoBehaviour
 {
+    [FormerlySerializedAs("PortraitContainer")]
     [Header ("Scene Objects")]
-    [SerializeField] GameObject PortraitContainer;
+    [SerializeField] GameObject portraitContainer;
     
     [Header("Resources")] 
     [SerializeField] private GameObject portraitPrefab;
@@ -14,24 +19,43 @@ public class EpilogueManager : MonoBehaviour
     [Header("Epilogue")] 
     [SerializeField] private GameEvent onDialogueStart;
     
-    /// <summary>
-    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
-    /// </summary>
-    /// <param name="character"> The character which has been chosen. </param>
-    public async void StartEpilogueDialogue(CharacterInstance character)
-    {
-        // Get the epilogue dialogue.
-        remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+    // Private Variables
+    private StoryObject             story;
+    private List<CharacterInstance> characters;
+    private int                     culpritId;
+    
+    #region EpilogueFlow
+    // 1. Player selects who they think is the culprit
+    // 1.5 (Multiplayer only) Player reads other player's notebook and repeats step 1.
+    // 2. (Optional) Lose Scenario
+    // 3. Win scenario --> Dialogue with Fill in-textboxes.
+    // 4. GameWon/Loss screen
+    #endregion
 
-        // Create the DialogueObject and corresponding children.
-        // This background displays the suspected culprit over the Dialogue-background
-        var background = CreateDialogueBackground(character, story.dialogueBackground);
-        var dialogueObject = GetEpilogueStart(background);
+
+
+    public void StartEpilogue(Component sender, params object[] data)
+    {
+        // Set variables to the proper data
+        foreach (var d in data)
+        {
+            if (d is StoryObject story)
+                this.story = story;
+            if (d is List<CharacterInstance> characters)
+                this.characters = characters;
+            if (d is int culpritId)
+                this.culpritId = culpritId;
+        }
         
-        // Transition to the dialogue scene.
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
-        onDialogueStart.Raise(this, dialogueObject, character);
+        // Populates grid with all the remaining current characters.
+        PopulateGrid(characters.Where(c => c.isActive).ToList());
+        
+        // (Step 1) The player must now select the culprit in a 'selection'-scene.
+        // See region 'Culprit Selection'
     }
+
+
+    #region Culprit Selection
     
     /// <summary>
     /// For each character provided, instantiate a prefab of a portrait with the correct portrait
@@ -40,43 +64,111 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public void PopulateGrid(List<CharacterInstance> characters)
     {
-        Transform parent = PortraitContainer.transform;
+        Transform parent = portraitContainer.transform;
         foreach (CharacterInstance character in characters)
         { 
             // Create a new SelectOption object.
-            SelectOption newOption = Instantiate(portraitPrefab).GetComponent<SelectOption>();
-            newOption.character = character;
-            newOption.transform.SetParent(parent);
+            GameObject newOption = Instantiate(portraitPrefab, parent);
+            // TODO: Set avatar
+            newOption.GetComponentInChildren<Image>().sprite = character.avatar;
+            newOption.GetComponent<GameButton>().onClick.AddListener(delegate { CharacterSelected(character); });
+        }
+    }
+
+    private void CharacterSelected(CharacterInstance chosenCharacter)
+    {
+        // Set win state
+        bool hasWon = culpritId == chosenCharacter.id;
+        
+        StartEpilogueDialogue(chosenCharacter, hasWon);
+    }
+    #endregion
+
+
+    #region Epilogue Dialogue
+    
+    /// <summary>
+    /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
+    /// </summary>
+    /// <param name="character"> The character which has been chosen. </param>
+    public void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
+    {
+        // TODO: Create a coroutine to wait for the loadscene operation to be done. We dont have scenecontroller to rely on here.
+        // Load the DialogueScene first.
+        // Transition to the dialogue scene.
+        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        
+        // Get the epilogue dialogue.
+        // TODO: Clean characterinstance class
+        //remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+        
+        // Create the DialogueObject and corresponding children.
+        // This background displays the suspected culprit over the Dialogue-background
+        var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
+
+        if (hasWon || startWinScenario.HasValue)
+        {
+            var dialogueObject = story.storyEpilogueWonDialogue.GetDialogue(background);
+            onDialogueStart.Raise(this, dialogueObject, character);
+            GetComponent<GameEventListener>().response.AddListener(delegate{EndEpilogue(hasWon);});
+        }
+        else
+        {
+            var dialogueObject = story.storyEpilogueLossDialogue.GetDialogue(background);
+            onDialogueStart.Raise(this, dialogueObject, character);
+            // Lose-scenario, so we add a listener for 'DialogueEnd', where if it ends,
+            // we got into StartEpilogueDialogue again, but now for the win-scenario.
+            GetComponent<GameEventListener>().response.AddListener(delegate{
+                StartEpilogueDialogue(
+                    characters.Where(c=> c.id == culpritId).ToList()[0], 
+                    hasWon, 
+                    true);
+                
+            });
+        }
+        
+    }    
+    
+    #endregion
+
+
+    #region End Game Logic
+
+    /// <summary>
+    /// This method ends the dialogue, and loads the correct GameOver-scene depending on 'hasWon'
+    /// </summary>
+    public void EndEpilogue(bool hasWon)
+    {
+        // TODO: Send the list of characters to the Gamewin/loss screen, so that we can restart from there
+        
+        if (hasWon)
+        {
+            SceneManager.LoadScene("GameWinScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameLossScene");
         }
     }
     
-    public void ButtonClicked(GameObject option)
-    {
-        // Get the SelectOption object from the character space.
-        SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
-        // Only active characters can be talked to.
-        if (selectOption.character.isActive)
-        {
-            
-            
-            // Start the dialogue if a criminal does not need to be decided yet.
-            if (selectionType == "dialogue")
-            {
-                GameManager.gm.StartDialogue(selectOption.character);
-            }
-            else
-            {
-                // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-                GameManager.gm.FinalChosenCuplrit = selectOption.character;
-                // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-                if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
-                    GameManager.gm.hasWon = true;
-                else
-                    GameManager.gm.hasWon = false;
-                // Load the epilogue scene.
-                GameManager.gm.StartEpilogueDialogue(selectOption.character);
-            }
-        }
-    }
+
+    #endregion
+    
+    
+    #region Notebook Logic
+    // TODO: This is mostly important for Multiplayer, so a 2nd notebook can be opened.
+    
+    // TODO: Find a way to open NoteBook here in Epilogue as well, while choosing the culprit.
+    
+
+    #endregion
+
+
+    #region Multiplayer Logic
+
+    
+
+    #endregion
+    
     
 }

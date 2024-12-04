@@ -5,8 +5,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// This is a container for dialogueobjects. it has a list of dialogueobjects, rather than a
@@ -18,29 +21,35 @@ public class DialogueContainer : ScriptableObject
 {
     // Voicepitch of the dialogue
     [Range(0.5f, 2f)] public float voicePitch = 1;
-    // lines of the dialogue in an array
-    [SerializeField] public DialogueData[] lines;
-    // Background image, takes an array and orders these into one background.
-    [SerializeField] GameObject[] background;
+    // segments of the dialogue in an array
+    [SerializeField] public DialogueData[] segments;
+    
+    private          int          defaultLineLength = 30;
+    private          char[]       punctuations      = {',','.', '!', '?', ':'};
     
     /// <summary>
     /// Takes an array of DialogueData, creates DialogueObjects of these,
     /// and strings them each sequentially as responses of the previous.
     /// This creates a sequential dialogue, during which backgrounds,
-    /// images and dialogue-lines can vary.
+    /// images and dialogue-segments can vary.
     /// </summary>
     /// <returns></returns>
-    public DialogueObject GetDialogue()
+    public DialogueObject GetDialogue([CanBeNull] GameObject[] background = null, int? startIndex = null, int? endIndex = null)
     {
+        if (background != null) 
+            SetBackground(background, startIndex, endIndex);
+        
         // Create the first piece of dialogue and initialize it as output.
         // we will add on to its responses in the for-loop below.
-        DialogueObject output = CreateDialogueObject(lines[0]);
-        for (int i = 1; i < lines.Length; i++)
+        DialogueObject output = SegmentDialogue(segments[0]);
+        for (int i = 1; i < segments.Length; i++)
         {
             // Get dialogue-data from the correct line
-            var data = lines[i];
-            AppendToLeaf(output, CreateDialogueObject(data));
+            var data = segments[i];
+            AppendToLeaf(output, SegmentDialogue(data));
         }
+        // End with TerminateDialogueObject
+        AppendToLeaf(output, new TerminateDialogueObject());
 
         return output;
     }
@@ -62,13 +71,133 @@ public class DialogueContainer : ScriptableObject
 
     public DialogueObject CreateDialogueObject(DialogueData data)
     {
-        // We create a new ContentDialogueObject, containing text, image or background
-        // The first of these two could be null, but that is handled by the ContentDialogueObject.
-        List<string> text = new List<string>();
-        text.Add(data.line);
-        return new ContentDialogueObject(text, data.image, background);
+        DialogueType dialogueType = data.type;
+        GameObject[] background = data.background;
+        
+        switch (dialogueType)
+        {
+            case DialogueType.ContentDialogue:
+                // We create a new ContentDialogueObject, containing text, image or background
+                // The first of these two could be null, but that is handled by the ContentDialogueObject.
+                List<string> text = new List<string>();
+                text.Add(data.text);
+                return new ContentDialogueObject(text, data.image, background);
+            case DialogueType.OpenResponseDialogue:
+                return new OpenResponseDialogueObject(background);
+                break;
+            default:
+                Debug.LogError("Could not create DialogueObject from DialogueContainer: invalid type");
+                return null;
+        }
         
     }
+
+    /// <summary>
+    /// Takes one dialogue data, splits it by the characterl creates separate dialogueobjects 
+    /// </summary>
+    private DialogueObject SegmentDialogue(DialogueData data)
+    {
+        int maxLineLength = SettingsManager.sm == null ? defaultLineLength : SettingsManager.sm.maxLineLength;
+        string remainingText = data.text;
+        DialogueObject output = null;
+        
+        // see if text is too long; take the first X characters of the text, then find the last punctuation,
+        // and split it there and pass it to make a dialogueobject
+        // recurse this on the rest.
+        // In case of double punctuations that just didnt fit in the maxlinelength, we remove them from the start of the string
+        while (remainingText.Length > 0)
+        {
+            // takes a substring of the full string containing the first X characters
+            // Then finds the index of the last punctuation-character in that string.
+            int textLength = 
+                FindLastPunctuation(
+                    remainingText.Substring(
+                        0, Mathf.Min(remainingText.Length, maxLineLength)));
+            
+            // We create two substrings;
+            // One for the first segment of dialogue that we will create a dialogueobject of.
+            // And a second for the remainingtext, which we re-assign.
+            string segmentText = remainingText.Substring(0, textLength);
+            remainingText = remainingText.Substring(textLength);
+            // Drop the first characters of remainingtext if they are part of punctuation or a space
+            while (remainingText.Length > 0 && (remainingText[0] == ' ' ||  punctuations.Contains(remainingText[0])))
+            {
+                // Drop first element of remainingtext if its punctuation
+                remainingText = remainingText.Remove(0, 1);
+            }
+                
+
+            // With this segment, we now create a DialogueObject.
+            DialogueObject newDialogue = CreateDialogueObject(new DialogueData(data.type, segmentText, data.image));
+            // We append this new object to the previous one we created.
+
+            // We set the ouput to include the newDialogue
+            if (output == null)
+                output = newDialogue;
+            else
+                AppendToLeaf(output, newDialogue);
+
+            // If the remainingText is not empty, we repeat the while-loop until it is, and we have
+            // segmented all of the text in separate dialogueobjects.
+        }
+
+        return output;
+    }
+
+    /// <summary>
+    /// Finds the index of the last punctuation-symbol of the passed string
+    /// Punctuations include the following  ",.?!"
+    /// </summary>
+    private int FindLastPunctuation(string input)
+    {
+        // If there is no punctuation in the input..
+        if (!input.Intersect(punctuations).Any())
+        {
+            // See if it contains a space..
+            // If so, return the index of the last space.
+            // Otherwise, return the full length
+            if (input.Contains(' '))
+                return input.LastIndexOf(' ');
+            return input.Length;
+        }
+        // If there is punctuation in the input, return the index of the last one.
+        int output = input.LastIndexOfAny(punctuations);
+        return output;
+    }
+
+    /// <summary>
+    /// Sets the background of the dialogue. The range for this change can be set with indices.
+    /// If no range is given, we apply it to all DialogueData-segments
+    /// </summary>
+    /// <param name="background">The background to set to the dialogue.</param>
+    /// <param name="startRange">The start of the range of the operation.</param>
+    /// <param name="endRange">The end of the range of the operation.</param>
+    private void SetBackground(GameObject[] background, int? startRange = null, int? endRange = null)
+    {
+        int start = startRange ?? 0;
+        int end = endRange.HasValue ? Math.Min(segments.Length, endRange.Value + 1) : segments.Length;
+        for (int i = start; i < end; i++)   
+            segments[i].background  = background;
+    }
+    
+}
+
+[Serializable]
+public enum DialogueType
+{
+    ContentDialogue,
+    OpenResponseDialogue
+}
+
+[Serializable]
+public enum Emotion
+{
+    Neutral,
+    Happy,
+    Sad,
+    Angry,
+    Confused,
+    Freaky
 }
 
 /// <summary>
@@ -77,7 +206,22 @@ public class DialogueContainer : ScriptableObject
 [Serializable]
 public class DialogueData
 {
-    [SerializeField] public string line;
-    [SerializeField] public Sprite  image;
+    [SerializeField] public DialogueType type;
+    [SerializeField] public Emotion      emotion;
+    [SerializeField] public string       text;
+    [SerializeField] public Sprite       image;
+    [SerializeField] public GameObject[] background;
+    
+    // TODO: If it is a branching dialogue, add list of child-dialoguedata here?
+
+    // Constructor to assign the data to the object
+    public DialogueData(DialogueType type, string text, Sprite image)
+    {
+        this.type = type;
+        this.text = text;
+        this.image = image;
+    }
+
 }
 
+// TODO: Method that sets background for the dialogue

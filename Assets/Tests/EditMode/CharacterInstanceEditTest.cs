@@ -89,101 +89,22 @@ public class CharacterInstanceEditTest
         if (!greetings)
         {
             CharacterData data = mainCharacterData;
-            mainCharacter.data.greetings = new DialogueLines[] { }; // Create data without lines
+            mainCharacter.data.greetings = new DialogueLines[] { }; // Create data without segmentslines
             var lines = mainCharacter.GetGreeting();
             
             // The only thing returned should be "Hello"
             Assert.AreEqual(lines.Count, 1);
             Assert.AreEqual(lines[0], "Hello");
             
-            mainCharacter.data = data; // Put data with lines back for other tests
+            mainCharacter.data = data; // Put data with segmentslines back for other tests
         }
         else
         {
             var lines = mainCharacter.GetGreeting();
-            Assert.IsNotNull(lines); // Test if some lines get returned
+            Assert.IsNotNull(lines); // Test if some segmentslines get returned
         }
     }
-
-    /// <summary>
-    /// Tests if the correct epilogue dialouge gets returned, based on win status
-    /// </summary>
-    /// <param name="hasWon">Whether or not the player has won</param>
-    [Test]
-    [TestCase(true)]
-    [TestCase(false)]
-    public void GetEpilogueDialogueTest(bool hasWon)
-    {
-        List<List<string>> epilogueDialogue = mainCharacter.GetEpilogueDialogue(hasWon);
-
-        if (hasWon)
-        {
-            List<string> speakingText1 = new List<string>()
-            {
-                "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName + ".",
-                "I was indeed the one who kept sending you messages.",
-                "and in fact, I knew that you did not know who was sending the messages.",
-                "You managed to guess correctly, and so i wanted to ask you the following:",
-                "What made you think it was me sending the messages?"
-            };
-            List<string> speakingText2 = new List<string>()
-            {
-                "Okay, thats very interesting!",
-                "Now I have another question for you:",
-                "Have you found something about me that you can relate to?"
-            };
-            List<string> speakingText3 = new List<string>()
-            {
-                "Alright very cool.",
-                "I have to go now.",
-                "I do not want to miss the bus.",
-                "Goodbye."
-            };
-            // List of lists, where in between each list an OpenResponseDialogueObject will be called.
-            List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
-            
-            Assert.AreEqual(retval, epilogueDialogue);
-        }
-        else
-        {
-            List<string> speakingText1 = new List<string>()
-            { 
-                "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-                "You are asking me if I was sending you messages?",
-                "I am sorry but I do not know what you are talking about.",
-                "I have to go now, bye."
-            };
-            List<string> speakingText2 = new List<string>()
-            { 
-                "Well that was pretty awkward, wasn't it?",
-                "I'm " + GameManager.gm.GetCulprit().characterName,
-                "I am the one who kept sending you messages.",
-                "and in fact, I knew that you did not know who",
-                "was sending the messages.",
-                "You did not guess correctly unfortunately.",
-                "Despite that, I still wanted to to ask you the following:",
-                "What made you think it was me sending the messages?"
-            };
-            List<string> speakingText3 = new List<string>()
-            { 
-                "Okay, thats very interesting!",
-                "Now I have another question for you:",
-                "Have you found something about me that you can relate to?"
-            };
-            List<string> speakingText4 = new List<string>()
-            { 
-                "Alright very cool.",
-                "I have to go now.",
-                "I do not want to miss the bus.",
-                "Goodbye." 
-            };
-            // List of lists, where in between each list an OpenResponseDialogueObject will be called.
-            List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3, speakingText4};
-            
-            Assert.AreEqual(retval, epilogueDialogue);
-        }
-    }
-
+    
     [Test]
     [TestCase(true)]
     [TestCase(false)]

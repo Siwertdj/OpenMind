@@ -17,6 +17,9 @@ public class SettingsManager : MonoBehaviour
     public AudioMixer audioMixer;
     
     private AudioSource musicSource;
+    
+    // TODO: Integrate this with text-size
+    public int maxLineLength;
 
     [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     

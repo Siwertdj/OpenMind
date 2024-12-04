@@ -74,7 +74,7 @@ public class DialogueAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// An overload of WriteDialogue() for single lines.
+    /// An overload of WriteDialogue() for single segments.
     /// </summary>
     /// <param name="output">The line that is written</param>
     /// <param name="pitch">The pitch of the characters voice.</param>

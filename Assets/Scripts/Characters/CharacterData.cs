@@ -11,10 +11,15 @@ using UnityEngine;
 
 public class CharacterData : ScriptableObject
 {
-    public string characterName;
-    public int id;
-    public Sprite avatar;
-    [Range(0.5f, 2f)] public float voicePitch = 1;
+    public                   string characterName;
+    public                   int    id;
+    public                   Sprite avatar;
+    public                   Sprite happyAvatar;
+    public                   Sprite sadAvatar;
+    public                   Sprite angryAvatar;
+    public                   Sprite confusedAvatar;
+    public                   Sprite freakyAvatar;
+    [Range(0.5f, 2f)] public float  voicePitch = 1;
 
     [SerializeField] public KeyValuePair[] answers;
     [SerializeField] public DialogueLines[] greetings;
@@ -45,13 +50,5 @@ public class CharacterData : ScriptableObject
 [Serializable] public struct DialogueLine
 {
     [SerializeField]
-    public Emotion emotion;
-    [SerializeField]
     public string line;
-}
-
-public enum Emotion
-{
-    Happy,
-    Neutral
 }

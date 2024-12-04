@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Loading/Loading.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
-    path: Assets/Scenes/NPCSelect/EpilogueScene.unity
+    path: Assets/Scenes/Epilogue/EpilogueScene.unity
     guid: 4d1c5da303831124483a054353410334
   - enabled: 1
     path: Assets/Scenes/Dialogue/DialogueScene.unity
@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Menus/GameMenuScene.unity
     guid: a8120ac879099114dab36bbc9a015477
+  - enabled: 1
+    path: Assets/Scenes/NPCSelect/NPCSelectScene.unity
+    guid: dded1153eb783f442b7f26803e703738
   m_configObjects: {}

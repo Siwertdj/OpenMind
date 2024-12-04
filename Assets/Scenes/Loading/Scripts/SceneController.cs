@@ -97,7 +97,7 @@ public class SceneController : MonoBehaviour
             return;
         }
 
-        // Split into lines
+        // Split into segments
         string[] fileGraphContentLines = Regex.Split(file.text, "\r\n|\r|\n");
 
         sceneGraph = new List<List<(int, TransitionType)>>(fileGraphContentLines.Length);
