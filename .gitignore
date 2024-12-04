@@ -11,6 +11,15 @@
 /[Uu]ser[Ss]ettings/
 /[Pp]layerSaveData/
 
+# Doxygen amasses a lot of files we dont need in every branch
+/[Dd]ocs/
+/[Dd]oxygen-1.9.6/
+Doxyfile/
+doxygen-1.9.6.linux.bin.tar/
+doxygen-1.9.6.linux.bin.tar.gz.1/
+doxygen-1.9.6.linux.bin.tar.gz.2/
+doxygen-1.9.6.linux.bin.tar.gz.3/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
@@ -26,6 +35,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vsconfig/
 
 # Gradle cache directory
 .gradle/
@@ -71,3 +81,4 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/CodeCoverage
