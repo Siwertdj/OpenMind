@@ -1,11 +1,13 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+#if DEBUG && UNITY_EDITOR
+
 using System.Diagnostics;
 using System.IO;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-#if DEBUG
+#if DEBUG && UNITY_EDITOR
 using static UnityEditor.EditorUtility;
 #endif
 
@@ -39,7 +41,7 @@ public class DebugManager : MonoBehaviour
     
     private void Awake()
     {
-        #if DEBUG
+        #if DEBUG && UNITY_EDITOR
         if (!FullyDisablePopups)
             DontDestroyOnLoad(gameObject);
         
@@ -57,7 +59,7 @@ public class DebugManager : MonoBehaviour
     //Called when there is an exception
     void LogCallback(string condition, string stackTrace, LogType type)
     {
-        #if DEBUG
+        #if DEBUG && UNITY_EDITOR
         if (!FullyDisablePopups)
         {
             if (!(DisablePopups || ignores.Contains(condition) || type == LogType.Log))
@@ -80,3 +82,4 @@ public class DebugManager : MonoBehaviour
         Application.logMessageReceived -= LogCallback;
     }
 }
+#endif

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
@@ -24,29 +25,23 @@ public class SelectionManager : MonoBehaviour
 
     private Coroutine fadeCoroutine;
 
+    private Transform scrollable;
+    private Transform layout;
+
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
-    private void Start()
+    private void Awake()
     {
-        SetSceneType();
+        scrollable = scroller.transform.GetChild(0);
+        layout = scrollable.GetChild(0);
+
         SetHeaderText();
         GenerateOptions();
 
         scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
         scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
         scroller.scrollDuration = scrollDuration;
-    }
-
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
     }
 
     /// <summary>
@@ -76,7 +71,7 @@ public class SelectionManager : MonoBehaviour
             newOption.character = character;
 
             // Set the parent & position of the object
-            newOption.transform.SetParent(scroller.transform.GetChild(0).GetChild(i), false);
+            newOption.transform.SetParent(layout.GetChild(i), false);
             newOption.transform.position = newOption.transform.parent.position;
         }
     }
@@ -136,9 +131,6 @@ public class SelectionManager : MonoBehaviour
             button.interactable = false;
             text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
-
-        // Force the button to change state immediately
-        Canvas.ForceUpdateCanvases();
 
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
