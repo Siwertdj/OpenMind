@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
+
+        // Set the target frame rate to the screen's refresh rate
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+            
         gameState = GameState.Loading;
     }
     
@@ -402,6 +407,7 @@ public class GameManager : MonoBehaviour
         // Change the gamestate
         gameState = GameState.HintDialogue;
         
+        // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),

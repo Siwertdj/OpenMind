@@ -772,7 +772,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  gameEvent: {fileID: 0}
 --- !u!1 &217989641
 GameObject:
   m_ObjectHideFlags: 0

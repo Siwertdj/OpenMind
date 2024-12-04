@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class StorySelectionManager : MonoBehaviour
 {
     [Header("Data")] 
-    [SerializeField] private StoryObject[] stories;
+    [SerializeField] public StoryObject[] stories;
     
     // Game Events
     [Header("Events")]

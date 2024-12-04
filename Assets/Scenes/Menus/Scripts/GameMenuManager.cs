@@ -34,9 +34,10 @@ public class GameMenuManager : MonoBehaviour
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
-            SceneController.sc.GetSceneName(activeScene), 
+            SceneController.SceneName.Loading, 
             SceneController.TransitionType.Unload);
         
+        // After that is done, we call UIManager to finish the operation.
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
 
         
@@ -79,7 +80,7 @@ public class GameMenuManager : MonoBehaviour
         // Load SettingsMenu-scene, so it loads on top of all other scenes.
         // _ = throws away the await so we dont get an error
         _ = SceneController.sc.TransitionScene(
-            SceneController.SceneName.GameMenuScene, 
+            SceneController.SceneName.Loading, 
             SceneController.SceneName.SettingsScene, 
             SceneController.TransitionType.Additive);
     }
