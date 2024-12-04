@@ -941,6 +941,7 @@ MonoBehaviour:
   delayInSeconds: 0.05
   delayAfterSentence: 1
   audioEnabled: 1
+  overrideDefaultSpeed: 0
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0

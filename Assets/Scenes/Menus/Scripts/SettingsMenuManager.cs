@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using JetBrains.Annotations;
@@ -12,6 +12,11 @@ using UnityEngine.Serialization;
 
 public class SettingsMenuManager : MonoBehaviour
 {
+    [Header("Audio References")]
+    [SerializeField] private GameObject audioSliderGroup;
+
+    private Slider musicVolumeSlider;
+    private Slider sfxVolumeSlider;
     // SLIDERS
     [SerializeField] private GameObject sliderGroup;
     
@@ -44,29 +49,34 @@ public class SettingsMenuManager : MonoBehaviour
         ChangeTextSize();
     }
 
-    /// <summary>
-    /// This method is intended to correct the sliders when opening the menu, so the sliders
-    /// correspond with the values of the audiomixer.
-    /// TODO: Currently doesnt work.
-    /// </summary>
-    public void CorrectSliderValues()
+    [Header("Accessibility References")]
+    [SerializeField] private GameSlider talkingSpeedSlider;
+    [SerializeField] private Toggle textToSpeechToggle;
+
+    private void Start()
     {
         // Get the sliders
-        Slider[] sliders = sliderGroup.GetComponentsInChildren<Slider>();
-        Slider masterVolumeSlider = sliders[0];
-        Slider musicVolumeSlider = sliders[1];
-        Slider sfxVolumeSlider = sliders[2];
+        Slider[] sliders = audioSliderGroup.GetComponentsInChildren<Slider>();
+        musicVolumeSlider = sliders[0];
+        sfxVolumeSlider = sliders[1];
+
+        // Set the values on the UI elements
+        musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
+        sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
+        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);
+        textToSpeechToggle.SetIsOnWithoutNotify(SettingsManager.sm.ttsEnabled);
         
-        // Fetch the values from the audiomixer
-        SettingsManager.sm.audioMixer.GetFloat("MasterVolume", out float masterVolume);
-        SettingsManager.sm.audioMixer.GetFloat("MusicVolume", out float musicVolume);
-        SettingsManager.sm.audioMixer.GetFloat("SfxVolume", out float sfxVolume);
-        // Set the values
-        masterVolumeSlider.SetValueWithoutNotify(masterVolume);
-        musicVolumeSlider.SetValueWithoutNotify(musicVolume);
-        sfxVolumeSlider.SetValueWithoutNotify(sfxVolume);
     }
-    
+
+    /// <summary>
+    /// Called when the scene is unloaded.
+    /// Saves the values which were set in the settings screen.
+    /// </summary>
+    private void OnDestroy()
+    {
+        SettingsManager.sm.SaveSettings();
+    }
+
     /// <summary>
     /// Called to exit the settingsmenu. It sets any other menu overlays to 'active',
     /// such as the notebook- and menu-buttons in the game, and unloads its own scene.
@@ -112,8 +122,17 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        SettingsManager.sm.SetSfxVolume(volume);
-        
+        SettingsManager.sm.SetSfxVolume(volume);        
+    }
+
+    public void SetTalkingSpeed(float multiplier)
+    {
+        SettingsManager.sm.SetTalkingSpeed(multiplier);
+    }
+
+    public void SetTextToSpeech(bool isEnabled)
+    {
+        SettingsManager.sm.ttsEnabled = isEnabled;
     }
     
     #region TextSettings
