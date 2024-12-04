@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorial/TutorialScene.unity
     guid: 968764cd7e812344e92dc0cce9bf186a
+  - enabled: 1
+    path: Assets/Scenes/Menus/MultiplayerScreenScene.unity
+    guid: 0a6ff42fbbb93d7419f1dc57401050aa
   m_configObjects: {}
