@@ -19,8 +19,8 @@ public class NetworkManager : MonoBehaviour
     void Start()
     {
         GetLocalIPs();
-        //SetupBroadcastTest();
-        SetupNetworkTest();
+        SetupBroadcastTest();
+        //SetupNetworkTest();
     }
     
     void Update()
@@ -42,11 +42,33 @@ public class NetworkManager : MonoBehaviour
     
     void SetupBroadcastTest()
     {
+        SetupBeacon();
+        //SetupProbe();
+    }
+    
+    void SetupProbe()
+    {
+        Debug.Log("setup probe");
+        Probe probe = gameObject.GetComponent<Probe>();
+        probe.enabled = true;
+        StartCoroutine(WaitSeconds(30f, () =>
+        {
+            string foundIps = "";
+            foreach (var probeFoundDevice in probe.FoundDevices)
+            {
+                foundIps += $"{probeFoundDevice}, ";
+            }
+            Debug.Log($"probe found IPs: {foundIps}");
+            probe.enabled = false;
+        }));
+    }
+    
+    void SetupBeacon()
+    {
+        Debug.Log("setup beacon");
         Beacon beacon = gameObject.GetComponent<Beacon>();
-        // Probe probe = gameObject.GetComponent<Probe>();
         beacon.enabled = true;
-        // probe.enabled = true;
-        StartCoroutine(WaitSeconds(300f, () =>
+        StartCoroutine(WaitSeconds(30f, () =>
         {
             string foundIps = "";
             foreach (var beaconFoundDevice in beacon.FoundDevices)
@@ -55,14 +77,7 @@ public class NetworkManager : MonoBehaviour
             }
             Debug.Log($"beacon found IPs: {foundIps}");
             
-            // foundIps = "";
-            // foreach (var probeFoundDevice in probe.FoundDevices)
-            // {
-            //     foundIps += $"{probeFoundDevice}, ";
-            // }
-            // Debug.Log($"probe found IPs: {foundIps}");
             beacon.enabled = false;
-            // probe.enabled = false;
         }));
     }
     
@@ -75,8 +90,8 @@ public class NetworkManager : MonoBehaviour
     void SetupNetworkTest()
     {
         Debug.Log("Starting setup");
-        //SetupListener();
-        SetupSender();
+        SetupListener();
+        //SetupSender();
         Debug.Log("Ended setup");
     }
     

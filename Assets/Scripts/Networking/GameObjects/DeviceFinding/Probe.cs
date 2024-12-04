@@ -20,7 +20,7 @@ public class Probe : MonoBehaviour
     
     void OnEnable()
     {
-        StartCoroutine(probe.StartReceivingResponses());
+        //StartCoroutine(probe.StartReceivingResponses());
         StartCoroutine(probe.StartSendingProbes(ProbeIntervalSeconds));
     }
     

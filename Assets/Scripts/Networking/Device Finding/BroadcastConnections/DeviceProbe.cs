@@ -16,22 +16,27 @@ public class DeviceProbe : UdpDeviceReceiver
     private HashSet<IPEndPoint> connectedBeacons = new ();
     public  HashSet<IPEndPoint> ConnectedBeacons => connectedBeacons;
     private bool                isSending;
+    private UdpClient           broadcaster;
     
-    private readonly IPEndPoint broadcast = new(IPAddress.Broadcast, IPConnections.Port);
-    
+    private readonly IPEndPoint broadcast = new(IPAddress.Parse("192.168.2.255"), IPConnections.Port);
     private const char type = 'P';
     
     public DeviceProbe(string identifier) : base(identifier)
     {
+        broadcaster = new UdpClient();
+        broadcaster.EnableBroadcast = true;
+        broadcaster.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Broadcast, true);
+        broadcaster.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+        // udp.Client.Bind(new IPEndPoint(IPAddress.Any, IPConnections.Port));
     }
     
-    protected override void ReceiveMessage(IPEndPoint receivedEndpoint, char type)
-    {
-        if (type == DeviceProbe.type)
-            return;
-        
-        connectedBeacons.Add(receivedEndpoint);
-    }
+    // protected override void ReceiveMessage(IPEndPoint receivedEndpoint, char type)
+    // {
+    //     if (type == DeviceProbe.type)
+    //         return;
+    //     
+    //     connectedBeacons.Add(receivedEndpoint);
+    // }
     
     public IEnumerator StartSendingProbes(float intervalSeconds)
     {

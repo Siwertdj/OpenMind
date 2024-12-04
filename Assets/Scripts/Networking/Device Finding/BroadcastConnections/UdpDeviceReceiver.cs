@@ -12,37 +12,34 @@ using UnityEngine;
 public abstract class UdpDeviceReceiver
 {
     private bool      isReceiving;
-    private string    identifier;
+    protected string    identifier;
     private UdpClient udp = new();
     
     protected UdpDeviceReceiver(string identifier)
     {
         this.identifier = identifier;
-        
-        udp.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-        udp.Client.Bind(new IPEndPoint(IPAddress.Any, IPConnections.Port));
     }
     
-    public IEnumerator StartReceivingResponses()
-    {
-        isReceiving = true;
-        
-        while (isReceiving)
-        {
-            Task task = udp.ReceiveAsync().ContinueWith(t =>
-            {
-                byte[] buffer = t.Result.Buffer;
-                string receivedIdentifier = Encoding.UTF8.GetString(buffer);
-                char type = receivedIdentifier[^1];
-                if (receivedIdentifier != identifier + type)
-                    ReceiveMessage(t.Result.RemoteEndPoint, type);
-            });
-            
-            //wait until receiving is finished
-            yield return new WaitUntil(() => task.IsCompleted || !isReceiving);
-            // yield return null;
-        }
-    }
+    // public IEnumerator StartReceivingResponses()
+    // {
+    //     isReceiving = true;
+    //     
+    //     while (isReceiving)
+    //     {
+    //         Task task = udp.ReceiveAsync().ContinueWith(t =>
+    //         {
+    //             byte[] buffer = t.Result.Buffer;
+    //             string receivedIdentifier = Encoding.UTF8.GetString(buffer);
+    //             char type = receivedIdentifier[^1];
+    //             if (receivedIdentifier != identifier + type)
+    //                 ReceiveMessage(t.Result.RemoteEndPoint, type);
+    //         });
+    //         
+    //         //wait until receiving is finished
+    //         yield return new WaitUntil(() => task.IsCompleted || !isReceiving);
+    //         // yield return null;
+    //     }
+    // }
     
     
     protected void SendAsync(IPEndPoint target, char type)
@@ -51,7 +48,7 @@ public abstract class UdpDeviceReceiver
         udp.SendAsync(probeData, probeData.Length, target);
     }
     
-    protected abstract void ReceiveMessage(IPEndPoint receivedEndpoint, char type);
+    // protected abstract void ReceiveMessage(IPEndPoint receivedEndpoint, char type);
     protected abstract void Dispose();
     protected abstract void Clear();
     
