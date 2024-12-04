@@ -58,6 +58,7 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="data"></param>
+    // TODO: could be made private.
     public void OnChangedTextSize(Component sender, params object[] data)
     {
         // Set the fontSize.
@@ -73,6 +74,7 @@ public class SelectionManager : MonoBehaviour
     /// <summary>
     /// Change the fontSize of the tmp_text components
     /// </summary>
+    // TODO: could be made private.
     public void ChangeTextSize()
     {
         int fontSize = SettingsManager.sm.GetFontSize();

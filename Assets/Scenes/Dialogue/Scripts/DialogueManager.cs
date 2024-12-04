@@ -308,8 +308,7 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
     }
-
-
+    
     #region TextSize
 
     /// <summary>
@@ -317,6 +316,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="data"></param>
+    // TODO: could be made private.
     public void OnChangedTextSize(Component sender, params object[] data)
     {
         // Set the fontSize.
@@ -338,6 +338,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Change the fontSize of the tmp_text components (excluding questions and return button)
     /// </summary>
+    // TODO: could be made private.
     public void ChangeTextSize()
     {
         // Set the fontSize.
