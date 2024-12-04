@@ -20,6 +20,8 @@ public class SettingsManager : MonoBehaviour
     
     private AudioSource musicSource;
 
+    private TextToSpeech tts;
+
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
     [NonSerialized] public float sfxVolume = 0;
@@ -37,6 +39,8 @@ public class SettingsManager : MonoBehaviour
         
         // Set reference to music-audiosource by component
         musicSource = GetComponents<AudioSource>()[0];
+
+        tts = GetComponent<TextToSpeech>();
     }
 
     private void Start()
@@ -144,6 +148,15 @@ public class SettingsManager : MonoBehaviour
     { 
         TalkingDelay = 0.05f * multiplier;
         talkingSpeed = multiplier;
+    }
+
+    public void AttemptSpeakTTS(string text)
+    {
+        if (ttsEnabled)
+        {
+            Debug.Log("tts");
+            tts.StartSpeech(text);
+        }
     }
     #endregion
 }

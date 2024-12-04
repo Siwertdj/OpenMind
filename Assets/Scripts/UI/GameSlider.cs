@@ -38,9 +38,6 @@ public class GameSlider : MonoBehaviour
         // Update the slider's value (if you need forced snapping)
         slider.value = steppedValue;
 
-        var rectTransform = (RectTransform)defaultValueRef.transform.parent;
-        Debug.Log(rectTransform.gameObject.name + " " + rectTransform.rect.width);
-
         valueText.text = steppedValue.ToString($"F{valueRounding}") + valueInfo;
     }
 }

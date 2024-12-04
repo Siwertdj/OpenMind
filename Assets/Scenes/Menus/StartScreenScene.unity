@@ -1151,6 +1151,7 @@ GameObject:
   - component: {fileID: 582075139}
   - component: {fileID: 582075138}
   - component: {fileID: 582075141}
+  - component: {fileID: 582075142}
   m_Layer: 0
   m_Name: SettingsManager
   m_TagString: Untagged
@@ -1171,10 +1172,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  musicVolume: 0
-  sfxVolume: 0
-  talkingSpeed: 0
-  ttsEnabled: 0
   defaultMusicFadeInTime: 0.5
 --- !u!4 &582075137
 Transform:
@@ -1419,6 +1416,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &582075142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 582075135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cef0015e8394eefac5f408eb6d765a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &608510556
 GameObject:
   m_ObjectHideFlags: 0
