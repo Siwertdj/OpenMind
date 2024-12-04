@@ -1486,6 +1486,7 @@ MonoBehaviour:
   confirmSelectionButton: {fileID: 330808632}
   scroller: {fileID: 1885397429}
   headerText: {fileID: 1951431983}
+  stopLoadIcon: {fileID: 11400000, guid: d5bc87abbc43ab44bb2893aabb110910, type: 2}
 --- !u!4 &1659958912
 Transform:
   m_ObjectHideFlags: 0

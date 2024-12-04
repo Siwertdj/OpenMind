@@ -1118,6 +1118,7 @@ MonoBehaviour:
   onEpilogueEnd:
     m_PersistentCalls:
       m_Calls: []
+  stopLoadIcon: {fileID: 11400000, guid: d5bc87abbc43ab44bb2893aabb110910, type: 2}
 --- !u!4 &1061845840
 Transform:
   m_ObjectHideFlags: 0
