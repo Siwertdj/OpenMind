@@ -21,6 +21,7 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
     [SerializeField] private bool audioEnabled = true;
+    [SerializeField] private bool overrideDefaultSpeed = true;
     [SerializeField] public float inputDelay = 0.5f; // Time in seconds between accepted inputs
 
     private Coroutine outputCoroutine;
@@ -187,7 +188,8 @@ public class DialogueAnimator : MonoBehaviour
                 audioSource.Play();
 
             // Wait and continue with next letter
-            yield return new WaitForSeconds(delayInSeconds);
+            float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
+            yield return new WaitForSeconds(delay);
             outputCoroutine = StartCoroutine(WritingAnimation(output, stringIndex + 1));
         }
         else
