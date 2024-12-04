@@ -1174,6 +1174,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
+  musicVolume: 0
+  sfxVolume: 0
+  talkingSpeed: 0
+  ttsEnabled: 0
   defaultMusicFadeInTime: 0.5
 --- !u!4 &582075137
 Transform:
@@ -1298,7 +1302,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -3414167128995361774, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
   m_audioClip: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.71
+  m_Volume: 0.76
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1678,7 +1682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100.00002}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803739612

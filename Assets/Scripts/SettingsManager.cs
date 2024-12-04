@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -15,8 +15,17 @@ public class SettingsManager : MonoBehaviour
     
     // the audiomixer that contains all soundchannels
     public AudioMixer audioMixer;
+
+    public float TalkingDelay {  get; private set; }
     
     private AudioSource musicSource;
+
+    #region Settings Variables
+    [NonSerialized] public float musicVolume = 0;
+    [NonSerialized] public float sfxVolume = 0;
+    [NonSerialized] public float talkingSpeed = 1;
+    [NonSerialized] public bool ttsEnabled = false;
+    #endregion
 
     [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     
@@ -30,6 +39,33 @@ public class SettingsManager : MonoBehaviour
         musicSource = GetComponents<AudioSource>()[0];
     }
 
+    private void Start()
+    {
+        if (audioMixer != null)
+            ApplySavedSettings();
+    }
+
+    private void ApplySavedSettings()
+    {
+        // Get the saved values
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
+        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
+
+        // Apply the saved values
+        SetMusicVolume(musicVolume);
+        SetSfxVolume(sfxVolume);
+        SetTalkingSpeed(talkingSpeed);
+    }
+
+    public void SaveSettings()
+    {
+        PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
+        PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
+        PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
+        PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+    }
 
     #region Audio
     /// <summary>
@@ -47,7 +83,8 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat("musicVolume", volume);
+        audioMixer.SetFloat(nameof(musicVolume), volume);
+        musicVolume = volume;
     }
 
     /// <summary>
@@ -56,8 +93,8 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        audioMixer.SetFloat("sfxVolume", volume);
-        
+        audioMixer.SetFloat(nameof(sfxVolume), volume);
+        sfxVolume = volume;
     }
     
     /// <summary>
@@ -99,6 +136,14 @@ public class SettingsManager : MonoBehaviour
             musicSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
+    }
+    #endregion
+
+    #region Accessibility
+    public void SetTalkingSpeed(float multiplier) 
+    { 
+        TalkingDelay = 0.05f * multiplier;
+        talkingSpeed = multiplier;
     }
     #endregion
 }
