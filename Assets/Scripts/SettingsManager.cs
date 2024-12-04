@@ -41,7 +41,8 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        ApplySavedSettings();
+        if (audioMixer != null)
+            ApplySavedSettings();
     }
 
     private void ApplySavedSettings()
