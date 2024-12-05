@@ -32,6 +32,9 @@ public class DataListener : DataNetworker
     ///<summary>used to convert received data into a new message</summary>
     private NetworkEvents respondEvents;
     
+    ///<summary>when called, a response is sent</summary>
+    public NetworkEvents onDeplayedRespondEvents { get; private set; }
+    
     private bool isConnectionListening, isDataListening;
    
     /// <summary>
@@ -46,6 +49,7 @@ public class DataListener : DataNetworker
         onResponseSentEvents = new NetworkEvents();
         onAckSentEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
+        onDeplayedRespondEvents = new NetworkEvents();
         
         if (!IPConnections.GetOwnIps().Contains(ipAddress))
         {
