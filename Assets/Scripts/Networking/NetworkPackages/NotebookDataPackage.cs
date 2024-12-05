@@ -17,6 +17,13 @@ public class NotebookDataPackage
         personalNotes = data.GetPersonalNotes();
     }
     
+    public NotebookDataPackage(NetworkPackage data)
+    {
+        NotebookDataPackage notebookDataPackage = data.GetData<NotebookDataPackage>();
+        characterNotes = notebookDataPackage.characterNotes;
+        personalNotes = notebookDataPackage.personalNotes;
+    }
+    
     public NetworkPackage CreatePackage()
     {
         return NetworkPackage.CreatePackage(this);

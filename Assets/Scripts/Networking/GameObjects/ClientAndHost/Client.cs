@@ -13,17 +13,10 @@ using UnityEngine;
 /// </summary>
 public class Client : MonoBehaviour
 {
-    //TODO:
-    //-client setup
-    //-obtain classroom code
-    //-convert classroom code to ip
-    //-attempt to connect to ip & handle potential error feedback
-    //-create event to obtain notebook data and send it to the host & handle potential error feedback
-    //-retrieve other notebook data from client & put it into notebook
+    public static Client c;
     
-    public Client c;
-    
-    private DataSender sender;
+    private DataSender           sender;
+    private Action<NotebookData> response;
     
     private void Awake()
     {
@@ -60,16 +53,21 @@ public class Client : MonoBehaviour
         Debug.LogError("No connection was made");
     }
     
-    public void SendNotebookData()
+    public void SendNotebookData(Action<NotebookData> response)
     {
+        this.response = response;
         NotebookDataPackage package = new NotebookDataPackage(GameManager.gm.notebookData);
         sender.AddOnAckTimeoutEvent("NotebookData", AcknowledgementTimeoutError);
         sender.SendDataAsync("NotebookData", package.CreatePackage(), 5f);
+        sender.AddOnReceiveResponseEvent("NotebookResponse", ReceivedNotebookDataFromOther);
     }
     
     void ReceivedNotebookDataFromOther(object o)
     {
-        
+        List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
+        NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0]);
+        NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
+        response(notebookData);
     }
     
     /// <summary>
