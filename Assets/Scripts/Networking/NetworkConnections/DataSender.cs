@@ -25,6 +25,8 @@ public class DataSender : DataNetworker
     
     /// <summary> when a connection is made with the listener, input is the task associated with making the connection </summary>
     private NetworkEvents onConnectEvents;
+    /// <summary> when a connection timed out, input is nothing </summary>
+    private NetworkEvents onConnectionTimeoutEvents;
     /// <summary> when data is sent to the listener, input is the amount of bytes that were sent </summary>
     private NetworkEvents onDataSentEvents;
     /// <summary> when a response is received from the listener, input is the response obtained </summary>
@@ -34,6 +36,7 @@ public class DataSender : DataNetworker
     private NetworkEvents onAckReceievedEvents;
     /// <summary> when an acknowlegement is not received within the timeout period, input is the signature of the timeout message </summary>
     private NetworkEvents onAckTimeoutEvents;
+
     
     
     /// <summary>
@@ -47,6 +50,7 @@ public class DataSender : DataNetworker
         onConnectEvents = new NetworkEvents();
         onAckReceievedEvents = new NetworkEvents();
         onAckTimeoutEvents = new NetworkEvents();
+        onConnectionTimeoutEvents = new NetworkEvents();
         
         acknowledgementTimes = new List<AcknowledgementTime>();
         
@@ -73,7 +77,7 @@ public class DataSender : DataNetworker
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
                 {
-                    if (!timeout || true)
+                    if (!timeout && t.IsCompletedSuccessfully)
                     {
                         connected = true;
                         logError = onConnectEvents.Raise("Connect", t, clearDataSentEvents,
@@ -87,7 +91,7 @@ public class DataSender : DataNetworker
                 double diff = (DateTime.Now - start).TotalMilliseconds;
                 if (diff > timeoutSeconds * 1000)
                 {
-                    logError = "Failed to connect";
+                    onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
                     timeout = true;
                     break;
                 }
@@ -260,6 +264,14 @@ public class DataSender : DataNetworker
     /// </summary>
     public void AddOnConnectEvent(Action<object> action) =>
         onConnectEvents.Subscribe("Connect", action);
+    
+    /// <summary>
+    /// Adds an action to the event of connecting with a host.
+    /// When connecting to a host, the given action is called.
+    /// The object is the task created when attempting to connect with a host.
+    /// </summary>
+    public void AddOnConnectionTimeoutEvent(Action<object> action) =>
+        onConnectEvents.Subscribe("Timeout", action);
     
     /// <summary>
     /// Adds an action to the event of completing the send action.

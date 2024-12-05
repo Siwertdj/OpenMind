@@ -1,14 +1,82 @@
 // This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
 
+/// <summary>
+/// Handles the client side of networking.
+/// This script can be active and inactive (separate from the active and inactive of objects in unity.)
+/// </summary>
 public class Client : MonoBehaviour
 {
     //TODO:
-    //- loop through all possible local ips
-    //- make new DataSender for each local ip
-    //- ping all devices with that DataSender
+    //-client setup
+    //-obtain classroom code
+    //-convert classroom code to ip
+    //-attempt to connect to ip & handle potential error feedback
+    //-create event to obtain notebook data and send it to the host & handle potential error feedback
+    //-retrieve other notebook data from client & put it into notebook
+    
+    public Client c;
+    
+    private DataSender sender;
+    
+    private void Awake()
+    {
+        c = this;
+    }
+    
+    public void EnterClassroomCode(string classroomCode)
+    {
+        IPAddress  hostAddress = null;
+        IPv4Converter converter = new IPv4Converter();
+        try
+        {
+            hostAddress = converter.ConvertToIPAddress(classroomCode);
+        }
+        catch (ArgumentException e)
+        {
+            Debug.LogError($"No error handling yet, go error: {e}");
+        }
+        
+        if (hostAddress is null)
+            return;
+        
+        sender = new DataSender(hostAddress, IPConnections.Port);
+        sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
+        StartCoroutine(sender.DisplayAnyDebugs(1f));
+        StartCoroutine(sender.Connect(5f));
+    }
+    
+    /// <summary>
+    /// Called when no connection could be established.
+    /// </summary>
+    void ConnectionTimeoutError(object o)
+    {
+        Debug.LogError("No connection was made");
+    }
+    
+    public void SendNotebookData()
+    {
+        NotebookDataPackage package = new NotebookDataPackage(GameManager.gm.notebookData);
+        sender.AddOnAckTimeoutEvent("NotebookData", AcknowledgementTimeoutError);
+        sender.SendDataAsync("NotebookData", package.CreatePackage(), 5f);
+    }
+    
+    void ReceivedNotebookDataFromOther(object o)
+    {
+        
+    }
+    
+    /// <summary>
+    /// Called when no acknowlegement was received, meaning no data was received.
+    /// </summary>
+    void AcknowledgementTimeoutError(object o)
+    {
+        Debug.LogError("No acknowledgement was received");
+    }
 }
