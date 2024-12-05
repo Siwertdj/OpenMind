@@ -55,9 +55,9 @@ public class NotebookManagerEditTest
     {
         nm.InitializeCharacterButtons();
         
-        var buttons = nm.nameButtons.GetComponentsInChildren<Button>().ToList();
+        var buttons = nm.Test_GetNameButtons();
 
-        for (int i = 0; i < buttons.Count; i++)
+        for (int i = 0; i < buttons.Length; i++)
         {
             int id = i;
             Button button = buttons[id];

@@ -15,12 +15,11 @@ public class NotebookManager : MonoBehaviour
     public GameObject inputField;
     public GameObject inputFieldCharacters;
     public GameObject characterInfo;
-    public GameObject nameButtons;
     public Button personalButton;
     [NonSerialized] public NotebookData notebookData;
     private CharacterInstance currentCharacter;
-    private List<Button> buttons;
     private Button selectedButton;
+    [SerializeField] private Button[] nameButtons;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
@@ -46,14 +45,22 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void InitializeCharacterButtons()
     {
-        buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
-        for (int i = 0; i < buttons.Count; i++)
+        // Initialise all buttons for which there are characters
+        for (int i = 0; i < GameManager.gm.currentCharacters.Count; i++)
         {
+            Debug.Log($"Made button for {i}");
             int id = i;
-            Button button = buttons[id];
+            var button = nameButtons[i];
             button.GetComponentInChildren<TextMeshProUGUI>().text = 
                 GameManager.gm.currentCharacters[i].characterName;
+
+            Debug.Log($"Adding listener {i}");
             button.onClick.AddListener(()=>CharacterTab(id));
+        }
+        // Set any remaining buttons to inactive
+        for (int i = GameManager.gm.currentCharacters.Count; i < nameButtons.Length; i++)
+        {
+            nameButtons[i].gameObject.SetActive(false);
         }
     }
     
@@ -78,6 +85,8 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void CharacterTab(int id)
     {
+        Debug.Log($"CharacterTab {id}");
+
         // Save notes
         SaveNotes();
         // Deactivate the personal notes tab if it's opened
@@ -90,13 +99,14 @@ public class NotebookManager : MonoBehaviour
         // Activate written character notes
         inputFieldCharacters.SetActive(true);
         // Get the character
+        Debug.Log($"Trying to get character {id}, max id is {GameManager.gm.currentCharacters.Count - 1}");
         currentCharacter = GameManager.gm.currentCharacters[id];
         // Write the notes to the notebook tab
         characterInfo.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
         // Write text to notebook
         inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
         // Make button clickable
-        ChangeButtons(buttons[id]);
+        ChangeButtons(nameButtons[id]);
     }
     
     /// <summary>
@@ -134,4 +144,10 @@ public class NotebookManager : MonoBehaviour
         selectedButton = clickedButton;
         selectedButton.interactable = false;
     }
+
+    #region Test Variables
+    #if UNITY_INCLUDE_TESTS
+    public Button[] Test_GetNameButtons() => nameButtons;
+    #endif
+    #endregion
 }
