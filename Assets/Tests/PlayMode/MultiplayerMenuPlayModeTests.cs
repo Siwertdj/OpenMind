@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-public class MultiplayerMenuEditTests : MonoBehaviour
+public class MultiplayerMenuPlayTests : MonoBehaviour
 {
     private MultiplayerMenuManager mm;
     
@@ -34,9 +34,9 @@ public class MultiplayerMenuEditTests : MonoBehaviour
     {
         // check if the correct canvas is active
         Assert.IsTrue(GameObject.Find("MultiplayerMenuOptions").activeSelf);
-        Assert.IsTrue(GameObject.Find("HostMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("JoinMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("ChooseStory") == null);
+        Assert.IsNull(GameObject.Find("HostMenuOptions"));
+        Assert.IsNull(GameObject.Find("JoinMenuOptions"));
+        Assert.IsNull(GameObject.Find("ChooseStory"));
         yield return null;
     }
 
@@ -48,10 +48,10 @@ public class MultiplayerMenuEditTests : MonoBehaviour
     {
         mm.OpenHostMenu();
         // check if the correct canvas is active
-        Assert.IsTrue(GameObject.Find("MultiplayerMenuOptions") == null);
+        Assert.IsNull(GameObject.Find("MultiplayerMenuOptions"));
         Assert.IsTrue(GameObject.Find("HostMenuOptions").activeSelf);
-        Assert.IsTrue(GameObject.Find("JoinMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("ChooseStory") == null);
+        Assert.IsNull(GameObject.Find("JoinMenuOptions"));
+        Assert.IsNull(GameObject.Find("ChooseStory"));
         yield return null;
     }
     
@@ -63,10 +63,10 @@ public class MultiplayerMenuEditTests : MonoBehaviour
     {
         mm.OpenJoinMenu();
         // check if the correct canvas is active
-        Assert.IsTrue(GameObject.Find("MultiplayerMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("HostMenuOptions") == null);
+        Assert.IsNull(GameObject.Find("MultiplayerMenuOptions"));
+        Assert.IsNull(GameObject.Find("HostMenuOptions"));
         Assert.IsTrue(GameObject.Find("JoinMenuOptions").activeSelf);
-        Assert.IsTrue(GameObject.Find("ChooseStory") == null);
+        Assert.IsNull(GameObject.Find("ChooseStory"));
         yield return null;
     }
     
@@ -77,11 +77,11 @@ public class MultiplayerMenuEditTests : MonoBehaviour
     public IEnumerator ChooseStoryTest()
     {
         mm.OpenHostMenu();
-        mm.StartAsHost();
+        mm.CreateAsHost();
         // check if the correct canvas is active
-        Assert.IsTrue(GameObject.Find("MultiplayerMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("HostMenuOptions") == null);
-        Assert.IsTrue(GameObject.Find("JoinMenuOptions") == null);
+        Assert.IsNull(GameObject.Find("MultiplayerMenuOptions"));
+        Assert.IsNull(GameObject.Find("HostMenuOptions"));
+        Assert.IsNull(GameObject.Find("JoinMenuOptions"));
         Assert.IsTrue(GameObject.Find("ChooseStory").activeSelf);
         yield return null;
     }
