@@ -243,9 +243,6 @@ public class SceneController : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        // Set the ActiveScene to the newly loaded scene
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
-
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }
@@ -370,24 +367,5 @@ public class SceneController : MonoBehaviour
            GameManager.gm.IsPaused = true;
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
        }
-    }
-
-    /// <summary>
-    /// Converts the given scene to the corresponding value in the SceneName enum.
-    /// </summary>
-    /// <param name="scene"></param>
-    /// <returns></returns>
-    public SceneName GetSceneName(Scene scene)
-    {
-        try
-        {
-            return (SceneName)Enum.Parse(typeof(SceneName), scene.name, true);
-        }
-        catch (ArgumentException)
-        {
-            // If scene name is not found, throw an error
-            Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
-            throw;
-        }
     }
 }
