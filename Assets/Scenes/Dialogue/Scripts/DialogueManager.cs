@@ -10,8 +10,6 @@ using System;
 using System.IO;
 using System.Net;
 using UnityEngine.Events;
-using System.Runtime.InteropServices;
-using Codice.Client.BaseCommands.BranchExplorer;
 
 /// <summary>
 /// The manager for the dialogue scene
