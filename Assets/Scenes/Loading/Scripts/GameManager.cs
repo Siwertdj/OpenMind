@@ -562,10 +562,10 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                        await sc.TransitionScene(
-                            SceneController.SceneName.DialogueScene, 
-                            SceneController.SceneName.NPCSelectScene, 
-                            SceneController.TransitionType.Transition);
+                    await sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
                 }
                 // Change the gamestate
                 gameState = GameState.NpcSelect;
