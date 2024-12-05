@@ -26,8 +26,13 @@ public class GameManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onDialogueStart;
 
-    public bool IsPaused { get; set; } = false;
-    
+    #region Pausing
+    private int pauseStack = 0;
+    public bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
+
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
     private int numQuestions; // Amount of times the player can ask a question
@@ -252,7 +257,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-    
+
     #region InstantiateGameOrCycles
     /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
