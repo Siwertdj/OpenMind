@@ -34,13 +34,14 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
+    public GameEvent stopLoadIcon;
 
     [NonSerialized] public        string            inputText;
     [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
-    
+
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
     /// </summary>
@@ -51,7 +52,11 @@ public class DialogueManager : MonoBehaviour
     {
         // Set static DialogueManager instance
         dm = this;
-
+        
+        // Change the text size
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+        
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
         {
@@ -175,7 +180,7 @@ public class DialogueManager : MonoBehaviour
 
             // Set styling for button
             buttonText.enableAutoSizing = false;
-            buttonText.fontSize = 40;
+            buttonText.fontSize = SettingsManager.sm.GetFontSize();
 
             // Add event when clicking the button
             button.onClick.AddListener(() => OnButtonClick(response));
@@ -226,7 +231,7 @@ public class DialogueManager : MonoBehaviour
         TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
+        buttonText.fontSize = SettingsManager.sm.GetFontSize();
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
@@ -311,6 +316,46 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
     }
+    
+    #region TextSize
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data"></param>
+    // TODO: could be made private.
+    public void OnChangedTextSize(Component sender, params object[] data)
+    {
+        // Set the fontSize.
+        if (data[0] is int fontSize)
+        {
+            // Change the characterNameField fontSize
+            characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            // Change the animator text fontSize
+            animator.ChangeTextSize(fontSize);
+            // Change the question and return button fontSize if they are present.
+            foreach (Button b in questionsField.GetComponentsInChildren<Button>())
+            {
+                TMP_Text buttonText = b.GetComponentInChildren<TMP_Text>();
+                buttonText.fontSize = fontSize;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components (excluding questions and return button)
+    /// </summary>
+    // TODO: could be made private.
+    public void ChangeTextSize()
+    {
+        // Set the fontSize.
+        int fontSize = SettingsManager.sm.GetFontSize();
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        animator.ChangeTextSize(fontSize);
+    }
+
+    #endregion
     
     /// <summary>
     /// Gets the text for the buttons that prompt specific questions.
