@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 /// <summary>
 /// Method in this class are raised by Game Events to start and stop the loading icon animation
 /// </summary>
-public class PopUpManager : MonoBehaviour
+public class LoadingScreenManager : MonoBehaviour
 {
     public Canvas popUpCanvas; // canvas that will show the loading icon
     public float guaranteeLoadDuration; // duration to plug into WaitForSeconds to guarantee a certain length of the loading animation
