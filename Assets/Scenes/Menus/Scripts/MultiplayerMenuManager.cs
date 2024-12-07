@@ -135,8 +135,8 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void StartAsHost()
     {
         // TODO: This is the method to start the game as a host
-        client = gameObject.AddComponent<Client>();
-        client.EnterClassroomCode(classCode);
+        //client = gameObject.AddComponent<Client>();
+        //client.EnterClassroomCode(classCode);
         
         host.ActivateNotebookExchange();
     }
@@ -159,9 +159,10 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// Sets the class code to the input from the player.
     /// </summary>
     /// <param name="code">The contents of the input field.</param>
-    public void SetCode(string code)
+    public void SetCode(GameObject inputField)
     {
-        classCode = code;
+        classCode = inputField.GetComponent<TMP_InputField>().text;
+        Debug.Log(classCode);
     }
 
     // TODO: this is where the player joins a game using a class code
