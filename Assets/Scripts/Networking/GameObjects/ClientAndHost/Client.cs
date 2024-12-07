@@ -17,6 +17,8 @@ public class Client : MonoBehaviour
     
     private DataSender           sender;
     private Action<NotebookData> response;
+    private Action<int> storyID;
+    private Action<int> seed;
     
     private void Awake()
     {
@@ -41,10 +43,24 @@ public class Client : MonoBehaviour
         
         sender = new DataSender(hostAddress, IPConnections.Port);
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
+        
+        // Ask for storyID and the seed when connected with the host
+        sender.AddOnConnectEvent(OnConnectionWithHost);
+        sender.AddOnReceiveResponseEvent("Seed", ReceivedSeedFromHost);
+        sender.AddOnReceiveResponseEvent("StoryID", ReceivedStoryIdFromHost);
+        
         StartCoroutine(sender.DisplayAnyDebugs(1f));
         StartCoroutine(sender.Connect(5f));
+        StartCoroutine(sender.ListenForResponse(3f));
     }
-    
+
+    private void OnConnectionWithHost(object obj)
+    {
+        Debug.Log($"(Sender): Connected with the host.");
+        sender.SendDataAsync("Seed", NetworkPackage.CreatePackage("Plz give seed!"), 10f);
+        sender.SendDataAsync("StoryID", NetworkPackage.CreatePackage("Plz give storyID!"), 10f);
+    }
+
     /// <summary>
     /// Called when no connection could be established.
     /// </summary>
@@ -68,6 +84,18 @@ public class Client : MonoBehaviour
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0]);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
         response(notebookData);
+    }
+    
+    void ReceivedStoryIdFromHost(object o)
+    {
+        List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
+        storyID(receivedData[0].GetData<int>());
+    }
+    
+    void ReceivedSeedFromHost(object o)
+    {
+        List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
+        seed(receivedData[0].GetData<int>());
     }
     
     /// <summary>

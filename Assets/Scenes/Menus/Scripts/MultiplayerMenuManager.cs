@@ -25,7 +25,10 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     private string classCode;
     private int    storyid;
+    private int    seed;
     
+    public static Host   host;
+    public static Client client;
 
     /// <summary>
     /// Opens the settings menu.
@@ -109,10 +112,21 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void HostGame(int id)
     {
         storyid = id;
-        Random rnd = new Random();
-        classCode = rnd.Next(100000, 999999).ToString();
         storyCanvas.SetActive(false);
         lobbyCanvas.SetActive(true);
+        
+        // Create and activate the host
+        host = gameObject.AddComponent<Host>();
+        host.Activate();
+        
+        // Create a classcode using the local IP address
+        classCode = host.CreateClassroomCode();
+        
+        // Create a seed
+        seed = DateTime.Now.Ticks.GetHashCode();
+        
+        // Let clients connect to the game
+        host.Lobby(storyid, seed);
     }
 
     /// <summary>
@@ -120,7 +134,11 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// </summary>
     public void StartAsHost()
     {
-        // TODO: This is the method to start the game as a host 
+        // TODO: This is the method to start the game as a host
+        client = gameObject.AddComponent<Client>();
+        client.EnterClassroomCode(classCode);
+        
+        host.ActivateNotebookExchange();
     }
 
     #endregion
@@ -153,10 +171,11 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// </summary>
     public void JoinGame()
     {
+        client = gameObject.AddComponent<Client>();
         
+        client.EnterClassroomCode(classCode);
     }
     
-
     #endregion
     
     public void Update()
