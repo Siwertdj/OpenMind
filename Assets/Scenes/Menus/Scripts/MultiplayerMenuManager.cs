@@ -159,7 +159,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void SetCode(GameObject inputField)
     {
         classCode = inputField.GetComponent<TMP_InputField>().text;
-        Debug.Log(classCode);
     }
 
     // TODO: this is where the player joins a game using a class code
