@@ -135,9 +135,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void StartAsHost()
     {
         // TODO: This is the method to start the game as a host
-        //client = gameObject.AddComponent<Client>();
-        //client.EnterClassroomCode(classCode);
-        
         host.ActivateNotebookExchange();
     }
 

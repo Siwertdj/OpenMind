@@ -90,12 +90,14 @@ public class Client : MonoBehaviour
     {
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         storyID(receivedData[0].GetData<int>());
+        Debug.Log("Client: Received storyID: " + receivedData[0].GetData<int>());
     }
     
     void ReceivedSeedFromHost(object o)
     {
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         seed(receivedData[0].GetData<int>());
+        Debug.Log("Client: Received seed: " + receivedData[0].GetData<int>());
     }
     
     /// <summary>
