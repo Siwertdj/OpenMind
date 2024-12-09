@@ -6,19 +6,22 @@ using System.Collections.Generic;
 
 public class NotebookDataPackage
 {
-    public Dictionary<int, string> characterNotes = new();
-    public string                  personalNotes;
+    private List<CharacterInstance> characters;
+    private Dictionary<int, string> characterNotes = new();
+    private string                  personalNotes;
     
-    public NotebookDataPackage(NotebookData data)
+    public NotebookDataPackage(NotebookData data, List<CharacterInstance> characters)
     {
-        foreach (CharacterInstance character in GameManager.gm.currentCharacters)
+        this.characters = characters;
+        foreach (CharacterInstance character in characters)
             characterNotes.Add(character.id, data.GetCharacterNotes(character));
         
         personalNotes = data.GetPersonalNotes();
     }
     
-    public NotebookDataPackage(NetworkPackage data)
+    public NotebookDataPackage(NetworkPackage data, List<CharacterInstance> characters)
     {
+        this.characters = characters;
         NotebookDataPackage notebookDataPackage = data.GetData<NotebookDataPackage>();
         characterNotes = notebookDataPackage.characterNotes;
         personalNotes = notebookDataPackage.personalNotes;
@@ -37,7 +40,7 @@ public class NotebookDataPackage
         foreach (var keyValuePair in characterNotes)
         {
             CharacterInstance instance =
-                GameManager.gm.currentCharacters.Find(cc => cc.id == keyValuePair.Key);
+                characters.Find(cc => cc.id == keyValuePair.Key);
             pages.Add(instance, new NotebookPage(instance));
         }
 
