@@ -12,13 +12,17 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
+    public GameObject LoadingScreenManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject popUpScreen;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+    public GameEvent startLoadIcon;
 
     [Header("Copyright canvas")]
     public Canvas copyright;
@@ -38,10 +42,14 @@ public class StartMenuManager : MonoBehaviour
         
         // Keep the copyright text on the screen in all scenes
         DontDestroyOnLoad(copyright);
+
+        // Make popup and loading available at any point in the game
+        DontDestroyOnLoad(loadingScreen);
+        DontDestroyOnLoad(popUpScreen);
         
         SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
-    
+
     /// <summary>
     /// Activates the prompt which asks the player to skip the prologue
     /// </summary>
@@ -58,7 +66,6 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void ContinueGame()
     {
-        //SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
         SaveData saveData = Load.Loader.GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }

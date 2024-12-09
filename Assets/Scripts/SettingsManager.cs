@@ -19,6 +19,17 @@ public class SettingsManager : MonoBehaviour
     public float TalkingDelay {  get; private set; }
     
     private AudioSource musicSource;
+    
+    // Text size to be used for the text components
+    public TextSize textSize;
+    
+    public enum TextSize
+    {
+        Small,
+        Medium,
+        Large
+    }
+    
 
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
@@ -35,10 +46,13 @@ public class SettingsManager : MonoBehaviour
         sm = this;
         DontDestroyOnLoad(this.gameObject);
         
+        // Set the default textSize to medium.
+        textSize = TextSize.Medium;
+        
         // Set reference to music-audiosource by component
         musicSource = GetComponents<AudioSource>()[0];
     }
-
+    
     private void Start()
     {
         if (audioMixer != null)
@@ -66,6 +80,26 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
         PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
     }
+    
+    #region TextSize
+
+    /// <summary>
+    /// Get the fontSize of the dialogue text.
+    /// </summary>
+    public int GetFontSize()
+    {
+        switch (textSize)
+        {
+            case TextSize.Small:
+                return 35;
+            case TextSize.Medium:
+                return 45;
+            default:
+                return 55;
+        }
+    }
+
+    #endregion
 
     #region Audio
     /// <summary>
