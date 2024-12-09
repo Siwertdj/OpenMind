@@ -23,7 +23,6 @@ public class StartMenuManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onGameLoaded;
     public GameEvent startLoadIcon;
-    public GameEvent doPopUp;
 
     [Header("Copyright canvas")]
     public Canvas copyright;
@@ -47,9 +46,6 @@ public class StartMenuManager : MonoBehaviour
         // Make popup and loading available at any point in the game
         DontDestroyOnLoad(loadingScreen);
         DontDestroyOnLoad(popUpScreen);
-
-        doPopUp.Raise(this, "Test test test");
-
         
         SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
