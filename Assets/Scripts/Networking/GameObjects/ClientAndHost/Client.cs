@@ -30,6 +30,9 @@ public class Client : MonoBehaviour
         c = this;
     }
     
+    /// <summary>
+    /// Enters a classroom code. This converts it back to an ip, connects with this ip and requests initialisation data.
+    /// </summary>
     public void EnterClassroomCode(string classroomCode)
     {
         IPAddress  hostAddress = null;

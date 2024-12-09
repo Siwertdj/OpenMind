@@ -10,16 +10,18 @@ using UnityEngine;
 
 public class Host : MonoBehaviour
 {
+    public static Host h;
+    
     private IPAddress                  ownIP;
     private DataListener               listener;
     private int                        seed;
     private int                        storyID;
-    private List<List<NetworkPackage>> notebooks;
+    private List<List<NetworkPackage>> notebooks = new ();
     
 
     void Awake()
     {
-        notebooks = new ();
+        h = this;
     }
     
     public void Activate()
