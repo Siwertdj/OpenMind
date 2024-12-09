@@ -101,6 +101,7 @@ public class DialogueAnimatorPlayTest
     [UnityTest]
     public IEnumerator InDialogueCheckTest()
     {
+
         string text = "Hello, World!";
 
         // InDialogue should be false before we start writing
@@ -119,6 +120,7 @@ public class DialogueAnimatorPlayTest
         Assert.IsTrue(animator.InDialogue);
 
         // InDialogue should be false when we skip to close the dialogue
+        yield return new WaitForSeconds(animator.inputDelay);
         animator.SkipDialogue();
         Assert.IsFalse(animator.InDialogue);
 
@@ -190,9 +192,11 @@ public class DialogueAnimatorPlayTest
         animator.WriteDialogue(text);
 
         // End the dialogue
+        yield return new WaitForSeconds(animator.inputDelay);
         animator.SkipDialogue();
+        yield return new WaitForSeconds(animator.inputDelay);
         animator.SkipDialogue();
-
+        
         Assert.IsTrue(dialogueEndCheck);
 
         yield return null;
