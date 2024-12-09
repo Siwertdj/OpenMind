@@ -108,7 +108,7 @@ public class NetworkManager : MonoBehaviour
         dataListener.AddResponseTo("test", EchoMessage);
         dataListener.AddOnDisconnectedEvent(ListenerDisconnect);
         
-        StartCoroutine(dataListener.AcceptIncomingConnections(3f));
+        StartCoroutine(dataListener.AcceptIncomingConnections());
         StartCoroutine(dataListener.ListenForIncomingData(0.1f));
         StartCoroutine(dataListener.IsDisconnected(1f));
     }
@@ -122,12 +122,12 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnConnectEvent(SenderConnect);
         sender.AddOnDataSentEvent("test", SenderDataSent);
         sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
-        sender.AddOnAckReceivedEvent(SenderReceiveACK);
+        sender.AddOnAckReceivedEvent("test", SenderReceiveACK);
         sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         sender.AddOnDisconnectedEvent(SenderDisconnect);
         
         StartCoroutine(sender.Connect(10f));
-        StartCoroutine(sender.ListenForResponse(3f));
+        StartCoroutine(sender.ListenForResponse());
         StartCoroutine(sender.IsDisconnected(1f));
     }
     

@@ -24,7 +24,6 @@ public class MultiplayerManager : MonoBehaviour
         
         // Create and activate the host
         host = gameObject.AddComponent<Host>();
-        host.Activate();
         
         // Create a seed
         seed = DateTime.Now.Ticks.GetHashCode();
@@ -47,7 +46,7 @@ public class MultiplayerManager : MonoBehaviour
         // Create the client
         client = gameObject.AddComponent<Client>();
         // Connect to the host using the code
-        client.EnterClassroomCode(classCode);
+        //client.EnterClassroomCode(classCode);
     }
 
     public void StartGame()

@@ -3,28 +3,54 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// Acts similar to <see cref="NetworkEvents"/>, but with a delay.
+/// When both raise is called and an input is supplied, the event is actually raised
 /// </summary>
 public class NetworkDelayedEvents
 {
     private Dictionary<string, object> inputData = new();
     private NetworkEvents              events    = new();
+    private HashSet<string>            raised    = new();
     
     /// <summary>
-    /// Raises all events that are subscribed to the given signature.
+    /// Raises all events that are subscribed to the given signature, if an input has been supplied for this signature.
     /// If clear is set to true, all events regarding the given signature will be removed after called.
     /// </summary>
-    public string Raise(string signature, bool clear, string eventName) =>
-        events.Raise(signature, inputData[signature], clear, eventName);
+    public string Raise(string signature, bool clear, string eventName)
+    {
+        if (inputData.ContainsKey(signature))
+        {
+            raised.Remove(signature);
+            inputData.Remove(signature);
+            return events.Raise(signature, inputData[signature], clear, eventName);
+        }
+        
+        raised.Add(signature);
+        return "";
+    }
+    
     
     /// <summary>
-    /// Adds data to the given signature for when the event can be called.
+    /// Adds data to the given signature for when the event can be called. If the event was already raised, call the event.
     /// If data has already been given to a signature, it is overridden with the new data.
     /// </summary>
-    public void InputData(string signature, object data) =>
+    public string InputData(string signature, object data, bool clear, string eventName)
+    {
         inputData[signature] = data;
+        
+        if (raised.Contains(signature))
+        {
+            raised.Remove(signature);
+            inputData.Remove(signature);
+            return events.Raise(signature, inputData[signature], clear, eventName);
+        }
+        
+        return "";
+    }
+        
     
     /// <summary>
     /// Subscribes the given action to the given signature.

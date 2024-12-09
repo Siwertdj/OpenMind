@@ -31,9 +31,8 @@ public class DataListener : DataNetworker
     private NetworkEvents onAckSentEvents;
     ///<summary>used to convert received data into a new message</summary>
     private NetworkEvents respondEvents;
-    
-    ///<summary>when called, a response is sent</summary>
-    public NetworkEvents onDeplayedRespondEvents { get; private set; }
+    ///<summary>used to respond in a delayed matter</summary>
+    private NetworkDelayedEvents delayedRespondEvents;
     
     private bool isConnectionListening, isDataListening;
    
@@ -49,7 +48,7 @@ public class DataListener : DataNetworker
         onResponseSentEvents = new NetworkEvents();
         onAckSentEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
-        onDeplayedRespondEvents = new NetworkEvents();
+        delayedRespondEvents = new NetworkDelayedEvents();
         
         if (!IPConnections.GetOwnIps().Contains(ipAddress))
         {
@@ -69,7 +68,7 @@ public class DataListener : DataNetworker
             o =>
             {
                 (int, string) data = ((int, string))o;
-                AddResponseTo("ACK", signature => signature, 
+                SendResponseTo("ACK", signature => signature, 
                     (data.Item1, new List<NetworkPackage>{NetworkPackage.CreatePackage(data.Item2)}));
             });
     }
@@ -78,12 +77,8 @@ public class DataListener : DataNetworker
     /// Starts a loop in a coroutine to accept incoming connections. This function will run infinitely unless cancelled.
     /// While this function is running, any incoming connections will be accepted.
     /// </summary>
-    /// <param name="intervalSeconds">
-    /// Retry accepting new connections each interval.
-    /// The interval exists so it doesn't run constantly and take up a lot of resources.
-    /// </param>
     /// <param name="clearOnAcceptConnectionEvents">If set to true, the actions called after connecting with a client are removed from the event.</param>
-    public IEnumerator AcceptIncomingConnections(float intervalSeconds, bool clearOnAcceptConnectionEvents = false)
+    public IEnumerator AcceptIncomingConnections(bool clearOnAcceptConnectionEvents = false)
     {
         GiveDisplayWarning();
         isConnectionListening = true;
@@ -203,6 +198,13 @@ public class DataListener : DataNetworker
         //responds to the sender
         logError = respondEvents.Raise(signature, (index, receivedTailPackages),
             clearRespondEvents, "respondEvent");
+        if (logError != "")
+            return;
+        
+        logError = delayedRespondEvents.InputData(signature, (index, receivedTailPackages),
+            clearRespondEvents, "delayedRespondEvent");
+        if (logError != "")
+            return;
         
         isConnectionReceiving[index] = false;
     }
@@ -247,7 +249,7 @@ public class DataListener : DataNetworker
     /// <param name="response">Given the received data, create a response with it.</param>
     public void AddResponseTo([DisallowNull] string signature, Func<List<NetworkPackage>, List<NetworkPackage>> response) =>
         respondEvents.Subscribe(signature,
-            o => AddResponseTo(signature, response, ((int, List<NetworkPackage>))o));
+            o => SendResponseTo(signature, response, ((int, List<NetworkPackage>))o));
     
     /// <summary>
     /// Same as <see cref="AddResponseTo(string,System.Func{System.Collections.Generic.List{NetworkPackage},System.Collections.Generic.List{NetworkPackage}})"/>
@@ -256,13 +258,27 @@ public class DataListener : DataNetworker
     public void AddResponseTo([DisallowNull] string signature,
         Func<List<NetworkPackage>, NetworkPackage> response) =>
         respondEvents.Subscribe(signature,
-            o => AddResponseTo(signature, d => new List<NetworkPackage> { response(d) },
+            o => SendResponseTo(signature, d => new List<NetworkPackage> { response(d) },
                 ((int, List<NetworkPackage>))o));
+    
+    public Action<List<NetworkPackage>> AddDelayedResponseTo([DisallowNull] string signature,
+        Action<List<NetworkPackage>> receiveData)
+    {
+        onDataReceivedEvents.Subscribe(signature, o => receiveData((List<NetworkPackage>)o));
+        
+        return response =>
+        {
+            delayedRespondEvents.Subscribe(signature,
+                o => SendResponseTo(signature, _ => response, ((int, List<NetworkPackage>))o));
+            delayedRespondEvents.Raise(signature, false, "delayedRespondEvent");
+        };
+    }
+        
     
     /// <summary>
     /// Sends a response after receiving a message.
     /// </summary>
-    private void AddResponseTo(
+    private void SendResponseTo(
         [DisallowNull] string signature, 
         Func<List<NetworkPackage>,List<NetworkPackage>> response, 
         (int, List<NetworkPackage>) socketIndexAndMessage, 

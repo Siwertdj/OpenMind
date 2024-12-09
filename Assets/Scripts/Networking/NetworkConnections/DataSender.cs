@@ -36,6 +36,8 @@ public class DataSender : DataNetworker
     private NetworkEvents onAckReceievedEvents;
     /// <summary> when an acknowlegement is not received within the timeout period, input is the signature of the timeout message </summary>
     private NetworkEvents onAckTimeoutEvents;
+    /// <summary> when an attempt is made to listen for a response, but the sender was disconnected from the host, input is nothing </summary>
+    private NetworkEvents onNotConnectedListeningEvents;
 
     
     
@@ -51,6 +53,7 @@ public class DataSender : DataNetworker
         onAckReceievedEvents = new NetworkEvents();
         onAckTimeoutEvents = new NetworkEvents();
         onConnectionTimeoutEvents = new NetworkEvents();
+        onNotConnectedListeningEvents = new NetworkEvents();
         
         acknowledgementTimes = new List<AcknowledgementTime>();
         
@@ -161,7 +164,7 @@ public class DataSender : DataNetworker
     /// A special onAcknowledgementFail event will be called when no ACK with the signature of the sent messages was received within the timeout.
     /// </summary>
     /// <param name="clearResponseEvents">If set to true, the actions called after receiving a response are removed from the event.</param>
-    public IEnumerator ListenForResponse(float socketNotConenctedWarningInterval, bool clearResponseEvents = false)
+    public IEnumerator ListenForResponse(bool clearResponseEvents = false)
     {
         isListeningForResponse = true;
 
@@ -169,8 +172,8 @@ public class DataSender : DataNetworker
         {
             if (!socket.Connected)
             {
-                logWarning = "Cannot listen for a response while not connected with a host";
-                yield return new WaitForSeconds(socketNotConenctedWarningInterval);
+                onNotConnectedListeningEvents.Raise("Disconnect", null, false, "onNotConnectedListeningEvents");
+                isListeningForResponse = false;
             }
             else
             {
@@ -226,9 +229,8 @@ public class DataSender : DataNetworker
             
             try
             {
-                logError = onAckReceievedEvents.Raise("ACK",
-                    receivedTailPackages[0].GetData<string>(),
-                    clearResponseEvents, "onAckReceivedEvent");
+                logError = onAckReceievedEvents.Raise(signature,
+                    signature, clearResponseEvents, "onAckReceivedEvent");
             }
             catch (InvalidCastException e)
             {
@@ -294,8 +296,8 @@ public class DataSender : DataNetworker
     /// When connecting to a host, the given action is called.
     /// The object is the task created when attempting to connect with a host.
     /// </summary>
-    public void AddOnAckReceivedEvent(Action<object> action) =>
-        onAckReceievedEvents.Subscribe("ACK", action);
+    public void AddOnAckReceivedEvent(string signature, Action<object> action) =>
+        onAckReceievedEvents.Subscribe(signature, action);
     
     /// <summary>
     /// Adds an action to the event of not receiving an ack within the timeout period.
@@ -304,6 +306,13 @@ public class DataSender : DataNetworker
     /// </summary>
     public void AddOnAckTimeoutEvent(string signature, Action<object> action) =>
         onAckTimeoutEvents.Subscribe(signature, action);
+    
+    /// <summary>
+    /// Adds an action to the event of listening for a response from the host while not being connected to the host.
+    /// The object is the signature of the message who was not acknowledged by the host.
+    /// </summary>
+    public void AddOnNotConnectedListeningEvents(Action<object> action) =>
+        onNotConnectedListeningEvents.Subscribe("Disconnect", action);
 
     protected override bool IsDisconnected(out Socket info)
     {

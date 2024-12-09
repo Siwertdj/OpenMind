@@ -128,6 +128,9 @@ public abstract class DataNetworker : NetworkDebugger
 
     protected abstract bool IsDisconnected(out Socket info);
     
+    /// <summary>
+    /// Adds an event to the action of a socket disconnecting. The input is the socket that got disconnected.
+    /// </summary>
     public void AddOnDisconnectedEvent(Action<object> action) =>
         onDisconnectedEvents.Subscribe("Disconnect", action);
 }

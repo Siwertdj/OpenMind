@@ -15,65 +15,97 @@ public class Client : MonoBehaviour
 {
     public static Client c;
     
-    private DataSender              sender;
-    private Action<NotebookData>    response;
-    private Action<int>             storyID;
-    private Action<int>             seed;
+    private NetworkSettings settings;
+    private GameEvent             doPopup;
+    private DataSender            sender;
+    private Action<NotebookData>  response;
+    private Action<int>           storyID;
+    private Action<int>           seed;
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
     private List<CharacterInstance> activeCharacters;
-    
-    private const bool DebugMode = true; 
     
     private void Awake()
     {
         c = this;
     }
     
+    public void AssignSettings(GameEvent doPopup, NetworkSettings settings)
+    {
+        this.doPopup = doPopup;
+        this.settings = settings;
+    }
+    
     /// <summary>
     /// Enters a classroom code. This converts it back to an ip, connects with this ip and requests initialisation data.
+    /// The seed and storyID actions are used to assign these values into the rest of the game.
     /// </summary>
-    public void EnterClassroomCode(string classroomCode)
+    public void EnterClassroomCode(string classroomCode, Action<int> seed, Action<int> storyID)
     {
-        IPAddress  hostAddress = null;
+        this.seed = seed;
+        this.storyID = storyID;
+        IPAddress hostAddress;
         IPv4Converter converter = new IPv4Converter();
         try
         {
             hostAddress = converter.ConvertToIPAddress(classroomCode);
         }
-        catch (ArgumentException e)
+        catch (ArgumentException)
         {
-            Debug.LogError($"No error handling yet, go error: {e}");
+            if (settings.IsDebug)
+                Debug.Log("(Client): Invalid classroom code");
+            else
+                DisplayError("Invalid classroom code.");
+            return;
         }
         
-        if (hostAddress is null)
-            return;
+        sender = new DataSender(hostAddress, settings.ClientHostPortConnection);
+        sender.AddOnDisconnectedEvent(Disconnected);
         
-        sender = new DataSender(hostAddress, IPConnections.Port);
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
-        
-        // Ask for storyID and the seed when connected with the host
         sender.AddOnConnectEvent(OnConnectionWithHost);
-        sender.AddOnReceiveResponseEvent("Initializer", ReceivedInitFromHost);
+        sender.AddOnReceiveResponseEvent(settings.InitialisationDataSignature, ReceivedInitFromHost);
         
-        StartCoroutine(sender.DisplayAnyDebugs(1f));
-        StartCoroutine(sender.Connect(5f));
-        StartCoroutine(sender.ListenForResponse(3f));
+        //additional debugs if in debug mode
+        if (settings.IsDebug)
+            AddAdditionalDebugMessagesClassroomCode();
+        
+        StartCoroutine(sender.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
+        StartCoroutine(sender.IsDisconnected(settings.DisconnectedIntervalSeconds));
+        StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
+        StartCoroutine(sender.ListenForResponse());
     }
-
+    
+    private void Disconnected(object o)
+    {
+        if (settings.IsDebug)
+            Debug.Log("(Client): Disconnected from the host.");
+        else
+            DisplayError("You got disconnected from the host, please check whether you and the host are connected to the internet.");
+    }
+    
+    private void ConnectionTimeoutError(object o)
+    {
+        if (settings.IsDebug)
+            Debug.Log("(Client): No connection was made.");
+        else
+            DisplayError("No connection with the host could be established, please check if the entered classroom code is correct" +
+                         " and whether you and the host are connected to the internet.");
+    }
+    
     private void OnConnectionWithHost(object obj)
     {
-        if (DebugMode)
-            Debug.Log($"(Sender): Connected with the host.");
-        sender.SendDataAsync("Initializer", NetworkPackage.CreatePackage("Plz give seed init data!"), 10f);
+        if (settings.IsDebug)
+            Debug.Log($"(Client): Connected with the host.");
+        sender.SendDataAsync(settings.InitialisationDataSignature,
+            NetworkPackage.CreatePackage("Plz give init data!"), settings.AcknowledgementTimeoutSeconds);
     }
-
-    /// <summary>
-    /// Called when no connection could be established.
-    /// </summary>
-    void ConnectionTimeoutError(object o)
+    
+    private void ReceivedInitFromHost(object o)
     {
-        Debug.LogError("No connection was made");
+        List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
+        storyID(receivedData[0].GetData<int>());
+        seed(receivedData[1].GetData<int>());
     }
     
     /// <summary>
@@ -87,12 +119,16 @@ public class Client : MonoBehaviour
         this.response = response;
         activeCharacters = currentCharacters;
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
-        sender.AddOnAckTimeoutEvent("NotebookData", AcknowledgementTimeoutError);
-        sender.SendDataAsync("NotebookData", package.CreatePackage(), 5f);
-        sender.AddOnReceiveResponseEvent("NotebookResponse", ReceivedNotebookDataFromOther);
+        
+        if (settings.IsDebug)
+            AddAdditionalDebugMessagesNotebook();
+        
+        sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
+        sender.AddOnReceiveResponseEvent(settings.NotebookDataSignature, ReceivedNotebookDataFromOther);
+        sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
     }
     
-    void ReceivedNotebookDataFromOther(object o)
+    private void ReceivedNotebookDataFromOther(object o)
     {
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
@@ -100,18 +136,61 @@ public class Client : MonoBehaviour
         response(notebookData);
     }
     
-    void ReceivedInitFromHost(object o)
-    {
-        List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
-        storyID(receivedData[0].GetData<int>());
-        seed(receivedData[1].GetData<int>());
-    }
-    
     /// <summary>
     /// Called when no acknowlegement was received, meaning no data was received.
     /// </summary>
-    void AcknowledgementTimeoutError(object o)
+    private void AcknowledgementTimeoutError(object o)
     {
-        Debug.LogError("No acknowledgement was received");
+        DisplayError("Failed to sent a message to the host, please check whether you and the host are connected to the internet.");
     }
+    
+    private void DisplayError(string error)
+    {
+        if (doPopup is null)
+            Debug.LogError("No popup for error handling was initialised");
+        else
+            doPopup.Raise(this, error);
+    }
+    
+    #region debugMethods
+    
+    private void AddAdditionalDebugMessagesClassroomCode()
+    {
+        sender.AddOnDataSentEvent(settings.InitialisationDataSignature, DataSentInit);
+        sender.AddOnAckReceivedEvent(settings.InitialisationDataSignature, AckReceived);
+        sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
+        sender.AddOnNotConnectedListeningEvents(ListeningWhileDisconnected);
+    }
+    
+    private void DataSentInit(object o)
+    {
+        Debug.Log($"(Client): Sent {o} bytes to the host as an init request.");
+    }
+    
+    private void AckReceived(object o)
+    {
+        Debug.Log($"(Client): Received ACK with signature \"{o}\""); 
+    }
+    
+    private void AckTimeoutInit(object o)
+    {
+        Debug.Log($"(Client): Ack with signature {o} timed out");
+    }
+    
+    private void ListeningWhileDisconnected(object obj)
+    {
+        Debug.Log("(Client): Disconnected while listening for response from host.");
+    }
+    
+    private void AddAdditionalDebugMessagesNotebook()
+    {
+        sender.AddOnDataSentEvent(settings.NotebookDataSignature, DataSentNotebook);
+        sender.AddOnAckReceivedEvent(settings.NotebookDataSignature, AckReceived);
+    }
+    
+    private void DataSentNotebook(object o)
+    {
+        Debug.Log($"(Client): Sent {o} bytes to the host as a notebook data request.");
+    }
+    #endregion
 }
