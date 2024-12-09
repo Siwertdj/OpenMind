@@ -200,4 +200,76 @@ public class DialogueManagerPlayTest
 
         yield return null;
     }
+    
+    /// <summary>
+    /// Test whether the text scales correctly based on the textSize from the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    [UnityTest]
+    public IEnumerator ChangeTextSizeTest()
+    {
+        // Set the textSize to small.
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Small;
+        int fontSizePrior = SettingsManager.sm.GetFontSize();
+        
+        // Find the objects that contain tmp_text component.
+        GameObject characterNameField = GameObject.Find("Character Name Field");
+        TMP_Text dialogueText = GameObject.Find("Text (TMP)").GetComponent<TMP_Text>();
+        
+        // Set the fontSizes to small
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSizePrior;
+        dialogueText.fontSize = fontSizePrior;
+        
+        // Set the textSize to medium
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Medium;
+        
+        // Change the text size of the components.
+        dm.ChangeTextSize();
+        
+        // Search for the components.
+        characterNameField = GameObject.Find("Character Name Field");
+        dialogueText = GameObject.Find("Text (TMP)").GetComponent<TMP_Text>();
+        
+        // Check if the fontSizes are bigger than before.
+        Assert.Greater(characterNameField.GetComponentInChildren<TMP_Text>().fontSize, fontSizePrior);
+        Assert.Greater(dialogueText.fontSize, fontSizePrior);
+        
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Test whether the text scales correctly when the TextSize is changed in the SettingsManager.
+    /// </summary>
+    /// <returns></returns>
+    [UnityTest]
+    public IEnumerator OnChangedTextSizeTest()
+    {
+        // Set the textSize to small.
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Small;
+        int fontSizePrior = SettingsManager.sm.GetFontSize();
+        
+        // Find the objects that contain tmp_text component.
+        GameObject characterNameField = GameObject.Find("Character Name Field");
+        TMP_Text dialogueText = GameObject.Find("Text (TMP)").GetComponent<TMP_Text>();
+        
+        // Set the fontSizes to small
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSizePrior;
+        dialogueText.fontSize = fontSizePrior;
+        
+        // Set the textSize to medium
+        SettingsManager.sm.textSize = SettingsManager.TextSize.Medium;
+        
+        // Change the text size of the components.
+        dm.OnChangedTextSize(null, SettingsManager.sm.GetFontSize());
+        
+        // Search for the components.
+        characterNameField = GameObject.Find("Character Name Field");
+        dialogueText = GameObject.Find("Text (TMP)").GetComponent<TMP_Text>();
+        
+        // Check if the fontSizes are bigger than before.
+        Assert.Greater(characterNameField.GetComponentInChildren<TMP_Text>().fontSize, fontSizePrior);
+        Assert.Greater(dialogueText.fontSize, fontSizePrior);
+        
+        yield return null;
+    }
 }
