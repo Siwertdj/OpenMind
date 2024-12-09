@@ -66,7 +66,7 @@ public class NotebookManagerPlayTest
     {
         // Check if some basic properties hold
         Assert.IsFalse(nm.characterInfo.activeSelf);
-        Assert.IsFalse(nm.inputFieldCharacters.activeSelf);
+        Assert.IsFalse(nm.characterCustomInput.activeSelf);
         Assert.IsTrue(nm.inputField.activeSelf);
         Assert.AreEqual(nm.notebookData, gm.notebookData);
         Assert.IsFalse(nm.personalButton.interactable);
@@ -111,7 +111,7 @@ public class NotebookManagerPlayTest
         }
         
         // InputField should not be active
-        Assert.IsFalse(nm.inputFieldCharacters.activeSelf);
+        Assert.IsFalse(nm.characterCustomInput.activeSelf);
         
         // Personal notes should be printed on the screen
         Assert.AreEqual(nm.notebookData.GetPersonalNotes(), nm.inputField.GetComponent<TMP_InputField>().text);
