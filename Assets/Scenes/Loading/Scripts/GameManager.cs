@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
+    public GameEvent onEpilogueStart;
  
 
     public bool IsPaused { get; set; } = false;
@@ -219,16 +220,7 @@ public class GameManager : MonoBehaviour
             StartCycle();
         // Start the Epilogue
         else
-        {
-            // Wait for the scene transition
-            /*_ = sc.TransitionScene(
-                SceneController.SceneName.DialogueScene, 
-                SceneController.SceneName.EpilogueScene, 
-                SceneController.TransitionType.Transition);
-                */
-            // TODO: Find way to send data to EpilogueScene
-            SceneManager.LoadScene("EpilogueScene");
-        }
+            StartEpilogue();
     }
     #endregion
     
@@ -318,6 +310,27 @@ public class GameManager : MonoBehaviour
     
     // This region contains methods that directly change the Game State.
     #region ChangeGameState
+
+    /// <summary>
+    /// Starts the Epilogue
+    /// </summary>
+    private async void StartEpilogue()
+    {
+        gameState = GameState.Epilogue;     // redundant?
+        
+        // Wait for the scene transition
+        await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.EpilogueScene, 
+            SceneController.TransitionType.Transition);
+        
+        // Raise the EpilogueStart-event and pass all the necessary data
+        onEpilogueStart.Raise(this, story, characters, GetCulprit());
+        
+        // Then, Unload the toolbox
+        Destroy(GameObject.Find("Toolbox"));
+    }
+    
     /// <summary>
     /// Closes the game.
     /// </summary>
@@ -406,7 +419,8 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
         
-        Debug.Log("Dialoguemanager is null: " + (DialogueManager.dm == null));
+        // TODO: This shoul work, but sometimes DilaogueManager seems to be null..
+        //Debug.Log("Dialoguemanager is null: " + (DialogueManager.dm == null));
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
         var dialogueObject = new ContentDialogueObject(

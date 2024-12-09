@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for UI.
@@ -39,7 +40,18 @@ public class UIManager : MonoBehaviour
         GameManager.gm.IsPaused = false;
         gameButtons.SetActive(true);
     }
-    
+
+    /// <summary>
+    /// Toggles the notebook scene by calling Scenecontroller, if its not null
+    /// </summary>
+    /// <param name="button"></param>
+    public void ToggleNotebook(Button button)
+    {
+        if (SceneController.sc != null)
+        {
+            SceneController.sc.ToggleNotebookScene(button);
+        }
+    }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.

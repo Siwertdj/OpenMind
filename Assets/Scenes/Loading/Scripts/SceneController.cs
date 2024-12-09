@@ -31,7 +31,9 @@ public class SceneController : MonoBehaviour
         GameMenuScene,
         SettingsScene,
         GameLossScene,
-        GameWinScene
+        GameWinScene,
+        EpilogueScene,
+        StartScreenScene
     }
 
     /// <summary>
@@ -62,6 +64,7 @@ public class SceneController : MonoBehaviour
     public void Awake()
     {
         sc = this;
+        DontDestroyOnLoad(this);
     }
 
     /// <summary>
@@ -354,4 +357,6 @@ public class SceneController : MonoBehaviour
             throw;
         }
     }
+
+    
 }

@@ -518,17 +518,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 695fe1054f3d05b48a694753bc4b62e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 6b7362dc0caed36479c10cec7b2f5792, type: 2}
+  gameEvent: {fileID: 11400000, guid: 58ea9222c9f504647b65c1adfc2d1c14, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1659958910}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1659958913}
+        m_TargetAssemblyTypeName: EpilogueManager, Scripts
+        m_MethodName: StartEpilogue
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
