@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +39,7 @@ public class ResponseDialogueObject : DialogueObject
         dm.ReplaceBackground(background);
         dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
     }
+
     /// <summary>
     /// Gets character's response to the given question
     /// </summary>

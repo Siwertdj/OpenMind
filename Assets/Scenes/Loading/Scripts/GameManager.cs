@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -17,10 +18,10 @@ public class GameManager : MonoBehaviour
 {
     [Header("Game Resources")]
     [SerializeField] private List<CharacterData> characters; // The full list of characters in the game
-    
-    [Header("Events")]
-    public GameEvent onDialogueStart;
-    public GameEvent onEpilogueStart;
+
+    [Header("Events")] 
+    public                    GameEvent   onDialogueStart;
+    public                    GameEvent   onEpilogueStart;
  
 
     public bool IsPaused { get; set; } = false;
@@ -70,6 +71,12 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
+        
+        // Set the target frame rate to the screen's refresh rate
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+        
+        gameState = GameState.Loading;
     }
     
     /// <summary>
@@ -148,8 +155,13 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         // Start the music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+
+        
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        
+        //update gamestate
+        gameState = GameState.NpcSelect;
     }
 
     /// <summary>
@@ -165,8 +177,7 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
-    
-    
+
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -184,6 +195,9 @@ public class GameManager : MonoBehaviour
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        
+        // Change the gamestate
+        gameState = GameState.NpcSelect;
     }
     
     /// <summary>
@@ -346,6 +360,10 @@ public class GameManager : MonoBehaviour
     {
         // Unload all active scenes except the story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
+        //update gamestate
+        gameState = GameState.Loading;
+        
         // Reset the characters
         foreach (CharacterInstance character in currentCharacters)
         {
@@ -364,6 +382,10 @@ public class GameManager : MonoBehaviour
     {
         // unload all scenes except story scene
         SceneController.sc.UnloadAdditiveScenes();
+        
+        // Change the gamestate
+        gameState = GameState.Loading;
+        
         NewGame();     
     }
 
@@ -389,6 +411,10 @@ public class GameManager : MonoBehaviour
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(List<string> dialogue)
     {
+        // Change the gamestate
+        gameState = GameState.HintDialogue;
+        
+        // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
@@ -398,6 +424,7 @@ public class GameManager : MonoBehaviour
         var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
         
         gameState = GameState.HintDialogue;
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -419,7 +446,7 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
         
-        // TODO: This shoul work, but sometimes DilaogueManager seems to be null..
+        // TODO: This should work, but sometimes DilaogueManager seems to be null..
         //Debug.Log("Dialoguemanager is null: " + (DialogueManager.dm == null));
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);

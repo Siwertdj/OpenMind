@@ -29,7 +29,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
-    [SerializeField] private EventSystem eventPrefab;
+    [SerializeField] private EventSystem eventSystemPrefab;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
@@ -37,6 +37,7 @@ public class DialogueManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
+    public GameEvent stopLoadIcon;
 
     
     [FormerlySerializedAs("testDialogueObject")]
@@ -45,6 +46,7 @@ public class DialogueManager : MonoBehaviour
     
     // Variables
     [NonSerialized] public        string            inputText;
+    [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
@@ -56,7 +58,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (GameObject.Find("EventSystem") == null)
         {
-            Instantiate(eventPrefab);
+            Instantiate(eventSystemPrefab);
             StartDialogue(null, testDialogueContainer.GetDialogue());
         }
         
@@ -74,7 +76,11 @@ public class DialogueManager : MonoBehaviour
     {
         // Save the sender of the event that started dialogue
         dialogueStarter = sender;
-
+        
+        // Change the text size
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+        
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
         {
@@ -113,7 +119,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Gets the current object's first responseDialogue and executes it.
+    /// Gets the current object's first response and executes it.
     /// </summary>
     private void ExecuteNextObject()
     {
@@ -128,9 +134,10 @@ public class DialogueManager : MonoBehaviour
     /// <param name="pitch">The pitch of the character</param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
+        // The text of this dialogue object is null, so we dont open the window.
+        // This can be in case of a pause, an image, etc.
         if (dialogue == null)
         {
-            Debug.Log("Dialogue segments are null:  dialogue invisible");
             dialogueField.SetActive(false);
         }
         else
@@ -232,7 +239,7 @@ public class DialogueManager : MonoBehaviour
 
             // Set styling for button
             buttonText.enableAutoSizing = false;
-            buttonText.fontSize = 40;
+            buttonText.fontSize = SettingsManager.sm.GetFontSize();
 
             // Add event when clicking the button
             button.onClick.AddListener(() => OnButtonClick(response));
@@ -283,7 +290,7 @@ public class DialogueManager : MonoBehaviour
         TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
+        buttonText.fontSize = SettingsManager.sm.GetFontSize();
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
@@ -361,6 +368,46 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0; i < buttons.Length; i++)
             Destroy(buttons[i]);
     }
+    
+    #region TextSize
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data"></param>
+    // TODO: could be made private.
+    public void OnChangedTextSize(Component sender, params object[] data)
+    {
+        // Set the fontSize.
+        if (data[0] is int fontSize)
+        {
+            // Change the characterNameField fontSize
+            characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            // Change the animator text fontSize
+            animator.ChangeTextSize(fontSize);
+            // Change the question and return button fontSize if they are present.
+            foreach (Button b in questionsField.GetComponentsInChildren<Button>())
+            {
+                TMP_Text buttonText = b.GetComponentInChildren<TMP_Text>();
+                buttonText.fontSize = fontSize;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components (excluding questions and return button)
+    /// </summary>
+    // TODO: could be made private.
+    public void ChangeTextSize()
+    {
+        // Set the fontSize.
+        int fontSize = SettingsManager.sm.GetFontSize();
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        animator.ChangeTextSize(fontSize);
+    }
+
+    #endregion
     
     /// <summary>
     /// Gets the text for the buttons that prompt specific questions.
