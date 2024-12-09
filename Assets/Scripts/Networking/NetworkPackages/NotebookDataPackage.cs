@@ -40,5 +40,7 @@ public class NotebookDataPackage
                 GameManager.gm.currentCharacters.Find(cc => cc.id == keyValuePair.Key);
             pages.Add(instance, new NotebookPage(instance));
         }
+        
+        return new NotebookData(pages, personalNotes);
     }
 }
