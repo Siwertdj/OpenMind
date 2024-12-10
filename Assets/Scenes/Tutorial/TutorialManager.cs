@@ -37,7 +37,7 @@ public class TutorialManager : MonoBehaviour
         // Make sure nothing from 'previous' tutorial is active. 
         helpHighlight.SetActive(false);       
         textBox.gameObject.SetActive(false);   
-        TutorialTimeline.Pause();              
+        TutorialTimeline.Pause();
         
         // The type of tutorial that is shown, depends on the scene that is currently loaded. 
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
@@ -59,6 +59,12 @@ public class TutorialManager : MonoBehaviour
             tutorialButton = tutorial.GetComponentInChildren<Button>();
             GameObject notebook = GameObject.Find("NotebookButton");
             notebookButton = notebook.GetComponentInChildren<Button>();
+            
+            // Close notebook if it is already opened.
+            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+            {
+                notebookButton.onClick.Invoke();
+            }
             
             notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
             tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 

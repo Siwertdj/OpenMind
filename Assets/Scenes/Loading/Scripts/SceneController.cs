@@ -345,15 +345,30 @@ public class SceneController : MonoBehaviour
             }
             
             // Get the SceneName enum from the activeScene.
-            SceneName baseScene = GetSceneName(activeScene);
-            
+            SceneName baseScene;
+            if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
+            {
+                baseScene = SceneName.Loading;
+            }
+            else
+            {
+                baseScene = GetSceneName(activeScene);
+            }
             GameManager.gm.IsPaused = false;
             crossOverlay.SetActive(false);
             _ = TransitionScene(SceneName.NotebookScene, baseScene, TransitionType.Unload);
         }
         else
         {
-            SceneName activeScene = GetSceneName(SceneManager.GetActiveScene());
+            SceneName activeScene; 
+            if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
+            {
+                activeScene = SceneName.Loading;
+            }
+            else
+            {
+               activeScene = GetSceneName(SceneManager.GetActiveScene());
+            }
             GameManager.gm.IsPaused = true;
             crossOverlay.SetActive(true);
             _ = TransitionScene(activeScene, SceneName.NotebookScene, TransitionType.Additive);
@@ -369,14 +384,41 @@ public class SceneController : MonoBehaviour
        // If tutorial is already open, close it
        if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
        {
+           Scene activeScene;
+           // Check which scene is currently loaded.
+           if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("DialogueScene");
+           }
+           else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+           }
+           else if (SceneManager.GetSceneByName("GameLossScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameLossScene");
+           }
+           else if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameWinScene");
+           }
+           else
+           {
+               activeScene = SceneManager.GetSceneByName("Loading");
+           }
+           
+           // Get the SceneName enum from the activeScene.
+           SceneName baseScene = SceneName.Loading;
+           
            GameManager.gm.IsPaused = false;
-           _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
+           _ = TransitionScene(SceneName.TutorialScene, baseScene, TransitionType.Unload);
        }
        else
        {
            GameManager.gm.IsPaused = true;
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
        }
+       
     }
 
     /// <summary>
