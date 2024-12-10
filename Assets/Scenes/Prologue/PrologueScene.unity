@@ -373,7 +373,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a5c75c6dfebfbdc4a86804d32a585988, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -467,8 +467,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.040033706, y: 166.31982}
-  m_SizeDelta: {x: 852.94, y: 1182.888}
+  m_AnchoredPosition: {x: -1.1721, y: 166.31982}
+  m_SizeDelta: {x: 1161.5728, y: 1182.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &429653932
 GameObject:
@@ -1380,10 +1380,10 @@ MonoBehaviour:
   backgrounds:
   - {fileID: 21300000, guid: 110389d9c2c6fca45869f88b15a816f5, type: 3}
   - {fileID: 21300000, guid: 0df9f1576974d8c4eadf9a2cebaca640, type: 3}
-  - {fileID: 21300000, guid: 578686d0038ee43499e66c0dfda73d6d, type: 3}
+  - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
   illusions:
-  - {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
-  - {fileID: 21300000, guid: f2861768c92ff8c46b7aba52169623c9, type: 3}
+  - {fileID: 21300000, guid: a5c75c6dfebfbdc4a86804d32a585988, type: 3}
+  - {fileID: 21300000, guid: 59f25bf2412465f4a86797edcb219a03, type: 3}
   - {fileID: 21300000, guid: 1e5ff48cb3a309d4e9a460dfb08da429, type: 3}
   - {fileID: 21300000, guid: fab911f99cfad8e4c88c762a9523bc6f, type: 3}
   - {fileID: 21300000, guid: bb73f3777b31601439ca9e9a19f753f2, type: 3}
@@ -1397,7 +1397,8 @@ MonoBehaviour:
   - 'But did you notice the image was actually black and white? '
   - 'By adding a grid of colored lines, your brain makes you believe the image is
     in color. '
-  - 'Try it for yourself! You can remove the lines with the toggle on top of the screen. '
+  - 'Try it for yourself! You can remove the lines with the toggle on top of the
+    screen. '
   - 'Amazing right? '
   - Your brain can often fool you. Just look outside for example!
   - What shapes do you recognize in these clouds?
@@ -1714,7 +1715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.040033706, y: -32.70604}
+  m_AnchoredPosition: {x: -0.040031433, y: -32.70604}
   m_SizeDelta: {x: 852.94, y: 784.8363}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1706841638

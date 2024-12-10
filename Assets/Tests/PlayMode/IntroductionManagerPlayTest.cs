@@ -93,14 +93,15 @@ public class IntroductionManagerPlayTest
     public IEnumerator ASetUpTest()
     {
         im.StoryA();
+        
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.backgroundsA.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
         Assert.AreEqual(0, im.textMessageIndex);
         Assert.AreEqual(0, im.backgroundIndex);
-        Assert.AreEqual(0, im.playerTextIndex);
+        Assert.AreEqual(0, im.TextIndex);
         
         Assert.IsNotNull(im.sendButton);
         yield return null;
@@ -155,9 +156,9 @@ public class IntroductionManagerPlayTest
     public IEnumerator ChangePlayerTextTest()
     {
         im.StoryA();
-        int index = im.playerTextIndex;
+        int index = im.TextIndex;
         im.ChangePlayerText();
-        Assert.AreEqual(index+1, im.playerTextIndex);
+        Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         yield return null;
     }
