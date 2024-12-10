@@ -17,6 +17,7 @@ public class NotebookManager : MonoBehaviour
     public Button personalButton;
     [NonSerialized] public NotebookData notebookData;
     private CharacterInstance currentCharacter;
+    private int currentCharacterId;
     private Button selectedButton;
     [SerializeField] private Button[] nameButtons;
 
@@ -60,7 +61,7 @@ public class NotebookManager : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().text = 
                 GameManager.gm.currentCharacters[i].characterName;
 
-            button.onClick.AddListener(()=>CharacterTab(id));
+            button.onClick.AddListener(()=>OpenCharacterTab(id));
         }
         // Set any remaining buttons to inactive
         for (int i = GameManager.gm.currentCharacters.Count; i < nameButtons.Length; i++)
@@ -88,8 +89,10 @@ public class NotebookManager : MonoBehaviour
     /// <summary>
     /// Open a character tab and load and display the notes on that character.
     /// </summary>
-    private void CharacterTab(int id)
+    private void OpenCharacterTab(int id)
     {
+        currentCharacterId = id;
+
         // Destroy info from the previous character
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
@@ -109,7 +112,6 @@ public class NotebookManager : MonoBehaviour
 
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
-        Debug.Log(inputObject.name);
         inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
@@ -138,27 +140,63 @@ public class NotebookManager : MonoBehaviour
         ChangeButtons(nameButtons[id]);
     }
 
-    public void NavigateNotebook(int direction)
+    /// <summary>
+    /// Navigates to the page which is <paramref name="direction"/> pages away
+    /// from the current page. Will navigate to the previous/next character tab
+    /// if the page index is not reachable.
+    /// </summary>
+    public void NavigatePages(int direction)
     {
-        try
+        int childCount = characterInfo.transform.childCount;
+        int newIndex = currentPageIndex + direction;
+
+        if (newIndex < 0)
         {
+            // The index is less than 0, so navigate to previous character
+            NavigateCharacters(currentCharacterId - 1);
+        }
+        else if (newIndex >= childCount)
+        {
+            // The index is greater than the amount of pages, so navigate to next character
+            NavigateCharacters(currentCharacterId + 1);
+        }
+        else
+        {
+            // The index is within the current character's bounds, so navigate to given page
             var prevPage = characterInfo.transform.GetChild(currentPageIndex).gameObject;
             var newPage = characterInfo.transform.GetChild(currentPageIndex + direction).gameObject;
 
             prevPage.SetActive(false);
             newPage.SetActive(true);
 
-            currentPageIndex += direction;
-        }
-        catch (UnityException e) 
-        {
-            Debug.LogWarning("Page index was out of range\n" + e);
+            currentPageIndex = newIndex;
         }
     }
 
+    /// <summary>
+    /// Navigates to the character tab with the given id.
+    /// </summary>
+    private void NavigateCharacters(int id)
+    {
+        // Set the id so that we remain within the correct bounds
+        if (id >= GameManager.gm.currentCharacters.Count)
+            id = 0;
+        else if (id < 0)
+            id = GameManager.gm.currentCharacters.Count - 1;
+
+        OpenCharacterTab(id);
+    }
+
+    /// <summary>
+    /// Create all pages in one go. Creates multiple GameObjects each containing
+    /// a part of the notebook data regarding the selected character. All pages apart
+    /// from the first are automatically set to inactive.
+    /// </summary>
     private void CreateCharacterPages()
     {
         currentPageIndex = 0;
+
+        // Create the first page
         var page = Instantiate(pagePrefab, characterInfo.transform);
 
         while (allCharacterInfo.Count > 0)
@@ -171,18 +209,30 @@ public class NotebookManager : MonoBehaviour
 
             if (IsPageOverflowing(page.GetComponent<RectTransform>()))
             {
-                Debug.LogWarning("Out of bounds, creating new page");
                 // Page is overflowing, so create a new page
                 page = Instantiate(pagePrefab, characterInfo.transform);
-                page.SetActive(false);
 
                 // Add object to this new page instead
                 go.GetComponent<RectTransform>().SetParent(page.transform, false);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
+
+                // TODO: Find an alternative to this, as it is quite slow
+                // It is currently necessary to make sure the layout size is set immediately
+                Canvas.ForceUpdateCanvases();
+
+                // Set the new page to be inactive
+                page.SetActive(false);
             }
         }
     }
 
+    /// <summary>
+    /// Returns true if the collective height of the children is greater than
+    /// the height of the given gameObject.
+    /// </summary>
+    /// <param name="parent">The RectTransform of the gameObject to be checked, 
+    /// this gameObject must also have a VerticalLayoutGroup component.
+    /// </param>
     public bool IsPageOverflowing(RectTransform parent)
     {
         // Get the VerticalLayoutGroup component        
@@ -217,10 +267,10 @@ public class NotebookManager : MonoBehaviour
         return totalHeight > containerHeight;
     }
 
-/// <summary>
-/// Make the character log visible or not.
-/// </summary>
-public void ToggleCharacterInfo()
+    /// <summary>
+    /// Make the character log visible or not.
+    /// </summary>
+    public void ToggleCharacterInfo()
     {
         characterInfo.SetActive(!characterInfo.activeInHierarchy);
     }
