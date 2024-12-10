@@ -247,6 +247,8 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 1
+  overrideDefaultSpeed: 1
+  inputDelay: 0.5
 --- !u!1 &97876023
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,6 +629,7 @@ MonoBehaviour:
   delayAfterSentence: 1.5
   audioEnabled: 0
   overrideDefaultSpeed: 0
+  inputDelay: 0.5
 --- !u!1 &274968077
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,8 +1351,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'sample text oodaosdoaod oasodoa osdoaosd oaosdowoae '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
+  m_sharedMaterial: {fileID: -6543469512576157827, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1378,7 +1381,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 100
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -3154,8 +3157,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skip intro
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
+  m_sharedMaterial: {fileID: -6543469512576157827, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3179,12 +3182,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
+  m_fontSize: 40
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 40
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

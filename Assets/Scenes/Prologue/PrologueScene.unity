@@ -565,6 +565,7 @@ MonoBehaviour:
   delayAfterSentence: 1.5
   audioEnabled: 0
   overrideDefaultSpeed: 0
+  inputDelay: 0.5
 --- !u!1 &546638289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1398,7 +1399,8 @@ MonoBehaviour:
   - 'But did you notice the image was actually black and white? '
   - 'By adding a grid of colored lines, your brain makes you believe the image is
     in color. '
-  - 'Try it for yourself! You can remove the lines with the toggle on top of the screen. '
+  - 'Try it for yourself! You can remove the lines with the toggle on top of the
+    screen. '
   - 'Amazing right? '
   - Your brain can often fool you. Just look outside for example!
   - What shapes do you recognize in these clouds?
@@ -1550,8 +1552,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Receptionist
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
+  m_sharedMaterial: {fileID: -6543469512576157827, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1896,7 +1898,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Before the game starts, you will be introduced to the theme of the game.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1960,7 +1962,7 @@ MonoBehaviour:
   m_margin: {x: -196.01587, y: 197.34213, z: 273.5384, w: 119.67561}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1772810424
@@ -2364,8 +2366,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Before the game starts, you will be introduced to the theme of the game.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
+  m_sharedMaterial: {fileID: -6543469512576157827, guid: 055e6c845c4152f4b94f504a8ca2160e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
