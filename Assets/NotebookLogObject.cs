@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class NotebookLogObject : MonoBehaviour
@@ -13,10 +14,5 @@ public class NotebookLogObject : MonoBehaviour
     {
         questionText.text = question;
         answerText.text = answer;
-    }
-
-    public float GetObjectHeight()
-    {
-        return 0f;
     }
 }

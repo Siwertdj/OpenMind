@@ -24,6 +24,7 @@ public class NotebookManager : MonoBehaviour
     [Header("Prefab References")]
     [SerializeField] private GameObject logObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject pagePrefab;
 
     private int currentPageIndex = 0;
@@ -109,6 +110,11 @@ public class NotebookManager : MonoBehaviour
 
         // Get the character instance
         currentCharacter = GameManager.gm.currentCharacters[id];
+
+        // Create icon & name object
+        var introObject = Instantiate(introObjectPrefab);
+        introObject.GetComponent<NotebookCharacterObject>().SetInfo(currentCharacter);
+        allCharacterInfo.Enqueue(introObject);
 
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
