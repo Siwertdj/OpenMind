@@ -80,9 +80,6 @@ public class IntroductionManagerPlayTest
         yield return null;
     }
     
-    
-    
-    
     // This region contains test regarding the introduction of story A
     #region IntroductionA
     
@@ -95,7 +92,7 @@ public class IntroductionManagerPlayTest
         im.StoryA();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgroundsA.Length);
+        Assert.AreNotEqual(0, im.backgrounds.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
@@ -150,20 +147,6 @@ public class IntroductionManagerPlayTest
     }
     
     /// <summary>
-    /// Test that the player text is actually changed after the ChangePlayerText method is called 
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ChangePlayerTextTest()
-    {
-        im.StoryA();
-        int index = im.TextIndex;
-        im.ChangePlayerText();
-        Assert.AreEqual(index+1, im.TextIndex);
-        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        yield return null;
-    }
-    
-    /// <summary>
     /// Test that the background is actually changed after the ChangeBackground method is called 
     /// </summary>
     [UnityTest]
@@ -196,5 +179,99 @@ public class IntroductionManagerPlayTest
     }
     
     #endregion
+    
+    // This region contains test regarding the introduction of story B
+    #region IntroductionB
+    
+    /// <summary>
+    /// Checks some basic properties of the introduction of story A. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator BSetUpTest()
+    {
+        im.StoryB();
+        
+        // Lists containing necessary elements should not be empty
+        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.storyText.Length);
+        Assert.AreEqual(4, im.TextIndex);
+        
+        Assert.IsNotNull(im.sendButton);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the introduction can be played. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator BPlayIntroTest()
+    {
+        im.StoryB();
+        im.ContinueCurrentTimeline();
+        Assert.AreEqual(PlayState.Playing,im.currentTimeline.state);
+        // When the introduction is playing the continuebutton should not be visible.
+        Assert.IsFalse(im.continueButton.activeSelf);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the introduction of story B can be paused. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator BPauseIntroTest()
+    {
+        im.StoryB();
+        im.PauseCurrentTimeline();
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
+        // When the introduction is playing the continuebutton should be visible.
+        Assert.IsTrue(im.continueButton.activeSelf);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the character sprite changes when a vision is appearing. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator VisionTest()
+    {
+        im.StoryB();
+        Sprite beforeImage = im.character.sprite; 
+        im.Vision();
+        Assert.AreNotEqual(beforeImage, im.character.sprite);
+        yield return null; 
+    }
+    
+    #endregion
+    
+    
+    /// <summary>
+    /// Test that the player text is actually changed after the ChangePlayerText method is called 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ChangePlayerTextTest()
+    {
+        im.StoryA();
+        int index = im.TextIndex;
+        im.ChangePlayerText();
+        Assert.AreEqual(index+1, im.TextIndex);
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
+        Assert.AreEqual("You", im.nameTag.text);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Test that the character text is actually changed after the ChangePlayerText method is called 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ChangeCharacterTextTest()
+    {
+        im.StoryB();
+        int index = im.TextIndex;
+        im.ChangeCharacterText();
+        Assert.AreEqual(index+1, im.TextIndex);
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
+        Assert.AreEqual("Alex", im.nameTag.text);
+        yield return null;
+    }
     
 }

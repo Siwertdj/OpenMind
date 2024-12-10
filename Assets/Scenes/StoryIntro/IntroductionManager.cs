@@ -23,26 +23,28 @@ public class IntroductionManager : MonoBehaviour
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    public                       Sprite[]      backgroundsA; // Stores all the used backgrounds for the introduction.
-    public                       String[]      storyText;   // Stores all the used text for the introduction. 
-    private                      GameObject[]  messages; 
-    public                       GameObject[]  messageLocations;
-    public                       TMP_Text      typingText;
-    [SerializeField] private Transform     canvasTransform;
+    // General variables
+    public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
+    public String[]   storyText;   // Stores all the used text for the introduction. 
+    public Image      background;
+    public GameObject continueButton;
+    public Button     sendButton;
+    [SerializeField] public Image character;
+    [SerializeField] public TMP_Text nameTag; 
+    
+    // Variables for introduction A
+    private                  GameObject[]  messages; 
+    public                   GameObject[]  messageLocations;
+    public                   TMP_Text      typingText;
     [SerializeField] public  TextMessage[] textMessages;
-    [SerializeField] private Image character; 
+    [SerializeField] private Transform     canvasTransform;
+    
+    // Variables for introduction B
+    private bool vision = true;
     
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
     [SerializeField] private DialogueAnimator typingAnimation;
-    
-    public Image    background;
-    public GameObject continueButton;
-    public Button sendButton;
-    
-    private bool vision = true;
-    
-    [SerializeField] private TMP_Text nameTag; 
     
     // Variables to keep track of the state of the introduction within this code. 
     public PlayableDirector currentTimeline; // public for testing purposes
@@ -54,7 +56,6 @@ public class IntroductionManager : MonoBehaviour
     public GameEvent onGameLoaded;
     private StoryObject story;
     
-
     /// <summary>
     /// Starts the proper intro.
     /// </summary>
@@ -62,7 +63,6 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
-        //InitializeIntros();
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
         {
@@ -122,7 +122,7 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline = introStoryA;
         currentTimeline.Play();
         backgroundIndex = 0;
-        background.sprite = backgroundsA[backgroundIndex];
+        background.sprite = backgrounds[backgroundIndex];
     }
     
     /// <summary>
@@ -132,7 +132,7 @@ public class IntroductionManager : MonoBehaviour
     {
         currentTimeline = introStoryB;
         TextIndex = 4;
-        background.sprite = backgroundsA[4];
+        background.sprite = backgrounds[4];
         currentTimeline.Play();
     }
     
@@ -176,7 +176,7 @@ public class IntroductionManager : MonoBehaviour
         PauseCurrentTimeline();
         sendButton.gameObject.SetActive(false);
         typingText.gameObject.SetActive(false);
-        background.sprite = backgroundsA[3]; // Change the background to the phone background. 
+        background.sprite = backgrounds[3]; // Change the background to the phone background. 
         textMessageIndex++;
         
         // Make sure the four most recent texts are shown on the screen. 
@@ -200,13 +200,13 @@ public class IntroductionManager : MonoBehaviour
         backgroundIndex++; // Keep track of the background that needs to be shown. 
         try
         {
-            background.sprite = backgroundsA[backgroundIndex];
+            background.sprite = backgrounds[backgroundIndex];
         }
         catch
         {
             Debug.LogError("Error: No more available backgrounds.");
             backgroundIndex = 0;
-            background.sprite = backgroundsA[backgroundIndex];
+            background.sprite = backgrounds[backgroundIndex];
         }
         
         if (backgroundIndex > 0)
@@ -234,9 +234,29 @@ public class IntroductionManager : MonoBehaviour
     }
     #endregion
     
-    
+    // This region contains methods regarding introduction B.
     #region Introduction B
+    /// <summary>
+    /// This method changes the sprite of the character in order to make him have a vision. 
+    /// </summary>
+    public void Vision()
+    {
+        if (vision)
+        {
+            character.sprite = backgrounds[6];
+        }
+        else
+        {
+            character.sprite = backgrounds[5];
+        }
+        
+        vision = !vision; 
+    }
     
+    #endregion
+    
+    // This region contains methods regarding the story text of the introductions
+    #region StoryText
     /// <summary>
     /// This method changes and shows text the character is saying. 
     /// </summary>
@@ -246,24 +266,18 @@ public class IntroductionManager : MonoBehaviour
         updateText();
     }
     
-    
-    public void Vision()
+    /// <summary>
+    /// This method changes and shows text the player is saying. 
+    /// </summary>
+    public void ChangePlayerText()
     {
-        if (vision)
-        {
-            character.sprite = backgroundsA[6];
-        }
-        else
-        {
-            character.sprite = backgroundsA[5];
-        }
-        
-        vision = !vision; 
+        nameTag.text = "You";
+        updateText();
     }
     
-    #endregion
-    
-    
+    /// <summary>
+    /// This method updates the text that is shown on the screen. 
+    /// </summary>
     public void updateText()
     {
         PauseCurrentTimeline();
@@ -281,16 +295,7 @@ public class IntroductionManager : MonoBehaviour
         TextIndex++; // Keep track of which text needs to be shown. 
     }
     
-    
-    /// <summary>
-    /// This method changes and shows text the player is saying. 
-    /// </summary>
-    public void ChangePlayerText()
-    {
-        nameTag.text = "You";
-        updateText();
-    }
-    
+    #endregion
     
     // This region contains methods that directly manipulate the timeline
     #region TimelineManipulators
