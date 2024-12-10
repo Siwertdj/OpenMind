@@ -21,6 +21,9 @@ public class NotebookManager : MonoBehaviour
     private Button selectedButton;
     [SerializeField] private Button[] nameButtons;
 
+    [Header("Component References")]
+    [SerializeField] private TMP_Text currentTabText;
+
     [Header("Prefab References")]
     [SerializeField] private GameObject logObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
@@ -47,6 +50,9 @@ public class NotebookManager : MonoBehaviour
         inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
         selectedButton = personalButton;
         personalButton.interactable = false;
+
+        // Set the appropriate footer text
+        currentTabText.text = "Personal Notes";
     }
     
     /// <summary>
@@ -85,6 +91,9 @@ public class NotebookManager : MonoBehaviour
         inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
         // Make button clickable
         ChangeButtons(personalButton);
+        
+        // Set the appropriate footer text
+        currentTabText.text = "Personal Notes";
     }
     
     /// <summary>
@@ -95,6 +104,8 @@ public class NotebookManager : MonoBehaviour
         currentCharacterId = id;
 
         // Destroy info from the previous character
+        // Keep track of number of pages so we display the correct number
+        int prevPageCount = characterInfo.transform.childCount;
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
 
@@ -144,6 +155,13 @@ public class NotebookManager : MonoBehaviour
 
         // Make button clickable
         ChangeButtons(nameButtons[id]);
+
+        // Set appropriate footer text
+        currentTabText.text = 
+            currentCharacter.characterName + "\n" +
+            "Page " + (currentPageIndex + 1) + "/" + 
+            (characterInfo.transform.childCount - prevPageCount);
+
     }
 
     /// <summary>
@@ -153,7 +171,6 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void NavigatePages(int direction)
     {
-        int childCount = characterInfo.transform.childCount;
         int newIndex = currentPageIndex + direction;
 
         if (newIndex < 0)
@@ -161,7 +178,7 @@ public class NotebookManager : MonoBehaviour
             // The index is less than 0, so navigate to previous character
             NavigateCharacters(currentCharacterId - 1);
         }
-        else if (newIndex >= childCount)
+        else if (newIndex >= characterInfo.transform.childCount)
         {
             // The index is greater than the amount of pages, so navigate to next character
             NavigateCharacters(currentCharacterId + 1);
@@ -175,7 +192,12 @@ public class NotebookManager : MonoBehaviour
             prevPage.SetActive(false);
             newPage.SetActive(true);
 
-            currentPageIndex = newIndex;
+            currentPageIndex = newIndex;        
+            
+            // Set appropriate footer text
+            currentTabText.text =
+                currentCharacter.characterName + "\n" +
+                "Page " + (currentPageIndex + 1) + "/" + characterInfo.transform.childCount;
         }
     }
 
