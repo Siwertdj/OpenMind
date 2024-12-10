@@ -11,11 +11,19 @@ public class MultiplayerManager : MonoBehaviour
     private       Client             client;
     private       int                seed;
     private       int                storyID;
+    public        NetworkSettings    settings;
+    public        GameEvent          doPopup;
+
+    private Action<int> seedAction;
+    private Action<int> storyAction;
     
     void Awake()
     {
         mm = this;
         DontDestroyOnLoad(gameObject);
+        
+        seedAction = i => Debug.Log("seed action: " + i);
+        storyAction = i => Debug.Log("story action: " + i);
     }
 
     public void HostGame(int storyID)
@@ -24,6 +32,9 @@ public class MultiplayerManager : MonoBehaviour
         
         // Create and activate the host
         host = gameObject.AddComponent<Host>();
+        
+        // Assign the settings
+        host.AssignSettings(doPopup, settings);
         
         // Create a seed
         seed = DateTime.Now.Ticks.GetHashCode();
@@ -45,13 +56,18 @@ public class MultiplayerManager : MonoBehaviour
     {
         // Create the client
         client = gameObject.AddComponent<Client>();
+        
+        // Assign the settings
+        client.AssignSettings(doPopup, settings);
+        
         // Connect to the host using the code
-        //client.EnterClassroomCode(classCode);
+        client.EnterClassroomCode(classCode, seedAction, storyAction);
     }
 
     public void StartGame()
     {
-        //SceneManager.LoadScene("PrologueScene");
+        SceneManager.LoadScene("PrologueScene");
+        
         //SceneManager.LoadScene("StorySelectScene");
     }
 }
