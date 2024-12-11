@@ -34,6 +34,8 @@ public class DialogueManager : MonoBehaviour
     public UnityEvent onEpilogueEnd;
     public GameEvent stopLoadIcon;
 
+    public TMP_FontAsset openMindFont;
+
     [NonSerialized] public        string            inputText;
     [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
@@ -170,6 +172,7 @@ public class DialogueManager : MonoBehaviour
             // Set button text in question form
             TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
             buttonText.text = GetPromptText(response.question);
+            buttonText.font = openMindFont;
 
             // Set styling for button
             buttonText.enableAutoSizing = false;
