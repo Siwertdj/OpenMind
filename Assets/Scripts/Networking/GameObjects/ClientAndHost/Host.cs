@@ -9,11 +9,8 @@ using System.Net.Sockets;
 using UnityEngine;
 using Random = System.Random;
 
-public class Host : MonoBehaviour
+public class Host : NetworkObject
 {
-    private NetworkSettings              settings;
-    private GameEvent                    doPopup;
-    private IPAddress                    ownIP;
     private DataListener                 listener;
     private int                          seed;
     private int                          storyID;
@@ -21,14 +18,7 @@ public class Host : MonoBehaviour
     private Action<List<NetworkPackage>> sendFirstNotebook;
     private Random                       notebookRandom = new Random();//a separate random variable that is distinct from the gamemanager random
     
-    public void AssignSettings(GameEvent doPopup, NetworkSettings settings)
-    {
-        this.doPopup = doPopup;
-        this.settings = settings;
-        ownIP = IPConnections.GetOwnIps()[0];
-        listener = new DataListener(ownIP, settings.ClientHostPortConnection);
-    }
-
+    
     public string CreateClassroomCode()
     {
         IPv4Converter converter = new IPv4Converter();
@@ -39,7 +29,8 @@ public class Host : MonoBehaviour
     {
         this.seed = seed;
         this.storyID = storyID;
-
+        
+        listener = new DataListener(ownIP, settings.ClientHostPortConnection);
         StartCoroutine(listener.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
         listener.AddResponseTo(settings.InitialisationDataSignature, SendInit);
         
@@ -48,6 +39,8 @@ public class Host : MonoBehaviour
         
         StartCoroutine(listener.AcceptIncomingConnections());
         StartCoroutine(listener.ListenForIncomingData(settings.IncomingDataIntervalSeconds));
+        
+        ActivateNotebookExchange();
     }
     
     private List<NetworkPackage> SendInit(List<NetworkPackage> arg)
@@ -63,7 +56,7 @@ public class Host : MonoBehaviour
     }
 
     #region Notebook
-    public void ActivateNotebookExchange()
+    private void ActivateNotebookExchange()
     {
         sendFirstNotebook =
             listener.AddDelayedResponseTo(settings.NotebookDataSignature,
@@ -112,34 +105,6 @@ public class Host : MonoBehaviour
     
     private List<NetworkPackage> GetRandomNotebook() =>
         notebooks[notebookRandom.Next(notebooks.Count)];
-
-    // private List<NetworkPackage> ReturnAnotherNotebook(List<NetworkPackage> data)
-    // {
-    //     if (notebooks.Count == 0)
-    //     {
-    //         Debug.Log("No notebooks to return.");
-    //         return null;
-    //     }
-    //     else if (notebooks.Count == 1)
-    //     {
-    //         if (notebooks[0] != data)
-    //             return notebooks[0];
-    //         else
-    //         {
-    //             Debug.Log("Only the clients notebook is in the list.");
-    //             return null;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         int endList = notebooks.Count - 1;
-    //         
-    //         if (notebooks[endList] != data)
-    //             return notebooks[endList];
-    //         else 
-    //             return notebooks[endList - 1];
-    //     }
-    // }
     #endregion
     
     #region debugMethods
@@ -179,4 +144,9 @@ public class Host : MonoBehaviour
         Debug.Log($"(Host): Sent ack with signature {obj}");
     }
     #endregion
+    
+    public override void Dispose()
+    {
+        listener.Dispose();
+    }
 }

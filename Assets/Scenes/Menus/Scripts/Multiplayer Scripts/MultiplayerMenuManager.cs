@@ -25,10 +25,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     private string classCode;
     private int    storyid;
-    private int    seed;
-    
-    public static Host   host;
-    public static Client client;
 
     /// <summary>
     /// Opens the settings menu.
@@ -87,9 +83,6 @@ public class MultiplayerMenuManager : MonoBehaviour
         storyCanvas.SetActive(true);
     }
     
-    //TODO: the following methods are used to start the game as host
-    //TODO: Implement when networking is ready
-    
     public void StoryA()
     {
         HostGame(0);
@@ -127,8 +120,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// </summary>
     public void StartAsHost()
     {
-        // TODO: This is the method to start the game as a host
-        MultiplayerManager.mm.JoinGame(classCode);
+        MultiplayerManager.mm.StartGame();
     }
 
     #endregion
@@ -153,17 +145,11 @@ public class MultiplayerMenuManager : MonoBehaviour
     {
         classCode = inputField.GetComponent<TMP_InputField>().text;
     }
-
-    // TODO: this is where the player joins a game using a class code
-    // TODO: implement when networking is ready
-    /// <summary>
-    /// 
-    /// </summary>
+    
     public void JoinGame()
     {
         MultiplayerManager.mm.JoinGame(classCode);
     }
-    
     #endregion
     
     public void Update()

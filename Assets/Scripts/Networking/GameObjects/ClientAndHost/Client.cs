@@ -11,24 +11,16 @@ using UnityEngine;
 /// Handles the client side of networking.
 /// This script can be active and inactive (separate from the active and inactive of objects in unity.)
 /// </summary>
-public class Client : MonoBehaviour
+public class Client : NetworkObject
 {
-    private NetworkSettings settings;
-    private GameEvent             doPopup;
-    private DataSender            sender;
-    private Action<NotebookData>  response;
-    private Action<int>           storyID;
-    private Action<int>           seed;
+    private DataSender           sender;
+    private Action<NotebookData> response;
+    private Action<int>          storyID;
+    private Action<int>          seed;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
     private List<CharacterInstance> activeCharacters;
-    
-    public void AssignSettings(GameEvent doPopup, NetworkSettings settings)
-    {
-        this.doPopup = doPopup;
-        this.settings = settings;
-    }
     
     /// <summary>
     /// Enters a classroom code. This converts it back to an ip, connects with this ip and requests initialisation data.
@@ -188,4 +180,10 @@ public class Client : MonoBehaviour
         Debug.Log($"(Client): Sent {o} bytes to the host as a notebook data request.");
     }
     #endregion
+    
+    
+    public override void Dispose()
+    {
+        sender.Dispose();
+    }
 }
