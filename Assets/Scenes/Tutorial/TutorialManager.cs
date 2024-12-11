@@ -38,6 +38,11 @@ public class TutorialManager : MonoBehaviour
         helpHighlight.SetActive(false);       
         textBox.gameObject.SetActive(false);   
         TutorialTimeline.Pause();
+        // Initialize the tutorial button
+        GameObject tutorial = GameObject.Find("HelpButton");
+        tutorialButton = tutorial.GetComponentInChildren<Button>();
+        // Remove the stop tutorial feature from the continue button
+        continueButton.onClick.RemoveListener(StopTutorial);
         
         // The type of tutorial that is shown, depends on the scene that is currently loaded. 
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
@@ -45,18 +50,22 @@ public class TutorialManager : MonoBehaviour
             // The hint the player should receive during this scene. 
             text.text = "Try to find the culprit!";
             textBox.gameObject.SetActive(true);
+            // Make sure the small tutorial can be closed by tapping the screen
+            continueButton.gameObject.SetActive(true);
+            continueButton.onClick.AddListener(StopTutorial); // Add the stop tutorial feature from the continue button
         }
         else if (SceneManager.GetSceneByName("GameLossScene").isLoaded || SceneManager.GetSceneByName("GameWinScene").isLoaded)
         {
             // The hint the player should receive during these scenes. 
             text.text = "Restart game, try again with the same characters, or quit?";
             textBox.gameObject.SetActive(true);
+            // Make sure the small tutorial can be closed by tapping the screen
+            continueButton.gameObject.SetActive(true);
+            continueButton.onClick.AddListener(StopTutorial); // Add the stop tutorial feature from the continue button
         }
         else // In all other cases (namely the NPCSelectScene) the actual tutorial needs to be played. 
         {
-            // Initialize required GameObjects
-            GameObject tutorial = GameObject.Find("HelpButton");
-            tutorialButton = tutorial.GetComponentInChildren<Button>();
+            // Initialize the notebook for the notebook tutorial
             GameObject notebook = GameObject.Find("NotebookButton");
             notebookButton = notebook.GetComponentInChildren<Button>();
             
@@ -73,6 +82,9 @@ public class TutorialManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// This method activates the help button highlight
+    /// </summary>
     public void HighlightHelp()
     {
         helpHighlight.gameObject.SetActive(true);
