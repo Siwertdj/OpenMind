@@ -91,8 +91,15 @@ public class Client : NetworkObject
     private void ReceivedInitFromHost(object o)
     {
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
-        storyID(receivedData[0].GetData<int>());
-        seed(receivedData[1].GetData<int>());
+        
+        int story = receivedData[0].GetData<int>();
+        int seeed = receivedData[1].GetData<int>();
+        
+        if (settings.IsDebug)
+            Debug.Log($"Received message from host, seed = {seeed} and story = {story}.");
+        
+        storyID(story);
+        seed(seeed);
     }
     
     /// <summary>
@@ -144,7 +151,7 @@ public class Client : NetworkObject
     private void AddAdditionalDebugMessagesClassroomCode()
     {
         sender.AddOnDataSentEvent(settings.InitialisationDataSignature, DataSentInit);
-        sender.AddOnAckReceivedEvent(settings.InitialisationDataSignature, AckReceived);
+        sender.AddOnAckReceivedEvent(AckReceived);
         sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
         sender.AddOnNotConnectedListeningEvents(ListeningWhileDisconnected);
     }
@@ -172,7 +179,6 @@ public class Client : NetworkObject
     private void AddAdditionalDebugMessagesNotebook()
     {
         sender.AddOnDataSentEvent(settings.NotebookDataSignature, DataSentNotebook);
-        sender.AddOnAckReceivedEvent(settings.NotebookDataSignature, AckReceived);
     }
     
     private void DataSentNotebook(object o)

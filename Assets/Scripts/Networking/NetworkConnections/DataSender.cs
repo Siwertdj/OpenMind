@@ -58,8 +58,8 @@ public class DataSender : DataNetworker
         acknowledgementTimes = new List<AcknowledgementTime>();
         
         //when an ack is received, untrack all ackTimes that match the received signature.
-        onAckReceievedEvents.Subscribe("ACK", signature =>
-            acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
+        // onAckReceievedEvents.Subscribe("ACK", signature =>
+        //     acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
     }
     
     /// <summary>
@@ -174,7 +174,6 @@ public class DataSender : DataNetworker
             }
             else
             {
-                
                 byte[] buffer = new byte[NetworkPackage.MaxPackageSize];
                 Task task = socket.ReceiveAsync(buffer, SocketFlags.None).ContinueWith(
                     receivedByteAmount =>
@@ -194,9 +193,10 @@ public class DataSender : DataNetworker
                             logError = "Receiving message failed with error: " + e;
                         }
                     });
+                
                 yield return new WaitUntil(() =>
                 {
-                    CheckForTimeouts();
+                    //CheckForTimeouts();
                     return task.IsCompleted;
                 });
             }
@@ -227,7 +227,7 @@ public class DataSender : DataNetworker
             try
             {
                 logError = onAckReceievedEvents.Raise(signature,
-                    signature, clearResponseEvents, "onAckReceivedEvent");
+                    receivedTailPackages[0].GetData<string>(), clearResponseEvents, "onAckReceivedEvent");
             }
             catch (InvalidCastException e)
             {
@@ -293,8 +293,8 @@ public class DataSender : DataNetworker
     /// When connecting to a host, the given action is called.
     /// The object is the task created when attempting to connect with a host.
     /// </summary>
-    public void AddOnAckReceivedEvent(string signature, Action<object> action) =>
-        onAckReceievedEvents.Subscribe(signature, action);
+    public void AddOnAckReceivedEvent(Action<object> action) =>
+        onAckReceievedEvents.Subscribe("ACK", action);
     
     /// <summary>
     /// Adds an action to the event of not receiving an ack within the timeout period.

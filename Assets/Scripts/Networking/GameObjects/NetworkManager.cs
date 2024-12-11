@@ -122,7 +122,7 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnConnectEvent(SenderConnect);
         sender.AddOnDataSentEvent("test", SenderDataSent);
         sender.AddOnReceiveResponseEvent("test", SenderReceiveResponse);
-        sender.AddOnAckReceivedEvent("test", SenderReceiveACK);
+        sender.AddOnAckReceivedEvent(SenderReceiveACK);
         sender.AddOnAckTimeoutEvent("test", SenderAckTimeout);
         sender.AddOnDisconnectedEvent(SenderDisconnect);
         
