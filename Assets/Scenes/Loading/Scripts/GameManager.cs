@@ -112,7 +112,8 @@ public class GameManager : MonoBehaviour
         }
         else if (data[0] is MultiplayerInit multiplayerInit)
         {
-            story = multiplayerInit.story;
+            story = Resources.LoadAll<StoryObject>("Stories")
+                .First(story => story.storyID == multiplayerInit.story);
             random = new Random(multiplayerInit.seed);
             NewGame();
         }

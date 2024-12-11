@@ -13,12 +13,11 @@ public class MultiplayerManager : MonoBehaviour
     public NetworkSettings settings;
     public GameEvent       doPopup;
     
-    private Host            host;
-    private Client          client;
-    private MultiplayerInit init;
-    private bool            isSeedInitialized;
-    private bool            isStoryInitialized;
-    
+    private Host                 host;
+    private Client               client;
+    private MultiplayerInit      init;
+    private bool                 isSeedInitialized;
+    private bool                 isStoryInitialized;
     private Action<NotebookData> notebookAction;
     
     void Awake()
@@ -30,7 +29,7 @@ public class MultiplayerManager : MonoBehaviour
 
     public void HostGame(int storyID)
     {
-        init.story = FindStory(storyID);
+        init.story = storyID;
         
         // Create and activate the host
         host = gameObject.AddComponent<Host>();
@@ -44,8 +43,6 @@ public class MultiplayerManager : MonoBehaviour
         // Let clients connect to the game
         host.Lobby(storyID, init.seed);
     }
-    
-    private StoryObject FindStory(int storyID) => Resources.LoadAll<StoryObject>("Stories").First(s => s.storyID == storyID);
     
     public string GetClassCode() => host.CreateClassroomCode();
 
@@ -65,18 +62,24 @@ public class MultiplayerManager : MonoBehaviour
     {
         init.seed = seed;
         isSeedInitialized = true;
-        if (isStoryInitialized)
-            StartGame();
     }
     
     private void AssignStory(int story)
     {
-        
+        init.story = story;
         isStoryInitialized = true;
-        if (isSeedInitialized)
-            StartGame();
     }
-
+    
+    private void Update()
+    {
+        if (isSeedInitialized && isStoryInitialized)
+        {
+            isStoryInitialized = false;
+            isSeedInitialized = false;
+            StartCoroutine(LoadGame());
+        }
+    }
+    
     public void StartGame()
     {
         StartCoroutine(LoadGame());

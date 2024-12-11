@@ -6,6 +6,6 @@
 /// </summary>
 public class MultiplayerInit
 {
-    public StoryObject story;
-    public int         seed;
+    public int story;
+    public int seed;
 }
