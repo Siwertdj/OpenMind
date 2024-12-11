@@ -1,6 +1,6 @@
 Loading --> NPCSelectScene(A), GameMenuScene(A), NotebookScene(A), TutorialScene(A), SettingsScene(A)
-NPCSelectScene --> DialogueScene(T), GameLossScene(T), GameWinScene(T)
-DialogueScene --> DialogueScene(T), NPCSelectScene(T), GameWinScene(T), GameLossScene(T), EpilogueScene(T), EpilogueScene(U)
+NPCSelectScene --> DialogueScene(T), GameOverScene(T)
+DialogueScene --> DialogueScene(T), NPCSelectScene(T), GameOverScene(T), EpilogueScene(T), EpilogueScene(U)
 EpilogueScene --> DialogueScene(A), GameOverScene(T)
 NotebookScene --> Loading(U)
 TutorialScene --> Loading(U)
