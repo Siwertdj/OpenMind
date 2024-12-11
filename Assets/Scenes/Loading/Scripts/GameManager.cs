@@ -136,6 +136,7 @@ public class GameManager : MonoBehaviour
                         break;
                 }
             }
+            
             NewGame();
         }
     }
@@ -204,9 +205,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void NewGame()
     {
-        // Populate the list of characters, if its not null and contains a culprit
+        Debug.Log("New Game");
+        
+        // Populate the list of characters, unless its empty and contains a culprit
         // (It could be instantiated if the game was restarted)
-        if (currentCharacters != null && currentCharacters.Any(c => c.isCulprit))
+        if (currentCharacters.Count == 0 || 
+            (currentCharacters.Count > 0 && currentCharacters.Any(c => c.isCulprit)))
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
@@ -447,9 +451,6 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
-        
-        // TODO: This should work, but sometimes DilaogueManager seems to be null..
-        //Debug.Log("Dialoguemanager is null: " + (DialogueManager.dm == null));
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
         var dialogueObject = new ContentDialogueObject(

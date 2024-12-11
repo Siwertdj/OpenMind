@@ -118,7 +118,7 @@ public class EpilogueManager : MonoBehaviour
         {
             var dialogueObject = story.storyEpilogueWonDialogue.GetDialogue(background);
             onDialogueStart.Raise(this, dialogueObject, character);
-            GetComponent<GameEventListener>().response.AddListener(delegate{EndEpilogue(hasWon);});
+            GetComponents<GameEventListener>()[1].response.AddListener(delegate{EndEpilogue(hasWon);});
         }
         else
         {
@@ -126,7 +126,7 @@ public class EpilogueManager : MonoBehaviour
             onDialogueStart.Raise(this, dialogueObject, character);
             // Lose-scenario, so we add a listener for 'DialogueEnd', where if it ends,
             // we got into StartEpilogueDialogue again, but now for the win-scenario.
-            GetComponent<GameEventListener>().response.AddListener(delegate{
+            GetComponents<GameEventListener>()[1].response.AddListener(delegate{
                 StartEpilogueDialogue(
                     characters.Where(c=> c.id == culpritId).ToList()[0], 
                     hasWon, 

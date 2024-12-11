@@ -19,6 +19,10 @@ using TMPro;
 /// </summary>
 public class SceneController : MonoBehaviour
 {
+    [Header("Game Events")]
+    [SerializeField] GameEvent onStartSceneTransition;
+    [SerializeField] GameEvent onEndSceneTransition;
+    
     /// <summary>
     /// All scenes in the project.
     /// </summary>
@@ -309,6 +313,7 @@ public class SceneController : MonoBehaviour
     /// <param name="start"></param>
     public void StartScene(SceneName start)
     {
+        Debug.Log($"Start scene is {start}");
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 

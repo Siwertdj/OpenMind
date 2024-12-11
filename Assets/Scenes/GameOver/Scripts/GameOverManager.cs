@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Script containing methods to be used on button click in the gamewin scene.
@@ -73,20 +74,16 @@ public class GameOverManager : MonoBehaviour
 
     public void ReturnToMenu()
     {
-        
-    }
-
-    public void ReturnToStorySelect()
-    {
-        
+        SceneManager.LoadScene("StartScreenScene");
+        // TODO: All DDOL-objects should not duplicate
     }
     
     /// <summary>
     /// Retry the game with the same characters, culprit and story.
     /// </summary>
-    public void Retry()
+    public async void Retry()
     {
-        sc.TransitionScene(
+        await sc.TransitionScene(
             SceneController.SceneName.GameOverScene,
             SceneController.SceneName.Loading,
             SceneController.TransitionType.Transition);
@@ -97,9 +94,9 @@ public class GameOverManager : MonoBehaviour
     /// <summary>
     /// Restart the game with different characters and the same culprit, but the same story.
     /// </summary>
-    public void Restart()
+    public async void Restart()
     {
-        sc.TransitionScene(
+        await sc.TransitionScene(
             SceneController.SceneName.GameOverScene,
             SceneController.SceneName.Loading,
             SceneController.TransitionType.Transition);
