@@ -2283,6 +2283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69da160a5c2bb79478233330d6e9ae35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 849959f33dac9204ea045702fe57e827, type: 2}
+  doPopup: {fileID: 11400000, guid: 4a33ccc5dd0b3214488901071e211369, type: 2}
 --- !u!4 &900397779
 Transform:
   m_ObjectHideFlags: 0

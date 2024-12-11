@@ -54,6 +54,7 @@ public class Host : MonoBehaviour
     {
         if (settings.IsDebug)
             Debug.Log("Host sending seed & storyID.");
+        
         return new List<NetworkPackage>
         {
             NetworkPackage.CreatePackage(storyID),
@@ -87,7 +88,9 @@ public class Host : MonoBehaviour
     }
     
     /// <summary>
-    /// The function for receiving the first notebook from the client. Because the player that sends the first notebook has to wait for a second player to send their notebook, this is a separate function
+    /// The function for receiving the first notebook from the client.
+    /// Because the player that sends the first notebook has to wait for a second player to send their notebook,
+    /// this is a separate function
     /// </summary>
     private void ReceiveFirstNotebookFromClient(object o)
     {

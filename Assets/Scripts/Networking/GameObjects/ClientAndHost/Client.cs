@@ -19,6 +19,7 @@ public class Client : MonoBehaviour
     private Action<NotebookData>  response;
     private Action<int>           storyID;
     private Action<int>           seed;
+    
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
     private List<CharacterInstance> activeCharacters;
@@ -90,6 +91,7 @@ public class Client : MonoBehaviour
     {
         if (settings.IsDebug)
             Debug.Log($"(Client): Connected with the host.");
+        
         sender.SendDataAsync(settings.InitialisationDataSignature,
             NetworkPackage.CreatePackage("Plz give init data!"), settings.AcknowledgementTimeoutSeconds);
     }
