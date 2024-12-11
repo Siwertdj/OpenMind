@@ -104,9 +104,18 @@ public class MultiplayerManager : MonoBehaviour
     {
         notebookAction = receivedNotebook =>
             GameManager.gm.multiplayerNotebookData = receivedNotebook;
-        
-        client.SendNotebookData(notebookAction, 
-            GameManager.gm.notebookData,
-            GameManager.gm.currentCharacters);
+
+        if (client == null)
+        {
+            host.AddOwnNotebook(notebookAction, 
+                GameManager.gm.notebookData,
+                GameManager.gm.currentCharacters);
+        }
+        else
+        {
+            client.SendNotebookData(notebookAction, 
+                GameManager.gm.notebookData,
+                GameManager.gm.currentCharacters);
+        }
     }
 }
