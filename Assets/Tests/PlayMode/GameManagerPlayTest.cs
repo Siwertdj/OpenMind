@@ -248,7 +248,7 @@ public class GameManagerPlayTest
     }
     */
     
-    /// <summary>
+    /*/// <summary>
     /// Checks if the "RetryStoryScene" resets all characters to be active.
     /// </summary>
     [UnityTest]
@@ -263,7 +263,7 @@ public class GameManagerPlayTest
         Assert.IsTrue(actual);
         
         yield return null;
-    }
+    }*/
 
     /// <summary>
     /// Checks if the "GetRandomVictimNoCulprit" returns a CharacterInstance that is not the culprit.
@@ -840,6 +840,7 @@ public class GameManagerPlayTest
         Assert.AreEqual(GameManager.GameState.Epilogue, gm.gameState);
     }*/
     
+    /*
     /// <summary>
     /// Check if the transition from GameLoss to NpcSelect GameState is done correctly, by retrying the game.
     /// </summary>
@@ -859,7 +860,9 @@ public class GameManagerPlayTest
         
         Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
     }
+    */
     
+    /*
     /// <summary>
     /// Check if the transition from GameWin to NpcSelect GameState is done correctly, by restarting the game.
     /// </summary>
@@ -879,6 +882,7 @@ public class GameManagerPlayTest
         
         Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
     }
+    */
     
     /*/// <summary>
     /// Check if the transition from the Epilogue to GameWon GameState is done correctly.

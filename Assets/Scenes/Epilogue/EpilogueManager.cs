@@ -18,11 +18,13 @@ public class EpilogueManager : MonoBehaviour
 
     [Header("Epilogue")] 
     [SerializeField] private GameEvent onDialogueStart;
+    [SerializeField] private GameEvent onEpilogueEnd;
     
     // Private Variables
     private StoryObject             story;
     private List<CharacterInstance> characters;
     private int                     culpritId;
+    private SceneController         sc;
     
     #region EpilogueFlow
     // 1. Player selects who they think is the culprit
@@ -33,6 +35,10 @@ public class EpilogueManager : MonoBehaviour
     #endregion
 
 
+    private void Awake()
+    {
+        sc = SceneController.sc;
+    }
 
     public void StartEpilogue(Component sender, params object[] data)
     {
@@ -99,7 +105,6 @@ public class EpilogueManager : MonoBehaviour
     public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
     {
         // Transition to the dialogue scene.
-        SceneController sc = SceneController.sc;
         await sc.TransitionScene(
             SceneController.SceneName.EpilogueScene, 
             SceneController.SceneName.DialogueScene, 
@@ -107,7 +112,7 @@ public class EpilogueManager : MonoBehaviour
         
         // Create the DialogueObject and corresponding children.
         // This background displays the suspected culprit over the Dialogue-background
-        var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
+        var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.epilogueBackground);
 
         if (hasWon || startWinScenario.HasValue)
         {
@@ -130,7 +135,7 @@ public class EpilogueManager : MonoBehaviour
             });
         }
         
-    }    
+    }
     
     #endregion
 
@@ -140,18 +145,23 @@ public class EpilogueManager : MonoBehaviour
     /// <summary>
     /// This method ends the dialogue, and loads the correct GameOver-scene depending on 'hasWon'
     /// </summary>
-    public void EndEpilogue(bool hasWon)
+    public async void EndEpilogue(bool hasWon)
     {
-        // TODO: Send the list of characters to the Gamewin/loss screen, so that we can restart from there
+        // Unload Dialogue
+        await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.EpilogueScene,
+            SceneController.TransitionType.Unload);
         
-        if (hasWon)
-        {
-            SceneManager.LoadScene("GameWinScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameLossScene");
-        }
+        // Transition to GameOver
+        await sc.TransitionScene(
+            SceneController.SceneName.EpilogueScene, 
+            SceneController.SceneName.GameOverScene,
+            SceneController.TransitionType.Transition);
+        
+        
+        // Send the game values to the GameOver-scene. 
+        onEpilogueEnd.Raise(this, hasWon, characters, culpritId, story);
     }
     
 

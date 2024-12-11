@@ -52,7 +52,6 @@ public class DialogueContainer : ScriptableObject
         // End with TerminateDialogueObject
         AppendToLeaf(output, new TerminateDialogueObject());
 
-        Debug.Log("Dialogue retrieved");
         return output;
     }
 
@@ -76,8 +75,6 @@ public class DialogueContainer : ScriptableObject
     {
         DialogueType dialogueType = data.type;
         GameObject[] background = data.background;
-        
-        Debug.Log($"Created Dialogue for: '{data.text}'");
         
         switch (dialogueType)
         {
@@ -106,15 +103,12 @@ public class DialogueContainer : ScriptableObject
         string remainingText = data.text;
         DialogueObject output = null;
 
-        int n = 30;
-        
         // see if text is too long; take the first X characters of the text, then find the last punctuation,
         // and split it there and pass it to make a dialogueobject
         // recurse this on the rest.
         // In case of double punctuations that just didnt fit in the maxlinelength, we remove them from the start of the string
-        while (remainingText.Length > 0 && n>0)
+        while (remainingText.Length > 0)
         {
-            Debug.Log($"Remaining text: '{remainingText}'");
             DialogueObject newDialogue = null;
             string segmentText = "";
             // If the remainingText fits within maxLineLength..
@@ -154,8 +148,6 @@ public class DialogueContainer : ScriptableObject
 
             // If the remainingText is not empty, we repeat the while-loop until it is, and we have
             // segmented all of the text in separate dialogueobjects.
-
-            n--;
         }
 
         return output;

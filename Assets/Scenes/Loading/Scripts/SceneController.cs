@@ -30,8 +30,7 @@ public class SceneController : MonoBehaviour
         NotebookScene,
         GameMenuScene,
         SettingsScene,
-        GameLossScene,
-        GameWinScene,
+        GameOverScene,
         TutorialScene,
         EpilogueScene,
         StartScreenScene

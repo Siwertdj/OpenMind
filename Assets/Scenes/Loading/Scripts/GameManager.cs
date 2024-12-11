@@ -92,16 +92,51 @@ public class GameManager : MonoBehaviour
         sc = SceneController.sc;
         // Empty some variables so they can be initialized later.
         currentCharacters = new List<CharacterInstance>();
-        // Set the gamestory based on the data we passed
-        if (data[0] is StoryObject storyObject)
+        
+        // If the game is loaded (from StartMenuManager)
+        if (sender is StartMenuManager)
         {
-            story = storyObject;
-            NewGame();
+            if (data[0] is SaveData saveData)
+            {
+                LoadGame(saveData);
+            }
+            else
+            {
+                Debug.LogError("SaveData incorrectly parsed.");
+            }
         }
-        // Load the savedata
-        else if (data[0] is SaveData saveData)
+        // Else, set the values passed to the correct variables below.
+        else
         {
-            LoadGame(saveData);
+            int culpritID = -1;     // set to an impossible value of -1
+            foreach (var d in data)
+            {
+                switch (d)
+                {
+                    case StoryObject story:
+                        this.story = story;
+                        break;
+                    case List<CharacterInstance> characters:
+                        currentCharacters = characters;
+                        foreach (CharacterInstance c in currentCharacters)
+                        {
+                            c.isActive = true;
+                            // if the character list was found after the culpritID, set it here.
+                            // If it was not yet found, it will always be false.
+                            c.isCulprit = (c.id == culpritID);
+                        }
+                        break;
+                    case int id:
+                        culpritID = id;
+                        // if this id was found after the currentCharacters, set the culprit ID
+                        if (currentCharacters != null)
+                            foreach (CharacterInstance c in currentCharacters)
+                                if (c.id == culpritID)
+                                    c.isCulprit = true;
+                        break;
+                }
+            }
+            NewGame();
         }
     }
 
@@ -169,8 +204,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void NewGame()
     {
-        // Populate the list of characters
-        PopulateCharacters();
+        // Populate the list of characters, if its not null and contains a culprit
+        // (It could be instantiated if the game was restarted)
+        if (currentCharacters != null && currentCharacters.Any(c => c.isCulprit))
+            PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
         // Start the music
@@ -353,42 +390,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
     
-    /// <summary>
-    /// Reset game from start with the same characters
-    /// </summary>
-    public void RetryStoryScene()
-    {
-        // Unload all active scenes except the story scene
-        SceneController.sc.UnloadAdditiveScenes();
-        
-        //update gamestate
-        gameState = GameState.Loading;
-        
-        // Reset the characters
-        foreach (CharacterInstance character in currentCharacters)
-        {
-            // Reset the questions and active-status of this character
-            character.isActive = true;
-            character.InitializeQuestions();
-        }
-        // Start the game again
-        FirstCycle();
-    }
     
-    /// <summary>
-    /// Restart game from start with new characters
-    /// </summary>
-    public void RestartStoryScene()
-    {
-        // unload all scenes except story scene
-        SceneController.sc.UnloadAdditiveScenes();
-        
-        // Change the gamestate
-        gameState = GameState.Loading;
-        
-        NewGame();     
-    }
-
     /// <summary>
     /// Performs a visual fade-in/out when called,
     /// displaying the victim's name and their fate, depending on the Story we are currently in.
@@ -481,24 +483,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            
-            // TODO: this if statement serves no purpose i think, so it should be removed.
-            // We can still ask questions, so toggle back to NPCSelectMenu without ending the cycle.
-            if (gameState == GameState.GameLoss)
-            {
-                await sc.TransitionScene(
-                    SceneController.SceneName.GameLossScene, 
-                    SceneController.SceneName.NPCSelectScene, 
-                    SceneController.TransitionType.Transition);
-            }
-            else
-            {
-                    await sc.TransitionScene(
-                        SceneController.SceneName.DialogueScene, 
-                        SceneController.SceneName.NPCSelectScene, 
-                        SceneController.TransitionType.Transition);
-            }
-        
+            await sc.TransitionScene(
+                SceneController.SceneName.DialogueScene, 
+                SceneController.SceneName.NPCSelectScene, 
+                SceneController.TransitionType.Transition);
+    
             gameState = GameState.NpcSelect;
         }
     }
