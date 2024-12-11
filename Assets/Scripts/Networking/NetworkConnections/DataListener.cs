@@ -57,11 +57,9 @@ public class DataListener : DataNetworker
         }
         
         socket.Bind(endPoint);
-        Debug.Log("Local: " + socket.LocalEndPoint);
         socket.Listen(255);
         connections = new List<Socket>();
         isConnectionReceiving = new List<bool>();
-        Debug.Log(socket.LocalEndPoint);
         
         //create the ack respond event with the signature as the message
         onAckSentEvents.Subscribe("ACK",

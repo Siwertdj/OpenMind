@@ -109,6 +109,12 @@ public class GameManager : MonoBehaviour
         {
             LoadGame(saveData);
         }
+        else if (data[0] is MultiplayerInit multiplayerInit)
+        {
+            story = multiplayerInit.story;
+            random = new Random(multiplayerInit.seed);
+            NewGame();
+        }
     }
 
     /// <summary>

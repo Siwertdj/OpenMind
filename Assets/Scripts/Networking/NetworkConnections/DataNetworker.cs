@@ -19,7 +19,7 @@ using UnityEngine;
 /// This class maintains and displays any error messages caught in events.
 /// This class also contains some utility functions for shared code between DataSender and DataListener.
 /// </summary>
-public abstract class DataNetworker : NetworkDebugger
+public abstract class DataNetworker : NetworkDebugger, IDisposable
 {
     protected Socket     socket;
     protected IPEndPoint endPoint;
@@ -133,4 +133,10 @@ public abstract class DataNetworker : NetworkDebugger
     /// </summary>
     public void AddOnDisconnectedEvent(Action<object> action) =>
         onDisconnectedEvents.Subscribe("Disconnect", action);
+    
+    
+    public void Dispose()
+    {
+        socket.Dispose();
+    }
 }
