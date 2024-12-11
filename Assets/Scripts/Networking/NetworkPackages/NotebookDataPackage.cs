@@ -7,8 +7,9 @@ using System.Collections.Generic;
 public class NotebookDataPackage
 {
     private List<CharacterInstance> characters;
-    private Dictionary<int, string> characterNotes = new();
-    private string                  personalNotes;
+    
+    public Dictionary<int, string> characterNotes = new();
+    public string                  personalNotes;
     
     public NotebookDataPackage(NotebookData data, List<CharacterInstance> characters)
     {

@@ -24,9 +24,10 @@ public class NetworkDelayedEvents
         raised.Add(signature);
         if (inputData.ContainsKey(signature))
         {
+            object value = inputData[signature];
             raised.Remove(signature);
             inputData.Remove(signature);
-            return events.Raise(signature, inputData[signature], clear, eventName);
+            return events.Raise(signature, value, clear, eventName);
         }
         
         return "";
@@ -43,9 +44,10 @@ public class NetworkDelayedEvents
         
         if (raised.Contains(signature))
         {
+            object value = inputData[signature];
             raised.Remove(signature);
             inputData.Remove(signature);
-            return events.Raise(signature, inputData[signature], clear, eventName);
+            return events.Raise(signature, value, clear, eventName);
         }
         
         return "";
