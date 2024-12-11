@@ -19,6 +19,7 @@ public class MultiplayerManager : MonoBehaviour
     private bool            isSeedInitialized;
     private bool            isStoryInitialized;
     
+    private Action<NotebookData> notebookAction;
     
     void Awake()
     {
@@ -94,5 +95,17 @@ public class MultiplayerManager : MonoBehaviour
         
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");  // unload this scene; no longer necessary
+    }
+    
+    public void SendNotebook()
+    {
+        notebookAction = receivedNotebook =>
+        {
+            GameManager.gm.multiplayerNotebookData = receivedNotebook;
+        };
+        
+        client.SendNotebookData(notebookAction, 
+            GameManager.gm.notebookData,
+            GameManager.gm.currentCharacters);
     }
 }
