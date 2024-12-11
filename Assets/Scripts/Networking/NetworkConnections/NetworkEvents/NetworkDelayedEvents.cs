@@ -21,6 +21,7 @@ public class NetworkDelayedEvents
     /// </summary>
     public string Raise(string signature, bool clear, string eventName)
     {
+        raised.Add(signature);
         if (inputData.ContainsKey(signature))
         {
             raised.Remove(signature);
@@ -28,7 +29,6 @@ public class NetworkDelayedEvents
             return events.Raise(signature, inputData[signature], clear, eventName);
         }
         
-        raised.Add(signature);
         return "";
     }
     

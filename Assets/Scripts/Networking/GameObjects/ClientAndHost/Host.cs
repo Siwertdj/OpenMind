@@ -66,7 +66,7 @@ public class Host : NetworkObject
     /// <summary>
     /// The host uploads their own notebook
     /// </summary>
-    public void AddOwnNotebook(NotebookData notebookData, List<CharacterInstance> currentCharacters, Action<NotebookData> assignNotebookData)
+    public void AddOwnNotebook(Action<NotebookData> assignNotebookData, NotebookData notebookData, List<CharacterInstance> currentCharacters)
     {
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
         List<NetworkPackage> listPackage = new List<NetworkPackage> { package.CreatePackage() };
