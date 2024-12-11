@@ -47,7 +47,6 @@ public class SettingsManager : MonoBehaviour
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
-        DontDestroyOnLoad(this.gameObject);
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;

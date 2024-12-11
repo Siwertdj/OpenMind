@@ -31,7 +31,6 @@ public class TransitionAnimator : MonoBehaviour
     private void Awake()
     {
         i = this;
-        DontDestroyOnLoad(this);
     }
     
     /// <summary>

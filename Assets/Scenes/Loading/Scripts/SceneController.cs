@@ -68,7 +68,6 @@ public class SceneController : MonoBehaviour
     public void Awake()
     {
         sc = this;
-        DontDestroyOnLoad(this);
     }
 
     /// <summary>
