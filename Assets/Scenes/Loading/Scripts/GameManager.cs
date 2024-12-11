@@ -339,7 +339,7 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition);
         
         // Raise the EpilogueStart-event and pass all the necessary data
-        onEpilogueStart.Raise(this, story, characters, GetCulprit());
+        onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit());
         
         // Then, Unload the toolbox
         Destroy(GameObject.Find("Toolbox"));

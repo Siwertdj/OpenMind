@@ -64,6 +64,11 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public void PopulateGrid(List<CharacterInstance> characters)
     {
+        foreach (Transform child in portraitContainer.transform)
+        {
+            Destroy(child);
+        }
+        
         Transform parent = portraitContainer.transform;
         foreach (CharacterInstance character in characters)
         { 
@@ -77,6 +82,8 @@ public class EpilogueManager : MonoBehaviour
 
     private void CharacterSelected(CharacterInstance chosenCharacter)
     {
+        Debug.Log($"{chosenCharacter.characterName} was selected.");
+        
         // Set win state
         bool hasWon = culpritId == chosenCharacter.id;
         
@@ -91,21 +98,23 @@ public class EpilogueManager : MonoBehaviour
     /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
     /// </summary>
     /// <param name="character"> The character which has been chosen. </param>
-    public void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
+    public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
     {
-        // TODO: Create a coroutine to wait for the loadscene operation to be done. We dont have scenecontroller to rely on here.
-        // Load the DialogueScene first.
-        // Transition to the dialogue scene.
-        SceneManager.LoadScene("DialogueScene", LoadSceneMode.Additive);
+        Debug.Log("Starting epilogue-dialogue.");
         
-        // Get the epilogue dialogue.
-        // TODO: Clean characterinstance class
-        //remainingDialogueScenario = character.GetEpilogueDialogue(hasWon);
+        // Transition to the dialogue scene.
+        SceneController sc = SceneController.sc;
+        await sc.TransitionScene(
+            SceneController.SceneName.EpilogueScene, 
+            SceneController.SceneName.DialogueScene, 
+            SceneController.TransitionType.Additive);
         
         // Create the DialogueObject and corresponding children.
         // This background displays the suspected culprit over the Dialogue-background
         var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
 
+        Debug.Log("Dialoguescene loaded & background created");
+        
         if (hasWon || startWinScenario.HasValue)
         {
             var dialogueObject = story.storyEpilogueWonDialogue.GetDialogue(background);

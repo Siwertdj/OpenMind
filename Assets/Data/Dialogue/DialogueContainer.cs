@@ -36,6 +36,8 @@ public class DialogueContainer : ScriptableObject
     /// <returns></returns>
     public DialogueObject GetDialogue([CanBeNull] GameObject[] background = null, int? startIndex = null, int? endIndex = null)
     {
+        Debug.Log("Getting Dialogue from Container");
+        
         if (background != null) 
             SetBackground(background, startIndex, endIndex);
         
@@ -48,6 +50,7 @@ public class DialogueContainer : ScriptableObject
             var data = segments[i];
             AppendToLeaf(output, SegmentDialogue(data));
         }
+        
         // End with TerminateDialogueObject
         AppendToLeaf(output, new TerminateDialogueObject());
 
@@ -62,11 +65,20 @@ public class DialogueContainer : ScriptableObject
     public void AppendToLeaf(DialogueObject node, DialogueObject newLeaf)
     {
         // if the node has no responses, add the newleaf to its responses
+        /*
         if (node.Responses.Count == 0)
             node.Responses.Add(newLeaf);
         // else, we recurse
         else
             AppendToLeaf(node.Responses.First(), newLeaf);
+            */
+
+        DialogueObject currentNode = node;
+        while (currentNode.Responses.Count > 0)
+        {
+            currentNode = currentNode.Responses.First();
+        }
+        currentNode.Responses.Add(newLeaf);
     }
 
     public DialogueObject CreateDialogueObject(DialogueData data)
@@ -98,39 +110,48 @@ public class DialogueContainer : ScriptableObject
     private DialogueObject SegmentDialogue(DialogueData data)
     {
         int maxLineLength = SettingsManager.sm == null ? defaultLineLength : SettingsManager.sm.maxLineLength;
+        Debug.Log($"MaxLineLenght: {maxLineLength}");
         string remainingText = data.text;
         DialogueObject output = null;
+
+        int n = 30;
         
         // see if text is too long; take the first X characters of the text, then find the last punctuation,
         // and split it there and pass it to make a dialogueobject
         // recurse this on the rest.
         // In case of double punctuations that just didnt fit in the maxlinelength, we remove them from the start of the string
-        while (remainingText.Length > 0)
+        while (remainingText.Length > 0 || n <= 0)
         {
-            // takes a substring of the full string containing the first X characters
-            // Then finds the index of the last punctuation-character in that string.
-            int textLength = 
-                FindLastPunctuation(
-                    remainingText.Substring(
-                        0, Mathf.Min(remainingText.Length, maxLineLength)));
-            
-            // We create two substrings;
-            // One for the first segment of dialogue that we will create a dialogueobject of.
-            // And a second for the remainingtext, which we re-assign.
-            string segmentText = remainingText.Substring(0, textLength);
-            remainingText = remainingText.Substring(textLength);
-            // Drop the first characters of remainingtext if they are part of punctuation or a space
-            while (remainingText.Length > 0 && (remainingText[0] == ' ' ||  punctuations.Contains(remainingText[0])))
+            DialogueObject newDialogue = null;
+            string segmentText = "";
+            // If the remainingText fits within maxLineLength..
+            if (remainingText.Length <= maxLineLength)
             {
-                // Drop first element of remainingtext if its punctuation
-                remainingText = remainingText.Remove(0, 1);
+                 segmentText = RemovePunctuationFromStart(remainingText);
             }
+            // If the remainingtext needs to be segmented.. 
+            else
+            {
+                // takes a substring of the full string containing the first X characters
+                // Then finds the index of the last punctuation-character in that string.
+                // Trim the remaining text, to the last found punctuation in the remainingText-string
+                int textLength = 
+                    FindLastPunctuation(
+                        remainingText.Substring(
+                            0, Mathf.Min(remainingText.Length, maxLineLength)));
                 
-
-            // With this segment, we now create a DialogueObject.
-            DialogueObject newDialogue = CreateDialogueObject(new DialogueData(data.type, segmentText, data.image));
-            // We append this new object to the previous one we created.
-
+                // We create two substrings;
+                // One for the first segment of dialogue that we will create a dialogueobject of.
+                // And a second for the remainingtext, which we re-assign.
+                segmentText = remainingText.Substring(0, textLength);
+                remainingText = remainingText.Substring(textLength);
+                // Drop the first characters of remainingtext if they are part of punctuation or a space
+                remainingText = RemovePunctuationFromStart(remainingText);
+            }
+            
+            // With the found segment, we now create a DialogueObject.
+            newDialogue = CreateDialogueObject(new DialogueData(data.type, segmentText, data.image));
+            
             // We set the ouput to include the newDialogue
             if (output == null)
                 output = newDialogue;
@@ -139,6 +160,20 @@ public class DialogueContainer : ScriptableObject
 
             // If the remainingText is not empty, we repeat the while-loop until it is, and we have
             // segmented all of the text in separate dialogueobjects.
+
+            n--;
+        }
+
+        return output;
+    }
+
+    private string RemovePunctuationFromStart(string input)
+    {
+        string output = input;
+        while (output.Length > 0 && (output[0] == ' ' ||  punctuations.Contains(output[0])))
+        {
+            // Drop first element of remainingtext if its punctuation
+            output = output.Remove(0, 1);
         }
 
         return output;

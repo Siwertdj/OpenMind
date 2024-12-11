@@ -21,7 +21,7 @@ public class SettingsManager : MonoBehaviour
     private AudioSource musicSource;
     
     // TODO: Integrate this with text-size
-    public int maxLineLength;
+    public int maxLineLength = 30;
     
     // Text size to be used for the text components
     public TextSize textSize;
