@@ -203,18 +203,21 @@ public class DialogueManager : MonoBehaviour
     /// <param name="newBackground">The background that will replace the current background.</param>
     public void ReplaceBackground(GameObject[] newBackground)
     {
-        Transform parent = backgroundField.transform;
-
-        // Remove old background
-        foreach (Transform child in parent)
-            Destroy(child.gameObject);
-
-        // Instantiate new background
-        foreach (GameObject prefab in newBackground)
+        if (newBackground != null)
         {
-            var image = Instantiate(prefab).GetComponent<Image>();
-            image.rectTransform.SetParent(parent, false);
-        }        
+            Transform parent = backgroundField.transform;
+
+            // Remove old background
+            foreach (Transform child in parent)
+                Destroy(child.gameObject);
+
+            // Instantiate new background
+            foreach (GameObject prefab in newBackground)
+            {
+                var image = Instantiate(prefab).GetComponent<Image>();
+                image.rectTransform.SetParent(parent, false);
+            }
+        }
     }
 
     /// <summary>

@@ -82,8 +82,6 @@ public class EpilogueManager : MonoBehaviour
 
     private void CharacterSelected(CharacterInstance chosenCharacter)
     {
-        Debug.Log($"{chosenCharacter.characterName} was selected.");
-        
         // Set win state
         bool hasWon = culpritId == chosenCharacter.id;
         
@@ -100,8 +98,6 @@ public class EpilogueManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
     {
-        Debug.Log("Starting epilogue-dialogue.");
-        
         // Transition to the dialogue scene.
         SceneController sc = SceneController.sc;
         await sc.TransitionScene(
@@ -113,8 +109,6 @@ public class EpilogueManager : MonoBehaviour
         // This background displays the suspected culprit over the Dialogue-background
         var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
 
-        Debug.Log("Dialoguescene loaded & background created");
-        
         if (hasWon || startWinScenario.HasValue)
         {
             var dialogueObject = story.storyEpilogueWonDialogue.GetDialogue(background);

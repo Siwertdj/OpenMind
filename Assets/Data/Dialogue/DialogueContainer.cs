@@ -36,8 +36,6 @@ public class DialogueContainer : ScriptableObject
     /// <returns></returns>
     public DialogueObject GetDialogue([CanBeNull] GameObject[] background = null, int? startIndex = null, int? endIndex = null)
     {
-        Debug.Log("Getting Dialogue from Container");
-        
         if (background != null) 
             SetBackground(background, startIndex, endIndex);
         
@@ -54,6 +52,7 @@ public class DialogueContainer : ScriptableObject
         // End with TerminateDialogueObject
         AppendToLeaf(output, new TerminateDialogueObject());
 
+        Debug.Log("Dialogue retrieved");
         return output;
     }
 
@@ -65,14 +64,6 @@ public class DialogueContainer : ScriptableObject
     public void AppendToLeaf(DialogueObject node, DialogueObject newLeaf)
     {
         // if the node has no responses, add the newleaf to its responses
-        /*
-        if (node.Responses.Count == 0)
-            node.Responses.Add(newLeaf);
-        // else, we recurse
-        else
-            AppendToLeaf(node.Responses.First(), newLeaf);
-            */
-
         DialogueObject currentNode = node;
         while (currentNode.Responses.Count > 0)
         {
@@ -85,6 +76,8 @@ public class DialogueContainer : ScriptableObject
     {
         DialogueType dialogueType = data.type;
         GameObject[] background = data.background;
+        
+        Debug.Log($"Created Dialogue for: '{data.text}'");
         
         switch (dialogueType)
         {
@@ -110,7 +103,6 @@ public class DialogueContainer : ScriptableObject
     private DialogueObject SegmentDialogue(DialogueData data)
     {
         int maxLineLength = SettingsManager.sm == null ? defaultLineLength : SettingsManager.sm.maxLineLength;
-        Debug.Log($"MaxLineLenght: {maxLineLength}");
         string remainingText = data.text;
         DialogueObject output = null;
 
@@ -120,14 +112,16 @@ public class DialogueContainer : ScriptableObject
         // and split it there and pass it to make a dialogueobject
         // recurse this on the rest.
         // In case of double punctuations that just didnt fit in the maxlinelength, we remove them from the start of the string
-        while (remainingText.Length > 0 || n <= 0)
+        while (remainingText.Length > 0 && n>0)
         {
+            Debug.Log($"Remaining text: '{remainingText}'");
             DialogueObject newDialogue = null;
             string segmentText = "";
             // If the remainingText fits within maxLineLength..
             if (remainingText.Length <= maxLineLength)
             {
                  segmentText = RemovePunctuationFromStart(remainingText);
+                 remainingText = "";
             }
             // If the remainingtext needs to be segmented.. 
             else
