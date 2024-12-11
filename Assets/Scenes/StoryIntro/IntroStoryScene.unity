@@ -171,6 +171,67 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 1
+--- !u!1 &107210725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107210727}
+  - component: {fileID: 107210726}
+  m_Layer: 0
+  m_Name: StoryC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &107210726
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107210725}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -3702496251123548857, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+    value: {fileID: 1208453419}
+  - key: {fileID: 6119390854896751083, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+    value: {fileID: 1464702355}
+  - key: {fileID: -8218322097711309632, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+    value: {fileID: 1775969665}
+  - key: {fileID: 7198898477262417771, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1208453419}
+  - key: {fileID: -6181053485295886216, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1464702355}
+  - key: {fileID: -9147030484646639633, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1775969665}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &107210727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107210725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 558.5811, y: 772.0231, z: -2.1583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &228368346
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,59 +326,6 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 0
---- !u!1 &274968077
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 274968079}
-  - component: {fileID: 274968078}
-  m_Layer: 0
-  m_Name: StoryC
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!320 &274968078
-PlayableDirector:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274968077}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
-  m_InitialState: 0
-  m_WrapMode: 2
-  m_DirectorUpdateMode: 1
-  m_InitialTime: 0
-  m_SceneBindings:
-  - key: {fileID: -3702496251123548857, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
-    value: {fileID: 1208453419}
-  - key: {fileID: 6119390854896751083, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
-    value: {fileID: 1464702355}
-  m_ExposedReferences:
-    m_References: []
---- !u!4 &274968079
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274968077}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 558.5811, y: 772.0231, z: -2.1583}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &315456856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,15 +1075,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   introStoryA: {fileID: 1239055691}
   introStoryB: {fileID: 1407954286}
-  introStoryC: {fileID: 274968078}
+  introStoryC: {fileID: 107210726}
   backgrounds:
   - {fileID: 21300000, guid: 38c2b43cb244f7640b6567ac8cf99a1e, type: 3}
   - {fileID: 21300000, guid: 6c11d634dd0d776438b0d6ddc9252732, type: 3}
   - {fileID: 21300000, guid: 881b29cad61f3094c9fa79819dfd030d, type: 3}
-  - {fileID: 21300000, guid: 213215db4634ea74aa37f30e1c86dca1, type: 3}
+  - {fileID: 21300000, guid: ce0cde919bce5bf4999c1f5c21e3df05, type: 3}
   - {fileID: 21300000, guid: 870b3eb7338b6894fa7d70b246b97afe, type: 3}
   - {fileID: 21300000, guid: 1706e87b8a2c3e942bd3425960063a62, type: 3}
   - {fileID: 21300000, guid: 53691987360df514e8f044db0e7231c5, type: 3}
+  - {fileID: 21300000, guid: 295eb262c57e73d4bbae122726be8975, type: 3}
+  - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
+  - {fileID: 21300000, guid: 3dd7786da48f15341b65b9df036e135f, type: 3}
+  - {fileID: 21300000, guid: b19a2cd9a2585d74e8b4b6d37505e3a8, type: 3}
+  - {fileID: 21300000, guid: 30ae802f968791c4fbb6a04d1bf30e99, type: 3}
   storyText:
   - 'Unknown? I must have removed their number. Awkward! '
   - Let's look around, maybe I recognize someone.
@@ -1097,6 +1110,24 @@ MonoBehaviour:
   - "Come on, let\u2019s talk to some people"
   - maybe we can find the person responsible.
   - I sense they are currently in the cafeteria.
+  - Wait! Before I forget. I have to tell you something.
+  - 'Have you heard about the latest paper of your old professor? '
+  - 'Yeah, that successful one? '
+  - "That\u2019s the one."
+  - I believe he stole this paper from one of the people here today!
+  - Oh no..
+  - 'We have to make this right. '
+  - I put all kinds of data into my computer and asked it to determine who the rightful
+    author is.
+  - But it is taking too long and only giving vague hints.
+  - 'BEEP BEEP The author is currently in the cafeteria. '
+  - 'Maybe you can help me? '
+  - Sure!
+  - 'You can ask the people present questions to find out who the computer is talking
+    about. '
+  - 'But you have to be discreet! The professor cannot find out we are looking into
+    his paper.. '
+  - Good luck!
   background: {fileID: 1208453420}
   continueButton: {fileID: 315456856}
   sendButton: {fileID: 1300033502}
@@ -1200,7 +1231,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 213215db4634ea74aa37f30e1c86dca1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce0cde919bce5bf4999c1f5c21e3df05, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1230,6 +1261,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: db3ad9fc50d240842b5d648956e95ee9, type: 2}
     - {fileID: 11400000, guid: 4d13f9c84dfc03b42860fbb9656350b4, type: 2}
     - {fileID: 11400000, guid: 6f66c15496981c347a198d16dbf1bd99, type: 2}
+    - {fileID: 11400000, guid: bc4f8d0c98f0d57448046940d096acd4, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1306,6 +1338,20 @@ MonoBehaviour:
         - m_Target: {fileID: 1187182886}
           m_TargetAssemblyTypeName: IntroductionManager, Scripts
           m_MethodName: ChangeCharacterText
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1187182886}
+          m_TargetAssemblyTypeName: IntroductionManager, Scripts
+          m_MethodName: ChangeComputerText
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -1731,7 +1777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 221.60919, y: -383.00195}
+  m_AnchoredPosition: {x: 212, y: -383.00195}
   m_SizeDelta: {x: 68.3656, y: 69.2405}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1300033502
@@ -1890,7 +1936,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1407954284}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -1902,7 +1948,15 @@ PlayableDirector:
     value: {fileID: 1464702355}
   - key: {fileID: -8218322097711309632, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1775969665}
-  - key: {fileID: 2814199117720577956, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+  - key: {fileID: 0}
+    value: {fileID: 1775969669}
+  - key: {fileID: 7198898477262417771, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1208453419}
+  - key: {fileID: -9147030484646639633, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1775969665}
+  - key: {fileID: -6181053485295886216, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1464702355}
+  - key: {fileID: 4642109007761088518, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1775969669}
   m_ExposedReferences:
     m_References: []
@@ -2214,7 +2268,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: 15.894}
+  m_AnchoredPosition: {x: 15, y: 33}
   m_SizeDelta: {x: 491.03, y: 1048.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1775969667
@@ -2291,12 +2345,27 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: 3621246dd98bc7542b4ddc207d1e79b8, type: 2}
+    - {fileID: 11400000, guid: 6256c7f88870f1a4aa91fddfb4a4552a, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 1187182886}
           m_TargetAssemblyTypeName: IntroductionManager, Scripts
           m_MethodName: Vision
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1187182886}
+          m_TargetAssemblyTypeName: IntroductionManager, Scripts
+          m_MethodName: Computer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2340,8 +2409,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -3.6297, y: 1.2099}
+  m_SizeDelta: {x: 320.9886, y: 52.4198}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1807932668
 MonoBehaviour:
@@ -2363,7 +2432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You
+  m_text: Receptionist
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
@@ -2390,8 +2459,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
-  m_fontSizeBase: 70
+  m_fontSize: 60
+  m_fontSizeBase: 60
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2520,4 +2589,4 @@ SceneRoots:
   - {fileID: 1238301442}
   - {fileID: 1239055692}
   - {fileID: 1407954285}
-  - {fileID: 274968079}
+  - {fileID: 107210727}

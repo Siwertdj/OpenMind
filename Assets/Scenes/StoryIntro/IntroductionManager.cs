@@ -29,6 +29,7 @@ public class IntroductionManager : MonoBehaviour
     public Image      background;
     public GameObject continueButton;
     public Button     sendButton;
+    private string characterName; 
     [SerializeField] public Image character;
     [SerializeField] public TMP_Text nameTag; 
     
@@ -41,6 +42,9 @@ public class IntroductionManager : MonoBehaviour
     
     // Variables for introduction B
     private bool vision = true;
+    
+    // Variable for introduction C
+    private bool computer = true; 
     
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
@@ -133,6 +137,7 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline = introStoryB;
         TextIndex = 4;
         background.sprite = backgrounds[4];
+        characterName = "Alex";
         currentTimeline.Play();
     }
     
@@ -142,6 +147,10 @@ public class IntroductionManager : MonoBehaviour
     public void StoryC()
     {
         currentTimeline = introStoryC;
+        TextIndex = 19;
+        background.sprite = backgrounds[11];
+        character.sprite = backgrounds[9];
+        characterName = "Receptionist";
         currentTimeline.Play();
     }
     
@@ -255,6 +264,39 @@ public class IntroductionManager : MonoBehaviour
     
     #endregion
     
+    
+    #region Introduction C
+    /// <summary>
+    /// This method changes the sprite of the character into the computer. 
+    /// </summary>
+    public void Computer()
+    {
+        if (computer)
+        {
+            character.sprite = backgrounds[9];
+            background.sprite = backgrounds[4];
+        }
+        else
+        {
+            character.sprite = backgrounds[7];
+            background.sprite = backgrounds[11];
+        }
+        
+        computer = !computer; 
+    }
+    
+    /// <summary>
+    /// This method changes and shows text the computer is saying. 
+    /// </summary>
+    public void ChangeComputerText()
+    {
+        nameTag.text = "Computer";
+        character.sprite = backgrounds[10];
+        updateText();
+    }
+    
+    #endregion
+    
     // This region contains methods regarding the story text of the introductions
     #region StoryText
     /// <summary>
@@ -262,7 +304,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void ChangeCharacterText()
     {
-        nameTag.text = "Alex";
+        nameTag.text = characterName;
         updateText();
     }
     
