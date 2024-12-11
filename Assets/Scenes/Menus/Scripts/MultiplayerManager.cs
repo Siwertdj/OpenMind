@@ -1,21 +1,20 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Random = System.Random;
 
 public class MultiplayerManager : MonoBehaviour
 {
     public static MultiplayerManager mm;
     private       Host               host;
     private       Client             client;
-    private       int                seed;
-    private       int                storyID;
     public        NetworkSettings    settings;
     public        GameEvent          doPopup;
 
     private Action<int> seedAction;
     private Action<int> storyAction;
+
+    private Action<NotebookData> notebookAction;
     
     void Awake()
     {
@@ -28,8 +27,6 @@ public class MultiplayerManager : MonoBehaviour
 
     public void HostGame(int storyID)
     {
-        this.storyID = storyID;
-        
         // Create and activate the host
         host = gameObject.AddComponent<Host>();
         
@@ -37,7 +34,7 @@ public class MultiplayerManager : MonoBehaviour
         host.AssignSettings(doPopup, settings);
         
         // Create a seed
-        seed = DateTime.Now.Ticks.GetHashCode();
+        int seed = DateTime.Now.Ticks.GetHashCode();
         
         // Let clients connect to the game
         host.Lobby(storyID, seed);
@@ -67,5 +64,17 @@ public class MultiplayerManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene("PrologueScene");
+    }
+
+    public void SendNotebook()
+    {
+        notebookAction = receivedNotebook =>
+        {
+            GameManager.gm.multiplayerNotebookData = receivedNotebook;
+        };
+        
+        client.SendNotebookData(notebookAction, 
+            GameManager.gm.notebookData,
+            GameManager.gm.currentCharacters);
     }
 }

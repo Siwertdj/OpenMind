@@ -12,20 +12,54 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    public GameObject inputField;
-    public GameObject inputFieldCharacters;
-    public GameObject characterInfo;
-    public GameObject nameButtons;
-    public Button personalButton;
-    [NonSerialized] public NotebookData notebookData;
-    private CharacterInstance currentCharacter;
-    private List<Button> buttons;
-    private Button selectedButton;
-
+    public                 GameObject        inputField;
+    public                 GameObject        inputFieldCharacters;
+    public                 GameObject        characterInfo;
+    public                 GameObject        nameButtons;
+    public                 Button            personalButton;
+    private                CharacterInstance currentCharacter;
+    private                List<Button>      buttons;
+    private                Button            selectedButton;
+    public                 Button            multiplayerButton;
+    private                bool              showingMultiplayerNotebook;
+    public NotebookData notebookData;
+    
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
     /// </summary>
     void Start()
+    {
+        notebookData = GameManager.gm.notebookData;
+        InitializeNotebook(notebookData);
+        showingMultiplayerNotebook = false;
+        personalButton.interactable = true;
+        multiplayerButton.interactable = true;
+    }
+    
+    public void ToggleMultiplayerNotebook()
+    {
+        if (showingMultiplayerNotebook)
+        {
+            notebookData = GameManager.gm.notebookData;
+            InitializeNotebook(notebookData);
+            showingMultiplayerNotebook = false;
+        }
+        else
+        {
+            if (GameManager.gm.multiplayerNotebookData != null)
+            {
+                notebookData = GameManager.gm.multiplayerNotebookData;
+                InitializeNotebook(notebookData);
+                showingMultiplayerNotebook = true;
+            }
+            else
+            {
+                Debug.Log("No multiplayer notebook exists.");
+            }
+        }
+    }
+
+    private void InitializeNotebook(NotebookData notebook)
     {
         // close character notes
         characterInfo.SetActive(false);
@@ -34,11 +68,9 @@ public class NotebookManager : MonoBehaviour
         inputField.SetActive(true);
         // assign character names to buttons
         InitializeCharacterButtons();
-        // get notebookdata
-        notebookData = GameManager.gm.notebookData;
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        inputField.GetComponent<TMP_InputField>().text = notebook.GetPersonalNotes();
         selectedButton = personalButton;
-        personalButton.interactable = false;
+        //personalButton.interactable = false;
     }
     
     /// <summary>

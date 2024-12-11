@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;       // static instance of the gamemanager
     private SceneController sc;
     public NotebookData notebookData;
+    public NotebookData multiplayerNotebookData;
 
     // Enumerations
     #region Enumerations
@@ -245,12 +246,21 @@ public class GameManager : MonoBehaviour
             // Change the gamestate
             gameState = GameState.CulpritSelect;
             
+            MultiplayerNotebookExchange();
+            
             _ = sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition);
         }
     }
+
+    private void MultiplayerNotebookExchange()
+    {
+        // Send notebook
+        MultiplayerManager.mm.SendNotebook();
+    }
+    
     #endregion
     
     #region InstantiateGameOrCycles
