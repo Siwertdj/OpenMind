@@ -7,10 +7,11 @@ using Random = System.Random;
 public class MultiplayerManager : MonoBehaviour
 {
     public static MultiplayerManager mm;
-    private       Host               host;
-    private       Client             client;
-    private       int                seed;
-    private       int                storyID;
+    
+    private Host   host;
+    private Client client;
+    private int    seed;
+    private int    storyID;
     
     void Awake()
     {

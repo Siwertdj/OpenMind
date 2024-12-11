@@ -13,8 +13,6 @@ using UnityEngine;
 /// </summary>
 public class Client : MonoBehaviour
 {
-    public static Client c;
-    
     private NetworkSettings settings;
     private GameEvent             doPopup;
     private DataSender            sender;
@@ -24,11 +22,6 @@ public class Client : MonoBehaviour
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
     private List<CharacterInstance> activeCharacters;
-    
-    private void Awake()
-    {
-        c = this;
-    }
     
     public void AssignSettings(GameEvent doPopup, NetworkSettings settings)
     {

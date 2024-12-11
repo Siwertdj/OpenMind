@@ -11,8 +11,6 @@ using Random = System.Random;
 
 public class Host : MonoBehaviour
 {
-    public static Host h;
-    
     private NetworkSettings              settings;
     private GameEvent                    doPopup;
     private IPAddress                    ownIP;
@@ -22,12 +20,6 @@ public class Host : MonoBehaviour
     private List<List<NetworkPackage>>   notebooks = new ();
     private Action<List<NetworkPackage>> sendFirstNotebook;
     private Random                       notebookRandom = new Random();//a separate random variable that is distinct from the gamemanager random
-    
-
-    void Awake()
-    {
-        h = this;
-    }
     
     public void AssignSettings(GameEvent doPopup, NetworkSettings settings)
     {
