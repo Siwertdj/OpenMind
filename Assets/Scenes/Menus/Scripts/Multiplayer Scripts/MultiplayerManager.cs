@@ -100,9 +100,7 @@ public class MultiplayerManager : MonoBehaviour
     public void SendNotebook()
     {
         notebookAction = receivedNotebook =>
-        {
             GameManager.gm.multiplayerNotebookData = receivedNotebook;
-        };
         
         client.SendNotebookData(notebookAction, 
             GameManager.gm.notebookData,

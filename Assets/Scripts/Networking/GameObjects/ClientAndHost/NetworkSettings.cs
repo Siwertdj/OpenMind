@@ -29,6 +29,9 @@ public class NetworkSettings : ScriptableObject
     [Tooltip("After each interval, a check is made whether any data was sent to the host.")]
     public float IncomingDataIntervalSeconds = 1f;
     
+    [Tooltip("When not connected to a host, but listening for a response, every interval a check is made whether or not a connection is made with the host. If the client is connected, proceed with listening for response data.")]
+    public float ListeningWhileNotConnectedIntervalSeconds = 2f;
+    
     [Tooltip("If no connection is made after the given amount of time, a popup is displayed to the user that no connection could be made.")]
     public float ConnectionTimeoutSeconds = 5f;
     

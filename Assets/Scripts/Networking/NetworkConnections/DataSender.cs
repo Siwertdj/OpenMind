@@ -104,9 +104,6 @@ public class DataSender : DataNetworker
         }
         else
             logWarning = "Socket was already connected, so nothing happened.";
-        
-        Debug.Log("remote: " + socket.RemoteEndPoint);
-        Debug.Log("local: " + socket.LocalEndPoint);
     }
     
     /// <summary>
@@ -164,7 +161,7 @@ public class DataSender : DataNetworker
     /// A special onAcknowledgementFail event will be called when no ACK with the signature of the sent messages was received within the timeout.
     /// </summary>
     /// <param name="clearResponseEvents">If set to true, the actions called after receiving a response are removed from the event.</param>
-    public IEnumerator ListenForResponse(bool clearResponseEvents = false)
+    public IEnumerator ListenForResponse(float listenNotConnectedInterval, bool clearResponseEvents = false)
     {
         isListeningForResponse = true;
 
@@ -173,7 +170,7 @@ public class DataSender : DataNetworker
             if (!socket.Connected)
             {
                 onNotConnectedListeningEvents.Raise("Disconnect", null, false, "onNotConnectedListeningEvents");
-                isListeningForResponse = false;
+                yield return new WaitForSeconds(listenNotConnectedInterval);
             }
             else
             {

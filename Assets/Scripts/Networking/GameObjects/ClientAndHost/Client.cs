@@ -59,7 +59,6 @@ public class Client : NetworkObject
         StartCoroutine(sender.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
         StartCoroutine(sender.IsDisconnected(settings.DisconnectedIntervalSeconds));
         StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
-        StartCoroutine(sender.ListenForResponse());
     }
     
     private void Disconnected(object o)
@@ -84,6 +83,7 @@ public class Client : NetworkObject
         if (settings.IsDebug)
             Debug.Log($"(Client): Connected with the host.");
         
+        StartCoroutine(sender.ListenForResponse(settings.ListeningWhileNotConnectedIntervalSeconds));
         sender.SendDataAsync(settings.InitialisationDataSignature,
             NetworkPackage.CreatePackage("Plz give init data!"), settings.AcknowledgementTimeoutSeconds);
     }

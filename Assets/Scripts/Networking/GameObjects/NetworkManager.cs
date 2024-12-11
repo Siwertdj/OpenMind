@@ -127,7 +127,7 @@ public class NetworkManager : MonoBehaviour
         sender.AddOnDisconnectedEvent(SenderDisconnect);
         
         StartCoroutine(sender.Connect(10f));
-        StartCoroutine(sender.ListenForResponse());
+        StartCoroutine(sender.ListenForResponse(2f));
         StartCoroutine(sender.IsDisconnected(1f));
     }
     
