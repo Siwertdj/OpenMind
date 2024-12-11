@@ -66,10 +66,9 @@ public class NotebookManagerPlayTest
     {
         // Check if some basic properties hold
         Assert.IsFalse(nm.characterInfo.activeSelf);
-        Assert.IsFalse(nm.characterCustomInput.activeSelf);
-        Assert.IsTrue(nm.inputField.activeSelf);
+        Assert.IsTrue(nm.Test_PersonalInputField.gameObject.activeSelf);
         Assert.AreEqual(nm.notebookData, gm.notebookData);
-        Assert.IsFalse(nm.personalButton.interactable);
+        Assert.IsFalse(nm.Test_GetPersonalButton().interactable);
         
         yield return null;
     }
@@ -81,22 +80,22 @@ public class NotebookManagerPlayTest
     public IEnumerator OpenPersonalNotesTest()
     {
         // Set up fields
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        string textBefore = nm.Test_PersonalInputField.text;
         
         string newText = "hello";
 
-        nm.inputField.GetComponent<TMP_InputField>().text = newText;
+        nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
         
         nm.OpenPersonalNotes();
         
-        var textAfter = nm.inputField.GetComponent<TMP_InputField>().text;
+        var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Check if SaveNotes works correctly
         
         // Check if text has changed
         Assert.AreNotEqual(textBefore, textAfter);
         
-        bool active = nm.inputField.activeInHierarchy;
+        bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
         
         // Check if the new text is equal to the dummy text
         if (active)
@@ -110,11 +109,8 @@ public class NotebookManagerPlayTest
             Assert.AreEqual(nm.notebookData.GetCharacterNotes(gm.currentCharacters[0]), newText);
         }
         
-        // InputField should not be active
-        Assert.IsFalse(nm.characterCustomInput.activeSelf);
-        
         // Personal notes should be printed on the screen
-        Assert.AreEqual(nm.notebookData.GetPersonalNotes(), nm.inputField.GetComponent<TMP_InputField>().text);
+        Assert.AreEqual(nm.notebookData.GetPersonalNotes(), nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text);
         
         yield return null;
     }
@@ -125,20 +121,20 @@ public class NotebookManagerPlayTest
     [UnityTest]
     public IEnumerator SaveNotesTest()
     {
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        string textBefore = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Write dummy text to input field
         string newText = "hello";
-        nm.inputField.GetComponent<TMP_InputField>().text = newText;
+        nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
         
         nm.SaveNotes();
         
-        var textAfter = nm.inputField.GetComponent<TMP_InputField>().text;
+        var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Check if text has changed
         Assert.AreNotEqual(textBefore, textAfter);
 
-        bool active = nm.inputField.activeInHierarchy;
+        bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
         
         // Check if the new text is equal to the dummy text
         if (active)

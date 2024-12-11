@@ -11,17 +11,19 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    public GameObject inputField;
-    public GameObject characterCustomInput;
+    private GameObject characterCustomInput;
     public GameObject characterInfo;
-    public Button personalButton;
     [NonSerialized] public NotebookData notebookData;
     private CharacterInstance currentCharacter;
     private int currentCharacterId;
     private Button selectedButton;
+
+    [Header("Tab Select Button Refs")]
+    [SerializeField] private Button personalButton;
     [SerializeField] private Button[] nameButtons;
 
     [Header("Component References")]
+    [SerializeField] private TMP_InputField personalInputField;
     [SerializeField] private TMP_Text currentTabText;
 
     [Header("Prefab References")]
@@ -42,12 +44,12 @@ public class NotebookManager : MonoBehaviour
         // close character notes
         characterInfo.SetActive(false);
         // Open personal notes
-        inputField.SetActive(true);
+        personalInputField.gameObject.SetActive(true);
         // assign character names to buttons
         InitializeCharacterButtons();
         // get notebookdata
         notebookData = GameManager.gm.notebookData;
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
         selectedButton = personalButton;
         personalButton.interactable = false;
 
@@ -61,17 +63,18 @@ public class NotebookManager : MonoBehaviour
     public void InitializeCharacterButtons()
     {
         // Initialise all buttons for which there are characters
-        for (int i = 0; i < GameManager.gm.currentCharacters.Count; i++)
+        var characters = GameManager.gm.currentCharacters;
+        for (int i = 0; i < characters.Count; i++)
         {
             int id = i;
             var button = nameButtons[i];
-            button.GetComponentInChildren<TextMeshProUGUI>().text = 
-                GameManager.gm.currentCharacters[i].characterName;
+            button.GetComponentInChildren<CharacterIcon>().SetAvatar(characters[i]);
 
             button.onClick.AddListener(()=>OpenCharacterTab(id));
         }
+
         // Set any remaining buttons to inactive
-        for (int i = GameManager.gm.currentCharacters.Count; i < nameButtons.Length; i++)
+        for (int i = characters.Count; i < nameButtons.Length; i++)
         {
             nameButtons[i].gameObject.SetActive(false);
         }
@@ -87,8 +90,8 @@ public class NotebookManager : MonoBehaviour
         // Close the character tab 
         characterInfo.SetActive(false);
         // activate input
-        inputField.SetActive(true);
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        personalInputField.gameObject.SetActive(true);
+        personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
         // Make button clickable
         ChangeButtons(personalButton);
         
@@ -113,8 +116,8 @@ public class NotebookManager : MonoBehaviour
         SaveNotes();
 
         // Deactivate the personal notes tab if it's opened
-        if (inputField.activeInHierarchy)
-            inputField.SetActive(false);
+        if (personalInputField.gameObject.activeInHierarchy)
+            personalInputField.gameObject.SetActive(false);
 
         // Activate written character notes
         characterInfo.SetActive(true);
@@ -308,10 +311,10 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
-        if (inputField.activeInHierarchy)
+        if (personalInputField.gameObject.activeInHierarchy)
         {
             // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
+            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
@@ -332,7 +335,9 @@ public class NotebookManager : MonoBehaviour
     }
 
     #region Test Variables
-    #if UNITY_INCLUDE_TESTS
+#if UNITY_INCLUDE_TESTS
+    public TMP_InputField Test_PersonalInputField { get { return personalInputField; } }
+    public Button Test_GetPersonalButton() => personalButton;
     public Button[] Test_GetNameButtons() => nameButtons;
     #endif
     #endregion
