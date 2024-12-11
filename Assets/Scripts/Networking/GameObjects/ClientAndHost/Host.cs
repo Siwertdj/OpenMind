@@ -4,8 +4,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
@@ -69,7 +71,9 @@ public class Host : NetworkObject
     public void AddOwnNotebook(Action<NotebookData> assignNotebookData, NotebookData notebookData, List<CharacterInstance> currentCharacters)
     {
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
-        List<NetworkPackage> listPackage = new List<NetworkPackage> { package.CreatePackage() };
+        List<NetworkPackage> listPackage = new List<NetworkPackage> { NetworkPackage.CreatePackage(settings.NotebookDataSignature), package.CreatePackage() };
+
+        new NotebookDataPackage(listPackage[1], currentCharacters);
         if (notebooks.Count == 0)
             ReceiveFirstNotebookFromClient(listPackage);
         else

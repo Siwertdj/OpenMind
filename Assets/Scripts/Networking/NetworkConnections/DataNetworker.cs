@@ -72,10 +72,7 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
                 continue;
             try
             {
-                networkData.Add(JsonConvert
-                    .DeserializeObject<List<string>>(receivedRawData)
-                    .Select(NetworkPackage.ConvertToPackage)
-                    .ToList());
+                networkData.Add(JsonConvert.DeserializeObject<List<NetworkPackage>>(receivedRawData));
             }
             catch (JsonException e)
             {
@@ -93,12 +90,11 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     /// <returns>true if the conversion succeeded, otherwise false</returns>
     protected bool TryCreatePackage(string signature, IEnumerable<NetworkPackage> data, out byte[] buffer)
     {
-        NetworkPackage sign = NetworkPackage.CreatePackage(signature);
-        
-        List<NetworkPackage> networkData = new List<NetworkPackage> { sign };
+
+        List<NetworkPackage> networkData = new List<NetworkPackage> { NetworkPackage.CreatePackage(signature) };
         networkData.AddRange(data);
-        List<string> stringPayload = networkData.Select(np => np.ConvertToString()).ToList();
-        string rawData = JsonConvert.SerializeObject(stringPayload) + '\u0004';
+
+        string rawData = JsonConvert.SerializeObject(networkData) + '\u0004';
         buffer = Encoding.UTF8.GetBytes(rawData);
         if (buffer.Length > NetworkPackage.MaxPackageSize)
         {

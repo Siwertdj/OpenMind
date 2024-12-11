@@ -11,11 +11,12 @@ using Newtonsoft.Json;
 /// </summary>
 public class NetworkPackage
 {
-    private      object data;
-    private      string dataType;
+    public       string data;
+    public       string dataType;
     public const int    MaxPackageSize = 1024;
     
-    private NetworkPackage(object data, string dataType)
+    [JsonConstructor]
+    public NetworkPackage(string data, string dataType)
     {
         this.dataType = dataType;
         this.data = data;
@@ -24,21 +25,7 @@ public class NetworkPackage
     /// <summary>
     /// Creates a new network package with the given data.
     /// </summary>
-    public static NetworkPackage CreatePackage<T>(T data) => new(data, typeof(T).ToString());
-    
-    /// <summary>
-    /// Converts this package to a json string to be sent through the network.
-    /// </summary>
-    public string ConvertToString() => JsonConvert.SerializeObject(new[] { data, dataType });
-    
-    /// <summary>
-    /// Converts a json string back to a network package.
-    /// </summary>
-    public static NetworkPackage ConvertToPackage(string package)
-    {
-        object[] data = JsonConvert.DeserializeObject<object[]>(package);
-        return new NetworkPackage(data[0], (string)data[1]);
-    }
+    public static NetworkPackage CreatePackage<T>(T data) => new(JsonConvert.SerializeObject(data), typeof(T).ToString());
     
     /// <summary>
     /// Converts the data of this network package to the right type.
@@ -50,7 +37,7 @@ public class NetworkPackage
         if (typeof(T).ToString() != dataType)
             throw new InvalidCastException($"Cannot convert {typeof(T)} to actual type {dataType}.");
         
-        return (T)Convert.ChangeType(data, typeof(T));
+        return JsonConvert.DeserializeObject<T>(data);
     }
 }
 

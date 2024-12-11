@@ -3,16 +3,25 @@
 
 
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class NotebookDataPackage
 {
     private List<CharacterInstance> characters;
     
-    public Dictionary<int, string> characterNotes = new();
+    public Dictionary<int, string> characterNotes;
     public string                  personalNotes;
+    
+    [JsonConstructor]
+    public NotebookDataPackage(Dictionary<int, string> characterNotes, string personalNotes)
+    {
+        this.characterNotes = characterNotes;
+        this.personalNotes = personalNotes;
+    }
     
     public NotebookDataPackage(NotebookData data, List<CharacterInstance> characters)
     {
+        characterNotes = new();
         this.characters = characters;
         foreach (CharacterInstance character in characters)
             characterNotes.Add(character.id, data.GetCharacterNotes(character));
