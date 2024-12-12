@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour
         dialogue.AddRange(GetCulprit().GetRandomTrait());
         // Creates Dialogue that says who disappeared and provides a new hint.
         var dialogueObject = new SpeakingObject(dialogue, CreateDialogueBackground(null, story.hintBackground));
-        StartDialogue(dialogueObject);
+        StartHintDialogue(dialogueObject);
     }
 
     /// <summary>
@@ -399,18 +399,17 @@ public class GameManager : MonoBehaviour
     // This region contains methods regarding dialogue
     #region Dialogue
     /// <summary>
-    /// Starts a new dialogue.
+    /// Starts a new hint dialogue.
     /// </summary>
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
-    public async void StartDialogue(DialogueObject dialogueObject)
+    public async void StartHintDialogue(DialogueObject dialogueObject)
     {
         // Change the gamestate
         gameState = GameState.HintDialogue;
         
-        // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
-            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.DialogueScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition);
         
@@ -563,10 +562,10 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                        await sc.TransitionScene(
-                            SceneController.SceneName.DialogueScene, 
-                            SceneController.SceneName.NPCSelectScene, 
-                            SceneController.TransitionType.Transition);
+                    await sc.TransitionScene(
+                        SceneController.SceneName.DialogueScene, 
+                        SceneController.SceneName.NPCSelectScene, 
+                        SceneController.TransitionType.Transition);
                 }
                 // Change the gamestate
                 gameState = GameState.NpcSelect;

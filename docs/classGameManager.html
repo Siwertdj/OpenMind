@@ -140,9 +140,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>RetryStoryScene</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>RestartStoryScene</b> ()</td></tr>
 <tr class="memdesc:a348fc6fd4410fe58257b99875de92a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restart game from start with new characters. <br /></td></tr>
 <tr class="separator:a348fc6fd4410fe58257b99875de92a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe564ff57be6994dd7d7137c2a6d445c"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#abe564ff57be6994dd7d7137c2a6d445c">StartDialogue</a> (<a class="el" href="classDialogueObject.html">DialogueObject</a> dialogueObject)</td></tr>
-<tr class="memdesc:abe564ff57be6994dd7d7137c2a6d445c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new dialogue.  <br /></td></tr>
-<tr class="separator:abe564ff57be6994dd7d7137c2a6d445c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a616e089cfb7b0835ebde81c59757beaa"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a616e089cfb7b0835ebde81c59757beaa">StartHintDialogue</a> (<a class="el" href="classDialogueObject.html">DialogueObject</a> dialogueObject)</td></tr>
+<tr class="memdesc:a616e089cfb7b0835ebde81c59757beaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
+<tr class="separator:a616e089cfb7b0835ebde81c59757beaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cdd75ff0254229d6709046cda1d782e"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a1cdd75ff0254229d6709046cda1d782e">StartDialogue</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
 <tr class="memdesc:a1cdd75ff0254229d6709046cda1d782e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called to start Dialogue with a specific character, taking a <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a> as parameter. This toggles-off the NPCSelectScene, and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter. Then, it loads the DialogueScene.  <br /></td></tr>
 <tr class="separator:a1cdd75ff0254229d6709046cda1d782e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -442,7 +442,7 @@ GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPre
 </div>
 </div>
 <a id="a1cdd75ff0254229d6709046cda1d782e" name="a1cdd75ff0254229d6709046cda1d782e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,32 +465,6 @@ GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPre
   </dd>
 </dl>
 <p>TODO: Should use the id of a character instead of the <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a>. </p>
-
-</div>
-</div>
-<a id="abe564ff57be6994dd7d7137c2a6d445c" name="abe564ff57be6994dd7d7137c2a6d445c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe564ff57be6994dd7d7137c2a6d445c">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">async void GameManager.StartDialogue </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDialogueObject.html">DialogueObject</a>&#160;</td>
-          <td class="paramname"><em>dialogueObject</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts a new dialogue. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -551,6 +525,32 @@ GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPre
   <table class="params">
     <tr><td class="paramname">sender</td><td>The sender, sends either a <a class="el" href="classStoryObject.html" title="A scriptable object which contains the settings pertaining to a Story-type.">StoryObject</a> or some <a class="el" href="classSaveData.html" title="Contains data that can be saved to a file.">SaveData</a>.</td></tr>
     <tr><td class="paramname">data</td><td>The story that the player has chosen, or the savedata that needs to be loaded.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a616e089cfb7b0835ebde81c59757beaa" name="a616e089cfb7b0835ebde81c59757beaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a616e089cfb7b0835ebde81c59757beaa">&#9670;&#160;</a></span>StartHintDialogue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async void GameManager.StartHintDialogue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classDialogueObject.html">DialogueObject</a>&#160;</td>
+          <td class="paramname"><em>dialogueObject</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts a new hint dialogue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
   </table>
   </dd>
 </dl>
