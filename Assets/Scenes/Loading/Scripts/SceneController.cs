@@ -243,9 +243,6 @@ public class SceneController : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        // Set the ActiveScene to the newly loaded scene
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
-
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }
@@ -339,14 +336,14 @@ public class SceneController : MonoBehaviour
             // If notebook is already open, close it
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
             {
-                GameManager.gm.IsPaused = false;
+                GameManager.gm.UnpauseGame();
                 crossOverlay.SetActive(false);
                 _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
                     TransitionType.Unload);
             }
             else // Notebook is NOT loaded.. so open it
             {
-                GameManager.gm.IsPaused = true;
+                GameManager.gm.PauseGame();
                 crossOverlay.SetActive(true);
                 _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
                     TransitionType.Additive);
@@ -362,32 +359,13 @@ public class SceneController : MonoBehaviour
        // If tutorial is already open, close it
        if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
        {
-           GameManager.gm.IsPaused = false;
+           GameManager.gm.UnpauseGame();
            _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
        }
        else
        {
-           GameManager.gm.IsPaused = true;
+           GameManager.gm.PauseGame();
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
        }
-    }
-
-    /// <summary>
-    /// Converts the given scene to the corresponding value in the SceneName enum.
-    /// </summary>
-    /// <param name="scene"></param>
-    /// <returns></returns>
-    public SceneName GetSceneName(Scene scene)
-    {
-        try
-        {
-            return (SceneName)Enum.Parse(typeof(SceneName), scene.name, true);
-        }
-        catch (ArgumentException)
-        {
-            // If scene name is not found, throw an error
-            Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
-            throw;
-        }
     }
 }
