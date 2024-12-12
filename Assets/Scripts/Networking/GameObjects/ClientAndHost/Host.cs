@@ -18,8 +18,18 @@ public class Host : NetworkObject
     private int                          storyID;
     private List<List<NetworkPackage>>   notebooks = new ();
     private Action<List<NetworkPackage>> sendFirstNotebook;
+    private Action<List<NetworkPackage>> assignNotebookData;
     private Random                       notebookRandom = new Random();//a separate random variable that is distinct from the gamemanager random
+    private bool addNormalResponse = false;
     
+    private void Update()
+    {
+        if (addNormalResponse)
+        {
+            addNormalResponse = false;
+            listener.AddResponseTo(settings.NotebookDataSignature, ReceiveAndRespondWithNotebook);
+        }
+    }
     
     public string CreateClassroomCode()
     {
@@ -70,17 +80,20 @@ public class Host : NetworkObject
     /// </summary>
     public void AddOwnNotebook(Action<NotebookData> assignNotebookData, NotebookData notebookData, List<CharacterInstance> currentCharacters)
     {
+        this.assignNotebookData = package => assignNotebookData(
+            new NotebookDataPackage(package[0], currentCharacters).ConvertToNotebookData());
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
-        List<NetworkPackage> listPackage = new List<NetworkPackage> { NetworkPackage.CreatePackage(settings.NotebookDataSignature), package.CreatePackage() };
-
-        new NotebookDataPackage(listPackage[1], currentCharacters);
+        List<NetworkPackage> listPackage = new List<NetworkPackage> { package.CreatePackage() };
+        
         if (notebooks.Count == 0)
             ReceiveFirstNotebookFromClient(listPackage);
         else
         {
+            sendFirstNotebook(listPackage);
             List<NetworkPackage> notebook = ReceiveAndRespondWithNotebook(listPackage);
-            NotebookDataPackage notebookDataPackage = new NotebookDataPackage(notebook[0], currentCharacters);
-            assignNotebookData(notebookDataPackage.ConvertToNotebookData());
+            // assignNotebookData(
+            //     new NotebookDataPackage(notebook[0], currentCharacters).ConvertToNotebookData());
+            this.assignNotebookData(notebook);
         }
     }
     
@@ -94,14 +107,21 @@ public class Host : NetworkObject
         //if this wasn't the first notebook, meaning the first notebook came from the host
         //then immediately send a response
         if (notebooks.Count > 0)
-            sendFirstNotebook(GetRandomNotebook());
+        {
+            // sendFirstNotebook(GetRandomNotebook());
+            assignNotebookData((List<NetworkPackage>)o);
+            return;
+        }
         
         notebooks.Add((List<NetworkPackage>)o);
-        listener.AddResponseTo(settings.NotebookDataSignature, ReceiveAndRespondWithNotebook);
+        addNormalResponse = true;
     }
 
     private List<NetworkPackage> ReceiveAndRespondWithNotebook(List<NetworkPackage> o)
     {
+        // if (notebooks.Count == 1)
+        //     sendFirstNotebook(notebooks[0]);
+        
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
         notebooks.Add(o);
         return randomNotebook;
