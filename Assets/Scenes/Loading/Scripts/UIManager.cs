@@ -28,8 +28,9 @@ public class UIManager : MonoBehaviour
     {
         GameManager.gm.IsPaused = true;
         gameButtons.SetActive(false);
-        // '_ =' throws away the await
-        _ = SceneController.sc.TransitionScene(SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+        
+            // '_ =' throws away the await
+            _ = SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
             SceneController.SceneName.GameMenuScene,
             SceneController.TransitionType.Additive);
     }

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour
     
     [Header("Events")]
     public GameEvent onDialogueStart;
- 
 
     public bool IsPaused { get; set; } = false;
     
@@ -77,6 +77,11 @@ public class GameManager : MonoBehaviour
     {
         gm = this;
         DontDestroyOnLoad(gameObject.transform.parent);
+
+        // Set the target frame rate to the screen's refresh rate
+        if (Application.platform == RuntimePlatform.Android || Application.platform == RuntimePlatform.IPhonePlayer)
+            Application.targetFrameRate = (int)Screen.currentResolution.refreshRateRatio.value;
+            
         gameState = GameState.Loading;
     }
     
@@ -156,6 +161,8 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         // Start the music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+
+        
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
         
@@ -176,8 +183,7 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         FirstCycle();
     }
-    
-    
+
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -401,6 +407,7 @@ public class GameManager : MonoBehaviour
         // Change the gamestate
         gameState = GameState.HintDialogue;
         
+        // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
