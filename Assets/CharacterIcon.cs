@@ -3,40 +3,34 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.TextCore.Text;
 
 public class CharacterIcon : MonoBehaviour
 {
     [SerializeField] private Image avatarImageRef;
 
     public void SetAvatar(CharacterInstance character)
-    {
+    {        
         // Set the correct sprite
         avatarImageRef.sprite = character.avatar;
-        
-        // Set the image location to the center of the face
-        var rectTransform = avatarImageRef.GetComponent<RectTransform>();
-        rectTransform.sizeDelta = character.avatar.rect.size;
 
-        float x = character.data.facePivot.x * rectTransform.rect.size.x
-            - rectTransform.rect.size.x / 2;
-
-        float y =
-            character.data.facePivot.y * rectTransform.rect.size.y
-            - rectTransform.rect.size.y / 2;
-
-        avatarImageRef.transform.localPosition = new Vector2(
-            -x, -y);
-            //-(character.data.facePivot.y * rectTransform.rect.size.y
-            //- rectTransform.rect.size.y / 2));
-
-        Debug.Log("New pos: " + avatarImageRef.transform.localPosition +
-         ", Name: " + character.characterName +
-         ", Pivot: " + character.data.facePivot +
-         ", Rect size: " + rectTransform.rect.size);
+        // Wait for layout to be initialized before setting scale & pos
+        StartCoroutine(SetSizeAndPosition(character));
     }
 
-    private void Update()
+    private IEnumerator SetSizeAndPosition(CharacterInstance character)
     {
-        Debug.Log("pos: " + avatarImageRef.transform.localPosition);
+        yield return new WaitForEndOfFrame();
+
+        var rectTransform = avatarImageRef.GetComponent<RectTransform>();
+
+        // Set the correct size
+        float width = 1.8f * Mathf.Abs(GetComponent<RectTransform>().rect.height);
+        float height = width / (character.avatar.rect.width / character.avatar.rect.height);
+        rectTransform.sizeDelta = new Vector2(width, height);
+
+        // Set the image location to the center of the face
+        rectTransform.pivot = character.data.facePivot;
+        rectTransform.localPosition = new Vector2(0, 0);
     }
 }
