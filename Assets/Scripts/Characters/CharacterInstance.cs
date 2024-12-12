@@ -17,10 +17,10 @@ public class CharacterInstance
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();
 
-    public string characterName;
-    public int id;
-    public Sprite avatar;
-    public float pitch;
+    public string       characterName;
+    public int          id;
+    public List<(Emotion, Sprite)> avatarEmotions;
+    public float        pitch;
 
     public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
@@ -36,7 +36,7 @@ public class CharacterInstance
         this.data = data;
         characterName = data.characterName;
         id = data.id;
-        avatar = data.avatar;
+        ParseEmotionSprites(data.neutralAvatar, data.happyAvatar, data.unhappyAvatar);
         pitch = data.voicePitch;
 
         InitializeQuestions();
@@ -59,6 +59,35 @@ public class CharacterInstance
         return new() { "Hello" };
     }
 
+    private void ParseEmotionSprites(Sprite neutralSprite, Sprite happySprite, Sprite unhappySprite)
+    {
+        avatarEmotions = new List<(Emotion, Sprite)>();
+        TryAdd(avatarEmotions, Emotion.Neutral, neutralSprite, neutralSprite);
+        TryAdd(avatarEmotions, Emotion.Happy, happySprite, neutralSprite);
+        TryAdd(avatarEmotions, Emotion.Unhappy, unhappySprite, neutralSprite);
+    }
+
+    private void TryAdd(List<(Emotion,Sprite)> list, Emotion emotion, Sprite newAvatar, Sprite defaultAvatar)
+    {
+        if (newAvatar != null)
+        {
+            list.Add((emotion, newAvatar));
+        }
+        else if (defaultAvatar != null)
+        {
+            list.Add((emotion, defaultAvatar));
+        }
+        else
+        {
+            Debug.LogError("Default avatar is null.");
+        }
+    }
+
+    public Sprite GetAvatar()
+    {
+        
+        return avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
+    }
 
     /// <summary>
     /// Gets all traits of this character, can be modified later if traits are stored differently

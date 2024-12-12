@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Fatima
   id: 0
-  avatar: {fileID: 21300000, guid: 05e5217918ea6fa43afa962761914251, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 05e5217918ea6fa43afa962761914251, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 80c554a95f9db8c479633d0e4e5d0793, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.7
   answers:
   - question: 8

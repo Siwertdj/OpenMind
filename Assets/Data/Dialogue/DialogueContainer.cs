@@ -76,17 +76,17 @@ public class DialogueContainer : ScriptableObject
         DialogueType dialogueType = data.type;
         GameObject[] background = data.background;
         
+        List<string> text = new List<string>();
+        text.Add(data.text);
+        var emotion = data.emotion;
         switch (dialogueType)
         {
             case DialogueType.ContentDialogue:
                 // We create a new ContentDialogueObject, containing text, image or background
                 // The first of these two could be null, but that is handled by the ContentDialogueObject.
-                List<string> text = new List<string>();
-                text.Add(data.text);
-                return new ContentDialogueObject(text, data.image, background);
+                return new ContentDialogueObject(text, data.image, background, emotion);
             case DialogueType.OpenResponseDialogue:
-                return new OpenResponseDialogueObject(background);
-                break;
+                return new OpenResponseDialogueObject(text, data.image, background, emotion);
             default:
                 Debug.LogError("Could not create DialogueObject from DialogueContainer: invalid type");
                 return null;
@@ -215,10 +215,7 @@ public enum Emotion
 {
     Neutral,
     Happy,
-    Sad,
-    Angry,
-    Confused,
-    Freaky
+    Unhappy
 }
 
 /// <summary>

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Aiden
   id: 4
-  avatar: {fileID: 21300000, guid: e291aeb01b382904bb035048eafebf06, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: e291aeb01b382904bb035048eafebf06, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 034f2e114a16a6941960e5ce922a88ea, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.2
   answers:
   - question: 2

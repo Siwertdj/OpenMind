@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Peter
   id: 22
-  avatar: {fileID: 21300000, guid: 088a0440883d6c44daed691a01e0d7be, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 088a0440883d6c44daed691a01e0d7be, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 2
   answers:
   - question: 1

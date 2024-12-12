@@ -2,6 +2,7 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -21,7 +22,8 @@ public class SelectOption : MonoBehaviour
     /// </summary>
     void Start()
     {
-        avatarImage.sprite = character.avatar;
+        avatarImage.sprite =  
+            character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
 
         if (!character.isActive)
             SetInactive();

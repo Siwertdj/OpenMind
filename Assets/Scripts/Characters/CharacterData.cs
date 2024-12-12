@@ -13,12 +13,9 @@ public class CharacterData : ScriptableObject
 {
     public                   string characterName;
     public                   int    id;
-    public                   Sprite avatar;
+    public                   Sprite neutralAvatar;
     public                   Sprite happyAvatar;
-    public                   Sprite sadAvatar;
-    public                   Sprite angryAvatar;
-    public                   Sprite confusedAvatar;
-    public                   Sprite freakyAvatar;
+    public                   Sprite unhappyAvatar;
     [Range(0.5f, 2f)] public float  voicePitch = 1;
 
     [SerializeField] public KeyValuePair[] answers;

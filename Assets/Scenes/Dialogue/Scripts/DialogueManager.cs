@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -111,7 +112,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void OnDialogueComplete()
     {
-        // Close dialogue field
+        // Close dialogue field and reset its parent to be correct
+        dialogueField.transform.parent = GameObject.Find("Canvas").transform;
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
 
@@ -187,10 +189,11 @@ public class DialogueManager : MonoBehaviour
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
         background_.Add(background == null ? story.dialogueBackground : background);
 
-        // If a character is given, add that as well
+        // If a character is given, add that as well with the proper emotion
         if (character != null)
         {
-            avatarPrefab.GetComponent<Image>().sprite = character.avatar;
+            avatarPrefab.GetComponent<Image>().sprite = 
+                character.avatarEmotions.First(es => es.Item1 == Emotion.Neutral).Item2;
             background_.Add(avatarPrefab);
         }
 
@@ -201,7 +204,7 @@ public class DialogueManager : MonoBehaviour
     /// Replaces the current dialogue background with the given background.
     /// </summary>
     /// <param name="newBackground">The background that will replace the current background.</param>
-    public void ReplaceBackground(GameObject[] newBackground)
+    public void ReplaceBackground(GameObject[] newBackground, Emotion? emotion = null)
     {
         if (newBackground != null)
         {
@@ -216,9 +219,16 @@ public class DialogueManager : MonoBehaviour
             {
                 var image = Instantiate(prefab).GetComponent<Image>();
                 image.rectTransform.SetParent(parent, false);
+                // For the character's sprite..
+                if (emotion.HasValue && prefab.name == "avatarPrefab")
+                {
+                    prefab.GetComponent<Image>().sprite = 
+                        currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value).Item2;
+                }
             }
         }
     }
+
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
@@ -275,10 +285,18 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Creates the buttons and the text field for the open questions.
     /// </summary>
-    public void CreateOpenQuestion()
+    public void CreateOpenQuestion(List<string> dialogue)
     {
         // Enable the input field.
         inputField.SetActive(true);
+
+        // Set dialogue above the questionbox
+        dialogueField.transform.parent = inputField.transform;
+        dialogueField.transform.SetSiblingIndex(0);
+        
+        WriteDialogue(dialogue);
+
+        // TODO: Save answer somewhere?
     }
     
     /// <summary>

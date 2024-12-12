@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Eva
   id: 14
-  avatar: {fileID: 21300000, guid: 854afebe6edd6f84bb555f34546d4551, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 854afebe6edd6f84bb555f34546d4551, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   answers:
   - question: 1

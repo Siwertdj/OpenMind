@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Linda
   id: 15
-  avatar: {fileID: 21300000, guid: df3abe4422ead5344ba16098cd64c5db, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: df3abe4422ead5344ba16098cd64c5db, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   answers:
   - question: 1

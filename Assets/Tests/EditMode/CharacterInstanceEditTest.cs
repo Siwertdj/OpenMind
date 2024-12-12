@@ -64,7 +64,7 @@ public class CharacterInstanceEditTest
         Assert.AreEqual(mainCharacter.data, mainCharacterData);
         Assert.AreEqual(mainCharacter.characterName, mainCharacterData.characterName);
         Assert.AreEqual(mainCharacter.id, mainCharacterData.id);
-        Assert.AreEqual(mainCharacter.avatar, mainCharacterData.avatar);
+        Assert.AreEqual(mainCharacter.GetAvatar(), mainCharacterData.neutralAvatar);
         Assert.AreEqual(mainCharacter.pitch, mainCharacterData.voicePitch);
 
         // Check if InitializeQuestions() goes correctly

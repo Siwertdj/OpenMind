@@ -32,19 +32,22 @@ public abstract class DialogueObject
 public class ContentDialogueObject : DialogueObject
 {
     [CanBeNull] public List<string> dialogue;
-    [CanBeNull] public Sprite   image; 
+    [CanBeNull] public Sprite       image;
+    [CanBeNull] public Emotion      emotion;
 
     /// <summary>
     /// The constructor for <see cref="ContentDialogueObject"/>.
     /// </summary>
     /// <param name="dialogue">The text</param>
     /// <param name="background">The background</param>
-    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background)
+    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
     {
         // Set this object's local variables to match the parameter-values of the constructor
         this.dialogue = dialogue;
         this.image = image; 
         this.background = background;
+        if (emotion.HasValue)
+            this.emotion = emotion.Value;
     }
 
     /// <summary>
@@ -53,8 +56,8 @@ public class ContentDialogueObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-
-        dm.ReplaceBackground(background);
+        
+        dm.ReplaceBackground(background,emotion);
         dm.PrintImage(image);
         dm.WriteDialogue(dialogue);
 

@@ -2,6 +2,7 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
@@ -11,15 +12,22 @@ using UnityEngine;
 public class OpenResponseDialogueObject : DialogueObject
 {
     // The answer of the open question.
-    public string answer = "";
+    public              string       answer = "";
+    [CanBeNull] public  Sprite       image;
+    [CanBeNull] private List<string> dialogue;
+    [CanBeNull] private Emotion      emotion;
 
     /// <summary>
     /// The constructor.
     /// </summary>
     /// <param name="background">The background</param>
-    public OpenResponseDialogueObject(GameObject[] background)
+    public OpenResponseDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion emotion)
     {
+        // Set this object's local variables to match the parameter-values of the constructor
         this.background = background;
+        this.image = image;
+        this.emotion = emotion;
+        this.dialogue = dialogue;
     }
 
     /// <summary>
@@ -28,8 +36,11 @@ public class OpenResponseDialogueObject : DialogueObject
     public override void Execute()
     {
         // TODO: Print segments/text at the same time.. or print, and when its done typewriting, open the openanswerbox below.
+        var dm = DialogueManager.dm;
         
+        dm.ReplaceBackground(background, emotion);
+        dm.PrintImage(image);
         // Asks Dialoguemanager to open an openquestion-textbox
-        DialogueManager.dm.CreateOpenQuestion();
+        dm.CreateOpenQuestion(dialogue);
     }
 }

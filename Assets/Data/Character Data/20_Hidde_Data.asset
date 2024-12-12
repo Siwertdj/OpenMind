@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Hidde
   id: 20
-  avatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   answers:
   - question: 2

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Tess
   id: 16
-  avatar: {fileID: 21300000, guid: d28d604b71d7de04986139bd5f77adbb, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: d28d604b71d7de04986139bd5f77adbb, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   answers:
   - question: 1
