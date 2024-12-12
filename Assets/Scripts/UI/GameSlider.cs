@@ -24,7 +24,6 @@ public class GameSlider : MonoBehaviour
 
         // Set the default value sample to the correct position
         var rectTransform = (RectTransform)defaultValueRef.transform.parent;
-        Debug.Log($"{rectTransform.gameObject.name} is {rectTransform.rect.width}");
         defaultValueRef.localPosition = new Vector2(
             -rectTransform.rect.width * (defaultValue / (slider.maxValue + slider.minValue)),
             defaultValueRef.localPosition.y);
