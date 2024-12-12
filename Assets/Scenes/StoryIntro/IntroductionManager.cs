@@ -134,6 +134,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryB()
     {
+        character.sprite = backgrounds[5];
         currentTimeline = introStoryB;
         TextIndex = 4;
         background.sprite = backgrounds[4];
@@ -198,7 +199,6 @@ public class IntroductionManager : MonoBehaviour
         HideOrShowTexts(true); // Show the new texts. 
     }
     
-   
     
     /// <summary>
     /// This method changes the background of the scene. 
@@ -241,6 +241,12 @@ public class IntroductionManager : MonoBehaviour
         typingText.text = textMessages[textMessageIndex + messageLocations.Length].messageContent;
         typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
     }
+    
+    public void HideDialog()
+    {
+        dialogueAnimator.gameObject.SetActive(false);
+    }
+    
     #endregion
     
     // This region contains methods regarding introduction B.
@@ -363,7 +369,7 @@ public class IntroductionManager : MonoBehaviour
         else
         {
             continueButton.SetActive(false);
-            dialogueAnimator.gameObject.SetActive(false);
+            //dialogueAnimator.gameObject.SetActive(false);
             typingAnimation.gameObject.SetActive(false);
             currentTimeline.Play();
         }

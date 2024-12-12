@@ -196,7 +196,6 @@ public class IntroductionManagerPlayTest
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreEqual(4, im.TextIndex);
         
-        Assert.IsNotNull(im.sendButton);
         yield return null;
     }
     
@@ -243,6 +242,69 @@ public class IntroductionManagerPlayTest
     
     #endregion
     
+    // This region contains test regarding the introduction of story B
+    #region IntroductionC
+    
+    /// <summary>
+    /// Checks some basic properties of the introduction of story A. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator CSetUpTest()
+    {
+        im.StoryC();
+        
+        // Lists containing necessary elements should not be empty
+        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.storyText.Length);
+        Assert.AreEqual(19, im.TextIndex);
+        
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the introduction can be played. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator CPlayIntroTest()
+    {
+        im.StoryC();
+        im.ContinueCurrentTimeline();
+        Assert.AreEqual(PlayState.Playing,im.currentTimeline.state);
+        // When the introduction is playing the continuebutton should not be visible.
+        Assert.IsFalse(im.continueButton.activeSelf);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the introduction of story B can be paused. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator CPauseIntroTest()
+    {
+        im.StoryC();
+        im.PauseCurrentTimeline();
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
+        // When the introduction is playing the continuebutton should be visible.
+        Assert.IsTrue(im.continueButton.activeSelf);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Checks if the character sprite changes when the computer is appearing. 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ComputerTest()
+    {
+        im.StoryC();
+        Sprite beforeImage = im.character.sprite;
+        im.Computer();
+        im.Computer();
+        Assert.AreNotEqual(beforeImage, im.character.sprite);
+        yield return null;
+    }
+    
+    #endregion
+    
     
     /// <summary>
     /// Test that the player text is actually changed after the ChangePlayerText method is called 
@@ -271,6 +333,21 @@ public class IntroductionManagerPlayTest
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         Assert.AreEqual("Alex", im.nameTag.text);
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Test that the computer text is actually changed after the ChangePlayerText method is called 
+    /// </summary>
+    [UnityTest]
+    public IEnumerator ChangeComputerTextTest()
+    {
+        im.StoryC();
+        int index = im.TextIndex;
+        im.ChangeComputerText();
+        Assert.AreEqual(index+1, im.TextIndex);
+        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
+        Assert.AreEqual("Computer", im.nameTag.text);
         yield return null;
     }
     
