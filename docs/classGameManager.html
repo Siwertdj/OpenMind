@@ -110,6 +110,12 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:adb110a6ef474e4ac7901176c97a859ab"><td class="memItemLeft" align="right" valign="top"><a id="adb110a6ef474e4ac7901176c97a859ab" name="adb110a6ef474e4ac7901176c97a859ab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PauseGame</b> ()</td></tr>
+<tr class="separator:adb110a6ef474e4ac7901176c97a859ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417e1e84736301be51605800bf19f6d2"><td class="memItemLeft" align="right" valign="top"><a id="a417e1e84736301be51605800bf19f6d2" name="a417e1e84736301be51605800bf19f6d2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UnpauseGame</b> ()</td></tr>
+<tr class="separator:a417e1e84736301be51605800bf19f6d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a5a95dd5a934abd62a92bdc50a2ea05c3">StartGame</a> (Component sender, params object[] data)</td></tr>
 <tr class="memdesc:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the game. If a story is passed along, starts a new game with that story. If savedata is passed along loads the game with that data.  <br /></td></tr>
 <tr class="separator:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -202,7 +208,7 @@ static <a class="el" href="classGameManager.html">GameManager</a>&#160;</td><td 
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
 <tr class="memitem:a504d119ddb7d4b1daadb6516eefd51ca"><td class="memItemLeft" align="right" valign="top"><a id="a504d119ddb7d4b1daadb6516eefd51ca" name="a504d119ddb7d4b1daadb6516eefd51ca"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPaused</b> = false<code> [get, set]</code></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPaused</b><code> [get]</code></td></tr>
 <tr class="separator:a504d119ddb7d4b1daadb6516eefd51ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a05fad1b75832b124fcb665ae441493eb"><td class="memItemLeft" align="right" valign="top"><a id="a05fad1b75832b124fcb665ae441493eb" name="a05fad1b75832b124fcb665ae441493eb"></a>
 <a class="el" href="classStoryObject.html">StoryObject</a>&#160;</td><td class="memItemRight" valign="bottom"><b>story</b><code> [get, private set]</code></td></tr>
@@ -259,6 +265,9 @@ GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>avatarPrefab</b
 <tr class="memitem:a4f1e673585ea5e1a9b10aa45592e2494"><td class="memItemLeft" align="right" valign="top"><a id="a4f1e673585ea5e1a9b10aa45592e2494" name="a4f1e673585ea5e1a9b10aa45592e2494"></a>
 GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPrefabs</b></td></tr>
 <tr class="separator:a4f1e673585ea5e1a9b10aa45592e2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a355008d7d110df49e092018d59896355"><td class="memItemLeft" align="right" valign="top"><a id="a355008d7d110df49e092018d59896355" name="a355008d7d110df49e092018d59896355"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td></tr>
+<tr class="separator:a355008d7d110df49e092018d59896355"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7edb2ed107590c2f42224bf31c8dfa39"><td class="memItemLeft" align="right" valign="top"><a id="a7edb2ed107590c2f42224bf31c8dfa39" name="a7edb2ed107590c2f42224bf31c8dfa39"></a>
 <a class="el" href="classSceneController.html">SceneController</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sc</b></td></tr>
 <tr class="separator:a7edb2ed107590c2f42224bf31c8dfa39"><td class="memSeparator" colspan="2">&#160;</td></tr>
