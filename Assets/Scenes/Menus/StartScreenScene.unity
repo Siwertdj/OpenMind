@@ -1174,10 +1174,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  musicVolume: 0
-  sfxVolume: 0
-  talkingSpeed: 0
-  ttsEnabled: 0
+  textSize: 0
   defaultMusicFadeInTime: 0.5
 --- !u!4 &582075137
 Transform:
