@@ -7,12 +7,12 @@ using TMPro;
 public class NotebookCharacterObject : MonoBehaviour
 {
     [Header("Component Refs")]
-    [SerializeField] private Image avatarImage;
+    [SerializeField] private CharacterIcon characterIcon;
     [SerializeField] private TMP_Text nameText;
 
     public void SetInfo(CharacterInstance character)
     {
         nameText.text = character.characterName;
-        avatarImage.sprite = character.avatar;
+        characterIcon.SetAvatar(character);
     }
 }
