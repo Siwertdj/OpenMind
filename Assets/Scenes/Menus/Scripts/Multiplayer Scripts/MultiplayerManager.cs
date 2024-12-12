@@ -96,7 +96,6 @@ public class MultiplayerManager : MonoBehaviour
         
         onGameLoaded.Raise(this, init);
         
-        host.AddOwnNotebook(null, GameManager.gm.notebookData, GameManager.gm.currentCharacters);
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");  // unload this scene; no longer necessary
     }
