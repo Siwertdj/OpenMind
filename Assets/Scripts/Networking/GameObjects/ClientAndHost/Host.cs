@@ -21,14 +21,37 @@ public class Host : NetworkObject
     private Action<List<NetworkPackage>> assignNotebookData;
     private Random                       notebookRandom = new Random();//a separate random variable that is distinct from the gamemanager random
     private bool addNormalResponse = false;
+    private bool readyToSentFirstClientSecondClientNotebook;
+    private List<NetworkPackage> dataToSendSecondClient;
     
     private void Update()
     {
         if (addNormalResponse)
         {
+            //wait for async reading to finish
             addNormalResponse = false;
-            listener.AddResponseTo(settings.NotebookDataSignature, ReceiveAndRespondWithNotebook);
+            StartCoroutine(SendDataWithDelay());
         }
+        
+        if (readyToSentFirstClientSecondClientNotebook)
+        {
+            Debug.Log("coroutine");
+            readyToSentFirstClientSecondClientNotebook = false;
+            StartCoroutine(SendDataWithDelay1());
+        }
+    }
+    
+    private IEnumerator SendDataWithDelay()
+    {
+        yield return new WaitForSeconds(1);
+        Debug.Log("Adding normal response");
+        listener.AddResponseTo(settings.NotebookDataSignature, ReceiveAndRespondWithNotebook);
+    }
+    
+    private IEnumerator SendDataWithDelay1()
+    {
+        yield return new WaitForSeconds(1);
+        sendFirstNotebook(dataToSendSecondClient);
     }
     
     public string CreateClassroomCode()
@@ -85,16 +108,22 @@ public class Host : NetworkObject
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
         List<NetworkPackage> listPackage = new List<NetworkPackage> { package.CreatePackage() };
         
+        //if host was first upload
         if (notebooks.Count == 0)
-            ReceiveFirstNotebookFromClient(listPackage);
-        else
         {
-            sendFirstNotebook(listPackage);
-            List<NetworkPackage> notebook = ReceiveAndRespondWithNotebook(listPackage);
-            // assignNotebookData(
-            //     new NotebookDataPackage(notebook[0], currentCharacters).ConvertToNotebookData());
-            this.assignNotebookData(notebook);
+            ReceiveFirstNotebookFromClient(listPackage);
+            return;
         }
+        
+        //if host was second, send data to the first
+        if (notebooks.Count == 1)
+            sendFirstNotebook(listPackage);
+        
+        //get new notebook data and assign it to the host
+        List<NetworkPackage> notebook = ReceiveAndRespondWithNotebook(listPackage);
+        // assignNotebookData(
+        //     new NotebookDataPackage(notebook[0], currentCharacters).ConvertToNotebookData());
+        this.assignNotebookData(notebook);
     }
     
     /// <summary>
@@ -104,26 +133,38 @@ public class Host : NetworkObject
     /// </summary>
     private void ReceiveFirstNotebookFromClient(object o)
     {
-        //if this wasn't the first notebook, meaning the first notebook came from the host
-        //then immediately send a response
-        if (notebooks.Count > 0)
+        //client as second notebook upload
+        if (notebooks.Count == 1)
         {
-            // sendFirstNotebook(GetRandomNotebook());
-            assignNotebookData((List<NetworkPackage>)o);
-            return;
+            //if host was first upload
+            if (assignNotebookData != null)
+                assignNotebookData((List<NetworkPackage>)o);
         }
         
+        //if not first upload
+        if (notebooks.Count > 0)
+            return;
+        
+        Debug.Log($"Received first notebook {((List<NetworkPackage>)o)[0].data}");
         notebooks.Add((List<NetworkPackage>)o);
         addNormalResponse = true;
     }
 
     private List<NetworkPackage> ReceiveAndRespondWithNotebook(List<NetworkPackage> o)
     {
-        // if (notebooks.Count == 1)
-        //     sendFirstNotebook(notebooks[0]);
+        //if client and second upload, assign notebook to the first upload if it was also a client
+        if (notebooks.Count == 1 && assignNotebookData == null)
+        {
+            // dataToSendSecondClient = o;
+            // readyToSentFirstClientSecondClientNotebook = true;
+            Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
+            sendFirstNotebook(o);
+        }
+            
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
         notebooks.Add(o);
+        Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
     }
     
@@ -140,6 +181,7 @@ public class Host : NetworkObject
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);
         listener.AddOnResponseSentEvent(settings.InitialisationDataSignature, OnResponseSent);
+        listener.AddOnResponseSentEvent(settings.NotebookDataSignature, OnResponseSent);
         listener.AddOnAckSentEvent(OnAckSent);
     }
     
@@ -150,7 +192,7 @@ public class Host : NetworkObject
     
     private void OnDisconnect(object obj)
     {
-        Debug.Log($"(Host): Client with endpoint {((Socket)obj).RemoteEndPoint} disconnected");
+        Debug.Log($"(Host): Client with endpoint {((Socket)obj).RemoteEndPoint} disconnected");   
     }
     
     private void OnDataReceived(object obj)

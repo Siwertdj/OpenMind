@@ -40,7 +40,7 @@ public class NetworkDelayedEvents
     /// </summary>
     public string InputData(string signature, object data, bool clear, string eventName)
     {
-        inputData[signature] = data;
+        inputData.TryAdd(signature, data);
         
         if (raised.Contains(signature))
         {

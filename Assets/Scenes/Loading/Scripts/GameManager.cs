@@ -244,6 +244,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void EndCycle() 
     {
+        MultiplayerNotebookExchange();
         // Start Cycle as normal
         if (EnoughCharactersRemaining())    
             StartCycle();
