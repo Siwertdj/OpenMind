@@ -243,9 +243,6 @@ public class SceneController : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        // Set the ActiveScene to the newly loaded scene
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
-
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }

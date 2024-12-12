@@ -5,7 +5,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-using UnityEngine.TextCore.Text;
 using TMPro;
 
 public class NPCSelectPlayTest
