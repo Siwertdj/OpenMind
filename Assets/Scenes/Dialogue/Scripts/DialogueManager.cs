@@ -89,6 +89,11 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void OnDialogueComplete()
     {
+        // If the current object is a TerminateDialogueObject, don't do anything,
+        // just wait for the scene to unload.
+        if (currentObject is TerminateDialogueObject)
+            return;
+
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
