@@ -16,19 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: ' I''m doing great! I am very proud of who I am right now and I have also
-      still have the freedom to make irresponsible decisions, and to enjoy them.'
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 2
-    text: Oh, there is one thing that worries me. The current growth of racism and
-      inequality, but I don't really like to talk about that.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 0
-    text: I like to have fun to distract me from those problems and just issues I
-      can't control in general.
+    text: "It's good. I just got my bachelor's degree a couple weeks ago and right
+      now I'm working as a freelancer. I still live at home with my dad and my dog.
+      I have a lot of friends but not like a group of friends. I\u2019m also very
+      close with my family."
     image: {fileID: 0}
     background: []
