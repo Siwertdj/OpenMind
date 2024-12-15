@@ -86,6 +86,7 @@ public class GameManagerPlayTest
     {
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
         SceneController.sc.UnloadAdditiveScenes();
+        Debug.Log("test");
     }
     
     /// <summary>

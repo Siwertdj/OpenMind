@@ -17,6 +17,15 @@ public class SelectionManagerTest
     [UnitySetUp]
     public IEnumerator SetUp()
     {
+        /*
+        GameObject tb = GameObject.Find("Toolbox");
+        while (tb != null)
+        {
+            GameObject.Destroy(tb);
+            tb = GameObject.Find("Toolbox");
+        }
+        */
+
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
