@@ -62,7 +62,7 @@ public class NotebookPage
         foreach (Question q in _character.AskedQuestions)
         {
             output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in _character.Answers[q])
+            foreach (string s in _character.Answers[q].GetStrings())
             {
                 output += s + " ";
             }

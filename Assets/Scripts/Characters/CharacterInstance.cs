@@ -12,7 +12,7 @@ public class CharacterInstance
 {
     public CharacterData data;
 
-    public Dictionary<Question, List<string>> Answers = new();
+    public Dictionary<Question, DialogueContainer> Answers = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();

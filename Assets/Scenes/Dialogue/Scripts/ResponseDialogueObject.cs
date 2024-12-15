@@ -29,7 +29,7 @@ public class ResponseDialogueObject : DialogueObject
     {
         var dm = DialogueManager.dm;
 
-        List<string> answer = GetQuestionResponse(question);
+        DialogueObject answer = GetQuestionResponse(question);
         if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
             Responses.Add(new QuestionDialogueObject(background));
         // If there are no more questions remaining give a TerminateDialogueObject as a response
@@ -37,7 +37,8 @@ public class ResponseDialogueObject : DialogueObject
             Responses.Add(new TerminateDialogueObject());
 
         dm.ReplaceBackground(background);
-        dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
+        answer.Execute();
+        //dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
     }
 
     /// <summary>
@@ -46,7 +47,7 @@ public class ResponseDialogueObject : DialogueObject
     /// <param name="question">The question that needs a response.</param>
     /// <returns>The answer to the given question.</returns>
     // 
-    private List<string> GetQuestionResponse(Question question)
+    private DialogueObject GetQuestionResponse(Question question)
     {
         GameManager.gm.numQuestionsAsked++;
 
@@ -57,6 +58,6 @@ public class ResponseDialogueObject : DialogueObject
         character.AskedQuestions.Add(question);
         
         // Return answer to the question
-        return character.Answers[question];
+        return character.Answers[question].GetDialogue();
     }
 }

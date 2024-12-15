@@ -55,6 +55,14 @@ public class DialogueContainer : ScriptableObject
         return output;
     }
 
+    public List<string> GetStrings()
+    {
+        List<string> output = new List<string>();
+        foreach (var segment in segments)
+            output.Add(segment.text);
+        return output;
+    }
+    
     /// <summary>
     /// Appends a dialogueobject to the lead of a dialogue-tree.
     /// It finds the lowest-level node with no responses and adds

@@ -28,7 +28,7 @@ public class CharacterData : ScriptableObject
 [Serializable] public struct KeyValuePair
 {
     [SerializeField] public Question question;
-    [SerializeField] public List<string> answer;
+    [SerializeField] public DialogueContainer answer;
     [SerializeField] public List<string> trait;
 }
 
