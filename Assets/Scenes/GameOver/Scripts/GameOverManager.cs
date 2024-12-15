@@ -86,7 +86,8 @@ public class GameOverManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.GameOverScene,
             SceneController.SceneName.Loading,
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
         
         onGameLoaded.Raise(this, characters, culpritID, story);
     }
@@ -99,7 +100,8 @@ public class GameOverManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.GameOverScene,
             SceneController.SceneName.Loading,
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
         
         onGameLoaded.Raise(this, story);
     }

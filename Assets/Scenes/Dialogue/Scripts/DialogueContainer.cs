@@ -86,6 +86,7 @@ public class DialogueContainer : ScriptableObject
                 // The first of these two could be null, but that is handled by the ContentDialogueObject.
                 return new ContentDialogueObject(text, data.image, background, emotion);
             case DialogueType.OpenResponseDialogue:
+                // TODO: Only make the last one of this segment an openresponsedialogue, and keep the rest as 'contentdialogue'.
                 return new OpenResponseDialogueObject(text, data.image, background, emotion);
             default:
                 Debug.LogError("Could not create DialogueObject from DialogueContainer: invalid type");
@@ -101,6 +102,7 @@ public class DialogueContainer : ScriptableObject
     {
         int maxLineLength = SettingsManager.sm == null ? defaultLineLength : SettingsManager.sm.maxLineLength;
         string remainingText = data.text;
+        DialogueType dialogueType = data.type;
         DialogueObject output = null;
 
         // see if text is too long; take the first X characters of the text, then find the last punctuation,
@@ -137,8 +139,15 @@ public class DialogueContainer : ScriptableObject
                 remainingText = RemovePunctuationFromStart(remainingText);
             }
             
-            // With the found segment, we now create a DialogueObject.
-            newDialogue = CreateDialogueObject(new DialogueData(data.type, segmentText, data.image));
+            // If this segment is an OpenResponse-question but we are not finished asking the question,
+            // ..we will instead create this segment as a ContentDialogueObject
+            if (data.type == DialogueType.OpenResponseDialogue && remainingText.Length > 0)
+                dialogueType = DialogueType.ContentDialogue;
+            if (data.type == DialogueType.OpenResponseDialogue && remainingText.Length == 0)
+                dialogueType = DialogueType.OpenResponseDialogue;
+
+            // With the found segment, we now create a DialogueObject.    
+            newDialogue = CreateDialogueObject(new DialogueData(dialogueType, data.emotion, segmentText, data.image, data.background));
             
             // We set the ouput to include the newDialogue
             if (output == null)
@@ -197,8 +206,10 @@ public class DialogueContainer : ScriptableObject
     {
         int start = startRange ?? 0;
         int end = endRange.HasValue ? Math.Min(segments.Length, endRange.Value + 1) : segments.Length;
-        for (int i = start; i < end; i++)   
-            segments[i].background  = background;
+        for (int i = start; i < end; i++)
+        {
+            segments[i].background = background;
+        }
     }
     
 }
@@ -233,11 +244,13 @@ public class DialogueData
     // TODO: If it is a branching dialogue, add list of child-dialoguedata here?
 
     // Constructor to assign the data to the object
-    public DialogueData(DialogueType type, string text, Sprite image)
+    public DialogueData(DialogueType type, Emotion emotion, string text, Sprite image, GameObject[] background)
     {
         this.type = type;
+        this.emotion = emotion;
         this.text = text;
         this.image = image;
+        this.background = background;
     }
 
 }

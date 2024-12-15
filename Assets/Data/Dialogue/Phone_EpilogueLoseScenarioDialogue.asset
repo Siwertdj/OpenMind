@@ -19,16 +19,19 @@ MonoBehaviour:
     text: Huh? What do you mean, I was the one texting you? Sorry, i think you've
       got the wrong person..
     image: {fileID: 0}
-    background: []
+    background:
+    - {fileID: 3448788318129469726, guid: 433afa755917b2046af2f0420245ff84, type: 3}
   - type: 0
     emotion: 0
     text: Huh? What do you mean, I was the one texting you? Sorry, i think you've
       got the wrong person..
     image: {fileID: 0}
-    background: []
+    background:
+    - {fileID: 3448788318129469726, guid: 433afa755917b2046af2f0420245ff84, type: 3}
   - type: 0
     emotion: 0
     text: Huh? What do you mean, I was the one texting you? Sorry, i think you've
       got the wrong person..
     image: {fileID: 0}
-    background: []
+    background:
+    - {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}

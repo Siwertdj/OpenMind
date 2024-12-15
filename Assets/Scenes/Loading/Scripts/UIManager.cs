@@ -33,7 +33,8 @@ public class UIManager : MonoBehaviour
             // '_ =' throws away the await
             _ = SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
             SceneController.SceneName.GameMenuScene,
-            SceneController.TransitionType.Additive);
+            SceneController.TransitionType.Additive,
+            false);
     }
 
     /// <summary>

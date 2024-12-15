@@ -112,8 +112,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void OnDialogueComplete()
     {
-        // Close dialogue field and reset its parent to be correct
-        dialogueField.transform.parent = GameObject.Find("Canvas").transform;
+        // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
 
@@ -220,7 +219,7 @@ public class DialogueManager : MonoBehaviour
                 var image = Instantiate(prefab).GetComponent<Image>();
                 image.rectTransform.SetParent(parent, false);
                 // For the character's sprite..
-                if (emotion.HasValue && prefab.name == "avatarPrefab")
+                if (emotion.HasValue && prefab.name == "Character Avatar")
                 {
                     prefab.GetComponent<Image>().sprite = 
                         currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value).Item2;
@@ -290,10 +289,7 @@ public class DialogueManager : MonoBehaviour
         // Enable the input field.
         inputField.SetActive(true);
 
-        // Set dialogue above the questionbox
-        dialogueField.transform.parent = inputField.transform;
-        dialogueField.transform.SetSiblingIndex(0);
-        
+        animator.InOpenQuestion = true;        
         WriteDialogue(dialogue);
 
         // TODO: Save answer somewhere?
@@ -330,6 +326,7 @@ public class DialogueManager : MonoBehaviour
         // Reset the text from the input field.
         inputText = "";
 
+        animator.InOpenQuestion = false;
         ExecuteNextObject();
     }
 

@@ -96,7 +96,8 @@ public class SettingsMenuManager : MonoBehaviour
             // '_ =' throws away the await
             _ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
                 SceneController.SceneName.Loading,
-                SceneController.TransitionType.Unload);
+                SceneController.TransitionType.Unload,
+                true);
         }
     }
     

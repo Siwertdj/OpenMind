@@ -36,8 +36,6 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SetSceneType();
-        
         // Change the text size
         confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
         headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
@@ -92,18 +90,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     #endregion
-    
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
-    }
-
+  
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>

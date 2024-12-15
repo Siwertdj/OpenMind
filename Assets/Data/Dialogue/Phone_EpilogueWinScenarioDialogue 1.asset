@@ -15,20 +15,38 @@ MonoBehaviour:
   voicePitch: 1
   segments:
   - type: 0
+    emotion: 0
     text: Hey! I was indeed the one who was sending you messages.
     image: {fileID: 0}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   - type: 1
+    emotion: 1
     text: Why did you think it was me?
     image: {fileID: 0}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   - type: 0
+    emotion: 0
     text: I see, that's interesting..
     image: {fileID: 0}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   - type: 1
+    emotion: 0
     text: Is there anything you find you could relate to?
     image: {fileID: 0}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   - type: 0
+    emotion: 0
     text: Thank you for sharing. Well, since we already caught up earlier, let's
       hang out for the rest of the event!
     image: {fileID: 0}
-  background:
-  - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}

@@ -109,7 +109,8 @@ public class EpilogueManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.EpilogueScene, 
             SceneController.SceneName.DialogueScene, 
-            SceneController.TransitionType.Additive);
+            SceneController.TransitionType.Additive,
+            false);
         
         // Create the DialogueObject and corresponding children.
         // This background displays the suspected culprit over the Dialogue-background
@@ -152,13 +153,15 @@ public class EpilogueManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
             SceneController.SceneName.EpilogueScene,
-            SceneController.TransitionType.Unload);
+            SceneController.TransitionType.Unload,
+            false);
         
         // Transition to GameOver
         await sc.TransitionScene(
             SceneController.SceneName.EpilogueScene, 
             SceneController.SceneName.GameOverScene,
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
         
         
         // Send the game values to the GameOver-scene. 

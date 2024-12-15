@@ -205,8 +205,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void NewGame()
     {
-        Debug.Log("New Game");
-        
         // Populate the list of characters, unless its empty and contains a culprit
         // (It could be instantiated if the game was restarted)
         if (currentCharacters.Count == 0 || 
@@ -377,7 +375,8 @@ public class GameManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
             SceneController.SceneName.EpilogueScene, 
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
         
         // Raise the EpilogueStart-event and pass all the necessary data
         onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit());
@@ -425,7 +424,8 @@ public class GameManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
             SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
 
         var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
         
@@ -450,7 +450,8 @@ public class GameManager : MonoBehaviour
         await sc.TransitionScene(
             SceneController.SceneName.NPCSelectScene,
             SceneController.SceneName.DialogueScene,
-            SceneController.TransitionType.Transition);
+            SceneController.TransitionType.Transition,
+            true);
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
         var dialogueObject = new ContentDialogueObject(
@@ -487,7 +488,8 @@ public class GameManager : MonoBehaviour
             await sc.TransitionScene(
                 SceneController.SceneName.DialogueScene, 
                 SceneController.SceneName.NPCSelectScene, 
-                SceneController.TransitionType.Transition);
+                SceneController.TransitionType.Transition,
+                true);
     
             gameState = GameState.NpcSelect;
         }
