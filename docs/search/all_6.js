@@ -12,7 +12,7 @@ var searchData=
   ['generateoptions_9',['GenerateOptions',['../classSelectionManager.html#a822ce8fcd043b4e66269f6f6eff2e6ab',1,'SelectionManager']]],
   ['generatequestions_10',['GenerateQuestions',['../classQuestionObject.html#a9e4eb6ecc44ae9a5706977e5e3b4b4a0',1,'QuestionObject']]],
   ['getalltraits_11',['GetAllTraits',['../classCharacterInstance.html#a555b17dea13b1b52b9027ded05c1927b',1,'CharacterInstance']]],
-  ['getanswers_12',['GetAnswers',['../classNotebookData.html#a4487a50dfe62da7422d0580f53e8695d',1,'NotebookData']]],
+  ['getanswers_12',['GetAnswers',['../classNotebookData.html#a6ac3d5a7b1403ae1574d84a529127bf0',1,'NotebookData']]],
   ['getanswerstest_13',['GetAnswersTest',['../classNotebookPageDataTest.html#a343b61b991021c861ebd902c4cf38749',1,'NotebookPageDataTest']]],
   ['getbutton_14',['GetButton',['../classSettingsMenuManager.html#a7071356b44e203bf2d78bbd1093410ae',1,'SettingsMenuManager']]],
   ['getcharacternotes_15',['GetCharacterNotes',['../classNotebookData.html#a81428bc3f2aef0ef20b6d1211fad4082',1,'NotebookData']]],

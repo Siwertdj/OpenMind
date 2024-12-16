@@ -16,6 +16,7 @@ MonoBehaviour:
   id: 8
   avatar: {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
   voicePitch: 1
+  facePivot: {x: 0.5025, y: 0.7429}
   answers:
   - question: 2
     answer:
