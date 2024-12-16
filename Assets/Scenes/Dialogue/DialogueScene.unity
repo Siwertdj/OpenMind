@@ -1108,6 +1108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbb9893b9181b34aa91e6a65ad76430, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customFont: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   animator: {fileID: 826756117}
   dialogueField: {fileID: 1460950029}
   questionsField: {fileID: 1565962714721478318}
