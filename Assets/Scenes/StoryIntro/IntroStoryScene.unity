@@ -868,7 +868,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
   - {fileID: 21300000, guid: 3dd7786da48f15341b65b9df036e135f, type: 3}
   - {fileID: 21300000, guid: b19a2cd9a2585d74e8b4b6d37505e3a8, type: 3}
-  - {fileID: 21300000, guid: 30ae802f968791c4fbb6a04d1bf30e99, type: 3}
+  - {fileID: 21300000, guid: 3420fff798d9eb24dbf3e17a790ce041, type: 3}
   storyText:
   - 'Unknown? I must have removed their number. Awkward! '
   - Let's look around, maybe I recognize someone.
@@ -1908,7 +1908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1464702357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1922,7 +1922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2990387, g: 0.64073896, b: 0.9056604, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1964,8 +1964,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 80.51221, y: 46.921143}
-  m_SizeDelta: {x: 123.2864, y: 49.2204}
+  m_AnchoredPosition: {x: 402, y: 989}
+  m_SizeDelta: {x: 136.1025, y: 79.782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464702360
 MonoBehaviour:
@@ -2364,7 +2364,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Receptionist
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2428,7 +2428,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1807932669
