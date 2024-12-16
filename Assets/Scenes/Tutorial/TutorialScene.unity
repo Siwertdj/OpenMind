@@ -385,8 +385,13 @@ MonoBehaviour:
   - ' Find out who is sending you the messages. You will receive messages with hints.
     Talk to the persons present to find out who matches these hints.  Beware, you
     do not have unlimited questions to ask before you have to make a choice. '
-  - StoryB
-  - StoryC
+  - 'Find out who is responsible for the disappearances. Alex will give you descriptions
+    from his visions. Talk to the persons present to find out who matches his visions.
+    Beware, you do not have unlimited questions to ask before you have to make a
+    choice. '
+  - 'Find out who is the real author. The computer will give you hints. Talk to the
+    persons present to find out who matches these hints. Beware, you do not have
+    unlimited questions to ask before you have to make a choice. '
   objectiveBox: {fileID: 1393315987}
   objectiveText: {fileID: 430739451}
 --- !u!4 &475655578
@@ -458,11 +463,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 251.13586
+      value: 382.9098
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 270.05493
+      value: 354.8064
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -494,11 +499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 287
+      value: 334.02798
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 280
+      value: 354.33447
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -825,11 +830,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 251.1359
+      value: 382.9947
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 270.055
+      value: 407.0943
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -861,11 +866,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -316
+      value: -388
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -247
+      value: -293
       objectReference: {fileID: 0}
     - target: {fileID: 8376968489786156885, guid: a061cc0e27e3ad9449af69d655e4d3c2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
