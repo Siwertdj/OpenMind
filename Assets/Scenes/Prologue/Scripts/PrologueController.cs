@@ -175,7 +175,7 @@ public class CutsceneController : MonoBehaviour
         }
     }
     /// <summary>
-    /// This method updates the introduction text. Since there are only two lines of text, there is no array needed. 
+    /// This method updates the introduction text. Since there are only two segments of text, there is no array needed. 
     /// </summary>
     public void UpdateIntroText()
     {

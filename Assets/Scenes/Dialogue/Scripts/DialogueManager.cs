@@ -4,12 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using TMPro;
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
 /// <summary>
 /// The manager for the dialogue scene
@@ -23,24 +27,49 @@ public class DialogueManager : MonoBehaviour
 
     [Header("Fields")]
     [SerializeField] private GameObject dialogueField;
+    [SerializeField] private GameObject imageField;
     [SerializeField] private GameObject questionsField;
     [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
 
     [Header("Prefabs")]
+    [SerializeField] private EventSystem eventSystemPrefab;
     [SerializeField] private GameObject buttonPrefab;
+    [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
+    [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
 
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
     public GameEvent stopLoadIcon;
 
+    
+    [FormerlySerializedAs("testDialogueObject")]
+    [Header("Test variables")]
+    [SerializeField] private DialogueContainer testDialogueContainer;
+    
+    // Variables
     [NonSerialized] public        string            inputText;
     [NonSerialized] public        List<string>      playerAnswers;
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
+    private                       Component         dialogueStarter;
+    
+    // In this awake, we initialize some components in case it is loaded in isolation.
+    // It does not need to rely on GameManager to be active, but it needs an eventsystem
+    private void Awake()
+    {
+        if (GameObject.Find("EventSystem") == null)
+        {
+            Instantiate(eventSystemPrefab);
+            StartDialogue(null, testDialogueContainer.GetDialogue());
+        }
+        
+        // Set static DialogueManager instance
+        dm = this;
+    }
 
     /// <summary>
     /// Sets DialogueManager variables (currentObject & dialogueRecipient) and executes the starting DialogueObject.
@@ -50,8 +79,8 @@ public class DialogueManager : MonoBehaviour
     /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
     {
-        // Set static DialogueManager instance
-        dm = this;
+        // Save the sender of the event that started dialogue
+        dialogueStarter = sender;
         
         // Change the text size
         characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
@@ -74,16 +103,12 @@ public class DialogueManager : MonoBehaviour
         {
             characterNameField.SetActive(false);
         }
-    
-        // Initialize the list of answers giving in the epilogue
-        playerAnswers = new List<string>();
-        
-        // Execute the starting object
-        currentObject.Execute();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
-        onEpilogueEnd.AddListener(SaveAnswers);
+        
+        // Execute the starting object to begin dialogue
+        currentObject.Execute();
     }
 
     /// <summary>
@@ -99,10 +124,6 @@ public class DialogueManager : MonoBehaviour
         // Close dialogue field
         dialogueField.SetActive(false);
         characterNameField.SetActive(false);
-        
-        // If we are in the Epilogue GameState and the next response object is an OpenResponseObject, create the open question.
-        if (GameManager.gm.gameState == GameManager.GameState.Epilogue && currentObject.Responses[0] is OpenResponseObject)
-            CreateOpenQuestion();
 
         ExecuteNextObject();
     }
@@ -112,7 +133,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void ExecuteNextObject()
     {
-        currentObject = currentObject.Responses[0];
+        currentObject = currentObject.Responses.First();
         currentObject.Execute();
     }
 
@@ -123,49 +144,121 @@ public class DialogueManager : MonoBehaviour
     /// <param name="pitch">The pitch of the character</param>
     public void WriteDialogue(List<string> dialogue, float pitch = 1)
     {
-        // Enable the dialogue field
-        dialogueField.SetActive(true);
-        
-        // Adjust the box containing the character's name
-        if (currentRecipient != null)
+        // The text of this dialogue object is null, so we dont open the window.
+        // This can be in case of a pause, an image, etc.
+        if (dialogue == null)
         {
-            characterNameField.SetActive(true);
-            characterNameField.GetComponentInChildren<TMP_Text>().text = currentRecipient.characterName;
+            dialogueField.SetActive(false);
+            ExecuteNextObject();
         }
+        else
+        {
+            // Enable the dialogue field
+            dialogueField.SetActive(true);
 
-        // Animator write dialogue to the screen.
-        pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
-        animator.WriteDialogue(dialogue, pitch);
+            // Adjust the box containing the character's name
+            if (currentRecipient != null)
+            {
+                characterNameField.SetActive(true);
+                characterNameField.GetComponentInChildren<TMP_Text>().text =
+                    currentRecipient.characterName;
+            }
+
+            // Animator write dialogue to the screen.
+            pitch = currentRecipient == null ? 1 : currentRecipient.pitch;
+            animator.WriteDialogue(dialogue, pitch);
+        }
     }
 
+    public void PrintImage(Sprite newImage)
+    {
+        if (newImage == null)
+            imageField.SetActive(false);
+        else
+        {
+            // Enable the image field
+            imageField.SetActive(true);
+
+            // Set the content of the image
+            imageField.GetComponent<Image>().sprite = newImage;
+        }
+    }
+    
+    /// <summary>
+    /// Creates a background for the coming dialogue.
+    /// </summary>
+    /// <param name="story">The storyobject that contains the backgrounds for the dialogue.</param>
+    /// <param name="character">The character the dialogue will be with.</param>
+    /// <param name="background">The background for the dialogue.</param>
+    /// <returns></returns>
+    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, GameObject background = null)
+    {
+        List<GameObject> background_ = new();
+
+        // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
+        background_.Add(background == null ? story.dialogueBackground : background);
+
+        // If a character is given, add that as well with the proper emotion
+        if (character != null)
+        {
+            avatarPrefab.GetComponent<Image>().sprite = 
+                character.avatarEmotions.First(es => es.Item1 == Emotion.Neutral).Item2;
+            background_.Add(avatarPrefab);
+        }
+
+        return background_.ToArray();
+    }
+    
     /// <summary>
     /// Replaces the current dialogue background with the given background.
     /// </summary>
     /// <param name="newBackground">The background that will replace the current background.</param>
-    public void ReplaceBackground(GameObject[] newBackground)
+    public void ReplaceBackground(GameObject[] newBackground, Emotion? emotion = null)
     {
-        Transform parent = backgroundField.transform;
-
-        // Remove old background
-        foreach (Transform child in parent)
-            Destroy(child.gameObject);
-
-        // Instantiate new background
-        foreach (GameObject prefab in newBackground)
+        if (newBackground != null)
         {
-            var image = Instantiate(prefab).GetComponent<Image>();
-            image.rectTransform.SetParent(parent, false);
-        }        
+            if (newBackground.Length > 0)
+            {
+                Transform parent = backgroundField.transform;
+
+                // Remove old background
+                foreach (Transform child in parent)
+                    Destroy(child.gameObject);
+
+                // Instantiate new background
+                foreach (GameObject prefab in newBackground)
+                {
+                    var image = Instantiate(prefab).GetComponent<Image>();
+                    image.rectTransform.SetParent(parent, false);
+                    
+                }
+            }
+        }
+        // Set emotion
+        if (emotion.HasValue)
+        {
+            foreach (Transform child in backgroundField.transform)
+            {
+                if (child.gameObject.name == "Character Avatar(Clone)")
+                {
+                    if (currentRecipient != null)
+                        child.GetComponent<Image>().sprite =
+                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value)
+                                .Item2;
+                }
+            }
+        }
     }
+
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
     /// </summary>
-    /// <param name="questionObject">A <see cref="QuestionObject"/> containing the questions and responses</param>
-    public void InstantiatePromptButtons(QuestionObject questionObject)
+    /// <param name="questionDialogueObject">A <see cref="QuestionDialogueObject"/> containing the questions and responses</param>
+    public void InstantiatePromptButtons(QuestionDialogueObject questionDialogueObject)
     {
-        // Instantiate button containing each response
-        foreach (ResponseObject response in questionObject.Responses)
+        // Instantiate button containing each responseDialogue
+        foreach (ResponseDialogueObject response in questionDialogueObject.Responses)
         {
             // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
@@ -197,8 +290,8 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Executed when a question button is pressed.
     /// </summary>
-    /// <param name="response">A <see cref="ResponseObject"/> containing the response</param>
-    public void OnButtonClick(ResponseObject response)
+    /// <param name="responseDialogue">A <see cref="ResponseDialogueObject"/> containing the responseDialogue</param>
+    public void OnButtonClick(ResponseDialogueObject responseDialogue)
     {
         // Remove buttons from screen
         DestroyButtons();
@@ -207,17 +300,23 @@ public class DialogueManager : MonoBehaviour
         questionsField.SetActive(false);
 
         // Write dialogue when button is pressed
-        currentObject = response;
+        currentObject = responseDialogue;
         currentObject.Execute();
     }
 
     /// <summary>
     /// Creates the buttons and the text field for the open questions.
     /// </summary>
-    private void CreateOpenQuestion()
+    public void CreateOpenQuestion(List<string> dialogue)
     {
         // Enable the input field.
         inputField.SetActive(true);
+        inputField.gameObject.GetComponentInChildren<TMP_InputField>().text = "";
+
+        animator.InOpenQuestion = true;        
+        WriteDialogue(dialogue);
+
+        // TODO: Save answer somewhere?
     }
     
     /// <summary>
@@ -243,30 +342,24 @@ public class DialogueManager : MonoBehaviour
     public void AnswerOpenQuestion()
     {        
         // Assign the text from the inputField to inputText and add it to the list of answers.
-        // TODO: can write the answers from the open questions to somewhere.
         inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
-        playerAnswers.Add(inputText);
-        
+        // Can use this to write the inputText to somewhere, here..
+
         // Disable the input field.
         inputField.SetActive(false);
         
         // Reset the text from the input field.
         inputText = "";
 
+        animator.InOpenQuestion = false;
         ExecuteNextObject();
     }
 
-    /// <summary>
-    /// Save the answers that the player has given to a file
-    /// </summary>
-    public void SaveAnswers()
-    {
-        File.WriteAllLines(Path.Combine(Application.persistentDataPath, "answers.txt"),playerAnswers);
-    }
     
     /// <summary>
     /// Helper function for CreateBackButton.
     /// Sends the player back to the NPCSelect scene
+    /// TODO: This button should take into account other situations dialgoue may appear beside in the gameloop
     /// </summary>
     private void BacktoNPCScreen()
     {

@@ -20,6 +20,9 @@ MonoBehaviour:
   storyIntroMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
   storyGameMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
   storyEpilogueMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
+  storyEpilogueWonDialogue: {fileID: 11400000, guid: 91747bafca5141d4f9ee27c94ce9ba31, type: 2}
+  storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 99c354101e36f6c499ffc2d63f2a4074, type: 2}
+  storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
   victimDialogue: has gone home.
   hintDialogue: '*beep beep* You got a new message!'
   numberOfCharacters: 6

@@ -182,7 +182,7 @@ public class SceneControllerTests
             LogAssert.Expect(LogType.Error,
                 $"Cannot make a transition from the scene {to}, since it's not loaded.");
             
-            Task task1 = sc.TransitionScene(to, from, tt);
+            Task task1 = sc.TransitionScene(to, from, tt, false);
             yield return new WaitUntil(() => task1.IsCompleted);
             
             Assert.IsFalse(DidTransitionHappen(from, to));
@@ -204,7 +204,7 @@ public class SceneControllerTests
             }
             
             //do the transition
-            Task task = sc.TransitionScene(from, to, tt);
+            Task task = sc.TransitionScene(from, to, tt, false);
             yield return new WaitUntil(() => task.IsCompleted);
             
             //the transition has different results based on the type of transition
@@ -237,7 +237,7 @@ public class SceneControllerTests
             LogAssert.Expect(LogType.Error,
                 $"Current scene {from} cannot make a {tt}-transition to {to}");
             
-            Task task2 = sc.TransitionScene(from, to, tt);
+            Task task2 = sc.TransitionScene(from, to, tt, false);
             yield return new WaitUntil(() => task2.IsCompleted);
             
             Assert.IsFalse(DidTransitionHappen(from, to));
