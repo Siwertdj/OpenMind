@@ -101,10 +101,11 @@ Public Types</h2></td></tr>
 , <br />
 &#160;&#160;<b>GameMenuScene</b>
 , <b>SettingsScene</b>
-, <b>GameLossScene</b>
-, <b>GameWinScene</b>
+, <b>GameOverScene</b>
+, <b>TutorialScene</b>
 , <br />
-&#160;&#160;<b>TutorialScene</b>
+&#160;&#160;<b>EpilogueScene</b>
+, <b>StartScreenScene</b>
 <br />
  }</td></tr>
 <tr class="memdesc:a106a2661ff7b984ba0626699ca733078"><td class="mdescLeft">&#160;</td><td class="mdescRight">All scenes in the project. <br /></td></tr>
@@ -126,12 +127,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr
 void&#160;</td><td class="memItemRight" valign="bottom"><b>UnloadAdditiveScenes</b> ()</td></tr>
 <tr class="memdesc:a99c4e8c0b66815fbd1f710deea4fd857"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unloads all scenes(as all are opened additively), other than the 'Loading' scene. <br /></td></tr>
 <tr class="separator:a99c4e8c0b66815fbd1f710deea4fd857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace56faf58d214c72d6274a140b214ed6"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#ace56faf58d214c72d6274a140b214ed6">TransitionScene</a> (<a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> from, <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> to, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType, Func&lt; string, string, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>, Task &gt; loadCode)</td></tr>
-<tr class="memdesc:ace56faf58d214c72d6274a140b214ed6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional method to let a scene determine the transition itself. This method can be directly called to override the transition code.  <br /></td></tr>
-<tr class="separator:ace56faf58d214c72d6274a140b214ed6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a865c3149b8b8d8978e0aea04087e5aea"><td class="memItemLeft" align="right" valign="top"><a id="a865c3149b8b8d8978e0aea04087e5aea" name="a865c3149b8b8d8978e0aea04087e5aea"></a>
-async Task&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionScene</b> (<a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> from, <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> to, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType)</td></tr>
-<tr class="separator:a865c3149b8b8d8978e0aea04087e5aea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a73f0dddeafe7f87348ab61ea856ceb6d"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#a73f0dddeafe7f87348ab61ea856ceb6d">TransitionScene</a> (<a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> from, <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> to, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType, bool playAnimation, Func&lt; string, string, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>, bool, Task &gt; loadCode)</td></tr>
+<tr class="memdesc:a73f0dddeafe7f87348ab61ea856ceb6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Additional method to let a scene determine the transition itself. This method can be directly called to override the transition code.  <br /></td></tr>
+<tr class="separator:a73f0dddeafe7f87348ab61ea856ceb6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af2a3e8b0f18173280ce075b5dd1994"><td class="memItemLeft" align="right" valign="top"><a id="a3af2a3e8b0f18173280ce075b5dd1994" name="a3af2a3e8b0f18173280ce075b5dd1994"></a>
+async Task&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionScene</b> (<a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> from, <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> to, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType, bool playAnimation)</td></tr>
+<tr class="separator:a3af2a3e8b0f18173280ce075b5dd1994"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae475ea119baf65134ab3e391faef11de"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#ae475ea119baf65134ab3e391faef11de">StartScene</a> (<a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneName</a> start)</td></tr>
 <tr class="memdesc:ae475ea119baf65134ab3e391faef11de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to be called when loading the first cycle.  <br /></td></tr>
 <tr class="separator:ae475ea119baf65134ab3e391faef11de"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -165,9 +166,9 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>GetTransitionGraphF
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadSceneGraph</b> ()</td></tr>
 <tr class="memdesc:a3dd53252aa55ffbba6665a4c745c24f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">read the scene graph from the file and assign sceneGraph and sceneToID <br /></td></tr>
 <tr class="separator:a3dd53252aa55ffbba6665a4c745c24f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3399797d5a08b2f9a47157dad6023fa"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#ab3399797d5a08b2f9a47157dad6023fa">Transitioning</a> (string currentScene, string targetScene, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType)</td></tr>
-<tr class="memdesc:ab3399797d5a08b2f9a47157dad6023fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">transitions to a new scene.  <br /></td></tr>
-<tr class="separator:ab3399797d5a08b2f9a47157dad6023fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24a286e1b2b8d61a2a846bfbfa557898"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#a24a286e1b2b8d61a2a846bfbfa557898">Transitioning</a> (string currentScene, string targetScene, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a> transitionType, bool playAnimation)</td></tr>
+<tr class="memdesc:a24a286e1b2b8d61a2a846bfbfa557898"><td class="mdescLeft">&#160;</td><td class="mdescRight">transitions to a new scene.  <br /></td></tr>
+<tr class="separator:a24a286e1b2b8d61a2a846bfbfa557898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1886975d0e0ca40771807899dcbbaf3a"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneController.html#a1886975d0e0ca40771807899dcbbaf3a">LoadScene</a> (string targetScene)</td></tr>
 <tr class="memdesc:a1886975d0e0ca40771807899dcbbaf3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts SceneManager.LoadSceneAsync() from an AsyncOperation to a Task so that it is awaitable.  <br /></td></tr>
 <tr class="separator:a1886975d0e0ca40771807899dcbbaf3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,6 +178,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ReadSceneGraph</b> ()
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:aeb3549837cb440e0126dc2683f5b9ba4"><td class="memItemLeft" align="right" valign="top"><a id="aeb3549837cb440e0126dc2683f5b9ba4" name="aeb3549837cb440e0126dc2683f5b9ba4"></a>
+<a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onStartSceneTransition</b></td></tr>
+<tr class="separator:aeb3549837cb440e0126dc2683f5b9ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af1e0995f62d2b446cdfbf4fdd782e2ec"><td class="memItemLeft" align="right" valign="top"><a id="af1e0995f62d2b446cdfbf4fdd782e2ec" name="af1e0995f62d2b446cdfbf4fdd782e2ec"></a>
+<a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onEndSceneTransition</b></td></tr>
+<tr class="separator:af1e0995f62d2b446cdfbf4fdd782e2ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa197dfd04e06ceeb2796a70a550ba180"><td class="memItemLeft" align="right" valign="top"><a id="aa197dfd04e06ceeb2796a70a550ba180" name="aa197dfd04e06ceeb2796a70a550ba180"></a>
 List&lt; List&lt;(int, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>)&gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>sceneGraph</b></td></tr>
 <tr class="separator:aa197dfd04e06ceeb2796a70a550ba180"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -326,8 +333,8 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionGra
 
 </div>
 </div>
-<a id="ab3399797d5a08b2f9a47157dad6023fa" name="ab3399797d5a08b2f9a47157dad6023fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3399797d5a08b2f9a47157dad6023fa">&#9670;&#160;</a></span>Transitioning()</h2>
+<a id="a24a286e1b2b8d61a2a846bfbfa557898" name="a24a286e1b2b8d61a2a846bfbfa557898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24a286e1b2b8d61a2a846bfbfa557898">&#9670;&#160;</a></span>Transitioning()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,7 +358,13 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionGra
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>&#160;</td>
-          <td class="paramname"><em>transitionType</em>&#160;</td>
+          <td class="paramname"><em>transitionType</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>playAnimation</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -378,8 +391,8 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionGra
 
 </div>
 </div>
-<a id="ace56faf58d214c72d6274a140b214ed6" name="ace56faf58d214c72d6274a140b214ed6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ace56faf58d214c72d6274a140b214ed6">&#9670;&#160;</a></span>TransitionScene()</h2>
+<a id="a73f0dddeafe7f87348ab61ea856ceb6d" name="a73f0dddeafe7f87348ab61ea856ceb6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a73f0dddeafe7f87348ab61ea856ceb6d">&#9670;&#160;</a></span>TransitionScene()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,7 +418,13 @@ const string&#160;</td><td class="memItemRight" valign="bottom"><b>TransitionGra
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">Func&lt; string, string, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>, Task &gt;&#160;</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>playAnimation</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Func&lt; string, string, <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">TransitionType</a>, bool, Task &gt;&#160;</td>
           <td class="paramname"><em>loadCode</em>&#160;</td>
         </tr>
         <tr>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['objectivetexttest_0',['ObjectiveTextTest',['../classTutorialManagerPlayTest.html#ac3b413586d4fca409b0a748d7234b4cb',1,'TutorialManagerPlayTest']]],
-  ['onbuttonclick_1',['OnButtonClick',['../classDialogueManager.html#afd38c927c041cccfd8756b2f69023c27',1,'DialogueManager']]],
+  ['onbuttonclick_1',['OnButtonClick',['../classDialogueManager.html#abab84129c3ca0c685869298e9f7fc450',1,'DialogueManager']]],
   ['onbuttonclicktest_2',['OnButtonClickTest',['../classDialogueManagerPlayTest.html#a92759305705c6b19126e038f1b7b7889',1,'DialogueManagerPlayTest']]],
   ['onchangedtextsize_3',['OnChangedTextSize',['../classDialogueManager.html#a840bb80986e5ea8e58367779eafde9a1',1,'DialogueManager.OnChangedTextSize()'],['../classSelectionManager.html#a7d8811132eefe9815b7ca8fb242cf388',1,'SelectionManager.OnChangedTextSize()']]],
   ['onchangedtextsizetest_4',['OnChangedTextSizeTest',['../classDialogueManagerPlayTest.html#a06cd7fa096687aa064e5901daf1b1d29',1,'DialogueManagerPlayTest.OnChangedTextSizeTest()'],['../classNPCSelectPlayTest.html#aa1ee963790dc751cfd62946e4ecf2358',1,'NPCSelectPlayTest.OnChangedTextSizeTest()']]],
@@ -18,7 +18,7 @@ var searchData=
   ['openpersonalnotes_15',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
   ['openpersonalnotestest_16',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
   ['openpopup_17',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
-  ['openresponseobject_18',['OpenResponseObject',['../classOpenResponseObject.html',1,'OpenResponseObject'],['../classOpenResponseObject.html#a0f8265059932c25047bb3765d35eb3cc',1,'OpenResponseObject.OpenResponseObject()']]],
+  ['openresponsedialogueobject_18',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html',1,'OpenResponseDialogueObject'],['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject.OpenResponseDialogueObject()']]],
   ['opensettings_19',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
   ['openskipprologueprompt_20',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]]
 ];

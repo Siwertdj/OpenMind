@@ -3,11 +3,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
 /// An abstract class containing the blueprint for the possible dialogue options.
-/// Possible children are: SpeakingObject, QuestionObject, ResponseObject, and TerminateDialogueObject.
+/// Possible children are: ContentDialogueObject, DialogueDialogueQuestionObject, ResponseDialogueObject, and TerminateDialogueObject.
 /// </summary>
 public abstract class DialogueObject
 {
@@ -28,19 +29,25 @@ public abstract class DialogueObject
 /// A child of DialogueObject. Executing this object simply writes its text to the screen.
 /// A response must be set manually, otherwise the response is a TerminateDialogueObject.
 /// </summary>
-public class SpeakingObject : DialogueObject
+public class ContentDialogueObject : DialogueObject
 {
-    public List<string> dialogue;
+    [CanBeNull] public List<string> dialogue;
+    [CanBeNull] public Sprite       image;
+    [CanBeNull] public Emotion      emotion;
 
     /// <summary>
-    /// The constructor for <see cref="SpeakingObject"/>.
+    /// The constructor for <see cref="ContentDialogueObject"/>.
     /// </summary>
     /// <param name="dialogue">The text</param>
     /// <param name="background">The background</param>
-    public SpeakingObject(List<string> dialogue, GameObject[] background)
+    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
     {
+        // Set this object's local variables to match the parameter-values of the constructor
         this.dialogue = dialogue;
+        this.image = image; 
         this.background = background;
+        if (emotion.HasValue)
+            this.emotion = emotion.Value;
     }
 
     /// <summary>
@@ -49,8 +56,9 @@ public class SpeakingObject : DialogueObject
     public override void Execute()
     {
         var dm = DialogueManager.dm;
-
-        dm.ReplaceBackground(background);
+        
+        dm.ReplaceBackground(background,emotion);
+        dm.PrintImage(image);
         dm.WriteDialogue(dialogue);
 
         // If no response is given, terminate dialogue

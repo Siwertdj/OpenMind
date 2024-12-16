@@ -138,27 +138,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td><
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndGame</b> ()</td></tr>
 <tr class="memdesc:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the game. <br /></td></tr>
 <tr class="separator:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3bf26a7e60970c59ff66d22e334cfdc3"><td class="memItemLeft" align="right" valign="top"><a id="a3bf26a7e60970c59ff66d22e334cfdc3" name="a3bf26a7e60970c59ff66d22e334cfdc3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RetryStoryScene</b> ()</td></tr>
-<tr class="memdesc:a3bf26a7e60970c59ff66d22e334cfdc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset game from start with the same characters. <br /></td></tr>
-<tr class="separator:a3bf26a7e60970c59ff66d22e334cfdc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a348fc6fd4410fe58257b99875de92a14"><td class="memItemLeft" align="right" valign="top"><a id="a348fc6fd4410fe58257b99875de92a14" name="a348fc6fd4410fe58257b99875de92a14"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RestartStoryScene</b> ()</td></tr>
-<tr class="memdesc:a348fc6fd4410fe58257b99875de92a14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restart game from start with new characters. <br /></td></tr>
-<tr class="separator:a348fc6fd4410fe58257b99875de92a14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a616e089cfb7b0835ebde81c59757beaa"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a616e089cfb7b0835ebde81c59757beaa">StartHintDialogue</a> (<a class="el" href="classDialogueObject.html">DialogueObject</a> dialogueObject)</td></tr>
-<tr class="memdesc:a616e089cfb7b0835ebde81c59757beaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
-<tr class="separator:a616e089cfb7b0835ebde81c59757beaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a8af6c59e65b3a2cbd6e3946045a1ec79">StartDialogue</a> (List&lt; string &gt; dialogue)</td></tr>
+<tr class="memdesc:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
+<tr class="separator:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cdd75ff0254229d6709046cda1d782e"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a1cdd75ff0254229d6709046cda1d782e">StartDialogue</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
 <tr class="memdesc:a1cdd75ff0254229d6709046cda1d782e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called to start Dialogue with a specific character, taking a <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a> as parameter. This toggles-off the NPCSelectScene, and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter. Then, it loads the DialogueScene.  <br /></td></tr>
 <tr class="separator:a1cdd75ff0254229d6709046cda1d782e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd7444b7a79966c56af61de16ae3fd75"><td class="memItemLeft" align="right" valign="top"><a id="abd7444b7a79966c56af61de16ae3fd75" name="abd7444b7a79966c56af61de16ae3fd75"></a>
 async void&#160;</td><td class="memItemRight" valign="bottom"><b>EndDialogue</b> (Component sender, params object[] data)</td></tr>
-<tr class="memdesc:abd7444b7a79966c56af61de16ae3fd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classDialogueManager.html" title="The manager for the dialogue scene.">DialogueManager</a> when dialogue is ended, by execution of a <a class="el" href="classTerminateDialogueObject.html" title="A child of DialogueObject. Executing this object unloads the dialogue scene with no response.">TerminateDialogueObject</a>. Checks if questions are remaining: .. if no, end cycle. .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle. <br /></td></tr>
+<tr class="memdesc:abd7444b7a79966c56af61de16ae3fd75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called by <a class="el" href="classDialogueManager.html" title="The manager for the dialogue scene.">DialogueManager</a> when dialogue is ended, by execution of a DialogueTerminateObject. Checks if questions are remaining: .. if no, end cycle. .. if yes, 'back to NPCSelect'-button was clicked, so don't end cycle. <br /></td></tr>
 <tr class="separator:abd7444b7a79966c56af61de16ae3fd75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a502cb7661291d11d37ed9fb1e8f63e91"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a502cb7661291d11d37ed9fb1e8f63e91">StartEpilogueDialogue</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
-<tr class="memdesc:a502cb7661291d11d37ed9fb1e8f63e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).  <br /></td></tr>
-<tr class="separator:a502cb7661291d11d37ed9fb1e8f63e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4d79f33e1ecb977c578db38960217dd1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a4d79f33e1ecb977c578db38960217dd1">EnoughCharactersRemaining</a> ()</td></tr>
 <tr class="memdesc:a4d79f33e1ecb977c578db38960217dd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the number of characters in the currently active game (selected in the 'currentCharacters'-list) that are also 'active' (the isActive-bool of these CharacterInstances) is more than the gamemanager variable 'numberOfActiveCharacters', which is the minimum amount of characters that should be remaining until we transition into selecting a culprit.  <br /></td></tr>
 <tr class="separator:a4d79f33e1ecb977c578db38960217dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,6 +160,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a8ad3dbf17637945daf62cd446ba6d15d"><td class="memItemLeft" align="right" valign="top"><a id="a8ad3dbf17637945daf62cd446ba6d15d" name="a8ad3dbf17637945daf62cd446ba6d15d"></a>
 <a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onDialogueStart</b></td></tr>
 <tr class="separator:a8ad3dbf17637945daf62cd446ba6d15d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa870dc5d005f687d67790eb7348a26f7"><td class="memItemLeft" align="right" valign="top"><a id="aa870dc5d005f687d67790eb7348a26f7" name="aa870dc5d005f687d67790eb7348a26f7"></a>
+<a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onEpilogueStart</b></td></tr>
+<tr class="separator:aa870dc5d005f687d67790eb7348a26f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a53f25bde001b9155ab9cba1327b89c"><td class="memItemLeft" align="right" valign="top"><a id="a3a53f25bde001b9155ab9cba1327b89c" name="a3a53f25bde001b9155ab9cba1327b89c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>numQuestionsAsked</b></td></tr>
 <tr class="separator:a3a53f25bde001b9155ab9cba1327b89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -180,18 +172,12 @@ List&lt; <a class="el" href="classCharacterInstance.html">CharacterInstance</a> 
 <tr class="memitem:aaabd1864e2bf399452e4cbe0d341ca18"><td class="memItemLeft" align="right" valign="top"><a id="aaabd1864e2bf399452e4cbe0d341ca18" name="aaabd1864e2bf399452e4cbe0d341ca18"></a>
 GameState&#160;</td><td class="memItemRight" valign="bottom"><b>gameState</b></td></tr>
 <tr class="separator:aaabd1864e2bf399452e4cbe0d341ca18"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ea772016ec0d88eb123ae2a3ee0f371"><td class="memItemLeft" align="right" valign="top"><a id="a9ea772016ec0d88eb123ae2a3ee0f371" name="a9ea772016ec0d88eb123ae2a3ee0f371"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasWon</b></td></tr>
-<tr class="separator:a9ea772016ec0d88eb123ae2a3ee0f371"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53e7cb392e84c8ecd8792b52636e229f"><td class="memItemLeft" align="right" valign="top"><a id="a53e7cb392e84c8ecd8792b52636e229f" name="a53e7cb392e84c8ecd8792b52636e229f"></a>
-<a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>IntermediateChosenCuplrit</b></td></tr>
-<tr class="separator:a53e7cb392e84c8ecd8792b52636e229f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac585e84c001da05b267ccc04bd0da1e1"><td class="memItemLeft" align="right" valign="top"><a id="ac585e84c001da05b267ccc04bd0da1e1" name="ac585e84c001da05b267ccc04bd0da1e1"></a>
 <a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>FinalChosenCuplrit</b></td></tr>
 <tr class="separator:ac585e84c001da05b267ccc04bd0da1e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae0a20af36ecbc246916cde4d5a7e0b"><td class="memItemLeft" align="right" valign="top"><a id="abae0a20af36ecbc246916cde4d5a7e0b" name="abae0a20af36ecbc246916cde4d5a7e0b"></a>
-List&lt; List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>remainingDialogueScenario</b></td></tr>
-<tr class="separator:abae0a20af36ecbc246916cde4d5a7e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ea772016ec0d88eb123ae2a3ee0f371"><td class="memItemLeft" align="right" valign="top"><a id="a9ea772016ec0d88eb123ae2a3ee0f371" name="a9ea772016ec0d88eb123ae2a3ee0f371"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>hasWon</b></td></tr>
+<tr class="separator:a9ea772016ec0d88eb123ae2a3ee0f371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adff22c6c1da5c386bf2d7f0f16e46140"><td class="memItemLeft" align="right" valign="top"><a id="adff22c6c1da5c386bf2d7f0f16e46140" name="adff22c6c1da5c386bf2d7f0f16e46140"></a>
 Random&#160;</td><td class="memItemRight" valign="bottom"><b>random</b> = new Random()</td></tr>
 <tr class="separator:adff22c6c1da5c386bf2d7f0f16e46140"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,15 +226,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>PopulateCharacters</b
 string&#160;</td><td class="memItemRight" valign="bottom"><b>ChooseVictim</b> ()</td></tr>
 <tr class="memdesc:a09722b3e2a609e42ac4a094df9688727"><td class="mdescLeft">&#160;</td><td class="mdescRight">Chooses a victim, changes the isActive bool to 'false' and randomly selects a trait from both the culprit and the victim that is removed from their list of questions and prints to to the debuglog. <br /></td></tr>
 <tr class="separator:a09722b3e2a609e42ac4a094df9688727"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb336acbd01171f75847f961369ba53c"><td class="memItemLeft" align="right" valign="top"><a id="afb336acbd01171f75847f961369ba53c" name="afb336acbd01171f75847f961369ba53c"></a>
+async void&#160;</td><td class="memItemRight" valign="bottom"><b>StartEpilogue</b> ()</td></tr>
+<tr class="memdesc:afb336acbd01171f75847f961369ba53c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the Epilogue. <br /></td></tr>
+<tr class="separator:afb336acbd01171f75847f961369ba53c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6fbb9d157a3cbd07f66219461650773"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#ae6fbb9d157a3cbd07f66219461650773">CycleTransition</a> (string victimName)</td></tr>
 <tr class="memdesc:ae6fbb9d157a3cbd07f66219461650773"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs a visual fade-in/out when called, displaying the victim's name and their fate, depending on the Story we are currently in.  <br /></td></tr>
 <tr class="separator:ae6fbb9d157a3cbd07f66219461650773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acae2a408422aad42da5ef4648b7a62d1"><td class="memItemLeft" align="right" valign="top">GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#acae2a408422aad42da5ef4648b7a62d1">CreateDialogueBackground</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character=null, GameObject background=null)</td></tr>
-<tr class="memdesc:acae2a408422aad42da5ef4648b7a62d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a background for the coming dialogue.  <br /></td></tr>
-<tr class="separator:acae2a408422aad42da5ef4648b7a62d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af204776a22f9119a428f90a046f0661f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDialogueObject.html">DialogueObject</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#af204776a22f9119a428f90a046f0661f">GetEpilogueStart</a> (GameObject[] background)</td></tr>
-<tr class="memdesc:af204776a22f9119a428f90a046f0661f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method which returns the DialogueObjects that need to be used at the start of the epilogue.  <br /></td></tr>
-<tr class="separator:af204776a22f9119a428f90a046f0661f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aea663eaabf0ab28a17d1037cc2df01ee"><td class="memItemLeft" align="right" valign="top"><a id="aea663eaabf0ab28a17d1037cc2df01ee" name="aea663eaabf0ab28a17d1037cc2df01ee"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Test_CharactersInGame</b> ()</td></tr>
 <tr class="memdesc:aea663eaabf0ab28a17d1037cc2df01ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the name of all characters in the current game to the console, for debugging purposes. <br /></td></tr>
@@ -259,12 +243,6 @@ Private Attributes</h2></td></tr>
 <tr class="memitem:aa84c5ad3ad8b21cc649f45660eb0db31"><td class="memItemLeft" align="right" valign="top"><a id="aa84c5ad3ad8b21cc649f45660eb0db31" name="aa84c5ad3ad8b21cc649f45660eb0db31"></a>
 List&lt; <a class="el" href="classCharacterData.html">CharacterData</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>characters</b></td></tr>
 <tr class="separator:aa84c5ad3ad8b21cc649f45660eb0db31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3656718a2af41eab7e9abb7a0ccb71f"><td class="memItemLeft" align="right" valign="top"><a id="ab3656718a2af41eab7e9abb7a0ccb71f" name="ab3656718a2af41eab7e9abb7a0ccb71f"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>avatarPrefab</b></td></tr>
-<tr class="separator:ab3656718a2af41eab7e9abb7a0ccb71f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f1e673585ea5e1a9b10aa45592e2494"><td class="memItemLeft" align="right" valign="top"><a id="a4f1e673585ea5e1a9b10aa45592e2494" name="a4f1e673585ea5e1a9b10aa45592e2494"></a>
-GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPrefabs</b></td></tr>
-<tr class="separator:a4f1e673585ea5e1a9b10aa45592e2494"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a355008d7d110df49e092018d59896355"><td class="memItemLeft" align="right" valign="top"><a id="a355008d7d110df49e092018d59896355" name="a355008d7d110df49e092018d59896355"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td></tr>
 <tr class="separator:a355008d7d110df49e092018d59896355"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -275,52 +253,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The manager for the entire game, where most of the magic happens. instances of this class can be passed to all other classes. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="acae2a408422aad42da5ef4648b7a62d1" name="acae2a408422aad42da5ef4648b7a62d1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acae2a408422aad42da5ef4648b7a62d1">&#9670;&#160;</a></span>CreateDialogueBackground()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">GameObject[] GameManager.CreateDialogueBackground </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td>
-          <td class="paramname"><em>character</em> = <code>null</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">GameObject&#160;</td>
-          <td class="paramname"><em>background</em> = <code>null</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a background for the coming dialogue. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">character</td><td>The character the dialogue will be with.</td></tr>
-    <tr><td class="paramname">background</td><td>The background for the dialogue.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
 <a id="ae6fbb9d157a3cbd07f66219461650773" name="ae6fbb9d157a3cbd07f66219461650773"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae6fbb9d157a3cbd07f66219461650773">&#9670;&#160;</a></span>CycleTransition()</h2>
 
@@ -375,35 +307,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 
 </div>
 </div>
-<a id="af204776a22f9119a428f90a046f0661f" name="af204776a22f9119a428f90a046f0661f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af204776a22f9119a428f90a046f0661f">&#9670;&#160;</a></span>GetEpilogueStart()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classDialogueObject.html">DialogueObject</a> GameManager.GetEpilogueStart </td>
-          <td>(</td>
-          <td class="paramtype">GameObject[]&#160;</td>
-          <td class="paramname"><em>background</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Method which returns the DialogueObjects that need to be used at the start of the epilogue. </p>
-<dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="classDialogueObject.html" title="An abstract class containing the blueprint for the possible dialogue options. Possible children are: ...">DialogueObject</a> that is used at the start of the epilogue.</dd></dl>
-
-</div>
-</div>
 <a id="ab461bd19286e78b6c1bcfb267809e65e" name="ab461bd19286e78b6c1bcfb267809e65e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab461bd19286e78b6c1bcfb267809e65e">&#9670;&#160;</a></span>HasQuestionsLeft()</h2>
 
@@ -451,7 +354,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 </div>
 </div>
 <a id="a1cdd75ff0254229d6709046cda1d782e" name="a1cdd75ff0254229d6709046cda1d782e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -477,26 +380,26 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 
 </div>
 </div>
-<a id="a502cb7661291d11d37ed9fb1e8f63e91" name="a502cb7661291d11d37ed9fb1e8f63e91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a502cb7661291d11d37ed9fb1e8f63e91">&#9670;&#160;</a></span>StartEpilogueDialogue()</h2>
+<a id="a8af6c59e65b3a2cbd6e3946045a1ec79" name="a8af6c59e65b3a2cbd6e3946045a1ec79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8af6c59e65b3a2cbd6e3946045a1ec79">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">async void GameManager.StartEpilogueDialogue </td>
+          <td class="memname">async void GameManager.StartDialogue </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td>
-          <td class="paramname"><em>character</em></td><td>)</td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>dialogue</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice). </p>
+<p>Starts a new hint dialogue. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">character</td><td>The character which has been chosen. </td></tr>
+    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
   </table>
   </dd>
 </dl>
@@ -534,32 +437,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
   <table class="params">
     <tr><td class="paramname">sender</td><td>The sender, sends either a <a class="el" href="classStoryObject.html" title="A scriptable object which contains the settings pertaining to a Story-type.">StoryObject</a> or some <a class="el" href="classSaveData.html" title="Contains data that can be saved to a file.">SaveData</a>.</td></tr>
     <tr><td class="paramname">data</td><td>The story that the player has chosen, or the savedata that needs to be loaded.</td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a616e089cfb7b0835ebde81c59757beaa" name="a616e089cfb7b0835ebde81c59757beaa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a616e089cfb7b0835ebde81c59757beaa">&#9670;&#160;</a></span>StartHintDialogue()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">async void GameManager.StartHintDialogue </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classDialogueObject.html">DialogueObject</a>&#160;</td>
-          <td class="paramname"><em>dialogueObject</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts a new hint dialogue. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
   </table>
   </dd>
 </dl>

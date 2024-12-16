@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['openresponseobject_0',['OpenResponseObject',['../classOpenResponseObject.html',1,'']]]
+  ['openresponsedialogueobject_0',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html',1,'']]]
 ];

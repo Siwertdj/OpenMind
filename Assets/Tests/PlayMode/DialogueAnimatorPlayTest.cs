@@ -69,7 +69,7 @@ public class DialogueAnimatorPlayTest
     }
 
     /// <summary>
-    /// Checks whether each letter is typed at the right moment when multiple lines are used.
+    /// Checks whether each letter is typed at the right moment when multiple segmentslines are used.
     /// </summary>
     [UnityTest]
     public IEnumerator MultiLineWritingDelayTest()

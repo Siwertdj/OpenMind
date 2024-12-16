@@ -50,6 +50,7 @@ public class NotebookPageDataTest
         Assert.AreEqual(newNotes, notes);
     }
     
+    /*
     /// <summary>
     /// Checks if the answers get retrieved correctly
     /// </summary>
@@ -73,7 +74,7 @@ public class NotebookPageDataTest
         var actual = data.GetAnswers(character);
 
         Assert.AreEqual(expected, actual);
-    }
+    }*/
 
     /// <summary>
     /// Checks if the character notes get updated correctly

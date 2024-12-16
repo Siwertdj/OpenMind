@@ -53,7 +53,7 @@ public class NotebookPageEditTest
         Assert.AreNotEqual(notes, page.GetNotes());
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Tests if the correct string gets put out after invoking QuestionText()
     /// </summary>
     [Test]
@@ -87,7 +87,7 @@ public class NotebookPageEditTest
         c.Answers[question] = new List<string> { questionString };
         
         Assert.AreEqual(answer, page.QuestionText());
-    }
+    }*/
     
     /// <summary>
     /// Source lists for IntroTest

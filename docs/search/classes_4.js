@@ -7,6 +7,6 @@ var searchData=
   ['gamemanageredittest_4',['GameManagerEditTest',['../classGameManagerEditTest.html',1,'']]],
   ['gamemanagerplaytest_5',['GameManagerPlayTest',['../classGameManagerPlayTest.html',1,'']]],
   ['gamemenumanager_6',['GameMenuManager',['../classGameMenuManager.html',1,'']]],
-  ['gameslider_7',['GameSlider',['../classGameSlider.html',1,'']]],
-  ['gamewinmanager_8',['GameWinManager',['../classGameWinManager.html',1,'']]]
+  ['gameovermanager_7',['GameOverManager',['../classGameOverManager.html',1,'']]],
+  ['gameslider_8',['GameSlider',['../classGameSlider.html',1,'']]]
 ];

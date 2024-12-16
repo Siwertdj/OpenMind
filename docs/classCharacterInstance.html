@@ -90,9 +90,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adc519ed027a8b3c4f667b78307a7e961"><td class="memItemLeft" align="right" valign="top">List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#adc519ed027a8b3c4f667b78307a7e961">GetGreeting</a> ()</td></tr>
 <tr class="memdesc:adc519ed027a8b3c4f667b78307a7e961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random greeting from the character's list of greetings.  <br /></td></tr>
 <tr class="separator:adc519ed027a8b3c4f667b78307a7e961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87a7ca2ea632de8ffcf6176267fc4910"><td class="memItemLeft" align="right" valign="top">List&lt; List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#a87a7ca2ea632de8ffcf6176267fc4910">GetEpilogueDialogue</a> (bool hasWon)</td></tr>
-<tr class="memdesc:a87a7ca2ea632de8ffcf6176267fc4910"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the epilogue dialogue depending on the players choice at the end of the game.  <br /></td></tr>
-<tr class="separator:a87a7ca2ea632de8ffcf6176267fc4910"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ab1640164c12283cb1f5a68f31b66e9"><td class="memItemLeft" align="right" valign="top"><a id="a5ab1640164c12283cb1f5a68f31b66e9" name="a5ab1640164c12283cb1f5a68f31b66e9"></a>
+Sprite&#160;</td><td class="memItemRight" valign="bottom"><b>GetAvatar</b> ()</td></tr>
+<tr class="separator:a5ab1640164c12283cb1f5a68f31b66e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62e9d08da3ca90fe996212476092aefd"><td class="memItemLeft" align="right" valign="top"><a id="a62e9d08da3ca90fe996212476092aefd" name="a62e9d08da3ca90fe996212476092aefd"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>InitializeQuestions</b> ()</td></tr>
 <tr class="memdesc:a62e9d08da3ca90fe996212476092aefd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for the constructor. Places character data (answers &amp; traits) in their respective dictionaries. <br /></td></tr>
@@ -106,9 +106,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a6f48951cb56728beb802729ebf88d141"><td class="memItemLeft" align="right" valign="top"><a id="a6f48951cb56728beb802729ebf88d141" name="a6f48951cb56728beb802729ebf88d141"></a>
 <a class="el" href="classCharacterData.html">CharacterData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>data</b></td></tr>
 <tr class="separator:a6f48951cb56728beb802729ebf88d141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5c6c5daf45865b38734e541c15f98e3"><td class="memItemLeft" align="right" valign="top"><a id="ab5c6c5daf45865b38734e541c15f98e3" name="ab5c6c5daf45865b38734e541c15f98e3"></a>
-Dictionary&lt; Question, List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Answers</b> = new()</td></tr>
-<tr class="separator:ab5c6c5daf45865b38734e541c15f98e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af640c5f6489c329802c8c538bc20e1d5"><td class="memItemLeft" align="right" valign="top"><a id="af640c5f6489c329802c8c538bc20e1d5" name="af640c5f6489c329802c8c538bc20e1d5"></a>
+Dictionary&lt; Question, <a class="el" href="classDialogueContainer.html">DialogueContainer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Answers</b> = new()</td></tr>
+<tr class="separator:af640c5f6489c329802c8c538bc20e1d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9c75007c35fa45ff0e96c0161edc4b4"><td class="memItemLeft" align="right" valign="top"><a id="ae9c75007c35fa45ff0e96c0161edc4b4" name="ae9c75007c35fa45ff0e96c0161edc4b4"></a>
 Dictionary&lt; Question, List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Traits</b> = new()</td></tr>
 <tr class="separator:ae9c75007c35fa45ff0e96c0161edc4b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -124,9 +124,9 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>characterName</b></
 <tr class="memitem:a3238a398fc31d4d107bb3088f6b5f6fa"><td class="memItemLeft" align="right" valign="top"><a id="a3238a398fc31d4d107bb3088f6b5f6fa" name="a3238a398fc31d4d107bb3088f6b5f6fa"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>id</b></td></tr>
 <tr class="separator:a3238a398fc31d4d107bb3088f6b5f6fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b9c14bc0fd2e483c7f8f8ce184cec6f"><td class="memItemLeft" align="right" valign="top"><a id="a6b9c14bc0fd2e483c7f8f8ce184cec6f" name="a6b9c14bc0fd2e483c7f8f8ce184cec6f"></a>
-Sprite&#160;</td><td class="memItemRight" valign="bottom"><b>avatar</b></td></tr>
-<tr class="separator:a6b9c14bc0fd2e483c7f8f8ce184cec6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43b925226c4029f9ebb65490f1175e2a"><td class="memItemLeft" align="right" valign="top"><a id="a43b925226c4029f9ebb65490f1175e2a" name="a43b925226c4029f9ebb65490f1175e2a"></a>
+List&lt;(Emotion, Sprite)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>avatarEmotions</b></td></tr>
+<tr class="separator:a43b925226c4029f9ebb65490f1175e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e420a3e59eae127f26e080f10d455a7"><td class="memItemLeft" align="right" valign="top"><a id="a1e420a3e59eae127f26e080f10d455a7" name="a1e420a3e59eae127f26e080f10d455a7"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>pitch</b></td></tr>
 <tr class="separator:a1e420a3e59eae127f26e080f10d455a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,12 +142,12 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>TalkedTo</b></td></tr
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr class="memitem:a6a6490a7b2a8e4fad3577122dba7407c"><td class="memItemLeft" align="right" valign="top">List&lt; List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#a6a6490a7b2a8e4fad3577122dba7407c">EpilogueWinScenario</a> ()</td></tr>
-<tr class="memdesc:a6a6490a7b2a8e4fad3577122dba7407c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for <a class="el" href="classCharacterInstance.html#a87a7ca2ea632de8ffcf6176267fc4910" title="Get the epilogue dialogue depending on the players choice at the end of the game.">GetEpilogueDialogue</a> which gives the scenario for when the player guesses the culprit.  <br /></td></tr>
-<tr class="separator:a6a6490a7b2a8e4fad3577122dba7407c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fbf0c794794e73b5199a57d2ff1f37c"><td class="memItemLeft" align="right" valign="top">List&lt; List&lt; string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#a4fbf0c794794e73b5199a57d2ff1f37c">EpilogueLoseScenario</a> ()</td></tr>
-<tr class="memdesc:a4fbf0c794794e73b5199a57d2ff1f37c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for <a class="el" href="classCharacterInstance.html#a87a7ca2ea632de8ffcf6176267fc4910" title="Get the epilogue dialogue depending on the players choice at the end of the game.">GetEpilogueDialogue</a> which gives the scenario for when the player does not guess the correct culprit.  <br /></td></tr>
-<tr class="separator:a4fbf0c794794e73b5199a57d2ff1f37c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d741b3f367901f28c4bd0d1a3243f09"><td class="memItemLeft" align="right" valign="top"><a id="a3d741b3f367901f28c4bd0d1a3243f09" name="a3d741b3f367901f28c4bd0d1a3243f09"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ParseEmotionSprites</b> (Sprite neutralSprite, Sprite happySprite, Sprite unhappySprite)</td></tr>
+<tr class="separator:a3d741b3f367901f28c4bd0d1a3243f09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76bb05a89665a261c7979f5bdced4185"><td class="memItemLeft" align="right" valign="top"><a id="a76bb05a89665a261c7979f5bdced4185" name="a76bb05a89665a261c7979f5bdced4185"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TryAdd</b> (List&lt;(Emotion, Sprite)&gt; list, Emotion emotion, Sprite newAvatar, Sprite defaultAvatar)</td></tr>
+<tr class="separator:a76bb05a89665a261c7979f5bdced4185"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a555b17dea13b1b52b9027ded05c1927b"><td class="memItemLeft" align="right" valign="top">List&lt; string &gt;[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#a555b17dea13b1b52b9027ded05c1927b">GetAllTraits</a> ()</td></tr>
 <tr class="memdesc:a555b17dea13b1b52b9027ded05c1927b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets all traits of this character, can be modified later if traits are stored differently.  <br /></td></tr>
 <tr class="separator:a555b17dea13b1b52b9027ded05c1927b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -182,62 +182,6 @@ Private Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a4fbf0c794794e73b5199a57d2ff1f37c" name="a4fbf0c794794e73b5199a57d2ff1f37c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fbf0c794794e73b5199a57d2ff1f37c">&#9670;&#160;</a></span>EpilogueLoseScenario()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">List&lt; List&lt; string &gt; &gt; CharacterInstance.EpilogueLoseScenario </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper function for <a class="el" href="classCharacterInstance.html#a87a7ca2ea632de8ffcf6176267fc4910" title="Get the epilogue dialogue depending on the players choice at the end of the game.">GetEpilogueDialogue</a> which gives the scenario for when the player does not guess the correct culprit. </p>
-<dl class="section return"><dt>Returns</dt><dd>Returns a list of list with type string, where after every list with type string an open question will be asked. </dd></dl>
-
-</div>
-</div>
-<a id="a6a6490a7b2a8e4fad3577122dba7407c" name="a6a6490a7b2a8e4fad3577122dba7407c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6a6490a7b2a8e4fad3577122dba7407c">&#9670;&#160;</a></span>EpilogueWinScenario()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">List&lt; List&lt; string &gt; &gt; CharacterInstance.EpilogueWinScenario </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Helper function for <a class="el" href="classCharacterInstance.html#a87a7ca2ea632de8ffcf6176267fc4910" title="Get the epilogue dialogue depending on the players choice at the end of the game.">GetEpilogueDialogue</a> which gives the scenario for when the player guesses the culprit. </p>
-<dl class="section return"><dt>Returns</dt><dd>Returns a list of list with type string, where after every list with type string an open question will be asked. </dd></dl>
-
-</div>
-</div>
 <a id="a555b17dea13b1b52b9027ded05c1927b" name="a555b17dea13b1b52b9027ded05c1927b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a555b17dea13b1b52b9027ded05c1927b">&#9670;&#160;</a></span>GetAllTraits()</h2>
 
@@ -266,33 +210,6 @@ Private Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a87a7ca2ea632de8ffcf6176267fc4910" name="a87a7ca2ea632de8ffcf6176267fc4910"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a87a7ca2ea632de8ffcf6176267fc4910">&#9670;&#160;</a></span>GetEpilogueDialogue()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">List&lt; List&lt; string &gt; &gt; CharacterInstance.GetEpilogueDialogue </td>
-          <td>(</td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>hasWon</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Get the epilogue dialogue depending on the players choice at the end of the game. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">hasWon</td><td>Whether the player has chosen the correct character at the end</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Returns a list of list with type string, where after every list with type string an open question will be asked. </dd></dl>
-
-</div>
-</div>
 <a id="adc519ed027a8b3c4f667b78307a7e961" name="adc519ed027a8b3c4f667b78307a7e961"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc519ed027a8b3c4f667b78307a7e961">&#9670;&#160;</a></span>GetGreeting()</h2>
 
@@ -309,7 +226,7 @@ Private Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get a random greeting from the character's list of greetings. </p>
-<dl class="section return"><dt>Returns</dt><dd>A greeting in the form of dialogue lines.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A greeting in the form of dialogue segments.</dd></dl>
 
 </div>
 </div>

@@ -83,18 +83,21 @@ public class SettingsMenuManager : MonoBehaviour
     /// </summary>
     public void ExitSettings()
     {
-        // If a scenecontroller exists, we exit the settings using the transition-graph.
-        if (SceneController.sc != null)
+        if (SceneManager.GetSceneByName("StartScreenScene").isLoaded)
+        {
+            // '_ =' throws away the await
+            /*_ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
+                SceneController.SceneName.StartScreenScene,
+                SceneController.TransitionType.Unload);*/
+            SceneManager.UnloadSceneAsync("SettingsScene");
+        }
+        else if (SceneManager.GetSceneByName("Loading").isLoaded)
         {
             // '_ =' throws away the await
             _ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
                 SceneController.SceneName.Loading,
-                SceneController.TransitionType.Unload);
-        }
-        // otherwise, we use the built-in SceneManager to unload.
-        else
-        {
-            SceneManager.UnloadSceneAsync("SettingsScene");
+                SceneController.TransitionType.Unload,
+                true);
         }
     }
     

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['questionobject_0',['QuestionObject',['../classQuestionObject.html',1,'']]]
+  ['questiondialogueobject_0',['QuestionDialogueObject',['../classQuestionDialogueObject.html',1,'']]]
 ];

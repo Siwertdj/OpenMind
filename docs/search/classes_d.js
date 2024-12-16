@@ -11,12 +11,11 @@ var searchData=
   ['settingsedittest_8',['SettingsEditTest',['../classSettingsEditTest.html',1,'']]],
   ['settingsmanager_9',['SettingsManager',['../classSettingsManager.html',1,'']]],
   ['settingsmenumanager_10',['SettingsMenuManager',['../classSettingsMenuManager.html',1,'']]],
-  ['speakingobject_11',['SpeakingObject',['../classSpeakingObject.html',1,'']]],
-  ['startmenumanager_12',['StartMenuManager',['../classStartMenuManager.html',1,'']]],
-  ['startscreenplaytest_13',['StartScreenPlayTest',['../classStartScreenPlayTest.html',1,'']]],
-  ['startscreentest_14',['StartScreenTest',['../classStartScreenTest.html',1,'']]],
-  ['storyobject_15',['StoryObject',['../classStoryObject.html',1,'']]],
-  ['storyselectionmanager_16',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
-  ['storyselectionmanagerplaytest_17',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
-  ['swipedetector_18',['SwipeDetector',['../classSwipeDetector.html',1,'']]]
+  ['startmenumanager_11',['StartMenuManager',['../classStartMenuManager.html',1,'']]],
+  ['startscreenplaytest_12',['StartScreenPlayTest',['../classStartScreenPlayTest.html',1,'']]],
+  ['startscreentest_13',['StartScreenTest',['../classStartScreenTest.html',1,'']]],
+  ['storyobject_14',['StoryObject',['../classStoryObject.html',1,'']]],
+  ['storyselectionmanager_15',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
+  ['storyselectionmanagerplaytest_16',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
+  ['swipedetector_17',['SwipeDetector',['../classSwipeDetector.html',1,'']]]
 ];

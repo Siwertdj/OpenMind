@@ -5,7 +5,6 @@ var searchData=
   ['bpauseintrotest_2',['BPauseIntroTest',['../classIntroductionManagerPlayTest.html#aaee1d46e3e68d9dbee2e9f2a566d618a',1,'IntroductionManagerPlayTest']]],
   ['bplayintrotest_3',['BPlayIntroTest',['../classIntroductionManagerPlayTest.html#a8a15b6051fcf2799382bdc7cc5eb7ed8',1,'IntroductionManagerPlayTest']]],
   ['bsetuptest_4',['BSetUpTest',['../classIntroductionManagerPlayTest.html#ac2802709b2417a07510ac65d2e79992c',1,'IntroductionManagerPlayTest']]],
-  ['buttonbehaviour_5',['ButtonBehaviour',['../classButtonBehaviour.html',1,'']]],
-  ['buttonfadeintest_6',['ButtonFadeInTest',['../classNPCSelectPlayTest.html#aaa530d7284d4de0e69ed401097f31673',1,'NPCSelectPlayTest']]],
-  ['buttonfadeouttest_7',['ButtonFadeOutTest',['../classNPCSelectPlayTest.html#af6ea7543654fe9e98dd82d3de02d8f67',1,'NPCSelectPlayTest']]]
+  ['buttonfadeintest_5',['ButtonFadeInTest',['../classNPCSelectPlayTest.html#aaa530d7284d4de0e69ed401097f31673',1,'NPCSelectPlayTest']]],
+  ['buttonfadeouttest_6',['ButtonFadeOutTest',['../classNPCSelectPlayTest.html#af6ea7543654fe9e98dd82d3de02d8f67',1,'NPCSelectPlayTest']]]
 ];
