@@ -60,6 +60,10 @@ public class IntroductionManager : MonoBehaviour
     public GameEvent onGameLoaded;
     private StoryObject story;
     
+    public GameObject textbubble;
+    public TMP_Text   text;
+    public TMP_Text   tag;
+    
     /// <summary>
     /// Starts the proper intro.
     /// </summary>
@@ -67,6 +71,7 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
+        continueButton.SetActive(true);
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
         {
@@ -124,6 +129,9 @@ public class IntroductionManager : MonoBehaviour
         }
         // Initialize the right timeline and indices for story A. 
         currentTimeline = introStoryA;
+        currentTimeline.time = 0; // Reset the timeline to the start
+        currentTimeline.RebuildGraph();
+        
         currentTimeline.Play();
         backgroundIndex = 0;
         background.sprite = backgrounds[backgroundIndex];
@@ -136,6 +144,9 @@ public class IntroductionManager : MonoBehaviour
     {
         character.sprite = backgrounds[5];
         currentTimeline = introStoryB;
+        currentTimeline.time = 0; // Reset the timeline to the start
+        currentTimeline.RebuildGraph();
+        
         TextIndex = 4;
         background.sprite = backgrounds[4];
         characterName = "Alex";
@@ -148,6 +159,9 @@ public class IntroductionManager : MonoBehaviour
     public void StoryC()
     {
         currentTimeline = introStoryC;
+        currentTimeline.time = 0; // Reset the timeline to the start
+        currentTimeline.RebuildGraph();
+        
         TextIndex = 19;
         background.sprite = backgrounds[11];
         character.sprite = backgrounds[9];
@@ -245,6 +259,7 @@ public class IntroductionManager : MonoBehaviour
     public void HideDialog()
     {
         dialogueAnimator.gameObject.SetActive(false);
+        textbubble.SetActive(false);
     }
     
     #endregion
@@ -330,10 +345,12 @@ public class IntroductionManager : MonoBehaviour
     {
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
-        dialogueAnimator.gameObject.SetActive(true);
+        //dialogueAnimator.gameObject.SetActive(true);
+        textbubble.SetActive(true);
         try
         {
-            dialogueAnimator.WriteDialogue(storyText[TextIndex]);
+            text.text = storyText[TextIndex];
+            //dialogueAnimator.WriteDialogue(storyText[TextIndex]);
         }
         catch
         {
