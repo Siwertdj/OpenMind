@@ -15,7 +15,8 @@ MonoBehaviour:
   characterName: Peter
   id: 22
   avatar: {fileID: 21300000, guid: 088a0440883d6c44daed691a01e0d7be, type: 3}
-  voicePitch: 2
+  voicePitch: 1.01
+  facePivot: {x: 0.4818, y: 0.7931}
   answers:
   - question: 1
     answer:
