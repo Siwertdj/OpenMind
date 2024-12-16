@@ -15,13 +15,14 @@ public class StoryObject : ScriptableObject
     
     [Header("Story Assets")]
     [SerializeField] public GameObject dialogueBackground;
-    [SerializeField]     public GameObject        hintBackground;
-    [SerializeField]     public GameObject        epilogueBackground;
-    [SerializeField]     public AudioClip         storyIntroMusic;
-    [SerializeField]     public AudioClip         storyGameMusic;
-    [SerializeField]     public AudioClip         storyEpilogueMusic;
-    [SerializeField]     public DialogueContainer storyEpilogueWonDialogue;
-    [SerializeField]     public DialogueContainer storyEpilogueLossDialogue;
+    [SerializeField] public GameObject        hintBackground;
+    [SerializeField] public GameObject        epilogueBackground;
+    [SerializeField] public AudioClip         storyIntroMusic;
+    [SerializeField] public AudioClip         storyGameMusic;
+    [SerializeField] public AudioClip         storyEpilogueMusic;
+    [SerializeField] public DialogueContainer storyEpilogueWonDialogue;
+    [SerializeField] public DialogueContainer storyEpilogueLossDialogueCulprit;
+    [SerializeField] public DialogueContainer storyEpilogueLossDialogueNPC;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;

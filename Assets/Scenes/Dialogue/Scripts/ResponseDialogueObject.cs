@@ -2,6 +2,7 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 /// <summary>
 /// A child of DialogueObject. Executing this object writes a response to the given question to the screen.
@@ -29,16 +30,33 @@ public class ResponseDialogueObject : DialogueObject
     {
         var dm = DialogueManager.dm;
 
+        // Get the answer to this question out of CharacterInstance
         DialogueObject answer = GetQuestionResponse(question);
-        if (GameManager.gm.HasQuestionsLeft() && DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
-            Responses.Add(new QuestionDialogueObject(background));
+        
+        // TODO: Rewrite this.
+        if (GameManager.gm.HasQuestionsLeft() &&
+            DialogueManager.dm.currentRecipient.RemainingQuestions.Count > 0)
+        {
+            DialogueContainer.RemoveLeaf(answer);
+            DialogueContainer.AddLeaf(answer,
+                new QuestionDialogueObject(background));
+        }
         // If there are no more questions remaining give a TerminateDialogueObject as a response
         else
-            Responses.Add(new TerminateDialogueObject());
+        {
+            // This is already the case
+            
+        }
 
+        /*Debug.Log( $"Answer line-length: {DialogueContainer.TreeLength(answer)}");
+        DialogueContainer.PrintDialogue(answer);*/
+
+        
         dm.ReplaceBackground(background);
-        answer.Execute();
-        //dm.WriteDialogue(answer, DialogueManager.dm.currentRecipient.pitch);
+        
+        // TODO: We dont want to try and write empty dialogue. This is a work around that breaks image-only dialogye segments.
+        Responses.Add(answer);
+        dm.WriteDialogue(null, 1);
     }
 
     /// <summary>
@@ -49,12 +67,17 @@ public class ResponseDialogueObject : DialogueObject
     // 
     private DialogueObject GetQuestionResponse(Question question)
     {
+        // Player asked a question, so increment this value in gamemanager
+        // TODO: Preferably done with gameevent
         GameManager.gm.numQuestionsAsked++;
 
+        // Remove question from  this character's list of remaining questions
+        // TODO: Preferably done with gameevent (same event as above)
         CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
         
         // Write answers to notebook
+        // TODO: Possibly ommit this in multiplayer version
         character.AskedQuestions.Add(question);
         
         // Return answer to the question

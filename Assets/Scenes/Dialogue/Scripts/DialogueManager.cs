@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 using TMPro;
 using System;
 using System.IO;
@@ -12,6 +11,9 @@ using System.Linq;
 using System.Net;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
+using Image = UnityEngine.UI.Image;
 
 /// <summary>
 /// The manager for the dialogue scene
@@ -124,7 +126,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void ExecuteNextObject()
     {
-        currentObject = currentObject.Responses[0];
+        currentObject = currentObject.Responses.First();
         currentObject.Execute();
     }
 
@@ -140,6 +142,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogue == null)
         {
             dialogueField.SetActive(false);
+            ExecuteNextObject();
         }
         else
         {
@@ -207,22 +210,34 @@ public class DialogueManager : MonoBehaviour
     {
         if (newBackground != null)
         {
-            Transform parent = backgroundField.transform;
-
-            // Remove old background
-            foreach (Transform child in parent)
-                Destroy(child.gameObject);
-
-            // Instantiate new background
-            foreach (GameObject prefab in newBackground)
+            if (newBackground.Length > 0)
             {
-                var image = Instantiate(prefab).GetComponent<Image>();
-                image.rectTransform.SetParent(parent, false);
-                // For the character's sprite..
-                if (emotion.HasValue && prefab.name == "Character Avatar")
+                Transform parent = backgroundField.transform;
+
+                // Remove old background
+                foreach (Transform child in parent)
+                    Destroy(child.gameObject);
+
+                // Instantiate new background
+                foreach (GameObject prefab in newBackground)
                 {
-                    prefab.GetComponent<Image>().sprite = 
-                        currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value).Item2;
+                    var image = Instantiate(prefab).GetComponent<Image>();
+                    image.rectTransform.SetParent(parent, false);
+                    
+                }
+            }
+        }
+        // Set emotion
+        if (emotion.HasValue)
+        {
+            foreach (Transform child in backgroundField.transform)
+            {
+                if (child.gameObject.name == "Character Avatar(Clone)")
+                {
+                    if (currentRecipient != null)
+                        child.GetComponent<Image>().sprite =
+                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value)
+                                .Item2;
                 }
             }
         }
@@ -288,6 +303,7 @@ public class DialogueManager : MonoBehaviour
     {
         // Enable the input field.
         inputField.SetActive(true);
+        inputField.gameObject.GetComponentInChildren<TMP_InputField>().text = "";
 
         animator.InOpenQuestion = true;        
         WriteDialogue(dialogue);

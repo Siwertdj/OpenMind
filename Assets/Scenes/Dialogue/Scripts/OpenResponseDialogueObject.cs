@@ -14,7 +14,7 @@ public class OpenResponseDialogueObject : DialogueObject
     // The answer of the open question.
     public              string       answer = "";
     [CanBeNull] public  Sprite       image;
-    [CanBeNull] private List<string> dialogue;
+    [CanBeNull] public List<string> dialogue;
     [CanBeNull] private Emotion      emotion;
 
     /// <summary>

@@ -326,7 +326,10 @@ public class GameManager : MonoBehaviour
             c.isCulprit = false;
         }
         //Randomly select a culprit
-        currentCharacters[random.Next(0, story.numberOfCharacters)].isCulprit = true;
+        int culrpitId = random.Next(0, story.numberOfCharacters);
+        Debug.Log($"Culprit id: {culrpitId}");
+        currentCharacters[culrpitId].isCulprit = true;
+        Debug.Log($"Culprit is: {currentCharacters[culrpitId].characterName}? {currentCharacters[culrpitId].isCulprit}");
     }
 
     /// <summary>
@@ -379,7 +382,7 @@ public class GameManager : MonoBehaviour
             true);
         
         // Raise the EpilogueStart-event and pass all the necessary data
-        onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit());
+        onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit().id);
         
         // Then, Unload the toolbox
         Destroy(GameObject.Find("Toolbox"));

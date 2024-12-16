@@ -219,6 +219,113 @@ public class DialogueContainer : ScriptableObject
             segments[i].background = background;
         }
     }
+
+
+    #region Static Methods
+
+    /// <summary>
+    /// Static variant of AppendToLeaf, which adds a response to the end of a tree.
+    /// If the leaf is a terminatedialogueobject, we replace it, and set it as leaf of the new Response.
+    /// </summary>
+    public static void AddLeaf(DialogueObject treeHead, DialogueObject newLeaf)
+    {
+        // Currentnode starts at TreeHead. LastNode starts as null.
+        DialogueObject lastNode = null;
+        DialogueObject currentNode = treeHead;
+        // If the currentNode has atleast 1 response, set the first response to currentNode and loop
+        // until we find a currentNode that has no responses.
+        while (currentNode.Responses.Count > 0)
+        {
+            lastNode = currentNode;
+            currentNode = currentNode.Responses.First();
+        }
+        // Now, if currentNode is a TerminateDialogueObject, we want to replace it with newLeaf, 
+        // and set TerminateDialogueObject to be the newleaf's first response.
+        if (lastNode.Responses.First() is TerminateDialogueObject)
+        {
+            lastNode.Responses.Clear();
+            newLeaf.Responses.Add(new TerminateDialogueObject());
+            lastNode.Responses.Add(newLeaf);
+        }
+        // If its not a TerminateDialogueObject, we add newLeaf as a response of currentNode
+        else
+        {
+            currentNode.Responses.Add(newLeaf);
+        }
+    }
+    
+    /// <summary>
+    /// Finds the leaf of the DialogueObject passed as an argument, and removes it.
+    /// </summary>
+    /// <param name="treeHead"></param>
+    public static void RemoveLeaf(DialogueObject treeHead)
+    {
+        // Currentnode starts at TreeHead. LastNode starts as null.
+        DialogueObject lastNode = null;
+        DialogueObject currentNode = treeHead;
+        // If the currentNode has atleast 1 response, set the first response to currentNode and loop
+        // until we find a currentNode that has no responses.
+        // Dont forget to set LastNode to currentNode first, so we know which node has the leaf as response.
+        while (currentNode.Responses.Count > 0)
+        {
+            lastNode = currentNode;
+            currentNode = currentNode.Responses.First();
+        }
+        // Now, remove the responses (leave(s)) from the lastNode. 
+        lastNode.Responses.Clear();
+    }
+
+    public static int TreeLength(DialogueObject treeHead)
+    {
+        int counter = 1;    // counter starts at 1, because the last node is empty but does still count.
+        DialogueObject currentNode = treeHead;
+        while (currentNode.Responses.Count > 0)
+        {
+            counter++;
+            currentNode = currentNode.Responses.First();
+        }
+        
+        
+        return counter;
+    }
+
+    public static void PrintDialogue(DialogueObject treeHead)
+    {
+        DialogueObject currentNode = treeHead;
+        while (currentNode.Responses.Count > 0)
+        {
+            PrintDialogueHelper(currentNode);
+            currentNode = currentNode.Responses.First();
+        }
+        // print the last one too
+        PrintDialogueHelper(currentNode);
+        
+        
+    }
+
+    private static void PrintDialogueHelper(DialogueObject node)
+    {
+        if (node is ContentDialogueObject cdo)
+        {
+            string output = "";
+            foreach (string s in cdo.dialogue)
+                output += s + " ";
+            Debug.Log(output);
+        }
+        else if (node is OpenResponseDialogueObject ordo)
+        {
+            string output = "";
+            foreach (string s in ordo.dialogue)
+                output += s + " ";
+            Debug.Log(output);
+        }
+        else
+        {
+            Debug.Log($"Dialogueobject is [{node.GetType()}]");
+        }
+    }
+
+    #endregion
     
 }
 

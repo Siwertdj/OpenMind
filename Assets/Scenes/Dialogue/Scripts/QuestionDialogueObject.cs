@@ -32,7 +32,7 @@ public class QuestionDialogueObject : DialogueObject
         // Add response to each question to list of responses
         foreach (Question question in questions)
             Responses.Add(new ResponseDialogueObject(question, background));
-
+        
         dm.ReplaceBackground(background);
         dm.InstantiatePromptButtons(this);
     }

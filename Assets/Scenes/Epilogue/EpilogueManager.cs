@@ -90,9 +90,10 @@ public class EpilogueManager : MonoBehaviour
     private void CharacterSelected(CharacterInstance chosenCharacter)
     {
         // Set win state
-        bool hasWon = culpritId == chosenCharacter.id;
+        //bool hasWon = culpritId == chosenCharacter.id;
+        bool hasWon = chosenCharacter.isCulprit;
         
-        StartEpilogueDialogue(chosenCharacter, hasWon);
+        StartEpilogueDialogue(chosenCharacter, hasWon, hasWon);
     }
     #endregion
 
@@ -103,38 +104,57 @@ public class EpilogueManager : MonoBehaviour
     /// Used to start dialogue in the epilogue scene (talking to the person chosen as the final choice).
     /// </summary>
     /// <param name="character"> The character which has been chosen. </param>
-    public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool? startWinScenario = false)
+    public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool startCulpritDialogue)
     {
+        // TODO: Fix the transitions here.
         // Transition to the dialogue scene.
-        await sc.TransitionScene(
-            SceneController.SceneName.EpilogueScene, 
-            SceneController.SceneName.DialogueScene, 
-            SceneController.TransitionType.Additive,
-            false);
-        
+        // If its already laoded, unload it first.
+        if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.DialogueScene, 
+                SceneController.SceneName.DialogueScene, 
+                SceneController.TransitionType.Transition,
+                true);
+        }
+        else
+        {
+            await sc.TransitionScene(
+                SceneController.SceneName.EpilogueScene,
+                SceneController.SceneName.DialogueScene,
+                SceneController.TransitionType.Additive,
+                false);
+        }
+
         // Create the DialogueObject and corresponding children.
         // This background displays the suspected culprit over the Dialogue-background
         var background = DialogueManager.dm.CreateDialogueBackground(story, character, story.epilogueBackground);
 
-        if (hasWon || startWinScenario.HasValue)
+        if (hasWon)
         {
             var dialogueObject = story.storyEpilogueWonDialogue.GetDialogue(background);
             onDialogueStart.Raise(this, dialogueObject, character);
             GetComponents<GameEventListener>()[1].response.AddListener(delegate{EndEpilogue(hasWon);});
         }
-        else
+        else if (!hasWon && !startCulpritDialogue)
         {
-            var dialogueObject = story.storyEpilogueLossDialogue.GetDialogue(background);
+            var dialogueObject = story.storyEpilogueLossDialogueNPC.GetDialogue(background);
             onDialogueStart.Raise(this, dialogueObject, character);
             // Lose-scenario, so we add a listener for 'DialogueEnd', where if it ends,
             // we got into StartEpilogueDialogue again, but now for the win-scenario.
             GetComponents<GameEventListener>()[1].response.AddListener(delegate{
                 StartEpilogueDialogue(
-                    characters.Where(c=> c.id == culpritId).ToList()[0], 
+                    characters.Where(c=> c.isCulprit).ToList()[0], 
                     hasWon, 
                     true);
                 
             });
+        }
+        else
+        {
+            var dialogueObject = story.storyEpilogueLossDialogueCulprit.GetDialogue(background);
+            onDialogueStart.Raise(this, dialogueObject, character);
+            GetComponents<GameEventListener>()[1].response.AddListener(delegate{EndEpilogue(hasWon);});
         }
         
     }
@@ -149,6 +169,7 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public async void EndEpilogue(bool hasWon)
     {
+        // TODO: Allegedly this is invalid, but it still gets unloaded. weird.
         // Unload Dialogue
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
