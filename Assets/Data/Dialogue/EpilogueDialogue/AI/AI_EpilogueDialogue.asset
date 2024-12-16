@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: AI_EpilogueDialogue
   m_EditorClassIdentifier: 
   voicePitch: 1
-  lines: []
-  background: []
+  segments: []

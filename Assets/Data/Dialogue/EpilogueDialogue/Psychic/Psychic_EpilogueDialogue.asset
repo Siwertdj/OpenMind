@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: Psychic_EpilogueDialogue
   m_EditorClassIdentifier: 
   voicePitch: 1
-  lines: []
-  background: []
+  segments: []
