@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1634760736168612443}
   - component: {fileID: 183240250634411454}
   - component: {fileID: 1686609542159291917}
-  - component: {fileID: 1252453876101877845}
   m_Layer: 5
   m_Name: Character Icon
   m_TagString: Untagged
@@ -105,20 +104,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   avatarImageRef: {fileID: 6388354393515319896}
---- !u!114 &1252453876101877845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3974545436036252721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AspectMode: 1
-  m_AspectRatio: 1
 --- !u!1 &5292198456628612456
 GameObject:
   m_ObjectHideFlags: 0
