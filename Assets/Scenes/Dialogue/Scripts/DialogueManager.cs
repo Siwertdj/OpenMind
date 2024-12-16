@@ -16,6 +16,8 @@ using UnityEngine.Events;
 /// </summary>
 public class DialogueManager : MonoBehaviour
 {
+    [SerializeField] private TMP_FontAsset customFont;
+
     [Header("Dialogue animator reference")]
     [SerializeField] private DialogueAnimator animator;
 
@@ -179,6 +181,7 @@ public class DialogueManager : MonoBehaviour
             // Set styling for button
             buttonText.enableAutoSizing = false;
             buttonText.fontSize = SettingsManager.sm.GetFontSize();
+            buttonText.font = customFont;
 
             // Add event when clicking the button
             button.onClick.AddListener(() => OnButtonClick(response));
@@ -230,6 +233,7 @@ public class DialogueManager : MonoBehaviour
         buttonText.text = "Talk to someone else";
         buttonText.enableAutoSizing = false;
         buttonText.fontSize = SettingsManager.sm.GetFontSize();
+        buttonText.font = customFont;
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
 
