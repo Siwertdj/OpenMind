@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I'm overzealous. Sometimes I take on too much work and I'm very disciplined
+      so I can push myself a bit too far.
+    image: {fileID: 0}
+    background: []

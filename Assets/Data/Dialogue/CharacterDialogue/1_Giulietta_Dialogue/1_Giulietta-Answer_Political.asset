@@ -13,4 +13,15 @@ MonoBehaviour:
   m_Name: 1_Giulietta-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I think the growth of right-wing parties in so many countries right now
+      is very scary.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: That's one of the reasons why I have a lot of respect for AOC in the US.
+    image: {fileID: 0}
+    background: []

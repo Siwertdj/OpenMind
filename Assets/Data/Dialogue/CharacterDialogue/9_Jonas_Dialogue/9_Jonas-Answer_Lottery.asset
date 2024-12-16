@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I would pay off my student debt and donate the rest of the money. I think
+      being a multimillionaire is unethical.
+    image: {fileID: 0}
+    background: []

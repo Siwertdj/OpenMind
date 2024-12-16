@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: Life is good. I live together with my husband, we have been married for
+      a couple of years. I'm working in the legal system. I'm very passionate about
+      the work I'm doing right now because I am able to help people in difficult
+      positions.
+    image: {fileID: 0}
+    background: []

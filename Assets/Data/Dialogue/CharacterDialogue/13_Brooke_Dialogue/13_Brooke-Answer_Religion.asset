@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: No, I am an atheist.
+    image: {fileID: 0}
+    background: []

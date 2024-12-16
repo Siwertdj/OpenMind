@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My partner, my son and my sister. I always go to my sister when I have
+      a problem.
+    image: {fileID: 0}
+    background: []

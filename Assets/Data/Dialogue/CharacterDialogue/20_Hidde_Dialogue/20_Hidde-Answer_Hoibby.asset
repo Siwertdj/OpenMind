@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I know it\u2019s general but I would have to say just learning new things.
+      Specifically learning to understand things I find interesting."
+    image: {fileID: 0}
+    background: []

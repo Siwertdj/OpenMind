@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: The most important person in my life is my boyfriend. I always go to him
+      when I have a problem. Although I often wait too long before I ask for help.
+    image: {fileID: 0}
+    background: []

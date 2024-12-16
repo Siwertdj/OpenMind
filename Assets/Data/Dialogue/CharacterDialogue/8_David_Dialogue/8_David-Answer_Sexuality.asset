@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Sexuality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am gay, I have a partner and we live together in an apartment.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I am not very good with money, I am very lucky I have a job that pays relatively
+      well.
+    image: {fileID: 0}
+    background: []

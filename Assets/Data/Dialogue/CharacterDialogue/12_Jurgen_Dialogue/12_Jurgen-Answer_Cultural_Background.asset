@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Cultural_Background
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I grew up in the east of the Netherlands.
+    image: {fileID: 0}
+    background: []

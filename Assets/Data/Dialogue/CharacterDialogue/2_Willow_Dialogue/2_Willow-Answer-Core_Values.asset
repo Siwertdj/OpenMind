@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 2_Willow-Answer-Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I think friendship, showing appreciation, independence and confidence are
+      all extremely important!
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,14 @@ MonoBehaviour:
   m_Name: 0_Fatima-Answer_Personality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: My friends and my family would describe me as funny and kind.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: I agree with them, I think I'm pretty funny as well.
+    image: {fileID: 0}
+    background: []

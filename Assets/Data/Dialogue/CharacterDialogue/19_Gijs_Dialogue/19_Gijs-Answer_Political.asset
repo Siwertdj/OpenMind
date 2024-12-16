@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am glad that political parties for young people, that do more for the
+      climate and the future, are growing more and more.
+    image: {fileID: 0}
+    background: []

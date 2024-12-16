@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 0_Fatima-Answer_Education_Sytem
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I wouldn't say I'm super positive about it. I used to get bullied for being
+      a nerd and for doing my best.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,15 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: 'I used to look up to some people, but that has stopped recently. '
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 0
+    text: I do still have a lot of respect for self made people, the opposite of
+      nepobabies.
+    image: {fileID: 0}
+    background: []

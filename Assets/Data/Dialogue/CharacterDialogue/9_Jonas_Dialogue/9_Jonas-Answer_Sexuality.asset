@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Sexuality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am a transgender man that is mostly asexual. I am open to both monogamy
+      and polyamory, it all depends on the wishes of my partner. I don't believe
+      there to be one true love though, with eight billion people on this planet.
+      I have room in my heart.
+    image: {fileID: 0}
+    background: []

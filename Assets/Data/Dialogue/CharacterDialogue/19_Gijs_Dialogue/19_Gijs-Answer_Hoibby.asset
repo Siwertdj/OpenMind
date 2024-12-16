@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I love to learn and I like to watch science videos. I also play videogames
+      with my friends.
+    image: {fileID: 0}
+    background: []

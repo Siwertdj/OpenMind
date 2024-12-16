@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My girlfriend is definitely the most important person to me, I talk to
+      her everyday and I can always come to her when I have a problem.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm a fan of Peter R. de Vries. Next to investigative journalists he was
+      also a writer and he has done a lot of interesting things in my opinion. He
+      tries to tell the whole story, not just one truth.
+    image: {fileID: 0}
+    background: []

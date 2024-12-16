@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I think we have to do more for the climate, especially the big companies.
+    image: {fileID: 0}
+    background: []

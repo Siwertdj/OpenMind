@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I read a lot. Books, the newspaper but also trade journals. Reading is
+      definitely my main hobby at the moment. Occasionally I watch informative programs
+      and documentaries. I care about getting smarter, learning and self development.
+    image: {fileID: 0}
+    background: []

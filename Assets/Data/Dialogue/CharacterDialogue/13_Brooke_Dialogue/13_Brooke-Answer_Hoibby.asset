@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I have too many! Drawing, painting, needlework, making music, lots of volunteering
+      and watching cringey tv. I used to be a DJ and I do all kinds of sports. It's
+      kind of my pitfall. I enjoy doing all creative things. I can learn new things
+      quickly. I don't have one talent, I can do many things a little. I don't understand
+      it when people have no hobbies, besides watching Netflix.
+    image: {fileID: 0}
+    background: []

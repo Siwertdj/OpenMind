@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I think the whole political spectrum is moving towards the right. I think
+      people forget they are running a country and not a business that needs to make
+      money.
+    image: {fileID: 0}
+    background: []

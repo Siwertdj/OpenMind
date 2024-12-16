@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'I am doing really well! I am currently living in a rented studio apartment.
+      I love my job and colleagues and I have a great work/life balance.  '
+    image: {fileID: 0}
+    background: []

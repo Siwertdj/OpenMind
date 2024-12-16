@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I prefer eating vegetarian. I feel healthier and I have ethical reasons
+      too. I mainly don't agree with the way animals are treated. We are mass slaughtering
+      them and then they just end up in a packet. We are so far removed from the
+      reality of what happens to the animals.
+    image: {fileID: 0}
+    background: []

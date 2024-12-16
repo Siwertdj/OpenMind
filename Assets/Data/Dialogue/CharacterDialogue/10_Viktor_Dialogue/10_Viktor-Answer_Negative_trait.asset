@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Negative_trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: You get calmer as you age but I'm quick to anger and I'm a bit impatient.
+      There was a lot of swearing in my home when I was growing up so naturally I
+      have taken it up as well. I have really tried to keep it in but when I hit
+      my head it comes out anyway.
+    image: {fileID: 0}
+    background: []

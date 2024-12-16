@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 7_Arslan-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: No, I am not religious. I am interested in theology though and I really
+      enjoy learning about religions
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: As an artist I have turned my hobby into my job. Additionally I like to
+      read, especially English books. I also like watching TLC TV, to me it's the
+      ultimate relaxation activity. I exercise as well but that's really only because
+      it's necessary.
+    image: {fileID: 0}
+    background: []

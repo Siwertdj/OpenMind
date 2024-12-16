@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer-Wellbeing
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: Good and bad at the same time. I like having more free time now that my
+      children have left home and I don't have to take care of them so much anymore.
+      The freedom is nice but I still need to get used to it.
+    image: {fileID: 0}
+    background: []

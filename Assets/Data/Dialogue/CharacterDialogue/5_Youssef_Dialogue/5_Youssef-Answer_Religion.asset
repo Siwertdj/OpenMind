@@ -13,4 +13,19 @@ MonoBehaviour:
   m_Name: 5_Youssef-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am not religious, and I never really have been.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: My dad did not like that, haha.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 0
+    text: He wanted me to be muslim, like him.
+    image: {fileID: 0}
+    background: []

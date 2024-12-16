@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am living in a rental apartment and I am working as a youth coach. I
+      think it's amazing that they let me in their life to let me help them.
+    image: {fileID: 0}
+    background: []

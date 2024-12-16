@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I am very impatient, but it's not a time thing. If something is bothering
+      me, sometimes I don't handle it well.
+    image: {fileID: 0}
+    background: []

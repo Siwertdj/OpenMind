@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 16_Tess-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I love Prince, I cried so much when I heard he died.
+    image: {fileID: 0}
+    background: []

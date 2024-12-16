@@ -20,108 +20,57 @@ MonoBehaviour:
   voicePitch: 2
   answers:
   - question: 1
-    answer:
-    - I am 50.
+    answer: {fileID: 11400000, guid: 89313ecdc9e18b7468c98fb2d2a257ad, type: 2}
     trait:
     - I am 50 years old.
   - question: 2
-    answer:
-    - Good.
-    - I work for the police department and I live together with my girlfriend and
-      three children.
-    - If I could redo a period in my life it would be sixteen to thirty.
+    answer: {fileID: 11400000, guid: 2a15c8f28e80a38498c5b7509142c692, type: 2}
     trait:
     - I live together with my girlfriend and three children.
   - question: 3
-    answer:
-    - I'm a fan of Peter R. de Vries.
-    - Next to investigative journalist he was also a writer and he has done a lot
-      of interesting things in my opinion.
-    - He tries to tell the whole story, not just one truth.
+    answer: {fileID: 11400000, guid: 7d42544d2231fed40b27d3bc2db93ecb, type: 2}
     trait:
     - I am inspired by Peter R. de Vries.
   - question: 4
-    answer:
-    - Well, I have a monogamous relationship with my girlfriend.
-    - If you look at it from an evolutionary or biological perspective or compare
-      it to the animal kingdom, we are not born to be monogamous.
-    - But emotionally I wouldn't even wanna think about polyamory.
-    - I'm not a fan but I'm open to it if others would want it.
+    answer: {fileID: 11400000, guid: d2e115fd0d43bf54f8ecee6819ac7159, type: 2}
     trait:
     - I'm monogamous.
   - question: 6
-    answer:
-    - I follow the debates.
-    - What really bothers me about them is that it seems to be more about personal
-      character than the actual argument.
-    - We are going in the wrong direction.
-    - The polarisation caused us to stand against each other and right now the voices
-      on the right are louder.
+    answer: {fileID: 11400000, guid: f9dd247990610ee42a9ebc7dc561e766, type: 2}
     trait:
     - It bothers me that the political debated seem to be more about personal character
       than the argument.
   - question: 7
-    answer:
-    - I read a lot.
-    - Books, the newspaper but also trade journals.
-    - Reading is definitely my main hobby at the moment.
-    - Occasionaly i watch informative programs and documentaries.
-    - I care about getting smarter, learning and self development.
+    answer: {fileID: 11400000, guid: 38f528e391367f24faf2481f3e20ba36, type: 2}
     trait:
     - My biggest hobby is reading.
   - question: 9
-    answer:
-    - No. I used to be an atheist but I've slowly been shifting towards agnosticism.
-    - From my scientific training I've learned that there are things you can't see
-      but are definitely there.
-    - And the other way around.
+    answer: {fileID: 11400000, guid: 17b9f23bb7bf6ec4c8d8555fca1319da, type: 2}
     trait:
     - I used to be an atheist, now I'm agnostic.
   - question: 10
-    answer:
-    - I have a master's degree from university.
+    answer: {fileID: 11400000, guid: f0785da6cbc16d04eb2837a49c966590, type: 2}
     trait:
     - I have a master's degree from university.
   - question: 11
-    answer:
-    - That's easy.
-    - Integrity, reliability, connection and courage.
-    - Those are the core values of the police and I agree with them.
+    answer: {fileID: 11400000, guid: 6e5163bbc8c831d4eab6cc30a58a14bd, type: 2}
     trait:
     - My core values are integrity,reliability, connection and courage.
   - question: 13
-    answer:
-    - My girlfriend is the most important person in my life.
-    - Without a doubt.
+    answer: {fileID: 11400000, guid: f06a589c6b5b0f644b36080d1da14d66, type: 2}
     trait:
     - My girlfriend is the most important person in my life.
   - question: 14
-    answer:
-    - That I'm interested in a lot of things.
-    - In other people's stories and a variety of other topics.
-    - I'm also good at listening to people so in that sence I'm also helpful.
+    answer: {fileID: 11400000, guid: 260dfd8ccccdd9a40a758cb0b1e3e0a9, type: 2}
     trait:
     - One of my positive traits is that I'm interested in a lot of things and in
       other people's stories.
   - question: 15
-    answer:
-    - I'm dominant.
-    - To reach your goal you have to stand your ground which can come across as dominance.
+    answer: {fileID: 11400000, guid: ac4172dcc8a696d48a453d34caa1feaf, type: 2}
     trait:
     - My negative trait is that I can be very dominant.
   - question: 17
-    answer:
-    - What everyone is talking about right now.
-    - Migration, immigrants and the alysum seeker problem.
-    - I think when talking about seeking asylum because of danger I'm entirely open
-      to it.
-    - We need people from outside of the Netherlands, the economy would collapse
-      otherwise.
-    - 'But when people think the grass is greener on the other side of the mountain
-      and contribute nothing to society I think a country like the Netherlands should
-      say: "No, there is no place for you here".'
-    - I speak up about discrimination within the police itself as well.
-    - It is not a place where you expect it to happens and it shouldn't be allowed.
+    answer: {fileID: 11400000, guid: 879962de5eefffa46acbb3d959d7e477, type: 2}
     trait:
     - A social issue I'm interested in is the migration, immigrant and asylum seeker
       problem.

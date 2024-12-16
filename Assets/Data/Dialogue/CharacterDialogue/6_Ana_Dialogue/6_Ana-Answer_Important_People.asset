@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My brother and I have always been very close, so I'd have to say he's the
+      most important person to me.
+    image: {fileID: 0}
+    background: []

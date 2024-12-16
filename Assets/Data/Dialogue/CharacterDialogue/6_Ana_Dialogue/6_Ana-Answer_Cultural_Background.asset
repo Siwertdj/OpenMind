@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Cultural_Background
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'I am from Portugal. My parents taught me that it''s important to keep
+      a tidy home and to be close and love your family. They pushed how important
+      family is and I totally agree with them. '
+    image: {fileID: 0}
+    background: []

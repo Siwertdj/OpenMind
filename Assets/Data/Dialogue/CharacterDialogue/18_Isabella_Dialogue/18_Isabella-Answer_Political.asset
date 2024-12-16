@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm left-wing. I listen to the radio a lot to keep up with politics. I'm
+      opposed to the patriarchy and men in positions of power. Power corrupts and
+      I think going against that creates more equality.
+    image: {fileID: 0}
+    background: []

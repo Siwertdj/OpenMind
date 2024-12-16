@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Personality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am good at taking care of people. But sometimes I withdraw from others
+      and I tend to put the needs of others before my own too much. People are really
+      surprised when I get angry. I rarely get angry but when I do they really went
+      too far.
+    image: {fileID: 0}
+    background: []

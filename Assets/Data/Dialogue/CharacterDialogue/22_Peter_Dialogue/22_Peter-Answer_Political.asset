@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I follow the debates. What really bothers me about them is that it seems
+      to be more about personal character than the actual argument. We are going
+      in the wrong direction. The polarisation caused us to stand against each other
+      and right now the voices on the right are louder.
+    image: {fileID: 0}
+    background: []

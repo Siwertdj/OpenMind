@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I'm impatient and I lack perseverance sometimes. I'm also overstimulated
+      quickly.
+    image: {fileID: 0}
+    background: []

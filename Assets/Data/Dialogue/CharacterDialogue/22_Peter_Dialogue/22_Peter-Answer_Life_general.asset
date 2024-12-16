@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Life_general
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: Good. I work for the police department and I live together with my girlfriend
+      and three children. If I could redo a period in my life it would be sixteen
+      to thirty.
+    image: {fileID: 0}
+    background: []

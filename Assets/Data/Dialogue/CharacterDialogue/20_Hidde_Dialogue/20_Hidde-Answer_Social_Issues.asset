@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: "I wouldn\u2019t do something like the people from Extinction Rebellion,
+      just blocking roads, that has nothing to do with the goal of the demonstration.
+      I would look for the source of the problem and protest there."
+    image: {fileID: 0}
+    background: []

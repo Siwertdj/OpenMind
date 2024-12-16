@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: That's easy. Integrity, reliability, connection and courage. Those are
+      the core values of the police and I agree with them.
+    image: {fileID: 0}
+    background: []

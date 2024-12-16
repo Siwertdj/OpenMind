@@ -13,4 +13,16 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'What everyone is talking about right now. Migration, immigrants and the
+      asylum seeker problem. I think when talking about seeking asylum because of
+      danger I''m entirely open to it. We need people from outside of the Netherlands,
+      the economy would collapse otherwise. But when people think the grass is greener
+      on the other side of the mountain and contribute nothing to society I think
+      a country like the Netherlands should say: "No, there is no place for you here".
+      I speak up about discrimination within the police itself as well. It is not
+      a place where you expect it to happen and it shouldn''t be allowed.'
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: No, we eat an AVG everyday but we have started eating more varied meals.
+      We also try to eat less meat.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Education_Sytem
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I think the system could be a lot better. The groups need to be smaller
+      and there should be more space for children that need more support than the
+      standard.
+    image: {fileID: 0}
+    background: []

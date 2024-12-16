@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer-Positive_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am an enthusiastic person and I'm very caring.
+    image: {fileID: 0}
+    background: []

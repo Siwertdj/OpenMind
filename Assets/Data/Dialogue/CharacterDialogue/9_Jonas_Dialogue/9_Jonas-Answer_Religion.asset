@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am not religious anymore. I grew up going to church but I don't believe
+      in god and I don't follow those doctrines.
+    image: {fileID: 0}
+    background: []

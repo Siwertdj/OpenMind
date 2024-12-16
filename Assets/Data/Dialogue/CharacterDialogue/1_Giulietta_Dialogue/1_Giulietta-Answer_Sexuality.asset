@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 1_Giulietta-Answer_Sexuality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am bisexual. But I'm not in a relationship or anything
+    image: {fileID: 0}
+    background: []

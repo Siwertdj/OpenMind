@@ -13,4 +13,15 @@ MonoBehaviour:
   m_Name: 0_Fatima-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'To me, the most important people are my husband and my daughter. '
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: My husband is always there for me to lean on. You could say he's kind of
+      my coach.
+    image: {fileID: 0}
+    background: []

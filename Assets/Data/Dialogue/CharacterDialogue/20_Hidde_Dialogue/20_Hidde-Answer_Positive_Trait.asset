@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Positive_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "I think I\u2019m caring and a great listener. My parents would also say
+      I often think things through well."
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I'm a very active person. I like leaving the house, exercising and doing
+      things with my friends. I also love listening to music. I like reggae, blues
+      and hip hop.
+    image: {fileID: 0}
+    background: []

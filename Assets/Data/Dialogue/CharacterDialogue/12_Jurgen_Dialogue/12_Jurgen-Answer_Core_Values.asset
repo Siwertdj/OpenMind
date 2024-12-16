@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I think that as individuals we have some kind of duty to commit ourselves
+      to a community. It's very important to me to empower people and get them in
+      the right place. I care a lot about health.
+    image: {fileID: 0}
+    background: []

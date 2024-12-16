@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Education_Sytem
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I think the different levels of education are important. Not everyone is
+      smart, but everyone is smart in their own way.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'I think people take in too much external news, problems and suffering.
+      It''s better to look at what we can do ourselves locally. We should ask ourselves:
+      Can I do something for my neighbours? Can I do something for my own community?
+      Can I set up something that is actually helpful?'
+    image: {fileID: 0}
+    background: []

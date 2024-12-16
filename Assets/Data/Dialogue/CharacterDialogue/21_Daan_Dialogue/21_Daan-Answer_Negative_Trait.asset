@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 21_Daan-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I'm a control freak.
+    image: {fileID: 0}
+    background: []

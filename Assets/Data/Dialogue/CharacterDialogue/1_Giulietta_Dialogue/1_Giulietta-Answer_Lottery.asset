@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 1_Giulietta-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: If I won the lottery I would invest the money in a music career.
+    image: {fileID: 0}
+    background: []

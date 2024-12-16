@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Good. I am living in a row house with my wife and I work as a software
+      developer. I have three kids that have left home. I have seen them growing
+      up. It was fun when they were young, I miss that time in my life but I am very
+      proud of what they have achieved in life.
+    image: {fileID: 0}
+    background: []

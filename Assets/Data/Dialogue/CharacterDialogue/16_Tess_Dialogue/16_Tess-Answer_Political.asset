@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 16_Tess-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I think it\u2019s very, very important to vote. I always vote left."
+    image: {fileID: 0}
+    background: []

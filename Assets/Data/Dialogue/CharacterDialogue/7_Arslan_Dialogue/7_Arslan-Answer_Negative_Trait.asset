@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 7_Arslan-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I am super competitive. It's very hard for me to admit someone is better
+      than me at something.
+    image: {fileID: 0}
+    background: []

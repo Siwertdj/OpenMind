@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I really respect the royal family. They are just normal people, they didn't
+      choose their life. I understand the human mistakes they make. They are just
+      human beings too.
+    image: {fileID: 0}
+    background: []

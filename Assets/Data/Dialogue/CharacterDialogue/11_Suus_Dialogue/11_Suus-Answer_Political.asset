@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm not really into politics. I have my husband for that. He explains it
+      to me in case I didn't entirely understand something. I am on the right side
+      of the political spectrum.
+    image: {fileID: 0}
+    background: []

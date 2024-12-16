@@ -13,4 +13,20 @@ MonoBehaviour:
   m_Name: 1_Giulietta-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I would say my biggest negative trait is that I'm very chaotic.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 0
+    text: But I think it's also kind of a positive trait, my friends say it makes
+      me really refreshing.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: And I think it makes me more spontaneous and playful!
+    image: {fileID: 0}
+    background: []

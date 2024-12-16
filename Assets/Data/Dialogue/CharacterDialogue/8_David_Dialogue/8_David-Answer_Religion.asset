@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'I am not religious, but I have looked into most religions. Not to see
+      if I want to convert to any of them, just out of pure interest. My parents
+      were not that religious and I did go to a Christian primary school, but I think
+      all schools should be secular and that religions should be practiced at home.  '
+    image: {fileID: 0}
+    background: []

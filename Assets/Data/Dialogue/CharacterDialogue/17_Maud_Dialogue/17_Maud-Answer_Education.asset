@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer_Education
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I have a HBO master's degree in pedagogy.
+    image: {fileID: 0}
+    background: []

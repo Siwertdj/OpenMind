@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I often buy organic foods, for environmental reasons. And I have a sweet
+      tooth!
+    image: {fileID: 0}
+    background: []

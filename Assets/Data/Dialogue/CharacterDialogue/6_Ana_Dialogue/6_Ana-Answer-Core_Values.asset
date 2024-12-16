@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer-Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I think social equality is super, super important. I find it important
+      that in countries that are not so well developed that women should have the
+      same rights as men and that they can be who they want to be. I think it\u2019s
+      also important that they have abortion rights and that they can get a divorce
+      if they want to. "
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Education_Sytem
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: The school setting never really suited me. Sitting still and only doing
+      what you're told is not my cup of tea. I quickly got bored.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am a fan of the work that public figures do. But I am not really a fan
+      of the public figures themselves.
+    image: {fileID: 0}
+    background: []

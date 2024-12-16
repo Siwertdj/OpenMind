@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm politically left. I don't follow all debates but I think it's important
+      to always vote. I try to encourage other people to vote too.
+    image: {fileID: 0}
+    background: []

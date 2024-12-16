@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "Even though I don\u2019t believe in God, I do share a lot of values with
+      Christianity. For example, never knowingly harm another. I also really believe
+      in justice and our judicial system. Always being on time is also very important
+      to me."
+    image: {fileID: 0}
+    background: []

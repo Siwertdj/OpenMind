@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 4_Aiden-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Any person who is successful to be honest.
+    image: {fileID: 0}
+    background: []

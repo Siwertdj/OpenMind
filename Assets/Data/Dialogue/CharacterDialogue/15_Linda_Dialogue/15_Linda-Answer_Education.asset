@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer_Education
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I have a nursing degree and I got more training while working at a hospital.
+    image: {fileID: 0}
+    background: []

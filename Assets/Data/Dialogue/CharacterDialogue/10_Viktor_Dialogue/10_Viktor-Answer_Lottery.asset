@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I would definitely share it with my wife. I think we would spend it on
+      traveling.
+    image: {fileID: 0}
+    background: []

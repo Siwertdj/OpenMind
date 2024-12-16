@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: "I think religion is a big problem. Religion in and of itself is not bad,
+      it\u2019s more how people abuse it. People use religion to oppress people and
+      get more power, land or money. I think that\u2019s very problematic."
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 8_David-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "It\u2019s great, I live together with my partner in an apartment. We also
+      have two lovely cats."
+    image: {fileID: 0}
+    background: []

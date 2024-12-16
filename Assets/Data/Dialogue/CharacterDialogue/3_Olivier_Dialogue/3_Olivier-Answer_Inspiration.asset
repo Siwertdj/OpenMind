@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 3_Olivier-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "Sifan Hassan is very inspiring to me. I think it's great that we\u2019re
+      giving women a chance and that she\u2019s really going for it."
+    image: {fileID: 0}
+    background: []

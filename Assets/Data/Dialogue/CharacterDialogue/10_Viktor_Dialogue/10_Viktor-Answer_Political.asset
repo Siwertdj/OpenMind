@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I try to follow as many different news sources as I can to get a clear
+      view of what is happening on both the right and left side. Personally I am
+      on the right side of the political spectrum. I will never join a splinter party.
+      And I think populism is condemnable because it is really easy to use people's
+      gut feeling. I can't stand Donald Trump because of that.
+    image: {fileID: 0}
+    background: []

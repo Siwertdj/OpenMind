@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 16_Tess-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My children are the most important people in my life. I think everyone
+      should be able to be themselves.
+    image: {fileID: 0}
+    background: []

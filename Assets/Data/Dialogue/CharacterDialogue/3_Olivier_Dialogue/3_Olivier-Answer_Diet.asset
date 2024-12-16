@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 3_Olivier-Answer_Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I am not a vegetarian, but if I look at the way meat is produced, I can
+      see that this is not the way God intended.
+    image: {fileID: 0}
+    background: []

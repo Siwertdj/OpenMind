@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 16_Tess-Answer-Negative-Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: "I think I\u2019m a very chaotic person, I always say what I\u2019m thinking
+      and I don\u2019t really know if people like me when we first meet. I can just
+      be a bit much sometimes."
+    image: {fileID: 0}
+    background: []

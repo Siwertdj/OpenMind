@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'I still say a prayer before dinner. I''ve been doing that since I was
+      a child. That is the only thing I still do consistently. '
+    image: {fileID: 0}
+    background: []

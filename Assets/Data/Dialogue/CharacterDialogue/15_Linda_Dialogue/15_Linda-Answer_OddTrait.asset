@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer_OddTrait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "I\u2019m super jealous of people with a lot of musical and artistic talent."
+    image: {fileID: 0}
+    background: []

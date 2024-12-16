@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 21_Daan-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: It is really important to me to really try to do something good for other
+      people.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Positive_trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: That I'm interested in a lot of things. In other people's stories and a
+      variety of other topics. I'm also good at listening to people so in that sense
+      I'm also helpful.
+    image: {fileID: 0}
+    background: []

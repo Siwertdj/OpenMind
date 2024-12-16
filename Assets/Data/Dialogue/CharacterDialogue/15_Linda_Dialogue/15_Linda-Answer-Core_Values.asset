@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer-Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I think it\u2019s very important to empathize and relate to other people
+      and respect them. Everyone just wants to be happy."
+    image: {fileID: 0}
+    background: []

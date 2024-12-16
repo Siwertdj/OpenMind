@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I am agnostic. I do wonder sometimes what comes after death, but I don\u2019t
+      think we\u2019ll ever know."
+    image: {fileID: 0}
+    background: []

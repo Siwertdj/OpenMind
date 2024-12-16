@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My favourite person is my husband. We have been married for a long time.
+      He is the first person I go to if I have a problem. He knows how I feel about
+      things and he knows the right tool to give me to help deal with them. My social
+      network consists of my close friends, they are my chosen family. Family is
+      really important to me.
+    image: {fileID: 0}
+    background: []

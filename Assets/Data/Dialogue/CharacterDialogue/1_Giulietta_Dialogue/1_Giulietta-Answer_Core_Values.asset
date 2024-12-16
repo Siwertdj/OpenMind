@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 1_Giulietta-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I think the most important thing right now is equality. There's so much
+      hate towards women and minorities like people of color and trans people.
+    image: {fileID: 0}
+    background: []

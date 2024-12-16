@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Education
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am currently studying to get my bachelors degree at university.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Education
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I have tried many different things, but I didn't finish most of them. Except
+      art school. I'm very passionate about art. I love the classics and any type
+      of art that is comforting. I don't need art to be shocking.
+    image: {fileID: 0}
+    background: []

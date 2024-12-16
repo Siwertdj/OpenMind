@@ -20,63 +20,42 @@ MonoBehaviour:
   voicePitch: 1
   answers:
   - question: 1
-    answer:
-    - I am 27 years old.
+    answer: {fileID: 11400000, guid: 855c2f7dc984f444cb9be4fcd9dbf97e, type: 2}
     trait: []
   - question: 6
-    answer:
-    - I am glad that political parties for young people,
-    - that do more for the climate and the future, are growing more and more.
+    answer: {fileID: 11400000, guid: 7e0415e8977628f429256c92ad424f2c, type: 2}
     trait:
     - I like that political parties for young people are growing.
   - question: 7
-    answer:
-    - I love to learn and I like to watch science videos.
-    - I also play videogames with my friends.
+    answer: {fileID: 11400000, guid: 33642590ee58ff542b098853123d13b3, type: 2}
     trait:
     - I like that political parties for young people are growing.
   - question: 10
-    answer:
-    - I studied Life Sciences and I am currently working as a data engineer.
+    answer: {fileID: 11400000, guid: f4e575d0524f404458e0d03e5082d78e, type: 2}
     trait:
     - I studied Life Sciences.
   - question: 11
-    answer:
-    - Knowledge is very important to me.
-    - I am very inquisitive and I am always very eager to learn.
-    - "When I don\u2019t understand something I am always quick to dive into how
-      it works."
+    answer: {fileID: 11400000, guid: 57d399d7093a50042b3914f6e8f53336, type: 2}
     trait:
     - I love learning new things.
   - question: 12
-    answer:
-    - I would say that I am a pretty chaotic person.
-    - I can do a lot of things at once, but sometimes it can definitely be a bit
-      too much.
+    answer: {fileID: 11400000, guid: 3d4d6e40a66f7b64ea08a9fe1dcf3ff7, type: 2}
     trait:
     - I am a very chaotic person.
   - question: 13
-    answer:
-    - My girlfriend is definitely the most important person to me,
-    - I talk to her everyday
-    - and I can always come to her when I have a problem.
+    answer: {fileID: 11400000, guid: e443190da103e004cbddf6a35c70caae, type: 2}
     trait:
     - My girlfriend is the most important person in my life.
   - question: 15
-    answer:
-    - I am not very good with money, I am very lucky I have a job that pays relatively
-      well.
+    answer: {fileID: 11400000, guid: 64c457c7811347c4a96d13fa12ea053d, type: 2}
     trait:
     - I am very bad with money.
   - question: 17
-    answer:
-    - I think we have to do more for the climate, especially the big companies.
+    answer: {fileID: 11400000, guid: e2c2b904326671f4bb7451ee6108f91f, type: 2}
     trait:
     - I think we should do more for the climate.
   - question: 19
-    answer:
-    - 'If I won the lottery I would buy myself a huge house and I would get a small
-      pet goat. '
+    answer: {fileID: 11400000, guid: 704ee36ebcff29e4e9d87bf164ca2aa8, type: 2}
     trait:
     - If I won the lottery I would buy myself a big house and a small goat.
   greetings:

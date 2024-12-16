@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer-Negative_trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I'm gloomy sometimes. I can have a bit of a negative attitude towards life.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Positive_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am great at listening and other people tell me I'm a joker. I like using
+      humour. Hearing people laugh makes me feel really good.
+    image: {fileID: 0}
+    background: []

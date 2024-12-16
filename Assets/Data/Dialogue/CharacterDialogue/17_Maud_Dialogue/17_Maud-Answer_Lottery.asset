@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'If I win the lottery I would travel the world immediately! I would start
+      as far away as possible. After that I would probably have about 8 different
+      volunteering jobs. '
+    image: {fileID: 0}
+    background: []

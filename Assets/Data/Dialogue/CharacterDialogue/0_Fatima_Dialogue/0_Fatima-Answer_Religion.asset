@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 0_Fatima-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am muslim, but I only recently started wearing a hijab
+    image: {fileID: 0}
+    background: []

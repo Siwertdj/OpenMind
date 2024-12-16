@@ -13,4 +13,17 @@ MonoBehaviour:
   m_Name: 5_Youssef-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: "I think social equality is very important. I went to a very white primary
+      school and that\u2019s when I first started noticing that I didn\u2019t really
+      look like anyone."
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 2
+    text: 'I was always dismissed as some kind of criminal even though that was not
+      the case at all. '
+    image: {fileID: 0}
+    background: []

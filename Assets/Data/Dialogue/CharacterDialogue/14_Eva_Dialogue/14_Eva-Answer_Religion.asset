@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm not religious. I think it can be comforting for people that really
+      believe in it. I personally don't believe in it and I can see that it causes
+      a lot of misery in the world. So I'm ambivalent regarding religion.
+    image: {fileID: 0}
+    background: []

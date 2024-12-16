@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 17_Maud-Answer_Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I respect Sylvana Simons. So people who are refusing to let anyone stop
+      them from speaking the truth.
+    image: {fileID: 0}
+    background: []

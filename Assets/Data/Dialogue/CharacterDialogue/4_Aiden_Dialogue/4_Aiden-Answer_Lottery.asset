@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 4_Aiden-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'If I won the lottery, I would probably invest the money. I think I''d
+      buy a house for myself, and buy another house to rent as an investment. '
+    image: {fileID: 0}
+    background: []

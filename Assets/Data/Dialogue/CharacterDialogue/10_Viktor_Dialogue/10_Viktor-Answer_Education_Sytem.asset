@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Education_Sytem
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: A lot has changed over the years. The most important thing that has declined
+      in the discipline part. Teachers are struggling to keep order and teach. The
+      result is that kids drop out too early and they will slide down even further.
+    image: {fileID: 0}
+    background: []

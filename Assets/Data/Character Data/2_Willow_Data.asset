@@ -20,82 +20,39 @@ MonoBehaviour:
   voicePitch: 1.5
   answers:
   - question: 4
-    answer:
-    - I am pansexual.
-    - Recently, I have also been thinking about maybe experimenting with polyamory.
-    - I think it's close-minded to think that everyone is looking
-    - for a monogamous relationship.
-    - I think it would be pretty claustrophobic to spend
-    - the rest of your life with only one person
-    - 'but I would also prefer to be someone''s top priority '
-    - and have them be my top priority.
+    answer: {fileID: 11400000, guid: 3d54e4bf2cedee845869b8597dc4b5fa, type: 2}
     trait:
     - I am pansexual and I think I am monogamous but I'm not sure yet.
-  - question: 5
-    answer:
-    - I'm doing great!
-    - I am very proud of who I am right now
-    - and I have also still have the freedom to make irresponsible,
-    - and to enjoy them.
-    - Oh, there is one thing that worries me.
-    - The current growth of racism and inequality,
-    - but I don't really like to talk about that.
-    - I like to have fun to distract me from those problems
-    - and just issues I can't control in general.
+  - question: 2
+    answer: {fileID: 11400000, guid: f4a6f184e35261344997f0104321a670, type: 2}
     trait:
     - My life is going great but I am worried about racism and inequality.
   - question: 7
-    answer:
-    - I really like doing things with friends, could be anything
-    - partying, going out to eat, going on a vacation or doing some arts and crafts.
-    - If it's with my friends, it's a good time.
-    - I also used to be on social media a lot but recently it has lessened
-    - because of some heavy things that have been happening lately,
-    - but I don't really like to talk about that.
+    answer: {fileID: 11400000, guid: 8d42b495bd098b642ba2ef9e628664fb, type: 2}
     trait:
     - I enjoy activities with my friends, and I used to enjoy social media.
-  - question: 2
-    answer:
-    - It's good. I just got my bachelor's degree a couple weeks ago
-    - and right now I'm working as a freelancer.
-    - I still live at home with my dad and my dog.
-    - I have a lot of friends but not like a group of friends.
-    - "I\u2019m also very close with my family."
+  - question: 5
+    answer: {fileID: 11400000, guid: dbc6fbf6c53f44343b07df714fd0a8a4, type: 2}
     trait:
     - I enjoy activities with my friends, and I used to enjoy social media.
   - question: 9
-    answer:
-    - No, I'm not religious.
-    - Generally I have no problem with religions and their ideas
-    - but I think the execution is problematic in may cases.
+    answer: {fileID: 11400000, guid: 5e380b79954ecd940b227074c58d9a16, type: 2}
     trait:
     - I am not religioues
   - question: 14
-    answer:
-    - I think my best trait is that I'm a very chill
-    - go-with-the-flow kind of person.
-    - Though sometimes I can be a little too chill
-    - to the point I just don't do things I don't feel like doing
+    answer: {fileID: 11400000, guid: 8be837a538e7bbb4fac3e8469c6256d5, type: 2}
     trait:
     - I am very chill person, but sometimes too chill.
   - question: 11
-    answer:
-    - I think friendship, showing appreciation, independence and confidence are all
-      extremely important
+    answer: {fileID: 11400000, guid: d75d5eec416cd524a9f095d58da76249, type: 2}
     trait:
     - I think friendship, being independent and self-confidence are important.
   - question: 19
-    answer:
-    - I would buy an appartment or a house and I would go on a vacation with what's
-      left.
+    answer: {fileID: 11400000, guid: 79747a32aca3d384da9f1e5a58bbaf90, type: 2}
     trait:
     - If I won the lottery I would buy a house and go on a vacation.
   - question: 18
-    answer:
-    - I think the education system is made for only one kind of person.
-    - But there's many people that don't fit that label.
-    - 'I think there should be different levels of education '
-    - but what they represent right not has to change.
+    answer: {fileID: 11400000, guid: 194a3a3da1cf1d44a9258bc32069b290, type: 2}
     trait:
     - I think a lot of people don't fit the current education system.
   greetings:

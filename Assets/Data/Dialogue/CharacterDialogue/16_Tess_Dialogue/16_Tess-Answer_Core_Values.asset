@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 16_Tess-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I think family, love and equality are the most important things in life.
+      I think everyone should be able to be themselves. I also think all children
+      should have equal chances and should get as many resources as possible to be
+      able to be themselves.
+    image: {fileID: 0}
+    background: []

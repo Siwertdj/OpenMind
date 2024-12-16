@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 4_Aiden-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: "I think what we\u2019re doing for the climate is almost pointless, I get
+      that we serve as an example for the rest of the world but when I hear that
+      China and Egypt are just dumping trash in the ocean. All of it feels a bit
+      pointless. "
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 2_Willow-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: No, I'm not religious. Generally I have no problem with religions and their
+      ideas but I think the execution is problematic in many cases.
+    image: {fileID: 0}
+    background: []

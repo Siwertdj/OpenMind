@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: There are many people that are important to me, for different reasons.
+      But, I think my grandma is the most important of them all.
+    image: {fileID: 0}
+    background: []

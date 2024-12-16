@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: 'I think it is concerning that so many countries are trying to get rid
+      of immigrants and expats, that they are viewing these people as a threat when
+      they are not. I feel like history is repeating itself.  '
+    image: {fileID: 0}
+    background: []

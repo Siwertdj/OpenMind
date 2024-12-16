@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 5_Youssef-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I love arts and crafts and just making things in general. I also like reading
+      scientific papers, I like to look into how things work and try to think of
+      a better solution.
+    image: {fileID: 0}
+    background: []

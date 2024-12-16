@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 0_Fatima-Answer_Cultural_Background
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I was born in Morocco, but we moved to the Netherlands when I was still
+      quite young.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer-Positive_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I like having fun a lot and I am a very humorous person.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I try to support the LGBT community. If someone says something unjust about
+      the community I will defend it but I wouldn't start the conversation myself.
+      I'm not really a fighter.
+    image: {fileID: 0}
+    background: []

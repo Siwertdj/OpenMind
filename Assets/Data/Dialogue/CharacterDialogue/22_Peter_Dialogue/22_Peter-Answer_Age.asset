@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Age
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I am 50.
+    image: {fileID: 0}
+    background: []

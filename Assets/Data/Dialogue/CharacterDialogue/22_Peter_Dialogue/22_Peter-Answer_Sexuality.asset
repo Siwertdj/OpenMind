@@ -13,4 +13,13 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Sexuality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'Well, I have a monogamous relationship with my girlfriend. If you look
+      at it from an evolutionary or biological perspective or compare it to the animal
+      kingdom, we are not born to be monogamous. But emotionally I wouldn''t even
+      wanna think about polyamory. I''m not a fan but I''m open to it if others would
+      want it. '
+    image: {fileID: 0}
+    background: []

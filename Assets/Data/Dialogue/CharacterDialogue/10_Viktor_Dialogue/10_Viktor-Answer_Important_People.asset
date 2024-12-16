@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: The most important people in my life are my wife and my children. I also
+      have a lot of friends from my youth, nice neighbours and I like to do things
+      with colleagues as well.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: My boyfriend is the most important person in my life. We are getting married
+      soon
+    image: {fileID: 0}
+    background: []

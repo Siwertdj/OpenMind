@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I would book a huge trip. After that I wouldn't stop working. I think I
+      would keep working for 2 or 3 days.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'Definitely my family, my children and my grandchildren. They are so important
+      to me. '
+    image: {fileID: 0}
+    background: []

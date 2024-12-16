@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 5_Youssed-Answer_Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I don't eat pork, but not because of religious reasons. I just don't like
+      the taste.
+    image: {fileID: 0}
+    background: []

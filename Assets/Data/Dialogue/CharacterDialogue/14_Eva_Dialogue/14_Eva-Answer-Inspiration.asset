@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer-Inspiration
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Yes! Michelle Obama inspires me. Athletes too, they are insanely good at
+      what they do. Sifan Hassan for instance, she is amazing!
+    image: {fileID: 0}
+    background: []

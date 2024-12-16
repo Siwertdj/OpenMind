@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I am very chaotic. In fights I tend to put up a shield quickly.
+    image: {fileID: 0}
+    background: []

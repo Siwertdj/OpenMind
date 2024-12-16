@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 22_Peter-Answer_Important_People
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: My girlfriend is the most important person in my life. Without a doubt.
+    image: {fileID: 0}
+    background: []

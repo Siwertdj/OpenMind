@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer-Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: 'I think racism is a very big problem. I always try to talk to people when
+      I hear them making racist remarks. '
+    image: {fileID: 0}
+    background: []

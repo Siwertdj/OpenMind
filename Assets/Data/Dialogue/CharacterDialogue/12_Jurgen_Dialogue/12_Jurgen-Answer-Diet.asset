@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer-Diet
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Yes, I do intermittent fasting. Besides that I eat a farmer's diet.
+    image: {fileID: 0}
+    background: []

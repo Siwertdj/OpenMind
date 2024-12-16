@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 15_Linda-Answer_Life_General
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "It\u2019s great! I actually like getting older because I get to be proud
+      of who I\u2019ve been and to look back on my life. "
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 7_Arslan-Answer-Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "I think it\u2019s very important to always treat others how you would
+      want to be treated."
+    image: {fileID: 0}
+    background: []

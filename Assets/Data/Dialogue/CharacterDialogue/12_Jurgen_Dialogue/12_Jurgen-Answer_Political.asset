@@ -13,4 +13,14 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Political
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I don't care about big political discussions. By that I mean things outside
+      of the local context that I can't influence. I do that consciously. I don't
+      watch the news and I often don't vote. If I vote I need to do a lot of research,
+      more than just filling in a voting guide. I read the program points and see
+      how it aligns with my vision. I don't think that is done enough even though
+      it's important.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 14_Eva-Answer-Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I think deporting children is scandalous. It's not going to solve the migration
+      problem.
+    image: {fileID: 0}
+    background: []

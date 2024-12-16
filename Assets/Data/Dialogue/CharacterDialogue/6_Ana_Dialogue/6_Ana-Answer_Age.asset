@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Age
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am 29 years old.
+    image: {fileID: 0}
+    background: []

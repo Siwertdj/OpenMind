@@ -20,58 +20,39 @@ MonoBehaviour:
   voicePitch: 1.7
   answers:
   - question: 8
-    answer:
-    - I was born in Morocco, but we moved to the Netherlands when I was still quite
-      young.
+    answer: {fileID: 11400000, guid: c2ba47dfcae7e134c98d350e972e9274, type: 2}
     trait:
     - I was born in Morocco.
   - question: 7
-    answer:
-    - I really, really love reading books and listening to audiobooks.
-    - It is so easy to lose myself in them
-    - and it is just is so relaxing.
+    answer: {fileID: 11400000, guid: af530381e2c6a4944a2c07c6932fa84f, type: 2}
     trait:
     - My biggest hobby is reading books and listening to audiobooks.
   - question: 10
-    answer:
-    - I have a master's degree
+    answer: {fileID: 11400000, guid: a703cf613ba470a4dbd1f40db3ab05fd, type: 2}
     trait:
     - I got a master's degree.
   - question: 12
-    answer:
-    - My friends and my family would describe me as funny and kind.
-    - I agree with them,
-    - I think I'm pretty funny aswell.
+    answer: {fileID: 11400000, guid: 5756106de2604cd4a96b5e9ec012243f, type: 2}
     trait:
     - I am kind and funny.
   - question: 13
-    answer:
-    - To me, the most important people
-    - are my husband and my daughter
-    - My husband is always there for me to lean on.
-    - You could say he's kind of my coach.
+    answer: {fileID: 11400000, guid: c032ab562d8e22d4fbab4d5b670ce3e4, type: 2}
     trait:
     - My husband and daughter are very important to me.
   - question: 19
-    answer:
-    - If I won the lottery I would do something good for the world.
-    - Like building an orphanage in Morocco.
+    answer: {fileID: 11400000, guid: a473de4ea983a114f858454634e7ed79, type: 2}
     trait:
     - If I won the lottery I would build an orphanage in Morocco.
   - question: 9
-    answer:
-    - I am muslim, but I only recently started wearing a hijab
+    answer: {fileID: 11400000, guid: 937abf0fa5c759c428d1c54e0dcbd33a, type: 2}
     trait:
     - I am muslim.
   - question: 18
-    answer:
-    - I wouldn't say I'm super positive about it.
-    - I used to get bullied for being a nerd and for doing my best.
+    answer: {fileID: 11400000, guid: 190c218aaf2e24e4f904153021da4e1c, type: 2}
     trait:
     - I used to get bullied for being a nerd.
   - question: 16
-    answer:
-    - People don't expect that I can get really angry sometimes.
+    answer: {fileID: 11400000, guid: 260d8c4cc891d33439c3d19007b9aaec, type: 2}
     trait:
     - It suprises people that I can get really angry.
   greetings:

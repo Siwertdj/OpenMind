@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 6_Ana-Answer_Hoibby
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "I really enjoy going to the gym, hanging out with friends and I love to
+      travel. Mexico is my favorite country that I have visited. It was super sunny,
+      there\u2019s a lot of nature, the people are great and the food is amazing. "
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 13_Brooke-Answer_Life_general
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: "Good! I am a digital designer and I volunteer. I live with my fianc\xE9,
+      cat and bonus child in a small town. I have lots of friends from different
+      places. From class, going out and from volunteering."
+    image: {fileID: 0}
+    background: []

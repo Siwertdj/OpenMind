@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Personality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am a very passionate person. When I'm interested in something it becomes
+      my entire life. One of the things I am very passionate about is social justice.
+      My friends would probably call me energetic. In general I'm pretty quiet but
+      when my friends get me started, I can talk for hours.
+    image: {fileID: 0}
+    background: []

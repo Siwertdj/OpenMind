@@ -13,4 +13,21 @@ MonoBehaviour:
   m_Name: 5_Youssef-Answer_Cultural_Background
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: 'My father is of Moroccan descent and muslim and he also wanted me to be
+      muslim. '
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 2
+    text: "He really had a vision of who and what he wanted me to be, but it didn\u2019t
+      stick."
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: 'Now I think that freedom is very important, to be who you want to be. '
+    image: {fileID: 0}
+    background: []

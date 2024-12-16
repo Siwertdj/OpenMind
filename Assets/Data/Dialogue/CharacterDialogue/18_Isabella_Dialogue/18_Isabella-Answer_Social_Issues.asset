@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: 18_Isabella-Answer_Social_Issues
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: Definitely the asylum policy. I think we need to realise how great it is
+      here and that human beings never flee their country to seek fortune. They don't
+      leave if they aren't in danger. It annoys me that many people aren't that open
+      minded. What are they afraid of?
+    image: {fileID: 0}
+    background: []

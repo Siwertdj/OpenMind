@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 11_Suus-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Seize the day. I have a "carpe diem" poster hanging above my bed.
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 20_Hidde-Answer_Negative_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: "Sometimes it\u2019s hard for me to be social with other people."
+    image: {fileID: 0}
+    background: []

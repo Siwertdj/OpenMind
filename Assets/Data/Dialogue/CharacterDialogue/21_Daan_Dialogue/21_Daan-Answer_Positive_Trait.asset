@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 21_Daan-Answer_Positive_Trait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I'm very patient. I think other people would say I'm a social and kind
+      person.
+    image: {fileID: 0}
+    background: []

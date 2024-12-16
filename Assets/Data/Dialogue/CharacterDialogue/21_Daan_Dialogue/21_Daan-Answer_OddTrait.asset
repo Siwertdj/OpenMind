@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 21_Daan-Answer_OddTrait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 2
+    text: I don't drink alcohol. That seems to be an issue for some people.
+    image: {fileID: 0}
+    background: []

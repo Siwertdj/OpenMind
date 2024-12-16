@@ -20,56 +20,35 @@ MonoBehaviour:
   voicePitch: 1
   answers:
   - question: 1
-    answer:
-    - I am 77 years old.
+    answer: {fileID: 11400000, guid: 8e5befae80a5e7f489bdcdcc176cfa68, type: 2}
     trait:
     - 
   - question: 2
-    answer:
-    - "It\u2019s great!"
-    - I actually like getting older because I get to be
-    - "proud of who I\u2019ve been and to look back on my life. "
+    answer: {fileID: 11400000, guid: f32d859645d63654e95364d9b8e1a4d9, type: 2}
     trait:
     - My life is great, I like getting older.
   - question: 7
-    answer:
-    - I love to bike and I read a lot.
-    - "I\u2019ve actually been reading to three Turkish kids and it\u2019s always
-      so much fun."
-    - They even call me grandma now!
-    - They used not really talk in school, and when they did it was only ever in
-      Turkish,
-    - but now they speak Dutch very well.
-    - "It\u2019s so important to me to get out of your social bubble sometimes. "
+    answer: {fileID: 11400000, guid: 691685b65e3d2c140aaaaf00fb7ed1e3, type: 2}
     trait:
     - I love to bike and I read a lot.
   - question: 10
-    answer:
-    - I have a nursing degree and I got more training while working at a hospital.
+    answer: {fileID: 11400000, guid: fc8831efa24806e44813aa296d961486, type: 2}
     trait:
     - I have a nursing degree.
   - question: 11
-    answer:
-    - "I think it\u2019s very important to empathize and relate to other people and
-      respect them."
-    - Everyone just wants to be happy.
+    answer: {fileID: 11400000, guid: 074c532ba5173984089242b2f245cf9f, type: 2}
     trait:
     - I think empathy is very important.
   - question: 13
-    answer:
-    - Definitely my family, my children and my grandchildren.
-    - 'They are so important to me. '
+    answer: {fileID: 11400000, guid: 9cd980cbf81c85046a0b8aef09b1a875, type: 2}
     trait:
     - The most important people in my life are my family.
   - question: 17
-    answer:
-    - I think racism is a very big problem.
-    - 'I always try to talk to people when I hear them making racist remarks. '
+    answer: {fileID: 11400000, guid: 011f01310cf0e4c4f972f8a1e6729a89, type: 2}
     trait:
     - 'I think '
   - question: 16
-    answer:
-    - "I\u2019m super jealous of people with a lot of musical and artistic talent.  "
+    answer: {fileID: 11400000, guid: 827486aecc5ffa045b6d9034124a0635, type: 2}
     trait:
     - I'm very jealous of people with a lot of talent.
   greetings:

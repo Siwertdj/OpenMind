@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Personality
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I would say that I am a pretty chaotic person. I can do a lot of things
+      at once, but sometimes it can definitely be a bit too much.
+    image: {fileID: 0}
+    background: []

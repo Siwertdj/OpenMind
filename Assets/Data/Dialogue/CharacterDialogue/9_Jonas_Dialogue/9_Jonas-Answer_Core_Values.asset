@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 9_Jonas-Answer_Core_Values
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: My core values are quality and open-mindedness. I think it is important
+      to be open and to not judge people you have never even spoken to. Searching
+      for "radical left"  will probably give you an idea of the rest.
+    image: {fileID: 0}
+    background: []

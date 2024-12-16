@@ -20,68 +20,40 @@ MonoBehaviour:
   voicePitch: 1.5
   answers:
   - question: 15
-    answer:
-    - 'I would say my biggest negative trait '
-    - is that I'm very chaotic.
-    - But I think it's also kind of a positive trait,
-    - my friends say it makes me really refreshing.
-    - And I think it make me more spontaneous and playful!
+    answer: {fileID: 11400000, guid: 1a156812a6713354b88e9c48179effe3, type: 2}
     trait:
     - My biggest negative trait is that I'm very chaotic, but it also has its positive
       side.
   - question: 7
-    answer:
-    - I really like music.
-    - I like listening but I love to sing!
-    - When I have time I also like to write my own music.
+    answer: {fileID: 11400000, guid: fc4ebd498e7c4164fbf86fb91251cde9, type: 2}
     trait:
     - I love to listen to and write music.
   - question: 11
-    answer:
-    - I think the most important thing right now is equality.
-    - There's so much hate towards women
-    - and minorities like people of color and trans people.
+    answer: {fileID: 11400000, guid: ee7d504998b719642bf8c8ba0de6fbce, type: 2}
     trait:
     - Equality is very important to me.
   - question: 6
-    answer:
-    - I think the growth of right-wing parties
-    - in so many countries right now is very scary.
-    - That's one of the reasons why I have
-    - a lot of respect for AOC in the US.
+    answer: {fileID: 11400000, guid: 743d2dc7f5e0724469eb39bf3cc94a1c, type: 2}
     trait:
     - I think the growth of right-wing parties is very scary.
   - question: 4
-    answer:
-    - I am bisexual. But I'm not in a relationship or anything
+    answer: {fileID: 11400000, guid: 3005d56a0b70db147a4872ca38ad4cca, type: 2}
     trait:
     - I am bisexual.
   - question: 16
-    answer:
-    - People often don't expect that I'm a bit of an introvert.
-    - I often struggle with socializing.
+    answer: {fileID: 11400000, guid: 113811d784721f44fa0daca721130442, type: 2}
     trait:
     - People are surprised when they hear I'm an introvert.
   - question: 13
-    answer:
-    - My sister, my roommate and my best friend are all very important to me.
-    - But if I had to choose one person, it would have to be my sister.
+    answer: {fileID: 11400000, guid: c7738df0a158ec342a531ec5a5ad2e8d, type: 2}
     trait:
     - My sister is the most important person to me.
   - question: 19
-    answer:
-    - If I won the lottery I would invest the money in a music career.
-    trait:
-    - If I won the lottery I would invest the money in a music career.
-  - question: 19
-    answer:
-    - If I won the lottery I would invest the money in a music career.
+    answer: {fileID: 11400000, guid: 733f57dac33dc6840a17f6668fe71a26, type: 2}
     trait:
     - If I won the lottery I would invest the money in a music career.
   - question: 18
-    answer:
-    - I think we should invest more money into education.
-    - There's no better investment than to invest in the future of your country.
+    answer: {fileID: 11400000, guid: 7be52b6c6ac842a41be5e3ecfd7ba409, type: 2}
     trait:
     - We should invest more money into education.
   greetings:

@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: 12_Jurgen-Answer_Religion
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I am not religious but I'm interested in spirituality. In a very broad
+      and practical way. I read books, meditate and have conversations about religion
+      and personal development.
+    image: {fileID: 0}
+    background: []

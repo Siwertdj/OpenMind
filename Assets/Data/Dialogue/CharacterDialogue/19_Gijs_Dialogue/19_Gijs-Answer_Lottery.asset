@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 19_Gijs-Answer_Lottery
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: 'If I won the lottery I would buy myself a huge house and I would get a
+      small pet goat. '
+    image: {fileID: 0}
+    background: []

@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: 5_Youssef-Answer_Education
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: I went to barber school and I'm currently employed as a barber.
+    image: {fileID: 0}
+    background: []

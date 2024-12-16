@@ -13,4 +13,10 @@ MonoBehaviour:
   m_Name: 10_Viktor-Answer_OddTrait
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: People think I look a lot younger than I am. And they don't expect me to
+      listen to heavy music. Some people just don't understand you.
+    image: {fileID: 0}
+    background: []
