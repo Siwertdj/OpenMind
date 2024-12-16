@@ -359,13 +359,59 @@ public class SceneController : MonoBehaviour
        // If tutorial is already open, close it
        if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
        {
+           Scene activeScene;
+           // Check which scene is currently loaded.
+           if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("DialogueScene");
+           }
+           else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+           }
+           else if (SceneManager.GetSceneByName("GameLossScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameLossScene");
+           }
+           else if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameWinScene");
+           }
+           else
+           {
+               activeScene = SceneManager.GetSceneByName("Loading");
+           }
+           
+           // Get the SceneName enum from the activeScene.
+           SceneName baseScene = SceneName.Loading;
+           
            GameManager.gm.UnpauseGame();
-           _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
+           _ = TransitionScene(SceneName.TutorialScene, baseScene, TransitionType.Unload);
        }
        else
        {
            GameManager.gm.PauseGame();
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
        }
+       
+    }
+
+    /// <summary>
+    /// Converts the given scene to the corresponding value in the SceneName enum.
+    /// </summary>
+    /// <param name="scene"></param>
+    /// <returns></returns>
+    public SceneName GetSceneName(Scene scene)
+    {
+        try
+        {
+            return (SceneName)Enum.Parse(typeof(SceneName), scene.name, true);
+        }
+        catch (ArgumentException)
+        {
+            // If scene name is not found, throw an error
+            Debug.LogError($"'{scene.name}' is not a valid enum name for {typeof(SceneName).Name}.");
+            throw;
+        }
     }
 }

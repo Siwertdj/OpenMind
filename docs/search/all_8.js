@@ -10,8 +10,11 @@ var searchData=
   ['instantiatepromptbuttons_7',['InstantiatePromptButtons',['../classDialogueManager.html#af2d36aaa1ce19613ec4c9517e6c5e991',1,'DialogueManager']]],
   ['instantnavigate_8',['InstantNavigate',['../classNPCSelectScroller.html#ae87d78e4c34851971e0ef7abc81842f8',1,'NPCSelectScroller']]],
   ['intro_9',['Intro',['../classNotebookPage.html#a3852aa90cff310c024324342b7fc3491',1,'NotebookPage']]],
-  ['introtest_10',['IntroTest',['../classNotebookPageEditTest.html#af132cdfa80a86977e5674bf80f2e373e',1,'NotebookPageEditTest']]],
-  ['isoutputting_11',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]],
-  ['isoutputtingchecktest_12',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
-  ['ispageoverflowing_13',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
+  ['introductionmanager_10',['IntroductionManager',['../classIntroductionManager.html',1,'']]],
+  ['introductionmanagerplaytest_11',['IntroductionManagerPlayTest',['../classIntroductionManagerPlayTest.html',1,'']]],
+  ['introductionsetuptest_12',['IntroductionSetUpTest',['../classIntroductionManagerPlayTest.html#a5db7b3122704215c4741d804cad2184e',1,'IntroductionManagerPlayTest']]],
+  ['introtest_13',['IntroTest',['../classNotebookPageEditTest.html#af132cdfa80a86977e5674bf80f2e373e',1,'NotebookPageEditTest']]],
+  ['isoutputting_14',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]],
+  ['isoutputtingchecktest_15',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
+  ['ispageoverflowing_16',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
 ];

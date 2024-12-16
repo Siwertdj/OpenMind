@@ -8,5 +8,8 @@ var searchData=
   ['animationcoroutine_5',['AnimationCoroutine',['../classTransitionAnimator.html#a40b3f28d4477f342da0af6ac11850d69',1,'TransitionAnimator']]],
   ['animationtype_6',['AnimationType',['../classTransitionAnimator.html#a229d9583e213d8e5d33e6620d8ab4068',1,'TransitionAnimator']]],
   ['answeropenquestion_7',['AnswerOpenQuestion',['../classDialogueManager.html#abb6f39f919eda143a1f4a6b300038afa',1,'DialogueManager']]],
-  ['awake_8',['Awake',['../classDialogueAnimator.html#a27adbfbcbec50038ef7dca9415ea9720',1,'DialogueAnimator.Awake()'],['../classGameManager.html#a2959177ee51ac31badbf8b1bc8f7f637',1,'GameManager.Awake()'],['../classSceneController.html#a9757c396c158689c379467d22cebb49f',1,'SceneController.Awake()'],['../classSelectionManager.html#a6cbd06a30d1d6036628d6d5aa7ac014e',1,'SelectionManager.Awake()']]]
+  ['apauseintrotest_8',['APauseIntroTest',['../classIntroductionManagerPlayTest.html#ad0e5a80a359abe476a52d58754047229',1,'IntroductionManagerPlayTest']]],
+  ['aplayintrotest_9',['APlayIntroTest',['../classIntroductionManagerPlayTest.html#a778ad39be02441ea572135f15c1f5c56',1,'IntroductionManagerPlayTest']]],
+  ['asetuptest_10',['ASetUpTest',['../classIntroductionManagerPlayTest.html#a416f5ecffd580282767070671d03a624',1,'IntroductionManagerPlayTest']]],
+  ['awake_11',['Awake',['../classDialogueAnimator.html#a27adbfbcbec50038ef7dca9415ea9720',1,'DialogueAnimator.Awake()'],['../classGameManager.html#a2959177ee51ac31badbf8b1bc8f7f637',1,'GameManager.Awake()'],['../classSceneController.html#a9757c396c158689c379467d22cebb49f',1,'SceneController.Awake()'],['../classSelectionManager.html#a6cbd06a30d1d6036628d6d5aa7ac014e',1,'SelectionManager.Awake()']]]
 ];

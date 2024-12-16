@@ -19,5 +19,6 @@ var searchData=
   ['transitionanimation_16',['TransitionAnimation',['../classUIManager.html#a62e8e87aeda96e991b1f77d74da62f1c',1,'UIManager']]],
   ['transitioning_17',['Transitioning',['../classSceneController.html#ab3399797d5a08b2f9a47157dad6023fa',1,'SceneController']]],
   ['transitionscene_18',['TransitionScene',['../classSceneController.html#ace56faf58d214c72d6274a140b214ed6',1,'SceneController']]],
-  ['typeanimation_19',['TypeAnimation',['../classTimelineManager.html#a7b712712fd2f3e1b5649a60816cc8b01',1,'TimelineManager']]]
+  ['typeanimation_19',['TypeAnimation',['../classIntroductionManager.html#af1a4cced1c7945f4662a29b9d5fb60da',1,'IntroductionManager']]],
+  ['typeanimationtest_20',['TypeAnimationTest',['../classIntroductionManagerPlayTest.html#a20526ed4deee0e022ce73594d5386d82',1,'IntroductionManagerPlayTest']]]
 ];
