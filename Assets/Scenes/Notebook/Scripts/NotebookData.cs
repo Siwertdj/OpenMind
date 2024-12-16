@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
@@ -54,10 +54,7 @@ public class NotebookData
     /// <summary>
     /// Get the answers the player has obtained from a character.
     /// </summary>
-    public string GetAnswers(CharacterInstance character)
-    {
-        return _pages[character].Intro() + _pages[character].QuestionText();
-    }
+    public List<(string, string)> GetAnswers(CharacterInstance character) => _pages[character].QuestionText();
     
     /// <summary>
     /// Save the text that the player has written about a character to the notebookpage.
