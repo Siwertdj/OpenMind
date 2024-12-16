@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void OpenMenu()
     {
-        GameManager.gm.IsPaused = true;
+        GameManager.gm.PauseGame();
         gameButtons.SetActive(false);
         
             // '_ =' throws away the await
@@ -42,7 +42,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        GameManager.gm.IsPaused = false;
+        GameManager.gm.UnpauseGame();
         gameButtons.SetActive(true);
     }
 

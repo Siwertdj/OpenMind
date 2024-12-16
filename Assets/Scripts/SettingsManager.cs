@@ -93,11 +93,11 @@ public class SettingsManager : MonoBehaviour
         switch (textSize)
         {
             case TextSize.Small:
-                return 35;
-            case TextSize.Medium:
-                return 45;
-            default:
                 return 55;
+            case TextSize.Medium:
+                return 70;
+            default:
+                return 85;
         }
     }
 

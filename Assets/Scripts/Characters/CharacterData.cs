@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
@@ -17,6 +17,7 @@ public class CharacterData : ScriptableObject
     public                   Sprite happyAvatar;
     public                   Sprite unhappyAvatar;
     [Range(0.5f, 2f)] public float  voicePitch = 1;
+    public Vector2 facePivot = new(0.5f, 0.8f);
 
     [SerializeField] public KeyValuePair[] answers;
     [SerializeField] public DialogueLines[] greetings;

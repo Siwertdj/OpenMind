@@ -3,9 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = System.Random;
@@ -24,8 +22,13 @@ public class GameManager : MonoBehaviour
     public                    GameEvent   onEpilogueStart;
  
 
-    public bool IsPaused { get; set; } = false;
-    
+    #region Pausing
+    private int pauseStack = 0;
+    public bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
+
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
     private int numQuestions; // Amount of times the player can ask a question
@@ -276,7 +279,7 @@ public class GameManager : MonoBehaviour
             StartEpilogue();
     }
     #endregion
-    
+
     #region InstantiateGameOrCycles
     /// <summary>
     /// Makes a randomized selection of characters for this loop of the game, from the total database of all characters.
@@ -327,9 +330,7 @@ public class GameManager : MonoBehaviour
         }
         //Randomly select a culprit
         int culrpitId = random.Next(0, story.numberOfCharacters);
-        Debug.Log($"Culprit id: {culrpitId}");
         currentCharacters[culrpitId].isCulprit = true;
-        Debug.Log($"Culprit is: {currentCharacters[culrpitId].characterName}? {currentCharacters[culrpitId].isCulprit}");
     }
 
     /// <summary>
@@ -413,8 +414,7 @@ public class GameManager : MonoBehaviour
     // This region contains methods regarding dialogue
     #region Dialogue
     /// <summary>
-    /// Starts a new dialogue from Text, and not from a character. Therefore, we need only pass
-    /// the list of string. The rest is handled within this method.
+    /// Starts a new hint dialogue.
     /// </summary>
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
     public async void StartDialogue(List<string> dialogue)
@@ -425,7 +425,7 @@ public class GameManager : MonoBehaviour
         // TODO: Review the originscene 'GetActiveScene'. This is called by StartCycle, where we go Dialogue --> Dialogue.
         // Transition to dialogue scene and await the loading operation
         await sc.TransitionScene(
-            SceneController.sc.GetSceneName(SceneManager.GetActiveScene()),
+            SceneController.SceneName.DialogueScene,
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition,
             true);
@@ -465,7 +465,8 @@ public class GameManager : MonoBehaviour
 
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
-
+        
+        // Change the gamestate
         gameState = GameState.NpcDialogue;
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.

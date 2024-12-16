@@ -7,8 +7,11 @@ public class DDOLManager : MonoBehaviour
 {
     private void Awake()
     {
-        if(FindObjectsOfType<DDOLManager>().Length > 1)
-            Destroy(this);
+        //if (GameObject.FindGameObjectsWithTag("DDOLManager").Length > 1)
+        if (FindObjectsOfType<DDOLManager>().Length > 1)
+        {
+            Destroy(this);   
+        }
         else
         {
             DontDestroyOnLoad(this);
