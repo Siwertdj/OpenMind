@@ -11,12 +11,13 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    private GameObject characterCustomInput;
-    public GameObject characterInfo;
-    [NonSerialized] public NotebookData notebookData;
-    private CharacterInstance currentCharacter;
-    private int currentCharacterId;
-    private Button selectedButton;
+    private                GameObject        characterCustomInput;
+    public                 GameObject        characterInfo;
+    [NonSerialized] public NotebookData      notebookData;
+    private                CharacterInstance currentCharacter;
+    private                int               currentCharacterId;
+    private                Button            selectedButton;
+    private                bool              showingMultiplayerNotebook;
 
     [Header("Tab Select Button Refs")]
     [SerializeField] private Button personalButton;
@@ -45,7 +46,7 @@ public class NotebookManager : MonoBehaviour
         InitializeNotebook(notebookData);
         showingMultiplayerNotebook = false;
         personalButton.interactable = true;
-        multiplayerButton.interactable = true;
+        //multiplayerButton.interactable = true;
     }
     
     public void ToggleMultiplayerNotebook()
