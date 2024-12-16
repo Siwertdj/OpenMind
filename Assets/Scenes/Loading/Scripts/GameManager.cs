@@ -268,7 +268,8 @@ public class GameManager : MonoBehaviour
     private void MultiplayerNotebookExchange()
     {
         // Send notebook
-        MultiplayerManager.mm.SendNotebook();
+        if (MultiplayerManager.mm is not null) 
+            MultiplayerManager.mm.SendNotebook();
     }
     
     #endregion
