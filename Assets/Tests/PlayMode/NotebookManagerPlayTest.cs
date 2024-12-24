@@ -65,7 +65,7 @@ public class NotebookManagerPlayTest
     public IEnumerator StartNotebookTest()
     {
         // Check if some basic properties hold
-        Assert.IsFalse(nm.characterInfo.activeSelf);
+        Assert.IsFalse(nm.Test_CharacterInfoField.activeSelf);
         Assert.IsTrue(nm.Test_PersonalInputField.gameObject.activeSelf);
         Assert.AreEqual(nm.notebookData, gm.notebookData);
         Assert.IsFalse(nm.Test_GetPersonalButton().interactable);

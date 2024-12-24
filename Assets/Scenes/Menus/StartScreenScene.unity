@@ -1222,6 +1222,9 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
   maxLineLength: 30
   textSize: 0
+  OnTextSizeChanged:
+    m_PersistentCalls:
+      m_Calls: []
   defaultMusicFadeInTime: 0.5
 --- !u!4 &582075137
 Transform:

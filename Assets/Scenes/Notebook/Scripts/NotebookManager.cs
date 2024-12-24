@@ -12,13 +12,16 @@ using UnityEngine.UI;
 public class NotebookManager : MonoBehaviour
 {
     private GameObject characterCustomInput;
-    public GameObject characterInfo;
-    [NonSerialized] public NotebookData notebookData;
     private CharacterInstance currentCharacter;
-    private int currentCharacterId;
+    private int currentCharacterIndex;
+    private int currentPageIndex;
     private Button selectedButton;
+    [NonSerialized] public NotebookData notebookData;
 
-    [Header("Tab Select Button Refs")]
+    [Header("Field References")]
+    [SerializeField] private GameObject characterInfo;
+
+    [Header("Tab Select Button References")]
     [SerializeField] private Button personalButton;
     [SerializeField] private Button[] nameButtons;
 
@@ -31,10 +34,6 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject inputObjectPrefab;
     [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject pagePrefab;
-
-    private int currentPageIndex = 0;
-
-    private Queue<GameObject> allCharacterInfo = new();
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
@@ -52,7 +51,7 @@ public class NotebookManager : MonoBehaviour
         OpenPersonalNotes();
 
         // Recreate tab when font size is changed
-        SettingsManager.sm.OnTextSizeChanged.AddListener(() => OpenCharacterTab(currentCharacterId));
+        SettingsManager.sm.OnTextSizeChanged.AddListener(() => OpenCharacterTab(currentCharacterIndex));
     }
     
     /// <summary>
@@ -83,16 +82,21 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void OpenPersonalNotes()
     {
-        currentCharacterId = -1;
+        // An id of -1 signifies the custom notes tab
+        currentCharacterIndex = -1;
 
         // Save character notes
         SaveNotes();
+
         // Close the character tab 
         characterInfo.SetActive(false);
-        // activate input
-        personalInputField.gameObject.SetActive(true);
-        personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-        Debug.Log(personalButton);
+
+        // Activate input field
+        var inputField = personalInputField.GetComponent<TMP_InputField>();
+        inputField.gameObject.SetActive(true);
+        inputField.text = notebookData.GetPersonalNotes();
+        inputField.pointSize = SettingsManager.sm.GetFontSize();
+
         // Make button clickable
         ChangeButtons(personalButton);
         
@@ -112,7 +116,7 @@ public class NotebookManager : MonoBehaviour
             return;
         }
 
-        currentCharacterId = id;
+        currentCharacterIndex = id;
 
         // Destroy info from the previous character
         // Keep track of number of pages so we display the correct number
@@ -132,6 +136,10 @@ public class NotebookManager : MonoBehaviour
 
         // Get the character instance
         currentCharacter = GameManager.gm.currentCharacters[id];
+
+        // The queue which will hold all the character's info
+        // This info will later be divided into pages
+        Queue<GameObject> allCharacterInfo = new();
 
         // Create icon & name object
         var introObject = Instantiate(introObjectPrefab);
@@ -158,7 +166,7 @@ public class NotebookManager : MonoBehaviour
             LayoutRebuilder.ForceRebuildLayoutImmediate(logObject.GetComponent<RectTransform>());
         }
 
-        CreateCharacterPages();
+        CreateCharacterPages(allCharacterInfo);
 
         // Make button clickable
         ChangeButtons(nameButtons[id]);
@@ -183,12 +191,12 @@ public class NotebookManager : MonoBehaviour
         if (newIndex < 0)
         {
             // The index is less than 0, so navigate to previous character
-            NavigateCharacters(currentCharacterId - 1);
+            NavigateCharacters(currentCharacterIndex - 1);
         }
         else if (newIndex >= characterInfo.transform.childCount)
         {
             // The index is greater than the amount of pages, so navigate to next character
-            NavigateCharacters(currentCharacterId + 1);
+            NavigateCharacters(currentCharacterIndex + 1);
         }
         else
         {
@@ -228,7 +236,7 @@ public class NotebookManager : MonoBehaviour
     /// a part of the notebook data regarding the selected character. All pages apart
     /// from the first are automatically set to inactive.
     /// </summary>
-    private void CreateCharacterPages()
+    private void CreateCharacterPages(Queue<GameObject> allCharacterInfo)
     {
         currentPageIndex = 0;
 
@@ -352,6 +360,7 @@ public class NotebookManager : MonoBehaviour
     public TMP_InputField Test_PersonalInputField { get { return personalInputField; } }
     public Button Test_GetPersonalButton() => personalButton;
     public Button[] Test_GetNameButtons() => nameButtons;
+    public GameObject Test_CharacterInfoField { get { return characterInfo; } }
     #endif
     #endregion
 }
