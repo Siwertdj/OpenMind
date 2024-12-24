@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 /// <summary>
 /// Manager class for the notebook scene.
@@ -17,6 +18,11 @@ public class NotebookManager : MonoBehaviour
     private int currentPageIndex;
     private Button selectedButton;
     [NonSerialized] public NotebookData notebookData;
+
+    [Header("Settings")]
+    [SerializeField] private float tabAnimationDuration;
+    [SerializeField] private float expandedTabHeight;
+    [SerializeField] private float collapsedTabHeight;
 
     [Header("Field References")]
     [SerializeField] private GameObject characterInfo;
@@ -349,7 +355,14 @@ public class NotebookManager : MonoBehaviour
     private void ChangeButtons(Button clickedButton)
     {
         if (selectedButton != null)
+        {
             selectedButton.interactable = true;
+            selectedButton.GetComponent<NotebookTabButton>().AnimateTab(
+                collapsedTabHeight, tabAnimationDuration);
+        }
+
+        clickedButton.GetComponent<NotebookTabButton>().AnimateTab(
+            expandedTabHeight, tabAnimationDuration);
 
         selectedButton = clickedButton;
         selectedButton.interactable = false;
