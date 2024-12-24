@@ -357,10 +357,13 @@ public class NotebookManager : MonoBehaviour
         if (selectedButton != null)
         {
             selectedButton.interactable = true;
+
+            // Collapse the previously clicked button
             selectedButton.GetComponent<NotebookTabButton>().AnimateTab(
                 collapsedTabHeight, tabAnimationDuration);
         }
 
+        // Expand the clicked button
         clickedButton.GetComponent<NotebookTabButton>().AnimateTab(
             expandedTabHeight, tabAnimationDuration);
 

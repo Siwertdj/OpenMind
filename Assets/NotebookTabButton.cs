@@ -7,6 +7,11 @@ public class NotebookTabButton : MonoBehaviour
 {
     private Coroutine animationCoroutine;
 
+    /// <summary>
+    /// Smoothly set this tab to the given height.
+    /// </summary>
+    /// <param name="newHeight">The height the tab will have by the end of the animation.</param>
+    /// <param name="duration">The duration of the animation.</param>
     public void AnimateTab(float newHeight, float duration)
     {
         if (animationCoroutine != null)
@@ -16,6 +21,9 @@ public class NotebookTabButton : MonoBehaviour
             TabAnimationCoroutine(newHeight, duration));
     }
 
+    /// <summary>
+    /// The coroutine which animates the tab expanding/collapsing.
+    /// </summary>
     private IEnumerator TabAnimationCoroutine(float newHeight, float duration)
     {
         var rect = GetComponent<RectTransform>();
@@ -30,9 +38,9 @@ public class NotebookTabButton : MonoBehaviour
         {
             time += Time.deltaTime;
 
-            float height = Mathf.Lerp(
-                originalHeight, newHeight,
-                time / duration);
+            // Use SmoothStep to create a dampened interpolation
+            float timeStep = Mathf.SmoothStep(0, 1, time / duration);
+            float height = Mathf.Lerp(originalHeight, newHeight, timeStep);
 
             rect.sizeDelta = new Vector2(rect.sizeDelta.x, height);
 
