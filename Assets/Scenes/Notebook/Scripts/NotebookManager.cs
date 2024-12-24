@@ -85,6 +85,8 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void OpenPersonalNotes()
     {
+        currentCharacterId = -1;
+
         // Save character notes
         SaveNotes();
         // Close the character tab 
@@ -104,6 +106,13 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void OpenCharacterTab(int id)
     {
+        // If id is out of bounds, open personal notes
+        if (id < 0 || id >= GameManager.gm.currentCharacters.Count)
+        {
+            OpenPersonalNotes();
+            return;
+        }
+
         currentCharacterId = id;
 
         // Destroy info from the previous character
@@ -205,10 +214,11 @@ public class NotebookManager : MonoBehaviour
     private void NavigateCharacters(int id)
     {
         // Set the id so that we remain within the correct bounds
-        if (id >= GameManager.gm.currentCharacters.Count)
-            id = 0;
-        else if (id < 0)
-            id = GameManager.gm.currentCharacters.Count - 1;
+        int characterCount = GameManager.gm.currentCharacters.Count;
+        if (id > characterCount)
+            id = -1;
+        else if (id < -1)
+            id = characterCount - 1;
 
         OpenCharacterTab(id);
     }
