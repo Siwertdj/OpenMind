@@ -14,5 +14,10 @@ public class NotebookLogObject : MonoBehaviour
     {
         questionText.text = question;
         answerText.text = answer;
+
+        // Set appropriate font sizes
+        if (SettingsManager.sm == null) return;
+        questionText.fontSize = SettingsManager.sm.GetFontSize() / 1.5f;
+        answerText.fontSize = SettingsManager.sm.GetFontSize() / 1.5f;
     }
 }

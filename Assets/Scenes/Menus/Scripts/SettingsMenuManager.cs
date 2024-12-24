@@ -164,6 +164,7 @@ public class SettingsMenuManager : MonoBehaviour
         
         // Change the textSize from SettingsManager
         SettingsManager.sm.textSize = size;
+        SettingsManager.sm.OnTextSizeChanged.Invoke();
         
         // Change the fontSize of the example
         ChangeTextSize();

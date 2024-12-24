@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -32,6 +33,8 @@ public class SettingsManager : MonoBehaviour
         Medium,
         Large
     }
+
+    public UnityEvent OnTextSizeChanged;
     
 
     #region Settings Variables

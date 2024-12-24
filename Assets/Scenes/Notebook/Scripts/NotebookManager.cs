@@ -41,20 +41,18 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     void Start()
     {
-        // close character notes
-        characterInfo.SetActive(false);
-        // Open personal notes
-        personalInputField.gameObject.SetActive(true);
-        // assign character names to buttons
+        // Assign character names to buttons
         InitializeCharacterButtons();
-        // get notebookdata
+
+        // Get notebookdata
         notebookData = GameManager.gm.notebookData;
         personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-        selectedButton = personalButton;
-        personalButton.interactable = false;
 
-        // Set the appropriate footer text
-        currentTabText.text = "Personal Notes";
+        // Open custom notes page
+        OpenPersonalNotes();
+
+        // Recreate tab when font size is changed
+        SettingsManager.sm.OnTextSizeChanged.AddListener(() => OpenCharacterTab(currentCharacterId));
     }
     
     /// <summary>
@@ -94,6 +92,7 @@ public class NotebookManager : MonoBehaviour
         // activate input
         personalInputField.gameObject.SetActive(true);
         personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        Debug.Log(personalButton);
         // Make button clickable
         ChangeButtons(personalButton);
         
@@ -142,6 +141,7 @@ public class NotebookManager : MonoBehaviour
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
         inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
+        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() / 1.5f;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
@@ -258,6 +258,10 @@ public class NotebookManager : MonoBehaviour
                 go.GetComponent<RectTransform>().SetParent(page.transform, false);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
 
+                // TODO: Find an alternative to this, as it is quite slow
+                // It is currently necessary to make sure the layout size is set immediately
+                Canvas.ForceUpdateCanvases();
+
                 // Set the new page to be inactive
                 page.SetActive(false);
             }
@@ -336,7 +340,9 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void ChangeButtons(Button clickedButton)
     {
-        selectedButton.interactable = true;
+        if (selectedButton != null)
+            selectedButton.interactable = true;
+
         selectedButton = clickedButton;
         selectedButton.interactable = false;
     }
