@@ -86,6 +86,8 @@ public class TutorialManagerPlayTest
         Assert.AreEqual(PlayState.Playing,tm.TutorialTimeline.state);
         // Check that notebook button is disabled at the start of the tutorial.
         Assert.IsFalse(notebookButton.enabled);
+        // Check that Notebook is closed when the tutorial is started. 
+        Assert.IsFalse(SceneManager.GetSceneByName("NotebookScene").isLoaded);
         yield return null;
     }
     

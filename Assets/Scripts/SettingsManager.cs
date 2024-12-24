@@ -20,6 +20,9 @@ public class SettingsManager : MonoBehaviour
     
     private AudioSource musicSource;
     
+    // TODO: Integrate this with text-size
+    public int maxLineLength = 30;
+    
     // Text size to be used for the text components
     public TextSize textSize;
     
@@ -44,7 +47,6 @@ public class SettingsManager : MonoBehaviour
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
-        DontDestroyOnLoad(this.gameObject);
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;
@@ -91,11 +93,11 @@ public class SettingsManager : MonoBehaviour
         switch (textSize)
         {
             case TextSize.Small:
-                return 35;
-            case TextSize.Medium:
-                return 45;
-            default:
                 return 55;
+            case TextSize.Medium:
+                return 70;
+            default:
+                return 85;
         }
     }
 

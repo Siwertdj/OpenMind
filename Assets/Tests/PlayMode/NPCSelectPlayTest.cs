@@ -252,7 +252,7 @@ public class NPCSelectPlayTest
             yield return new WaitForSeconds(scroller.scrollDuration);
 
             // Only test x value, as y value is irrelevant
-            Assert.AreEqual(Screen.width / 2, scroller.Test_Children[childIndex].position.x,
+            Assert.AreEqual((double)Screen.width / 2, scroller.Test_Children[childIndex].position.x,
                 $"The child is at x position {scroller.Test_Children[childIndex].position.x}, " +
                 $"but the center of the screen is at {Screen.width / 2}");
         }

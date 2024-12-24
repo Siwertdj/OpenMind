@@ -42,8 +42,8 @@ public class DebugManager : MonoBehaviour
     private void Awake()
     {
         #if DEBUG && UNITY_EDITOR
-        if (!FullyDisablePopups)
-            DontDestroyOnLoad(gameObject);
+        if (FullyDisablePopups)
+            Destroy(this);
         
         IsDebug = true;
         #endif

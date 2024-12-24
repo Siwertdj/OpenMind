@@ -35,7 +35,8 @@ public class GameMenuManager : MonoBehaviour
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
             SceneController.SceneName.Loading, 
-            SceneController.TransitionType.Unload);
+            SceneController.TransitionType.Unload,
+            false);
         
         // After that is done, we call UIManager to finish the operation.
         GameManager.gm.GetComponent<UIManager>().CloseMenu();
@@ -82,7 +83,8 @@ public class GameMenuManager : MonoBehaviour
         _ = SceneController.sc.TransitionScene(
             SceneController.SceneName.Loading, 
             SceneController.SceneName.SettingsScene, 
-            SceneController.TransitionType.Additive);
+            SceneController.TransitionType.Additive,
+            true);
     }
 
     /// <summary>

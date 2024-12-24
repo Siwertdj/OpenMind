@@ -34,6 +34,12 @@ public class DialogueAnimator : MonoBehaviour
     public bool InDialogue { get; private set; } = false;
 
     /// <summary>
+    /// Is there dialogue currently on the screen?
+    /// </summary>
+    public bool InOpenQuestion { private get;  set; } = false;
+    
+
+    /// <summary>
     /// Is dialogue currently being written?
     /// </summary>
     public bool IsOutputting { get; private set; } = false;
@@ -129,11 +135,8 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     public void SkipDialogue()
     {
-        // Don't do anything if the game is paused
-        if (GameManager.gm?.IsPaused == true)
-            return;
-
-        if (!InDialogue)
+        // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
+        if (GameManager.gm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue

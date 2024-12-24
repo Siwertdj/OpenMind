@@ -14,131 +14,76 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Jonas
   id: 9
-  avatar: {fileID: 21300000, guid: 5e091d5f420e4dd4784e9b0f1440e220, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 5e091d5f420e4dd4784e9b0f1440e220, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5084, y: 0.7997}
   answers:
   - question: 1
-    answer:
-    - I am 23 years old.
+    answer: {fileID: 11400000, guid: b5ba2365f92b0b740be6854f53cea9ff, type: 2}
     trait:
     - I am 23 years old.
   - question: 2
-    answer:
-    - Life's good!
-    - I am living in a privately rented home in a working class neighbourhood, together
-      with with pet rodents.
-    - I feel like I am that one weirdo there.
-    - I don't have a relationship but I have a lot of friends from my studies and
-      from before I started studying.
+    answer: {fileID: 11400000, guid: 8b6df7ab529a01a4da5311dd67c66da4, type: 2}
     trait:
     - I am living in a working class neighbourhood and I have a lot of friends.
   - question: 3
-    answer:
-    - I am a fan of the work that public figures do.
-    - But I am not really a fan of the public figures themselves.
+    answer: {fileID: 11400000, guid: 9b4f66479c0b8ff48a47093e07245803, type: 2}
     trait:
     - I am inspired by the work that public figures do.
   - question: 4
-    answer:
-    - I am a transgender man that is mostly asexual.
-    - I am open to both monogamy and polyamory, it all depends on the wishes of my
-      partner
-    - I don't believe there to be one true love though, with eight milliard people
-      on this planet.
-    - I have room in my heart.
+    answer: {fileID: 11400000, guid: 530e9b9d17adc5a428c36e81003c7ca8, type: 2}
     trait:
     - I am a transgender and asexual.
   - question: 5
-    answer:
-    - I am enjoying life right now because I am busy doing things I'm interested
-      in.
-    - I really like gaming and art.
-    - I mean art in the broadest sense of the word.
+    answer: {fileID: 11400000, guid: c51c0dedc55716f4d9959ed79d4aba9e, type: 2}
     trait:
     - I enjoy my life right now because I am busy doing things I'm interested in.
   - question: 9
-    answer:
-    - I am not religious anymore.
-    - I grew up going to church but I don't believe in god and I don't follow those
-      doctrines.
+    answer: {fileID: 11400000, guid: e406ec4630174ea40a41092e40adaf37, type: 2}
     trait:
     - I am not religious, even though I grew up going to church.
   - question: 10
-    answer:
-    - I am currenlty studying to get my bachelors degree at university.
+    answer: {fileID: 11400000, guid: 664ec4fb04cff9b4e97f48aa0c9dc4cf, type: 2}
     trait:
     - I am studying to get my bachelors degree at university.
   - question: 11
-    answer:
-    - My core values are quality and open-mindedness.
-    - I think it is important to be open and to not judge people you have never even
-      spoken to.
-    - Searching for "radical left"  will probably give you an idea of the rest.
+    answer: {fileID: 11400000, guid: 32302fa9e397a084eaa6d3dc0171571b, type: 2}
     trait:
     - My core values are quality and open-mindedness.
   - question: 12
-    answer:
-    - I am a very passionate person.
-    - When I'm interested in something it becomes my entire life.
-    - One of the things I am very passionate about is social justice.
-    - My friends would probably call me energetic.
-    - In general I'm pretty quiet but when my friends get me started, I can talk
-      for hours.
+    answer: {fileID: 11400000, guid: d297569ee34d5ea42bb2e5b28a72ef77, type: 2}
     trait:
     - I am a very passionate person.
   - question: 13
-    answer:
-    - There are many people that are important to me, for different reasons.
-    - But, I think my grandma is the most important of them all.
+    answer: {fileID: 11400000, guid: 3976f3a7ea1ea754799481a9332ce942, type: 2}
     trait:
     - My granda is the most important person in my life.
   - question: 15
-    answer:
-    - I am very impatient, but it's not a time thing.
-    - If something is bothering me, sometimes I don't handle it well.
+    answer: {fileID: 11400000, guid: 134bcd4e601f82c4faacbacd0f1a3f1b, type: 2}
     trait:
     - My negative trait is that I'm impantient.
   - question: 19
-    answer:
-    - I would pay off my student debt and donate the rest of the money.
-    - I think being a multimillionair is unethical.
+    answer: {fileID: 11400000, guid: 877d5fe79a9b54f4fab5e25d6e9b37c6, type: 2}
     trait:
     - If I win the lottery I would pay off my student debt and donate what is left.
   - question: 6
-    answer:
-    - I think the whole political spectrum is moving towards the right.
-    - I think people forget they are running a country and not a business that needs
-      to make money.
+    answer: {fileID: 11400000, guid: b427158b60fbe1149bb781294603307a, type: 2}
     trait:
     - My political opinion is that people forget they are running a country and not
       a business that needs to make money.
   - question: 20
-    answer:
-    - I am vegetarian.
-    - Sometimes I accidentally eat vegan because animal products are expensive.
-    - So many people are hungry and we are throwing away milliards kilos of food.
+    answer: {fileID: 11400000, guid: ca80610c8ec11554893cef144d511bcb, type: 2}
     trait:
     - I am vegetarian.
   - question: 18
-    answer:
-    - I think it is great that we have different levels because not everyone functions
-      in the same way.
-    - That being said, I don't think it's right to consider them higher or lower.
-    - I think we are too focussed on grading how well someone can reproduce something
-      instead of actually understanding and applying it.
-    - Lastly, the social dynamics of high school are not for me.
+    answer: {fileID: 11400000, guid: 8833f54b9f168de448f4d17c5a52302f, type: 2}
     trait:
     - I think the Dutch school system is too focussed on grading how well someone
       can reproduce something instead of applying it.
   - question: 17
-    answer:
-    - I care about the rights of minority groups.
-    - Trans rights to be more specific but also for religious and ethnic minorities.
-    - I think I'm passionate about social justice in general.
-    - Besides that I think trusting science is important.
-    - A lot of people are doing their own research and the legitimacy from real scientific
-      research is declining because of that.
+    answer: {fileID: 11400000, guid: 5620d20cfa497ca4fbc4434149a4fe00, type: 2}
     trait:
     - I care about the rights of minority groups.
   greetings:

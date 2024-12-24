@@ -14,74 +14,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Tess
   id: 16
-  avatar: {fileID: 21300000, guid: d28d604b71d7de04986139bd5f77adbb, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: d28d604b71d7de04986139bd5f77adbb, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.4951, y: 0.7515}
   answers:
   - question: 1
-    answer:
-    - I am 41 years old.
+    answer: {fileID: 11400000, guid: ed4a3d45428ed8d4eb0f0fe585718a24, type: 2}
     trait: []
   - question: 3
-    answer:
-    - I love Prince, I cried so much when I heard he died.
+    answer: {fileID: 11400000, guid: 0c451071cc9ea704bb77970f13c1d31e, type: 2}
     trait:
     - I love Prince.
   - question: 6
-    answer:
-    - "I think it\u2019s very, very important to vote."
-    - I always vote left.
+    answer: {fileID: 11400000, guid: 7052c20a4fda7714ca971589c82e7d23, type: 2}
     trait:
     - I vote left.
   - question: 7
-    answer:
-    - I love to take walks. I have to walk every day,
-    - "otherwise my head is just so full and it\u2019s nice to be able to just walk
-      it off."
-    - I also love music. I listen to everything but I especially love hiphop,
-    - I could talk about it for hours.
+    answer: {fileID: 11400000, guid: 07cd5da83d011a74380a3ca66e07f34b, type: 2}
     trait:
     - I love to take walks and to listen to music.
   - question: 9
-    answer:
-    - I am not religious but I do consider myself spiritual.
-    - "I believe that there\u2019s more than what we can currently see."
-    - I do everything on feeling, I always listen to my gut feeling.
+    answer: {fileID: 11400000, guid: 220057baa4ba27f4a80c70be5db1bde6, type: 2}
     trait:
     - I am spiritual.
   - question: 11
-    answer:
-    - I think family, love and equality are the most important things in life.
-    - I think everyone should be able to be themselves.
-    - I also think all children should have equal chances
-    - and should get as many resources as possible to be able to be themselves.
+    answer: {fileID: 11400000, guid: 43ac20c060ddabc4fabc6903ae4e5e71, type: 2}
     trait:
     - I think family, love and equality are important.
   - question: 13
-    answer:
-    - My children are the most important people in my life.
-    - I think everyone should be able to be themselves.
+    answer: {fileID: 11400000, guid: 23a627c638e445e45bd748e8cf05f83c, type: 2}
     trait:
     - The most important people to me are my kids.
   - question: 15
-    answer:
-    - "I think I\u2019m a very chaotic person, I always say what I\u2019m thinking "
-    - "and I don\u2019t really know if people like me when we first meet."
-    - I can just be a bit much sometimes.
+    answer: {fileID: 11400000, guid: ad6f44db415e15a4db8321824de23227, type: 2}
     trait:
     - I am a very chaotic person.
   - question: 16
-    answer:
-    - "I\u2019m a super big softie, anything could make me cry."
+    answer: {fileID: 11400000, guid: 206b6a946f093734e9e2911e310cd368, type: 2}
     trait:
     - I could cry about anything.
   - question: 17
-    answer:
-    - "I think Gaza is in a terrible situation. I have been saying \u201CFree Palestine\u201D
-      since I was 10."
-    - 'I have Arabic friends from when I was young and '
-    - I am embarrassed that my children are growing up in a world where people are
-      tolerating this.
+    answer: {fileID: 11400000, guid: 2586fcbb7ef68c34f84807e1e6ed1003, type: 2}
     trait:
     - I think the occupation of Palestinian territory is a big issue.
   greetings:
