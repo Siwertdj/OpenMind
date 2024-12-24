@@ -235,14 +235,20 @@ public class NotebookManager : MonoBehaviour
         // Create the first page
         var page = Instantiate(pagePrefab, characterInfo.transform);
 
+        // While there are still notebook objects to be placed
         while (allCharacterInfo.Count > 0)
         {
-            // Dequeue the object
+            // Dequeue an object
             var go = allCharacterInfo.Dequeue();
+
+            // Set its parent with a vertical layout group component
             go.GetComponent<RectTransform>().SetParent(page.transform, false);
 
+            // Force rebuild the layout so the height values are correct
             LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
 
+            // If it doesn't fit, make a new page and place it in there
+            // If it does fit, move on to the next object
             if (IsPageOverflowing(page.GetComponent<RectTransform>()))
             {
                 // Page is overflowing, so create a new page
@@ -251,10 +257,6 @@ public class NotebookManager : MonoBehaviour
                 // Add object to this new page instead
                 go.GetComponent<RectTransform>().SetParent(page.transform, false);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
-
-                // TODO: Find an alternative to this, as it is quite slow
-                // It is currently necessary to make sure the layout size is set immediately
-                Canvas.ForceUpdateCanvases();
 
                 // Set the new page to be inactive
                 page.SetActive(false);
