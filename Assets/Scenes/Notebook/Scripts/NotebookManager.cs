@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System.Collections;
 
 /// <summary>
 /// Manager class for the notebook scene.
@@ -47,7 +46,7 @@ public class NotebookManager : MonoBehaviour
     void Start()
     {
         // Assign character names to buttons
-        InitializeCharacterButtons();
+        InitializeTabButtons();
 
         // Get notebookdata
         notebookData = GameManager.gm.notebookData;
@@ -56,14 +55,15 @@ public class NotebookManager : MonoBehaviour
         // Open custom notes page
         OpenPersonalNotes();
 
-        // Recreate tab when font size is changed
+        // Add listener to recreate tab when font size is changed
         SettingsManager.sm.OnTextSizeChanged.AddListener(() => OpenCharacterTab(currentCharacterIndex));
     }
     
     /// <summary>
-    /// Initialize the character buttons, use their names as the button text and add the button event.
+    /// Initialize the tab buttons (custom notes & character tabs), 
+    /// For characters, use their names as the button text and add the button event.
     /// </summary>
-    public void InitializeCharacterButtons()
+    public void InitializeTabButtons()
     {
         // Initialise all buttons for which there are characters
         var characters = GameManager.gm.currentCharacters;
@@ -155,7 +155,7 @@ public class NotebookManager : MonoBehaviour
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
         inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() / 1.5f;
+        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() / 1.2f;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 

@@ -53,7 +53,7 @@ public class NotebookManagerEditTest
     [Test]
     public void InitializeCharacterButtonsTest()
     {
-        nm.InitializeCharacterButtons();
+        nm.InitializeTabButtons();
         
         var buttons = nm.Test_GetNameButtons();
 
