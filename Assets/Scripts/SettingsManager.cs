@@ -34,6 +34,10 @@ public class SettingsManager : MonoBehaviour
         Large
     }
 
+    // Multipliers for different text sizes
+    public const float M_SMALL_TEXT = 0.8f;
+    public const float M_LARGE_TEXT = 1.4f;
+
     public UnityEvent OnTextSizeChanged;
     
 

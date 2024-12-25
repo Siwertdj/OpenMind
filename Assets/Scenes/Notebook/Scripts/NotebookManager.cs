@@ -51,12 +51,13 @@ public class NotebookManager : MonoBehaviour
         // Get notebookdata
         notebookData = GameManager.gm.notebookData;
         personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        personalInputField.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
 
         // Open custom notes page
         OpenPersonalNotes();
 
         // Add listener to recreate tab when font size is changed
-        SettingsManager.sm.OnTextSizeChanged.AddListener(() => OpenCharacterTab(currentCharacterIndex));
+        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
     }
     
     /// <summary>
@@ -101,7 +102,7 @@ public class NotebookManager : MonoBehaviour
         var inputField = personalInputField.GetComponent<TMP_InputField>();
         inputField.gameObject.SetActive(true);
         inputField.text = notebookData.GetPersonalNotes();
-        inputField.pointSize = SettingsManager.sm.GetFontSize();
+        inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
 
         // Make button clickable
         ChangeButtons(personalButton);
@@ -155,7 +156,7 @@ public class NotebookManager : MonoBehaviour
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
         inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() / 1.2f;
+        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
@@ -369,6 +370,20 @@ public class NotebookManager : MonoBehaviour
 
         selectedButton = clickedButton;
         selectedButton.interactable = false;
+    }
+
+    /// <summary>
+    /// What happens when the player changes text size settings.
+    /// Resets current page and apply new values.
+    /// </summary>
+    private void OnTextSizeChanged()
+    {
+        // Reopen character tab (automatically applies settings)
+        OpenCharacterTab(currentCharacterIndex);
+
+        // Change text size for personal input tab
+        personalInputField.GetComponent<TMP_InputField>().pointSize = 
+            SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
     }
 
     #region Test Variables
