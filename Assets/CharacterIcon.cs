@@ -11,8 +11,15 @@ public class CharacterIcon : MonoBehaviour
     private const float ZOOM_FACTOR = 1.8f;
 
     [SerializeField] private Image avatarImageRef;
+    [SerializeField] private Image backgroundImageRef;
 
     private CharacterInstance character;
+
+    public Color BackgroundColor
+    { 
+        get { return backgroundImageRef.color; }
+        set { backgroundImageRef.color = value; }
+    }
 
     public void SetAvatar(CharacterInstance character)
     {

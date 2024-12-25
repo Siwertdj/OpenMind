@@ -14,6 +14,7 @@ public class NotebookCharacterObject : MonoBehaviour
     {
         nameText.text = character.characterName;
         characterIcon.SetAvatar(character);
+        characterIcon.BackgroundColor = new Color(0, 0, 0, 0.2f);
 
         if (SettingsManager.sm != null)
             nameText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
