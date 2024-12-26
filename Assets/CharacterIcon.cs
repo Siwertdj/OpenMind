@@ -11,7 +11,7 @@ public class CharacterIcon : MonoBehaviour
     private const float ZOOM_FACTOR = 1.8f;
 
     [SerializeField] private Image avatarImageRef;
-    [SerializeField] private Image backgroundImageRef;
+    private Image backgroundImageRef;
 
     private CharacterInstance character;
 
@@ -19,6 +19,11 @@ public class CharacterIcon : MonoBehaviour
     { 
         get { return backgroundImageRef.color; }
         set { backgroundImageRef.color = value; }
+    }
+
+    private void Awake()
+    {
+        backgroundImageRef = GetComponent<Image>();
     }
 
     public void SetAvatar(CharacterInstance character)
@@ -31,7 +36,7 @@ public class CharacterIcon : MonoBehaviour
         // Set the image location to the center of the face
         var rectTransform = avatarImageRef.GetComponent<RectTransform>();
         rectTransform.pivot = character.data.facePivot;
-        rectTransform.localPosition = Vector2.zero;
+        rectTransform.anchoredPosition = Vector2.zero;
 
         SetAvatarSize();
     }

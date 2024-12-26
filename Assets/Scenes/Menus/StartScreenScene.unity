@@ -1226,6 +1226,9 @@ MonoBehaviour:
   sfxSource: {fileID: 582075138}
   defaultMusicFadeInTime: 0.5
   defaultButtonClickSound: {fileID: 8300000, guid: 1d11ea0ce7cc45e49a97a475b1e367a8, type: 3}
+  OnTextSizeChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &582075137
 Transform:
   m_ObjectHideFlags: 0
