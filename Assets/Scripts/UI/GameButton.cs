@@ -17,8 +17,6 @@ public class GameButton : Button
 
     private new void Start()
     {
-        // Retrieve gameevent from assets folder to reference
-        gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
         // add method below to listeners of the onclick.
         // This method raises the aforementioned event 
         onClick.AddListener(RaiseEvent);

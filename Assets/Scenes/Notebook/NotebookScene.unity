@@ -250,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.1822052
+      value: 0.18218994
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 213787019}
   - component: {fileID: 213787018}
   - component: {fileID: 213787020}
+  - component: {fileID: 213787021}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -360,7 +361,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -30, y: -246}
-  m_SizeDelta: {x: 656.8667, y: 418.36792}
+  m_SizeDelta: {x: 0, y: 418.36792}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213787018
 MonoBehaviour:
@@ -412,6 +413,20 @@ SortingGroup:
   m_SortingLayer: 0
   m_SortingOrder: 100
   m_SortAtRoot: 0
+--- !u!114 &213787021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213787016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 0.6448182
 --- !u!1 &316353421
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2596641, y: 0.82357657}
   m_AnchorMax: {x: 0.7847774, y: 0.88718253}
-  m_AnchoredPosition: {x: 0.8865967, y: -0.06213379}
+  m_AnchoredPosition: {x: 0.8865967, y: -0.06201172}
   m_SizeDelta: {x: -3.4969482, y: 0.27090454}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &369294126
@@ -1033,7 +1048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 9.030579, y: 91.75098}
+  m_AnchoredPosition: {x: 9.03064, y: 91.75098}
   m_SizeDelta: {x: -39.9147, y: -183.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &657100576
@@ -1314,7 +1329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.1822052
+      value: 0.18218994
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
