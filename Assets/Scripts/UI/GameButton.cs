@@ -14,6 +14,7 @@ using UnityEngine.UI;
 public class GameButton : Button
 {
     public GameEvent gameEvent;
+    public AudioClip[] audioClips;
 
     private new void Start()
     {
@@ -23,7 +24,14 @@ public class GameButton : Button
     }
     
     private void RaiseEvent()
-    { 
-        gameEvent.Raise(this);
+    {
+        AudioClip clip = null;
+        if (audioClips?.Length > 0)
+        {
+            // Get some random audioclip to be played
+            clip = audioClips[Random.Range(0, audioClips.Length)];
+        }
+
+        gameEvent.Raise(this, clip);
     }
 }

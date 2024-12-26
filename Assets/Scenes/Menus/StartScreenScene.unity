@@ -256,6 +256,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &105892627
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,6 +774,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 0}
+  audioClips: []
 --- !u!1 &217989641
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,12 +1222,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  maxLineLength: 30
-  textSize: 0
-  OnTextSizeChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  musicSource: {fileID: 582075139}
+  sfxSource: {fileID: 582075138}
   defaultMusicFadeInTime: 0.5
+  defaultButtonClickSound: {fileID: 8300000, guid: 1d11ea0ce7cc45e49a97a475b1e367a8, type: 3}
 --- !u!4 &582075137
 Transform:
   m_ObjectHideFlags: 0
@@ -1457,10 +1457,10 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 582075138}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 582075136}
+        m_TargetAssemblyTypeName: SettingsManager, Scripts
+        m_MethodName: OnClick
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2176,6 +2176,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1024159935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2562,6 +2563,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1127524790
 GameObject:
   m_ObjectHideFlags: 0
@@ -3693,6 +3695,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &2085541972
 GameObject:
   m_ObjectHideFlags: 0

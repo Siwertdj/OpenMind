@@ -13,19 +13,23 @@ public class SettingsManager : MonoBehaviour
 {
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
-    
-    // the audiomixer that contains all soundchannels
-    public AudioMixer audioMixer;
+
+    [Header("Component References")]
+    public AudioMixer audioMixer; // The audiomixer that contains all soundchannels
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
+    [Header("Settings (?)")]
+    [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    [SerializeField] AudioClip defaultButtonClickSound;
 
     public float TalkingDelay {  get; private set; }
-    
-    private AudioSource musicSource;
-    
+
     // TODO: Integrate this with text-size
-    public int maxLineLength = 30;
+    [NonSerialized] public int maxLineLength = 30;
     
     // Text size to be used for the text components
-    public TextSize textSize;
+    [NonSerialized] public TextSize textSize;
     
     public enum TextSize
     {
@@ -47,8 +51,6 @@ public class SettingsManager : MonoBehaviour
     [NonSerialized] public float talkingSpeed = 1;
     [NonSerialized] public bool ttsEnabled = false;
     #endregion
-
-    [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     
     private void Awake()
     {
@@ -57,9 +59,6 @@ public class SettingsManager : MonoBehaviour
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;
-        
-        // Set reference to music-audiosource by component
-        musicSource = GetComponents<AudioSource>()[0];
     }
     
     private void Start()
@@ -88,6 +87,16 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
         PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+    }
+
+    public void OnClick(Component sender, params object[] data)
+    {
+        if (data[0] is AudioClip audioClip)
+            sfxSource.clip = audioClip;
+        else
+            sfxSource.clip = defaultButtonClickSound;
+
+        sfxSource.Play();
     }
     
     #region TextSize
