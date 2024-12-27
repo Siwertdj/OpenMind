@@ -49,7 +49,6 @@ public class SettingsManager : MonoBehaviour
     [NonSerialized] public float musicVolume = 0;
     [NonSerialized] public float sfxVolume = 0;
     [NonSerialized] public float talkingSpeed = 1;
-    [NonSerialized] public bool ttsEnabled = false;
     #endregion
     
     private void Awake()
@@ -73,7 +72,7 @@ public class SettingsManager : MonoBehaviour
         musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
         sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
-        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
+        textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
         // Apply the saved values
         SetMusicVolume(musicVolume);
@@ -86,7 +85,7 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
-        PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(nameof(textSize), (int)textSize);
     }
 
     public void OnClick(Component sender, params object[] data)

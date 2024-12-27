@@ -64,7 +64,6 @@ public class SettingsMenuManager : MonoBehaviour
         musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
         sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
         talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);
-        textToSpeechToggle.SetIsOnWithoutNotify(SettingsManager.sm.ttsEnabled);
         
     }
 
@@ -132,11 +131,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         SettingsManager.sm.SetTalkingSpeed(multiplier);
     }
-
-    public void SetTextToSpeech(bool isEnabled)
-    {
-        SettingsManager.sm.ttsEnabled = isEnabled;
-    }
     
     #region TextSettings
     
@@ -151,11 +145,8 @@ public class SettingsMenuManager : MonoBehaviour
         GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
         
         // Set all buttons (excluding return button) to the color white and disable all arrows.
-        for (int i = 0; i < children.Length - 1; i++)
-        {
+        for (int i = 0; i < children.Length; i++)
             children[i].GetComponent<Image>().color = Color.white;
-            children[i].transform.GetChild(1).gameObject.SetActive(false);
-        }
         
         // Set the chosen size to a green color and enable the arrow.
         activeButton = button;
@@ -181,8 +172,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         // Set the chosen size to a green color
         button.GetComponent<Image>().color = Color.green;
-        // Enable the arrow
-        button.transform.GetChild(1).gameObject.SetActive(true);
     }
     
     /// <summary>
