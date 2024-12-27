@@ -43,14 +43,13 @@ public class StartMenuManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Activates the prompt which asks the player to skip the prologue
+    /// Toggles the prompt which asks the player to skip the prologue
     /// </summary>
-    public void OpenSkipProloguePrompt()
+    public void ToggleSkipProloguePrompt()
     {
-        // Change menu's
-        mainMenuCanvas.SetActive(false);
-        skipPrologueCanvas.SetActive(true);
-        
+        // Change menus
+        mainMenuCanvas.SetActive(!mainMenuCanvas.activeSelf);
+        skipPrologueCanvas.SetActive(!skipPrologueCanvas.activeSelf);
     }
 
     /// <summary>
