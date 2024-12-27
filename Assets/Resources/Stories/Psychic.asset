@@ -24,7 +24,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueCulprit: {fileID: 0}
   storyEpilogueLossDialogueNPC: {fileID: 0}
   victimDialogue: has gone home.
-  hintDialogue: Hmm.. I am seeing something..
+  hintDialogue: Hmm.. I am seeing something about the culprit...
   numberOfCharacters: 4
   numQuestions: 1
   minimumRemaining: 2

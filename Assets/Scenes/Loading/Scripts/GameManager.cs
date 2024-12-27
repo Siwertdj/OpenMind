@@ -259,7 +259,16 @@ public class GameManager : MonoBehaviour
             $"{victimName} {story.victimDialogue}",
             story.hintDialogue,
         };
-        dialogue.AddRange(GetCulprit().GetRandomTrait());
+
+        // add " to trait dialogue if story is Psychic
+        List<string> traitDialogue = GetCulprit().GetRandomTrait();
+        if (story.storyID == 1)
+        {
+            traitDialogue[0] = "\"" + traitDialogue[0];
+            traitDialogue[traitDialogue.Count - 1] += "\"";
+        }
+
+        dialogue.AddRange(traitDialogue);
         // Creates Dialogue that says who disappeared and provides a new hint.
         StartDialogue(dialogue);
     }
