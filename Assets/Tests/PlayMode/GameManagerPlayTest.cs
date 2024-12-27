@@ -50,10 +50,6 @@ public class GameManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
         
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
@@ -61,9 +57,6 @@ public class GameManagerPlayTest
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Get a StoryObject.
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
@@ -84,7 +77,10 @@ public class GameManagerPlayTest
     [TearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to Loading to unload
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -97,7 +93,7 @@ public class GameManagerPlayTest
         // Set up expected and actual values.
         int expected = gm.currentCharacters.Count;
         // The number of characters at the start of the game.
-        int actual = 4;
+        int actual = 8;
 
         // Check if they are equal.
         Assert.AreEqual(expected, actual);
@@ -114,7 +110,7 @@ public class GameManagerPlayTest
         // Set up expected and actual values.
         int expected = gm.currentCharacters.Count(c => c.isActive);
         // The number of characters at the start of the game.
-        int actual = 4;
+        int actual = 8;
         
         // Check if they are equal.
         Assert.AreEqual(expected, actual);

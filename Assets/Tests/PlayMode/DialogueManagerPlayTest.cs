@@ -30,19 +30,12 @@ public class DialogueManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
-        
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Set global variables
         story = Resources.LoadAll<StoryObject>("Stories")[0];
@@ -65,10 +58,13 @@ public class DialogueManagerPlayTest
     /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
     /// gets removed before a new test starts.
     /// </summary>
-    [TearDown]
+    [UnityTearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to Loading to unload after
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+
         SceneController.sc.UnloadAdditiveScenes();
     }
     
