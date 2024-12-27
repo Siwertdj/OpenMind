@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using UnityEngine;
@@ -38,6 +38,14 @@ public class StorySelectionManager : MonoBehaviour
     public void StoryCSelected()
     {
         StartIntro(2);
+    }
+
+    /// <summary>
+    /// Back to main menu (Start Screen)
+    /// </summary>
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene("StartScreenScene", LoadSceneMode.Single);
     }
 
     /// <summary>
