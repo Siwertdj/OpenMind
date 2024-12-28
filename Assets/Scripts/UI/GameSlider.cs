@@ -11,6 +11,7 @@ public class GameSlider : MonoBehaviour
     [SerializeField] private TMP_Text valueText;
     [SerializeField] private int valueRounding;
     [SerializeField] private float defaultValue;
+    [SerializeField] private bool defaultValueEnabled;
     [SerializeField] private RectTransform defaultValueRef;
     [SerializeField] private Slider sliderComponentRef;
 
@@ -18,15 +19,22 @@ public class GameSlider : MonoBehaviour
 
     private void Awake()
     {
-        //slider = GetComponent<Slider>();
         slider.onValueChanged.AddListener(UpdateSlider);
         UpdateSlider(slider.value);
 
-        // Set the default value sample to the correct position
-        var rectTransform = (RectTransform)defaultValueRef.transform.parent;
-        defaultValueRef.localPosition = new Vector2(
-            -rectTransform.rect.width * (defaultValue / (slider.maxValue + slider.minValue)),
-            defaultValueRef.localPosition.y);
+        // Set default value
+        if (defaultValueEnabled)
+        {
+            // Set the default value sample to the correct position
+            var rectTransform = (RectTransform)defaultValueRef.transform.parent;
+            defaultValueRef.localPosition = new Vector2(
+                -rectTransform.rect.width * (defaultValue / (slider.maxValue + slider.minValue)),
+                defaultValueRef.localPosition.y);
+        }
+        else
+        {
+            defaultValueRef.gameObject.SetActive(false);
+        }
     }
 
     private void UpdateSlider(float value)

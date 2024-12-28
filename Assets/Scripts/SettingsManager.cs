@@ -144,6 +144,8 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
+        if (volume <= -40)
+            volume = -80;
         audioMixer.SetFloat(nameof(sfxVolume), volume);
         sfxVolume = volume;
     }

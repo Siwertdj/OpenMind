@@ -63,8 +63,7 @@ public class SettingsMenuManager : MonoBehaviour
         // Set the values on the UI elements
         musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
         sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
-        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);
-        
+        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
     }
 
     /// <summary>
@@ -115,7 +114,8 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        SettingsManager.sm.SetMusicVolume(volume);
+        // Convert 0 - 100 value to -50 - 0
+        SettingsManager.sm.SetMusicVolume((volume - 100) * 0.5f);
     }
     
     /// <summary>
@@ -124,7 +124,8 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        SettingsManager.sm.SetSfxVolume(volume);        
+        // Convert 0 - 100 value to -50 - 0
+        SettingsManager.sm.SetSfxVolume((volume - 100) * 0.5f);        
     }
 
     public void SetTalkingSpeed(float multiplier)
