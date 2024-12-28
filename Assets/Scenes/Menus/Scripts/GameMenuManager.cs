@@ -39,9 +39,7 @@ public class GameMenuManager : MonoBehaviour
             false);
         
         // After that is done, we call UIManager to finish the operation.
-        GameManager.gm.GetComponent<UIManager>().CloseMenu();
-
-        
+        GameManager.gm.GetComponent<UIManager>().CloseMenu();        
     }
 
     /// <summary>
@@ -70,7 +68,6 @@ public class GameMenuManager : MonoBehaviour
 
         // Load Game
         Load.Loader.LoadButtonPressed();
-
     }
 
     /// <summary>
@@ -92,12 +89,21 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
+        // Store DDOLs to be destroyed after transition
+        var DDOLs = GameObject.FindGameObjectWithTag("DDOLManager");
+        var toolbox = GameObject.FindGameObjectWithTag("Toolbox");
+
+        // Transition to start screen scene
         SceneManager.LoadScene("StartScreenScene");
-        // Destroy all DontDestroyOnLoad-objects
-        // TODO: This doesnt want to work
-        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("DDOL"))
-        {
-            Destroy(obj);
-        }
+
+        // TODO: Instead of using SceneManager, this should use the SceneController
+        //_ = SceneController.sc.TransitionScene(
+        //    SceneController.SceneName.Loading,
+        //    SceneController.SceneName.StartScreenScene,
+        //    SceneController.TransitionType.Transition, true);
+
+        // Destroy DDOLs
+        Destroy(DDOLs);
+        Destroy(toolbox);
     }
 }

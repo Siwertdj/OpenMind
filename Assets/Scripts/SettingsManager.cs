@@ -71,7 +71,6 @@ public class SettingsManager : MonoBehaviour
         // Get the saved values
         musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
         sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
-        Debug.Log($"apply saved settings: {sfxVolume}");
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
         textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
