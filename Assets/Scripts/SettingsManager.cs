@@ -71,6 +71,7 @@ public class SettingsManager : MonoBehaviour
         // Get the saved values
         musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
         sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        Debug.Log($"apply saved settings: {sfxVolume}");
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
         textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
@@ -134,7 +135,15 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(musicVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+
+        audioMixer.SetFloat(nameof(musicVolume), adjustedVolume);
         musicVolume = volume;
     }
 
@@ -144,9 +153,14 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        if (volume <= -40)
-            volume = -80;
-        audioMixer.SetFloat(nameof(sfxVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+        audioMixer.SetFloat(nameof(sfxVolume), adjustedVolume);
         sfxVolume = volume;
     }
     

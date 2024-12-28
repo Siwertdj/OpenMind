@@ -15,10 +15,8 @@ public class SettingsMenuManager : MonoBehaviour
     [Header("Audio References")]
     [SerializeField] private GameObject audioSliderGroup;
 
-    private Slider musicVolumeSlider;
-    private Slider sfxVolumeSlider;
-    // SLIDERS
-    [SerializeField] private GameObject sliderGroup;
+    private GameSlider musicVolumeSlider;
+    private GameSlider sfxVolumeSlider;
     
     // Buttons from TextMenuOptions
     [SerializeField] private GameObject buttonGroup;
@@ -27,7 +25,7 @@ public class SettingsMenuManager : MonoBehaviour
     private GameButton activeButton;
     
     // Chosen text size
-    private SettingsManager.TextSize size;
+    private SettingsManager.TextSize textSize;
 
     // Example tmp_text objects
     [SerializeField] private TMP_Text characterNameField;
@@ -38,8 +36,8 @@ public class SettingsMenuManager : MonoBehaviour
     
     void Awake()
     {
-        // Set the active button.
-        size = SettingsManager.sm.textSize;
+        // Set the active text size button
+        textSize = SettingsManager.sm.textSize;
         activeButton = GetButton(SettingsManager.sm.textSize);
         SetActiveButton(activeButton);
         
@@ -56,13 +54,13 @@ public class SettingsMenuManager : MonoBehaviour
     private void Start()
     {
         // Get the sliders
-        Slider[] sliders = audioSliderGroup.GetComponentsInChildren<Slider>();
+        GameSlider[] sliders = audioSliderGroup.GetComponentsInChildren<GameSlider>();
         musicVolumeSlider = sliders[0];
         sfxVolumeSlider = sliders[1];
 
         // Set the values on the UI elements
-        musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
-        sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
+        musicVolumeSlider.UpdateSlider(SettingsManager.sm.musicVolume);
+        sfxVolumeSlider.UpdateSlider(SettingsManager.sm.sfxVolume);
         talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
     }
 
@@ -114,8 +112,7 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        // Convert 0 - 100 value to -50 - 0
-        SettingsManager.sm.SetMusicVolume((volume - 100) * 0.5f);
+        SettingsManager.sm.SetMusicVolume(volume);
     }
     
     /// <summary>
@@ -124,8 +121,7 @@ public class SettingsMenuManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        // Convert 0 - 100 value to -50 - 0
-        SettingsManager.sm.SetSfxVolume((volume - 100) * 0.5f);        
+        SettingsManager.sm.SetSfxVolume(volume);        
     }
 
     public void SetTalkingSpeed(float multiplier)
@@ -152,10 +148,10 @@ public class SettingsMenuManager : MonoBehaviour
         // Set the chosen size to a green color and enable the arrow.
         activeButton = button;
         SetActiveButton(button);
-        size = GetTextSize(button);
+        textSize = GetTextSize(button);
         
         // Change the textSize from SettingsManager
-        SettingsManager.sm.textSize = size;
+        SettingsManager.sm.textSize = textSize;
         SettingsManager.sm.OnTextSizeChanged.Invoke();
         
         // Change the fontSize of the example

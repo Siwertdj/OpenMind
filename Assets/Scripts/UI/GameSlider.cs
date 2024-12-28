@@ -17,7 +17,7 @@ public class GameSlider : MonoBehaviour
 
     public Slider slider { get { return sliderComponentRef; } }
 
-    private void Awake()
+    private void Start()
     {
         slider.onValueChanged.AddListener(UpdateSlider);
         UpdateSlider(slider.value);
@@ -37,15 +37,13 @@ public class GameSlider : MonoBehaviour
         }
     }
 
-    private void UpdateSlider(float value)
+    public void UpdateSlider(float value)
     {
         // Adjust the value to match step precision
         float steppedValue = Mathf.Round(value / step) * step;
 
         // Update the slider's value (if you need forced snapping)
         slider.value = steppedValue;
-
-        var rectTransform = (RectTransform)defaultValueRef.transform.parent;
 
         valueText.text = steppedValue.ToString($"F{valueRounding}") + valueInfo;
     }
