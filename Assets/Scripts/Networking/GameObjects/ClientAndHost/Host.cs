@@ -23,6 +23,8 @@ public class Host : NetworkObject
     private bool addNormalResponse = false;
     private bool readyToSentFirstClientSecondClientNotebook;
     private List<NetworkPackage> dataToSendSecondClient;
+    private int playerCount;
+    private bool isListening;
     
     private void Update()
     {
@@ -62,6 +64,7 @@ public class Host : NetworkObject
 
     public void Lobby(int storyID, int seed)
     {
+        playerCount = 0;
         this.seed = seed;
         this.storyID = storyID;
         
@@ -75,7 +78,41 @@ public class Host : NetworkObject
         StartCoroutine(listener.AcceptIncomingConnections());
         StartCoroutine(listener.ListenForIncomingData(settings.IncomingDataIntervalSeconds));
         
+        listener.AddOnDisconnectedEvent(OnPlayerDisconnect);
+        listener.AddOnAcceptConnectionsEvent(OnPlayerConnect);
+        
         ActivateNotebookExchange();
+
+        isListening = true;
+    }
+    
+    private void OnPlayerDisconnect(object obj)
+    {
+        Debug.Log("Disconnected");
+        playerCount--;
+    }
+    
+    private void OnPlayerConnect(object obj)
+    {
+        Debug.Log("Connected");
+        playerCount++;
+    }
+
+    public int PlayerAmount(int maxPlayers)
+    {
+        if (isListening && playerCount >= maxPlayers)
+        {
+            listener.CancelListeningForConnections();
+            isListening = false;
+        }
+
+        if (!isListening && playerCount < maxPlayers)
+        {
+            StartCoroutine(listener.AcceptIncomingConnections());
+            isListening = true;
+        }
+        
+        return playerCount;
     }
     
     private List<NetworkPackage> SendInit(List<NetworkPackage> arg)

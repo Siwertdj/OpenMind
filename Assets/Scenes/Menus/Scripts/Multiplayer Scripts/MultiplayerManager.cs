@@ -119,4 +119,6 @@ public class MultiplayerManager : MonoBehaviour
                 GameManager.gm.currentCharacters);
         }
     }
+
+    public int GetPlayerAmount(int maxPlayers) => host.PlayerAmount(maxPlayers);
 }
