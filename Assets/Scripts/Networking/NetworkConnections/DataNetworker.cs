@@ -130,13 +130,13 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     public void AddOnDisconnectedEvent(Action<object> action) =>
         onDisconnectedEvents.Subscribe("Disconnect", action);
     
-    private void OnApplicationQuit()
-    {
-        Dispose();
-    }
-    
     public void Dispose()
     {
         socket.Dispose();
+    }
+    
+    protected bool IsSocketConnected(Socket s)
+    {
+        return !((s.Poll(1000, SelectMode.SelectRead) && (s.Available == 0)) || !s.Connected);
     }
 }

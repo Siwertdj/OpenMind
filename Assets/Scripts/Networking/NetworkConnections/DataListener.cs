@@ -309,10 +309,7 @@ public class DataListener : DataNetworker
     {
         for (var i = 0; i < connections.Count; i++)
         {
-            Socket s = connections[i];
-            bool connected = !((s.Poll(1000, SelectMode.SelectRead) && (s.Available == 0)) || !s.Connected);
-            
-            if(!connected)
+            if(!IsSocketConnected(connections[i]))
             {
                 info = connections[i];
                 connections.Remove(connections[i]);

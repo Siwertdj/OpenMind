@@ -75,7 +75,7 @@ public class DataSender : DataNetworker
         GiveDisplayWarning();
         
         //check if you are already connected
-        if (!socket.Connected)
+        if (!IsSocketConnected(socket))
         {
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
@@ -120,7 +120,7 @@ public class DataSender : DataNetworker
     public void SendDataAsync(string signature, IEnumerable<NetworkPackage> payload, float acknowledgementTimeoutSeconds, bool clearDataSentEvents = false)
     {
         //cannot send data when not connected
-        if (!socket.Connected)
+        if (!IsSocketConnected(socket))
         {
             Debug.LogWarning("Cannot send data when the socket is not connected.");
             return;
@@ -167,7 +167,7 @@ public class DataSender : DataNetworker
 
         while (isListeningForResponse)
         {
-            if (!socket.Connected)
+            if (!IsSocketConnected(socket))
             {
                 onNotConnectedListeningEvents.Raise("Disconnect", null, false, "onNotConnectedListeningEvents");
                 yield return new WaitForSeconds(listenNotConnectedInterval);
@@ -313,7 +313,7 @@ public class DataSender : DataNetworker
 
     protected override bool IsDisconnected(out Socket info)
     {
-        if (!socket.Connected && connected)
+        if(!IsSocketConnected(socket) && connected)
         {
             connected = false;
             info = socket;
