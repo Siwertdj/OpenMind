@@ -16,6 +16,7 @@ public class Host : NetworkObject
     private DataListener                 listener;
     private int                          seed;
     private int                          storyID;
+    private int maxPlayers;
     private List<List<NetworkPackage>>   notebooks = new ();
     private Action<List<NetworkPackage>> sendFirstNotebook;
     private Action<List<NetworkPackage>> assignNotebookData;
@@ -23,7 +24,6 @@ public class Host : NetworkObject
     private bool addNormalResponse = false;
     private bool readyToSentFirstClientSecondClientNotebook;
     private List<NetworkPackage> dataToSendSecondClient;
-    private int playerCount;
     private bool isListening;
     
     private void Update()
@@ -40,6 +40,23 @@ public class Host : NetworkObject
             Debug.Log("coroutine");
             readyToSentFirstClientSecondClientNotebook = false;
             StartCoroutine(SendDataWithDelay1());
+        }
+    }
+
+    private void ManagePlayerAmount(object obj)
+    {
+        int playerCount = listener.GetPlayerAmount();
+        
+        if (isListening && playerCount >= maxPlayers)
+        {
+            listener.CancelListeningForConnections();
+            isListening = false;
+        }
+        
+        if (!isListening && playerCount < maxPlayers)
+        {
+            StartCoroutine(listener.AcceptIncomingConnections());
+            isListening = true;
         }
     }
     
@@ -62,11 +79,11 @@ public class Host : NetworkObject
         return converter.ConvertToCode(ownIP);
     }
 
-    public void Lobby(int storyID, int seed)
+    public void Lobby(int storyID, int seed, int maxPlayers)
     {
-        playerCount = 0;
         this.seed = seed;
         this.storyID = storyID;
+        this.maxPlayers = maxPlayers;
         
         listener = new DataListener(ownIP, settings.ClientHostPortConnection);
         StartCoroutine(listener.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
@@ -77,43 +94,20 @@ public class Host : NetworkObject
         
         StartCoroutine(listener.AcceptIncomingConnections());
         StartCoroutine(listener.ListenForIncomingData(settings.IncomingDataIntervalSeconds));
+        StartCoroutine(listener.IsDisconnected(5));
         
-        listener.AddOnDisconnectedEvent(OnPlayerDisconnect);
-        listener.AddOnAcceptConnectionsEvent(OnPlayerConnect);
+        listener.AddOnAcceptConnectionsEvent(ManagePlayerAmount);
+        listener.AddOnDisconnectedEvent(ManagePlayerAmount);
         
         ActivateNotebookExchange();
 
         isListening = true;
     }
-    
-    private void OnPlayerDisconnect(object obj)
-    {
-        Debug.Log("Disconnected");
-        playerCount--;
-    }
-    
-    private void OnPlayerConnect(object obj)
-    {
-        Debug.Log("Connected");
-        playerCount++;
-    }
 
-    public int PlayerAmount(int maxPlayers)
-    {
-        if (isListening && playerCount >= maxPlayers)
-        {
-            listener.CancelListeningForConnections();
-            isListening = false;
-        }
-
-        if (!isListening && playerCount < maxPlayers)
-        {
-            StartCoroutine(listener.AcceptIncomingConnections());
-            isListening = true;
-        }
-        
-        return playerCount;
-    }
+    /// <summary>
+    /// Returns the amount of players connected to the host.
+    /// </summary>
+    public int PlayerAmount() => listener.GetPlayerAmount();
     
     private List<NetworkPackage> SendInit(List<NetworkPackage> arg)
     {
@@ -213,7 +207,6 @@ public class Host : NetworkObject
     
     private void AddAdditionalDebugMessagesInit()
     {
-        StartCoroutine(listener.IsDisconnected(settings.DisconnectedIntervalSeconds));
         listener.AddOnAcceptConnectionsEvent(OnConnectionAccepted);
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);

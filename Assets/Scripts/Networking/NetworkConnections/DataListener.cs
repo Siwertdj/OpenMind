@@ -35,14 +35,16 @@ public class DataListener : DataNetworker
     private NetworkDelayedEvents delayedRespondEvents;
     
     private bool isConnectionListening, isDataListening;
-   
+    
+    ///<summary>amount of players that joined</summary>
+    public int GetPlayerAmount() => connections.Count;
+    
     /// <summary>
     /// Creates a data listening object using an IPAddress and a port to create an endpoint.
     /// The ipAddress should point to an ipAddress on the local device.
     /// </summary>
     public DataListener([DisallowNull] IPAddress ipAddress, ushort port) : base(ipAddress, port)
     {
-        
         onAcceptConnectionEvents = new NetworkEvents();
         onDataReceivedEvents = new NetworkEvents();
         onResponseSentEvents = new NetworkEvents();
@@ -298,12 +300,19 @@ public class DataListener : DataNetworker
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }
-
+    
+    /// <summary>
+    /// Tests if the clients are still connected, if not the sockets are removed from the connection list.
+    /// <param name="info">Return true if a client just disconnected.</param>
+    /// </summary>
     protected override bool IsDisconnected(out Socket info)
     {
         for (var i = 0; i < connections.Count; i++)
         {
-            if (!connections[i].Connected)
+            Socket s = connections[i];
+            bool connected = !((s.Poll(1000, SelectMode.SelectRead) && (s.Available == 0)) || !s.Connected);
+            
+            if(!connected)
             {
                 info = connections[i];
                 connections.Remove(connections[i]);

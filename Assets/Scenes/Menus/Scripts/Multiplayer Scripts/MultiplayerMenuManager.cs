@@ -111,7 +111,7 @@ public class MultiplayerMenuManager : MonoBehaviour
         lobbyCanvas.SetActive(true);
         
         // Start hosting
-        MultiplayerManager.mm.HostGame(storyid);
+        MultiplayerManager.mm.HostGame(storyid, maxPlayers);
         
         // Create a code
         classCode = MultiplayerManager.mm.GetClassCode();
@@ -156,14 +156,13 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     public void Update()
     {
-        maxPlayersText.text = maxPlayers.ToString();
-        
-        
+        if(hostCanvas.activeInHierarchy)
+            maxPlayersText.text = maxPlayers.ToString();
         
         if (lobbyCanvas.activeInHierarchy)
         {
             code.text = classCode;
-            playerCountText.text = MultiplayerManager.mm.GetPlayerAmount(maxPlayers) + "/" + maxPlayers;
+            playerCountText.text = MultiplayerManager.mm.GetPlayerAmount() + "/ " + maxPlayers + " players joined";
         }
     }
 }

@@ -130,6 +130,10 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     public void AddOnDisconnectedEvent(Action<object> action) =>
         onDisconnectedEvents.Subscribe("Disconnect", action);
     
+    private void OnApplicationQuit()
+    {
+        Dispose();
+    }
     
     public void Dispose()
     {

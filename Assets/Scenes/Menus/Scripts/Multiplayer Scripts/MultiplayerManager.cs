@@ -27,7 +27,7 @@ public class MultiplayerManager : MonoBehaviour
         init = new MultiplayerInit();
     }
 
-    public void HostGame(int storyID)
+    public void HostGame(int storyID, int maxPlayers)
     {
         init.story = storyID;
         
@@ -41,7 +41,7 @@ public class MultiplayerManager : MonoBehaviour
         init.seed = new Random().Next(int.MaxValue);
         
         // Let clients connect to the game
-        host.Lobby(storyID, init.seed);
+        host.Lobby(storyID, init.seed, maxPlayers);
     }
     
     public string GetClassCode() => host.CreateClassroomCode();
@@ -120,5 +120,8 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    public int GetPlayerAmount(int maxPlayers) => host.PlayerAmount(maxPlayers);
+    public int GetPlayerAmount()
+    {
+        return host.PlayerAmount();
+    }
 }
