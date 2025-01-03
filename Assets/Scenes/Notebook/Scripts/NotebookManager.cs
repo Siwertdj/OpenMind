@@ -33,6 +33,7 @@ public class NotebookManager : MonoBehaviour
     [Header("Component References")]
     [SerializeField] private TMP_InputField personalInputField;
     [SerializeField] private TMP_Text currentTabText;
+    [SerializeField] private TMP_Text personalInputTitleText;
 
     [Header("Prefab References")]
     [SerializeField] private GameObject logObjectPrefab;
@@ -52,6 +53,7 @@ public class NotebookManager : MonoBehaviour
         notebookData = GameManager.gm.notebookData;
         personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
         personalInputField.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
 
         // Open custom notes page
         OpenPersonalNotes();
@@ -384,6 +386,9 @@ public class NotebookManager : MonoBehaviour
         // Change text size for personal input tab
         personalInputField.GetComponent<TMP_InputField>().pointSize = 
             SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+
+        personalInputTitleText.fontSize =
+            SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
     }
 
     #region Test Variables
