@@ -14,11 +14,12 @@ public class UIManager : MonoBehaviour
 {
     [Header("UI Settings")] 
     [SerializeField] private GameObject gameMenu;
-    [SerializeField] private GameObject gameButtons;
-    [SerializeField] private GameObject transitionCanvas;
+    [SerializeField] private GameObject      gameButtons;
+    [SerializeField] private GameObject      menuButton;
+    [SerializeField] private GameObject      transitionCanvas;
     [SerializeField] private TextMeshProUGUI transitionText;
-    [SerializeField] private float transitionDuration = 1f;
-    [SerializeField] private float fadeTime = 0.5f;
+    [SerializeField] private float           transitionDuration = 1f;
+    [SerializeField] private float           fadeTime           = 0.5f;
 
     private Coroutine transitionCoroutine;
 
@@ -54,7 +55,7 @@ public class UIManager : MonoBehaviour
     {
         if (SceneController.sc != null)
         {
-            SceneController.sc.ToggleNotebookScene(button);
+            SceneController.sc.ToggleNotebookScene(button, menuButton);
         }
     }
 
