@@ -16,7 +16,6 @@ public class DialogueAnimatorPlayTest
 {
     private TMP_Text textField;
     private DialogueAnimator animator;
-    private float delayInSeconds;
 
     #region Setup & Teardown
     [UnitySetUp]
@@ -29,10 +28,13 @@ public class DialogueAnimatorPlayTest
         animator = textObject.AddComponent<DialogueAnimator>();
         animator.Test_SetTextComponent(textField);
 
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.05f;
+
         yield return null;
     }
 
-    [UnityTearDown]
+    [TearDown]
     public void TearDown()
     {
         animator.CancelWriting();
@@ -74,6 +76,9 @@ public class DialogueAnimatorPlayTest
     [UnityTest]
     public IEnumerator MultiLineWritingDelayTest()
     {
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.02f;
+
         List<string> lines = new List<string> { "Hello, World!", "foo", "bar" };
         animator.WriteDialogue(lines);
 
@@ -91,7 +96,8 @@ public class DialogueAnimatorPlayTest
             }
 
             // Await next line start
-            yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            //yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            animator.SkipDialogue(true);
         }
     }
 

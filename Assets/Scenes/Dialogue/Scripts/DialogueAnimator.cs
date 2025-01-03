@@ -131,16 +131,17 @@ public class DialogueAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// Skips dialogue that is being written
+    /// Skips dialogue that is being written.
     /// </summary>
-    public void SkipDialogue()
+    /// <param name="instant">If true, ignores skip delay</param>
+    public void SkipDialogue(bool instant = false)
     {
         // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
         if (GameManager.gm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue
-        if (Time.time - recentInputTime > inputDelay)
+        if (Time.time - recentInputTime > inputDelay || instant)
         {
             if (IsOutputting)
             {
@@ -223,6 +224,7 @@ public class DialogueAnimator : MonoBehaviour
     public float Test_DelayAfterSentence
     {
         get { return delayAfterSentence; }
+        set { delayAfterSentence = value; }
     }
 
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;

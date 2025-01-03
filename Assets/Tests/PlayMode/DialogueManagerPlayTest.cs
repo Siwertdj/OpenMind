@@ -58,14 +58,15 @@ public class DialogueManagerPlayTest
     /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
     /// gets removed before a new test starts.
     /// </summary>
-    [UnityTearDown]
+    [TearDown]
     public void TearDown()
     {
-        // Move toolbox and DDOLs to Loading to unload after
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+        // Store DDOLs to be destroyed after transition
+        GameObject DDOLs = GameObject.FindGameObjectWithTag("DDOLManager");
+        GameObject toolbox = GameObject.FindGameObjectWithTag("Toolbox");
 
-        SceneController.sc.UnloadAdditiveScenes();
+        GameObject.Destroy(DDOLs);
+        GameObject.Destroy(toolbox);
     }
     
     #endregion
