@@ -51,9 +51,6 @@ public class NotebookManager : MonoBehaviour
 
         // Get notebookdata
         notebookData = GameManager.gm.notebookData;
-        personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-        personalInputField.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
-        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
 
         // Open custom notes page
         OpenPersonalNotes();
@@ -114,7 +111,10 @@ public class NotebookManager : MonoBehaviour
         var inputField = personalInputField.GetComponent<TMP_InputField>();
         inputField.gameObject.SetActive(true);
         inputField.text = notebookData.GetPersonalNotes();
+
+        // Set font sizes
         inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
 
         // Make button clickable
         ChangeButtons(personalButton);
@@ -392,13 +392,6 @@ public class NotebookManager : MonoBehaviour
     {
         // Reopen character tab (automatically applies settings)
         OpenCharacterTab(currentCharacterIndex);
-
-        // Change text size for personal input tab
-        personalInputField.GetComponent<TMP_InputField>().pointSize = 
-            SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
-
-        personalInputTitleText.fontSize =
-            SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
     }
 
     #region Test Variables
