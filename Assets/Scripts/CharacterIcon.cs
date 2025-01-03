@@ -15,10 +15,22 @@ public class CharacterIcon : MonoBehaviour
 
     private CharacterInstance character;
 
+    /// <summary>
+    /// The color of the icon's background.
+    /// </summary>
     public Color BackgroundColor
     { 
         get { return backgroundImageRef.color; }
         set { backgroundImageRef.color = value; }
+    }
+
+    /// <summary>
+    /// The overlay color on the avatar image.
+    /// </summary>
+    public Color OverlayColor
+    {
+        get { return avatarImageRef.color; }
+        set { avatarImageRef.color = value; }
     }
 
     private void Awake()

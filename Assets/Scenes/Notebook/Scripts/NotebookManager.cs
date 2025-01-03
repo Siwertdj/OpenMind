@@ -74,7 +74,17 @@ public class NotebookManager : MonoBehaviour
         {
             int id = i;
             var button = nameButtons[i];
-            button.GetComponentInChildren<CharacterIcon>().SetAvatar(characters[i]);
+            
+            // Set the icon avatar
+            var icon = button.GetComponentInChildren<CharacterIcon>();
+            icon.SetAvatar(characters[i]);
+
+            // Inactive characters should have a different looking icon
+            if (!characters[i].isActive)
+            {
+                icon.BackgroundColor = new Color(0.7f, 0.7f, 0.7f);
+                icon.OverlayColor = new Color(0.7f, 0.7f, 0.7f);
+            }
 
             button.onClick.AddListener(()=>OpenCharacterTab(id));
         }
