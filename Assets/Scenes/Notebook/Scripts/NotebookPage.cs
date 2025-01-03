@@ -83,7 +83,7 @@ public class NotebookPage
         }
         else
         {
-            return "I have not asked " + _character.characterName + "any questions.";
+            return "I have not asked " + _character.characterName + " any questions.";
         }
     }
     

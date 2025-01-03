@@ -67,4 +67,8 @@ public class CharacterIcon : MonoBehaviour
         float height = width / ratio;
         avatarImageRef.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
     }
+
+#if UNITY_INCLUDE_TESTS
+    public CharacterInstance Test_Character { get { return character; } }
+#endif
 }
