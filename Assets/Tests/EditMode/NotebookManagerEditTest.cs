@@ -62,7 +62,7 @@ public class NotebookManagerEditTest
     [Test]
     public void InitializeCharacterButtonsTest()
     {
-        nm.InitializeCharacterButtons();
+        nm.InitializeTabButtons();
         
         var buttons = nm.Test_GetNameButtons();
 
@@ -85,12 +85,12 @@ public class NotebookManagerEditTest
     [Test]
     public void ToggleCharacterInfoTest()
     {
-        bool active = nm.characterInfo.activeInHierarchy;
+        bool active = nm.Test_CharacterInfoField.activeInHierarchy;
         
         nm.ToggleCharacterInfo();
         
         if (active)
-            Assert.IsFalse(nm.characterInfo.activeSelf);
-        else Assert.IsTrue(nm.characterInfo.activeSelf);
+            Assert.IsFalse(nm.Test_CharacterInfoField.activeSelf);
+        else Assert.IsTrue(nm.Test_CharacterInfoField.activeSelf);
     }
 }
