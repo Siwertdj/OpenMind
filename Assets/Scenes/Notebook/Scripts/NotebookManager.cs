@@ -27,8 +27,8 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject characterInfo;
 
     [Header("Tab Select Button References")]
-    [SerializeField] private Button personalButton;
-    [SerializeField] private Button[] nameButtons;
+    [SerializeField] private GameButton personalButton;
+    [SerializeField] private GameButton[] nameButtons;
 
     [Header("Component References")]
     [SerializeField] private TMP_InputField personalInputField;
