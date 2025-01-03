@@ -7,10 +7,6 @@ using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using WaitUntil = UnityEngine.WaitUntil;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class DialogueAnimatorPlayTest
 {
@@ -30,6 +26,7 @@ public class DialogueAnimatorPlayTest
 
         animator.Test_DelayInSeconds = 0.01f;
         animator.Test_DelayAfterSentence = 0.05f;
+        animator.Test_IgnoreSkipDelay = true;
 
         yield return null;
     }
@@ -97,7 +94,7 @@ public class DialogueAnimatorPlayTest
 
             // Await next line start
             //yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
-            animator.SkipDialogue(true);
+            animator.SkipDialogue();
         }
     }
 

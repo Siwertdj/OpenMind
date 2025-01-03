@@ -410,7 +410,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -30.999939, y: -157.80005}
+  m_AnchoredPosition: {x: -31, y: -157.80005}
   m_SizeDelta: {x: 0, y: 630.3679}
   m_Pivot: {x: 0.49999994, y: 0.5}
 --- !u!114 &213787018
@@ -675,8 +675,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 584.66}
-  m_SizeDelta: {x: 0, y: -1169.3}
+  m_AnchoredPosition: {x: 0, y: 500.2}
+  m_SizeDelta: {x: 0, y: -1000.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &355724332
 MonoBehaviour:
@@ -2015,8 +2015,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -94.99872}
-  m_SizeDelta: {x: -18.4124, y: -213.8114}
+  m_AnchoredPosition: {x: -0.000030517578, y: -91}
+  m_SizeDelta: {x: -60.8292, y: -297.1122}
   m_Pivot: {x: 0.5, y: 0.6369268}
 --- !u!1 &829692253
 GameObject:
@@ -2301,7 +2301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3.3177643
+      value: -3.3177948
       objectReference: {fileID: 0}
     - target: {fileID: 7041123256146763766, guid: 274982f30ca650248b971c2dea39748d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2461,7 +2461,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.26638868, y: 0.21412513}
   m_AnchorMax: {x: 0.75838876, y: 0.8138176}
-  m_AnchoredPosition: {x: 0, y: -15.000244}
+  m_AnchoredPosition: {x: 0, y: -15.000305}
   m_SizeDelta: {x: 0, y: -30.000002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1120042305
@@ -2758,7 +2758,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
