@@ -1180,10 +1180,11 @@ MonoBehaviour:
   personalInputField: {fileID: 657100576}
   currentTabText: {fileID: 1547554453}
   personalInputTitleText: {fileID: 355724332}
-  logObjectPrefab: {fileID: 8363704787138209958, guid: 28efe5bc8acb2294c8f7542f7a820b48, type: 3}
-  inputObjectPrefab: {fileID: 2074640962416746786, guid: 1611e1982807ec04391696a529504b4a, type: 3}
-  introObjectPrefab: {fileID: 2691103649229140218, guid: 38c91ccfad5bd0d499903d953b1ead4f, type: 3}
   pagePrefab: {fileID: 6495478036534208244, guid: a39a88ed79154474f8c29a9a917b4037, type: 3}
+  inactiveNotePrefab: {fileID: 2691103649229140218, guid: 89d30f90ecaa88e4da9474f6c47f9041, type: 3}
+  introObjectPrefab: {fileID: 2691103649229140218, guid: 38c91ccfad5bd0d499903d953b1ead4f, type: 3}
+  inputObjectPrefab: {fileID: 2074640962416746786, guid: 1611e1982807ec04391696a529504b4a, type: 3}
+  logObjectPrefab: {fileID: 8363704787138209958, guid: 28efe5bc8acb2294c8f7542f7a820b48, type: 3}
 --- !u!1 &593553344
 GameObject:
   m_ObjectHideFlags: 0

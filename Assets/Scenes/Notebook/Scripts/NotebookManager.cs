@@ -36,10 +36,11 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private TMP_Text personalInputTitleText;
 
     [Header("Prefab References")]
-    [SerializeField] private GameObject logObjectPrefab;
-    [SerializeField] private GameObject inputObjectPrefab;
-    [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject pagePrefab;
+    [SerializeField] private GameObject inactiveNotePrefab;
+    [SerializeField] private GameObject introObjectPrefab;
+    [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject logObjectPrefab;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
@@ -159,6 +160,17 @@ public class NotebookManager : MonoBehaviour
         // The queue which will hold all the character's info
         // This info will later be divided into pages
         Queue<GameObject> allCharacterInfo = new();
+
+        if (!currentCharacter.isActive)
+        {
+            var inactiveNoteObject = Instantiate(inactiveNotePrefab);
+            var noteText = inactiveNoteObject.GetComponentInChildren<TMP_Text>();
+
+            noteText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+            noteText.text = $"Note: {currentCharacter.characterName} {GameManager.gm.story.victimDialogue}";
+
+            allCharacterInfo.Enqueue(inactiveNoteObject);
+        }
 
         // Create icon & name object
         var introObject = Instantiate(introObjectPrefab);
