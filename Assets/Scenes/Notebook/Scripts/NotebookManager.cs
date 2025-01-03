@@ -161,6 +161,7 @@ public class NotebookManager : MonoBehaviour
         // This info will later be divided into pages
         Queue<GameObject> allCharacterInfo = new();
 
+        // If character is inactive, create note object
         if (!currentCharacter.isActive)
         {
             var inactiveNoteObject = Instantiate(inactiveNotePrefab);
