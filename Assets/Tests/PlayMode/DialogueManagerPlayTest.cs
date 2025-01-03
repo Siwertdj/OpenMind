@@ -61,12 +61,11 @@ public class DialogueManagerPlayTest
     [TearDown]
     public void TearDown()
     {
-        // Store DDOLs to be destroyed after transition
-        GameObject DDOLs = GameObject.FindGameObjectWithTag("DDOLManager");
-        GameObject toolbox = GameObject.FindGameObjectWithTag("Toolbox");
+        // Move toolbox and DDOLs to Loading to unload
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
-        GameObject.Destroy(DDOLs);
-        GameObject.Destroy(toolbox);
+        SceneController.sc.UnloadAdditiveScenes();
     }
     
     #endregion

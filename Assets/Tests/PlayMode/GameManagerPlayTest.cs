@@ -4,15 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
-using UnityEditor;
-using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameManagerPlayTest
 {
