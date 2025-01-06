@@ -141,7 +141,7 @@ public class CutsceneController : MonoBehaviour
     }
     
     #endregion
-
+    
     // This region contains methods that manipulate UI elements on the canvas.
     #region UIManipulators
     /// <summary>
