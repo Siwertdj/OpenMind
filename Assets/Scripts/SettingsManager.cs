@@ -148,7 +148,7 @@ public class SettingsManager : MonoBehaviour
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
 
-        // Set the music loop.
+        // Set the music loop to the given parameter.
         musicSource.loop = loop;
     }
 
