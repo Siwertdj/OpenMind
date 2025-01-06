@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -66,7 +66,7 @@ public class TutorialManager : MonoBehaviour
         else // In all other cases (namely the NPCSelectScene) the actual tutorial needs to be played. 
         {
             // Initialize the notebook for the notebook tutorial
-            GameObject notebook = GameObject.Find("NotebookButton");
+            GameObject notebook = GameObject.Find("Notebook Button");
             notebookButton = notebook.GetComponentInChildren<Button>();
             
             // Close notebook if it is already opened.

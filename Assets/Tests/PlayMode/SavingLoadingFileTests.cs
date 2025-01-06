@@ -16,6 +16,8 @@ using Property = NUnit.Framework.PropertyAttribute;
 /// </summary>
 public class SavingLoadingTestFilePaths
 {
+    private GameManager gm;
+
     [OneTimeSetUp]
     public void LoadTestingScene()
     {
@@ -32,6 +34,7 @@ public class SavingLoadingTestFilePaths
     public IEnumerator Initialise()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
+        
         if (layer > 0)
         {
             Debug.Log("hi");
@@ -42,29 +45,59 @@ public class SavingLoadingTestFilePaths
         
         if (layer > 1)
         {
+            // Load StartScreenScene in order to put the SettingsManager into DDOL
+            SceneManager.LoadScene("StartScreenScene");
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+            // Unload the StartScreenScene
+            SceneManager.UnloadSceneAsync("StartScreenScene");
+
+            // Load the "Loading" scene in order to get access to the toolbox in DDOL
+            SceneManager.LoadScene("Loading");
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+
+            // Put toolbox as parent of SettingsManager
+            GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
+
+            // Initialize GameManager and start the game. 
+            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
+
+            /*
             GameManager.gm.gameObject.AddComponent<AudioSource>();
             GameManager.gm.gameObject.AddComponent<SettingsManager>();
 
             //initialise gamemanager
             StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
             GameManager.gm.StartGame(null, story);
+            */
+
             yield return new WaitUntil(() =>
                 SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         }
     }
     
     [UnityTearDown]
-    public IEnumerator RemoveGameManager()
+    public void RemoveGameManager()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
+
         
+
+        SceneController.sc.UnloadAdditiveScenes();
         if (layer > 0)
         {
+            // Move toolbox and DDOLs to Loading to unload
+            GameObject.Destroy(GameObject.Find("Toolbox"));
+            GameObject.Destroy(GameObject.Find("DDOLs"));
+
+            /*
             SceneManager.UnloadSceneAsync("Loading");
             yield return new WaitUntil(() => !SceneManager.GetSceneByName("Loading").isLoaded);
+            */
         }
 
-        GameManager.gm = null;
+        //GameManager.gm = null;
     }
     
     private Save saving  => Save.Saver;

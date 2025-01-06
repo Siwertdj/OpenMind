@@ -71,7 +71,7 @@ public class NotebookManagerEditTest
             int id = i;
             Button button = buttons[id];
             // Find icon of character and check if correct character sprite is shown
-            Transform icon = button.transform.Find("Icon");
+            Transform icon = button.transform.Find("Character Icon");
             Transform avatar = icon.transform.Find("Avatar");
             Image face = avatar.GetComponentInChildren<Image>();
 
