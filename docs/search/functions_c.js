@@ -11,13 +11,14 @@ var searchData=
   ['ondisable_8',['OnDisable',['../classGameEventListener.html#a31d742a3f342a583325dd2fff80de358',1,'GameEventListener']]],
   ['onenable_9',['OnEnable',['../classGameEventListener.html#af1d5585a115b74d5e304d79fa73775ab',1,'GameEventListener']]],
   ['oneventraised_10',['OnEventRaised',['../classGameEventListener.html#a80db09b3e43a86b2a0a5832da81a5c47',1,'GameEventListener']]],
-  ['ontogglevaluechanged_11',['OnToggleValueChanged',['../classCutsceneController.html#a92b61004cbad935341f6bff2f69d3426',1,'CutsceneController']]],
-  ['opencharactertab_12',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
-  ['openmenu_13',['OpenMenu',['../classUIManager.html#a78494fd17bf0cc867abab837f1f78d1d',1,'UIManager']]],
-  ['openpersonalnotes_14',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
-  ['openpersonalnotestest_15',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
-  ['openpopup_16',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
-  ['openresponsedialogueobject_17',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject']]],
-  ['opensettings_18',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
-  ['openskipprologueprompt_19',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]]
+  ['ontextsizechanged_11',['OnTextSizeChanged',['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager']]],
+  ['ontogglevaluechanged_12',['OnToggleValueChanged',['../classCutsceneController.html#a92b61004cbad935341f6bff2f69d3426',1,'CutsceneController']]],
+  ['opencharactertab_13',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
+  ['openmenu_14',['OpenMenu',['../classUIManager.html#a78494fd17bf0cc867abab837f1f78d1d',1,'UIManager']]],
+  ['openpersonalnotes_15',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
+  ['openpersonalnotestest_16',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
+  ['openpopup_17',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
+  ['openresponsedialogueobject_18',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject']]],
+  ['opensettings_19',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
+  ['openskipprologueprompt_20',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]]
 ];

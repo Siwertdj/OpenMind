@@ -35,7 +35,7 @@ var searchData=
   ['cpauseintrotest_32',['CPauseIntroTest',['../classIntroductionManagerPlayTest.html#a777f1adb8416451fb98464d83a784e71',1,'IntroductionManagerPlayTest']]],
   ['cplayintrotest_33',['CPlayIntroTest',['../classIntroductionManagerPlayTest.html#a804dcf81820d4cc4b9042acde660c402',1,'IntroductionManagerPlayTest']]],
   ['createbackbutton_34',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],
-  ['createcharacterpages_35',['CreateCharacterPages',['../classNotebookManager.html#ae08dc71577eba7b3afc9a5ad359d968f',1,'NotebookManager']]],
+  ['createcharacterpages_35',['CreateCharacterPages',['../classNotebookManager.html#af86f68457b5094528dabeddf0974e555',1,'NotebookManager']]],
   ['createcontinuebutton_36',['CreateContinueButton',['../classDialogueManager.html#a05c8f1b313240a670d3198a5c511b5b5',1,'DialogueManager']]],
   ['createdialoguebackground_37',['CreateDialogueBackground',['../classDialogueManager.html#a656faf0cdf38437bb253fc60c806daba',1,'DialogueManager']]],
   ['createopenquestion_38',['CreateOpenQuestion',['../classDialogueManager.html#aa1b422e7d6bd516d31a6d777d7cca9fc',1,'DialogueManager']]],

@@ -91,10 +91,10 @@ Inheritance diagram for NotebookManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae48d455134ab96c946f463fb08218615"><td class="memItemLeft" align="right" valign="top"><a id="ae48d455134ab96c946f463fb08218615" name="ae48d455134ab96c946f463fb08218615"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InitializeCharacterButtons</b> ()</td></tr>
-<tr class="memdesc:ae48d455134ab96c946f463fb08218615"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the character buttons, use their names as the button text and add the button event. <br /></td></tr>
-<tr class="separator:ae48d455134ab96c946f463fb08218615"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37aca8d3650c3b42a66311918749fba2"><td class="memItemLeft" align="right" valign="top"><a id="a37aca8d3650c3b42a66311918749fba2" name="a37aca8d3650c3b42a66311918749fba2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InitializeTabButtons</b> ()</td></tr>
+<tr class="memdesc:a37aca8d3650c3b42a66311918749fba2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the tab buttons (custom notes &amp; character tabs), For characters, use their names as the button text and add the button event. <br /></td></tr>
+<tr class="separator:a37aca8d3650c3b42a66311918749fba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45879daf9e6b5809bcd825936c9a10be"><td class="memItemLeft" align="right" valign="top"><a id="a45879daf9e6b5809bcd825936c9a10be" name="a45879daf9e6b5809bcd825936c9a10be"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenPersonalNotes</b> ()</td></tr>
 <tr class="memdesc:a45879daf9e6b5809bcd825936c9a10be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the personal notes tab and load the notes. <br /></td></tr>
@@ -117,9 +117,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SaveNotes</b> ()</td>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3ef67394aa6786222110db734e1c442b"><td class="memItemLeft" align="right" valign="top"><a id="a3ef67394aa6786222110db734e1c442b" name="a3ef67394aa6786222110db734e1c442b"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>characterInfo</b></td></tr>
-<tr class="separator:a3ef67394aa6786222110db734e1c442b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af453bcc68b7400dcbe78936b3e637be2"><td class="memItemLeft" align="right" valign="top"><a id="af453bcc68b7400dcbe78936b3e637be2" name="af453bcc68b7400dcbe78936b3e637be2"></a>
 <a class="el" href="classNotebookData.html">NotebookData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>notebookData</b></td></tr>
 <tr class="separator:af453bcc68b7400dcbe78936b3e637be2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -138,14 +135,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenCharacterTab</b> 
 void&#160;</td><td class="memItemRight" valign="bottom"><b>NavigateCharacters</b> (int id)</td></tr>
 <tr class="memdesc:a638440da6b9570acecfa09350915912d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Navigates to the character tab with the given id. <br /></td></tr>
 <tr class="separator:a638440da6b9570acecfa09350915912d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae08dc71577eba7b3afc9a5ad359d968f"><td class="memItemLeft" align="right" valign="top"><a id="ae08dc71577eba7b3afc9a5ad359d968f" name="ae08dc71577eba7b3afc9a5ad359d968f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CreateCharacterPages</b> ()</td></tr>
-<tr class="memdesc:ae08dc71577eba7b3afc9a5ad359d968f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create all pages in one go. Creates multiple GameObjects each containing a part of the notebook data regarding the selected character. All pages apart from the first are automatically set to inactive. <br /></td></tr>
-<tr class="separator:ae08dc71577eba7b3afc9a5ad359d968f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af86f68457b5094528dabeddf0974e555"><td class="memItemLeft" align="right" valign="top"><a id="af86f68457b5094528dabeddf0974e555" name="af86f68457b5094528dabeddf0974e555"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CreateCharacterPages</b> (Queue&lt; GameObject &gt; allCharacterInfo)</td></tr>
+<tr class="memdesc:af86f68457b5094528dabeddf0974e555"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create all pages in one go. Creates multiple GameObjects each containing a part of the notebook data regarding the selected character. All pages apart from the first are automatically set to inactive. <br /></td></tr>
+<tr class="separator:af86f68457b5094528dabeddf0974e555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b339753e186d35900c6e92a34ee0fb3"><td class="memItemLeft" align="right" valign="top"><a id="a9b339753e186d35900c6e92a34ee0fb3" name="a9b339753e186d35900c6e92a34ee0fb3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ChangeButtons</b> (Button clickedButton)</td></tr>
 <tr class="memdesc:a9b339753e186d35900c6e92a34ee0fb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make the clicked button non-interactable and make the last clicked buttons interactable again. <br /></td></tr>
 <tr class="separator:a9b339753e186d35900c6e92a34ee0fb3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa26cd049019adff10ee024b2ce33c13d"><td class="memItemLeft" align="right" valign="top"><a id="aa26cd049019adff10ee024b2ce33c13d" name="aa26cd049019adff10ee024b2ce33c13d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OnTextSizeChanged</b> ()</td></tr>
+<tr class="memdesc:aa26cd049019adff10ee024b2ce33c13d"><td class="mdescLeft">&#160;</td><td class="mdescRight">What happens when the player changes text size settings. Resets current page and apply new values. <br /></td></tr>
+<tr class="separator:aa26cd049019adff10ee024b2ce33c13d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -155,42 +156,57 @@ GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>characterCustom
 <tr class="memitem:a19f87b7766b9630fe8b60064af53b2e9"><td class="memItemLeft" align="right" valign="top"><a id="a19f87b7766b9630fe8b60064af53b2e9" name="a19f87b7766b9630fe8b60064af53b2e9"></a>
 <a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>currentCharacter</b></td></tr>
 <tr class="separator:a19f87b7766b9630fe8b60064af53b2e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe11a76b2f2d1287f2ea5def278a051c"><td class="memItemLeft" align="right" valign="top"><a id="abe11a76b2f2d1287f2ea5def278a051c" name="abe11a76b2f2d1287f2ea5def278a051c"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>currentCharacterId</b></td></tr>
-<tr class="separator:abe11a76b2f2d1287f2ea5def278a051c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af80d8077bf1bb95e807ef86d629cbe97"><td class="memItemLeft" align="right" valign="top"><a id="af80d8077bf1bb95e807ef86d629cbe97" name="af80d8077bf1bb95e807ef86d629cbe97"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currentCharacterIndex</b></td></tr>
+<tr class="separator:af80d8077bf1bb95e807ef86d629cbe97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70c986eeb893f00dc9c4bba62a59b10b"><td class="memItemLeft" align="right" valign="top"><a id="a70c986eeb893f00dc9c4bba62a59b10b" name="a70c986eeb893f00dc9c4bba62a59b10b"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>currentPageIndex</b></td></tr>
+<tr class="separator:a70c986eeb893f00dc9c4bba62a59b10b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6927ea49c7b38ef0ed60db5d7e34a1ca"><td class="memItemLeft" align="right" valign="top"><a id="a6927ea49c7b38ef0ed60db5d7e34a1ca" name="a6927ea49c7b38ef0ed60db5d7e34a1ca"></a>
 Button&#160;</td><td class="memItemRight" valign="bottom"><b>selectedButton</b></td></tr>
 <tr class="separator:a6927ea49c7b38ef0ed60db5d7e34a1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a96d39805029584f4f846032a680725bc"><td class="memItemLeft" align="right" valign="top"><a id="a96d39805029584f4f846032a680725bc" name="a96d39805029584f4f846032a680725bc"></a>
-Button&#160;</td><td class="memItemRight" valign="bottom"><b>personalButton</b></td></tr>
-<tr class="separator:a96d39805029584f4f846032a680725bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a330884b76ede842df0e692b573661da5"><td class="memItemLeft" align="right" valign="top"><a id="a330884b76ede842df0e692b573661da5" name="a330884b76ede842df0e692b573661da5"></a>
-Button[]&#160;</td><td class="memItemRight" valign="bottom"><b>nameButtons</b></td></tr>
-<tr class="separator:a330884b76ede842df0e692b573661da5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1866516f8389ec85861a2d3ea6948a"><td class="memItemLeft" align="right" valign="top"><a id="a2c1866516f8389ec85861a2d3ea6948a" name="a2c1866516f8389ec85861a2d3ea6948a"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>tabAnimationDuration</b></td></tr>
+<tr class="separator:a2c1866516f8389ec85861a2d3ea6948a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7441f2c01602d2053df883fa86a83017"><td class="memItemLeft" align="right" valign="top"><a id="a7441f2c01602d2053df883fa86a83017" name="a7441f2c01602d2053df883fa86a83017"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>expandedTabHeight</b></td></tr>
+<tr class="separator:a7441f2c01602d2053df883fa86a83017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3f68b6e77f9eebcc27b5c9fe33a6635"><td class="memItemLeft" align="right" valign="top"><a id="ac3f68b6e77f9eebcc27b5c9fe33a6635" name="ac3f68b6e77f9eebcc27b5c9fe33a6635"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>collapsedTabHeight</b></td></tr>
+<tr class="separator:ac3f68b6e77f9eebcc27b5c9fe33a6635"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ef67394aa6786222110db734e1c442b"><td class="memItemLeft" align="right" valign="top"><a id="a3ef67394aa6786222110db734e1c442b" name="a3ef67394aa6786222110db734e1c442b"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>characterInfo</b></td></tr>
+<tr class="separator:a3ef67394aa6786222110db734e1c442b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a053966b6e8318c2228dcd86bacbb6703"><td class="memItemLeft" align="right" valign="top"><a id="a053966b6e8318c2228dcd86bacbb6703" name="a053966b6e8318c2228dcd86bacbb6703"></a>
+<a class="el" href="classGameButton.html">GameButton</a>&#160;</td><td class="memItemRight" valign="bottom"><b>personalButton</b></td></tr>
+<tr class="separator:a053966b6e8318c2228dcd86bacbb6703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1edb1677eb9ecd46f3232aedade347de"><td class="memItemLeft" align="right" valign="top"><a id="a1edb1677eb9ecd46f3232aedade347de" name="a1edb1677eb9ecd46f3232aedade347de"></a>
+<a class="el" href="classGameButton.html">GameButton</a>[]&#160;</td><td class="memItemRight" valign="bottom"><b>nameButtons</b></td></tr>
+<tr class="separator:a1edb1677eb9ecd46f3232aedade347de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5f2e4d202f951066d11e68a62833b19"><td class="memItemLeft" align="right" valign="top"><a id="ae5f2e4d202f951066d11e68a62833b19" name="ae5f2e4d202f951066d11e68a62833b19"></a>
 TMP_InputField&#160;</td><td class="memItemRight" valign="bottom"><b>personalInputField</b></td></tr>
 <tr class="separator:ae5f2e4d202f951066d11e68a62833b19"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a241b44793375e4051a056fdb9c3797d0"><td class="memItemLeft" align="right" valign="top"><a id="a241b44793375e4051a056fdb9c3797d0" name="a241b44793375e4051a056fdb9c3797d0"></a>
 TMP_Text&#160;</td><td class="memItemRight" valign="bottom"><b>currentTabText</b></td></tr>
 <tr class="separator:a241b44793375e4051a056fdb9c3797d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0cd473769a84fa7d74de6866335ed383"><td class="memItemLeft" align="right" valign="top"><a id="a0cd473769a84fa7d74de6866335ed383" name="a0cd473769a84fa7d74de6866335ed383"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>logObjectPrefab</b></td></tr>
-<tr class="separator:a0cd473769a84fa7d74de6866335ed383"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a736a9cc57586b75df2a54dfe8f443b75"><td class="memItemLeft" align="right" valign="top"><a id="a736a9cc57586b75df2a54dfe8f443b75" name="a736a9cc57586b75df2a54dfe8f443b75"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>inputObjectPrefab</b></td></tr>
-<tr class="separator:a736a9cc57586b75df2a54dfe8f443b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadd7e21e0e2a1a0f8d71308f60dc3f10"><td class="memItemLeft" align="right" valign="top"><a id="aadd7e21e0e2a1a0f8d71308f60dc3f10" name="aadd7e21e0e2a1a0f8d71308f60dc3f10"></a>
-GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>introObjectPrefab</b></td></tr>
-<tr class="separator:aadd7e21e0e2a1a0f8d71308f60dc3f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba5249e30295d0534536634f7f701ac5"><td class="memItemLeft" align="right" valign="top"><a id="aba5249e30295d0534536634f7f701ac5" name="aba5249e30295d0534536634f7f701ac5"></a>
+TMP_Text&#160;</td><td class="memItemRight" valign="bottom"><b>personalInputTitleText</b></td></tr>
+<tr class="separator:aba5249e30295d0534536634f7f701ac5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc3ae9c4b53d45dac5a715d137af0c12"><td class="memItemLeft" align="right" valign="top"><a id="afc3ae9c4b53d45dac5a715d137af0c12" name="afc3ae9c4b53d45dac5a715d137af0c12"></a>
 GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>pagePrefab</b></td></tr>
 <tr class="separator:afc3ae9c4b53d45dac5a715d137af0c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70c986eeb893f00dc9c4bba62a59b10b"><td class="memItemLeft" align="right" valign="top"><a id="a70c986eeb893f00dc9c4bba62a59b10b" name="a70c986eeb893f00dc9c4bba62a59b10b"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>currentPageIndex</b> = 0</td></tr>
-<tr class="separator:a70c986eeb893f00dc9c4bba62a59b10b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32c5d4f04a3ddf388ac55977ffc076c2"><td class="memItemLeft" align="right" valign="top"><a id="a32c5d4f04a3ddf388ac55977ffc076c2" name="a32c5d4f04a3ddf388ac55977ffc076c2"></a>
-Queue&lt; GameObject &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>allCharacterInfo</b> = new()</td></tr>
-<tr class="separator:a32c5d4f04a3ddf388ac55977ffc076c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5d873093f16e840126261242c141931"><td class="memItemLeft" align="right" valign="top"><a id="ae5d873093f16e840126261242c141931" name="ae5d873093f16e840126261242c141931"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>inactiveNotePrefab</b></td></tr>
+<tr class="separator:ae5d873093f16e840126261242c141931"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadd7e21e0e2a1a0f8d71308f60dc3f10"><td class="memItemLeft" align="right" valign="top"><a id="aadd7e21e0e2a1a0f8d71308f60dc3f10" name="aadd7e21e0e2a1a0f8d71308f60dc3f10"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>introObjectPrefab</b></td></tr>
+<tr class="separator:aadd7e21e0e2a1a0f8d71308f60dc3f10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a736a9cc57586b75df2a54dfe8f443b75"><td class="memItemLeft" align="right" valign="top"><a id="a736a9cc57586b75df2a54dfe8f443b75" name="a736a9cc57586b75df2a54dfe8f443b75"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>inputObjectPrefab</b></td></tr>
+<tr class="separator:a736a9cc57586b75df2a54dfe8f443b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0cd473769a84fa7d74de6866335ed383"><td class="memItemLeft" align="right" valign="top"><a id="a0cd473769a84fa7d74de6866335ed383" name="a0cd473769a84fa7d74de6866335ed383"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>logObjectPrefab</b></td></tr>
+<tr class="separator:a0cd473769a84fa7d74de6866335ed383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manager class for the notebook scene. </p>

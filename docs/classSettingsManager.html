@@ -102,6 +102,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aecdc1547311f1bf10c23037743f10aaf"><td class="memItemLeft" align="right" valign="top"><a id="aecdc1547311f1bf10c23037743f10aaf" name="aecdc1547311f1bf10c23037743f10aaf"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SaveSettings</b> ()</td></tr>
 <tr class="separator:aecdc1547311f1bf10c23037743f10aaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45e9b4a96b3f5952153136a9e85283e5"><td class="memItemLeft" align="right" valign="top"><a id="a45e9b4a96b3f5952153136a9e85283e5" name="a45e9b4a96b3f5952153136a9e85283e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OnClick</b> (Component sender, params object[] data)</td></tr>
+<tr class="separator:a45e9b4a96b3f5952153136a9e85283e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee76b879f7ff9367b0fc82478b5048af"><td class="memItemLeft" align="right" valign="top"><a id="aee76b879f7ff9367b0fc82478b5048af" name="aee76b879f7ff9367b0fc82478b5048af"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFontSize</b> ()</td></tr>
 <tr class="memdesc:aee76b879f7ff9367b0fc82478b5048af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the fontSize of the dialogue text. <br /></td></tr>
@@ -128,12 +131,21 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a0ecafb8e1a3063786beb613762c80c75"><td class="memItemLeft" align="right" valign="top"><a id="a0ecafb8e1a3063786beb613762c80c75" name="a0ecafb8e1a3063786beb613762c80c75"></a>
 AudioMixer&#160;</td><td class="memItemRight" valign="bottom"><b>audioMixer</b></td></tr>
 <tr class="separator:a0ecafb8e1a3063786beb613762c80c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0239a44eeb5b96901b946211e9b57a52"><td class="memItemLeft" align="right" valign="top"><a id="a0239a44eeb5b96901b946211e9b57a52" name="a0239a44eeb5b96901b946211e9b57a52"></a>
+AudioSource&#160;</td><td class="memItemRight" valign="bottom"><b>musicSource</b></td></tr>
+<tr class="separator:a0239a44eeb5b96901b946211e9b57a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1e99f0db990e68b7e5b7a0dd01f0f17"><td class="memItemLeft" align="right" valign="top"><a id="aa1e99f0db990e68b7e5b7a0dd01f0f17" name="aa1e99f0db990e68b7e5b7a0dd01f0f17"></a>
+AudioSource&#160;</td><td class="memItemRight" valign="bottom"><b>sfxSource</b></td></tr>
+<tr class="separator:aa1e99f0db990e68b7e5b7a0dd01f0f17"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21ce03d2bbeac72397840116afc9c660"><td class="memItemLeft" align="right" valign="top"><a id="a21ce03d2bbeac72397840116afc9c660" name="a21ce03d2bbeac72397840116afc9c660"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>maxLineLength</b> = 30</td></tr>
 <tr class="separator:a21ce03d2bbeac72397840116afc9c660"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8cb18eb0e8150656e412ee3bbfddc20d"><td class="memItemLeft" align="right" valign="top"><a id="a8cb18eb0e8150656e412ee3bbfddc20d" name="a8cb18eb0e8150656e412ee3bbfddc20d"></a>
 TextSize&#160;</td><td class="memItemRight" valign="bottom"><b>textSize</b></td></tr>
 <tr class="separator:a8cb18eb0e8150656e412ee3bbfddc20d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac294b88b007c8a51b5dcee8193ac1689"><td class="memItemLeft" align="right" valign="top"><a id="ac294b88b007c8a51b5dcee8193ac1689" name="ac294b88b007c8a51b5dcee8193ac1689"></a>
+UnityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnTextSizeChanged</b></td></tr>
+<tr class="separator:ac294b88b007c8a51b5dcee8193ac1689"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8267f15f424ede8a57cd8beb7830e947"><td class="memItemLeft" align="right" valign="top"><a id="a8267f15f424ede8a57cd8beb7830e947" name="a8267f15f424ede8a57cd8beb7830e947"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>musicVolume</b> = 0</td></tr>
 <tr class="separator:a8267f15f424ede8a57cd8beb7830e947"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,15 +155,18 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>sfxVolume</b> = 0</t
 <tr class="memitem:aa2605ec3812115d22411496753e953d0"><td class="memItemLeft" align="right" valign="top"><a id="aa2605ec3812115d22411496753e953d0" name="aa2605ec3812115d22411496753e953d0"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>talkingSpeed</b> = 1</td></tr>
 <tr class="separator:aa2605ec3812115d22411496753e953d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6d6a65a1a2614701e58c1c06d4e81f3d"><td class="memItemLeft" align="right" valign="top"><a id="a6d6a65a1a2614701e58c1c06d4e81f3d" name="a6d6a65a1a2614701e58c1c06d4e81f3d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>ttsEnabled</b> = false</td></tr>
-<tr class="separator:a6d6a65a1a2614701e58c1c06d4e81f3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:ace5ec38e89ca47be1b13a1577fc35c14"><td class="memItemLeft" align="right" valign="top"><a id="ace5ec38e89ca47be1b13a1577fc35c14" name="ace5ec38e89ca47be1b13a1577fc35c14"></a>
 static <a class="el" href="classSettingsManager.html">SettingsManager</a>&#160;</td><td class="memItemRight" valign="bottom"><b>sm</b></td></tr>
 <tr class="separator:ace5ec38e89ca47be1b13a1577fc35c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fae1615551fa609e93218e4d932936f"><td class="memItemLeft" align="right" valign="top"><a id="a1fae1615551fa609e93218e4d932936f" name="a1fae1615551fa609e93218e4d932936f"></a>
+const float&#160;</td><td class="memItemRight" valign="bottom"><b>M_SMALL_TEXT</b> = 0.8f</td></tr>
+<tr class="separator:a1fae1615551fa609e93218e4d932936f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3c6eda94d41fd2eb9b6e0756900a76d"><td class="memItemLeft" align="right" valign="top"><a id="ac3c6eda94d41fd2eb9b6e0756900a76d" name="ac3c6eda94d41fd2eb9b6e0756900a76d"></a>
+const float&#160;</td><td class="memItemRight" valign="bottom"><b>M_LARGE_TEXT</b> = 1.4f</td></tr>
+<tr class="separator:ac3c6eda94d41fd2eb9b6e0756900a76d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
 Properties</h2></td></tr>
@@ -176,12 +191,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>ApplySavedSettings</b
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:a0239a44eeb5b96901b946211e9b57a52"><td class="memItemLeft" align="right" valign="top"><a id="a0239a44eeb5b96901b946211e9b57a52" name="a0239a44eeb5b96901b946211e9b57a52"></a>
-AudioSource&#160;</td><td class="memItemRight" valign="bottom"><b>musicSource</b></td></tr>
-<tr class="separator:a0239a44eeb5b96901b946211e9b57a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0fe24dd4b9a413062e4e66d873147d71"><td class="memItemLeft" align="right" valign="top"><a id="a0fe24dd4b9a413062e4e66d873147d71" name="a0fe24dd4b9a413062e4e66d873147d71"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultMusicFadeInTime</b> = 0.5f</td></tr>
 <tr class="separator:a0fe24dd4b9a413062e4e66d873147d71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abab2852644c3c5b53ca63aa12bfe3d06"><td class="memItemLeft" align="right" valign="top"><a id="abab2852644c3c5b53ca63aa12bfe3d06" name="abab2852644c3c5b53ca63aa12bfe3d06"></a>
+AudioClip&#160;</td><td class="memItemRight" valign="bottom"><b>defaultButtonClickSound</b></td></tr>
+<tr class="separator:abab2852644c3c5b53ca63aa12bfe3d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa65144c4be7c744b43560487925f556d" name="aa65144c4be7c744b43560487925f556d"></a>
