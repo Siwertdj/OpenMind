@@ -280,7 +280,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 386369042}
-  - {fileID: 930531609}
   m_Father: {fileID: 1238301442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -629,7 +628,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &930531609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -637,17 +636,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930531608}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.55102175, y: 0.55102175, z: 0.55102175}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1807932667}
-  m_Father: {fileID: 228368347}
+  m_Father: {fileID: 1238301442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -227.81941, y: 204}
+  m_AnchoredPosition: {x: -125.533455, y: -266.14255}
   m_SizeDelta: {x: 352.6953, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &930531610
@@ -927,6 +926,7 @@ MonoBehaviour:
   sendButton: {fileID: 1300033502}
   character: {fileID: 1775969667}
   nameTag: {fileID: 1807932668}
+  nameTagImage: {fileID: 930531608}
   messageLocations:
   - {fileID: 1602891227}
   - {fileID: 1875904328}
@@ -1240,6 +1240,7 @@ RectTransform:
   - {fileID: 1300033501}
   - {fileID: 1775969666}
   - {fileID: 228368347}
+  - {fileID: 930531609}
   - {fileID: 1342074083}
   - {fileID: 1464702359}
   m_Father: {fileID: 0}
@@ -2393,7 +2394,7 @@ MonoBehaviour:
   m_text: Receptionist
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2456,7 +2457,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1807932669
