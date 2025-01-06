@@ -136,7 +136,7 @@ public class SettingsManager : MonoBehaviour
     /// <summary>
     /// this method should fade-out the previous track, then fade-in the new track
     /// </summary>
-    public void SwitchMusic(AudioClip newClip, float? fadeTime)
+    public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
         if (newClip != null)
         {
@@ -147,6 +147,9 @@ public class SettingsManager : MonoBehaviour
             if (newClip != musicSource.clip)
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
+
+        // Set the music loop.
+        musicSource.loop = loop;
     }
 
     /// <summary>

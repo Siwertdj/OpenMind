@@ -825,7 +825,7 @@ MonoBehaviour:
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   startLoadIcon: {fileID: 11400000, guid: 334537c804656fe4995f51c51842dda5, type: 2}
   copyright: {fileID: 2085541975}
-  startMenuMusic: {fileID: 0}
+  startMenuMusic: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
 --- !u!1 &218964759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1344,7 +1344,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3414167128995361774, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.76
   m_Pitch: 1
@@ -2593,7 +2593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.000061035156, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0}
   m_SizeDelta: {x: -703, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127524792

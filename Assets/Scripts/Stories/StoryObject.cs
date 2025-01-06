@@ -19,6 +19,7 @@ public class StoryObject : ScriptableObject
     [SerializeField] public GameObject        epilogueBackground;
     [SerializeField] public AudioClip         storyIntroMusic;
     [SerializeField] public AudioClip         storyGameMusic;
+    [SerializeField] public AudioClip         storyHintPhoneMusic;
     [SerializeField] public AudioClip         storyEpilogueMusic;
     [SerializeField] public DialogueContainer storyEpilogueWonDialogue;
     [SerializeField] public DialogueContainer storyEpilogueLossDialogueCulprit;
