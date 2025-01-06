@@ -14,49 +14,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Maud
   id: 17
-  avatar: {fileID: 21300000, guid: 3b74707e22c91414cb65ffc4b6911812, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 3b74707e22c91414cb65ffc4b6911812, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 923bef4250de3fd4d82d560c58f6cb99, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.6
+  facePivot: {x: 0.4993, y: 0.6548}
   answers:
-  - question: 3
-    answer:
-    - I am a democrat.
-    - I will be voting for joe biden.
-    trait:
-    - bemograt
   - question: 1
-    answer:
-    - I was in 1987.
+    answer: {fileID: 11400000, guid: 1a53785010be0464b97399fc9ad71e78, type: 2}
+    trait:
     - I am 37 years old.
+  - question: 2
+    answer: {fileID: 11400000, guid: 88bd2b5c99f933a4681c5e24fcf5a8c4, type: 2}
     trait:
-    - bobn 1987
+    - I am working as a youth coach.
+  - question: 3
+    answer: {fileID: 11400000, guid: 3dbf657eafe70e043b81763bcd38052d, type: 2}
+    trait:
+    - I respect people who are refusing to let anyone stop them from speaking the
+      truth.
+  - question: 6
+    answer: {fileID: 11400000, guid: 5debded8b1f1b0f40afa29fe762b885b, type: 2}
+    trait:
+    - The asylum policy makes me furious.
   - question: 7
-    answer:
-    - The most important core value to me is happiness.
-    - It doesn't matter how much money u have
-    - or how famous u are if u cannot be happy.
+    answer: {fileID: 11400000, guid: 8faa1c4cefa52834a847d10afb66dfb3, type: 2}
     trait:
-    - big munney
-  - question: 8
-    answer:
-    - I consider myself to be kind.
-    - I am also quite shy.
+    - I have a vegetable garder.
+  - question: 10
+    answer: {fileID: 11400000, guid: 54d9e5b8414d82c42b552edf590f329f, type: 2}
     trait:
-    - shy guy (mario)
-  - question: 4
-    answer:
-    - My hobby is drawing.
-    - I like drawing animals.
+    - I have an HBO master's degree in pedagogy.
+  - question: 10
+    answer: {fileID: 11400000, guid: 54d9e5b8414d82c42b552edf590f329f, type: 2}
     trait:
-    - draw animal
-  - question: 5
-    answer:
-    - I was born in the Netherlands,
-    - However my parents are both german.
+    - I have an HBO master's degree.
+  - question: 13
+    answer: {fileID: 11400000, guid: 62c7d222a0a65b540bc219253e37a5dc, type: 2}
     trait:
-    - bobn nebetrlands
+    - The most important person in my life is my boyfriend.
+  - question: 14
+    answer: {fileID: 11400000, guid: 3aa0c03fb230b9d46a9c7d51dbfdc47d, type: 2}
+    trait:
+    - I am an enthousiastic and caring person.
+  - question: 15
+    answer: {fileID: 11400000, guid: a925cd19210111446a87ab9c14b2a1d1, type: 2}
+    trait:
+    - I am bad at setting boundaries.
+  - question: 19
+    answer: {fileID: 11400000, guid: 4e822d0f95416114993df264412d39db, type: 2}
+    trait:
+    - If I win the lottery I would travel the world and start volunteering.
+  - question: 20
+    answer: {fileID: 11400000, guid: a2be3137f33a22c4d9eb3ae513ff0b5c, type: 2}
+    trait:
+    - I am a vegetarian.
+  - question: 17
+    answer: {fileID: 11400000, guid: 5916920f3500c664bba8e8d05ef0c40c, type: 2}
+    trait:
+    - If I have an opinion I won't keep my mouth shut.
   greetings:
   - lines:
-    - Hello there
+    - Hello there.
   - lines:
     - Oh, hey
     - Good to see you again

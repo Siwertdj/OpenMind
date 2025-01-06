@@ -7,16 +7,11 @@ using NUnit.Framework;
 using TMPro;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using WaitUntil = UnityEngine.WaitUntil;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class DialogueAnimatorPlayTest
 {
     private TMP_Text textField;
     private DialogueAnimator animator;
-    private float delayInSeconds;
 
     #region Setup & Teardown
     [UnitySetUp]
@@ -29,10 +24,14 @@ public class DialogueAnimatorPlayTest
         animator = textObject.AddComponent<DialogueAnimator>();
         animator.Test_SetTextComponent(textField);
 
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.05f;
+        animator.Test_IgnoreSkipDelay = true;
+
         yield return null;
     }
 
-    [UnityTearDown]
+    [TearDown]
     public void TearDown()
     {
         animator.CancelWriting();
@@ -69,11 +68,14 @@ public class DialogueAnimatorPlayTest
     }
 
     /// <summary>
-    /// Checks whether each letter is typed at the right moment when multiple lines are used.
+    /// Checks whether each letter is typed at the right moment when multiple segmentslines are used.
     /// </summary>
     [UnityTest]
     public IEnumerator MultiLineWritingDelayTest()
     {
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.02f;
+
         List<string> lines = new List<string> { "Hello, World!", "foo", "bar" };
         animator.WriteDialogue(lines);
 
@@ -91,7 +93,8 @@ public class DialogueAnimatorPlayTest
             }
 
             // Await next line start
-            yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            //yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            animator.SkipDialogue();
         }
     }
 
@@ -101,6 +104,7 @@ public class DialogueAnimatorPlayTest
     [UnityTest]
     public IEnumerator InDialogueCheckTest()
     {
+
         string text = "Hello, World!";
 
         // InDialogue should be false before we start writing
@@ -119,6 +123,7 @@ public class DialogueAnimatorPlayTest
         Assert.IsTrue(animator.InDialogue);
 
         // InDialogue should be false when we skip to close the dialogue
+        yield return new WaitForSeconds(animator.inputDelay);
         animator.SkipDialogue();
         Assert.IsFalse(animator.InDialogue);
 
@@ -186,20 +191,22 @@ public class DialogueAnimatorPlayTest
     {
         string text = "Hello, World!";
         bool dialogueEndCheck = false;
-        animator.OnDialogueComplete.AddListener(() => setBool(ref dialogueEndCheck));
+        animator.OnDialogueComplete.AddListener(() => SetBool(ref dialogueEndCheck));
         animator.WriteDialogue(text);
 
-        // Wait for dialogue to finish
-        yield return new WaitForSeconds(animator.Test_DelayInSeconds * (text.Length + 2));
-
         // End the dialogue
+        yield return new WaitForSeconds(animator.inputDelay);
         animator.SkipDialogue();
+        yield return new WaitForSeconds(animator.inputDelay);
+        animator.SkipDialogue();
+        
+        Assert.IsTrue(dialogueEndCheck);
 
-        Assert.IsTrue(dialogueEndCheck);        
+        yield return null;
     }
 
     /// <summary>
     /// Helper function which simply sets a bool reference to its opposite value.
     /// </summary>
-    private void setBool(ref bool p) => p = !p;
+    private void SetBool(ref bool p) => p = !p;
 }

@@ -21,14 +21,24 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
     [SerializeField] private bool audioEnabled = true;
+    [SerializeField] private bool overrideDefaultSpeed = true;
+    [SerializeField] public float inputDelay = 0.5f; // Time in seconds between accepted inputs
 
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
+    private float recentInputTime;
+    private bool ignoreSkipDelay = false;
 
     /// <summary>
     /// Is there dialogue currently on the screen?
     /// </summary>
     public bool InDialogue { get; private set; } = false;
+
+    /// <summary>
+    /// Is there dialogue currently on the screen?
+    /// </summary>
+    public bool InOpenQuestion { private get;  set; } = false;
+    
 
     /// <summary>
     /// Is dialogue currently being written?
@@ -48,12 +58,21 @@ public class DialogueAnimator : MonoBehaviour
     {
         if (text == null)
             return;
-
         text.enableAutoSizing = false;
-        text.fontSize = 40;
+        ChangeTextSize(SettingsManager.sm.GetFontSize());
         audioSource = GetComponent<AudioSource>();
     }
-
+    
+    /// <summary>
+    /// Change the fontSize of the text
+    /// </summary>
+    /// <param name="fontSize"></param>
+    public void ChangeTextSize(int fontSize)
+    {
+        // Set the fontSize.
+        text.fontSize = fontSize;
+    }
+    
     /// <summary>
     /// Puts dialogue on screen.
     /// </summary>
@@ -113,33 +132,36 @@ public class DialogueAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// Skips dialogue that is being written
+    /// Skips dialogue that is being written.
     /// </summary>
     public void SkipDialogue()
     {
-        // Don't do anything if the game is paused
-        if (GameManager.gm?.IsPaused == true)
+        // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
+        if (GameManager.gm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
-        if (!InDialogue)
-            return;
+        // Check if enough time has passed since previous skip dialogue
+        if (Time.time - recentInputTime > inputDelay || ignoreSkipDelay)
+        {
+            if (IsOutputting)
+            {
+                // Write full sentence and then stop writing
+                IsOutputting = false;
+                StopCoroutine(outputCoroutine);
+                text.text = currentSentence;
+                dialogueIndex++;
+            }
+            else if (dialogueIndex < currentDialogue.Count)
+            {
+                WriteSentence(currentDialogue[dialogueIndex]);
+            }
+            else
+            {
+                EndDialogue();
+            }
 
-        if (IsOutputting)
-        {
-            // Write full sentence and then stop writing
-            IsOutputting = false;
-            StopCoroutine(outputCoroutine);
-            text.text = currentSentence;
-            dialogueIndex++;
-        }
-        else if (dialogueIndex < currentDialogue.Count)
-        {
-            WriteSentence(currentDialogue[dialogueIndex]);
-        }
-        else
-        {
-            EndDialogue();
-        }
+            recentInputTime = Time.time;
+        }        
     }
 
     /// <summary>
@@ -178,7 +200,8 @@ public class DialogueAnimator : MonoBehaviour
                 audioSource.Play();
 
             // Wait and continue with next letter
-            yield return new WaitForSeconds(delayInSeconds);
+            float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
+            yield return new WaitForSeconds(delay);
             outputCoroutine = StartCoroutine(WritingAnimation(output, stringIndex + 1));
         }
         else
@@ -186,18 +209,6 @@ public class DialogueAnimator : MonoBehaviour
             // If sentence is finished, stop outputting
             IsOutputting = false;
             dialogueIndex++;
-
-            // If there are more sentences, start writing the next sentence after s seconds
-            if (dialogueIndex < currentDialogue.Count)
-            {
-                yield return new WaitForSeconds(delayAfterSentence);
-
-                if (dialogueIndex >= currentDialogue.Count)
-                    Debug.LogError("dialogueIndex is greater than the amount of dialogue");
-
-                if (dialogueIndex < currentDialogue.Count)
-                    WriteSentence(currentDialogue[dialogueIndex]);
-            }
         }
     }
 
@@ -212,9 +223,15 @@ public class DialogueAnimator : MonoBehaviour
     public float Test_DelayAfterSentence
     {
         get { return delayAfterSentence; }
+        set { delayAfterSentence = value; }
     }
-
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+
+    public bool Test_IgnoreSkipDelay
+    {
+        get { return ignoreSkipDelay; }
+        set { ignoreSkipDelay = value; }
+    }
 #endif
 #endregion
 }

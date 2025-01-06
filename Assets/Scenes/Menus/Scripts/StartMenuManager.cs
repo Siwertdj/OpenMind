@@ -1,4 +1,4 @@
-﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using UnityEngine;
@@ -12,16 +12,23 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
+    public GameObject PopUpManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
+    [SerializeField] private GameObject popUpCanvas;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+    public GameEvent startLoadIcon;
 
     [Header("Copyright canvas")]
     public Canvas copyright;
+    
+    [Header("Resources")]
+    [SerializeField] AudioClip startMenuMusic;
+    private float startMenuMusicFadeInSpeed = 0f;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -32,8 +39,7 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        // Keep the copyright text on the screen in all scenes
-        DontDestroyOnLoad(copyright);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
     
     /// <summary>
@@ -52,7 +58,7 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void ContinueGame()
     {
-        SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
+        SaveData saveData = Load.Loader.GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }
     
@@ -92,5 +98,10 @@ public class StartMenuManager : MonoBehaviour
     public void SkipPrologue()
     {
         SceneManager.LoadScene("StorySelectScene");
+    }
+
+    public void OpenSettings()
+    {
+        SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
     }
 }

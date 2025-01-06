@@ -1,4 +1,4 @@
-name: "CodeQL Analysis - Main"
+name: "CodeQL Analysis - Dev"
 
 on:
   push:
@@ -13,10 +13,6 @@ jobs:
     name: Analyze on Main
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        language: [ 'csharp' ]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,17 +20,14 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: ${{ matrix.language }}
+          languages: csharp
 
-      - name: Build project
-        run: dotnet build --configuration Release
-
+    
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
         with:
-          queries: |
-            ./codeql/QueriesMain
-            ./codeql/QueriesDev
+          queries:   ./codeql/QueriesMain
+                     ./codeql/QueriesDev
 
       - name: Fail if warnings found
         if: failure() || success() && steps.analyze.outputs.alerts && steps.analyze.outputs.alerts > 0

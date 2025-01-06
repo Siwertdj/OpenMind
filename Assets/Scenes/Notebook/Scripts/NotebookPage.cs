@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,20 +55,21 @@ public class NotebookPage
     /// <summary>
     /// Add the title and question text together for each questions that has been asked.
     /// </summary>
-    public string QuestionText()
+    public List<(string, string)> QuestionText()
     {
-        string output = "\n";
+        List<(string, string)> result = new();
 
-        foreach (Question q in _character.AskedQuestions)
+        foreach (Question question in _character.AskedQuestions)
         {
-            output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in _character.Answers[q])
-            {
-                output += s + " ";
-            }
-            output += "\n \n";
+            string answerText = "";
+
+            string questionText = GetQuestionText(question);
+            foreach (string s in _character.Answers[question].GetStrings())
+                answerText += s + " ";
+
+            result.Add((questionText, answerText));
         }
-        return output;
+        return result;
     }
     
     /// <summary>
@@ -78,11 +79,11 @@ public class NotebookPage
     {
         if (_character.AskedQuestions.Count > 0)
         {
-            return "Your info on " + _character.characterName + ".\n";
+            return "My info on " + _character.characterName + ".";
         }
         else
         {
-            return "You have not asked " + _character.characterName + "\nany questions.\n";
+            return "I have not asked " + _character.characterName + " any questions.";
         }
     }
     

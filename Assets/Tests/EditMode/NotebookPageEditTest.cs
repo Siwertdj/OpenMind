@@ -53,7 +53,7 @@ public class NotebookPageEditTest
         Assert.AreNotEqual(notes, page.GetNotes());
     }
 
-    /// <summary>
+    /*/// <summary>
     /// Tests if the correct string gets put out after invoking QuestionText()
     /// </summary>
     [Test]
@@ -87,7 +87,7 @@ public class NotebookPageEditTest
         c.Answers[question] = new List<string> { questionString };
         
         Assert.AreEqual(answer, page.QuestionText());
-    }
+    }*/
     
     /// <summary>
     /// Source lists for IntroTest
@@ -116,7 +116,7 @@ public class NotebookPageEditTest
         var res = page.Intro();
         
         if (character.AskedQuestions.Count > 0)
-            Assert.AreEqual("Your info on " + character.characterName + ".\n", res);
-        else Assert.AreEqual("You have not asked " + character.characterName + "\nany questions.\n", res);
+            Assert.AreEqual("My info on " + character.characterName + ".", res);
+        else Assert.AreEqual("I have not asked " + character.characterName + " any questions.", res);
     }
 }

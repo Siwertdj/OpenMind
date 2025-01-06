@@ -1,5 +1,8 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -9,20 +12,18 @@ using TMPro;
 /// </summary>
 public class SelectOption : MonoBehaviour
 {
-    public  CharacterInstance character;
-    private Image             avatar;
-    private TMP_Text          characterNameText;
-    
+    public CharacterInstance character;
+
+    [SerializeField] private Image     avatarImage;
+    [SerializeField] private Component selectionManager;
+
     /// <summary>
     /// On startup, set the sprite and name to that of the proper character and check whether it is active or not.
     /// </summary>
     void Start()
     {
-        avatar = GetComponentInChildren<Image>();
-        avatar.sprite = character.avatar;
-
-        characterNameText = GetComponentInChildren<TMP_Text>();
-        characterNameText.text = character.characterName;
+        avatarImage.sprite =  
+            character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
 
         if (!character.isActive)
             SetInactive();
@@ -33,8 +34,6 @@ public class SelectOption : MonoBehaviour
     /// </summary>
     private void SetInactive()
     {
-        avatar.color = new Color(0.6f,0.6f,0.6f,0.6f);
-        characterNameText.alpha = 0.6f;
+        avatarImage.color = new Color(0.6f,0.6f,0.6f,0.6f);
     }
-    
 }

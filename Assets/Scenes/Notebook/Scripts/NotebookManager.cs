@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System.Linq;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,48 +11,86 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    public GameObject inputField;
-    public GameObject inputFieldCharacters;
-    public GameObject characterInfo;
-    public GameObject nameButtons;
-    public Button personalButton;
-    [NonSerialized] public NotebookData notebookData;
+    private GameObject characterCustomInput;
     private CharacterInstance currentCharacter;
-    private List<Button> buttons;
+    private int currentCharacterIndex;
+    private int currentPageIndex;
     private Button selectedButton;
+    [NonSerialized] public NotebookData notebookData;
+
+    [Header("Settings")]
+    [SerializeField] private float tabAnimationDuration;
+    [SerializeField] private float expandedTabHeight;
+    [SerializeField] private float collapsedTabHeight;
+
+    [Header("Field References")]
+    [SerializeField] private GameObject characterInfo;
+
+    [Header("Tab Select Button References")]
+    [SerializeField] private GameButton personalButton;
+    [SerializeField] private GameButton[] nameButtons;
+
+    [Header("Component References")]
+    [SerializeField] private TMP_InputField personalInputField;
+    [SerializeField] private TMP_Text currentTabText;
+    [SerializeField] private TMP_Text personalInputTitleText;
+
+    [Header("Prefab References")]
+    [SerializeField] private GameObject pagePrefab;
+    [SerializeField] private GameObject inactiveNotePrefab;
+    [SerializeField] private GameObject introObjectPrefab;
+    [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject logObjectPrefab;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
     /// </summary>
     void Start()
     {
-        // close character notes
-        characterInfo.SetActive(false);
-        inputFieldCharacters.SetActive(false);
-        // Open personal notes
-        inputField.SetActive(true);
-        // assign character names to buttons
-        InitializeCharacterButtons();
-        // get notebookdata
+        // Assign character names to buttons
+        InitializeTabButtons();
+
+        // Get notebookdata
         notebookData = GameManager.gm.notebookData;
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-        selectedButton = personalButton;
-        personalButton.interactable = false;
+
+        // Open custom notes page
+        OpenPersonalNotes();
+
+        // Add listener to recreate tab when font size is changed
+        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
     }
     
     /// <summary>
-    /// Initialize the character buttons, use their names as the button text and add the button event.
+    /// Initialize the tab buttons (custom notes & character tabs), 
+    /// For characters, use their names as the button text and add the button event.
     /// </summary>
-    public void InitializeCharacterButtons()
+    public void InitializeTabButtons()
     {
-        buttons = nameButtons.GetComponentsInChildren<Button>().ToList();
-        for (int i = 0; i < buttons.Count; i++)
+        // Initialise all buttons for which there are characters
+        var characters = GameManager.gm.currentCharacters;
+        for (int i = 0; i < characters.Count; i++)
         {
             int id = i;
-            Button button = buttons[id];
-            button.GetComponentInChildren<TextMeshProUGUI>().text = 
-                GameManager.gm.currentCharacters[i].characterName;
-            button.onClick.AddListener(()=>CharacterTab(id));
+            var button = nameButtons[i];
+            
+            // Set the icon avatar
+            var icon = button.GetComponentInChildren<CharacterIcon>();
+            icon.SetAvatar(characters[i]);
+
+            // Inactive characters should have a different looking icon
+            if (!characters[i].isActive)
+            {
+                icon.BackgroundColor = new Color(0.7f, 0.7f, 0.7f);
+                icon.OverlayColor = new Color(0.7f, 0.7f, 0.7f);
+            }
+
+            button.onClick.AddListener(()=>OpenCharacterTab(id));
+        }
+
+        // Set any remaining buttons to inactive
+        for (int i = characters.Count; i < nameButtons.Length; i++)
+        {
+            nameButtons[i].gameObject.SetActive(false);
         }
     }
     
@@ -62,43 +99,256 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void OpenPersonalNotes()
     {
+        // An id of -1 signifies the custom notes tab
+        currentCharacterIndex = -1;
+
         // Save character notes
         SaveNotes();
+
         // Close the character tab 
-        inputFieldCharacters.SetActive(false);
-        // activate input
-        inputField.SetActive(true);
-        inputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
+        characterInfo.SetActive(false);
+
+        // Activate input field
+        var inputField = personalInputField.GetComponent<TMP_InputField>();
+        inputField.gameObject.SetActive(true);
+        inputField.text = notebookData.GetPersonalNotes();
+
+        // Set font sizes
+        inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
+
         // Make button clickable
         ChangeButtons(personalButton);
+        
+        // Set the appropriate footer text
+        currentTabText.text = "Personal Notes";
     }
     
     /// <summary>
     /// Open a character tab and load and display the notes on that character.
     /// </summary>
-    private void CharacterTab(int id)
+    private void OpenCharacterTab(int id)
     {
+        // If id is out of bounds, open personal notes
+        if (id < 0 || id >= GameManager.gm.currentCharacters.Count)
+        {
+            OpenPersonalNotes();
+            return;
+        }
+
+        currentCharacterIndex = id;
+
+        // Destroy info from the previous character
+        // Keep track of number of pages so we display the correct number
+        int prevPageCount = characterInfo.transform.childCount;
+        foreach (Transform page in characterInfo.transform)
+            Destroy(page.gameObject);
+
         // Save notes
         SaveNotes();
+
         // Deactivate the personal notes tab if it's opened
-        if (inputField.activeInHierarchy)
-        {
-            inputField.SetActive(false);
-            characterInfo.SetActive(false);
-        }
-        
+        if (personalInputField.gameObject.activeInHierarchy)
+            personalInputField.gameObject.SetActive(false);
+
         // Activate written character notes
-        inputFieldCharacters.SetActive(true);
-        // Get the character
+        characterInfo.SetActive(true);
+
+        // Get the character instance
         currentCharacter = GameManager.gm.currentCharacters[id];
-        // Write the notes to the notebook tab
-        characterInfo.GetComponentInChildren<TextMeshProUGUI>().text = notebookData.GetAnswers(currentCharacter);
-        // Write text to notebook
-        inputFieldCharacters.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
+
+        // The queue which will hold all the character's info
+        // This info will later be divided into pages
+        Queue<GameObject> allCharacterInfo = new();
+
+        // If character is inactive, create note object
+        if (!currentCharacter.isActive)
+        {
+            var inactiveNoteObject = Instantiate(inactiveNotePrefab);
+            var noteText = inactiveNoteObject.GetComponentInChildren<TMP_Text>();
+
+            noteText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+            noteText.text = $"Note: {currentCharacter.characterName} {GameManager.gm.story.victimDialogue}";
+
+            allCharacterInfo.Enqueue(inactiveNoteObject);
+        }
+
+        // Create icon & name object
+        var introObject = Instantiate(introObjectPrefab);
+        introObject.GetComponent<NotebookCharacterObject>().SetInfo(currentCharacter);
+        allCharacterInfo.Enqueue(introObject);
+
+        // Create the custom input field object
+        var inputObject = Instantiate(inputObjectPrefab);
+        inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
+        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        characterCustomInput = inputObject; // Also set the reference so that it can be saved
+        allCharacterInfo.Enqueue(inputObject);
+
+        // Create objects for all q&a pairs
+        var log = notebookData.GetAnswers(currentCharacter);
+        foreach (var (question, answer) in log)
+        {
+            var logObject = Instantiate(logObjectPrefab).GetComponent<NotebookLogObject>();
+            logObject.SetText(question, answer);
+
+            allCharacterInfo.Enqueue(logObject.gameObject);
+
+            // Make sure the layout group is displayed properly
+            LayoutRebuilder.ForceRebuildLayoutImmediate(logObject.GetComponent<RectTransform>());
+        }
+
+        CreateCharacterPages(allCharacterInfo);
+
         // Make button clickable
-        ChangeButtons(buttons[id]);
+        ChangeButtons(nameButtons[id]);
+
+        // Set appropriate footer text
+        currentTabText.text = 
+            currentCharacter.characterName + "\n" +
+            "Page " + (currentPageIndex + 1) + "/" + 
+            (characterInfo.transform.childCount - prevPageCount);
+
     }
-    
+
+    /// <summary>
+    /// Navigates to the page which is <paramref name="direction"/> pages away
+    /// from the current page. Will navigate to the previous/next character tab
+    /// if the page index is not reachable.
+    /// </summary>
+    public void NavigatePages(int direction)
+    {
+        int newIndex = currentPageIndex + direction;
+
+        if (newIndex < 0)
+        {
+            // The index is less than 0, so navigate to previous character
+            NavigateCharacters(currentCharacterIndex - 1);
+        }
+        else if (newIndex >= characterInfo.transform.childCount)
+        {
+            // The index is greater than the amount of pages, so navigate to next character
+            NavigateCharacters(currentCharacterIndex + 1);
+        }
+        else
+        {
+            // The index is within the current character's bounds, so navigate to given page
+            var prevPage = characterInfo.transform.GetChild(currentPageIndex).gameObject;
+            var newPage = characterInfo.transform.GetChild(currentPageIndex + direction).gameObject;
+
+            prevPage.SetActive(false);
+            newPage.SetActive(true);
+
+            currentPageIndex = newIndex;        
+            
+            // Set appropriate footer text
+            currentTabText.text =
+                currentCharacter.characterName + "\n" +
+                "Page " + (currentPageIndex + 1) + "/" + characterInfo.transform.childCount;
+        }
+    }
+
+    /// <summary>
+    /// Navigates to the character tab with the given id.
+    /// </summary>
+    private void NavigateCharacters(int id)
+    {
+        // Set the id so that we remain within the correct bounds
+        int characterCount = GameManager.gm.currentCharacters.Count;
+        if (id > characterCount)
+            id = -1;
+        else if (id < -1)
+            id = characterCount - 1;
+
+        OpenCharacterTab(id);
+    }
+
+    /// <summary>
+    /// Create all pages in one go. Creates multiple GameObjects each containing
+    /// a part of the notebook data regarding the selected character. All pages apart
+    /// from the first are automatically set to inactive.
+    /// </summary>
+    private void CreateCharacterPages(Queue<GameObject> allCharacterInfo)
+    {
+        currentPageIndex = 0;
+
+        // Create the first page
+        var page = Instantiate(pagePrefab, characterInfo.transform);
+
+        // While there are still notebook objects to be placed
+        while (allCharacterInfo.Count > 0)
+        {
+            // Dequeue an object
+            var go = allCharacterInfo.Dequeue();
+
+            // Set its parent with a vertical layout group component
+            go.GetComponent<RectTransform>().SetParent(page.transform, false);
+
+            // Force rebuild the layout so the height values are correct
+            LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
+
+            // If it doesn't fit, make a new page and place it in there
+            // If it does fit, move on to the next object
+            if (IsPageOverflowing(page.GetComponent<RectTransform>()))
+            {
+                // Page is overflowing, so create a new page
+                page = Instantiate(pagePrefab, characterInfo.transform);
+
+                // Add object to this new page instead
+                go.GetComponent<RectTransform>().SetParent(page.transform, false);
+                LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
+
+                // TODO: Find an alternative to this, as it is quite slow
+                // It is currently necessary to make sure the layout size is set immediately
+                Canvas.ForceUpdateCanvases();
+
+                // Set the new page to be inactive
+                page.SetActive(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the collective height of the children is greater than
+    /// the height of the given gameObject.
+    /// </summary>
+    /// <param name="parent">The RectTransform of the gameObject to be checked, 
+    /// this gameObject must also have a VerticalLayoutGroup component.
+    /// </param>
+    public bool IsPageOverflowing(RectTransform parent)
+    {
+        // Get the VerticalLayoutGroup component        
+        if (!parent.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
+        {
+            Debug.LogError("VerticalLayoutGroup not found!");
+            return false;
+        }
+
+        // Get padding and spacing from the VerticalLayoutGroup
+        float spacing = layoutGroup.spacing;
+        float padding = layoutGroup.padding.top + layoutGroup.padding.bottom;
+
+        // Calculate the total height of all children
+        float totalHeight = 0f;
+        int childCount = parent.childCount;
+
+        for (int i = 0; i < childCount; i++)
+        {
+            RectTransform child = parent.GetChild(i).GetComponent<RectTransform>();
+            if (child != null)
+            {
+                totalHeight += child.rect.height;
+                if (i > 0) totalHeight += spacing; // Add spacing between items
+            }
+        }
+
+        totalHeight += padding;
+
+        // Compare the total height of content to the height of the layout group container
+        float containerHeight = parent.rect.height;
+        return totalHeight > containerHeight;
+    }
+
     /// <summary>
     /// Make the character log visible or not.
     /// </summary>
@@ -112,16 +362,16 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
-        if (inputField.activeInHierarchy)
+        if (personalInputField.gameObject.activeInHierarchy)
         {
             // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(inputField.GetComponent<TMP_InputField>().text);
+            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
             // Save the written character text to the notebook data
             notebookData.UpdateCharacterNotes(currentCharacter, 
-                inputFieldCharacters.GetComponent<TMP_InputField>().text);
+                characterCustomInput.GetComponent<TMP_InputField>().text);
         }
     }
     
@@ -130,8 +380,39 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void ChangeButtons(Button clickedButton)
     {
-        selectedButton.interactable = true;
+        if (selectedButton != null)
+        {
+            selectedButton.interactable = true;
+
+            // Collapse the previously clicked button
+            selectedButton.GetComponent<NotebookTabButton>().AnimateTab(
+                collapsedTabHeight, tabAnimationDuration);
+        }
+
+        // Expand the clicked button
+        clickedButton.GetComponent<NotebookTabButton>().AnimateTab(
+            expandedTabHeight, tabAnimationDuration);
+
         selectedButton = clickedButton;
         selectedButton.interactable = false;
     }
+
+    /// <summary>
+    /// What happens when the player changes text size settings.
+    /// Resets current page and apply new values.
+    /// </summary>
+    private void OnTextSizeChanged()
+    {
+        // Reopen character tab (automatically applies settings)
+        OpenCharacterTab(currentCharacterIndex);
+    }
+
+    #region Test Variables
+#if UNITY_INCLUDE_TESTS
+    public TMP_InputField Test_PersonalInputField { get { return personalInputField; } }
+    public Button Test_GetPersonalButton() => personalButton;
+    public Button[] Test_GetNameButtons() => nameButtons;
+    public GameObject Test_CharacterInfoField { get { return characterInfo; } }
+    #endif
+    #endregion
 }

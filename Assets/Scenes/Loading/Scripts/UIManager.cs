@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for UI.
@@ -22,13 +23,18 @@ public class UIManager : MonoBehaviour
     private Coroutine transitionCoroutine;
 
     /// <summary>
-    /// Opens the menu of the game, hides the UI buttons
+    /// Opens the GameMenu-scene, hides the UI buttons
     /// </summary>
     public void OpenMenu()
     {
-        GameManager.gm.IsPaused = true;
+        GameManager.gm.PauseGame();
         gameButtons.SetActive(false);
-        gameMenu.SetActive(true);
+        
+            // '_ =' throws away the await
+            _ = SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
+            SceneController.SceneName.GameMenuScene,
+            SceneController.TransitionType.Additive,
+            false);
     }
 
     /// <summary>
@@ -36,14 +42,20 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        GameManager.gm.IsPaused = false;
+        GameManager.gm.UnpauseGame();
         gameButtons.SetActive(true);
-        gameMenu.SetActive(false);
     }
 
-    public void ReturnToStartScreen()
+    /// <summary>
+    /// Toggles the notebook scene by calling Scenecontroller, if its not null
+    /// </summary>
+    /// <param name="button"></param>
+    public void ToggleNotebook(Button button)
     {
-        //_ = SceneController.sc.LoadScene(SceneController.SceneName.StartScreenScene);
+        if (SceneController.sc != null)
+        {
+            SceneController.sc.ToggleNotebookScene(button);
+        }
     }
 
     /// <summary>

@@ -1,62 +1,106 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for the NPCSelect scene.
 /// </summary>
 public class SelectionManager : MonoBehaviour
 {
-    // Prefab which is used to create SelectOption objects.
-    [SerializeField] private GameObject selectionOption;
-    
-    // The SelectionSpace object, which has character spaces as children.
-    public GameObject parent;
+    [Header("Settings")]
+    [SerializeField] private float buttonFadeDuration;
+    [SerializeField] private float scrollDuration;
 
-    // The header text at the top of the character selection screen.
-    public TextMeshProUGUI headerText;
+    [Header("Prefabs")]
+    [SerializeField] private GameObject optionPrefab;
 
-    private SceneController sc;
-    
-    // Variable which helps to decide whether the npcselect screen should be treated
-    // as dialogue or as for deciding the criminal.
-    // TODO: this 'string' is not very robust. We should find a better way to select the 'game state' during selection
-    private string selectionType;
-    
+    [Header("References")]
+    [SerializeField] private GameButton confirmSelectionButton;
+    [SerializeField] private NPCSelectScroller scroller;
+    [SerializeField] private TextMeshProUGUI headerText;
+
+    [Header("Events")]
+    [SerializeField] private GameEvent stopLoadIcon;
+
+    private Coroutine fadeCoroutine;
+
+    private Transform scrollable;
+    private Transform layout;
+
     /// <summary>
     /// On startup, set the selectionType of the scene, set the headertext and generate the selectable options.
     /// </summary>
-    private void Start()
+    private void Awake()
     {
-        sc = SceneController.sc;
-        SetSceneType();
-        SetHeaderText(selectionType);
-        GenerateOptions();
-    }
+        // Change the text size
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        ChangeTextSize();
+        
+        // stop loading animation (if it is playing)
+        stopLoadIcon.Raise(this);
 
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining() && !GameManager.gm.HasQuestionsLeft()) 
-            selectionType = "decidecriminal";
-        else
-            selectionType = "dialogue";
+        scrollable = scroller.transform.GetChild(0);
+        layout = scrollable.GetChild(0);
+
+        SetHeaderText();
+        GenerateOptions();
+        
+        scroller.OnCharacterSelected.AddListener(EnableSelectionButton);
+        scroller.NoCharacterSelected.AddListener(DisableSelectionButton);
+        scroller.scrollDuration = scrollDuration;
     }
     
+    #region TextSize
+
+    /// <summary>
+    /// Change the fontSize of the tmp_text components when a different textSize is chosen in the settings menu
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="data"></param>
+    // TODO: could be made private.
+    public void OnChangedTextSize(Component sender, params object[] data)
+    {
+        // Set the fontSize.
+        if (data[0] is int fontSize)
+        {
+            // Change the fontSize of the confirmSelectionButton
+            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            // Change the fontSize of the headerText
+            headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        }
+    }
+    
+    /// <summary>
+    /// Change the fontSize of the tmp_text components
+    /// </summary>
+    // TODO: could be made private.
+    public void ChangeTextSize()
+    {
+        int fontSize = SettingsManager.sm.GetFontSize();
+        // Change the fontSize of the confirmSelectionButton
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        
+        // Change the fontSize of the headerText
+        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+    }
+
+    #endregion
+  
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>
     /// <param name="sceneType"> Can take "dialogue" or "decidecriminal" as value. </param>
-    private void SetHeaderText(string sceneType)
+    private void SetHeaderText()
     {
-        if (sceneType == "decidecriminal")
+        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
             headerText.text = "Who do you think it was?";
+        else
+            headerText.text = "Who do you want to talk to?";
     }
     
     /// <summary>
@@ -65,50 +109,165 @@ public class SelectionManager : MonoBehaviour
     private void GenerateOptions()
     {
         // Create a SelectOption object for every character in currentCharacters.
-        int counter = 0;
-        foreach (CharacterInstance character in GameManager.gm.currentCharacters)
+        for (int i = 0; i < GameManager.gm.currentCharacters.Count; i++)
         {
+            var character = GameManager.gm.currentCharacters[i];
+
             // Create a new SelectOption object.
-            SelectOption newOption = Instantiate(selectionOption).GetComponent<SelectOption>();
-            newOption.character = character;                
-            // TODO: not correct yet, this will go out of bounds when there are more than 8 characters.
-            // Sets one of the 8 character spaces as parent of the SelectOption object.
-            newOption.transform.SetParent(parent.transform.GetChild(counter), false);
-            // Sets the position of the SelectOption object to the same position as the parent (character space).
+            SelectOption newOption = Instantiate(optionPrefab).GetComponent<SelectOption>();
+            newOption.character = character;
+
+            // Set the parent & position of the object
+            newOption.transform.SetParent(layout.GetChild(i), false);
             newOption.transform.position = newOption.transform.parent.position;
-            counter++;            
         }
     }
-    
+
+    #region Selection Button Logic
     /// <summary>
     /// Event for when a character is selected.
     /// </summary>
     /// <param name="option"> The character space on which has been clicked on. </param>
     /// TODO: Add an intermediate choice for the culprit. (if everyone agrees with the storyline epilogue)
-    public void ButtonClicked(GameObject option)
+    public void SelectionButtonClicked(CharacterInstance character)
     {
-        // Get the SelectOption object from the character space.
-        SelectOption selectOption = option.GetComponentInChildren<SelectOption>();
         // Only active characters can be talked to.
-        if (selectOption.character.isActive)
+        if (!character.isActive)
+            return;
+
+        /*
+        // Start the epilogue scene if CulpritSelect is active
+        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
         {
-            // Start the dialogue if a criminal does not need to be decided yet.
-            if (selectionType == "dialogue")
-            {
-                GameManager.gm.StartDialogue(selectOption.character);
-            }
-            else
-            {
-                // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-                GameManager.gm.FinalChosenCuplrit = selectOption.character;
-                // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-                if (GameManager.gm.GetCulprit().characterName == selectOption.character.characterName)
-                    GameManager.gm.hasWon = true;
-                else
-                    GameManager.gm.hasWon = false;
-                // Load the epilogue scene.
-                GameManager.gm.StartEpilogueDialogue(selectOption.character);
-            }
+            // Set the FinalChosenCulprit variable to the chosen character in GameManager.
+            GameManager.gm.FinalChosenCuplrit = character;
+
+            // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
+            GameManager.gm.hasWon = GameManager.gm.GetCulprit().characterName == character.characterName;
+
+            // Load the epilogue scene.
+            GameManager.gm.StartEpilogueDialogue(character);
+        }
+        else*/
+        {
+            // No special gamestate, so we start dialogue with the given character
+            GameManager.gm.StartDialogue(character);
         }
     }
+    /// <summary>
+    /// Enables the character selection button & sets it to the selected character.
+    /// </summary>
+    private void EnableSelectionButton()
+    {
+        var button = confirmSelectionButton;
+
+        // Set appropriate text whether or not selected character is active
+        var text = button.GetComponentInChildren<TMP_Text>();
+        string characterName = scroller.SelectedCharacter.characterName;
+
+        // Button text should not be interactable if character is not active
+        if (scroller.SelectedCharacter.isActive)
+        {
+            button.interactable = true;
+
+            // Set the button text depending on the gameState
+            text.text = GameManager.gm.gameState == GameManager.GameState.CulpritSelect ?
+                    $"Approach {characterName}" : $"Talk to {characterName}";
+        }
+        else
+        {
+            button.interactable = false;
+            text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
+        }
+
+        // Add appropriate "start dialogue" button for selected character
+        button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
+
+        // Fade the button in
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeIn(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+    }
+
+    /// <summary>
+    /// Disables the character selection button & removes its listeners.
+    /// </summary>
+    private void DisableSelectionButton()
+    {
+        var button = confirmSelectionButton;
+        button.onClick.RemoveAllListeners();
+
+        // Fade the button out
+        if (fadeCoroutine != null)
+            StopCoroutine(fadeCoroutine);
+
+        fadeCoroutine = StartCoroutine(FadeOut(button.GetComponent<CanvasGroup>(), buttonFadeDuration));
+    }
+    #endregion
+
+    #region Fade Logic
+    /// <summary>
+    /// Fades an object in using a canvas group.
+    /// </summary>
+    /// <param name="cg">The canvas group of the object to be faded</param>
+    /// <param name="duration">The duration of the fade</param>
+    private IEnumerator FadeIn(CanvasGroup cg, float duration)
+    {
+        // First, set the given gameObject to active
+        cg.gameObject.SetActive(true);
+
+        // Make the object interactable in advance to make it more responsive
+        cg.interactable = true;
+
+        float startingAlpha = cg.alpha;
+        float time = 0;
+        while (time <= duration)
+        {
+            time += Time.deltaTime;
+
+            // Use lerp to interpolate the fade
+            cg.alpha = Mathf.Lerp(startingAlpha, 1, time / duration);
+
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Fades an object out using a canvas group.
+    /// </summary>
+    /// <param name="cg">The canvas group of the object to be faded</param>
+    /// <param name="duration">The duration of the fade</param>
+    private IEnumerator FadeOut(CanvasGroup cg, float duration)
+    {
+        // Make the object non-interactable to prevent player mistakes
+        cg.interactable = true;
+
+        float startingAlpha = cg.alpha;
+        float time = 0;
+        while (time <= duration)
+        {
+            time += Time.deltaTime;
+
+            // Use lerp to interpolate the fade
+            cg.alpha = Mathf.Lerp(startingAlpha, 0, time / duration);
+
+            yield return null;
+        }
+
+        // Finally, disable the given gameObject
+        cg.gameObject.SetActive(false);
+    }
+    #endregion
+
+    #region Test Variables
+    #if UNITY_INCLUDE_TESTS
+
+    public void FadeIn_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeIn(cg, duration));
+    public void FadeOut_Test(CanvasGroup cg, float duration) => StartCoroutine(FadeOut(cg, duration));
+
+    public GameButton Test_GetSelectionButtonRef() => confirmSelectionButton;
+
+#endif
+    #endregion
 }

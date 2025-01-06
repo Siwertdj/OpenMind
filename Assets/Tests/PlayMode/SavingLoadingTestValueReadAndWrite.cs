@@ -1,11 +1,10 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -22,9 +21,9 @@ using Random = System.Random;
 /// </summary>
 public class SavingLoadingTestValueReadAndWrite
 {
-    Random          random = new Random();
-    private Saving  saving  => GameManager.FindObjectOfType<Saving>();
-    private Loading loading => GameManager.FindObjectOfType<Loading>();
+    Random       random = new Random();
+    private Save saving  => Save.Saver;
+    private Load loading => Load.Loader;
     
     [OneTimeSetUp]
     public void LoadTestingScene()
@@ -44,6 +43,9 @@ public class SavingLoadingTestValueReadAndWrite
         //create gamemanager without initialising it
         SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
+        
+        GameManager.gm.gameObject.AddComponent<AudioSource>();
+        GameManager.gm.gameObject.AddComponent<SettingsManager>();
         
         //initialise gamemanager
         StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
@@ -153,8 +155,7 @@ public class SavingLoadingTestValueReadAndWrite
                 Assert.AreEqual(l1[i], l2[i], msg + ": item " + i);
             else
                 comparer(l1[i], l2[i], msg);
-        }
-            
+        }            
     }
     
     private void CompareQuestionList((int, List<Question>) item1, (int, List<Question>) item2, string msg)
@@ -192,7 +193,7 @@ public class SavingLoadingTestValueReadAndWrite
     public void SavingLoadingDoesNotChangeContents()
     {
         SaveData saveData = CreateSaveData();
-        saving.Save(saveData);
+        saving.SaveGame(saveData);
         SaveData loaded = loading.GetSaveData();
         
         CompareSaveData(saveData, loaded, "compare change");
@@ -228,7 +229,7 @@ public class SavingLoadingTestValueReadAndWrite
         
         for (int i = 0; i < 5; i++)
         {
-            saving.Save(saveData);
+            saving.SaveGame(saveData);
             SaveData loaded = loading.GetSaveData();
             GameManager.gm.StartGame(null, loaded);
             yield return new WaitUntil(

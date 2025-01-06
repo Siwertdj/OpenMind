@@ -14,57 +14,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: David
   id: 8
-  avatar: {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
+  happyAvatar: {fileID: 21300000, guid: daae6ae9af99b094fbe337f57db176d8, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
+  facePivot: {x: 0.5025, y: 0.7429}
   answers:
   - question: 2
-    answer:
-    - "It\u2019s great,"
-    - 'I live together with my partner in an apartment. We also have two lovely cats. '
+    answer: {fileID: 11400000, guid: 786686bcedac58a46a38415bd6a24ccf, type: 2}
     trait:
     - I live with my partner and cats.
   - question: 4
-    answer:
-    - I am gay,
-    - I have a partner and we live together in an apartment.
+    answer: {fileID: 11400000, guid: 293ea8c9e5e13e6469062a12142487a9, type: 2}
     trait:
     - I am gay.
   - question: 6
-    answer:
-    - I think religion is a big problem.
-    - "Religion in and of itself is not bad, it\u2019s more how people abuse it."
-    - People use religion to oppress people and get more power, land or money.
-    - "I think that\u2019s very problematic. "
+    answer: {fileID: 11400000, guid: 49e988fb94799c44ba3e229c123733f1, type: 2}
     trait:
     - I think the way religion executed is a big problem.
   - question: 7
-    answer:
-    - My favorite thing to do is just hanging out with friends,
-    - maybe grabbing a drink with them.
-    - " I also like to watch quiz shows on tv, like \u201CSlimste Mens\u201D or \u201C2
-      voor 12\u201D. "
+    answer: {fileID: 11400000, guid: 4de41168017cdcd4cbed24b4d3e6ce85, type: 2}
     trait:
     - I like to hang out with friends and watch tv.
   - question: 9
-    answer:
-    - I am not religious, but I have looked into most religions.
-    - Not to see if I want to convert to any of them,
-    - Not to see if I want to convert to any of them,
-    - 'just out of pure interest. '
-    - My parents were not that religious and I did go to a Christian primary school,
-    - 'but I think all schools should be secular and that religions should be practiced
-      at home.  '
+    answer: {fileID: 11400000, guid: e3d2db944764bd6478e6848f3ed36490, type: 2}
     trait:
     - I am not religious.
   - question: 11
-    answer:
-    - "Even though I don\u2019t believe in God,"
-    - I do share a lot of values with Christianity.
-    - 'For example, never knowingly harm another. '
-    - I also really believe in justice and our judicial system.
-    - Always being on time is also very important to me.
+    answer: {fileID: 11400000, guid: 6fdd5497adb029444a7ca1759eb34e59, type: 2}
     trait:
     - I follow a lot of Christian values.
+  - question: 19
+    answer: {fileID: 11400000, guid: 88c36fb6f23aa9843a64733a01739b9f, type: 2}
+    trait:
+    - If I won the lottery I would quit my job a travel through South-Africa with
+      my partner.
+  - question: 3
+    answer: {fileID: 11400000, guid: 8e21a93a6cbfe494bbaf0d742fb301cf, type: 2}
+    trait:
+    - I don't really look up to anyone anymore.
   greetings:
   - lines:
     - Hello!

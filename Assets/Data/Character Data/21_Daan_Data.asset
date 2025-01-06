@@ -14,48 +14,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Daan
   id: 21
-  avatar: {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 9a542da39b4b39f4bb8e4b9bb9a8a9ca, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 2
+  facePivot: {x: 0.4992, y: 0.8364}
   answers:
-  - question: 3
-    answer:
-    - I am a republican.
-    - I will be voting for Donald Trump.
-    trait:
-    - rebubligan
   - question: 1
-    answer:
-    - I was born in 1989
-    - I am 35 years old
+    answer: {fileID: 11400000, guid: 2829c8a8d1ce57e4d8775cbcc6c45e75, type: 2}
     trait:
-    - bobn 1989
+    - I am 35 years old.
   - question: 2
-    answer:
-    - Thank u for asking!
-    - I recently bought a new car.
-    - Today, i drove to the reunion and it was awesome.
-    - So i am feeling great today.
+    answer: {fileID: 11400000, guid: b2c3e68ace9da904fb1d58b44cd2ed72, type: 2}
     trait:
-    - gob new gar
-  - question: 9
-    answer:
-    - 'The most important people in my life are '
-    - my son and my wife.
-    - They mean so much to me
-    - and i would do everything for them.
-    trait:
-    - my bon anb my bife
-  - question: 11
-    answer:
-    - 'A bad trait i have is that i am too long. '
-    - 'I can barely fit through most doors, '
-    - which means i have to crouch a lot.
-    trait:
-    - bery tall guy :o
+    - I live in an apartment on my own.
   - question: 6
-    answer:
-    - I have a bachelor's degree in psychology
-    - I have not gotten a master's degree.
+    answer: {fileID: 11400000, guid: 25c540ecd28ab764db0f46c338b192a8, type: 2}
     trait:
-    - babbelors begree, no baster :(
-  greetings: []
+    - I'd rather not participate in political discussions.
+  - question: 7
+    answer: {fileID: 11400000, guid: 8b2e6335f1d1a2d4a81945a7b75d93ec, type: 2}
+    trait:
+    - I have a black belt in a martial art.
+  - question: 9
+    answer: {fileID: 11400000, guid: 2d007914c4c94734ea990b755b57ebf5, type: 2}
+    trait:
+    - I am not religious, but I am spiritual sometimes.
+  - question: 10
+    answer: {fileID: 11400000, guid: f49d4cf55f709904da5ba9e9fb84d9c9, type: 2}
+    trait:
+    - My education level is HBO.
+  - question: 11
+    answer: {fileID: 11400000, guid: 5513f1a773faf58458716757a842f4cd, type: 2}
+    trait:
+    - It's important to me that I try to do something good for other people.
+  - question: 13
+    answer: {fileID: 11400000, guid: defd369c7aa2bd04f9b8d273ca86388e, type: 2}
+    trait:
+    - My girlfriend is the most important person in my life.
+  - question: 14
+    answer: {fileID: 11400000, guid: 42c9feebf9f68884f91b04138abe2f5f, type: 2}
+    trait:
+    - I'm a patient person.
+  - question: 15
+    answer: {fileID: 11400000, guid: 959769c48aed635428704d52d49005e3, type: 2}
+    trait:
+    - I'm a control freak.
+  - question: 16
+    answer: {fileID: 11400000, guid: 5383cb118dc3e844db21a41756200f85, type: 2}
+    trait:
+    - I don't drink alcohol.
+  - question: 18
+    answer: {fileID: 11400000, guid: 9d2b224f14575b44c98570d358144410, type: 2}
+    trait:
+    - I don't like the use of standardized tests in the current education system.
+  - question: 20
+    answer: {fileID: 11400000, guid: b19bb4c917ec61147a8bea7447c5b66a, type: 2}
+    trait:
+    - Because of environmental issues I think it's not that bad to eat less meat.
+  - question: 17
+    answer: {fileID: 11400000, guid: 6bc5fd9aa6e7d304481b4a99919ae78f, type: 2}
+    trait:
+    - A social issue I care about is inequality of opportunity.
+  greetings:
+  - lines:
+    - Hi there.

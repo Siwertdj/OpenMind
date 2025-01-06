@@ -14,59 +14,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Ana
   id: 6
-  avatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 1f1f34c6ea99fce458fa04077f374a72, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.6
+  facePivot: {x: 0.4968, y: 0.8412}
   answers:
   - question: 2
-    answer:
-    - I am doing really well!
-    - I am currently living in a rented studio apartment,
-    - 'I love my job and colleagues and I have a great work/life balance.  '
+    answer: {fileID: 11400000, guid: 665402ad3cb33ed448ba3978f22d1304, type: 2}
     trait:
     - My life is going great, I have a great job with great colleagues.
   - question: 3
-    answer:
-    - I have a lot of respect for Cristiano Ronaldo.
-    - He worked so hard so that he can be where is today.
-    - I also look up to Angelina Jolie for all that
-    - she does for Unicef and other humanitarian rights associations.
+    answer: {fileID: 11400000, guid: 82e62c705867ad249848a1e07dfa36b7, type: 2}
     trait:
     - I have a lot of respect for Cristiano Ronaldo and Angelina Jolie.
   - question: 6
-    answer:
-    - I think it is concerning that so many countries are
-    - trying to get rid of immigrants and expats,
-    - that they are viewing these people as a threat when they are not.
-    - 'I feel like history is repeating itself.  '
+    answer: {fileID: 11400000, guid: 102d3d4d52947054f82b202905200365, type: 2}
     trait:
     - It is concerning that countries are viewing immigrants and expats as a threat.
   - question: 7
-    answer:
-    - 'I really enjoy going to the gym, hanging out with friends '
-    - and I love to travel.
-    - 'Mexico is my favorite country that I have visited. '
-    - "It was super sunny, there\u2019s a lot of nature,"
-    - 'the people are great and the food is amazing. '
+    answer: {fileID: 11400000, guid: d958b93aa772a584ab4cb53f4ad8b390, type: 2}
     trait:
     - I love travelling, hanging out with friends and going to the gym.
   - question: 8
-    answer:
-    - I am from Portugal. My parents taught me that it's important to
-    - keep a tidy home and to be close and love your family.
-    - 'They pushed how important family is and I totally agree with them. '
+    answer: {fileID: 11400000, guid: 6cb81d071641faa4ab28c5ab9d32c27d, type: 2}
     trait:
     - My parents taught me love my family and to keep my home tidy.
   - question: 11
-    answer:
-    - I think social equality is super, super important.
-    - I find it important that in countries that are not so well developed
-    - 'that women should have the same rights as men and '
-    - that they can be who they want to be.
-    - "I think it\u2019s also important that they have abortion rights"
-    - 'and that they can get a divorce if they want to. '
+    answer: {fileID: 11400000, guid: 78523ac631f329846b148da374c30ad3, type: 2}
     trait:
     - Social equality is very important to me, I think a lot of developing countries
       are lacking that.
+  - question: 10
+    answer: {fileID: 11400000, guid: 1568a938efe15e1468d59b67938205d2, type: 2}
+    trait:
+    - I have a PhD in Life Sciences.
+  - question: 1
+    answer: {fileID: 11400000, guid: 9a94ff1704439f349af42eeb54dc9352, type: 2}
+    trait:
+    - I am 29 years old.
+  - question: 13
+    answer: {fileID: 11400000, guid: 5d8db1ad2b159764aa9e7f3eef634b35, type: 2}
+    trait:
+    - My brother is the most important person in my life.
   greetings:
   - lines:
     - Hi!
