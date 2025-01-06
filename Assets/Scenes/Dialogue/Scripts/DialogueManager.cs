@@ -32,12 +32,14 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
+    [SerializeField] private GameObject phoneField;
 
     [Header("Prefabs")]
     [SerializeField] private EventSystem eventSystemPrefab;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
+    [SerializeField] private GameObject phoneDialogueBoxPrefab;
 
     [Header("Events")]
     public GameEvent onEndDialogue;
@@ -170,6 +172,29 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    public void WritePhoneDialogue(string newMessage, List<string> previousMessages)
+    {
+        imageField.SetActive(false);
+        questionsField.SetActive(false);
+        dialogueField.SetActive(false);
+        phoneField.SetActive(true);
+
+        // Remove previous messages
+        foreach (Transform child in phoneField.transform)
+            Destroy(child.gameObject);
+
+        // Write previous messages
+        foreach (string message in previousMessages)
+        {
+            var prevMessageObject = Instantiate(phoneDialogueBoxPrefab, phoneField.transform);
+            prevMessageObject.GetComponent<ResizingTextBox>().SetText(message);
+        }
+
+        // Write current message
+        var messageObject = Instantiate(phoneDialogueBoxPrefab, phoneField.transform);
+        messageObject.GetComponent<ResizingTextBox>().SetText(newMessage);
+    }
+
     public void PrintImage(Sprite newImage)
     {
         if (newImage == null)
@@ -243,8 +268,7 @@ public class DialogueManager : MonoBehaviour
                 {
                     if (currentRecipient != null)
                         child.GetComponent<Image>().sprite =
-                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value)
-                                .Item2;
+                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value).Item2;
                 }
             }
         }

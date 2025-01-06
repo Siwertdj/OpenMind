@@ -37,30 +37,9 @@ public class ResizingTextBox : MonoBehaviour
 
         image.sprite = sprite;        
     }
-}
 
-[CustomEditor(typeof(ResizingTextBox))]
-public class ResizingTextBoxEditor : Editor
-{
-    private ResizingTextBox component;
-
-    public override void OnInspectorGUI()
+    public void SetText(string text)
     {
-        component = (ResizingTextBox)target;
-
-        // Draw the default inspector properties
-        DrawDefaultInspector();
-
-        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Return)
-            ExecuteButton();
-        if (GUILayout.Button("Apply Changes"))
-            ExecuteButton();
-    }
-
-    private void ExecuteButton()
-    {
-        component.ApplyChanges();
-
-        SceneView.RepaintAll();
+        textComponent.text = text;
     }
 }

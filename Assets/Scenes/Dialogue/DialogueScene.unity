@@ -136,6 +136,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
+--- !u!1 &56216223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 56216224}
+  - component: {fileID: 56216225}
+  m_Layer: 5
+  m_Name: Phone Dialogue Field
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &56216224
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56216223}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1408324294}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &56216225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56216223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &152444292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,10 +1305,12 @@ MonoBehaviour:
   inputField: {fileID: 195825243}
   backgroundField: {fileID: 1957542732}
   characterNameField: {fileID: 1457778585}
+  phoneField: {fileID: 56216223}
   eventSystemPrefab: {fileID: 4664268540125096493, guid: 316d823f62cb68c4c999994a188f1c92, type: 3}
   buttonPrefab: {fileID: 8759125814851348667, guid: 93c941f2b4f62754c85de6288266973e, type: 3}
   avatarPrefab: {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
   backgroundPrefabs: []
+  phoneDialogueBoxPrefab: {fileID: 3515205180382451151, guid: 98276737bf76b2c49b434d47c409941a, type: 3}
   onEndDialogue: {fileID: 11400000, guid: 6b7362dc0caed36479c10cec7b2f5792, type: 2}
   onEpilogueEnd:
     m_PersistentCalls:
@@ -1422,6 +1486,7 @@ RectTransform:
   - {fileID: 877701585}
   - {fileID: 1413766659}
   - {fileID: 4482723417529795636}
+  - {fileID: 56216224}
   - {fileID: 1778872298}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

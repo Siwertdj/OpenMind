@@ -430,10 +430,13 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition,
             true);
 
-        var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
-        
-        gameState = GameState.HintDialogue;
-        
+        // Create the appropriate DialogueObject
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // 0 corresponds to the phone story
+            dialogueObject = new PhoneDialogueObject(dialogue);
+        else
+            dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
