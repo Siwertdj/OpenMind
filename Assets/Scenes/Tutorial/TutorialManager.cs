@@ -66,8 +66,16 @@ public class TutorialManager : MonoBehaviour
         else // In all other cases (namely the NPCSelectScene) the actual tutorial needs to be played. 
         {
             // Initialize the notebook for the notebook tutorial
-            GameObject notebook = GameObject.Find("NotebookButton");
-            notebookButton = notebook.GetComponentInChildren<Button>();
+            GameObject notebook = GameObject.Find("Notebook Button");
+            
+            try
+            {
+                notebookButton = notebook.GetComponentInChildren<GameButton>();
+            }
+            catch
+            {
+                Debug.LogError("There is no notebookbutton");
+            }
             
             // Close notebook if it is already opened.
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
@@ -77,9 +85,10 @@ public class TutorialManager : MonoBehaviour
             
             notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
             tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 
-            // Start the tutorial
-            StartTutorial();
+            
         }
+        // Start the tutorial
+        StartTutorial();
     }
     
     /// <summary>
