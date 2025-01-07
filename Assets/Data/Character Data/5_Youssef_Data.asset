@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1.2
   facePivot: {x: 0.5081, y: 0.7914}
+  firstGreeting: {fileID: 11400000, guid: 2b78164a45c888946ab259c0b22a5a5f, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 3
     answer: {fileID: 11400000, guid: 6a0df3d8b0062ca4ba67238432120b07, type: 2}
@@ -52,6 +54,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 8615d7bd209064444969a25c58150680, type: 2}
     trait:
     - I am impatient.
-  greetings:
-  - lines:
-    - Oh, hi there!

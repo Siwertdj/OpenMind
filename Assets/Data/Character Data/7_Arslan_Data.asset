@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5088, y: 0.8084}
+  firstGreeting: {fileID: 11400000, guid: d9e6dce2c9baa11408384aa80a3bbafb, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 3
     answer: {fileID: 11400000, guid: c241b56e8c5a38b4e9d4b469e18cfd08, type: 2}
@@ -56,6 +58,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 2dcc8ead48613d64cb696b6eaf1cf787, type: 2}
     trait:
     - I hang out with my colleagues and friends from a community for Asian people.
-  greetings:
-  - lines:
-    - Hey there!

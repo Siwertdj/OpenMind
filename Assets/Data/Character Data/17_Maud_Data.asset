@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1.6
   facePivot: {x: 0.4993, y: 0.6548}
+  firstGreeting: {fileID: 11400000, guid: 002493ecd8f085c4fa96e30b551dd22f, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: 1a53785010be0464b97399fc9ad71e78, type: 2}
@@ -73,9 +75,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 5916920f3500c664bba8e8d05ef0c40c, type: 2}
     trait:
     - If I have an opinion I won't keep my mouth shut.
-  greetings:
-  - lines:
-    - Hello there.
-  - lines:
-    - Oh, hey
-    - Good to see you again

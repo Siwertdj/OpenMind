@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5014, y: 0.6779}
+  firstGreeting: {fileID: 11400000, guid: 008ae25d11b9ecd409051c9ba84418ff, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: 8e5befae80a5e7f489bdcdcc176cfa68, type: 2}
@@ -52,6 +54,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 827486aecc5ffa045b6d9034124a0635, type: 2}
     trait:
     - I'm very jealous of people with a lot of talent.
-  greetings:
-  - lines:
-    - Oh, hello there.

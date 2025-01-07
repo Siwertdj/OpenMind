@@ -250,6 +250,7 @@ public class DialogueContainer : ScriptableObject
         // If its not a TerminateDialogueObject, we add newLeaf as a response of currentNode
         else
         {
+            // of the newleaf is a response, add
             currentNode.Responses.Add(newLeaf);
         }
     }
@@ -333,7 +334,7 @@ public class DialogueContainer : ScriptableObject
 public enum DialogueType
 {
     ContentDialogue,
-    OpenResponseDialogue
+    OpenResponseDialogue,
 }
 
 [Serializable]
@@ -366,7 +367,25 @@ public class DialogueData
         this.text = text;
         this.image = image;
         this.background = background;
+        
+        ClearVariablesByType();
     }
+
+    /// <summary>
+    /// This method clears any variables that dont apply to the type.
+    /// Could also be used for error handling.
+    /// Currently doesnt have functionality.
+    /// </summary>
+    private void ClearVariablesByType()
+    {
+        switch (type)
+        {
+            case DialogueType.ContentDialogue:
+                break;
+            case DialogueType.OpenResponseDialogue:
+                break;
+        }
+    } 
 
 }
 

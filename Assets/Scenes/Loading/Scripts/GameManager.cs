@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
  
-
+    [Header("References")]
+    private TextMeshProUGUI introductionRoundText;
+    
     #region Pausing
     private int pauseStack = 0;
     public bool IsPaused { get { return pauseStack > 0; } }
@@ -55,7 +58,8 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         // Is there a gamestate for when the game is loading in?
-        Loading,        //      --> NPCSelect, HintDialogue(immediate victim)
+        Loading,        //      --> NPCIntroduction, NPCSelect, HintDialogue(immediate victim)
+        NpcIntroduction,//      --> NpcSelect
         NpcSelect,      //      --> NpcDialogue
         CulpritSelect,  //      --> GameWon, GameLoss
         NpcDialogue,    //      --> NpcSelect, CulpritSelect
@@ -217,6 +221,8 @@ public class GameManager : MonoBehaviour
         notebookData = new NotebookData();
         // Start the music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+        // Initialize introduction-round
+        gameState = GameState.NpcIntroduction;
         FirstCycle();
     }
 
@@ -457,10 +463,7 @@ public class GameManager : MonoBehaviour
             true);
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
-        var dialogueObject = new ContentDialogueObject(
-            character.GetGreeting(),
-            null,
-            background);
+        var dialogueObject = character.GetGreeting(background);
         dialogueObject.Responses.Add(new QuestionDialogueObject(background));
 
         // Until DialogueManager gets its information, it shouldnt do anything there.
@@ -525,6 +528,12 @@ public class GameManager : MonoBehaviour
     {
         return numQuestionsAsked < story.numQuestions;
     }
+
+    public int AmountCharactersGreeted()
+    {
+        return currentCharacters.Count(c => c.TalkedTo);
+    }
+    
     #endregion
 
     // This region contains methods necessary purely for debugging-purposes.

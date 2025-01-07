@@ -1,7 +1,10 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
@@ -46,17 +49,24 @@ public class CharacterInstance
     /// Get a random greeting from the character's list of greetings.
     /// </summary>
     /// <returns>A greeting in the form of dialogue segments.</returns>
-    public List<string> GetGreeting()
+    public DialogueObject GetGreeting([CanBeNull] GameObject[] background)
     {
-        // Pick random greeting from data list
-        if (data.greetings != null && data.greetings.Length > 0)
+        // If we havent talked to the NPC before..
+        if (!TalkedTo)
         {
-            int randomInt = new System.Random().Next(data.greetings.Length);
-            return data.greetings[randomInt].lines;
+            // Get greeting
+            TalkedTo = true;
+            return (data.firstGreeting != null 
+                ? data.firstGreeting.GetDialogue(background)
+                : new ContentDialogueObject("Hello", null, null));
         }
-
-        // If no greeting was found, return default greeting
-        return new() { "Hello" };
+        
+        // If we have talked to the NPC before, try to get the greeting-dialopgue.
+        // if its null, default to "Hello".
+        return (data.greeting != null 
+            ? data.greeting.GetDialogue(background) 
+            : new ContentDialogueObject("Hello", null, null));
+        
     }
 
     private void ParseEmotionSprites(Sprite neutralSprite, Sprite happySprite, Sprite unhappySprite)

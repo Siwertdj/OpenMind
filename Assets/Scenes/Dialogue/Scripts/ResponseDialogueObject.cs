@@ -41,15 +41,6 @@ public class ResponseDialogueObject : DialogueObject
             DialogueContainer.AddLeaf(answer,
                 new QuestionDialogueObject(background));
         }
-        // If there are no more questions remaining give a TerminateDialogueObject as a response
-        else
-        {
-            // This is already the case
-            
-        }
-
-        /*Debug.Log( $"Answer line-length: {DialogueContainer.TreeLength(answer)}");
-        DialogueContainer.PrintDialogue(answer);*/
 
         
         dm.ReplaceBackground(background);

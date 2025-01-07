@@ -19,8 +19,9 @@ public class CharacterData : ScriptableObject
     [Range(0.5f, 2f)] public float  voicePitch = 1;
     public Vector2 facePivot = new(0.5f, 0.8f);
 
-    [SerializeField] public KeyValuePair[] answers;
-    [SerializeField] public DialogueLines[] greetings;
+    [SerializeField] public DialogueContainer firstGreeting;
+    [SerializeField] public DialogueContainer greeting;
+    [SerializeField] public  KeyValuePair[]    answers;
 }
 
 /// <summary>
@@ -33,14 +34,6 @@ public class CharacterData : ScriptableObject
     [SerializeField] public List<string> trait;
 }
 
-/// <summary>
-/// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector
-/// </summary>
-[Serializable] public struct DialogueLines
-{
-    [SerializeField]
-    public List<string> lines;
-}
 
 /// <summary>
 /// KeyValuePair & DialogueLines must be individual objects in order to show up in the inspector

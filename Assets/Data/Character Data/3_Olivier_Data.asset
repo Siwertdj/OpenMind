@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1.1
   facePivot: {x: 0.5007, y: 0.8389}
+  firstGreeting: {fileID: 11400000, guid: 87f520fb49817eb4fb176232b53b713c, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 13
     answer: {fileID: 11400000, guid: ab098bcce36a59e4084e4b455efed9a2, type: 2}
@@ -58,6 +60,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 69c767facd41f8c4897c256b57126771, type: 2}
     trait:
     - I love to hang out with my friends.
-  greetings:
-  - lines:
-    - Hello there!

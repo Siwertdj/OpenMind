@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5025, y: 0.7429}
+  firstGreeting: {fileID: 11400000, guid: 5bc722b4d737328418293a54ee2a03d7, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 2
     answer: {fileID: 11400000, guid: 786686bcedac58a46a38415bd6a24ccf, type: 2}
@@ -53,6 +55,3 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 8e21a93a6cbfe494bbaf0d742fb301cf, type: 2}
     trait:
     - I don't really look up to anyone anymore.
-  greetings:
-  - lines:
-    - Hello!
