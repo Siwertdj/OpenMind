@@ -223,6 +223,8 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
         // Initialize introduction-round
         gameState = GameState.NpcIntroduction;
+        FindObjectOfType<GreetingManager>().UpdatePeopleGreeted(this); // TODO: Preferably we dont need this
+        // start first game cycle
         FirstCycle();
     }
 

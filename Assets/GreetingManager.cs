@@ -15,11 +15,6 @@ public class GreetingManager : MonoBehaviour
         textField = GetComponentInChildren<TMP_Text>();
     }
 
-    private void Start()
-    {
-        UpdatePeopleGreeted(this);
-    }
-
     public void UpdatePeopleGreeted(Component sender, params object[] data)
     {
         Debug.Log("Dialogue ended, update peoplegreeted.");
