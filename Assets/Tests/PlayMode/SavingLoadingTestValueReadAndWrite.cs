@@ -36,28 +36,44 @@ public class SavingLoadingTestValueReadAndWrite
     {
         SceneManager.UnloadSceneAsync("TestingScene");
     }
-    
+
+    /// <summary>
+    /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
+    /// </summary>
     [UnitySetUp]
-    private IEnumerator Initialise()
+    private IEnumerator SetUp()
     {
-        //create gamemanager without initialising it
-        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+        // Unload the StartScreenScene
+        SceneManager.UnloadSceneAsync("StartScreenScene");
+
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
+        SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-        
-        GameManager.gm.gameObject.AddComponent<AudioSource>();
-        GameManager.gm.gameObject.AddComponent<SettingsManager>();
-        
-        //initialise gamemanager
-        StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
+
+        // Get a StoryObject.
+        StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
+        StoryObject story = stories[0];
+
+        GameManager.gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Start the game with the chosen story.
         GameManager.gm.StartGame(null, story);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
     }
-    
-    [UnityTearDown]
-    public IEnumerator RemoveGameManager()
+
+    [TearDown]
+    public void Teardown()
     {
-        SceneManager.LoadScene("TestingScene");
-        yield return new WaitUntil(() => SceneManager.loadedSceneCount == 1);
+        // Move toolbox and DDOLs to Loading to unload
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+
+        SceneController.sc.UnloadAdditiveScenes();
     }
     
     private bool RandB() => RandI(2) == 0;

@@ -37,7 +37,8 @@ public class SceneController : MonoBehaviour
         GameOverScene,
         TutorialScene,
         EpilogueScene,
-        StartScreenScene
+        StartScreenScene,
+        StorySelectScene
     }
 
     /// <summary>
