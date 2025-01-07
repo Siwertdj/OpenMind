@@ -28,10 +28,6 @@ public class TutorialManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
         
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
@@ -39,9 +35,6 @@ public class TutorialManagerPlayTest
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Initialize GameManager and start the game. 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -53,7 +46,7 @@ public class TutorialManagerPlayTest
         tm = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         
         // Initialize required buttons
-        GameObject notebook = GameObject.Find("NotebookButton");
+        GameObject notebook = GameObject.Find("Notebook Button");
         notebookButton = notebook.GetComponentInChildren<Button>();
         
         GameObject tutorial = GameObject.Find("HelpButton");

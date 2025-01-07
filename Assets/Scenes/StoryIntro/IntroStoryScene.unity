@@ -199,7 +199,7 @@ PlayableDirector:
   m_GameObject: {fileID: 107210725}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -746,8 +746,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Skip intro
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
+  m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -771,8 +771,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -873,7 +873,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 38c2b43cb244f7640b6567ac8cf99a1e, type: 3}
   - {fileID: 21300000, guid: 6c11d634dd0d776438b0d6ddc9252732, type: 3}
   - {fileID: 21300000, guid: 881b29cad61f3094c9fa79819dfd030d, type: 3}
-  - {fileID: 21300000, guid: ce0cde919bce5bf4999c1f5c21e3df05, type: 3}
+  - {fileID: 21300000, guid: cc95e59ee5caf6140b8116d3d3902332, type: 3}
   - {fileID: 21300000, guid: 870b3eb7338b6894fa7d70b246b97afe, type: 3}
   - {fileID: 21300000, guid: 1706e87b8a2c3e942bd3425960063a62, type: 3}
   - {fileID: 21300000, guid: 53691987360df514e8f044db0e7231c5, type: 3}
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ce0cde919bce5bf4999c1f5c21e3df05, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc95e59ee5caf6140b8116d3d3902332, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1881,7 +1881,7 @@ PlayableDirector:
   m_GameObject: {fileID: 1407954284}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -1931,6 +1931,7 @@ GameObject:
   - component: {fileID: 1464702358}
   - component: {fileID: 1464702357}
   - component: {fileID: 1464702360}
+  - component: {fileID: 1464702361}
   m_Layer: 0
   m_Name: SkipButton
   m_TagString: Untagged
@@ -1951,7 +1952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.2990387, g: 0.64073896, b: 0.9056604, a: 1}
+  m_Color: {r: 0.8196079, g: 0.854902, b: 0.89019614, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1991,10 +1992,10 @@ RectTransform:
   - {fileID: 1058580705}
   m_Father: {fileID: 1238301442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 402, y: 989}
-  m_SizeDelta: {x: 136.1025, y: 79.782}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -82.437, y: -65}
+  m_SizeDelta: {x: 136.10248, y: 61.628906}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464702360
 MonoBehaviour:
@@ -2053,6 +2054,28 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
+--- !u!95 &1464702361
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464702355}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c6846bcedbbff24459ba3c9db79dadfe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1602891227
 GameObject:
   m_ObjectHideFlags: 0

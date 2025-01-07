@@ -85,10 +85,10 @@ public class TutorialManager : MonoBehaviour
             
             notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
             tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 
-            
+            // Start the tutorial
+            StartTutorial();
         }
-        // Start the tutorial
-        StartTutorial();
+        
     }
     
     /// <summary>

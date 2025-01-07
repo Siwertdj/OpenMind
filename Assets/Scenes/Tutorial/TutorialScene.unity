@@ -236,10 +236,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Find out who is sending you the messages. You will receive messages with
-    hints. Talk to the persons present to find out who matches these hints.\n\nBeware,
-    you do not have unlimited questions to ask before you have to make a choice.
-    \n"
+  m_text: Find out who is sending you the messages. You will receive messages with
+    hints. Try to find out who matches these hints.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
@@ -302,7 +300,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -2.530182, z: 0, w: 0}
+  m_margin: {x: 33.79306, y: 54.91806, z: 20.275757, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -332,8 +330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.1649, y: -51.772587}
-  m_SizeDelta: {x: 728.8669, y: 869.0603}
+  m_AnchoredPosition: {x: -0.00000035763, y: -26}
+  m_SizeDelta: {x: 728.8669, y: 673.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &475655576
 GameObject:
@@ -370,27 +368,29 @@ MonoBehaviour:
   helpHighlight: {fileID: 516136816}
   textBox: {fileID: 351138876}
   tutorialText:
-  - 'You can ask questions to each character in this room. '
+  - 'One of the characters in this room is the culprit. '
+  - By askings questions you can find out who that is.
+  - 'This game consists of multiple cycles. '
+  - During a cycle you can ask 2 questions.
   - 'Just swipe through the room and select the character you want to talk to. '
   - Gathered information will be written in your notebook.
   - You can enter the notebook by clicking on the notebook icon. Try it!
   - To find gathered information, just go to the tab of the character.
   - You can also write down your own thoughts.
   - 'Now exit the notebook by clicking on the icon again. '
+  - After you have asked your questions, one character will leave the game.
+  - Then you will receive a hint about the culprit.
+  - And then a new cycle will start.
   - 'You now know everything to start solving the mystery. '
   - Exit the tutorial by clicking the help button. Good luck!
   text: {fileID: 573016200}
   objectives:
   - ' Find out who is sending you the messages. You will receive messages with hints.
-    Talk to the persons present to find out who matches these hints.  Beware, you
-    do not have unlimited questions to ask before you have to make a choice. '
-  - 'Find out who is responsible for the disappearances. Alex will give you descriptions
-    from his visions. Talk to the persons present to find out who matches his visions.
-    Beware, you do not have unlimited questions to ask before you have to make a
-    choice. '
-  - 'Find out who is the real author. The computer will give you hints. Talk to the
-    persons present to find out who matches these hints. Beware, you do not have
-    unlimited questions to ask before you have to make a choice. '
+    Try to find out who matches these hints.'
+  - Find out who is responsible for the disappearances. Alex will give you descriptions
+    from his visions. Try to find out who matches his visions.
+  - Find out who is the real author. The computer will give you hints. Try to find
+    out who matches these hints.
   objectiveBox: {fileID: 1393315987}
   objectiveText: {fileID: 430739451}
 --- !u!4 &475655578
@@ -934,8 +934,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0023365, y: 18}
-  m_SizeDelta: {x: 859.99, y: 1001.0009}
+  m_AnchoredPosition: {x: -8.3847, y: 183.58}
+  m_SizeDelta: {x: 775.3906, y: 669.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1393315986
 CanvasRenderer:
@@ -1192,8 +1192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.1648, y: 407.49063}
-  m_SizeDelta: {x: 819.9603, y: 152.9641}
+  m_AnchoredPosition: {x: 0.00028832, y: 258.44}
+  m_SizeDelta: {x: 775.39, y: 152.9641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1884268580
 MonoBehaviour:
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 37.172363, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
