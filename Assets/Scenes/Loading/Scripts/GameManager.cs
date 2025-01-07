@@ -385,8 +385,8 @@ public class GameManager : MonoBehaviour
         // Raise the EpilogueStart-event and pass all the necessary data
         onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit().id);
         
-        // Then, Unload the toolbox
-        Destroy(GameObject.Find("Toolbox"));
+        // Then, destroy the gamemanager (but not the UImanager component)
+        Destroy(this);
     }
     
     /// <summary>
