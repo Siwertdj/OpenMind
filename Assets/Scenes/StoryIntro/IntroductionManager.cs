@@ -71,6 +71,7 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
+        
         continueButton.SetActive(true);
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
@@ -112,6 +113,9 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryA()
     {
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyAIntroSeen, true);
+        
         messages = new GameObject[textMessages.Length];
         for(int i = 0; i < textMessages.Length; i++)
         {
@@ -142,6 +146,9 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryB()
     {
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyBIntroSeen, true);
+        
         character.sprite = backgrounds[5];
         currentTimeline = introStoryB;
         currentTimeline.time = 0; // Reset the timeline to the start
@@ -158,6 +165,9 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryC()
     {
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyCIntroSeen, true);
+        
         currentTimeline = introStoryC;
         currentTimeline.time = 0; // Reset the timeline to the start
         currentTimeline.RebuildGraph();

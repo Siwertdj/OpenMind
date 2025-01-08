@@ -245,7 +245,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StartMenuManager, Scripts
-        m_MethodName: OpenSkipProloguePrompt
+        m_MethodName: StartPrologueOrPrompt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

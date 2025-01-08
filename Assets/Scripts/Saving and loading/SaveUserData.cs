@@ -9,7 +9,7 @@ using System.Linq;
 using UnityEngine;
 using Newtonsoft.Json;
 
-public class SaveUserData : MonoBehaviour
+public class SaveUserData
 {
     private static          SaveUserData   _saver;
     private static readonly object _lock = new object();
@@ -55,7 +55,7 @@ public class SaveUserData : MonoBehaviour
     /// </summary>
     /// <param name="query"></param>
     /// <param name="newValue"></param>
-    public void UpdataUserDataValue(FetchUserData.UserDataQuery query, bool newValue)
+    public void UpdateUserDataValue(FetchUserData.UserDataQuery query, bool newValue)
     {
         // TODO: Not very pretty. Refactor
 

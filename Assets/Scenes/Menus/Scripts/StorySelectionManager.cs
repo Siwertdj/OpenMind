@@ -1,6 +1,10 @@
 // This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System;
 using System.Collections;
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +19,38 @@ public class StorySelectionManager : MonoBehaviour
     // Game Events
     [Header("Events")]
     public GameEvent onIntroLoaded;
+
+    private void Awake()
+    {
+        UpdateButtons();
+    }
+
+    /// <summary>
+    /// Prepares buttons in StorySelect-scene based on UserData.
+    /// </summary>
+    public void UpdateButtons()
+    {
+        // TODO: Preferably find a way to do this without 'GameObject.Find'
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyAWon))
+        {
+            // story b unlocked
+            GameObject.Find("StoryB_Button").GetComponent<GameButton>().interactable = true;
+            // enable 'complete'-text
+            GameObject.Find("StoryA_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+        }
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyBWon))
+        {
+            // story c unlocked
+            GameObject.Find("StoryC_Button").GetComponent<GameButton>().GetComponentInChildren<GameButton>().interactable = true;
+            // enable 'complete'-text
+            GameObject.Find("StoryB_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+        }
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyCWon))
+        {
+            // enable 'complete'-text
+            GameObject.Find("StoryC_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+        }
+    }
     
     /// <summary>
     /// Starts Story A
