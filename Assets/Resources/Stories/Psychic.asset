@@ -25,7 +25,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueNPC: {fileID: 0}
   victimDialogue: has gone home.
   hintDialogue: Hmm.. I am seeing something..
-  numberOfCharacters: 4
+  numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0

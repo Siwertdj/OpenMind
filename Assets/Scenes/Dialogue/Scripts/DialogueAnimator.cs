@@ -27,6 +27,7 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
     private float recentInputTime;
+    private bool ignoreSkipDelay = false;
 
     /// <summary>
     /// Is there dialogue currently on the screen?
@@ -131,7 +132,7 @@ public class DialogueAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// Skips dialogue that is being written
+    /// Skips dialogue that is being written.
     /// </summary>
     public void SkipDialogue()
     {
@@ -140,7 +141,7 @@ public class DialogueAnimator : MonoBehaviour
             return;
 
         // Check if enough time has passed since previous skip dialogue
-        if (Time.time - recentInputTime > inputDelay)
+        if (Time.time - recentInputTime > inputDelay || ignoreSkipDelay)
         {
             if (IsOutputting)
             {
@@ -160,8 +161,7 @@ public class DialogueAnimator : MonoBehaviour
             }
 
             recentInputTime = Time.time;
-        }
-        
+        }        
     }
 
     /// <summary>
@@ -209,18 +209,6 @@ public class DialogueAnimator : MonoBehaviour
             // If sentence is finished, stop outputting
             IsOutputting = false;
             dialogueIndex++;
-
-            // If there are more sentences, start writing the next sentence after s seconds
-            if (dialogueIndex < currentDialogue.Count)
-            {
-                yield return new WaitForSeconds(delayAfterSentence);
-
-                if (dialogueIndex >= currentDialogue.Count)
-                    Debug.LogError("dialogueIndex is greater than the amount of dialogue");
-
-                if (dialogueIndex < currentDialogue.Count)
-                    WriteSentence(currentDialogue[dialogueIndex]);
-            }
         }
     }
 
@@ -235,9 +223,15 @@ public class DialogueAnimator : MonoBehaviour
     public float Test_DelayAfterSentence
     {
         get { return delayAfterSentence; }
+        set { delayAfterSentence = value; }
     }
-
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+
+    public bool Test_IgnoreSkipDelay
+    {
+        get { return ignoreSkipDelay; }
+        set { ignoreSkipDelay = value; }
+    }
 #endif
 #endregion
 }
