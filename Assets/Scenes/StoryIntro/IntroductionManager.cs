@@ -19,16 +19,20 @@ using Vector2 = System.Numerics.Vector2;
 public class IntroductionManager : MonoBehaviour
 {
     // PlayableDirectors manage the different timelines for the different stories
+    [Header("Stories")]
     public PlayableDirector introStoryA;
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    // General variables
+    [Header("Buttons")]
+    public GameObject continueButton;
+    public Button sendButton;
+    [SerializeField] GameObject skipButton;
+    
+    [Header("General Variables")]
     public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]   storyText;   // Stores all the used text for the introduction. 
     public Image      background;
-    public GameObject continueButton;
-    public Button     sendButton;
     private string characterName; 
     [SerializeField] public Image character;
     [SerializeField] public TMP_Text nameTag; 
@@ -71,7 +75,6 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
-        
         continueButton.SetActive(true);
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
@@ -139,6 +142,12 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline.Play();
         backgroundIndex = 0;
         background.sprite = backgrounds[backgroundIndex];
+
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyAIntroSeen))
+        {
+            skipButton.SetActive(true);
+        }
+            
     }
     
     /// <summary>
@@ -158,6 +167,12 @@ public class IntroductionManager : MonoBehaviour
         background.sprite = backgrounds[4];
         characterName = "Alex";
         currentTimeline.Play();
+        
+        
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyBIntroSeen))
+        {
+            skipButton.SetActive(true);
+        }
     }
     
     /// <summary>
@@ -177,6 +192,11 @@ public class IntroductionManager : MonoBehaviour
         character.sprite = backgrounds[9];
         characterName = "Receptionist";
         currentTimeline.Play();
+        
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyCIntroSeen))
+        {
+            skipButton.SetActive(true);
+        }
     }
     
     #endregion

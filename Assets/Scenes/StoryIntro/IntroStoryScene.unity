@@ -868,6 +868,9 @@ MonoBehaviour:
   introStoryA: {fileID: 1239055691}
   introStoryB: {fileID: 1407954286}
   introStoryC: {fileID: 107210726}
+  continueButton: {fileID: 1342074082}
+  sendButton: {fileID: 1300033502}
+  skipButton: {fileID: 1464702360}
   backgrounds:
   - {fileID: 21300000, guid: 38c2b43cb244f7640b6567ac8cf99a1e, type: 3}
   - {fileID: 21300000, guid: 6c11d634dd0d776438b0d6ddc9252732, type: 3}
@@ -921,8 +924,6 @@ MonoBehaviour:
     his paper.. '
   - Good luck!
   background: {fileID: 1208453420}
-  continueButton: {fileID: 1342074082}
-  sendButton: {fileID: 1300033502}
   character: {fileID: 1775969667}
   nameTag: {fileID: 1807932668}
   messageLocations:
