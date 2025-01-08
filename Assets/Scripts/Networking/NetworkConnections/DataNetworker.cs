@@ -105,7 +105,11 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
         
         return true;
     }
-
+    
+    /// <summary>
+    /// Tests if the client and host are still connected, if not call the disconnection events.
+    /// <param name="intervalSeconds">the interval for checking for disconnections, in seconds</param>
+    /// </summary>
     public IEnumerator IsDisconnected(float intervalSeconds)
     {
         isCheckingForDisconnection = true;
@@ -130,11 +134,17 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     public void AddOnDisconnectedEvent(Action<object> action) =>
         onDisconnectedEvents.Subscribe("Disconnect", action);
     
+    /// <summary>
+    /// Dispose of the socket when quitting the game.
+    /// </summary>
     public void Dispose()
     {
         socket.Dispose();
     }
-    
+
+    /// <summary>
+    /// Test if the socket is still connected.
+    /// </summary>
     protected bool IsSocketConnected(Socket s)
     {
         return !((s.Poll(1000, SelectMode.SelectRead) && (s.Available == 0)) || !s.Connected);

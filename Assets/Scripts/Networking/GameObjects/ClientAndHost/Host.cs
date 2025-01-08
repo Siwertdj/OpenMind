@@ -11,6 +11,10 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>
+/// Handles the host side of networking.
+/// This script can be active and inactive (separate from the active and inactive of objects in unity.)
+/// </summary>
 public class Host : NetworkObject
 {
     private DataListener                 listener;
@@ -42,7 +46,12 @@ public class Host : NetworkObject
             StartCoroutine(SendDataWithDelay1());
         }
     }
-
+    
+    /// <summary>
+    /// Enforce the player limit.
+    /// If too many players are connected, stop listening for connections.
+    /// If less players than the limit are connected keep/start listening.
+    /// </summary>
     private void ManagePlayerAmount(object obj)
     {
         int playerCount = listener.GetPlayerAmount();
@@ -73,12 +82,23 @@ public class Host : NetworkObject
         sendFirstNotebook(dataToSendSecondClient);
     }
     
+    /// <summary>
+    /// Create a classroom code using the IP adress.
+    /// </summary>
     public string CreateClassroomCode()
     {
         IPv4Converter converter = new IPv4Converter();
         return converter.ConvertToCode(ownIP);
     }
-
+    
+    /// <summary>
+    /// Start hosting the game.
+    /// Start listening for connections and for incoming data.
+    /// Start the notebook exchange.
+    /// </summary>
+    /// <param name="storyID">the storyID</param>
+    /// <param name="seed">the seed</param>
+    /// <param name="maxPlayers">the maximum amount of players that can join the game</param>
     public void Lobby(int storyID, int seed, int maxPlayers)
     {
         this.seed = seed;
@@ -109,6 +129,9 @@ public class Host : NetworkObject
     /// </summary>
     public int PlayerAmount() => listener.GetPlayerAmount();
     
+    /// <summary>
+    /// Send the storyID and the seed to the client.
+    /// </summary>
     private List<NetworkPackage> SendInit(List<NetworkPackage> arg)
     {
         if (settings.IsDebug)
@@ -122,6 +145,9 @@ public class Host : NetworkObject
     }
 
     #region Notebook
+    /// <summary>
+    /// Start the exchanging of notebooks.
+    /// </summary>
     private void ActivateNotebookExchange()
     {
         sendFirstNotebook =
@@ -180,7 +206,10 @@ public class Host : NetworkObject
         notebooks.Add((List<NetworkPackage>)o);
         addNormalResponse = true;
     }
-
+    
+    /// <summary>
+    /// Add the received notebook to the notebook list and return a random notebook.
+    /// </summary>
     private List<NetworkPackage> ReceiveAndRespondWithNotebook(List<NetworkPackage> o)
     {
         //if client and second upload, assign notebook to the first upload if it was also a client
@@ -191,7 +220,6 @@ public class Host : NetworkObject
             Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
             sendFirstNotebook(o);
         }
-            
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
         notebooks.Add(o);
@@ -199,6 +227,9 @@ public class Host : NetworkObject
         return randomNotebook;
     }
     
+    /// <summary>
+    /// Get a random notebook from the notebook list.
+    /// </summary>
     private List<NetworkPackage> GetRandomNotebook() =>
         notebooks[notebookRandom.Next(notebooks.Count)];
     #endregion
@@ -241,6 +272,9 @@ public class Host : NetworkObject
     }
     #endregion
     
+    /// <summary>
+    /// Dispose of the host when quitting the game.
+    /// </summary>
     public override void Dispose()
     {
         listener.Dispose();

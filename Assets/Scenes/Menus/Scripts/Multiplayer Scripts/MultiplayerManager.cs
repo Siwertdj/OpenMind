@@ -1,3 +1,5 @@
+// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Linq;
@@ -5,6 +7,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = System.Random;
 
+/// <summary>
+/// Handles the multiplayer for both the host and client side of the game.
+/// </summary>
 public class MultiplayerManager : MonoBehaviour
 {
     public static MultiplayerManager mm;
@@ -26,7 +31,13 @@ public class MultiplayerManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         init = new MultiplayerInit();
     }
-
+    
+    /// <summary>
+    /// Start hosting a game using the story ID and the max amount of players.
+    /// The seed is created here as well.
+    /// </summary>
+    /// <param name="storyID">the chosen story</param>
+    /// <param name="maxPlayers">the amount of players that are able the join the game</param>
     public void HostGame(int storyID, int maxPlayers)
     {
         init.story = storyID;
@@ -44,8 +55,15 @@ public class MultiplayerManager : MonoBehaviour
         host.Lobby(storyID, init.seed, maxPlayers);
     }
     
+    /// <summary>
+    /// Create a classroom code, as the host.
+    /// </summary>
     public string GetClassCode() => host.CreateClassroomCode();
-
+    
+    /// <summary>
+    /// Join the game as the client using the classcode.
+    /// </summary>
+    /// <param name="classCode">the classcode from the host</param>
     public void JoinGame(string classCode)
     {
         // Create the client
@@ -58,12 +76,20 @@ public class MultiplayerManager : MonoBehaviour
         client.EnterClassroomCode(classCode, AssignSeed, AssignStory);
     }
     
+    /// <summary>
+    /// Assign the seed received from the host.
+    /// </summary>
+    /// <param name="seed">the seed received from the host</param>
     private void AssignSeed(int seed)
     {
         init.seed = seed;
         isSeedInitialized = true;
     }
     
+    /// <summary>
+    /// Assign the story id received from the host.
+    /// </summary>
+    /// <param name="story">the storyID received from the host</param>
     private void AssignStory(int story)
     {
         init.story = story;
@@ -72,6 +98,7 @@ public class MultiplayerManager : MonoBehaviour
     
     private void Update()
     {
+        // Start the game only when both the seed and the storyID are received and initialized
         if (isSeedInitialized && isStoryInitialized)
         {
             isStoryInitialized = false;
@@ -80,11 +107,17 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Start the game.
+    /// </summary>
     public void StartGame()
     {
         StartCoroutine(LoadGame());
     }
     
+    /// <summary>
+    /// Load the game, from the multiplayer scene.
+    /// </summary>
     IEnumerator LoadGame()
     {
         // Start the loadscene-operation
@@ -101,6 +134,9 @@ public class MultiplayerManager : MonoBehaviour
         SceneManager.UnloadSceneAsync("StartScreenScene");
     }
     
+    /// <summary>
+    /// Send the notebook from either the host or client to the host.
+    /// </summary>
     public void SendNotebook()
     {
         notebookAction = receivedNotebook =>
@@ -119,7 +155,10 @@ public class MultiplayerManager : MonoBehaviour
                 GameManager.gm.currentCharacters);
         }
     }
-
+    
+    /// <summary>
+    /// Get the amount of players that are connected to the host.
+    /// </summary>
     public int GetPlayerAmount()
     {
         return host.PlayerAmount();

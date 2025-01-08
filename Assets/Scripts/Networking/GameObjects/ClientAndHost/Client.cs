@@ -122,6 +122,10 @@ public class Client : NetworkObject
         sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
     }
     
+    /// <summary>
+    /// Receive notebook data from the host.
+    /// Convert it back to notebookdata.
+    /// </summary>
     private void ReceivedNotebookDataFromOther(object o)
     {
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
@@ -187,7 +191,9 @@ public class Client : NetworkObject
     }
     #endregion
     
-    
+    /// <summary>
+    /// Dispose of the client when quitting the game.
+    /// </summary>
     public override void Dispose()
     {
         sender.Dispose();
