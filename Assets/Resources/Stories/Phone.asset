@@ -17,9 +17,10 @@ MonoBehaviour:
   dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
   hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
   epilogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
-  storyIntroMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyGameMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyEpilogueMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
+  storyIntroMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
+  storyGameMusic: {fileID: 8300000, guid: 0ad27c3e394db5c49a9750fc59f8d673, type: 3}
+  storyHintPhoneMusic: {fileID: 8300000, guid: 036ac2d6ad6a66e40b753b955d34abcc, type: 3}
+  storyEpilogueMusic: {fileID: 8300000, guid: b20e3c2360e5b3844a2d2a5711bc99ec, type: 3}
   storyEpilogueWonDialogue: {fileID: 11400000, guid: 91747bafca5141d4f9ee27c94ce9ba31, type: 2}
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 99c354101e36f6c499ffc2d63f2a4074, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
