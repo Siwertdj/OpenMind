@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -88,36 +89,30 @@ public class TerminateDialogueObject : DialogueObject
 /// </summary>
 public class PhoneDialogueObject : DialogueObject
 {
-    private string currentMessage;
     private List<string> remainingMessages;
-
-    public List<string> previousMessages;
+    private List<string> previousMessages;
 
     public PhoneDialogueObject(List<string> remainingMessages, List<string> previousMessages = null)
     {
         this.remainingMessages = remainingMessages;
+        
+        // Create an empty list of messages if there were no previous messages
+        this.previousMessages = previousMessages ?? new List<string>();
+        this.previousMessages.Add(remainingMessages[0]);
 
-        if (previousMessages == null)
-            this.previousMessages = new List<string>();
-        else
-            this.previousMessages = previousMessages;
-
-        // Get the message to be written and remove it from the list
-        currentMessage = remainingMessages[0];
+        // Remove the new message from the list
         this.remainingMessages.RemoveAt(0);
-        this.previousMessages.Add(currentMessage);
     }
 
     public override void Execute()
     {
         var dm = DialogueManager.dm;
 
-        dm.WritePhoneDialogue(currentMessage, previousMessages);
+        dm.WritePhoneDialogue(previousMessages);
 
-        if (remainingMessages.Count == 1)
+        if (remainingMessages.Count <= 0)
             Responses.Add(new TerminateDialogueObject());
         else
             Responses.Add(new PhoneDialogueObject(remainingMessages, previousMessages));
-
     }
 }

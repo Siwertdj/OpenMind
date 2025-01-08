@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
 
 /// <summary>
 /// The manager for the dialogue scene
@@ -172,27 +173,41 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void WritePhoneDialogue(string newMessage, List<string> previousMessages)
+    /// <summary>
+    /// Writes a list of messages to a phone screen.
+    /// </summary>
+    /// <param name="newMessage">The new message to be written at the bottom.</param>
+    /// <param name="previousMessages">The list of messages to be written above the new message.</param>
+    public void WritePhoneDialogue(List<string> messages)
     {
         imageField.SetActive(false);
         questionsField.SetActive(false);
         dialogueField.SetActive(false);
         phoneField.SetActive(true);
 
+        var phoneLayout = phoneField.transform.GetChild(0);
+
         // Remove previous messages
-        foreach (Transform child in phoneField.transform)
+        foreach (Transform child in phoneLayout)
             Destroy(child.gameObject);
 
-        // Write previous messages
-        foreach (string message in previousMessages)
-        {
-            var prevMessageObject = Instantiate(phoneDialogueBoxPrefab, phoneField.transform);
-            prevMessageObject.GetComponent<ResizingTextBox>().SetText(message);
-        }
+        // Write the messages
+        foreach (string message in messages)
+            AddPhoneMessage(message, phoneLayout);
 
-        // Write current message
-        var messageObject = Instantiate(phoneDialogueBoxPrefab, phoneField.transform);
-        messageObject.GetComponent<ResizingTextBox>().SetText(newMessage);
+        // Rebuild the layout
+        LayoutRebuilder.ForceRebuildLayoutImmediate(phoneLayout.GetComponent<RectTransform>());
+    }
+
+    /// <summary>
+    /// Creates a new message object in the given layout.
+    /// </summary>
+    /// <param name="message">The text be written in the message.</param>
+    /// <param name="phoneLayout">The parent transform for the message.</param>
+    private void AddPhoneMessage(string message, Transform phoneLayout)
+    {
+        var messageObject = Instantiate(phoneDialogueBoxPrefab, phoneLayout);
+        messageObject.GetComponent<ResizingTextBox>().SetText(message);
     }
 
     public void PrintImage(Sprite newImage)
