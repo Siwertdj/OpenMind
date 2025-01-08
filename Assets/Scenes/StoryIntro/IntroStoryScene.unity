@@ -910,14 +910,14 @@ MonoBehaviour:
   - I believe he stole this paper from one of the people here today!
   - Oh no..
   - 'We have to make this right. '
-  - I put all kinds of data into my computer and asked it to determine who the rightful
-    author is.
+  - I put all kinds of data into my computer ..
+  - .. and asked it to determine who the rightful author is.
   - But it is taking too long and only giving vague hints.
   - 'BEEP BEEP The author is currently in the cafeteria. '
   - 'Maybe you can help me? '
   - Sure!
-  - 'You can ask the people present questions to find out who the computer is talking
-    about. '
+  - You can ask the people present questions ...
+  - '.. to find out who the computer is talking about. '
   - 'But you have to be discreet! The professor cannot find out we are looking into
     his paper.. '
   - Good luck!
@@ -1060,6 +1060,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6f66c15496981c347a198d16dbf1bd99, type: 2}
     - {fileID: 11400000, guid: bc4f8d0c98f0d57448046940d096acd4, type: 2}
     - {fileID: 11400000, guid: 936b6060b557bdc47a9c42932883f0ac, type: 2}
+    - {fileID: 11400000, guid: 6256c7f88870f1a4aa91fddfb4a4552a, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -1164,6 +1165,20 @@ MonoBehaviour:
         - m_Target: {fileID: 1187182886}
           m_TargetAssemblyTypeName: IntroductionManager, Scripts
           m_MethodName: HideDialog
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1187182886}
+          m_TargetAssemblyTypeName: IntroductionManager, Scripts
+          m_MethodName: Computer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
