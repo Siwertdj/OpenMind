@@ -69,7 +69,9 @@ public class DialogueManager : MonoBehaviour
             Instantiate(eventSystemPrefab);
             StartDialogue(null, testDialogueContainer.GetDialogue());
         }
-        
+
+        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
+
         // Set static DialogueManager instance
         dm = this;
     }
@@ -206,8 +208,8 @@ public class DialogueManager : MonoBehaviour
     /// <param name="phoneLayout">The parent transform for the message.</param>
     private void AddPhoneMessage(string message, Transform phoneLayout)
     {
-        var messageObject = Instantiate(phoneDialogueBoxPrefab, phoneLayout);
-        messageObject.GetComponent<ResizingTextBox>().SetText(message);
+        var messageBox = Instantiate(phoneDialogueBoxPrefab, phoneLayout).GetComponent<ResizingTextBox>();
+        messageBox.SetText(message);
     }
 
     public void PrintImage(Sprite newImage)
@@ -269,8 +271,7 @@ public class DialogueManager : MonoBehaviour
                 foreach (GameObject prefab in newBackground)
                 {
                     var image = Instantiate(prefab).GetComponent<Image>();
-                    image.rectTransform.SetParent(parent, false);
-                    
+                    image.rectTransform.SetParent(parent, false);                    
                 }
             }
         }
@@ -341,6 +342,23 @@ public class DialogueManager : MonoBehaviour
         // Write dialogue when button is pressed
         currentObject = responseDialogue;
         currentObject.Execute();
+    }
+
+    /// <summary>
+    /// Make required adjustments when text size was changed.
+    /// </summary>
+    private void OnTextSizeChanged()
+    {
+        if (phoneField.activeSelf)
+        {
+            // Resize all message boxes
+            foreach (var messageBox in phoneField.GetComponentsInChildren<ResizingTextBox>())
+                messageBox.AdjustFontSize();
+
+            // Rebuild layout
+            LayoutRebuilder.ForceRebuildLayoutImmediate(
+                phoneField.transform.GetChild(0).GetComponent<RectTransform>());
+        }
     }
 
     /// <summary>

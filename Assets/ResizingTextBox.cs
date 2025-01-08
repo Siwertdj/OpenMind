@@ -27,19 +27,11 @@ public class ResizingTextBox : MonoBehaviour
     [SerializeField] private LayoutElement layoutElement;
     [SerializeField] private Image image;
 
-    public void ApplyChanges()
-    {
-        textComponent.text = textContent;
-        textComponent.fontSize = textSize;
-
-        layoutElement.minWidth = minWidth;
-        rectTransform.sizeDelta = new Vector2(maxWidth, rectTransform.sizeDelta.y);
-
-        image.sprite = sprite;        
-    }
-
     public void SetText(string text)
     {
         textComponent.text = text;
+        AdjustFontSize();
     }
+
+    public void AdjustFontSize() => textComponent.fontSize = SettingsManager.sm.GetFontSize();
 }
