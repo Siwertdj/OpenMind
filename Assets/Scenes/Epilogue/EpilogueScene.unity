@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portraitContainer: {fileID: 3968802144937937392}
-  portraitPrefab: {fileID: 4887116112029547099, guid: e06401b0de4bf66489b02f1ca380fcd2, type: 3}
+  portraitPrefab: {fileID: 6812386633057061723, guid: 1f22c3fe3c3fdb34880e621874fa07a0, type: 3}
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
   onEpilogueEnd: {fileID: 11400000, guid: 93e5628cbf78bf1478ace75f7d5e6cc6, type: 2}
 --- !u!114 &1659958914
