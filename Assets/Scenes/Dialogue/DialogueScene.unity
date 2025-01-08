@@ -748,6 +748,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 0
   audioClips: []
 --- !u!114 &497474565
 MonoBehaviour:
@@ -1425,6 +1426,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   stopLoadIcon: {fileID: 11400000, guid: d5bc87abbc43ab44bb2893aabb110910, type: 2}
+  phoneNotificationClip: {fileID: 8300000, guid: 036ac2d6ad6a66e40b753b955d34abcc, type: 3}
+  phoneAnimationDuration: 1
   testDialogueContainer: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
 --- !u!4 &1061845840
 Transform:

@@ -43,6 +43,10 @@ public class DialogueManager : MonoBehaviour
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
     public GameEvent stopLoadIcon;
+
+    [Header("Miscellaneous")]
+    [SerializeField] private AudioClip phoneNotificationClip;
+    [SerializeField] private float phoneAnimationDuration = 1f;
         
     [FormerlySerializedAs("testDialogueObject")]
     [Header("Test variables")]
@@ -137,7 +141,7 @@ public class DialogueManager : MonoBehaviour
         {
             // If phone is active, animate it going down
             if (phoneField.activeSelf)
-                StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900, 1));
+                StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
         }
 
         currentObject.Execute();
@@ -179,8 +183,7 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// Writes a list of messages to a phone screen.
     /// </summary>
-    /// <param name="newMessage">The new message to be written at the bottom.</param>
-    /// <param name="previousMessages">The list of messages to be written above the new message.</param>
+    /// <param name="messages">The list of messages to be written on the phone.</param>
     public void WritePhoneDialogue(List<string> messages)
     {
         // Store the layout in which the messages will be placed
@@ -188,7 +191,10 @@ public class DialogueManager : MonoBehaviour
 
         // If the phone is not open yet, animate it opening
         if (!phoneField.activeSelf)
-            StartCoroutine(PhoneAnimation(phoneLayout, -1900, -80, 1f));
+        {
+            SettingsManager.sm.PlaySfxClip(phoneNotificationClip);
+            StartCoroutine(PhoneAnimation(phoneLayout, -1900, -80, 0.8f));
+        }
 
         // Adjust appropriate fields
         imageField.SetActive(false);
@@ -212,15 +218,18 @@ public class DialogueManager : MonoBehaviour
     /// The animation for the phone being pulled up or down.
     /// <para>I have found -1900 and -80 to be good values for the heights, 1 for the duration.</para>
     /// </summary>
-    private IEnumerator PhoneAnimation(Transform transform, float startingHeight, float finalHeight, float duration)
+    private IEnumerator PhoneAnimation(Transform transform, float startingHeight, float finalHeight, float additionalWait = 0f)
     {
+        transform.localPosition = new Vector2(transform.localPosition.x, startingHeight);
+        yield return new WaitForSeconds(additionalWait);
+
         float time = 0f;
-        while (time < duration)
+        while (time < phoneAnimationDuration)
         {
             time += Time.deltaTime;
 
             // Use SmoothStep to create a dampened interpolation
-            float timeStep = Mathf.SmoothStep(0, 1, time / duration);
+            float timeStep = Mathf.SmoothStep(0, 1, time / phoneAnimationDuration);
             float height = Mathf.Lerp(startingHeight, finalHeight, timeStep);
 
             transform.localPosition = new Vector2(transform.localPosition.x, height);
