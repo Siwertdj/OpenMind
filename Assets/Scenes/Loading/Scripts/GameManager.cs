@@ -438,12 +438,9 @@ public class GameManager : MonoBehaviour
         // Create the appropriate DialogueObject
         DialogueObject dialogueObject;
         if (story.storyID == 0) // 0 corresponds to the phone story
-        { 
             dialogueObject = new PhoneDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
-        }
         else
             dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
-        
         
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
