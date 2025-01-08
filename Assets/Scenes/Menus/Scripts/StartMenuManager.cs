@@ -40,6 +40,9 @@ public class StartMenuManager : MonoBehaviour
         mainMenuCanvas.SetActive(true);
         
         SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData();
     }
     
     /// <summary>
