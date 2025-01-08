@@ -437,11 +437,6 @@ public class GameManager : MonoBehaviour
 
         var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
         
-        gameState = GameState.HintDialogue;
-        
-        // Start the phone hint music
-        SettingsManager.sm.SwitchMusic(story.storyHintPhoneMusic, null, false);
-        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);

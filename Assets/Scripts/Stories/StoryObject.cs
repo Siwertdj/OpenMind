@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using UnityEngine;
@@ -19,7 +19,6 @@ public class StoryObject : ScriptableObject
     [SerializeField] public GameObject        epilogueBackground;
     [SerializeField] public AudioClip         storyIntroMusic;
     [SerializeField] public AudioClip         storyGameMusic;
-    [SerializeField] public AudioClip         storyHintPhoneMusic;
     [SerializeField] public AudioClip         storyEpilogueMusic;
     [SerializeField] public DialogueContainer storyEpilogueWonDialogue;
     [SerializeField] public DialogueContainer storyEpilogueLossDialogueCulprit;
