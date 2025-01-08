@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -12,19 +13,23 @@ public class SettingsManager : MonoBehaviour
 {
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
-    
-    // the audiomixer that contains all soundchannels
-    public AudioMixer audioMixer;
+
+    [Header("Component References")]
+    public AudioMixer audioMixer; // The audiomixer that contains all soundchannels
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
+    [Header("Settings (?)")]
+    [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    [SerializeField] AudioClip defaultButtonClickSound;
 
     public float TalkingDelay {  get; private set; }
-    
-    private AudioSource musicSource;
-    
+
     // TODO: Integrate this with text-size
-    public int maxLineLength = 30;
+    [NonSerialized] public int maxLineLength = 30;
     
     // Text size to be used for the text components
-    public TextSize textSize;
+    [NonSerialized] public TextSize textSize;
     
     public enum TextSize
     {
@@ -32,16 +37,19 @@ public class SettingsManager : MonoBehaviour
         Medium,
         Large
     }
+
+    // Multipliers for different text sizes
+    public const float M_SMALL_TEXT = 0.8f;
+    public const float M_LARGE_TEXT = 1.4f;
+
+    public UnityEvent OnTextSizeChanged;
     
 
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
     [NonSerialized] public float sfxVolume = 0;
     [NonSerialized] public float talkingSpeed = 1;
-    [NonSerialized] public bool ttsEnabled = false;
     #endregion
-
-    [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     
     private void Awake()
     {
@@ -50,9 +58,6 @@ public class SettingsManager : MonoBehaviour
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;
-        
-        // Set reference to music-audiosource by component
-        musicSource = GetComponents<AudioSource>()[0];
     }
     
     private void Start()
@@ -67,7 +72,7 @@ public class SettingsManager : MonoBehaviour
         musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
         sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
-        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
+        textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
         // Apply the saved values
         SetMusicVolume(musicVolume);
@@ -80,7 +85,17 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
-        PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(nameof(textSize), (int)textSize);
+    }
+
+    public void OnClick(Component sender, params object[] data)
+    {
+        if (data[0] is AudioClip audioClip)
+            sfxSource.clip = audioClip;
+        else
+            sfxSource.clip = defaultButtonClickSound;
+
+        sfxSource.Play();
     }
     
     #region TextSize
@@ -119,7 +134,15 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(musicVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+
+        audioMixer.SetFloat(nameof(musicVolume), adjustedVolume);
         musicVolume = volume;
     }
 
@@ -129,7 +152,14 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(sfxVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+        audioMixer.SetFloat(nameof(sfxVolume), adjustedVolume);
         sfxVolume = volume;
     }
     

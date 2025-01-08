@@ -256,6 +256,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &105892627
 GameObject:
   m_ObjectHideFlags: 0
@@ -772,7 +773,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  gameEvent: {fileID: 0}
+  gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &217989641
 GameObject:
   m_ObjectHideFlags: 0
@@ -825,7 +827,7 @@ MonoBehaviour:
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   startLoadIcon: {fileID: 11400000, guid: 334537c804656fe4995f51c51842dda5, type: 2}
   copyright: {fileID: 2085541975}
-  startMenuMusic: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
+  startMenuMusic: {fileID: 0}
 --- !u!1 &218964759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,9 +1222,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  maxLineLength: 30
-  textSize: 0
+  musicSource: {fileID: 582075139}
+  sfxSource: {fileID: 582075138}
   defaultMusicFadeInTime: 0.5
+  defaultButtonClickSound: {fileID: 8300000, guid: 1d11ea0ce7cc45e49a97a475b1e367a8, type: 3}
+  OnTextSizeChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &582075137
 Transform:
   m_ObjectHideFlags: 0
@@ -1344,7 +1350,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3414167128995361774, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.76
   m_Pitch: 1
@@ -1454,10 +1460,10 @@ MonoBehaviour:
   response:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 582075138}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
+      - m_Target: {fileID: 582075136}
+        m_TargetAssemblyTypeName: SettingsManager, Scripts
+        m_MethodName: OnClick
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2173,6 +2179,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1024159935
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,6 +2566,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1127524790
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,7 +2601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207031, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -703, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127524792
@@ -3690,6 +3698,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &2085541972
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,7 +3780,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &2085541976
 RectTransform:

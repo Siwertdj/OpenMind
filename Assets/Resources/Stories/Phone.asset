@@ -26,7 +26,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
   victimDialogue: has gone home.
   hintDialogue: '*beep beep* You got a new message!'
-  numberOfCharacters: 6
+  numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0
