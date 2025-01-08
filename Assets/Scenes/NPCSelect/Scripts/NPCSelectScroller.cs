@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class NPCSelectScroller : MonoBehaviour
 {
@@ -106,11 +107,6 @@ public class NPCSelectScroller : MonoBehaviour
     {
         // Set the initially selected child
         SelectedChild = Children.Length / 2;
-        StartCoroutine(InstantNavigate(SelectedChild));
-    }
-
-    private void OnRectTransformDimensionsChange()
-    {
         StartCoroutine(InstantNavigate(SelectedChild));
     }
 
