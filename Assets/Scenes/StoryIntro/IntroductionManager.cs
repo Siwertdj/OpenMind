@@ -78,7 +78,7 @@ public class IntroductionManager : MonoBehaviour
             // set story-variable
             story = storyObject;
             // Start the music
-            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null);
+            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null, true);
             // depending on the chosen storyline, play the intro to the story
             switch (storyObject.storyID)
             {
