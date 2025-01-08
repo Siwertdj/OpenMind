@@ -25,16 +25,26 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Opens the GameMenu-scene, hides the UI buttons
     /// </summary>
-    public void OpenMenu()
+    public async void OpenMenu()
     {
         GameManager.gm.PauseGame();
         gameButtons.SetActive(false);
+
         
-            // '_ =' throws away the await
-            _ = SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
-            SceneController.SceneName.GameMenuScene,
-            SceneController.TransitionType.Additive,
-            false);
+        // '_ =' throws away the await
+        await SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
+        SceneController.SceneName.GameMenuScene,
+        SceneController.TransitionType.Additive,
+        false);
+        
+        // if gamemanager is null, we are in epilogue.
+        // We use this bool to decide if we should hide certain buttons.
+        // This way, they are correctly disabled/enabled each time the menu is opened.
+        bool inEpilogue = GameManager.gm == null;
+        // Not the cleanest, but functional.
+        GameObject.Find("SaveButton").SetActive(!inEpilogue); // disable in Epilogue
+        GameObject.Find("LoadButton").SetActive(!inEpilogue); // disable in Epilogue
+
     }
 
     /// <summary>
@@ -42,7 +52,8 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        GameManager.gm.UnpauseGame();
+        if (GameManager.gm != null)
+            GameManager.gm.UnpauseGame();
         gameButtons.SetActive(true);
     }
 
