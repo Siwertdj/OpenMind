@@ -219,7 +219,7 @@ PlayableDirector:
     value: {fileID: 1775969665}
   - key: {fileID: 7198898477262417771, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1208453419}
-  - key: {fileID: -6181053485295886216, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 1464702355}
   - key: {fileID: -9147030484646639633, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1775969665}
@@ -227,8 +227,6 @@ PlayableDirector:
     value: {fileID: 1775969669}
   - key: {fileID: -3702496251123548857, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1208453419}
-  - key: {fileID: 6119390854896751083, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
-    value: {fileID: 1464702355}
   - key: {fileID: -8218322097711309632, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1775969665}
   m_ExposedReferences:
@@ -1346,8 +1344,6 @@ PlayableDirector:
   m_SceneBindings:
   - key: {fileID: 3393242242203973498, guid: 87cc3c6c94684c94b8a81b04ff674c41, type: 2}
     value: {fileID: 1208453419}
-  - key: {fileID: -1555144204692895862, guid: 87cc3c6c94684c94b8a81b04ff674c41, type: 2}
-    value: {fileID: 1464702355}
   - key: {fileID: 290693621799807876, guid: a6268483017692c419cfee173c69ddfb, type: 2}
     value: {fileID: 1208453419}
   m_ExposedReferences:
@@ -1904,14 +1900,12 @@ PlayableDirector:
     value: {fileID: 1775969669}
   - key: {fileID: -3702496251123548857, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1208453419}
-  - key: {fileID: 6119390854896751083, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+  - key: {fileID: 0}
     value: {fileID: 1464702355}
   - key: {fileID: -8218322097711309632, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1775969665}
   - key: {fileID: 7198898477262417771, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1208453419}
-  - key: {fileID: -6181053485295886216, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
-    value: {fileID: 1464702355}
   - key: {fileID: -9147030484646639633, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1775969665}
   - key: {fileID: 4642109007761088518, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
@@ -2052,6 +2046,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1602891227
 GameObject:
   m_ObjectHideFlags: 0
