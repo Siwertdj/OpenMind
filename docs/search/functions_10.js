@@ -56,5 +56,5 @@ var searchData=
   ['storybselected_53',['StoryBSelected',['../classStorySelectionManager.html#a1552b1f93c11052007003c5161b054bf',1,'StorySelectionManager']]],
   ['storyc_54',['StoryC',['../classIntroductionManager.html#a74c4d6e032113dedc9d9e4d6219c0d1b',1,'IntroductionManager']]],
   ['storycselected_55',['StoryCSelected',['../classStorySelectionManager.html#a64984c8e30c3a32d6b93740233856632',1,'StorySelectionManager']]],
-  ['switchmusic_56',['SwitchMusic',['../classSettingsManager.html#aa0c07173daa0726657e0b831fc41f802',1,'SettingsManager']]]
+  ['switchmusic_56',['SwitchMusic',['../classSettingsManager.html#afb5b5d6eeb00e0800c5e8bb87fc2daac',1,'SettingsManager']]]
 ];

@@ -78,5 +78,5 @@ var searchData=
   ['storyselectionmanager_75',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
   ['storyselectionmanagerplaytest_76',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
   ['swipedetector_77',['SwipeDetector',['../classSwipeDetector.html',1,'']]],
-  ['switchmusic_78',['SwitchMusic',['../classSettingsManager.html#aa0c07173daa0726657e0b831fc41f802',1,'SettingsManager']]]
+  ['switchmusic_78',['SwitchMusic',['../classSettingsManager.html#afb5b5d6eeb00e0800c5e8bb87fc2daac',1,'SettingsManager']]]
 ];
