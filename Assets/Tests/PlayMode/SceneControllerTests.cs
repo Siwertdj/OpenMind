@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.EventSystems;
 using Random = System.Random;
+using UnityEditor;
 
 /// <summary>
 /// A class that tests scene controller properties:
@@ -24,7 +25,19 @@ public class SceneControllerTests
 {
     private GameManager     gm;
     private SceneController sc;
-    
+    private static SceneController.SceneName[] transitionSceneNames = new SceneController.SceneName[]
+    {
+        SceneController.SceneName.Loading,
+        SceneController.SceneName.NPCSelectScene,
+        SceneController.SceneName.DialogueScene,
+        SceneController.SceneName.NotebookScene,
+        SceneController.SceneName.GameMenuScene,
+        SceneController.SceneName.SettingsScene,
+        SceneController.SceneName.GameOverScene,
+        SceneController.SceneName.TutorialScene,
+        SceneController.SceneName.EpilogueScene
+    };
+
     //all possible scene names
     private static SceneController.SceneName[] sceneNames =
         Enum.GetValues(typeof(SceneController.SceneName)).Cast<SceneController.SceneName>().ToArray();
@@ -32,17 +45,6 @@ public class SceneControllerTests
     private static SceneController.TransitionType[] transitionTypes =
         Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
     
-    [OneTimeSetUp]
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
     
     /// <summary>
     /// Sets up the unit tests:
@@ -67,8 +69,18 @@ public class SceneControllerTests
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
         gm = GameManager.gm;
-        sc = SceneController.sc;
         
+        GameManager.gm.currentCharacters = new List<CharacterInstance>();
+        CharacterData dummyData = (CharacterData)AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData));
+        CharacterInstance dummy = new CharacterInstance(dummyData);
+        GameManager.gm.currentCharacters.AddRange(new[] { dummy, dummy, dummy, dummy });
+
+        SetProperty("story", GameManager.gm, ScriptableObject.CreateInstance<StoryObject>());
+
+        GameManager.gm.notebookData = new NotebookData();
+
+        sc = SceneController.sc;
+
         //unload the loading scene now
         SceneManager.UnloadSceneAsync("Loading");
         
@@ -118,7 +130,7 @@ public class SceneControllerTests
     /// Also tests whether the right scene gets loaded from SceneController.StartScene, since both properties are tested with this method.
     /// </summary>
     [UnityTest, Order(1)]
-    public IEnumerator TestSceneGraphReading([ValueSource(nameof(sceneNames))] SceneController.SceneName sceneName)
+    public IEnumerator TestSceneGraphReading([ValueSource(nameof(transitionSceneNames))] SceneController.SceneName sceneName)
     {
         if (sc == null) throw new ArgumentException("SceneController was null");
         //creates scene graph
@@ -143,18 +155,7 @@ public class SceneControllerTests
         Assert.IsTrue(finished);
     }
 
-    private static SceneController.SceneName[] transitionSceneNames = new SceneController.SceneName[]
-    {
-        SceneController.SceneName.Loading,
-        SceneController.SceneName.NPCSelectScene,
-        SceneController.SceneName.DialogueScene,
-        SceneController.SceneName.NotebookScene,
-        SceneController.SceneName.GameMenuScene,
-        SceneController.SceneName.SettingsScene,
-        SceneController.SceneName.GameOverScene,
-        SceneController.SceneName.TutorialScene,
-        SceneController.SceneName.EpilogueScene
-    };
+    
 
 
     /// <summary>
@@ -270,11 +271,14 @@ public class SceneControllerTests
         if (from == to)
             return !SceneManager.GetSceneByName(from.ToString()).isLoaded;
         
-        bool transitionHappened = false; 
-        transitionHappened |= SceneManager.GetSceneByName(to.ToString()).isLoaded;
-        
+        bool transitionHappened = false;
+        // Loading will always be active during these transition
+        if (to != SceneController.SceneName.Loading)
+            transitionHappened |= SceneManager.GetSceneByName(to.ToString()).isLoaded;
+
         //if from is not active, a transition happened
         transitionHappened |= !SceneManager.GetSceneByName(from.ToString()).isLoaded;
+        
         return transitionHappened;
     }
 }

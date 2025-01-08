@@ -24,18 +24,7 @@ public class SavingLoadingTestValueReadAndWrite
     Random       random = new Random();
     private Save saving  => Save.Saver;
     private Load loading => Load.Loader;
-    
-    [OneTimeSetUp]
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
+   
 
     /// <summary>
     /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
@@ -242,12 +231,15 @@ public class SavingLoadingTestValueReadAndWrite
     public IEnumerator SavingLoadingDoesNotChangeGameState()
     {
         SaveData saveData = CreateSaveData();
+
+        
         
         for (int i = 0; i < 5; i++)
         {
             saving.SaveGame(saveData);
             SaveData loaded = loading.GetSaveData();
-            GameManager.gm.StartGame(null, loaded);
+            GameManager.gm.StartGame(new StartMenuManager(), loaded);
+            
             yield return new WaitUntil(
                 () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
             
@@ -273,14 +265,14 @@ public class SavingLoadingTestValueReadAndWrite
         {
             SaveData saveData = loading.GetSaveData();
             Assert.IsNotNull(saveData);
-            
+
             SaveData saveDataCopy = loading.GetSaveData();
             for (int i = 0; i < 5; i++)
             {
-                GameManager.gm.StartGame(null, saveDataCopy);
+                GameManager.gm.StartGame(new StartMenuManager(), saveDataCopy);
                 yield return new WaitUntil(
                     () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-                
+
                 SaveData retrieved = saving.CreateSaveData();
                 saveDataCopy = retrieved;
                 

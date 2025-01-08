@@ -17,18 +17,6 @@ using Property = NUnit.Framework.PropertyAttribute;
 public class SavingLoadingTestFilePaths
 {
     private GameManager gm;
-
-    [OneTimeSetUp]
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
     
     [UnitySetUp]
     public IEnumerator Initialise()
