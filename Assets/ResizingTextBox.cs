@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
 
 public class ResizingTextBox : MonoBehaviour
 {

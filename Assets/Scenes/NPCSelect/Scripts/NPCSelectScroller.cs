@@ -109,6 +109,11 @@ public class NPCSelectScroller : MonoBehaviour
         StartCoroutine(InstantNavigate(SelectedChild));
     }
 
+    private void OnRectTransformDimensionsChange()
+    {
+        StartCoroutine(InstantNavigate(SelectedChild));
+    }
+
     /// <summary>
     /// Smoothly move one child to the left.
     /// </summary>

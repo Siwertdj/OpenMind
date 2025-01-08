@@ -11,9 +11,6 @@ using System.Linq;
 using System.Net;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
-using Image = UnityEngine.UI.Image;
 using UnityEngine.UI;
 
 /// <summary>
@@ -46,8 +43,7 @@ public class DialogueManager : MonoBehaviour
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
     public GameEvent stopLoadIcon;
-
-    
+        
     [FormerlySerializedAs("testDialogueObject")]
     [Header("Test variables")]
     [SerializeField] private DialogueContainer testDialogueContainer;
@@ -58,7 +54,6 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
-    private                       Component         dialogueStarter;
     
     // In this awake, we initialize some components in case it is loaded in isolation.
     // It does not need to rely on GameManager to be active, but it needs an eventsystem
@@ -83,10 +78,7 @@ public class DialogueManager : MonoBehaviour
     /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
     /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
-    {
-        // Save the sender of the event that started dialogue
-        dialogueStarter = sender;
-        
+    {        
         // Change the text size
         characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
         ChangeTextSize();
@@ -139,6 +131,15 @@ public class DialogueManager : MonoBehaviour
     private void ExecuteNextObject()
     {
         currentObject = currentObject.Responses.First();
+
+        // If dialogue will end, do some additional things
+        if (currentObject is TerminateDialogueObject)
+        {
+            // If phone is active, animate it going down
+            if (phoneField.activeSelf)
+                StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900, 1));
+        }
+
         currentObject.Execute();
     }
 
@@ -182,12 +183,18 @@ public class DialogueManager : MonoBehaviour
     /// <param name="previousMessages">The list of messages to be written above the new message.</param>
     public void WritePhoneDialogue(List<string> messages)
     {
+        // Store the layout in which the messages will be placed
+        var phoneLayout = phoneField.transform.GetChild(0);
+
+        // If the phone is not open yet, animate it opening
+        if (!phoneField.activeSelf)
+            StartCoroutine(PhoneAnimation(phoneLayout, -1900, -80, 1f));
+
+        // Adjust appropriate fields
         imageField.SetActive(false);
         questionsField.SetActive(false);
         dialogueField.SetActive(false);
         phoneField.SetActive(true);
-
-        var phoneLayout = phoneField.transform.GetChild(0);
 
         // Remove previous messages
         foreach (Transform child in phoneLayout)
@@ -199,6 +206,29 @@ public class DialogueManager : MonoBehaviour
 
         // Rebuild the layout
         LayoutRebuilder.ForceRebuildLayoutImmediate(phoneLayout.GetComponent<RectTransform>());
+    }
+
+    /// <summary>
+    /// The animation for the phone being pulled up or down.
+    /// <para>I have found -1900 and -80 to be good values for the heights, 1 for the duration.</para>
+    /// </summary>
+    private IEnumerator PhoneAnimation(Transform transform, float startingHeight, float finalHeight, float duration)
+    {
+        float time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+
+            // Use SmoothStep to create a dampened interpolation
+            float timeStep = Mathf.SmoothStep(0, 1, time / duration);
+            float height = Mathf.Lerp(startingHeight, finalHeight, timeStep);
+
+            transform.localPosition = new Vector2(transform.localPosition.x, height);
+
+            yield return null;
+        }
+
+        transform.localPosition = new Vector2(transform.localPosition.x, finalHeight);
     }
 
     /// <summary>
@@ -289,7 +319,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.

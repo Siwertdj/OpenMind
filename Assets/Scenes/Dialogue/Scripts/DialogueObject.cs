@@ -92,8 +92,9 @@ public class PhoneDialogueObject : DialogueObject
     private List<string> remainingMessages;
     private List<string> previousMessages;
 
-    public PhoneDialogueObject(List<string> remainingMessages, List<string> previousMessages = null)
+    public PhoneDialogueObject(List<string> remainingMessages, List<string> previousMessages, GameObject[] background)
     {
+        this.background = background;
         this.remainingMessages = remainingMessages;
         
         // Create an empty list of messages if there were no previous messages
@@ -108,11 +109,12 @@ public class PhoneDialogueObject : DialogueObject
     {
         var dm = DialogueManager.dm;
 
+        dm.ReplaceBackground(background);
         dm.WritePhoneDialogue(previousMessages);
 
         if (remainingMessages.Count <= 0)
             Responses.Add(new TerminateDialogueObject());
         else
-            Responses.Add(new PhoneDialogueObject(remainingMessages, previousMessages));
+            Responses.Add(new PhoneDialogueObject(remainingMessages, previousMessages, background));
     }
 }
