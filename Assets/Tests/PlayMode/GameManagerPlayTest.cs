@@ -239,8 +239,8 @@ public class GameManagerPlayTest
         Assert.IsTrue(SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         
         yield return null;
-    }
-    */
+    }*/
+    
     
     /*/// <summary>
     /// Checks if the "RetryStoryScene" resets all characters to be active.
@@ -274,7 +274,7 @@ public class GameManagerPlayTest
         yield return null;
     }
 
-    /*
+    
     /// <summary>
     /// Checks if the "EndCycle" method sets 1 character to inactive if there are enough characters remaining,
     /// else check if no characters get set to inactive.
@@ -372,7 +372,7 @@ public class GameManagerPlayTest
         
         yield return null;
     }
-*/
+
     /*
     /// <summary>
     /// Checks if the "StartDialogue" has the correct gameState (NpcDialogue) and checks if the DialogueScene is loaded.
@@ -447,47 +447,42 @@ public class GameManagerPlayTest
         
         // Find the gameObjects that holds the PortraitButtons as children.
         GameObject go = GameObject.Find("PortraitContainer");
-        Transform chosenCharacterObject = null;
         
         if (hasChosenCulprit)
         {
-            // Find the GameObject that corresponds with the culprit.
-            foreach (Transform child in go.transform)
+            // Find the index of the GameObject that corresponds with the culprit.
+            int culpritIndex = -1;
+            int counter = 0;
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
             {
-                // Get the character name through the sprite name
-                // TODO: perhaps find a better way to get to the CharacterInstances.
-                string selectedCharacter = child.GetComponentInChildren<Image>().sprite.name;
-                string selectedCharacterName = selectedCharacter.Split("_")[0];
-                // Find the culprit.
-                if (gm.GetCulprit().characterName == selectedCharacterName)
+                if (c.isCulprit)
                 {
-                    chosenCharacterObject = child;
+                    culpritIndex = counter;
                     break;
                 }
+                counter++;
             }
-
+            
             // Invoke the onClick of the culprit.
-            chosenCharacterObject.GetComponent<GameButton>().onClick.Invoke();
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
         }
         else
         {
-            // Find the GameObject that corresponds with an innocent person.
-            foreach (Transform child in go.transform)
+            // Find the index of the GameObject that corresponds with the culprit.
+            int culpritIndex = -1;
+            int counter = 0;
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
             {
-                // Get the character name through the sprite name
-                // TODO: perhaps find a better way to get to the CharacterInstances.
-                string selectedCharacter = child.GetComponentInChildren<Image>().sprite.name;
-                string selectedCharacterName = selectedCharacter.Split("_")[0];
-                // Find an innocent person that is not dead and is not the culprit.
-                if (gm.GetCulprit().characterName != selectedCharacterName)
+                if (!c.isCulprit)
                 {
-                    chosenCharacterObject = child;
+                    culpritIndex = counter;
                     break;
                 }
+                counter++;
             }
-
-            // Invoke the onClick of the innocent person.
-            chosenCharacterObject.GetComponent<GameButton>().onClick.Invoke();
+            
+            // Invoke the onClick of the culprit.
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
         }
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
