@@ -96,6 +96,7 @@ public class SaveUserData
                 Debug.LogError("Invalid UserData query");
                 break;
         }
+        UpdateUserData(currentUserData);
     }
 
     private UserData CreateUserData()

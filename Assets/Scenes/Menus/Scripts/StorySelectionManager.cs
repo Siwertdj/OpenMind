@@ -20,6 +20,16 @@ public class StorySelectionManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onIntroLoaded;
 
+    [Header("Buttons")] 
+    [SerializeField] private GameButton storyButtonA;
+    [SerializeField] private GameButton storyButtonB;
+    [SerializeField] private GameButton storyButtonC;
+
+    [Header("Text Objects")] 
+    [SerializeField] private TMP_Text storyAComplete;
+    [SerializeField] private TMP_Text storyBComplete;
+    [SerializeField] private TMP_Text storyCComplete;
+    
     private void Awake()
     {
         UpdateButtons();
@@ -34,21 +44,21 @@ public class StorySelectionManager : MonoBehaviour
         if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyAWon))
         {
             // story b unlocked
-            GameObject.Find("StoryB_Button").GetComponent<GameButton>().interactable = true;
+            storyButtonB.interactable = true;
             // enable 'complete'-text
-            GameObject.Find("StoryA_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+            storyAComplete.gameObject.SetActive(true);
         }
         if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyBWon))
         {
             // story c unlocked
-            GameObject.Find("StoryC_Button").GetComponent<GameButton>().GetComponentInChildren<GameButton>().interactable = true;
+            storyButtonC.interactable = true;
             // enable 'complete'-text
-            GameObject.Find("StoryB_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+            storyBComplete.gameObject.SetActive(true);
         }
         if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyCWon))
         {
             // enable 'complete'-text
-            GameObject.Find("StoryC_Button").GetComponent<GameButton>().GetComponentsInChildren<TMP_Text>()[2].gameObject.SetActive(true);
+            storyCComplete.gameObject.SetActive(true);
         }
     }
     

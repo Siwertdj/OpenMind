@@ -305,6 +305,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ffe1c93089342ec4898ecab9b2a64f7d, type: 2}
   - {fileID: 11400000, guid: 730e998b0730e884fb9a53057bfbd35f, type: 2}
   onIntroLoaded: {fileID: 11400000, guid: c4e8baea898550048b5dc023820bc26d, type: 2}
+  storyButtonA: {fileID: 2019508190}
+  storyButtonB: {fileID: 834273493}
+  storyButtonC: {fileID: 1028174429}
+  storyAComplete: {fileID: 306156960}
+  storyBComplete: {fileID: 1096139244}
+  storyCComplete: {fileID: 1382824271}
 --- !u!1 &306156958
 GameObject:
   m_ObjectHideFlags: 0

@@ -65,30 +65,41 @@ public class FetchUserData
             Debug.LogError("No userdata was found");
             return false;
         }
-
+        
         UserData userData = JsonConvert.DeserializeObject<UserData>(userDataFileJsonContents);
-
+        bool output;    // could use returns instead, but with this we can debug.
+        
         switch (query)
         {
             case UserDataQuery.prologueSeen:
-                return userData.prologueSeen;
+                output = userData.prologueSeen;
+                break;
             case UserDataQuery.playedBefore:
-                return userData.playedBefore;
+                output =  userData.playedBefore;
+                break;
             case UserDataQuery.storyAWon:
-                return userData.storyAWon;
+                output =  userData.storyAWon;
+                break;
             case UserDataQuery.storyBWon:
-                return userData.storyBWon;
+                output =  userData.storyBWon;
+                break;
             case UserDataQuery.storyCWon:
-                return userData.storyCWon;
+                output =  userData.storyCWon;
+                break;
             case UserDataQuery.storyAIntroSeen:
-                return userData.storyAIntroSeen;
+                output =  userData.storyAIntroSeen;
+                break;
             case UserDataQuery.storyBIntroSeen:
-                return userData.storyBIntroSeen;
+                output =  userData.storyBIntroSeen;
+                break;
             case UserDataQuery.storyCIntroSeen:
-                return userData.storyCIntroSeen;
+                output =  userData.storyCIntroSeen;
+                break;
             default:
                 Debug.LogError("Invalid UserData query");
                 return false;
         }
+        
+        return output;
     }
 }

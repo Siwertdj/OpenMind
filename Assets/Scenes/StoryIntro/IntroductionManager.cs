@@ -106,6 +106,9 @@ public class IntroductionManager : MonoBehaviour
             // Return to StorySelectScene and try again.
             SceneManager.LoadScene("StorySelectScene");
         }
+        
+        // Do behavior based on UserData
+        UpdateUserDataByStory(story);
     }
     
     // This region contains methods that regulate the different storylines. 
@@ -116,9 +119,6 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryA()
     {
-        // update userdata
-        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyAIntroSeen, true);
-        
         messages = new GameObject[textMessages.Length];
         for(int i = 0; i < textMessages.Length; i++)
         {
@@ -142,12 +142,6 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline.Play();
         backgroundIndex = 0;
         background.sprite = backgrounds[backgroundIndex];
-
-        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyAIntroSeen))
-        {
-            skipButton.SetActive(true);
-        }
-            
     }
     
     /// <summary>
@@ -155,9 +149,6 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryB()
     {
-        // update userdata
-        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyBIntroSeen, true);
-        
         character.sprite = backgrounds[5];
         currentTimeline = introStoryB;
         currentTimeline.time = 0; // Reset the timeline to the start
@@ -168,11 +159,6 @@ public class IntroductionManager : MonoBehaviour
         characterName = "Alex";
         currentTimeline.Play();
         
-        
-        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyBIntroSeen))
-        {
-            skipButton.SetActive(true);
-        }
     }
     
     /// <summary>
@@ -180,9 +166,6 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryC()
     {
-        // update userdata
-        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyCIntroSeen, true);
-        
         currentTimeline = introStoryC;
         currentTimeline.time = 0; // Reset the timeline to the start
         currentTimeline.RebuildGraph();
@@ -192,11 +175,41 @@ public class IntroductionManager : MonoBehaviour
         character.sprite = backgrounds[9];
         characterName = "Receptionist";
         currentTimeline.Play();
+    }
+
+    private void UpdateUserDataByStory(StoryObject story)
+    {
+        // initialize with arbitrary value.
+        FetchUserData.UserDataQuery query = FetchUserData.UserDataQuery.playedBefore;
         
-        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyCIntroSeen))
+        // operate
+        switch (story.storyID)
+        {
+            case 0:
+                query = FetchUserData.UserDataQuery.storyAIntroSeen;
+                break;
+            case 1:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            case 2:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            default:
+                Debug.LogError("Invalid story, could not fetch userdata.");
+                break;
+        }
+        
+        // Do behavior based on query result.
+        // In this casse, set skipButton active ONLY if query returns true.
+        if (FetchUserData.Loader.GetUserDataValue(query))
         {
             skipButton.SetActive(true);
         }
+        
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(query, true);
+
+        
     }
     
     #endregion

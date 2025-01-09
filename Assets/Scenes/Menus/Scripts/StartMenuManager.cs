@@ -42,7 +42,7 @@ public class StartMenuManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
         
         // update user data; create a file if it didnt exist already
-        SaveUserData.Saver.UpdateUserData();
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
     }
     
     /// <summary>
