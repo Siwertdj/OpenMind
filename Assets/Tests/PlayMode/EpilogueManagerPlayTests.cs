@@ -12,8 +12,9 @@ using UnityEngine.UI;
 
 public class EpilogueManagerPlayTests
 {
-    private StoryObject story;
-    private GameManager gm;
+    private StoryObject     story;
+    private GameManager     gm;
+    private DialogueManager dm;
 
     /// <summary>
     /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
@@ -74,8 +75,8 @@ public class EpilogueManagerPlayTests
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
         // Get the DialogueManager.
-        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
         // End the dialogue.
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
@@ -107,6 +108,74 @@ public class EpilogueManagerPlayTests
     static bool[] bools = new bool[] { true, false };
     static int[]  ints  = new int[] { 0, 1, 2 };
 
+    /// <summary>
+    /// Check whether the transition between culprit selection and epilogue works intended by looking at the following:
+    /// - if culprit is chosen:
+    /// Check if hasWon is set to true, check if the gameState is epilogue and check if we are currently in the DialogueScene.
+    /// - if innocent person is chosen:
+    /// Check if hasWon is set to false, check if the gameState is epilogue and check if we are currently in the DialogueScene.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
+    { 
+        // Find the gameObjects that holds the PortraitButtons as children.
+        GameObject go = GameObject.Find("PortraitContainer");
+        int culpritIndex = -1;
+        int counter = 0;
+        if (hasChosenCulprit)
+        {
+            // Find the index of the GameObject that corresponds with the culprit.
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
+            {
+                if (c.isCulprit)
+                {
+                    culpritIndex = counter;
+                    break;
+                }
+                counter++;
+            }
+            
+            // Invoke the onClick of the culprit.
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
+        }
+        else
+        {
+            // Find the index of the GameObject that corresponds with the culprit.
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
+            {
+                if (!c.isCulprit)
+                {
+                    culpritIndex = counter;
+                    break;
+                }
+                counter++;
+            }
+            
+            // Invoke the onClick of the culprit.
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
+        }
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager.
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // Check if the chosen character is the culprit when hasChosenCulprit is set to true,
+        // else check if the chosen character is not the culprit.
+        if (hasChosenCulprit)
+            Assert.IsTrue(dm.currentRecipient.isCulprit);
+        else
+            Assert.IsFalse(dm.currentRecipient.isCulprit);
+        
+        // Check if the gameState is switched to epilogue.
+        Assert.AreEqual(GameManager.GameState.Epilogue, gm.gameState);
+        
+        yield return null;
+    }
+    
     /*/// <summary>
     /// Check if the transition from the losing scenario works as intended when the dialogue switches from innocent person to culprit.
     /// </summary>
