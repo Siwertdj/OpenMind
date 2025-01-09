@@ -15,9 +15,9 @@ var searchData=
   ['dialoguemanagerplaytest_12',['DialogueManagerPlayTest',['../classDialogueManagerPlayTest.html',1,'']]],
   ['dialogueobject_13',['DialogueObject',['../classDialogueObject.html',1,'']]],
   ['didtransitionhappen_14',['DidTransitionHappen',['../classSceneControllerTests.html#a918f5dd93e4987d70bc9cf4ed208809d',1,'SceneControllerTests']]],
-  ['disablenotebookhighlight_15',['DisableNotebookHighlight',['../classTutorialManager.html#a6717f192d0fad56fba3286627c70cc1a',1,'TutorialManager']]],
-  ['disableselectionbutton_16',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
-  ['disblealleventandaudiolisteners_17',['DisbleAllEventAndAudioListeners',['../classSceneControllerTests.html#a090fc9965dea4327ae4304fda502bfcf',1,'SceneControllerTests']]],
+  ['disablealleventandaudiolisteners_15',['DisableAllEventAndAudioListeners',['../classSceneControllerTests.html#ad7c1319ee3bd86f3deca9cbf10d5b126',1,'SceneControllerTests']]],
+  ['disablenotebookhighlight_16',['DisableNotebookHighlight',['../classTutorialManager.html#a6717f192d0fad56fba3286627c70cc1a',1,'TutorialManager']]],
+  ['disableselectionbutton_17',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
   ['doescurrentsavefilework_18',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
   ['doessavefilelocationexist_19',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]],
   ['doesuserdatafilelocationexist_20',['DoesUserDataFileLocationExist',['../classFilePathConstants.html#abc6883a3f908b6ebfb501fb3e80288c5',1,'FilePathConstants']]]

@@ -7,7 +7,6 @@ var searchData=
   ['instantnavigate_4',['InstantNavigate',['../classNPCSelectScroller.html#ae87d78e4c34851971e0ef7abc81842f8',1,'NPCSelectScroller']]],
   ['intro_5',['Intro',['../classNotebookPage.html#a3852aa90cff310c024324342b7fc3491',1,'NotebookPage']]],
   ['introductionsetuptest_6',['IntroductionSetUpTest',['../classIntroductionManagerPlayTest.html#a5db7b3122704215c4741d804cad2184e',1,'IntroductionManagerPlayTest']]],
-  ['introtest_7',['IntroTest',['../classNotebookPageEditTest.html#af132cdfa80a86977e5674bf80f2e373e',1,'NotebookPageEditTest']]],
-  ['isoutputtingchecktest_8',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
-  ['ispageoverflowing_9',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
+  ['isoutputtingchecktest_7',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
+  ['ispageoverflowing_8',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
 ];

@@ -12,8 +12,7 @@ var searchData=
   ['introductionmanager_9',['IntroductionManager',['../classIntroductionManager.html',1,'']]],
   ['introductionmanagerplaytest_10',['IntroductionManagerPlayTest',['../classIntroductionManagerPlayTest.html',1,'']]],
   ['introductionsetuptest_11',['IntroductionSetUpTest',['../classIntroductionManagerPlayTest.html#a5db7b3122704215c4741d804cad2184e',1,'IntroductionManagerPlayTest']]],
-  ['introtest_12',['IntroTest',['../classNotebookPageEditTest.html#af132cdfa80a86977e5674bf80f2e373e',1,'NotebookPageEditTest']]],
-  ['isoutputting_13',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]],
-  ['isoutputtingchecktest_14',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
-  ['ispageoverflowing_15',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
+  ['isoutputting_12',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]],
+  ['isoutputtingchecktest_13',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]],
+  ['ispageoverflowing_14',['IsPageOverflowing',['../classNotebookManager.html#af491e884c8228a20ad9ee183d3657e8d',1,'NotebookManager']]]
 ];
