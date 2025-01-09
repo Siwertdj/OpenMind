@@ -309,12 +309,12 @@ public class DataListener : DataNetworker
         {
             Debug.Log("disconneded code run");
             DateTime now = DateTime.Now;
-            if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds <= interval * 2)
+            if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds >= interval * 2)
             {
                 info = connections[i];
-                /*connections.RemoveAt(i);
+                connections.RemoveAt(i);
                 isConnectionReceiving.RemoveAt(i);
-                lastReceveivedMessage.RemoveAt(i);*/
+                lastReceveivedMessage.RemoveAt(i);
                 return true;
             }
         }
