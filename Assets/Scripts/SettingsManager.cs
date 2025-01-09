@@ -175,11 +175,9 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
-        Debug.Log("Switching music");
         
         if (newClip != null)
         {
-            Debug.Log("Audioclip received");
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
@@ -188,14 +186,6 @@ public class SettingsManager : MonoBehaviour
             {
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
             }
-            else
-            {
-                Debug.Log($"Music clip '{newClip.name}' is the same as already playing clip '{musicSource.clip.name}'");
-            }
-        }
-        else
-        {
-            Debug.Log("Audioclip was null");
         }
 
         // Set the music loop to the given parameter.
