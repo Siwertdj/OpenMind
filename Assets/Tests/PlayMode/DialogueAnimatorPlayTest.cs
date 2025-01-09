@@ -93,7 +93,7 @@ public class DialogueAnimatorPlayTest
             }
 
             // Await next line start
-            //yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
             animator.SkipDialogue();
         }
     }
