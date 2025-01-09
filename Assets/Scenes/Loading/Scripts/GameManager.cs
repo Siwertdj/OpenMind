@@ -170,7 +170,6 @@ public class GameManager : MonoBehaviour
         foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
             currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
         
-
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
@@ -192,9 +191,9 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
-
+        
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 2, true);
         
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
@@ -215,11 +214,20 @@ public class GameManager : MonoBehaviour
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         FirstCycle();
     }
-
+    
+    /// <summary>
+    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
+    /// </summary>
+    /// <param name="helpButton"></param>
+    public void ToggleTutorial(Button helpButton)
+    {
+        sc.ToggleTutorialScene(helpButton);
+    }
+    
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -237,7 +245,6 @@ public class GameManager : MonoBehaviour
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
-        
         // Change the gamestate
         gameState = GameState.NpcSelect;
     }
@@ -272,11 +279,15 @@ public class GameManager : MonoBehaviour
     public void EndCycle() 
     {
         // Start Cycle as normal
-        if (EnoughCharactersRemaining())    
+        if (EnoughCharactersRemaining())
             StartCycle();
         // Start the Epilogue
         else
+        {
             StartEpilogue();
+            // Start the epilogue music
+            SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
+        }
     }
     #endregion
 
@@ -385,8 +396,8 @@ public class GameManager : MonoBehaviour
         // Raise the EpilogueStart-event and pass all the necessary data
         onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit().id);
         
-        // Then, Unload the toolbox
-        Destroy(GameObject.Find("Toolbox"));
+        // Then, destroy the gamemanager (but not the UImanager component)
+        Destroy(this);
     }
     
     /// <summary>
@@ -430,9 +441,12 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition,
             true);
 
-        var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
-        
-        gameState = GameState.HintDialogue;
+        // Create the appropriate DialogueObject
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // 0 corresponds to the phone story
+            dialogueObject = new PhoneDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        else
+            dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
         
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
@@ -468,12 +482,12 @@ public class GameManager : MonoBehaviour
         
         // Change the gamestate
         gameState = GameState.NpcDialogue;
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
-    
-    
+        
     /// <summary>
     /// Called by DialogueManager when dialogue is ended, by execution of a DialogueTerminateObject.
     /// Checks if questions are remaining:
@@ -482,6 +496,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
+        
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
@@ -497,9 +514,7 @@ public class GameManager : MonoBehaviour
     
             gameState = GameState.NpcSelect;
         }
-    }
-
-    
+    }    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.

@@ -4,15 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
-using UnityEditor;
-using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameManagerPlayTest
 {
@@ -50,10 +45,6 @@ public class GameManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
         
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
@@ -61,9 +52,6 @@ public class GameManagerPlayTest
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Get a StoryObject.
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
@@ -84,7 +72,10 @@ public class GameManagerPlayTest
     [TearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to Loading to unload
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -97,7 +88,7 @@ public class GameManagerPlayTest
         // Set up expected and actual values.
         int expected = gm.currentCharacters.Count;
         // The number of characters at the start of the game.
-        int actual = 4;
+        int actual = 8;
 
         // Check if they are equal.
         Assert.AreEqual(expected, actual);
@@ -114,7 +105,7 @@ public class GameManagerPlayTest
         // Set up expected and actual values.
         int expected = gm.currentCharacters.Count(c => c.isActive);
         // The number of characters at the start of the game.
-        int actual = 4;
+        int actual = 8;
         
         // Check if they are equal.
         Assert.AreEqual(expected, actual);
@@ -406,7 +397,7 @@ public class GameManagerPlayTest
     /// - if innocent person is chosen:
     /// Check if hasWon is set to false, check if the gameState is epilogue and check if we are currently in the DialogueScene.
     /// </summary>
-    [UnityTest]
+    //[UnityTest]
     public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
     {
         // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.

@@ -39,17 +39,28 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed, true);
+        
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
     }
     
     /// <summary>
-    /// Toggles the prompt which asks the player to skip the prologue
+    /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
+    /// Otherwise, start the prologue.
     /// </summary>
-    public void ToggleSkipProloguePrompt()
+    public void StartPrologueOrPrompt()
     {
-        // Change menus
-        mainMenuCanvas.SetActive(!mainMenuCanvas.activeSelf);
-        skipPrologueCanvas.SetActive(!skipPrologueCanvas.activeSelf);
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.prologueSeen))
+        {
+            // Change menu's
+            mainMenuCanvas.SetActive(false);
+            skipPrologueCanvas.SetActive(true);
+        }
+        else
+        {
+            StartPrologue();
+        }
     }
 
     /// <summary>

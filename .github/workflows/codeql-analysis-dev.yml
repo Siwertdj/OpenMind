@@ -21,6 +21,7 @@ jobs:
         uses: github/codeql-action/init@v2
         with:
           languages: csharp
+          build-mode: none
 
     
       - name: Perform CodeQL Analysis

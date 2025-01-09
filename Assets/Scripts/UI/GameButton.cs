@@ -14,18 +14,28 @@ using UnityEngine.UI;
 public class GameButton : Button
 {
     public GameEvent gameEvent;
+    public bool audioEnabled = true;
+    public AudioClip[] audioClips;
 
     private new void Start()
     {
-        // Retrieve gameevent from assets folder to reference
-        gameEvent = AssetDatabase.LoadAssetAtPath<GameEvent>("Assets/Data/Events/OnClick.asset");
         // add method below to listeners of the onclick.
         // This method raises the aforementioned event 
         onClick.AddListener(RaiseEvent);
     }
     
     private void RaiseEvent()
-    { 
-        //gameEvent.Raise(this);
+    {
+        if (!audioEnabled)
+            return;
+
+        AudioClip clip = null;
+        if (audioClips?.Length > 0)
+        {
+            // Get some random audioclip to be played
+            clip = audioClips[Random.Range(0, audioClips.Length)];
+        }
+
+        gameEvent.Raise(this, clip);
     }
 }

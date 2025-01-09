@@ -26,12 +26,6 @@ public class IntroductionManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"),
-            SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"),
-            SceneManager.GetSceneByName("StartScreenScene"));
-        
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
         
@@ -39,12 +33,8 @@ public class IntroductionManagerPlayTest
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform
-            .SetParent(GameObject.Find("Toolbox").transform);
-        
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        
+       
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
         
         SceneManager.LoadScene("IntroStoryScene");
@@ -56,8 +46,12 @@ public class IntroductionManagerPlayTest
     [TearDown]
     public void TearDown()
     {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"),
+        // Move toolbox and DDOLs to unload after
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), 
             SceneManager.GetSceneByName("IntroStoryScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"),
+            SceneManager.GetSceneByName("IntroStoryScene"));
+
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -317,7 +311,7 @@ public class IntroductionManagerPlayTest
         im.ChangePlayerText();
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        Assert.AreEqual("You", im.nameTag.text);
+        Assert.AreEqual(false, im.nameTagImage.activeSelf);
         yield return null;
     }
     
