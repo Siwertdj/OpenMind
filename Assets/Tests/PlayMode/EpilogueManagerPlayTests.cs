@@ -176,17 +176,30 @@ public class EpilogueManagerPlayTests
         yield return null;
     }
     
-    /*/// <summary>
-    /// Check if the transition from the losing scenario works as intended when the dialogue switches from innocent person to culprit.
+    /// <summary>
+    /// Check if the transition from the losing scenario switches from innocent person to culprit.
     /// </summary>
     [UnityTest]
     public IEnumerator EndDialogueToStartDialogueEpilogueTest()
     {
-        // Set the finalChosenCulprit in GameManager.
-        CharacterInstance innocentPerson = gm.GetRandomVictimNoCulprit();
-        gm.FinalChosenCuplrit = innocentPerson;
-        // Start the epilogue dialogue.
-        gm.StartEpilogueDialogue(innocentPerson);
+        // Find the gameObjects that holds the PortraitButtons as children.
+        GameObject go = GameObject.Find("PortraitContainer");
+        int culpritIndex = -1;
+        int counter = 0;
+  
+        // Find the index of the GameObject that corresponds with the culprit.
+        foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
+        {
+            if (!c.isCulprit)
+            {
+                culpritIndex = counter;
+                break;
+            }
+            counter++;
+        }
+        
+        // Invoke the onClick of the culprit.
+        go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
@@ -194,20 +207,73 @@ public class EpilogueManagerPlayTests
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
         // Get the DialogueManager.
-        var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
 
-        // End the dialogue and add a speakingObject to the responses list in order to start dialogue with a new person.
-        dm.currentObject = new TerminateDialogueObject();
-        List<string> text = new List<string>(){"hello"};
-        GameObject[] background = new GameObject[1]{gm.story.hintBackground};
-        dm.currentObject.Responses.Add(new ContentDialogueObject(text, null, background));
-        dm.currentObject.Execute();
+        // Check if the currentRecipient is not the culprit
+        Assert.IsFalse(dm.currentRecipient.isCulprit);
         
-        // Check if the DialogueObjects in the responses list of the currentObject
-        Assert.GreaterOrEqual(1, dm.currentObject.Responses.Count);
+        // Skip dialogue until first reflection moment
+        while (GameObject.Find("InputField") == null)
+        {
+            yield return new WaitForSeconds(1);
+                
+            if (GameObject.Find("Skip Dialogue Button") != null)
+                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+        }
+        
+        // Get the DialogueManager.
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // Check if the currentRecipient is the culprit
+        Assert.IsTrue(dm.currentRecipient.isCulprit);
 
-        // Wait for new dialogue with culprit to unload and load.
-        yield return new WaitUntil(() => !SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        yield return null;
+    }
+    
+    /// <summary>
+    /// Check if the correct gameState and scene are loaded after the dialogue of the epilogue ends.
+    /// </summary>
+    [UnityTest]
+    public IEnumerator EndDialogueEpilogueTest([ValueSource(nameof(bools))] bool hasWon)
+    {
+        // Find the gameObjects that holds the PortraitButtons as children.
+        GameObject go = GameObject.Find("PortraitContainer");
+        int culpritIndex = -1;
+        int counter = 0;
+        
+        // Check if certain properties hold when hasWon is set to true or false.
+        if (hasWon)
+        {
+            // Find the index of the GameObject that corresponds with the culprit.
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
+            {
+                if (c.isCulprit)
+                {
+                    culpritIndex = counter;
+                    break;
+                }
+                counter++;
+            }
+
+            // Invoke the onClick of the culprit.
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
+        }
+        else
+        {
+            // Find the index of the GameObject that corresponds with the culprit.
+            foreach (CharacterInstance c in gm.currentCharacters.Where(c => c.isActive).ToList())
+            {
+                if (!c.isCulprit)
+                {
+                    culpritIndex = counter;
+                    break;
+                }
+                counter++;
+            }
+
+            // Invoke the onClick of the culprit.
+            go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
+        }
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
@@ -217,109 +283,41 @@ public class EpilogueManagerPlayTests
         // Get the DialogueManager.
         dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         
-        // Check if the dialogue switches to the culprit.
-        Assert.AreEqual(gm.GetCulprit().characterName, dm.currentRecipient.characterName);
+        var em = GameObject.Find("EpilogueManager").GetComponent<EpilogueManager>();
+        
+        em.EndEpilogue(hasWon);
 
-        yield return null;
-    }*/
-    
-    /*
-    /// <summary>
-    /// Check if the correct gameState and scene are loaded after the dialogue of the epilogue ends.
-    /// </summary>
-    [UnityTest]
-    public IEnumerator EndDialogueEpilogueTest([ValueSource(nameof(bools))] bool hasWon)
-    {
-        // Set the hasWon variable from GameManager to true.
-        gm.hasWon = hasWon;
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("GameOverScene").isLoaded); // Wait for scene to load.
         
-        // Check if certain properties hold when hasWon is set to true or false.
-        if (gm.hasWon)
+        // Waiting for the DialogueManager to appear.
+        // TODO: change the gameovermanager to "gameovermanager" instead of "gameovermananger".
+        yield return new WaitUntil(() => GameObject.Find("GameOverMananger") != null);
+        
+        if (hasWon)
         {
-            // Set the finalChosenCulprit in GameManager.
-            CharacterInstance culprit = gm.GetCulprit();
-            gm.FinalChosenCuplrit = culprit;
-            // Start the epilogue dialogue.
-            gm.StartEpilogueDialogue(culprit);
-        
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
-        
-            // Waiting for the DialogueManager to appear.
-            yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
-            
-            // Get the DialogueManager.
-            var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-            
-            // End the dialogue.
-            dm.currentObject = new TerminateDialogueObject();
-            dm.currentObject.Execute();
-        
-            // Check if the DialogueObjects in the responses list of the currentObject
-            Assert.AreEqual(0, dm.currentObject.Responses.Count);
-            
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("GameWinScene").isLoaded); // Wait for scene to load.
-            
-            // TODO: swap gameState in EndDialogue to be before scene transition.
             // Check if the GameWinScene is loaded.
-            bool inGameWinScene = SceneManager.GetSceneByName("GameWinScene").isLoaded;
+            bool inGameWinScene = SceneManager.GetSceneByName("GameOverScene").isLoaded;
             Assert.IsTrue(inGameWinScene);
-        
+    
             // Check if we are in the correct gameState.
             Assert.AreEqual(GameManager.GameState.GameWon, gm.gameState);
         }
         else
         {
-            // Set the finalChosenCulprit in GameManager.
-            CharacterInstance innocentPerson = gm.GetRandomVictimNoCulprit();
-            gm.FinalChosenCuplrit = innocentPerson;
-            // Start the epilogue dialogue.
-            gm.StartEpilogueDialogue(innocentPerson);
-        
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
-        
-            // Waiting for the DialogueManager to appear.
-            yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
-            
-            // Get the DialogueManager.
-            var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-            
-            // End the dialogue.
-            dm.currentObject = new TerminateDialogueObject();
-            dm.currentObject.Execute();
-        
-            // Check if the DialogueObjects in the responses list of the currentObject
-            Assert.AreEqual(0, dm.currentObject.Responses.Count);
-            
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("GameOverScene").isLoaded); // Wait for scene to load.
-            
             // Check if the GameOverScene is loaded.
             bool inGameOverScene = SceneManager.GetSceneByName("GameOverScene").isLoaded;
             Assert.IsTrue(inGameOverScene);
-        
+    
             // Check if we are in the correct gameState.
             Assert.AreEqual(GameManager.GameState.GameLoss, gm.gameState);
         }
-
+        
         yield return null;
-    }*/
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*/// <summary>
+    // TODO: remove these 2 tests since they are useless and already tested by the tests above.
+    /*
+    /// <summary>
     /// Check if the transition from CulpritSelect to Epilogue GameState is done correctly.
     /// </summary>
     [UnityTest]
@@ -373,7 +371,8 @@ public class EpilogueManagerPlayTests
         gm.StartEpilogueDialogue(innocentPerson);
         
         Assert.AreEqual(GameManager.GameState.Epilogue, gm.gameState);
-    }*/
+    }
+    */
     
     /*/// <summary>
     /// Check if the transition from the Epilogue to GameWon GameState is done correctly.
