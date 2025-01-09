@@ -41,33 +41,64 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
     [SerializeField] private GameObject logObjectPrefab;
+    
+    public  Button     multiplayerButton;
+    private bool       showingMultiplayerNotebook;
+    public  GameObject inputField;
+    public  GameObject multiplayerCanvas;
+    
+    
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
     /// </summary>
     private void Start()
     {
+        InitializeTabButtons();
         notebookData = GameManager.gm.notebookData;
-        InitializeNotebook(notebookData);
+        // Open custom notes page
+        OpenPersonalNotes();
+
+        // Add listener to recreate tab when font size is changed
+        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
         showingMultiplayerNotebook = false;
         personalButton.interactable = true;
-        multiplayerButton.interactable = true;
+        if (GameManager.gm.multiplayerEpilogue)
+        {
+            multiplayerCanvas.SetActive(true);
+            multiplayerButton.interactable = true;
+        }
+        else
+        {
+            multiplayerCanvas.SetActive(false);
+            multiplayerButton.interactable = false;
+        }
     }
     
     public void ToggleMultiplayerNotebook()
     {
         if (showingMultiplayerNotebook)
         {
+            InitializeTabButtons();
             notebookData = GameManager.gm.notebookData;
-            InitializeNotebook(notebookData);
+            // Open custom notes page
+            OpenPersonalNotes();
+
+            // Add listener to recreate tab when font size is changed
+            SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
             showingMultiplayerNotebook = false;
         }
         else
         {
             if (GameManager.gm.multiplayerNotebookData != null)
             {
+                InitializeTabButtons();
                 notebookData = GameManager.gm.multiplayerNotebookData;
-                InitializeNotebook(notebookData);
+                // Open custom notes page
+                OpenPersonalNotes();
+
+                // Add listener to recreate tab when font size is changed
+                SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
                 showingMultiplayerNotebook = true;
             }
             else
@@ -77,31 +108,6 @@ public class NotebookManager : MonoBehaviour
         }
     }
 
-    private void InitializeNotebook(NotebookData notebook)
-    {
-        // close character notes
-        characterInfo.SetActive(false);
-        inputFieldCharacters.SetActive(false);
-        // Open personal notes
-        inputField.SetActive(true);
-        // assign character names to buttons
-        InitializeCharacterButtons();
-        inputField.GetComponent<TMP_InputField>().text = notebook.GetPersonalNotes();
-        selectedButton = personalButton;
-        //personalButton.interactable = false;
-        // Assign character names to buttons
-        InitializeTabButtons();
-
-        // Get notebookdata
-        notebookData = GameManager.gm.notebookData;
-
-        // Open custom notes page
-        OpenPersonalNotes();
-
-        // Add listener to recreate tab when font size is changed
-        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
-    }
-    
     /// <summary>
     /// Initialize the tab buttons (custom notes & character tabs), 
     /// For characters, use their names as the button text and add the button event.

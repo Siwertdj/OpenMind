@@ -47,7 +47,7 @@ public class StartMenuManager : MonoBehaviour
         DontDestroyOnLoad(loadingScreen);
         DontDestroyOnLoad(popUpScreen);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        //SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
     }
 
     /// <summary>
