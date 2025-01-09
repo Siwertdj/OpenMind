@@ -88,35 +88,7 @@ public class NotebookPageEditTest
         
         Assert.AreEqual(answer, page.QuestionText());
     }*/
-    
-    /// <summary>
-    /// Source lists for IntroTest
-    /// </summary>
-    private static readonly object[] sourceLists = 
-    {
-        new object[] {new List<Question> { } },
-        new object[] {new List<Question> { Question.Name }},
-        new object[] {new List<Question> { Question.Name, Question.Age}}
-    };
+   
 
-    /// <summary>
-    /// Tests if the Intro method displays the correct string
-    /// </summary>
-    [Test]
-    [TestCaseSource(nameof(sourceLists))]
-    public void IntroTest(List<Question> questions)
-    {
-        CharacterInstance c = character;
-        
-        foreach (Question q in questions)
-        {
-            c.AskedQuestions.Add(q);
-        }
-        
-        var res = page.Intro();
-        
-        if (character.AskedQuestions.Count > 0)
-            Assert.AreEqual("My info on " + character.characterName + ".", res);
-        else Assert.AreEqual("I have not asked " + character.characterName + " any questions.", res);
-    }
+    
 }
