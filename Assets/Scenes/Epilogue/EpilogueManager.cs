@@ -169,6 +169,9 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public async void EndEpilogue(bool hasWon)
     {
+        // Destroy remaining toolbox items (the buttons)
+        Destroy(GameObject.Find("Toolbox"));
+        
         // Updata UserData
         SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.playedBefore, true);
         if (hasWon)

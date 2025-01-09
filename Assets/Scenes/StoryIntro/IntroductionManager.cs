@@ -35,7 +35,8 @@ public class IntroductionManager : MonoBehaviour
     public Image      background;
     private string characterName; 
     [SerializeField] public Image character;
-    [SerializeField] public TMP_Text nameTag; 
+    [SerializeField] public TMP_Text nameTag;
+    [SerializeField] public GameObject nameTagImage; 
     
     // Variables for introduction A
     private                  GameObject[]  messages; 
@@ -299,11 +300,7 @@ public class IntroductionManager : MonoBehaviour
         typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
     }
     
-    public void HideDialog()
-    {
-        dialogueAnimator.gameObject.SetActive(false);
-        textbubble.SetActive(false);
-    }
+    
     
     #endregion
     
@@ -328,7 +325,7 @@ public class IntroductionManager : MonoBehaviour
     
     #endregion
     
-    
+    // This region contains methods regarding introduction C.
     #region Introduction C
     /// <summary>
     /// This method changes the sprite of the character into the computer. 
@@ -369,6 +366,7 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeCharacterText()
     {
         nameTag.text = characterName;
+        nameTagImage.gameObject.SetActive(true);
         updateText();
     }
     
@@ -377,7 +375,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void ChangePlayerText()
     {
-        nameTag.text = "You";
+        nameTagImage.gameObject.SetActive(false);
         updateText();
     }
     
@@ -403,6 +401,15 @@ public class IntroductionManager : MonoBehaviour
         TextIndex++; // Keep track of which text needs to be shown. 
     }
     
+    /// <summary>
+    /// This method removes the dialog from the screen. 
+    /// </summary>
+    public void HideDialog()
+    {
+        dialogueAnimator.gameObject.SetActive(false);
+        textbubble.SetActive(false);
+        nameTagImage.gameObject.SetActive(false);
+    }
     #endregion
     
     // This region contains methods that directly manipulate the timeline

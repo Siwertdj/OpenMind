@@ -69,8 +69,8 @@ public class SettingsManager : MonoBehaviour
     private void ApplySavedSettings()
     {
         // Get the saved values
-        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
-        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 80);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 80);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
         textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
@@ -90,11 +90,18 @@ public class SettingsManager : MonoBehaviour
 
     public void OnClick(Component sender, params object[] data)
     {
+        AudioClip clip;
         if (data[0] is AudioClip audioClip)
-            sfxSource.clip = audioClip;
+            clip = audioClip;
         else
-            sfxSource.clip = defaultButtonClickSound;
+            clip = defaultButtonClickSound;
 
+        PlaySfxClip(clip);
+    }
+
+    public void PlaySfxClip(AudioClip clip)
+    {
+        sfxSource.clip = clip;
         sfxSource.Play();
     }
     

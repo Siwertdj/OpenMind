@@ -7,11 +7,13 @@ using UnityEngine.UI;
 [CustomEditor(typeof(GameButton))]
 public class GameButtonEditor : Editor
 {
+    private SerializedProperty audioEnabled;
     private SerializedProperty audioClips;
 
     private void OnEnable()
     {
         audioClips = serializedObject.FindProperty(nameof(audioClips));
+        audioEnabled = serializedObject.FindProperty(nameof(audioEnabled));
     }
 
     public override void OnInspectorGUI()
@@ -47,9 +49,17 @@ public class GameButtonEditor : Editor
 
         serializedObject.Update();
 
-        EditorGUILayout.PropertyField(audioClips,
-            new GUIContent("Alternative audio clips", "Leave empty for default sound"),
+
+        EditorGUILayout.PropertyField(audioEnabled,
+            new GUIContent("Enable audio", "If enabled, there will be a sound when the button is clicked"),
             true);
+
+        if (audioEnabled.boolValue)
+        {
+            EditorGUILayout.PropertyField(audioClips,
+                new GUIContent("Alternative audio clips", "Leave empty for default sound"),
+                true);
+        }
 
         serializedObject.ApplyModifiedProperties();
 
