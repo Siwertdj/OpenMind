@@ -18,12 +18,13 @@ public class PrologueController : MonoBehaviour
     // The variables below are the UI components that we want to manipulate during the prologue scene
     [Header("Image refs")]
     [SerializeField] private Image textBubbleImage;
-    [SerializeField] private Image backgroundImage;
-    [SerializeField] private Image illusionImage;
-
+    [SerializeField] private Image    backgroundImage;
+    [SerializeField] private Image    illusionImage;
+    
     [Header("Text refs")]
     [SerializeField] private TMP_Text introText;
     [SerializeField] private TMP_Text nameBoxText;
+    [SerializeField] private TMP_Text spokenText;
 
     [Header("Misc. refs")]
     [SerializeField] private Toggle imageToggler;
@@ -57,6 +58,9 @@ public class PrologueController : MonoBehaviour
        
        // Update UserData
        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
+       
+       playableDirector.RebuildGraph();
+       playableDirector.Play();
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
@@ -98,6 +102,9 @@ public class PrologueController : MonoBehaviour
     /// </summary>
     public void LoadSelectStory()
     {
+        playableDirector.Stop();
+        playableDirector.time = 0;
+        playableDirector.Evaluate(); // Force the timeline to reset to its starting state
         SceneManager.LoadScene("StorySelectScene");
     }
     
@@ -191,7 +198,8 @@ public class PrologueController : MonoBehaviour
     public void UpdateText()
     {
         textIndex++;
-        dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
+        spokenText.text = receptionistText[textIndex];
+        //dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
     }
     #endregion
 }

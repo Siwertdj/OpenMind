@@ -33,6 +33,7 @@ public class IntroductionManager : MonoBehaviour
     public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]   storyText;   // Stores all the used text for the introduction. 
     public Image      background;
+    public Image phone; 
     private string characterName; 
     [SerializeField] public Image character;
     [SerializeField] public TMP_Text nameTag;
@@ -88,7 +89,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryA();
+                    StoryB();
                     break;
                 case 1:
                     StoryB();
@@ -161,6 +162,7 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline.Play();
         
     }
+    
     
     /// <summary>
     /// Method that prepares the scene to play storyline C. 
@@ -256,7 +258,6 @@ public class IntroductionManager : MonoBehaviour
         }
         HideOrShowTexts(true); // Show the new texts. 
     }
-    
     
     /// <summary>
     /// This method changes the background of the scene. 

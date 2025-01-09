@@ -1374,6 +1374,7 @@ MonoBehaviour:
   illusionImage: {fileID: 381591057}
   introText: {fileID: 1772810423}
   nameBoxText: {fileID: 1662234308}
+  spokenText: {fileID: 2033686005}
   imageToggler: {fileID: 1937756968}
   continueButton: {fileID: 198219724}
   dialogueAnimator: {fileID: 429653936}
