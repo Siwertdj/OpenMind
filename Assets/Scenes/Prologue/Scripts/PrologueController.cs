@@ -53,7 +53,7 @@ public class CutsceneController : MonoBehaviour
        backgroundIndex = 0;
        
        // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
+       SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters

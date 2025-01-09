@@ -192,8 +192,9 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+        
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
 
         
         //load npcSelect scene
@@ -215,8 +216,8 @@ public class GameManager : MonoBehaviour
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         FirstCycle();
     }
 
@@ -272,11 +273,15 @@ public class GameManager : MonoBehaviour
     public void EndCycle() 
     {
         // Start Cycle as normal
-        if (EnoughCharactersRemaining())    
+        if (EnoughCharactersRemaining())
             StartCycle();
         // Start the Epilogue
         else
+        {
             StartEpilogue();
+            // Start the epilogue music
+            SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
+        }
     }
     #endregion
 
@@ -432,8 +437,6 @@ public class GameManager : MonoBehaviour
 
         var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
         
-        gameState = GameState.HintDialogue;
-        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -468,6 +471,7 @@ public class GameManager : MonoBehaviour
         
         // Change the gamestate
         gameState = GameState.NpcDialogue;
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
@@ -482,6 +486,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
+        
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
