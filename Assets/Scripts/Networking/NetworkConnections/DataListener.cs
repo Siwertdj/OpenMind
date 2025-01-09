@@ -50,6 +50,7 @@ public class DataListener : DataNetworker
         onAckSentEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
         delayedRespondEvents = new NetworkDelayedEvents();
+        lastReceveivedMessage = new List<DateTime>();
         
         if (!IPConnections.GetOwnIps().Contains(ipAddress))
         {
@@ -91,6 +92,7 @@ public class DataListener : DataNetworker
                 {
                     connections.Add(t.Result);
                     isConnectionReceiving.Add(false);
+                    lastReceveivedMessage.Add(DateTime.Now);
                     logWarning = onAcceptConnectionEvents.Raise("Connect", t.Result, clearOnAcceptConnectionEvents, "onAcceptConnectionEvent");
                 });
             }
