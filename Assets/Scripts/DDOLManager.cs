@@ -10,7 +10,7 @@ public class DDOLManager : MonoBehaviour
         //if (GameObject.FindGameObjectsWithTag("DDOLManager").Length > 1)
         if (FindObjectsOfType<DDOLManager>().Length > 1)
         {
-            Destroy(this);   
+            Destroy(gameObject);   
         }
         else
         {
