@@ -53,7 +53,7 @@ public class PrologueController : MonoBehaviour
        backgroundIndex = 0;
        
        // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
+       SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
        
        // Update UserData
        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
