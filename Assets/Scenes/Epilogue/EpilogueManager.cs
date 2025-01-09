@@ -81,8 +81,10 @@ public class EpilogueManager : MonoBehaviour
             // Create a new SelectOption object.
             GameObject newOption = Instantiate(portraitPrefab, parent);
             // TODO: Set avatar
-            newOption.GetComponentInChildren<Image>().sprite = 
-                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
+            /*newOption.GetComponentInChildren<Image>().sprite = 
+                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;    */
+            newOption.GetComponent<CharacterIcon>().SetAvatar(character);
+            
             newOption.GetComponent<GameButton>().onClick.AddListener(delegate { CharacterSelected(character); });
         }
     }
