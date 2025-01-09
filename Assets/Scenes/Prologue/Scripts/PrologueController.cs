@@ -53,7 +53,7 @@ public class CutsceneController : MonoBehaviour
        backgroundIndex = 0;
        
        // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
+       SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
@@ -141,7 +141,7 @@ public class CutsceneController : MonoBehaviour
     }
     
     #endregion
-
+    
     // This region contains methods that manipulate UI elements on the canvas.
     #region UIManipulators
     /// <summary>
@@ -175,7 +175,7 @@ public class CutsceneController : MonoBehaviour
         }
     }
     /// <summary>
-    /// This method updates the introduction text. Since there are only two lines of text, there is no array needed. 
+    /// This method updates the introduction text. Since there are only two segments of text, there is no array needed. 
     /// </summary>
     public void UpdateIntroText()
     {

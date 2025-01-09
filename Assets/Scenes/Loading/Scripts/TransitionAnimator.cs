@@ -26,9 +26,9 @@ public class TransitionAnimator : MonoBehaviour
     }
 
     /// <summary>
-    /// On startup, initialize the static instance of this class.
+    /// On startup, initialize the static instance of this class, and make it DDOL
     /// </summary>
-    private void Start()
+    private void Awake()
     {
         i = this;
     }

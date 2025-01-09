@@ -1,7 +1,8 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Class that stores the data written in the notebook
@@ -20,7 +21,7 @@ public class NotebookData
     {
         // Empty all pages when we create new notebookdata
         _pages = new Dictionary<CharacterInstance, NotebookPage>();
-        
+
         // TODO: create a method that lets us fill it up based on the characters, instead of hiding it in the constructor
         // TODO: Or create checks for this, in case there are no characters yet
         foreach (CharacterInstance character in GameManager.gm.currentCharacters)
@@ -54,10 +55,7 @@ public class NotebookData
     /// <summary>
     /// Get the answers the player has obtained from a character.
     /// </summary>
-    public string GetAnswers(CharacterInstance character)
-    {
-        return _pages[character].Intro() + _pages[character].QuestionText();
-    }
+    public List<(string, string)> GetAnswers(CharacterInstance character) => _pages[character].QuestionText();
     
     /// <summary>
     /// Save the text that the player has written about a character to the notebookpage.

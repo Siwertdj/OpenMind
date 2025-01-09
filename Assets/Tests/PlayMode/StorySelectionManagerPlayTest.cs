@@ -25,22 +25,15 @@ public class StorySelectionManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
-        
         // Unload the StartScreenScene
-        //SceneManager.UnloadSceneAsync("StartScreenScene");
+        SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
-        
+        // Initialize GameManager and start the game. 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
         SceneManager.LoadScene("StorySelectScene");
@@ -76,10 +69,10 @@ public class StorySelectionManagerPlayTest
     {
         sm.StoryASelected(); // This method also loads the introduction scene.
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
-        // In TimelineManager the introduction is determined by the StorySelect scene.
-        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        // In IntroductionManager the introduction is determined by the StorySelect scene.
+        IntroductionManager im = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
         // We therefore check if the loaded introduction is indeed the correct one. 
-        Assert.AreEqual(tm.introStoryA,tm.currentTimeline);
+        Assert.AreEqual(im.introStoryA,im.currentTimeline);
         //Assert.AreEqual(sm.stories[0].storyID, gm.story.storyID);
         yield return null;
     }
@@ -94,7 +87,7 @@ public class StorySelectionManagerPlayTest
         sm.StoryBSelected();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
          
-        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        IntroductionManager tm = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
         
         Assert.AreEqual(tm.introStoryB,tm.currentTimeline);
         yield return null;
@@ -110,9 +103,9 @@ public class StorySelectionManagerPlayTest
         sm.StoryCSelected();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
         
-        TimelineManager tm = GameObject.Find("TimelineManager").GetComponent<TimelineManager>();
+        IntroductionManager im = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
         
-        Assert.AreEqual(tm.introStoryC, tm.currentTimeline);
+        Assert.AreEqual(im.introStoryC, im.currentTimeline);
         yield return null;
     }
     
