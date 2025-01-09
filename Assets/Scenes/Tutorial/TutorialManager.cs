@@ -67,7 +67,15 @@ public class TutorialManager : MonoBehaviour
         {
             // Initialize the notebook for the notebook tutorial
             GameObject notebook = GameObject.Find("Notebook Button");
-            notebookButton = notebook.GetComponentInChildren<Button>();
+            
+            try
+            {
+                notebookButton = notebook.GetComponentInChildren<GameButton>();
+            }
+            catch
+            {
+                Debug.LogError("There is no notebookbutton");
+            }
             
             // Close notebook if it is already opened.
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
@@ -80,6 +88,7 @@ public class TutorialManager : MonoBehaviour
             // Start the tutorial
             StartTutorial();
         }
+        
     }
     
     /// <summary>

@@ -19,19 +19,24 @@ using Vector2 = System.Numerics.Vector2;
 public class IntroductionManager : MonoBehaviour
 {
     // PlayableDirectors manage the different timelines for the different stories
+    [Header("Stories")]
     public PlayableDirector introStoryA;
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    // General variables
+    [Header("Buttons")]
+    public GameObject continueButton;
+    public Button sendButton;
+    [SerializeField] GameObject skipButton;
+    
+    [Header("General Variables")]
     public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]   storyText;   // Stores all the used text for the introduction. 
     public Image      background;
-    public GameObject continueButton;
-    public Button     sendButton;
     private string characterName; 
     [SerializeField] public Image character;
-    [SerializeField] public TMP_Text nameTag; 
+    [SerializeField] public TMP_Text nameTag;
+    [SerializeField] public GameObject nameTagImage; 
     
     // Variables for introduction A
     private                  GameObject[]  messages; 
@@ -102,6 +107,9 @@ public class IntroductionManager : MonoBehaviour
             // Return to StorySelectScene and try again.
             SceneManager.LoadScene("StorySelectScene");
         }
+        
+        // Do behavior based on UserData
+        UpdateUserDataByStory(story);
     }
     
     // This region contains methods that regulate the different storylines. 
@@ -151,6 +159,7 @@ public class IntroductionManager : MonoBehaviour
         background.sprite = backgrounds[4];
         characterName = "Alex";
         currentTimeline.Play();
+        
     }
     
     /// <summary>
@@ -167,6 +176,41 @@ public class IntroductionManager : MonoBehaviour
         character.sprite = backgrounds[9];
         characterName = "Receptionist";
         currentTimeline.Play();
+    }
+
+    private void UpdateUserDataByStory(StoryObject story)
+    {
+        // initialize with arbitrary value.
+        FetchUserData.UserDataQuery query = FetchUserData.UserDataQuery.playedBefore;
+        
+        // operate
+        switch (story.storyID)
+        {
+            case 0:
+                query = FetchUserData.UserDataQuery.storyAIntroSeen;
+                break;
+            case 1:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            case 2:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            default:
+                Debug.LogError("Invalid story, could not fetch userdata.");
+                break;
+        }
+        
+        // Do behavior based on query result.
+        // In this casse, set skipButton active ONLY if query returns true.
+        if (FetchUserData.Loader.GetUserDataValue(query))
+        {
+            skipButton.SetActive(true);
+        }
+        
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(query, true);
+
+        
     }
     
     #endregion
@@ -256,11 +300,7 @@ public class IntroductionManager : MonoBehaviour
         typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
     }
     
-    public void HideDialog()
-    {
-        dialogueAnimator.gameObject.SetActive(false);
-        textbubble.SetActive(false);
-    }
+    
     
     #endregion
     
@@ -285,7 +325,7 @@ public class IntroductionManager : MonoBehaviour
     
     #endregion
     
-    
+    // This region contains methods regarding introduction C.
     #region Introduction C
     /// <summary>
     /// This method changes the sprite of the character into the computer. 
@@ -326,6 +366,7 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeCharacterText()
     {
         nameTag.text = characterName;
+        nameTagImage.gameObject.SetActive(true);
         updateText();
     }
     
@@ -334,7 +375,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void ChangePlayerText()
     {
-        nameTag.text = "You";
+        nameTagImage.gameObject.SetActive(false);
         updateText();
     }
     
@@ -360,6 +401,15 @@ public class IntroductionManager : MonoBehaviour
         TextIndex++; // Keep track of which text needs to be shown. 
     }
     
+    /// <summary>
+    /// This method removes the dialog from the screen. 
+    /// </summary>
+    public void HideDialog()
+    {
+        dialogueAnimator.gameObject.SetActive(false);
+        textbubble.SetActive(false);
+        nameTagImage.gameObject.SetActive(false);
+    }
     #endregion
     
     // This region contains methods that directly manipulate the timeline
@@ -424,10 +474,14 @@ public class IntroductionManager : MonoBehaviour
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary
         
-        // Make sure tutorial is automatically loaded when the game starts. 
-        GameObject tutorial = GameObject.Find("HelpButton");
-        Button helpButton = tutorial.GetComponentInChildren<Button>();
-        helpButton.onClick.Invoke();
+        // Make sure tutorial is automatically loaded when the game starts..
+        // .. IF this is the first time playing. (has not played before)
+        if (!FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.playedBefore))
+        {
+            GameObject tutorial = GameObject.Find("HelpButton");
+            Button helpButton = tutorial.GetComponentInChildren<Button>();
+            helpButton.onClick.Invoke();
+        }
     }
     #endregion
     

@@ -45,7 +45,7 @@ public class StartScreenPlayTest : MonoBehaviour
     [UnityTest]
     public IEnumerator SkipPrologueTest()
     {
-        sm.OpenSkipProloguePrompt();
+        sm.StartPrologueOrPrompt();
         // Checks to see if the right buttons are active
         Assert.IsTrue(GameObject.Find("SkipPrologueWindow").activeSelf);
         // Checks to see if the right buttons ar inactive

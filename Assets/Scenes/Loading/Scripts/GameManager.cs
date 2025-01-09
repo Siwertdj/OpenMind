@@ -170,7 +170,6 @@ public class GameManager : MonoBehaviour
         foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
             currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
         
-
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
@@ -194,8 +193,7 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         
         // Start the game music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
-
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 2, true);
         
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
@@ -220,7 +218,16 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         FirstCycle();
     }
-
+    
+    /// <summary>
+    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
+    /// </summary>
+    /// <param name="helpButton"></param>
+    public void ToggleTutorial(Button helpButton)
+    {
+        sc.ToggleTutorialScene(helpButton);
+    }
+    
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -238,7 +245,6 @@ public class GameManager : MonoBehaviour
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
-        
         // Change the gamestate
         gameState = GameState.NpcSelect;
     }
@@ -390,8 +396,8 @@ public class GameManager : MonoBehaviour
         // Raise the EpilogueStart-event and pass all the necessary data
         onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit().id);
         
-        // Then, Unload the toolbox
-        Destroy(GameObject.Find("Toolbox"));
+        // Then, destroy the gamemanager (but not the UImanager component)
+        Destroy(this);
     }
     
     /// <summary>
