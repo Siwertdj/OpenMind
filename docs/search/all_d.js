@@ -12,7 +12,7 @@ var searchData=
   ['ondisable_9',['OnDisable',['../classGameEventListener.html#a31d742a3f342a583325dd2fff80de358',1,'GameEventListener']]],
   ['onenable_10',['OnEnable',['../classGameEventListener.html#af1d5585a115b74d5e304d79fa73775ab',1,'GameEventListener']]],
   ['oneventraised_11',['OnEventRaised',['../classGameEventListener.html#a80db09b3e43a86b2a0a5832da81a5c47',1,'GameEventListener']]],
-  ['ontextsizechanged_12',['OnTextSizeChanged',['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager']]],
+  ['ontextsizechanged_12',['OnTextSizeChanged',['../classDialogueManager.html#a293c22132389efdfab0b7a87f0c31407',1,'DialogueManager.OnTextSizeChanged()'],['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager.OnTextSizeChanged()']]],
   ['ontogglevaluechanged_13',['OnToggleValueChanged',['../classCutsceneController.html#a92b61004cbad935341f6bff2f69d3426',1,'CutsceneController']]],
   ['opencharactertab_14',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
   ['openmenu_15',['OpenMenu',['../classUIManager.html#a78494fd17bf0cc867abab837f1f78d1d',1,'UIManager']]],

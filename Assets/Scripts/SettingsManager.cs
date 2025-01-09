@@ -90,11 +90,18 @@ public class SettingsManager : MonoBehaviour
 
     public void OnClick(Component sender, params object[] data)
     {
+        AudioClip clip;
         if (data[0] is AudioClip audioClip)
-            sfxSource.clip = audioClip;
+            clip = audioClip;
         else
-            sfxSource.clip = defaultButtonClickSound;
+            clip = defaultButtonClickSound;
 
+        PlaySfxClip(clip);
+    }
+
+    public void PlaySfxClip(AudioClip clip)
+    {
+        sfxSource.clip = clip;
         sfxSource.Play();
     }
     

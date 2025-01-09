@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['popupmanager_0',['PopUpManager',['../classPopUpManager.html',1,'']]]
+  ['phonedialogueobject_0',['PhoneDialogueObject',['../classPhoneDialogueObject.html',1,'']]],
+  ['popupmanager_1',['PopUpManager',['../classPopUpManager.html',1,'']]]
 ];

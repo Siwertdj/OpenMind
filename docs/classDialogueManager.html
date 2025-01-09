@@ -102,6 +102,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OnDialogueComplete</b
 <tr class="memitem:a50daa9a4a15edd8fd730234cf87d57b8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueManager.html#a50daa9a4a15edd8fd730234cf87d57b8">WriteDialogue</a> (List&lt; string &gt; dialogue, float pitch=1)</td></tr>
 <tr class="memdesc:a50daa9a4a15edd8fd730234cf87d57b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the given dialogue to the screen using the dialogue animator.  <br /></td></tr>
 <tr class="separator:a50daa9a4a15edd8fd730234cf87d57b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae39ea635e03e72002f4f8e9b1fb3e723"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueManager.html#ae39ea635e03e72002f4f8e9b1fb3e723">WritePhoneDialogue</a> (List&lt; string &gt; messages)</td></tr>
+<tr class="memdesc:ae39ea635e03e72002f4f8e9b1fb3e723"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a list of messages to a phone screen.  <br /></td></tr>
+<tr class="separator:ae39ea635e03e72002f4f8e9b1fb3e723"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4473f96ba12231ca062b2db280b557f3"><td class="memItemLeft" align="right" valign="top"><a id="a4473f96ba12231ca062b2db280b557f3" name="a4473f96ba12231ca062b2db280b557f3"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>PrintImage</b> (Sprite newImage)</td></tr>
 <tr class="separator:a4473f96ba12231ca062b2db280b557f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -175,6 +178,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ExecuteNextObject</b> ()</td></tr>
 <tr class="memdesc:a14afcc4d005f9faa9368b71ed8ee9908"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the current object's first response and executes it. <br /></td></tr>
 <tr class="separator:a14afcc4d005f9faa9368b71ed8ee9908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65c40050a777b7fb7c126ab74b30945f"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueManager.html#a65c40050a777b7fb7c126ab74b30945f">PhoneAnimation</a> (Transform transform, float startingHeight, float finalHeight, float additionalWait=0f)</td></tr>
+<tr class="memdesc:a65c40050a777b7fb7c126ab74b30945f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The animation for the phone being pulled up or down.  <br /></td></tr>
+<tr class="separator:a65c40050a777b7fb7c126ab74b30945f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbd8d763a3bcf76516e30c35471522e1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueManager.html#abbd8d763a3bcf76516e30c35471522e1">AddPhoneMessage</a> (string message, Transform phoneLayout)</td></tr>
+<tr class="memdesc:abbd8d763a3bcf76516e30c35471522e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new message object in the given layout.  <br /></td></tr>
+<tr class="separator:abbd8d763a3bcf76516e30c35471522e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a293c22132389efdfab0b7a87f0c31407"><td class="memItemLeft" align="right" valign="top"><a id="a293c22132389efdfab0b7a87f0c31407" name="a293c22132389efdfab0b7a87f0c31407"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OnTextSizeChanged</b> ()</td></tr>
+<tr class="memdesc:a293c22132389efdfab0b7a87f0c31407"><td class="mdescLeft">&#160;</td><td class="mdescRight">Make required adjustments when text size was changed. <br /></td></tr>
+<tr class="separator:a293c22132389efdfab0b7a87f0c31407"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a00ce8784cb6d55e8905a2800da17a704"><td class="memItemLeft" align="right" valign="top"><a id="a00ce8784cb6d55e8905a2800da17a704" name="a00ce8784cb6d55e8905a2800da17a704"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>CreateBackButton</b> ()</td></tr>
 <tr class="memdesc:a00ce8784cb6d55e8905a2800da17a704"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the button to go back to the NPCSelect screen. <br /></td></tr>
@@ -222,6 +235,9 @@ GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundField
 <tr class="memitem:a793948958e237b785b3b2da23ae5cb8f"><td class="memItemLeft" align="right" valign="top"><a id="a793948958e237b785b3b2da23ae5cb8f" name="a793948958e237b785b3b2da23ae5cb8f"></a>
 GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>characterNameField</b></td></tr>
 <tr class="separator:a793948958e237b785b3b2da23ae5cb8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ced797bd2885caeafad7cc2c19803d"><td class="memItemLeft" align="right" valign="top"><a id="aa7ced797bd2885caeafad7cc2c19803d" name="aa7ced797bd2885caeafad7cc2c19803d"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>phoneField</b></td></tr>
+<tr class="separator:aa7ced797bd2885caeafad7cc2c19803d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af8c2bb9927b01362436ae14152619f34"><td class="memItemLeft" align="right" valign="top"><a id="af8c2bb9927b01362436ae14152619f34" name="af8c2bb9927b01362436ae14152619f34"></a>
 EventSystem&#160;</td><td class="memItemRight" valign="bottom"><b>eventSystemPrefab</b></td></tr>
 <tr class="separator:af8c2bb9927b01362436ae14152619f34"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -234,16 +250,67 @@ GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>avatarPrefab</b
 <tr class="memitem:ae701446805dcb6f7501c287471d58bd4"><td class="memItemLeft" align="right" valign="top"><a id="ae701446805dcb6f7501c287471d58bd4" name="ae701446805dcb6f7501c287471d58bd4"></a>
 GameObject[]&#160;</td><td class="memItemRight" valign="bottom"><b>backgroundPrefabs</b></td></tr>
 <tr class="separator:ae701446805dcb6f7501c287471d58bd4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a258b877514ab182ffa59e99506b4beb6"><td class="memItemLeft" align="right" valign="top"><a id="a258b877514ab182ffa59e99506b4beb6" name="a258b877514ab182ffa59e99506b4beb6"></a>
+GameObject&#160;</td><td class="memItemRight" valign="bottom"><b>phoneDialogueBoxPrefab</b></td></tr>
+<tr class="separator:a258b877514ab182ffa59e99506b4beb6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6cfa8d37164a7ada0ef6d857d50229a"><td class="memItemLeft" align="right" valign="top"><a id="af6cfa8d37164a7ada0ef6d857d50229a" name="af6cfa8d37164a7ada0ef6d857d50229a"></a>
+AudioClip&#160;</td><td class="memItemRight" valign="bottom"><b>phoneNotificationClip</b></td></tr>
+<tr class="separator:af6cfa8d37164a7ada0ef6d857d50229a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a812b407103c9c07de639116d6abd4484"><td class="memItemLeft" align="right" valign="top"><a id="a812b407103c9c07de639116d6abd4484" name="a812b407103c9c07de639116d6abd4484"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>phoneAnimationDuration</b> = 1f</td></tr>
+<tr class="separator:a812b407103c9c07de639116d6abd4484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aadfa25e5193917cb083e4693888e88b5"><td class="memItemLeft" align="right" valign="top"><a id="aadfa25e5193917cb083e4693888e88b5" name="aadfa25e5193917cb083e4693888e88b5"></a>
 <a class="el" href="classDialogueContainer.html">DialogueContainer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>testDialogueContainer</b></td></tr>
 <tr class="separator:aadfa25e5193917cb083e4693888e88b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab23932df95e2f6b8f7a9bd46f7469e0c"><td class="memItemLeft" align="right" valign="top"><a id="ab23932df95e2f6b8f7a9bd46f7469e0c" name="ab23932df95e2f6b8f7a9bd46f7469e0c"></a>
-Component&#160;</td><td class="memItemRight" valign="bottom"><b>dialogueStarter</b></td></tr>
-<tr class="separator:ab23932df95e2f6b8f7a9bd46f7469e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The manager for the dialogue scene. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="abbd8d763a3bcf76516e30c35471522e1" name="abbd8d763a3bcf76516e30c35471522e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbd8d763a3bcf76516e30c35471522e1">&#9670;&#160;</a></span>AddPhoneMessage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DialogueManager.AddPhoneMessage </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Transform&#160;</td>
+          <td class="paramname"><em>phoneLayout</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates a new message object in the given layout. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>The text be written in the message.</td></tr>
+    <tr><td class="paramname">phoneLayout</td><td>The parent transform for the message.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a656faf0cdf38437bb253fc60c806daba" name="a656faf0cdf38437bb253fc60c806daba"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a656faf0cdf38437bb253fc60c806daba">&#9670;&#160;</a></span>CreateDialogueBackground()</h2>
 
@@ -405,6 +472,57 @@ Component&#160;</td><td class="memItemRight" valign="bottom"><b>dialogueStarter<
 
 </div>
 </div>
+<a id="a65c40050a777b7fb7c126ab74b30945f" name="a65c40050a777b7fb7c126ab74b30945f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65c40050a777b7fb7c126ab74b30945f">&#9670;&#160;</a></span>PhoneAnimation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerator DialogueManager.PhoneAnimation </td>
+          <td>(</td>
+          <td class="paramtype">Transform&#160;</td>
+          <td class="paramname"><em>transform</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>startingHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>finalHeight</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>additionalWait</em> = <code>0f</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The animation for the phone being pulled up or down. </p>
+<p>I have found -1900 and -80 to be good values for the heights, 1 for the duration.</p>
+
+</div>
+</div>
 <a id="a92dfe15e258730e2247c93ef6c6ae5f2" name="a92dfe15e258730e2247c93ef6c6ae5f2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a92dfe15e258730e2247c93ef6c6ae5f2">&#9670;&#160;</a></span>ReplaceBackground()</h2>
 
@@ -509,6 +627,32 @@ Component&#160;</td><td class="memItemRight" valign="bottom"><b>dialogueStarter<
   <table class="params">
     <tr><td class="paramname">dialogue</td><td>The text that needs to be written</td></tr>
     <tr><td class="paramname">pitch</td><td>The pitch of the character</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae39ea635e03e72002f4f8e9b1fb3e723" name="ae39ea635e03e72002f4f8e9b1fb3e723"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae39ea635e03e72002f4f8e9b1fb3e723">&#9670;&#160;</a></span>WritePhoneDialogue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void DialogueManager.WritePhoneDialogue </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>messages</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a list of messages to a phone screen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">messages</td><td>The list of messages to be written on the phone.</td></tr>
   </table>
   </dd>
 </dl>
