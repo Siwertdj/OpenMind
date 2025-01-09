@@ -268,9 +268,9 @@ public class GameManager : MonoBehaviour
 
         // Process dialogue (replace <> words)
         List<string> dialogue = new();
-        for (int i = 0; i < story.hintDialogueList.Length; i++)
+        for (int i = 0; i < story.hintDialogue.Length; i++)
         {            
-            string line = ProcessDialogue(story.hintDialogueList[i]);
+            string line = ProcessDialogue(story.hintDialogue[i]);
             dialogue.Add(line);
         }
 

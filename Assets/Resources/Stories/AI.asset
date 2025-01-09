@@ -25,8 +25,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueCulprit: {fileID: 0}
   storyEpilogueLossDialogueNPC: {fileID: 0}
   victimDialogue: has gone home.
-  hintDialogue: The computer calculated new data about the culprit..
-  hintDialogueList:
+  hintDialogue:
   - <victimName> has gone home.
   - The computer calculated data about the culprit...
   - '"<hint>"'

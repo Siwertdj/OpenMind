@@ -25,8 +25,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 99c354101e36f6c499ffc2d63f2a4074, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
   victimDialogue: has gone home.
-  hintDialogue: 'Haven''t figured it out? Here is another hint:'
-  hintDialogueList:
+  hintDialogue:
   - It seems <victimName> has gone home.
   - 'Still haven''t figured out who I am? Here''s another hint:'
   - <hint>

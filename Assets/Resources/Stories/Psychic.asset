@@ -27,8 +27,7 @@ MonoBehaviour:
   storyEpilogueLossDialogueCulprit: {fileID: 0}
   storyEpilogueLossDialogueNPC: {fileID: 0}
   victimDialogue: has gone home.
-  hintDialogue: Hmm.. I am seeing something..
-  hintDialogueList:
+  hintDialogue:
   - I am sensing something... <victimName> has gone home...
   - 'Hold on... the culprit has said something:'
   - '"<hint>"'
