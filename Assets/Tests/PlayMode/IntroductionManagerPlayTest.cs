@@ -311,7 +311,7 @@ public class IntroductionManagerPlayTest
         im.ChangePlayerText();
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        Assert.AreEqual("You", im.nameTag.text);
+        Assert.AreEqual(false, im.nameTagImage.activeSelf);
         yield return null;
     }
     

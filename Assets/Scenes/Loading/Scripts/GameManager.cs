@@ -220,7 +220,16 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         FirstCycle();
     }
-
+    
+    /// <summary>
+    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
+    /// </summary>
+    /// <param name="helpButton"></param>
+    public void ToggleTutorial(Button helpButton)
+    {
+        sc.ToggleTutorialScene(helpButton);
+    }
+    
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -238,7 +247,6 @@ public class GameManager : MonoBehaviour
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
-        
         // Change the gamestate
         gameState = GameState.NpcSelect;
     }
