@@ -58,9 +58,9 @@ public class IntroductionManager : MonoBehaviour
     
     // Variables to keep track of the state of the introduction within this code. 
     public PlayableDirector currentTimeline; // public for testing purposes
-    public int backgroundIndex { get; set; } = 0;         // backgrounds[backgroundIndex] is the currently shown background.
+    public int BackgroundIndex { get; set; } = 0;    // backgrounds[backgroundIndex] is the currently shown background.
     public int TextIndex { get; set; } = 0;         // text[textIndex] is the currently shown text. 
-    public int textMessageIndex { get; set; } = 0;
+    public int TextMessageIndex { get; set; } = 0;
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
@@ -142,8 +142,8 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline.RebuildGraph();
         
         currentTimeline.Play();
-        backgroundIndex = 0;
-        background.sprite = backgrounds[backgroundIndex];
+        BackgroundIndex = 0;
+        background.sprite = backgrounds[BackgroundIndex];
     }
     
     /// <summary>
@@ -160,9 +160,7 @@ public class IntroductionManager : MonoBehaviour
         background.sprite = backgrounds[4];
         characterName = "Alex";
         currentTimeline.Play();
-        
     }
-    
     
     /// <summary>
     /// Method that prepares the scene to play storyline C. 
@@ -247,13 +245,13 @@ public class IntroductionManager : MonoBehaviour
         sendButton.gameObject.SetActive(false);
         typingText.gameObject.SetActive(false);
         background.sprite = backgrounds[3]; // Change the background to the phone background. 
-        textMessageIndex++;
+        TextMessageIndex++;
         
         // Make sure the four most recent texts are shown on the screen. 
         HideOrShowTexts(false); // Old messages need to be removed. 
-        for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
+        for (int i = TextMessageIndex; i < TextMessageIndex + 4; i++)
         {
-            messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
+            messages[i].transform.position = messageLocations[i-TextMessageIndex].transform.position;
             messages[i].SetActive(true);
         }
         HideOrShowTexts(true); // Show the new texts. 
@@ -265,19 +263,19 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeBackground()
     {
         HideOrShowTexts(false); // When the background is changed, the texts need to be hidden. 
-        backgroundIndex++; // Keep track of the background that needs to be shown. 
+        BackgroundIndex++; // Keep track of the background that needs to be shown. 
         try
         {
-            background.sprite = backgrounds[backgroundIndex];
+            background.sprite = backgrounds[BackgroundIndex];
         }
         catch
         {
             Debug.LogError("Error: No more available backgrounds.");
-            backgroundIndex = 0;
-            background.sprite = backgrounds[backgroundIndex];
+            BackgroundIndex = 0;
+            background.sprite = backgrounds[BackgroundIndex];
         }
         
-        if (backgroundIndex > 0)
+        if (BackgroundIndex > 0)
         {
             PauseCurrentTimeline(); // The first time the background is changed, the timeline does not have to be paused. 
         } 
@@ -297,11 +295,9 @@ public class IntroductionManager : MonoBehaviour
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
         // Write the next message, '+ messageLocations.Length' is to account for the empty messages. 
-        typingText.text = textMessages[textMessageIndex + messageLocations.Length].messageContent;
-        typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
+        typingText.text = textMessages[TextMessageIndex + messageLocations.Length].messageContent;
+        typingAnimation.WriteDialogue(textMessages[TextMessageIndex + messageLocations.Length].messageContent);
     }
-    
-    
     
     #endregion
     
@@ -387,12 +383,12 @@ public class IntroductionManager : MonoBehaviour
     {
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
-        //dialogueAnimator.gameObject.SetActive(true);
+        dialogueAnimator.gameObject.SetActive(true);
         textbubble.SetActive(true);
         try
         {
             text.text = storyText[TextIndex];
-            //dialogueAnimator.WriteDialogue(storyText[TextIndex]);
+            dialogueAnimator.WriteDialogue(storyText[TextIndex]);
         }
         catch
         {
@@ -437,10 +433,10 @@ public class IntroductionManager : MonoBehaviour
         else
         {
             continueButton.SetActive(false);
-            //dialogueAnimator.gameObject.SetActive(false);
+            dialogueAnimator.gameObject.SetActive(false);
             typingAnimation.gameObject.SetActive(false);
-            currentTimeline.Play();
         }
+        currentTimeline.Play();
     }
 
     #endregion
