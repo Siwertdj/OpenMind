@@ -14,7 +14,7 @@ var searchData=
   ['ontextsizechanged_11',['OnTextSizeChanged',['../classDialogueManager.html#a293c22132389efdfab0b7a87f0c31407',1,'DialogueManager.OnTextSizeChanged()'],['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager.OnTextSizeChanged()']]],
   ['ontogglevaluechanged_12',['OnToggleValueChanged',['../classCutsceneController.html#a92b61004cbad935341f6bff2f69d3426',1,'CutsceneController']]],
   ['opencharactertab_13',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
-  ['openmenu_14',['OpenMenu',['../classUIManager.html#a78494fd17bf0cc867abab837f1f78d1d',1,'UIManager']]],
+  ['openmenu_14',['OpenMenu',['../classUIManager.html#a05733c9cb003a5f95d51ecc752832985',1,'UIManager']]],
   ['openpersonalnotes_15',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
   ['openpersonalnotestest_16',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
   ['openpopup_17',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
