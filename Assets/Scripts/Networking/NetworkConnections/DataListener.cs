@@ -297,8 +297,8 @@ public class DataListener : DataNetworker
         
         if (!TryCreatePackage(signature, resp, out byte[] bytes))
             return;
-        
-        Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint}");
+        Debug.Log("Connection list length " + connections.Count + " socket index " + socketIndexAndMessage.Item1);
+        Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint} signature {signature}");
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }
@@ -307,6 +307,7 @@ public class DataListener : DataNetworker
     {
         for (var i = 0; i < connections.Count; i++)
         {
+            Debug.Log("disconneded code run");
             DateTime now = DateTime.Now;
             if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds <= interval * 2)
             {
