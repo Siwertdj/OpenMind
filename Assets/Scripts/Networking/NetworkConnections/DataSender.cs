@@ -239,6 +239,8 @@ public class DataSender : DataNetworker
                 logError = onAckReceievedEvents.Raise(signature,
                     receivedTailPackages[0].GetData<string>(), clearResponseEvents, "onAckReceivedEvent");
                 
+                Debug.Log($"Received ack: {receivedTailPackages[0].GetData<string>()}");
+                
                 acknowledgementTimes.RemoveAll(ackt => ackt.Signature == receivedTailPackages[0].GetData<string>());
             }
             catch (InvalidCastException e)
@@ -261,10 +263,14 @@ public class DataSender : DataNetworker
     {
         List<AcknowledgementTime> timeouts =
             acknowledgementTimes.FindAll(ackt => ackt.HasTimedOut());
-        
+
         foreach (var acknowledgementTime in timeouts)
-            logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature, acknowledgementTime.Signature, false, "onAckTimeoutEvents");
-        
+        {
+            Debug.Log($"Timeout: {acknowledgementTime.Signature}");
+            logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature,
+                acknowledgementTime.Signature, false, "onAckTimeoutEvents");
+        }
+
         acknowledgementTimes.RemoveAll(timeouts.Contains);
     }
     
@@ -328,6 +334,7 @@ public class DataSender : DataNetworker
         if (!connected)
             return false;
         
+        Debug.Log("sent ping");
         SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval/500f);
         return false;
     }

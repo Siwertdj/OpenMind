@@ -174,7 +174,7 @@ public class Client : NetworkObject
     
     private void ListeningWhileDisconnected(object obj)
     {
-        Debug.Log("(Client): Disconnected while listening for response from host.");
+        //Debug.Log("(Client): Disconnected while listening for response from host.");
     }
     
     private void AddAdditionalDebugMessagesNotebook()
