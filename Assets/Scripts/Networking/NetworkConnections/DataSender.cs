@@ -62,6 +62,7 @@ public class DataSender : DataNetworker
         //     acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
         
         onAckTimeoutEvents.Subscribe(pingSignature, _ => onDisconnectedEvents.Raise("Disconnect", null, false, "onDisconnectedEvents"));
+        AddOnDisconnectedEvent(_ => connected = false);
     }
     
     /// <summary>
@@ -237,6 +238,8 @@ public class DataSender : DataNetworker
             {
                 logError = onAckReceievedEvents.Raise(signature,
                     receivedTailPackages[0].GetData<string>(), clearResponseEvents, "onAckReceivedEvent");
+                
+                acknowledgementTimes.RemoveAll(ackt => ackt.Signature == receivedTailPackages[0].GetData<string>());
             }
             catch (InvalidCastException e)
             {
@@ -325,7 +328,7 @@ public class DataSender : DataNetworker
         if (!connected)
             return false;
         
-        SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval);
+        SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval/500f);
         return false;
     }
 }
