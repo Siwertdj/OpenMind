@@ -213,6 +213,6 @@ public class Host : NetworkObject
     
     public override void Dispose()
     {
-        listener.Dispose();
+        listener?.Dispose();
     }
 }

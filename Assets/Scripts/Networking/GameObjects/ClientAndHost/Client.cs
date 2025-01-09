@@ -143,7 +143,7 @@ public class Client : NetworkObject
         if (doPopup is null)
             Debug.LogError("No popup for error handling was initialised");
         else
-            doPopup.Raise(this, error);
+            doPopup.Raise(this, error, new Color(0,0,0));
     }
     
     #region debugMethods
@@ -190,6 +190,6 @@ public class Client : NetworkObject
     
     public override void Dispose()
     {
-        sender.Dispose();
+        sender?.Dispose();
     }
 }

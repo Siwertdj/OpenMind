@@ -96,14 +96,21 @@ public class DataSender : DataNetworker
                 {
                     onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
                     timeout = true;
+                    connecting.Dispose();
                     break;
                 }
                 
                 yield return null;
             }
+
+            if (!socket.Connected && !timeout)
+            {
+                onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
+            }
         }
         else
             logWarning = "Socket was already connected, so nothing happened.";
+        
     }
     
     /// <summary>
@@ -265,12 +272,11 @@ public class DataSender : DataNetworker
         onConnectEvents.Subscribe("Connect", action);
     
     /// <summary>
-    /// Adds an action to the event of connecting with a host.
-    /// When connecting to a host, the given action is called.
-    /// The object is the task created when attempting to connect with a host.
+    /// Adds an action to the event of timeing out while trying to connect to the host
+    /// The object is null.
     /// </summary>
     public void AddOnConnectionTimeoutEvent(Action<object> action) =>
-        onConnectEvents.Subscribe("Timeout", action);
+        onConnectionTimeoutEvents.Subscribe("Timeout", action);
     
     /// <summary>
     /// Adds an action to the event of completing the send action.
