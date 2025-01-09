@@ -175,14 +175,27 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
+        Debug.Log("Switching music");
+        
         if (newClip != null)
         {
+            Debug.Log("Audioclip received");
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
             // If the newclip is different than the current clip, we fade the new one in.
             if (newClip != musicSource.clip)
+            {
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+            }
+            else
+            {
+                Debug.Log($"Music clip '{newClip.name}' is the same as already playing clip '{musicSource.clip.name}'");
+            }
+        }
+        else
+        {
+            Debug.Log("Audioclip was null");
         }
 
         // Set the music loop to the given parameter.
@@ -198,6 +211,9 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
+        // initialize variables
+        float startVolume = musicSource.volume;
+        
         // Start loading the new clip
         // In the clip settings, "Load in Background" should be enabled,
         // otherwise the game could freeze until loading is done
@@ -208,16 +224,16 @@ public class SettingsManager : MonoBehaviour
                 $"This could cause freezes while the clip is loading.");
         newClip.LoadAudioData();
 
-        float startVolume = musicSource.volume;
         while (musicSource.volume > 0)
         {
             musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         musicSource.Stop();
-
         // Unload the old clip (Unity does not do this automatically)
-        musicSource.clip.UnloadAudioData();
+        if (musicSource.clip != null)
+            musicSource.clip.UnloadAudioData();
+    
 
         // Wait for the new clip to finish loading
         while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
@@ -232,6 +248,7 @@ public class SettingsManager : MonoBehaviour
             musicSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
+
     }
     #endregion
 
