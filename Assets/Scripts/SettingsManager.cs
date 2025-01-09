@@ -198,6 +198,16 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
+        // Start loading the new clip
+        // In the clip settings, "Load in Background" should be enabled,
+        // otherwise the game could freeze until loading is done
+        if (!newClip.loadInBackground)
+            Debug.LogWarning(
+                $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                $"set to {newClip.loadInBackground}. " +
+                $"This could cause freezes while the clip is loading.");
+        newClip.LoadAudioData();
+
         float startVolume = musicSource.volume;
         while (musicSource.volume > 0)
         {
@@ -205,8 +215,18 @@ public class SettingsManager : MonoBehaviour
             yield return null;
         }
         musicSource.Stop();
+
+        // Unload the old clip (Unity does not do this automatically)
+        musicSource.clip.UnloadAudioData();
+
+        // Wait for the new clip to finish loading
+        while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+            yield return null;
+
         musicSource.clip = newClip;
         musicSource.Play();
+
+        // Fade in the clip
         while (musicSource.volume < 1)
         {
             musicSource.volume += startVolume * Time.deltaTime / fadeTime;
