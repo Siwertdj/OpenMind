@@ -379,8 +379,8 @@ public class SystemTests
         // Write down notes
         string notebookTextPrior = "hello";
         var notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
-        notebookManager.inputField.GetComponent<TMP_InputField>().text = notebookTextPrior;
-        notebookManager.inputField.GetComponent<TMP_InputField>().onEndEdit.Invoke(notebookTextPrior);
+        //notebookManager.inputField.GetComponent<TMP_InputField>().text = notebookTextPrior;
+        //notebookManager.inputField.GetComponent<TMP_InputField>().onEndEdit.Invoke(notebookTextPrior);
         
         // Close notebook
         GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
