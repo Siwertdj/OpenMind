@@ -1,8 +1,10 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -263,15 +265,48 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
-        // Tell the player what happened in between cycles
-        var dialogue = new List<string> {
-            $"{victimName} {story.victimDialogue}",
-            story.hintDialogue,
-        };
-        dialogue.AddRange(GetCulprit().GetRandomTrait());
+        // Add the new hint to the dictionary
+        wordReplacements["hint"] = string.Join(" ", GetCulprit().GetRandomTrait());
+
+        // Process dialogue (replace <> words)
+        List<string> dialogue = new();
+        for (int i = 0; i < story.hintDialogueList.Length; i++)
+        {            
+            string line = ProcessDialogue(story.hintDialogueList[i]);
+            dialogue.Add(line);
+        }
+
         // Creates Dialogue that says who disappeared and provides a new hint.
         StartDialogue(dialogue);
     }
+
+    /// <summary>
+    /// Checks for keywords in <paramref name="inputLine"/> and replaces them with proper values.
+    /// </summary>
+    /// <param name="inputLine">The line to be altered.</param>
+    /// <returns>The inputLine with its keywords replaced with proper values.</returns>
+    public string ProcessDialogue(string inputLine)
+    {
+        // Regular expression to find placeholders in the format <keyword>
+        string pattern = @"\<(\w+)\>";
+        var regex = new Regex(pattern);
+
+        // Replace matches with corresponding values from the replacements dictionary
+        return regex.Replace(inputLine, match =>
+        {
+            string key = match.Groups[1].Value; // Extract the keyword (e.g., "name", "hint")
+            return wordReplacements.TryGetValue(key, out string replacement) ? replacement : match.Value;
+        });
+    }
+
+    /// <summary>
+    /// The dictionary containing replacements for certain keywords.
+    /// </summary>
+    public Dictionary<string, string> wordReplacements = new()
+    {
+        { "victimName", "Placeholder name" },
+        { "hint", "Placeholder hint dialogue." }
+    };
 
     /// <summary>
     /// Ends the cycle when all questions have been asked.
@@ -357,6 +392,7 @@ public class GameManager : MonoBehaviour
 
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
+        wordReplacements["victimName"] = victim.characterName;
         return victim.characterName;
     }
     
@@ -446,10 +482,34 @@ public class GameManager : MonoBehaviour
         // Create the appropriate DialogueObject
         DialogueObject dialogueObject;
         if (story.storyID == 0) // 0 corresponds to the phone story
+        {
             dialogueObject = new PhoneDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // 1 corresponds to the sidekick story
+        {
+            dialogueObject = new ContentDialogueObject(
+                new() { dialogue[0] }, null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+
+            var object2 = new ContentDialogueObject(
+                new() { dialogue[1] }, null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[1]
+                ));
+            dialogueObject.Responses.Add(object2);
+
+            object2.Responses.Add(new ContentDialogueObject(
+                new() { dialogue[2] }, null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]
+                )));
+        }
         else
+        {
             dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
-        
+        }
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);

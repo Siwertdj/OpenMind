@@ -272,12 +272,15 @@ public class DialogueManager : MonoBehaviour
     /// <param name="character">The character the dialogue will be with.</param>
     /// <param name="background">The background for the dialogue.</param>
     /// <returns></returns>
-    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, GameObject background = null)
+    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, params GameObject[] background)
     {
         List<GameObject> background_ = new();
 
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
-        background_.Add(background == null ? story.dialogueBackground : background);
+        if (background.Length == 0)
+            background_.Add(story.dialogueBackground);
+        else
+            background_.AddRange(background);
 
         // If a character is given, add that as well with the proper emotion
         if (character != null)
