@@ -245,7 +245,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StartMenuManager, Scripts
-        m_MethodName: OpenSkipProloguePrompt
+        m_MethodName: StartPrologueOrPrompt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -256,6 +256,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &105892627
 GameObject:
@@ -774,6 +775,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &217989641
 GameObject:
@@ -827,7 +829,7 @@ MonoBehaviour:
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   startLoadIcon: {fileID: 11400000, guid: 334537c804656fe4995f51c51842dda5, type: 2}
   copyright: {fileID: 2085541975}
-  startMenuMusic: {fileID: 0}
+  startMenuMusic: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
 --- !u!1 &218964759
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,7 +1352,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3414167128995361774, guid: ebe9f7f71869d0b4480edff0e324cd36, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.76
   m_Pitch: 1
@@ -2179,6 +2181,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1024159935
 GameObject:
@@ -2566,6 +2569,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1127524790
 GameObject:
@@ -3698,6 +3702,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &2085541972
 GameObject:

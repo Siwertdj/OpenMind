@@ -69,8 +69,8 @@ public class SettingsManager : MonoBehaviour
     private void ApplySavedSettings()
     {
         // Get the saved values
-        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
-        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 80);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 80);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
         textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
@@ -90,11 +90,18 @@ public class SettingsManager : MonoBehaviour
 
     public void OnClick(Component sender, params object[] data)
     {
+        AudioClip clip;
         if (data[0] is AudioClip audioClip)
-            sfxSource.clip = audioClip;
+            clip = audioClip;
         else
-            sfxSource.clip = defaultButtonClickSound;
+            clip = defaultButtonClickSound;
 
+        PlaySfxClip(clip);
+    }
+
+    public void PlaySfxClip(AudioClip clip)
+    {
+        sfxSource.clip = clip;
         sfxSource.Play();
     }
     
@@ -168,14 +175,27 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
+        Debug.Log("Switching music");
+        
         if (newClip != null)
         {
+            Debug.Log("Audioclip received");
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
             // If the newclip is different than the current clip, we fade the new one in.
             if (newClip != musicSource.clip)
+            {
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+            }
+            else
+            {
+                Debug.Log($"Music clip '{newClip.name}' is the same as already playing clip '{musicSource.clip.name}'");
+            }
+        }
+        else
+        {
+            Debug.Log("Audioclip was null");
         }
 
         // Set the music loop to the given parameter.
@@ -191,20 +211,44 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
+        // initialize variables
         float startVolume = musicSource.volume;
+        
+        // Start loading the new clip
+        // In the clip settings, "Load in Background" should be enabled,
+        // otherwise the game could freeze until loading is done
+        if (!newClip.loadInBackground)
+            Debug.LogWarning(
+                $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                $"set to {newClip.loadInBackground}. " +
+                $"This could cause freezes while the clip is loading.");
+        newClip.LoadAudioData();
+
         while (musicSource.volume > 0)
         {
             musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         musicSource.Stop();
+        // Unload the old clip (Unity does not do this automatically)
+        if (musicSource.clip != null)
+            musicSource.clip.UnloadAudioData();
+    
+
+        // Wait for the new clip to finish loading
+        while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+            yield return null;
+
         musicSource.clip = newClip;
         musicSource.Play();
+
+        // Fade in the clip
         while (musicSource.volume < 1)
         {
             musicSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
+
     }
     #endregion
 
