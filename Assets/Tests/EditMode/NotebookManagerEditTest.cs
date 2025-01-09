@@ -55,38 +55,4 @@ public class NotebookManagerEditTest
         EditorSceneManager.OpenScene("Assets/Scenes/Notebook/NotebookScene.unity");
         nm = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
     }
-
-    //
-    // NOTE: the tests below are commented out as they are no longer relevant,
-    // but maybe they will be useful later.
-    //
-
-
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            int id = i;
-            Button button = buttons[id];
-            // Find icon of character and check if correct character sprite is shown
-            Transform icon = button.transform.Find("Character Icon");
-            Transform avatar = icon.transform.Find("Avatar");
-            Image face = avatar.GetComponentInChildren<Image>();
-
-            Assert.AreEqual(GameManager.gm.currentCharacters[i].characterName + "_Neutral", face.sprite.name);
-        }
-    }
-    
-    /// <summary>
-    /// Checks if the ToggleCharacterInfo method works correctly
-    /// </summary>
-    [Test]
-    public void ToggleCharacterInfoTest()
-    {
-        bool active = nm.Test_CharacterInfoField.activeInHierarchy;
-        
-        nm.ToggleCharacterInfo();
-        
-        if (active)
-            Assert.IsFalse(nm.Test_CharacterInfoField.activeSelf);
-        else Assert.IsTrue(nm.Test_CharacterInfoField.activeSelf);
-    }
 }

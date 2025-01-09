@@ -57,7 +57,7 @@ public class StartScreenPlayTest : MonoBehaviour
     /// Checks if the prologue is loaded correctly
     /// </summary>
     /// <returns></returns>
-    [UnityTest]
+    [UnityTest, Order(1)]
     public IEnumerator PrologueTest()
     {
         sm.StartPrologue();
