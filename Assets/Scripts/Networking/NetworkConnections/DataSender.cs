@@ -45,7 +45,7 @@ public class DataSender : DataNetworker
     /// Creates a data sender object using an IPAddress and a port to create an endpoint.
     /// The ipAddress should point to the device you want to send the message to.
     /// </summary>
-    public DataSender([DisallowNull] IPAddress ipAddress, ushort port) : base(ipAddress, port)
+    public DataSender([DisallowNull] IPAddress ipAddress, ushort port, string pingSignature) : base(ipAddress, port)
     {
         onDataSentEvents = new NetworkEvents();
         onReceiveResponseEvents = new NetworkEvents();
@@ -60,6 +60,8 @@ public class DataSender : DataNetworker
         //when an ack is received, untrack all ackTimes that match the received signature.
         // onAckReceievedEvents.Subscribe("ACK", signature =>
         //     acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
+        
+        onAckTimeoutEvents.Subscribe(pingSignature, _ => onDisconnectedEvents.Raise("Disconnect", null, false, "onDisconnectedEvents"));
     }
     
     /// <summary>
@@ -203,7 +205,7 @@ public class DataSender : DataNetworker
                 
                 yield return new WaitUntil(() =>
                 {
-                    //CheckForTimeouts();
+                    CheckForTimeouts();
                     return task.IsCompleted;
                 });
             }
@@ -317,16 +319,13 @@ public class DataSender : DataNetworker
     public void AddOnNotConnectedListeningEvents(Action<object> action) =>
         onNotConnectedListeningEvents.Subscribe("Disconnect", action);
 
-    protected override bool IsDisconnected(out Socket info)
+    protected override bool IsDisconnected(string signature, int interval, out Socket info)
     {
-        if (!socket.Connected && connected)
-        {
-            connected = false;
-            info = socket;
-            return true;
-        }
-
         info = null;
+        if (!connected)
+            return false;
+        
+        SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval);
         return false;
     }
 }

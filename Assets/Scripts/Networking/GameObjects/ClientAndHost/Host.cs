@@ -176,7 +176,7 @@ public class Host : NetworkObject
     
     private void AddAdditionalDebugMessagesInit()
     {
-        StartCoroutine(listener.IsDisconnected(settings.DisconnectedIntervalSeconds));
+        StartCoroutine(listener.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         listener.AddOnAcceptConnectionsEvent(OnConnectionAccepted);
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);

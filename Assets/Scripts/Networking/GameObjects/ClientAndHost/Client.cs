@@ -45,19 +45,20 @@ public class Client : NetworkObject
             return;
         }
         
-        sender = new DataSender(hostAddress, settings.ClientHostPortConnection);
+        sender = new DataSender(hostAddress, settings.ClientHostPortConnection, settings.PingDataSignature);
         sender.AddOnDisconnectedEvent(Disconnected);
         
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
         sender.AddOnConnectEvent(OnConnectionWithHost);
         sender.AddOnReceiveResponseEvent(settings.InitialisationDataSignature, ReceivedInitFromHost);
+
         
         //additional debugs if in debug mode
         if (settings.IsDebug)
             AddAdditionalDebugMessagesClassroomCode();
         
         StartCoroutine(sender.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
-        StartCoroutine(sender.IsDisconnected(settings.DisconnectedIntervalSeconds));
+        StartCoroutine(sender.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
         StartCoroutine(sender.ListenForResponse(settings.ListeningWhileNotConnectedIntervalSeconds));
     }
@@ -152,8 +153,8 @@ public class Client : NetworkObject
     {
         sender.AddOnDataSentEvent(settings.InitialisationDataSignature, DataSentInit);
         sender.AddOnAckReceivedEvent(AckReceived);
-        sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
         sender.AddOnNotConnectedListeningEvents(ListeningWhileDisconnected);
+        sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
     }
     
     private void DataSentInit(object o)

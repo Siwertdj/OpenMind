@@ -18,8 +18,9 @@ using UnityEngine;
 /// </summary>
 public class DataListener : DataNetworker
 {
-    private List<Socket> connections;
-    private List<bool>   isConnectionReceiving;
+    private List<Socket>   connections;
+    private List<bool>     isConnectionReceiving;
+    private List<DateTime> lastReceveivedMessage;
     
     ///<summary>when a connection is made, input is the socket the connect is made with</summary>
     private NetworkEvents onAcceptConnectionEvents;
@@ -180,6 +181,7 @@ public class DataListener : DataNetworker
     
     private void HandleReceivedData(List<NetworkPackage> networkData, int index, bool clearDataReceivedEvents, bool clearRespondEvents)
     {
+        lastReceveivedMessage[index] = DateTime.Now;
         string signature = networkData[0].GetData<string>();
         
         List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
@@ -299,19 +301,19 @@ public class DataListener : DataNetworker
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }
 
-    protected override bool IsDisconnected(out Socket info)
+    protected override bool IsDisconnected(string signature, int interval, out Socket info)
     {
+       
         for (var i = 0; i < connections.Count; i++)
         {
-            if (!connections[i].Connected)
+            DateTime now = DateTime.Now;
+            if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds <= interval * 2)
             {
                 info = connections[i];
                 connections.Remove(connections[i]);
-                
                 return true;
             }
         }
-
         info = null;
         return false;
     }
