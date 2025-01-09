@@ -122,6 +122,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>UnpauseGame</b> ()</t
 <tr class="memitem:a0ed399772f0694d6fee3e4658195b4f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a0ed399772f0694d6fee3e4658195b4f4">LoadGame</a> (<a class="el" href="classSaveData.html">SaveData</a> saveData)</td></tr>
 <tr class="memdesc:a0ed399772f0694d6fee3e4658195b4f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the game using savedata passed along.  <br /></td></tr>
 <tr class="separator:a0ed399772f0694d6fee3e4658195b4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af31faf614ebb7d1380f14b50a365320d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#af31faf614ebb7d1380f14b50a365320d">ToggleTutorial</a> (Button helpButton)</td></tr>
+<tr class="memdesc:af31faf614ebb7d1380f14b50a365320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called when the helpButton is clicked. It either activates or deactivates the tutorial.  <br /></td></tr>
+<tr class="separator:af31faf614ebb7d1380f14b50a365320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6086ba77a34c2b59da862919da1a8a6"><td class="memItemLeft" align="right" valign="top"><a id="ae6086ba77a34c2b59da862919da1a8a6" name="ae6086ba77a34c2b59da862919da1a8a6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td></tr>
 <tr class="memdesc:ae6086ba77a34c2b59da862919da1a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the cycle when all questions have been asked. If we have too few characters remaining, we must select the culprit, otherwise we start a new cycle. <br /></td></tr>
@@ -437,6 +440,32 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
   <table class="params">
     <tr><td class="paramname">sender</td><td>The sender, sends either a <a class="el" href="classStoryObject.html" title="A scriptable object which contains the settings pertaining to a Story-type.">StoryObject</a> or some <a class="el" href="classSaveData.html" title="Contains data that can be saved to a file.">SaveData</a>.</td></tr>
     <tr><td class="paramname">data</td><td>The story that the player has chosen, or the savedata that needs to be loaded.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af31faf614ebb7d1380f14b50a365320d" name="af31faf614ebb7d1380f14b50a365320d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af31faf614ebb7d1380f14b50a365320d">&#9670;&#160;</a></span>ToggleTutorial()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GameManager.ToggleTutorial </td>
+          <td>(</td>
+          <td class="paramtype">Button&#160;</td>
+          <td class="paramname"><em>helpButton</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">helpButton</td><td></td></tr>
   </table>
   </dd>
 </dl>

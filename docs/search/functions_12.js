@@ -8,8 +8,8 @@ var searchData=
   ['updateintrotext_5',['UpdateIntroText',['../classCutsceneController.html#a349b7c738bbd64667551c9aa9b08da03',1,'CutsceneController']]],
   ['updatepersonalnotes_6',['UpdatePersonalNotes',['../classNotebookData.html#a0b1dae68770e75eacce2fda7dda5ae56',1,'NotebookData']]],
   ['updatepersonalnotestest_7',['UpdatePersonalNotesTest',['../classNotebookPageDataTest.html#a57fc657b47f324e9b83814b26b7cf733',1,'NotebookPageDataTest']]],
-  ['updatetext_8',['updateText',['../classIntroductionManager.html#a89d45623311cd4ee3d0d351a817e8fc6',1,'IntroductionManager']]],
-  ['updatetext_9',['UpdateText',['../classCutsceneController.html#aa3c6bcbd0b04bc08c00136cd9498de21',1,'CutsceneController']]],
+  ['updatetext_8',['UpdateText',['../classCutsceneController.html#aa3c6bcbd0b04bc08c00136cd9498de21',1,'CutsceneController']]],
+  ['updatetext_9',['updateText',['../classIntroductionManager.html#a89d45623311cd4ee3d0d351a817e8fc6',1,'IntroductionManager']]],
   ['updatetransitiontext_10',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
   ['updatetutorialtest_11',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
   ['updatetutorialtext_12',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]]
