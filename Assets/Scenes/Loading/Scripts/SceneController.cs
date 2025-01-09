@@ -344,13 +344,14 @@ public class SceneController : MonoBehaviour
     /// Function to load the notebook.
     /// </summary>
     // this method is not tested
-    public void ToggleNotebookScene(Button button)
+    public void ToggleNotebookScene(Button button, GameObject menuButton)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
             // If notebook is already open, close it
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
             {
+                menuButton.SetActive(true);
                 GameManager.gm.UnpauseGame();
                 crossOverlay.SetActive(false);
                 _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
@@ -358,6 +359,7 @@ public class SceneController : MonoBehaviour
             }
             else // Notebook is NOT loaded.. so open it
             {
+                menuButton.SetActive(false);
                 GameManager.gm.PauseGame();
                 crossOverlay.SetActive(true);
                 _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,

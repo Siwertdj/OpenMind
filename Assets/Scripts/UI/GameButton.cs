@@ -14,6 +14,7 @@ using UnityEngine.UI;
 public class GameButton : Button
 {
     public GameEvent gameEvent;
+    public bool audioEnabled = true;
     public AudioClip[] audioClips;
 
     private new void Start()
@@ -25,6 +26,9 @@ public class GameButton : Button
     
     private void RaiseEvent()
     {
+        if (!audioEnabled)
+            return;
+
         AudioClip clip = null;
         if (audioClips?.Length > 0)
         {

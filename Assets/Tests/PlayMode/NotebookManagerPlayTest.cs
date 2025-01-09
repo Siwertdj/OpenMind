@@ -145,4 +145,37 @@ public class NotebookManagerPlayTest
         
         yield return null;
     }
+
+    [UnityTest]
+    public IEnumerator TabButtonsTest()
+    {
+        var bottomRow = GameObject.Find("Buttons Bottom Row").transform;
+        var topRow = GameObject.Find("Buttons Top Row").transform;
+
+        // Check for a CharacterIcon component on the first button
+        // It shouldn't have one, as this should be the Personal Notes button
+        int firstChildIcons = bottomRow.GetChild(0).GetComponentsInChildren<CharacterIcon>().Length;
+        Assert.AreEqual(0, firstChildIcons,
+            "The first button should not have any children with the CharacterIcon component, but " +
+            firstChildIcons + " was/were found.");
+
+        // Check if the rest of the bottom row is in the correct order
+        // (should contain the first characters)
+        for (int i = 1; i < bottomRow.childCount; i++)
+        {
+            var icon = bottomRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
+        // Check the top row as well (should contain the rest of the characters)
+        for (int i = 0; i < topRow.childCount; i++)
+        {
+            var icon = topRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i + bottomRow.childCount - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
+        yield return null;
+    }
 }

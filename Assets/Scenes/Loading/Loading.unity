@@ -461,6 +461,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1014,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1546507292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1101,6 +1103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMenu: {fileID: 0}
   gameButtons: {fileID: 342585761}
+  menuButton: {fileID: 301513149}
   transitionCanvas: {fileID: 0}
   transitionText: {fileID: 0}
   transitionDuration: 2

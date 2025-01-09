@@ -56,15 +56,11 @@ public class NotebookManagerEditTest
         nm = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
     }
 
-    /// <summary>
-    /// Checks if all buttons get correctly initialized.
-    /// </summary>
-    [Test]
-    public void InitializeCharacterButtonsTest()
-    {
-        nm.InitializeTabButtons();
-        
-        var buttons = nm.Test_GetNameButtons();
+    //
+    // NOTE: the tests below are commented out as they are no longer relevant,
+    // but maybe they will be useful later.
+    //
+
 
         for (int i = 0; i < buttons.Length; i++)
         {

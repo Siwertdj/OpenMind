@@ -27,6 +27,7 @@ public class DialogueAnimator : MonoBehaviour
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
     private float recentInputTime;
+    private bool ignoreSkipDelay = false;
 
     /// <summary>
     /// Is there dialogue currently on the screen?
@@ -133,15 +134,14 @@ public class DialogueAnimator : MonoBehaviour
     /// <summary>
     /// Skips dialogue that is being written.
     /// </summary>
-    /// <param name="instant">If true, ignores skip delay</param>
-    public void SkipDialogue(bool instant = false)
+    public void SkipDialogue()
     {
         // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
         if (GameManager.gm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue
-        if (Time.time - recentInputTime > inputDelay || instant)
+        if (Time.time - recentInputTime > inputDelay || ignoreSkipDelay)
         {
             if (IsOutputting)
             {
@@ -161,8 +161,7 @@ public class DialogueAnimator : MonoBehaviour
             }
 
             recentInputTime = Time.time;
-        }
-        
+        }        
     }
 
     /// <summary>
@@ -226,8 +225,13 @@ public class DialogueAnimator : MonoBehaviour
         get { return delayAfterSentence; }
         set { delayAfterSentence = value; }
     }
-
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+
+    public bool Test_IgnoreSkipDelay
+    {
+        get { return ignoreSkipDelay; }
+        set { ignoreSkipDelay = value; }
+    }
 #endif
 #endregion
 }

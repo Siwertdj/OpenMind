@@ -39,7 +39,7 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed, true);
     }
     
     /// <summary>
