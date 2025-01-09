@@ -776,6 +776,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 0}
+  audioEnabled: 1
+  audioClips: []
 --- !u!1 &217989641
 GameObject:
   m_ObjectHideFlags: 0
@@ -3183,7 +3185,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StartMenuManager, Scripts
-        m_MethodName: ToggleSkipProloguePrompt
+        m_MethodName: CloseProloguePrompt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3194,6 +3196,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
+  audioClips: []
 --- !u!114 &1264411405
 MonoBehaviour:
   m_ObjectHideFlags: 0
