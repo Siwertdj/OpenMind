@@ -10,11 +10,13 @@ public class DDOLManager : MonoBehaviour
         //if (GameObject.FindGameObjectsWithTag("DDOLManager").Length > 1)
         if (FindObjectsOfType<DDOLManager>().Length > 1)
         {
-            Destroy(this);   
+            Destroy(gameObject);   
         }
         else
         {
+            // Make this group-object DDOL, and therefore also its children become DDOL
             DontDestroyOnLoad(this);
+            // Set all its children to be active
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);

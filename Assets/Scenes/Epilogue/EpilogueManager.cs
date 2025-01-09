@@ -81,8 +81,10 @@ public class EpilogueManager : MonoBehaviour
             // Create a new SelectOption object.
             GameObject newOption = Instantiate(portraitPrefab, parent);
             // TODO: Set avatar
-            newOption.GetComponentInChildren<Image>().sprite = 
-                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
+            /*newOption.GetComponentInChildren<Image>().sprite = 
+                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;    */
+            newOption.GetComponent<CharacterIcon>().SetAvatar(character);
+            
             newOption.GetComponent<GameButton>().onClick.AddListener(delegate { CharacterSelected(character); });
         }
     }
@@ -169,8 +171,24 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public async void EndEpilogue(bool hasWon)
     {
-        // Destroy Toolbox
+        // Destroy remaining toolbox items (the buttons)
         Destroy(GameObject.Find("Toolbox"));
+        
+        // Updata UserData
+        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.playedBefore, true);
+        if (hasWon)
+            switch (story.storyID)
+            {
+                case 0:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyAWon, true);
+                    break;
+                case 1:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyBWon, true);
+                    break;
+                case 2:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyCWon, true);
+                    break;
+            }
         
         // TODO: Allegedly this is invalid, but it still gets unloaded. weird.
         // Unload Dialogue

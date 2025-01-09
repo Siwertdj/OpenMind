@@ -175,6 +175,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
+        // checks if newclip passed has a value
         if (newClip != null)
         {
             // If the passed fadeTime is null, we use the default music fade-in time
@@ -182,9 +183,11 @@ public class SettingsManager : MonoBehaviour
 
             // If the newclip is different than the current clip, we fade the new one in.
             if (newClip != musicSource.clip)
+            {
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+            }
         }
-
+        
         // Set the music loop to the given parameter.
         musicSource.loop = loop;
     }
@@ -198,20 +201,44 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
+        // initialize variables
         float startVolume = musicSource.volume;
+        
+        // Start loading the new clip
+        // In the clip settings, "Load in Background" should be enabled,
+        // otherwise the game could freeze until loading is done
+        if (!newClip.loadInBackground)
+            Debug.LogWarning(
+                $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                $"set to {newClip.loadInBackground}. " +
+                $"This could cause freezes while the clip is loading.");
+        newClip.LoadAudioData();
+
         while (musicSource.volume > 0)
         {
             musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
         musicSource.Stop();
+        // Unload the old clip (Unity does not do this automatically)
+        if (musicSource.clip != null)
+            musicSource.clip.UnloadAudioData();
+    
+
+        // Wait for the new clip to finish loading
+        while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+            yield return null;
+
         musicSource.clip = newClip;
         musicSource.Play();
+
+        // Fade in the clip
         while (musicSource.volume < 1)
         {
             musicSource.volume += startVolume * Time.deltaTime / fadeTime;
             yield return null;
         }
+
     }
     #endregion
 

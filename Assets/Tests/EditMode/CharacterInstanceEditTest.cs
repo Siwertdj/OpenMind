@@ -26,7 +26,7 @@ public class CharacterInstanceEditTest
         // Get some random characters to set up the tests
         CharacterData c1 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData)); // This will be the "main" character during the tests
         mainCharacterData = c1;
-        CharacterData c2 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/1_Guilietta_Data.asset", typeof(CharacterData)); // This will be the culprit
+        CharacterData c2 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/1_Giulietta_Data.asset", typeof(CharacterData)); // This will be the culprit
         CharacterData c3 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/2_Willow_Data.asset", typeof(CharacterData)); // This will be the chosen culprit
         CharacterData c4 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/3_Olivier_Data.asset", typeof(CharacterData));
         

@@ -37,7 +37,8 @@ public class SceneController : MonoBehaviour
         GameOverScene,
         TutorialScene,
         EpilogueScene,
-        StartScreenScene
+        StartScreenScene,
+        StorySelectScene
     }
 
     /// <summary>
@@ -165,7 +166,7 @@ public class SceneController : MonoBehaviour
                 foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
                 {
                     if (enumValue.ToString()[0] == trans)
-                    {
+                    { 
                         sceneGraph[i].Add((sceneToID[toScene], enumValue));
                         found = true;
                         break;

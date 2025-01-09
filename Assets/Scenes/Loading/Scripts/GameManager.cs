@@ -172,7 +172,6 @@ public class GameManager : MonoBehaviour
         foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
             currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
         
-
         //assign all data to the current characters
         currentCharacters = currentCharacters.Select(c =>
         {
@@ -196,8 +195,7 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         
         // Start the game music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
-
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 2, true);
         
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
