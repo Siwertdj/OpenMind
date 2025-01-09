@@ -175,7 +175,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
-        
+        // checks if newclip passed has a value
         if (newClip != null)
         {
             // If the passed fadeTime is null, we use the default music fade-in time
@@ -187,7 +187,7 @@ public class SettingsManager : MonoBehaviour
                 StartCoroutine(FadeOutMusic(newClip, _fadeTime));
             }
         }
-
+        
         // Set the music loop to the given parameter.
         musicSource.loop = loop;
     }

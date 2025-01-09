@@ -14,7 +14,9 @@ public class DDOLManager : MonoBehaviour
         }
         else
         {
+            // Make this group-object DDOL, and therefore also its children become DDOL
             DontDestroyOnLoad(this);
+            // Set all its children to be active
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
