@@ -169,8 +169,24 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public async void EndEpilogue(bool hasWon)
     {
-        // Destroy Toolbox
+        // Destroy remaining toolbox items (the buttons)
         Destroy(GameObject.Find("Toolbox"));
+        
+        // Updata UserData
+        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.playedBefore, true);
+        if (hasWon)
+            switch (story.storyID)
+            {
+                case 0:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyAWon, true);
+                    break;
+                case 1:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyBWon, true);
+                    break;
+                case 2:
+                    SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyCWon, true);
+                    break;
+            }
         
         // TODO: Allegedly this is invalid, but it still gets unloaded. weird.
         // Unload Dialogue
