@@ -1,0 +1,109 @@
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+/// <summary>
+/// Script containing methods to be used on button click in the gamewin scene.
+/// Each method calls a method from <see cref="GameManager"/>.
+/// </summary>
+public class GameOverManager : MonoBehaviour
+{
+    [Header("Scene References")]
+    [SerializeField] GameObject GameWonCanvas;
+    [SerializeField] GameObject GameLossCanvas;
+
+    [Header("Game Events")] 
+    [SerializeField] private GameEvent onGameLoaded;
+    
+    // Game Variables
+    private bool                    hasWon;
+    private List<CharacterInstance> characters;
+    private int                     culpritID;
+    private StoryObject             story;
+    private SceneController         sc;
+    
+    
+    public void StartGameOver(Component sender, params object[] data)
+    {
+        // Set variables
+        foreach (var d in data)
+        {
+            switch (d)
+            {
+                case bool hasWon:
+                    this.hasWon = hasWon;
+                    break;
+                case List<CharacterInstance> characters:
+                    this.hasWon = hasWon;
+                    break;
+                case int culpritID:
+                    this.culpritID = culpritID;
+                    break;
+                case StoryObject story:
+                    this.story = story;
+                    break;
+                default:
+                    Debug.LogError("Unknown Data received.");
+                    break;
+            }
+        }
+        sc = SceneController.sc;
+        
+        SetStatusCanvas();
+    }
+
+    /// <summary>
+    /// Set GameWin or GameLoss
+    /// </summary>
+    private void SetStatusCanvas()
+    {
+        if (hasWon)
+        {
+            GameLossCanvas.SetActive(false);
+            GameWonCanvas.SetActive(true);
+        }
+        else
+        {
+            GameLossCanvas.SetActive(true);
+            GameWonCanvas.SetActive(false);
+        }
+    }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("StartScreenScene");
+        // TODO: All DDOL-objects should not duplicate
+    }
+    
+    /// <summary>
+    /// Retry the game with the same characters, culprit and story.
+    /// </summary>
+    public async void Retry()
+    {
+        await sc.TransitionScene(
+            SceneController.SceneName.GameOverScene,
+            SceneController.SceneName.Loading,
+            SceneController.TransitionType.Transition,
+            true);
+        
+        onGameLoaded.Raise(this, characters, culpritID, story);
+    }
+    
+    /// <summary>
+    /// Restart the game with different characters and the same culprit, but the same story.
+    /// </summary>
+    public async void Restart()
+    {
+        await sc.TransitionScene(
+            SceneController.SceneName.GameOverScene,
+            SceneController.SceneName.Loading,
+            SceneController.TransitionType.Transition,
+            true);
+        
+        onGameLoaded.Raise(this, story);
+    }
+
+}

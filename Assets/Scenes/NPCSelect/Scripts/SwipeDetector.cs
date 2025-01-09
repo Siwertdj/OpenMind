@@ -46,8 +46,12 @@ public class SwipeDetector : MonoBehaviour
 
     private void CheckSwipe()
     {
+        // Don't do anything if the game is paused
+        if (GameManager.gm?.IsPaused == true)
+            return;
+
         //Check if Horizontal swipe
-        if (horizontalValMove() > swipeThreshold)
+        if (HorizontalValMove() > swipeThreshold)
         {
             //Debug.Log("Horizontal");
             if (fingerDown.x - fingerUp.x > 0)//Right swipe
@@ -62,7 +66,7 @@ public class SwipeDetector : MonoBehaviour
         }
     }
 
-    float horizontalValMove()
+    private float HorizontalValMove()
     {
         return Mathf.Abs(fingerDown.x - fingerUp.x);
     }

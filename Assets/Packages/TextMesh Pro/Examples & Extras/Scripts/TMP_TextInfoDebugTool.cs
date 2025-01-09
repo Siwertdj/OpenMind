@@ -466,7 +466,7 @@ namespace TMPro.Examples
 
 
         /// <summary>
-        /// Draw Rectangles around each lines of the text.
+        /// Draw Rectangles around each segments of the text.
         /// </summary>
         /// <param name="text"></param>
         void DrawLineBounds()

@@ -12,13 +12,16 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
+    public GameObject PopUpManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
+    [SerializeField] private GameObject popUpCanvas;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
+    public GameEvent startLoadIcon;
 
     [Header("Copyright canvas")]
     public Canvas copyright;
@@ -36,21 +39,28 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        // Keep the copyright text on the screen in all scenes
-        DontDestroyOnLoad(copyright);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed, true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
     }
     
     /// <summary>
-    /// Activates the prompt which asks the player to skip the prologue
+    /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
+    /// Otherwise, start the prologue.
     /// </summary>
-    public void OpenSkipProloguePrompt()
+    public void StartPrologueOrPrompt()
     {
-        // Change menu's
-        mainMenuCanvas.SetActive(false);
-        skipPrologueCanvas.SetActive(true);
-        
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.prologueSeen))
+        {
+            // Change menu's
+            mainMenuCanvas.SetActive(false);
+            skipPrologueCanvas.SetActive(true);
+        }
+        else
+        {
+            StartPrologue();
+        }
     }
 
     /// <summary>
@@ -58,7 +68,6 @@ public class StartMenuManager : MonoBehaviour
     /// </summary>
     public void ContinueGame()
     {
-        //SaveData saveData = gameObject.GetComponent<Loading>().GetSaveData();
         SaveData saveData = Load.Loader.GetSaveData();
         StartCoroutine(LoadGame(saveData));
     }

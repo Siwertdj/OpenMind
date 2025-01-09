@@ -14,108 +14,66 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Brooke
   id: 13
-  avatar: {fileID: 21300000, guid: 384bb9365c83ebd4dbc7b3fe702cb5dd, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 384bb9365c83ebd4dbc7b3fe702cb5dd, type: 3}
+  happyAvatar: {fileID: 21300000, guid: c12b59dbb0eb7b24591c5934372632cf, type: 3}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
+  facePivot: {x: 0.5003, y: 0.8103}
   answers:
   - question: 1
-    answer:
-    - I am 30 years old.
+    answer: {fileID: 11400000, guid: e3cf4ff88fe989e4a84fc7e241ce2376, type: 2}
     trait:
     - I am 30 years old.
   - question: 2
-    answer:
-    - Good! I am a digital designer and I volunteer.
-    - "I live with my fianc\xE9, cat and bonus child in a small town."
-    - I have lots of friend from different places.
-    - From class, going out and from volunteering.
+    answer: {fileID: 11400000, guid: 0f6e8640ccc25654fb73ad53f1580d52, type: 2}
     trait:
     - I am a digital designer.
   - question: 4
-    answer:
-    - I am bisexual.
+    answer: {fileID: 11400000, guid: 895ec10b861489849a6174716d4718c4, type: 2}
     trait:
     - I am bisexual.
   - question: 5
-    answer:
-    - I'm doing pretty good.
-    - This is a weird time in my life.
-    - For the first time I actually have money but I don't have enough time to spend
-      it.
-    - I have the opportunity to do things that I didn't have enough money for in
-      the past, like buying a drum kit!
-    - If I only go to work and come home to eat and sleep I would get really sad.
-    - So busy life it is.
+    answer: {fileID: 11400000, guid: 278bc87c4714a604d87caa366817a132, type: 2}
     trait:
     - I prefer having a busy life.
   - question: 6
-    answer:
-    - I'm politically left.
-    - I don't follow all debates but I think it's important to always vote.
-    - I try to encourage other people to vote too.
+    answer: {fileID: 11400000, guid: d1a6dbcc973c3b84598415b5372b1167, type: 2}
     trait:
     - I think it's very important to vote.
   - question: 14
-    answer:
-    - I am friendly and creative.
+    answer: {fileID: 11400000, guid: ae9665185b5f3654e9d7fc1e1e98adf6, type: 2}
     trait:
     - I am creative.
   - question: 15
-    answer:
-    - I am very chaotic.
-    - In fights I tend to put up a shield quickly.
+    answer: {fileID: 11400000, guid: 5d38ef6f60c51c842bb035d95ee09113, type: 2}
     trait:
     - I am very chaotic.
   - question: 7
-    answer:
-    - I have too many!
-    - Drawing, painting, needleworl, making music, lots of volunteering and watching
-      cringy tv.
-    - I used to be a DJ and I do all kinds of sports.
-    - It's kind of my pitfall.
-    - I enjoy doing all creative things.
-    - I can learn new things quickly.
-    - I don't have one talent, I can do many things a little.
-    - I don't understand it when people have no hobbies, besides watching Netflix.
+    answer: {fileID: 11400000, guid: 4418d81d4d20f894ca471502e8cdfdc0, type: 2}
     trait:
     - I have too many hobbies.
   - question: 9
-    answer:
-    - No, I am an atheist.
+    answer: {fileID: 11400000, guid: a955957e4a7e9814caf5a2e701df3b25, type: 2}
     trait:
     - I am an atheist.
   - question: 13
-    answer:
-    - My boyfriend is the most important person in my life.
-    - We are getting marries soon.
+    answer: {fileID: 11400000, guid: 1a53fe35ed2c4fa40aace3900f48d704, type: 2}
     trait:
     - My boyfriend is the most important person in my life.
   - question: 16
-    answer:
-    - I speak two secret languages.
+    answer: {fileID: 11400000, guid: 116120704d6468e428aeabee542c6f76, type: 2}
     trait:
     - An odd thing about me is that I speak two secret languages.
   - question: 19
-    answer:
-    - I would book a huge trip.
-    - After that I wouldn't stop working.
-    - I think I would keep working for 2 or 3 days.
+    answer: {fileID: 11400000, guid: 9334c4c0a82538c4aa2d13c219d2fd44, type: 2}
     trait:
     - If I win the lottery I would book a huge trip.
   - question: 20
-    answer:
-    - I prefer eating vegetarian.
-    - I feel healthier and I have ethical reasons too.
-    - I mainly don't agree with the way animals are treated.
-    - We are mass slaughtering them and then they just end up in a packet.
-    - We are so far removed from the reality of what happens to the animals.
+    answer: {fileID: 11400000, guid: 51d4da1a50a1f5e42b3251817f887402, type: 2}
     trait:
     - I prefer eating vegetarian.
   - question: 17
-    answer:
-    - I try to support the LGBT community.
-    - If someone says something unjust about the community I will defend it but I
-      wouldn't start the conversation myself.
-    - I'm not really a fighter.
+    answer: {fileID: 11400000, guid: 674d22966923e084f860a7906c8252a0, type: 2}
     trait:
     - I support the LGBT community.
   greetings:

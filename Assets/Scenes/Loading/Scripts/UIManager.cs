@@ -5,6 +5,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Manager class for UI.
@@ -13,22 +14,38 @@ public class UIManager : MonoBehaviour
 {
     [Header("UI Settings")] 
     [SerializeField] private GameObject gameMenu;
-    [SerializeField] private GameObject gameButtons;
-    [SerializeField] private GameObject transitionCanvas;
+    [SerializeField] private GameObject      gameButtons;
+    [SerializeField] private GameObject      menuButton;
+    [SerializeField] private GameObject      transitionCanvas;
     [SerializeField] private TextMeshProUGUI transitionText;
-    [SerializeField] private float transitionDuration = 1f;
-    [SerializeField] private float fadeTime = 0.5f;
+    [SerializeField] private float           transitionDuration = 1f;
+    [SerializeField] private float           fadeTime           = 0.5f;
 
     private Coroutine transitionCoroutine;
 
     /// <summary>
     /// Opens the GameMenu-scene, hides the UI buttons
     /// </summary>
-    public void OpenMenu()
+    public async void OpenMenu()
     {
-        GameManager.gm.IsPaused = true;
+        GameManager.gm.PauseGame();
         gameButtons.SetActive(false);
-        SceneManager.LoadScene("GameMenuScene", LoadSceneMode.Additive);
+
+        
+        // '_ =' throws away the await
+        await SceneController.sc.TransitionScene(SceneController.SceneName.Loading,
+        SceneController.SceneName.GameMenuScene,
+        SceneController.TransitionType.Additive,
+        false);
+        
+        // if gamemanager is null, we are in epilogue.
+        // We use this bool to decide if we should hide certain buttons.
+        // This way, they are correctly disabled/enabled each time the menu is opened.
+        bool inEpilogue = GameManager.gm == null;
+        // Not the cleanest, but functional.
+        GameObject.Find("SaveButton").SetActive(!inEpilogue); // disable in Epilogue
+        GameObject.Find("LoadButton").SetActive(!inEpilogue); // disable in Epilogue
+
     }
 
     /// <summary>
@@ -36,10 +53,22 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        GameManager.gm.IsPaused = false;
+        if (GameManager.gm != null)
+            GameManager.gm.UnpauseGame();
         gameButtons.SetActive(true);
     }
-    
+
+    /// <summary>
+    /// Toggles the notebook scene by calling Scenecontroller, if its not null
+    /// </summary>
+    /// <param name="button"></param>
+    public void ToggleNotebook(Button button)
+    {
+        if (SceneController.sc != null)
+        {
+            SceneController.sc.ToggleNotebookScene(button, menuButton);
+        }
+    }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.
