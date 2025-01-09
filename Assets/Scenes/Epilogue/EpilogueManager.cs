@@ -174,13 +174,13 @@ public class EpilogueManager : MonoBehaviour
         if (hasWon)
             switch (story.storyID)
             {
-                case 1:
+                case 0:
                     SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyAWon, true);
                     break;
-                case 2:
+                case 1:
                     SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyBWon, true);
                     break;
-                case 3:
+                case 2:
                     SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.storyCWon, true);
                     break;
             }
