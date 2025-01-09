@@ -169,6 +169,9 @@ public class EpilogueManager : MonoBehaviour
     /// </summary>
     public async void EndEpilogue(bool hasWon)
     {
+        // Destroy Toolbox
+        Destroy(GameObject.Find("Toolbox"));
+        
         // TODO: Allegedly this is invalid, but it still gets unloaded. weird.
         // Unload Dialogue
         await sc.TransitionScene(
