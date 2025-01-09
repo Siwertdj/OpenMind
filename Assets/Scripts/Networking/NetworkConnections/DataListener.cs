@@ -305,14 +305,15 @@ public class DataListener : DataNetworker
 
     protected override bool IsDisconnected(string signature, int interval, out Socket info)
     {
-       
         for (var i = 0; i < connections.Count; i++)
         {
             DateTime now = DateTime.Now;
             if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds <= interval * 2)
             {
                 info = connections[i];
-                connections.Remove(connections[i]);
+                /*connections.RemoveAt(i);
+                isConnectionReceiving.RemoveAt(i);
+                lastReceveivedMessage.RemoveAt(i);*/
                 return true;
             }
         }
