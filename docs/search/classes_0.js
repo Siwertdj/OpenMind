@@ -5,6 +5,5 @@ var searchData=
   ['characterinstance_2',['CharacterInstance',['../classCharacterInstance.html',1,'']]],
   ['characterinstanceedittest_3',['CharacterInstanceEditTest',['../classCharacterInstanceEditTest.html',1,'']]],
   ['contentdialogueobject_4',['ContentDialogueObject',['../classContentDialogueObject.html',1,'']]],
-  ['customgameevent_5',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
-  ['cutscenecontroller_6',['CutsceneController',['../classCutsceneController.html',1,'']]]
+  ['customgameevent_5',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]]
 ];

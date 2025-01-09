@@ -6,5 +6,5 @@ var searchData=
   ['loadintro_3',['LoadIntro',['../classStorySelectionManager.html#a9c02f89933a85deee1305ef026859ee2',1,'StorySelectionManager']]],
   ['loadscene_4',['LoadScene',['../classSceneController.html#a1886975d0e0ca40771807899dcbbaf3a',1,'SceneController']]],
   ['loadscenecoroutine_5',['LoadSceneCoroutine',['../classSceneController.html#af19e5c765b3f21c4875bc0ca5a858415',1,'SceneController']]],
-  ['loadselectstory_6',['LoadSelectStory',['../classCutsceneController.html#a00b1da052dd11a05045d5b06d64b2514',1,'CutsceneController']]]
+  ['loadselectstory_6',['LoadSelectStory',['../classPrologueController.html#ad2b0f5f7ff15ac6431534e10e579ba77',1,'PrologueController']]]
 ];

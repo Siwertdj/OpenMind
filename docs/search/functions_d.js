@@ -1,7 +1,7 @@
 var searchData=
 [
   ['pausecurrenttimeline_0',['PauseCurrentTimeline',['../classIntroductionManager.html#a499dd61b5e50e4ccbfbc5c6b130e85cf',1,'IntroductionManager']]],
-  ['pausetimeline_1',['PauseTimeline',['../classCutsceneController.html#a6fa346b709dc75f9e8d79dd7f7ad9ea5',1,'CutsceneController']]],
+  ['pausetimeline_1',['PauseTimeline',['../classPrologueController.html#a0c49f8f925558f4fb209743c9ee11e0f',1,'PrologueController']]],
   ['pausetutorial_2',['PauseTutorial',['../classTutorialManager.html#a570d44c3d9140a9dd857c104bc2ab848',1,'TutorialManager']]],
   ['pausetutorialtest_3',['PauseTutorialTest',['../classTutorialManagerPlayTest.html#a3f0ee8928a2084c3be3c51234459260b',1,'TutorialManagerPlayTest']]],
   ['phoneanimation_4',['PhoneAnimation',['../classDialogueManager.html#a65c40050a777b7fb7c126ab74b30945f',1,'DialogueManager']]],

@@ -31,7 +31,7 @@ var searchData=
   ['continuecurrenttimeline_28',['ContinueCurrentTimeline',['../classIntroductionManager.html#af60b5d169482bb4b9894d88012c799ba',1,'IntroductionManager']]],
   ['continuegame_29',['ContinueGame',['../classStartMenuManager.html#a90cb33482dfc0185ad9b238f9a3f779f',1,'StartMenuManager']]],
   ['continuetalking_30',['ContinueTalking',['../classDialogueManager.html#a2ce173f6c3ce12c042d519611c133580',1,'DialogueManager']]],
-  ['continuetimeline_31',['ContinueTimeline',['../classCutsceneController.html#aaa3b7c765271afae505d43754e0491cb',1,'CutsceneController']]],
+  ['continuetimeline_31',['ContinueTimeline',['../classPrologueController.html#a64ecab56cec3ad6c9c828ddbedc47c76',1,'PrologueController']]],
   ['cpauseintrotest_32',['CPauseIntroTest',['../classIntroductionManagerPlayTest.html#a777f1adb8416451fb98464d83a784e71',1,'IntroductionManagerPlayTest']]],
   ['cplayintrotest_33',['CPlayIntroTest',['../classIntroductionManagerPlayTest.html#a804dcf81820d4cc4b9042acde660c402',1,'IntroductionManagerPlayTest']]],
   ['createbackbutton_34',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],

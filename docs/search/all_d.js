@@ -13,7 +13,7 @@ var searchData=
   ['onenable_10',['OnEnable',['../classGameEventListener.html#af1d5585a115b74d5e304d79fa73775ab',1,'GameEventListener']]],
   ['oneventraised_11',['OnEventRaised',['../classGameEventListener.html#a80db09b3e43a86b2a0a5832da81a5c47',1,'GameEventListener']]],
   ['ontextsizechanged_12',['OnTextSizeChanged',['../classDialogueManager.html#a293c22132389efdfab0b7a87f0c31407',1,'DialogueManager.OnTextSizeChanged()'],['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager.OnTextSizeChanged()']]],
-  ['ontogglevaluechanged_13',['OnToggleValueChanged',['../classCutsceneController.html#a92b61004cbad935341f6bff2f69d3426',1,'CutsceneController']]],
+  ['ontogglevaluechanged_13',['OnToggleValueChanged',['../classPrologueController.html#a558b5972496b5f0a43b1156cd9adc426',1,'PrologueController']]],
   ['opencharactertab_14',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
   ['openmenu_15',['OpenMenu',['../classUIManager.html#a05733c9cb003a5f95d51ecc752832985',1,'UIManager']]],
   ['openpersonalnotes_16',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
@@ -21,6 +21,5 @@ var searchData=
   ['openpopup_18',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
   ['openresponsedialogueobject_19',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html',1,'OpenResponseDialogueObject'],['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject.OpenResponseDialogueObject()']]],
   ['opensettings_20',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
-  ['openskipprologueprompt_21',['OpenSkipProloguePrompt',['../classStartMenuManager.html#af41e5b7748fda468662a1174555c810b',1,'StartMenuManager']]],
-  ['overlaycolor_22',['OverlayColor',['../classCharacterIcon.html#a899c17b436082e819399fe6573afe8f2',1,'CharacterIcon']]]
+  ['overlaycolor_21',['OverlayColor',['../classCharacterIcon.html#a899c17b436082e819399fe6573afe8f2',1,'CharacterIcon']]]
 ];

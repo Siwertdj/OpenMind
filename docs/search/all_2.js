@@ -16,7 +16,7 @@ var searchData=
   ['characterdata_13',['CharacterData',['../classCharacterData.html',1,'']]],
   ['charactericon_14',['CharacterIcon',['../classCharacterIcon.html',1,'CharacterIcon'],['../structNPCSelectOverview_1_1CharacterIcon.html',1,'NPCSelectOverview.CharacterIcon']]],
   ['characterinactivetest_15',['CharacterInactiveTest',['../classNPCSelectPlayTest.html#aee43ee17f8a6a72b5e1620087caa506a',1,'NPCSelectPlayTest']]],
-  ['characterinstance_16',['CharacterInstance',['../classCharacterInstance.html#aced72f3c0760acb5e2f8986e2e018eeb',1,'CharacterInstance.CharacterInstance()'],['../classCharacterInstance.html',1,'CharacterInstance']]],
+  ['characterinstance_16',['CharacterInstance',['../classCharacterInstance.html',1,'CharacterInstance'],['../classCharacterInstance.html#aced72f3c0760acb5e2f8986e2e018eeb',1,'CharacterInstance.CharacterInstance()']]],
   ['characterinstanceedittest_17',['CharacterInstanceEditTest',['../classCharacterInstanceEditTest.html',1,'']]],
   ['characterinstanceinittest_18',['CharacterInstanceInitTest',['../classCharacterInstanceEditTest.html#ac0f55e14722c86e67a0c60a53b41b1a1',1,'CharacterInstanceEditTest']]],
   ['children_19',['Children',['../classNPCSelectScroller.html#a6e3b934c625d034acf9890b6f3c5b20b',1,'NPCSelectScroller']]],
@@ -35,7 +35,7 @@ var searchData=
   ['continuecurrenttimeline_32',['ContinueCurrentTimeline',['../classIntroductionManager.html#af60b5d169482bb4b9894d88012c799ba',1,'IntroductionManager']]],
   ['continuegame_33',['ContinueGame',['../classStartMenuManager.html#a90cb33482dfc0185ad9b238f9a3f779f',1,'StartMenuManager']]],
   ['continuetalking_34',['ContinueTalking',['../classDialogueManager.html#a2ce173f6c3ce12c042d519611c133580',1,'DialogueManager']]],
-  ['continuetimeline_35',['ContinueTimeline',['../classCutsceneController.html#aaa3b7c765271afae505d43754e0491cb',1,'CutsceneController']]],
+  ['continuetimeline_35',['ContinueTimeline',['../classPrologueController.html#a64ecab56cec3ad6c9c828ddbedc47c76',1,'PrologueController']]],
   ['cpauseintrotest_36',['CPauseIntroTest',['../classIntroductionManagerPlayTest.html#a777f1adb8416451fb98464d83a784e71',1,'IntroductionManagerPlayTest']]],
   ['cplayintrotest_37',['CPlayIntroTest',['../classIntroductionManagerPlayTest.html#a804dcf81820d4cc4b9042acde660c402',1,'IntroductionManagerPlayTest']]],
   ['createbackbutton_38',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],
@@ -47,6 +47,5 @@ var searchData=
   ['csetuptest_44',['CSetUpTest',['../classIntroductionManagerPlayTest.html#a158350597e5a383e445e300f7df7bf12',1,'IntroductionManagerPlayTest']]],
   ['culpritselectepiloguetransition_45',['CulpritSelectEpilogueTransition',['../classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563',1,'GameManagerPlayTest']]],
   ['customgameevent_46',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
-  ['cutscenecontroller_47',['CutsceneController',['../classCutsceneController.html',1,'']]],
-  ['cycletransition_48',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
+  ['cycletransition_47',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
 ];

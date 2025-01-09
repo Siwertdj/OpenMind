@@ -38,5 +38,8 @@ var searchData=
   ['getsavefolderlocation_35',['GetSaveFolderLocation',['../classFilePathConstants.html#a15fb1698f35e008699e5af53d6c44e16',1,'FilePathConstants']]],
   ['getscenename_36',['GetSceneName',['../classSceneController.html#aa06a91bf01b99e2c4e1c8a19c1bdffd5',1,'SceneController']]],
   ['gettargetpos_37',['GetTargetPos',['../classNPCSelectScroller.html#afa52ee14117b0e1c114c69478d527ef0',1,'NPCSelectScroller']]],
-  ['gettextsize_38',['GetTextSize',['../classSettingsMenuManager.html#adac403d9996c74464b253e96abdfc46d',1,'SettingsMenuManager']]]
+  ['gettextsize_38',['GetTextSize',['../classSettingsMenuManager.html#adac403d9996c74464b253e96abdfc46d',1,'SettingsMenuManager']]],
+  ['getuserdatafilelocation_39',['GetUserDataFileLocation',['../classFilePathConstants.html#ad062c61404c6df99edd666133ff4c1e9',1,'FilePathConstants']]],
+  ['getuserdatafolderlocation_40',['GetUserDataFolderLocation',['../classFilePathConstants.html#a802cbdbd129db15e1f3e45a80b8cb29c',1,'FilePathConstants']]],
+  ['getuserdatavalue_41',['GetUserDataValue',['../classFetchUserData.html#a0938af0c85902fa0f3984062d7a80efa',1,'FetchUserData']]]
 ];

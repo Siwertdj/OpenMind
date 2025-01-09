@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['activatecloudillusion_0',['ActivateCloudIllusion',['../classCutsceneController.html#a3ca2bae6b4a79f34afc0319d2467ad10',1,'CutsceneController']]],
-  ['activatedialog_1',['ActivateDialog',['../classCutsceneController.html#a9d472d735bb64b05d96c593be85e4e66',1,'CutsceneController']]],
-  ['activategridillusion_2',['ActivateGridIllusion',['../classCutsceneController.html#a331ab39df12c86f2aef2aed695799152',1,'CutsceneController']]],
+  ['activatecloudillusion_0',['ActivateCloudIllusion',['../classPrologueController.html#a77c11b8dddab690754aadb32500f0dd8',1,'PrologueController']]],
+  ['activatedialog_1',['ActivateDialog',['../classPrologueController.html#a33125bf3fa8ca398b9b0ba9eaede0697',1,'PrologueController']]],
+  ['activategridillusion_2',['ActivateGridIllusion',['../classPrologueController.html#a3f594571080337ce87b330fdbedcaab0',1,'PrologueController']]],
   ['activatenotebooktutorial_3',['ActivateNotebookTutorial',['../classTutorialManager.html#a5775ed776dd41ee8af9b0453329f3d76',1,'TutorialManager']]],
   ['activecharacterstest_4',['ActiveCharactersTest',['../classGameManagerPlayTest.html#ad448e2e588505a3beece4badc02782a4',1,'GameManagerPlayTest']]],
   ['addleaf_5',['AddLeaf',['../classDialogueContainer.html#ad59e2badeae790d3adb3a1f84d366b86',1,'DialogueContainer']]],
