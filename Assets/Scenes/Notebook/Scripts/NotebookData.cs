@@ -30,7 +30,7 @@ public class NotebookData
             _pages[character] = page;
         }
         
-        _personalNotes = "Write down your thoughts.";
+        //_personalNotes = "Write down your thoughts.";
     }
 
     /// <summary>
@@ -43,6 +43,15 @@ public class NotebookData
         _pages = pages;
         _personalNotes = personalNotes;
     }
+
+    /// <summary>
+    /// Gets placeholder text from character
+    /// </summary>
+    public string GetCharacterPlaceholder(CharacterInstance character)
+    {
+        return _pages[character].GetPlaceholder();
+    }
+
 
     /// <summary>
     /// Get the notes the player has written about a character.

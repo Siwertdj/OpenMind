@@ -103,7 +103,7 @@ public class NotebookManager : MonoBehaviour
         currentCharacterIndex = -1;
 
         // Save character notes
-        SaveNotes();
+        if (characterInfo.activeSelf) SaveNotes();
 
         // Close the character tab 
         characterInfo.SetActive(false);
@@ -112,6 +112,7 @@ public class NotebookManager : MonoBehaviour
         var inputField = personalInputField.GetComponent<TMP_InputField>();
         inputField.gameObject.SetActive(true);
         inputField.text = notebookData.GetPersonalNotes();
+        Debug.Log("Loaded text: " + notebookData.GetPersonalNotes());
 
         // Set font sizes
         inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
@@ -145,7 +146,7 @@ public class NotebookManager : MonoBehaviour
             Destroy(page.gameObject);
 
         // Save notes
-        SaveNotes();
+        if (characterInfo.activeSelf) SaveNotes();
 
         // Deactivate the personal notes tab if it's opened
         if (personalInputField.gameObject.activeInHierarchy)
@@ -180,8 +181,12 @@ public class NotebookManager : MonoBehaviour
 
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
-        inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        var inpuObjectField = inputObject.GetComponent<TMP_InputField>();
+        inpuObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
+        inpuObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
+            = notebookData.GetCharacterPlaceholder(currentCharacter);
+
+        inpuObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
@@ -366,6 +371,7 @@ public class NotebookManager : MonoBehaviour
         {
             // Save the written personal text to the notebook data
             notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
+            Debug.Log("Saved: " + personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
