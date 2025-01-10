@@ -19,5 +19,6 @@ var searchData=
   ['openpersonalnotestest_16',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
   ['openpopup_17',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
   ['openresponsedialogueobject_18',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject']]],
-  ['opensettings_19',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]]
+  ['opensettings_19',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
+  ['optionstest_20',['OptionsTest',['../classSelectionManagerTest.html#aec278a045a07ce121c5d83eb42e0765e',1,'SelectionManagerTest']]]
 ];

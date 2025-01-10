@@ -77,6 +77,7 @@ public class GameManagerPlayTest
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
         SceneController.sc.UnloadAdditiveScenes();
+        Debug.Log("test");
     }
     
     /// <summary>

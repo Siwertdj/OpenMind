@@ -1,7 +1,7 @@
 var searchData=
 [
   ['tabanimationcoroutine_0',['TabAnimationCoroutine',['../classNotebookTabButton.html#ab0b363f07089cdf9cb6e31cd07f0f03a',1,'NotebookTabButton']]],
-  ['teardown_1',['TearDown',['../classDialogueManagerPlayTest.html#ad5f5a406afc3ac5f2912ed05342d718b',1,'DialogueManagerPlayTest.TearDown()'],['../classGameManagerPlayTest.html#aa89a5d1b27e6dd8550daa5ed25805be1',1,'GameManagerPlayTest.TearDown()']]],
+  ['teardown_1',['TearDown',['../classDialogueManagerPlayTest.html#ad5f5a406afc3ac5f2912ed05342d718b',1,'DialogueManagerPlayTest.TearDown()'],['../classGameManagerPlayTest.html#aa89a5d1b27e6dd8550daa5ed25805be1',1,'GameManagerPlayTest.TearDown()'],['../classSelectionManagerTest.html#a1549fbe3969e36af8b4be03054567793',1,'SelectionManagerTest.TearDown()']]],
   ['test_5fcharactersingame_2',['Test_CharactersInGame',['../classGameManager.html#aea663eaabf0ab28a17d1037cc2df01ee',1,'GameManager']]],
   ['testinitialloading_3',['TestInitialLoading',['../classSavingLoadingTestFilePaths.html#a4e62bf57e35692af0c4ca0ab0cf2e283',1,'SavingLoadingTestFilePaths']]],
   ['testinitialsave_4',['TestInitialSave',['../classSavingLoadingTestFilePaths.html#a196f9f1636ec2051746faefa083d336f',1,'SavingLoadingTestFilePaths']]],

@@ -21,5 +21,6 @@ var searchData=
   ['openpopup_18',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
   ['openresponsedialogueobject_19',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html',1,'OpenResponseDialogueObject'],['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject.OpenResponseDialogueObject()']]],
   ['opensettings_20',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
-  ['overlaycolor_21',['OverlayColor',['../classCharacterIcon.html#a899c17b436082e819399fe6573afe8f2',1,'CharacterIcon']]]
+  ['optionstest_21',['OptionsTest',['../classSelectionManagerTest.html#aec278a045a07ce121c5d83eb42e0765e',1,'SelectionManagerTest']]],
+  ['overlaycolor_22',['OverlayColor',['../classCharacterIcon.html#a899c17b436082e819399fe6573afe8f2',1,'CharacterIcon']]]
 ];
