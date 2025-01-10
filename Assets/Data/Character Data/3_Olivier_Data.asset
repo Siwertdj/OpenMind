@@ -14,79 +14,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Olivier
   id: 3
-  avatar: {fileID: 21300000, guid: 4fd19ba46f9fb984b8712a7a57e3f9a6, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: 4fd19ba46f9fb984b8712a7a57e3f9a6, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.1
+  facePivot: {x: 0.5007, y: 0.8389}
   answers:
   - question: 13
-    answer:
-    - 'I am Christian, so the most important person to me '
-    - is Jesus Christ.
-    - It's my goal to be as much like him as possible.
+    answer: {fileID: 11400000, guid: ab098bcce36a59e4084e4b455efed9a2, type: 2}
     trait:
     - Jesus Christ is the most important person in my life.
   - question: 3
-    answer:
-    - Sifan Hassan is very inspiring to me.
-    - "I think it's great that we\u2019re giving women a chance"
-    - "and that she\u2019s really going for it."
+    answer: {fileID: 11400000, guid: 9ddc1cffe80fbb64eb127cb7d290ca70, type: 2}
     trait:
     - My parents say I am enthusiastic fot the future and I think I am great at listening.
   - question: 9
-    answer:
-    - Yes, I am Christian.
-    - Religion to me is who I think God is, and who God wants to be, to me.
-    - I think God created a beautiful world but things happened
-    - that made it not beautiful anymore but that I am loved and that my purpose
-      is
-    - 'to contribute to make it beautiful again. '
+    answer: {fileID: 11400000, guid: add9cdc5262bc594f95f845c014cae99, type: 2}
     trait:
     - I am a Christian and I believe I am loved by God.
   - question: 2
-    answer:
-    - Life is and has been great.
-    - I have a ton of friends, old and new and I love my family and my girlfriend.
-    - Over the last couple of years I learned that even in hard times
-    - 'there are good things to be appreciated. '
-    - 'So even though things are kind of hard right now I am still doing well. '
+    answer: {fileID: 11400000, guid: f96a5d198af127b43a759a28043d4052, type: 2}
     trait:
     - Life is great, I have bunch of friends and I have learned to see the good things
       in bad times.
   - question: 12
-    answer:
-    - My parents would say my best trait is that I just love life
-    - and that I'm enthusiastic for the future.
-    - 'I think honesty is very important and that I am a great listener. '
-    - "But sometimes I think I\u2019m a little too dominant in conversations"
-    - 'which actually makes me a worse listener.  '
+    answer: {fileID: 11400000, guid: 29f0dcfce5a37cc42aeaf0448cd6ac4f, type: 2}
     trait:
     - My parents say I am enthusiastic fot the future and I think I am great at listening.
   - question: 6
-    answer:
-    - "I think we\u2019re going in the wrong direction."
-    - "We\u2019re listening to each other less and less and that means it is becoming
-      harder "
-    - and harder to come up with solutions that work.
-    - I also worry about the climate and
-    - "I think we\u2019re not doing enough about inequality. "
+    answer: {fileID: 11400000, guid: eb65b39b96542c349ae15d37784355b0, type: 2}
     trait:
     - I am worried about the political climate because we're listening to each other
       less and less.
   - question: 10
-    answer:
-    - I just finished my bachelors degree.
+    answer: {fileID: 11400000, guid: 9b190406386349e41847fb479b012c81, type: 2}
     trait:
     - I have a bachelors degree.
   - question: 20
-    answer:
-    - I am not a vegetarian,
-    - but if I look at the way meat is produced,
-    - I can see that this is not the way God intended.
+    answer: {fileID: 11400000, guid: d460966fdaa5f4a44a4cfe663c533b60, type: 2}
     trait:
     - I am not a vegetarian, but I don't like the way meat is produced.
   - question: 7
-    answer:
-    - I am super extroverted,
-    - I study a lot but I also love meeting up with friends.
+    answer: {fileID: 11400000, guid: 69c767facd41f8c4897c256b57126771, type: 2}
     trait:
     - I love to hang out with my friends.
   greetings:

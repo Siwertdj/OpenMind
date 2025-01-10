@@ -36,8 +36,6 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SetSceneType();
-        
         // Change the text size
         confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
         headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
@@ -92,18 +90,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     #endregion
-    
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
-    }
-
+  
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>
@@ -148,6 +135,7 @@ public class SelectionManager : MonoBehaviour
         if (!character.isActive)
             return;
 
+        /*
         // Start the epilogue scene if CulpritSelect is active
         if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
         {
@@ -160,7 +148,7 @@ public class SelectionManager : MonoBehaviour
             // Load the epilogue scene.
             GameManager.gm.StartEpilogueDialogue(character);
         }
-        else
+        else*/
         {
             // No special gamestate, so we start dialogue with the given character
             GameManager.gm.StartDialogue(character);

@@ -12,15 +12,15 @@ public class CharacterInstance
 {
     public CharacterData data;
 
-    public Dictionary<Question, List<string>> Answers = new();
+    public Dictionary<Question, DialogueContainer> Answers = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
     public List<Question> AskedQuestions = new();
 
-    public string characterName;
-    public int id;
-    public Sprite avatar;
-    public float pitch;
+    public string       characterName;
+    public int          id;
+    public List<(Emotion, Sprite)> avatarEmotions;
+    public float        pitch;
 
     public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
@@ -36,7 +36,7 @@ public class CharacterInstance
         this.data = data;
         characterName = data.characterName;
         id = data.id;
-        avatar = data.avatar;
+        ParseEmotionSprites(data.neutralAvatar, data.happyAvatar, data.unhappyAvatar);
         pitch = data.voicePitch;
 
         InitializeQuestions();
@@ -45,7 +45,7 @@ public class CharacterInstance
     /// <summary>
     /// Get a random greeting from the character's list of greetings.
     /// </summary>
-    /// <returns>A greeting in the form of dialogue lines.</returns>
+    /// <returns>A greeting in the form of dialogue segments.</returns>
     public List<string> GetGreeting()
     {
         // Pick random greeting from data list
@@ -59,91 +59,34 @@ public class CharacterInstance
         return new() { "Hello" };
     }
 
-    /// <summary>
-    /// Get the epilogue dialogue depending on the players choice at the end of the game.
-    /// </summary>
-    /// <param name="hasWon">Whether the player has chosen the correct character at the end</param>
-    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
-    public List<List<string>> GetEpilogueDialogue(bool hasWon)
+    private void ParseEmotionSprites(Sprite neutralSprite, Sprite happySprite, Sprite unhappySprite)
     {
-        if (hasWon)
-            return EpilogueWinScenario();
+        avatarEmotions = new List<(Emotion, Sprite)>();
+        TryAdd(avatarEmotions, Emotion.Neutral, neutralSprite, neutralSprite);
+        TryAdd(avatarEmotions, Emotion.Happy, happySprite, neutralSprite);
+        TryAdd(avatarEmotions, Emotion.Unhappy, unhappySprite, neutralSprite);
+    }
+
+    private void TryAdd(List<(Emotion,Sprite)> list, Emotion emotion, Sprite newAvatar, Sprite defaultAvatar)
+    {
+        if (newAvatar != null)
+        {
+            list.Add((emotion, newAvatar));
+        }
+        else if (defaultAvatar != null)
+        {
+            list.Add((emotion, defaultAvatar));
+        }
         else
-            return EpilogueLoseScenario();
+        {
+            Debug.LogError("Default avatar is null.");
+        }
     }
 
-    /// <summary>
-    /// Helper function for <see cref="GetEpilogueDialogue"/> which gives the scenario for when the player guesses the culprit.
-    /// </summary>
-    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
-    private List<List<string>> EpilogueWinScenario()
+    public Sprite GetAvatar()
     {
-        List<string> speakingText1 = new List<string>()
-        {
-            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName + ".",
-            "I was indeed the one who kept sending you messages.",
-            "and in fact, I knew that you did not know who was sending the messages.",
-            "You managed to guess correctly, and so i wanted to ask you the following:",
-            "What made you think it was me sending the messages?"
-        };
-        List<string> speakingText2 = new List<string>()
-        {
-            "Okay, thats very interesting!",
-            "Now I have another question for you:",
-            "Have you found something about me that you can relate to?"
-        };
-        List<string> speakingText3 = new List<string>()
-        {
-            "Alright very cool.",
-            "I have to go now.",
-            "I do not want to miss the bus.",
-            "Goodbye."
-        };
-        // List of lists, where in between each list an OpenResponseObject will be called.
-        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3};
-        return retval;
-    }
-
-    /// <summary>
-    /// Helper function for <see cref="GetEpilogueDialogue"/> which gives the scenario for when the player does not guess the correct culprit
-    /// </summary>
-    /// <returns> Returns a list of list with type string, where after every list with type string an open question will be asked. </returns>
-    private List<List<string>> EpilogueLoseScenario()
-    {
-        List<string> speakingText1 = new List<string>()
-        { 
-            "Hi I'm " + GameManager.gm.FinalChosenCuplrit.characterName,
-            "You are asking me if I was sending you messages?",
-            "I am sorry but I do not know what you are talking about.",
-            "I have to go now, bye."
-        };
-        List<string> speakingText2 = new List<string>()
-        { 
-            "Well that was pretty awkward, wasn't it?",
-            "I'm " + GameManager.gm.GetCulprit().characterName,
-            "I am the one who kept sending you messages.",
-            "and in fact, I knew that you did not know who",
-            "was sending the messages.",
-            "You did not guess correctly unfortunately.",
-            "Despite that, I still wanted to to ask you the following:",
-            "What made you think it was me sending the messages?"
-        };
-        List<string> speakingText3 = new List<string>()
-        { 
-            "Okay, thats very interesting!",
-            "Now I have another question for you:",
-            "Have you found something about me that you can relate to?"
-        };
-        List<string> speakingText4 = new List<string>()
-        { 
-            "Alright very cool.",
-            "I have to go now.",
-            "I do not want to miss the bus.",
-            "Goodbye." 
-        };
-        // List of lists, where in between each list an OpenResponseObject will be called.
-        List<List<string>> retval = new List<List<string>>(){speakingText1, speakingText2, speakingText3, speakingText4};
-        return retval;
+        
+        return avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;
     }
 
     /// <summary>

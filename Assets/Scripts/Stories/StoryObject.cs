@@ -1,7 +1,8 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// A scriptable object which contains the settings pertaining to a Story-type.
@@ -14,11 +15,14 @@ public class StoryObject : ScriptableObject
     
     [Header("Story Assets")]
     [SerializeField] public GameObject dialogueBackground;
-    [SerializeField] public GameObject hintBackground;
-    [SerializeField] public GameObject epilogueBackground;
-    [SerializeField] public AudioClip  storyIntroMusic;
-    [SerializeField] public AudioClip  storyGameMusic;
-    [SerializeField] public AudioClip  storyEpilogueMusic;
+    [SerializeField] public GameObject        hintBackground;
+    [SerializeField] public GameObject        epilogueBackground;
+    [SerializeField] public AudioClip         storyIntroMusic;
+    [SerializeField] public AudioClip         storyGameMusic;
+    [SerializeField] public AudioClip         storyEpilogueMusic;
+    [SerializeField] public DialogueContainer storyEpilogueWonDialogue;
+    [SerializeField] public DialogueContainer storyEpilogueLossDialogueCulprit;
+    [SerializeField] public DialogueContainer storyEpilogueLossDialogueNPC;
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;

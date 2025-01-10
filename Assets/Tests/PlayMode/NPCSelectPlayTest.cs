@@ -20,19 +20,12 @@ public class NPCSelectPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
-
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
 
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -50,7 +43,9 @@ public class NPCSelectPlayTest
     [TearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to scene to unload after
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NPCSelectScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("NPCSelectScene"));
         SceneController.sc.UnloadAdditiveScenes();
     }
 
@@ -252,7 +247,7 @@ public class NPCSelectPlayTest
             yield return new WaitForSeconds(scroller.scrollDuration);
 
             // Only test x value, as y value is irrelevant
-            Assert.AreEqual(Screen.width / 2, scroller.Test_Children[childIndex].position.x,
+            Assert.AreEqual((double)Screen.width / 2, scroller.Test_Children[childIndex].position.x,
                 $"The child is at x position {scroller.Test_Children[childIndex].position.x}, " +
                 $"but the center of the screen is at {Screen.width / 2}");
         }

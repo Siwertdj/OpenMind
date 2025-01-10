@@ -431,8 +431,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Talk to Name
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
+  m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -456,8 +456,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64
-  m_fontSizeBase: 64
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -639,6 +639,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &330808627
 GameObject:
   m_ObjectHideFlags: 0
@@ -762,6 +763,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!225 &330808633
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1449,7 +1451,7 @@ MonoBehaviour:
   defaultColor: {r: 0.5622641, g: 0.5622641, b: 0.5622641, a: 0.88235295}
   inactiveColor: {r: 0.23018861, g: 0.23018861, b: 0.23018861, a: 0.88235295}
   scroller: {fileID: 1885397429}
-  iconPrefab: {fileID: 5123050558345340525, guid: 66cdd307d9d18694a9986771cf059cd4, type: 3}
+  iconPrefab: {fileID: 8512552333905423466, guid: de437236670d9134a85876b278b7a03b, type: 3}
 --- !u!1 &1659958910
 GameObject:
   m_ObjectHideFlags: 0
@@ -1663,6 +1665,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1818185164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,8 +1876,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Who do you want to talk to?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
+  m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1898,12 +1901,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 62
-  m_fontSizeBase: 36
+  m_fontSize: 80.1
+  m_fontSizeBase: 0
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 100
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -1934,7 +1937,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 22.808258, y: 0, z: 19.957275, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
