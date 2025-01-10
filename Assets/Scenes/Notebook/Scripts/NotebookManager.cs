@@ -112,7 +112,6 @@ public class NotebookManager : MonoBehaviour
         var inputField = personalInputField.GetComponent<TMP_InputField>();
         inputField.gameObject.SetActive(true);
         inputField.text = notebookData.GetPersonalNotes();
-        Debug.Log("Loaded text: " + notebookData.GetPersonalNotes());
 
         // Set font sizes
         inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
