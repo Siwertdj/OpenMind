@@ -4,13 +4,11 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using NUnit.Framework;
-using UnityEngine.SocialPlatforms.Impl;
-using JetBrains.Annotations;
 
 public class SelectionManagerTest
 {
     private StoryObject story;
-    //private GameManager gm;
+
     /// <summary>
     /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
     /// </summary>
@@ -51,7 +49,6 @@ public class SelectionManagerTest
         SceneController.sc.UnloadAdditiveScenes();
     }
 
-
     /// <summary>
     /// Test if gamestate is set correctly
     /// </summary>
@@ -61,7 +58,6 @@ public class SelectionManagerTest
         Assert.AreEqual(GameManager.GameState.NpcSelect, GameManager.gm.gameState);
         yield return null;
     }
-
 
     /// <summary>
     /// Test if enough options are generated.
@@ -82,5 +78,4 @@ public class SelectionManagerTest
 
         yield return null;
     }
-
 }
