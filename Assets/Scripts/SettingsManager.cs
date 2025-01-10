@@ -208,9 +208,6 @@ public class SettingsManager : MonoBehaviour
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
         musicIsFading = true;
-
-        // initialize variables
-        float startVolume = musicSource.volume;
         
         // Start loading the new clip
         // In the clip settings, "Load in Background" should be enabled,
@@ -224,10 +221,11 @@ public class SettingsManager : MonoBehaviour
 
         while (musicSource.volume > 0)
         {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
+            musicSource.volume -= Time.deltaTime / fadeTime;
             yield return null;
         }
         musicSource.Stop();
+
         // Unload the old clip (Unity does not do this automatically)
         if (musicSource.clip != null)
             musicSource.clip.UnloadAudioData();
@@ -242,7 +240,7 @@ public class SettingsManager : MonoBehaviour
         // Fade in the clip
         while (musicSource.volume < 1)
         {
-            musicSource.volume += startVolume * Time.deltaTime / fadeTime;
+            musicSource.volume += Time.deltaTime / fadeTime;
             yield return null;
         }
 
