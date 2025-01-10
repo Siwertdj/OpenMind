@@ -30,6 +30,9 @@ public class SettingsManager : MonoBehaviour
     
     // Text size to be used for the text components
     [NonSerialized] public TextSize textSize;
+
+    private Coroutine musicFadeCoroutine;
+    private bool musicIsFading = false;
     
     public enum TextSize
     {
@@ -184,7 +187,10 @@ public class SettingsManager : MonoBehaviour
             // If the newclip is different than the current clip, we fade the new one in.
             if (newClip != musicSource.clip)
             {
-                StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+                if (musicIsFading)
+                    StopCoroutine(musicFadeCoroutine);
+
+                musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
             }
         }
         
@@ -201,6 +207,8 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
+        musicIsFading = true;
+
         // initialize variables
         float startVolume = musicSource.volume;
         
@@ -224,7 +232,6 @@ public class SettingsManager : MonoBehaviour
         if (musicSource.clip != null)
             musicSource.clip.UnloadAudioData();
     
-
         // Wait for the new clip to finish loading
         while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
             yield return null;
@@ -239,6 +246,7 @@ public class SettingsManager : MonoBehaviour
             yield return null;
         }
 
+        musicIsFading = false;
     }
     #endregion
 
