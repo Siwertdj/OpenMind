@@ -32,7 +32,8 @@ MonoBehaviour:
   noMoreHintsDialogue:
   - <victimName> has gone home.
   - The computer is trying to calculate more data...
-  - It seems the computer has run out of memory.
+  - It seems all these calculations have been too heavy on the computer's processor.
+  - The circuit boards are fried. You will not receive any more hints.
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
