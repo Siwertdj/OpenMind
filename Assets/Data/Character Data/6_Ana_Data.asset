@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 6_Ana_Data
+  m_EditorClassIdentifier: 
+  characterName: Ana
+  id: 6
+  avatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
+  voicePitch: 1.6
+  answers:
+  - question: 2
+    answer:
+    - I am doing really well!
+    - I am currently living in a rented studio apartment,
+    - 'I love my job and colleagues and I have a great work/life balance.  '
+    trait:
+    - My life is going great, I have a great job with great colleagues.
+  - question: 3
+    answer:
+    - I have a lot of respect for Cristiano Ronaldo.
+    - He worked so hard so that he can be where is today.
+    - I also look up to Angelina Jolie for all that
+    - she does for Unicef and other humanitarian rights associations.
+    trait:
+    - I have a lot of respect for Cristiano Ronaldo and Angelina Jolie.
+  - question: 6
+    answer:
+    - I think it is concerning that so many countries are
+    - trying to get rid of immigrants and expats,
+    - that they are viewing these people as a threat when they are not.
+    - 'I feel like history is repeating itself.  '
+    trait:
+    - It is concerning that countries are viewing immigrants and expats as a threat.
+  - question: 7
+    answer:
+    - 'I really enjoy going to the gym, hanging out with friends '
+    - and I love to travel.
+    - 'Mexico is my favorite country that I have visited. '
+    - "It was super sunny, there\u2019s a lot of nature,"
+    - 'the people are great and the food is amazing. '
+    trait:
+    - I love travelling, hanging out with friends and going to the gym.
+  - question: 8
+    answer:
+    - I am from Portugal. My parents taught me that it's important to
+    - keep a tidy home and to be close and love your family.
+    - 'They pushed how important family is and I totally agree with them. '
+    trait:
+    - My parents taught me love my family and to keep my home tidy.
+  - question: 11
+    answer:
+    - I think social equality is super, super important.
+    - I find it important that in countries that are not so well developed
+    - 'that women should have the same rights as men and '
+    - that they can be who they want to be.
+    - "I think it\u2019s also important that they have abortion rights"
+    - 'and that they can get a divorce if they want to. '
+    trait:
+    - Social equality is very important to me, I think a lot of developing countries
+      are lacking that.
+  - question: 10
+    answer:
+    - I have a PhD in Life Sciences.
+    trait:
+    - I have a PhD in Life Sciences.
+  - question: 1
+    answer:
+    - I am 29 years old.
+    trait:
+    - I am 29 years old.
+  - question: 13
+    answer:
+    - My brother and I have always been very close, so I'd have to say he's the most
+      important person to me.
+    trait:
+    - My brother is the most important person in my life.
+  greetings:
+  - lines:
+    - Hi!

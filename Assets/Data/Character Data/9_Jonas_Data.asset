@@ -1,0 +1,145 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 9_Jonas_Data
+  m_EditorClassIdentifier: 
+  characterName: Jonas
+  id: 9
+  avatar: {fileID: 21300000, guid: 5e091d5f420e4dd4784e9b0f1440e220, type: 3}
+  voicePitch: 1
+  answers:
+  - question: 1
+    answer:
+    - I am 23 years old.
+    trait:
+    - I am 23 years old.
+  - question: 2
+    answer:
+    - Life's good!
+    - I am living in a privately rented home in a working class neighbourhood, together
+      with with pet rodents.
+    - I feel like I am that one weirdo there.
+    - I don't have a relationship but I have a lot of friends from my studies and
+      from before I started studying.
+    trait:
+    - I am living in a working class neighbourhood and I have a lot of friends.
+  - question: 3
+    answer:
+    - I am a fan of the work that public figures do.
+    - But I am not really a fan of the public figures themselves.
+    trait:
+    - I am inspired by the work that public figures do.
+  - question: 4
+    answer:
+    - I am a transgender man that is mostly asexual.
+    - I am open to both monogamy and polyamory, it all depends on the wishes of my
+      partner
+    - I don't believe there to be one true love though, with eight milliard people
+      on this planet.
+    - I have room in my heart.
+    trait:
+    - I am a transgender and asexual.
+  - question: 5
+    answer:
+    - I am enjoying life right now because I am busy doing things I'm interested
+      in.
+    - I really like gaming and art.
+    - I mean art in the broadest sense of the word.
+    trait:
+    - I enjoy my life right now because I am busy doing things I'm interested in.
+  - question: 9
+    answer:
+    - I am not religious anymore.
+    - I grew up going to church but I don't believe in god and I don't follow those
+      doctrines.
+    trait:
+    - I am not religious, even though I grew up going to church.
+  - question: 10
+    answer:
+    - I am currenlty studying to get my bachelors degree at university.
+    trait:
+    - I am studying to get my bachelors degree at university.
+  - question: 11
+    answer:
+    - My core values are quality and open-mindedness.
+    - I think it is important to be open and to not judge people you have never even
+      spoken to.
+    - Searching for "radical left"  will probably give you an idea of the rest.
+    trait:
+    - My core values are quality and open-mindedness.
+  - question: 12
+    answer:
+    - I am a very passionate person.
+    - When I'm interested in something it becomes my entire life.
+    - One of the things I am very passionate about is social justice.
+    - My friends would probably call me energetic.
+    - In general I'm pretty quiet but when my friends get me started, I can talk
+      for hours.
+    trait:
+    - I am a very passionate person.
+  - question: 13
+    answer:
+    - There are many people that are important to me, for different reasons.
+    - But, I think my grandma is the most important of them all.
+    trait:
+    - My granda is the most important person in my life.
+  - question: 15
+    answer:
+    - I am very impatient, but it's not a time thing.
+    - If something is bothering me, sometimes I don't handle it well.
+    trait:
+    - My negative trait is that I'm impantient.
+  - question: 19
+    answer:
+    - I would pay off my student debt and donate the rest of the money.
+    - I think being a multimillionair is unethical.
+    trait:
+    - If I win the lottery I would pay off my student debt and donate what is left.
+  - question: 6
+    answer:
+    - I think the whole political spectrum is moving towards the right.
+    - I think people forget they are running a country and not a business that needs
+      to make money.
+    trait:
+    - My political opinion is that people forget they are running a country and not
+      a business that needs to make money.
+  - question: 20
+    answer:
+    - I am vegetarian.
+    - Sometimes I accidentally eat vegan because animal products are expensive.
+    - So many people are hungry and we are throwing away milliards kilos of food.
+    trait:
+    - I am vegetarian.
+  - question: 18
+    answer:
+    - I think it is great that we have different levels because not everyone functions
+      in the same way.
+    - That being said, I don't think it's right to consider them higher or lower.
+    - I think we are too focussed on grading how well someone can reproduce something
+      instead of actually understanding and applying it.
+    - Lastly, the social dynamics of high school are not for me.
+    trait:
+    - I think the Dutch school system is too focussed on grading how well someone
+      can reproduce something instead of applying it.
+  - question: 17
+    answer:
+    - I care about the rights of minority groups.
+    - Trans rights to be more specific but also for religious and ethnic minorities.
+    - I think I'm passionate about social justice in general.
+    - Besides that I think trusting science is important.
+    - A lot of people are doing their own research and the legitimacy from real scientific
+      research is declining because of that.
+    trait:
+    - I care about the rights of minority groups.
+  greetings:
+  - lines:
+    - Hello, nice to see you here.

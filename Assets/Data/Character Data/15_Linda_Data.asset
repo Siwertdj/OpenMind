@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be38393e0cd022a4d9f985cbf6a610ec, type: 3}
+  m_Name: 15_Linda_Data
+  m_EditorClassIdentifier: 
+  characterName: Linda
+  id: 15
+  avatar: {fileID: 21300000, guid: df3abe4422ead5344ba16098cd64c5db, type: 3}
+  voicePitch: 1
+  answers:
+  - question: 1
+    answer:
+    - I am 77 years old.
+    trait:
+    - 
+  - question: 2
+    answer:
+    - "It\u2019s great!"
+    - I actually like getting older because I get to be
+    - "proud of who I\u2019ve been and to look back on my life. "
+    trait:
+    - My life is great, I like getting older.
+  - question: 7
+    answer:
+    - I love to bike and I read a lot.
+    - "I\u2019ve actually been reading to three Turkish kids and it\u2019s always
+      so much fun."
+    - They even call me grandma now!
+    - They used not really talk in school, and when they did it was only ever in
+      Turkish,
+    - but now they speak Dutch very well.
+    - "It\u2019s so important to me to get out of your social bubble sometimes. "
+    trait:
+    - I love to bike and I read a lot.
+  - question: 10
+    answer:
+    - I have a nursing degree and I got more training while working at a hospital.
+    trait:
+    - I have a nursing degree.
+  - question: 11
+    answer:
+    - "I think it\u2019s very important to empathize and relate to other people and
+      respect them."
+    - Everyone just wants to be happy.
+    trait:
+    - I think empathy is very important.
+  - question: 13
+    answer:
+    - Definitely my family, my children and my grandchildren.
+    - 'They are so important to me. '
+    trait:
+    - The most important people in my life are my family.
+  - question: 17
+    answer:
+    - I think racism is a very big problem.
+    - 'I always try to talk to people when I hear them making racist remarks. '
+    trait:
+    - 'I think '
+  - question: 16
+    answer:
+    - "I\u2019m super jealous of people with a lot of musical and artistic talent.  "
+    trait:
+    - I'm very jealous of people with a lot of talent.
+  greetings:
+  - lines:
+    - Oh, hello there.
