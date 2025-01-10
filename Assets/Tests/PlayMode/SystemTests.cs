@@ -207,7 +207,6 @@ public class SystemTests
                         else if (GameObject.Find("Skip Dialogue Button") != null)
                             GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
                                 .Invoke();
-                        else Debug.Log("Could not find any button to continue!");
                     }
             }
         }
@@ -715,24 +714,6 @@ public class SystemTests
         var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameLossScene");
         var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
         Assert.IsTrue(gameOver || gameWon);
-        yield return null;
-    }
-
-    [UnityTest]
-    public IEnumerator ChangeSettings()
-    {
-        yield return null;
-    }
-
-    [UnityTest]
-    public IEnumerator RestartGame()
-    {
-        yield return null;
-    }
-
-    [UnityTest]
-    public IEnumerator RetryGame()
-    {
         yield return null;
     }
 }
