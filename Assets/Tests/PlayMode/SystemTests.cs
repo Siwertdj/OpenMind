@@ -57,8 +57,10 @@ public class SystemTests
             SceneController.sc.UnloadAdditiveScenes();
     }
     
+    static int[] stories = new int[] { 0, 1, 2 };
+    
     [UnityTest, Timeout(10000000)]
-    public IEnumerator PlayTheGame()
+    public IEnumerator PlayTheGame([ValueSource(nameof(stories))] int storyID)
     {
         // Find the New Game button and click it
         GameObject.Find("NewGameButton").GetComponent<Button>().onClick.Invoke();
@@ -85,9 +87,24 @@ public class SystemTests
         
         // Check if we are in the StorySelect scene
         Assert.AreEqual(SceneManager.GetSceneByName("StorySelectScene"), SceneManager.GetActiveScene());
-        
+
+        var buttonName = "";
+
+        switch (storyID)
+        {
+            case 0:
+                buttonName = "StoryA_Button";
+                break;
+            case 1:
+                buttonName = "StoryB_Button";
+                break;
+            case 2:
+                buttonName = "StoryC_Button";
+                break;
+        }
+
         // Select story
-        GameObject.Find("StoryA_Button").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(buttonName).GetComponent<Button>().onClick.Invoke();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
         
         // Check if we are in the story intro
