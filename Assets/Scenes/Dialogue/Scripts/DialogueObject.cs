@@ -85,7 +85,9 @@ public class TerminateDialogueObject : DialogueObject
 }
 
 /// <summary>
-/// 
+/// A child of DialogueObject. Executing this object will show the 
+/// previousMessages and the first element of remainingMessages.
+/// A response for the next messages is automatically created.
 /// </summary>
 public class PhoneDialogueObject : DialogueObject
 {
@@ -105,6 +107,10 @@ public class PhoneDialogueObject : DialogueObject
         this.remainingMessages.RemoveAt(0);
     }
 
+    /// <summary>
+    /// Write previousMessages and the first remainingMessage to the screen.
+    /// Automatically adds next messages as response object.
+    /// </summary>
     public override void Execute()
     {
         var dm = DialogueManager.dm;
