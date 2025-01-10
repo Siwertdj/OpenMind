@@ -10,7 +10,7 @@ using JetBrains.Annotations;
 public class SelectionManagerTest
 {
     private StoryObject story;
-    private GameManager gm;
+    //private GameManager gm;
     /// <summary>
     /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
     /// </summary>
@@ -32,10 +32,10 @@ public class SelectionManagerTest
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
         story = stories[0];
 
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+        GameManager.gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // Start the game with the chosen story.
-        gm.StartGame(null, story);
+        GameManager.gm.StartGame(null, story);
 
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
     }
@@ -58,7 +58,7 @@ public class SelectionManagerTest
     [UnityTest]
     public IEnumerator GameStateTest()
     {
-        Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
+        Assert.AreEqual(GameManager.GameState.NpcSelect, GameManager.gm.gameState);
         yield return null;
     }
 
@@ -70,7 +70,7 @@ public class SelectionManagerTest
     public IEnumerator OptionsTest()
     {
         GameObject parent = GameObject.Find("Layout");
-        int numOfCharacters = gm.currentCharacters.Count;
+        int numOfCharacters = GameManager.gm.currentCharacters.Count;
 
         int c = 0;
         for (int i = 0; i < 8;  i++)
