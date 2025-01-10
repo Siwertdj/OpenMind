@@ -146,7 +146,7 @@ public class NotebookManager : MonoBehaviour
             Destroy(page.gameObject);
 
         // Save notes
-        if (characterInfo.activeSelf) SaveNotes();
+        SaveNotes();
 
         // Deactivate the personal notes tab if it's opened
         if (personalInputField.gameObject.activeInHierarchy)
@@ -185,6 +185,7 @@ public class NotebookManager : MonoBehaviour
         inpuObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
         inpuObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
+        
 
         inpuObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
@@ -367,11 +368,10 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
-        if (personalInputField.gameObject.activeInHierarchy)
+        if (personalInputField.IsActive())
         {
             // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
-            Debug.Log("Saved: " + personalInputField.GetComponent<TMP_InputField>().text);
+            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);            
         }
         else
         {
