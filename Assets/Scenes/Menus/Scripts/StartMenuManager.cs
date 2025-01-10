@@ -63,6 +63,16 @@ public class StartMenuManager : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Close prologue prompt
+    /// </summary>
+    public void CloseProloguePrompt()
+    {
+        mainMenuCanvas.SetActive(true);
+        skipPrologueCanvas.SetActive(false);
+    }
+
     /// <summary>
     /// Gets savedata and loads a game using that data
     /// </summary>
