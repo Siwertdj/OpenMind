@@ -118,6 +118,21 @@ public class SystemTests
             // Check if we are in the NPC Select scene
             Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
 
+            yield return new WaitForSeconds(0.5f);
+
+            // Play the tutorial
+            while (SceneManager.GetSceneByName("TutorialScene").isLoaded)
+            {
+                // Wait a second, otherwise the test crashes
+                yield return new WaitForSeconds(1);
+            
+                // Find button (if it is active, and click it to proceed)
+                if (GameObject.Find("ContinueButton") != null)
+                    GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+                else if (GameObject.Find("NotebookHighlight") != null)
+                    GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
+            }
+
             // Start at the leftmost character
             while (GameObject.Find("NavLeft"))
             {
@@ -154,14 +169,28 @@ public class SystemTests
             Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
 
             yield return new WaitForSeconds(1);
-            
-            // Wait until you can ask a question
-            GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
 
-            // Ask a question
-            GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+            int numQuestions = GameManager.gm.story.numQuestions;
 
-            // Skip dialogue until new cycle starts
+            // Ask a certain number of questions
+            for (int j = 0; j < numQuestions; j++)
+            {
+                // Wait until you can ask a question
+                while (GameObject.Find("Questions Field") == null)
+                {
+                    GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(1);
+                }
+
+                // Ask a question
+                GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+                
+                if (j < numQuestions - 1)
+                    while (GameObject.Find("questionButton").GetComponent<Button>() == null)
+                        yield return new WaitForSeconds(1);
+            }
+
+            // Go through hint scene
             while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("NPCSelectScene"))
             {
                 yield return new WaitForSeconds(1);
