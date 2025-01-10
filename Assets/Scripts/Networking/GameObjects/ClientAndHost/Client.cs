@@ -17,6 +17,7 @@ public class Client : NetworkObject
     private Action<NotebookData> response;
     private Action<int>          storyID;
     private Action<int>          seed;
+    private Action               reactivateJoinButton;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
@@ -26,10 +27,11 @@ public class Client : NetworkObject
     /// Enters a classroom code. This converts it back to an ip, connects with this ip and requests initialisation data.
     /// The seed and storyID actions are used to assign these values into the rest of the game.
     /// </summary>
-    public void EnterClassroomCode(string classroomCode, Action<int> seed, Action<int> storyID)
+    public void EnterClassroomCode(string classroomCode, Action<int> seed, Action<int> storyID, Action reactivateJoinButton)
     {
         this.seed = seed;
         this.storyID = storyID;
+        this.reactivateJoinButton = reactivateJoinButton;
         IPAddress hostAddress;
         IPv4Converter converter = new IPv4Converter();
         try
@@ -39,7 +41,7 @@ public class Client : NetworkObject
         catch (ArgumentException)
         {
             if (settings.IsDebug)
-                Debug.Log("(Client): Invalid classroom code");
+                DebugError("(Client): Invalid classroom code");
             else
                 DisplayError("Invalid classroom code.");
             return;
@@ -74,7 +76,7 @@ public class Client : NetworkObject
     private void ConnectionTimeoutError(object o)
     {
         if (settings.IsDebug)
-            Debug.Log("(Client): No connection was made.");
+            DebugError("(Client): No connection was made.");
         else
             DisplayError("No connection with the host could be established, please check if the entered classroom code is correct" +
                          " and whether you and the host are connected to the internet.");
@@ -144,7 +146,16 @@ public class Client : NetworkObject
         if (doPopup is null)
             Debug.LogError("No popup for error handling was initialised");
         else
+        {
             doPopup.Raise(this, error, new Color(0,0,0));
+            reactivateJoinButton();
+        }
+    }
+
+    private void DebugError(string error)
+    {
+        Debug.Log(error);
+        reactivateJoinButton();
     }
     
     #region debugMethods

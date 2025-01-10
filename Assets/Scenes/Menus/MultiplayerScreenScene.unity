@@ -897,6 +897,7 @@ MonoBehaviour:
   maxPlayers: 10
   maxPlayersText: {fileID: 2087667756}
   code: {fileID: 2062612976}
+  joinButton: {fileID: 1070788015}
 --- !u!1 &218395989
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,7 +2790,7 @@ GameObject:
   - component: {fileID: 1070788016}
   - component: {fileID: 1070788015}
   m_Layer: 5
-  m_Name: JoinButton
+  m_Name: JoinButtonClient
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2839,8 +2840,8 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_SelectedColor: {r: 0.6830188, g: 0.668843, b: 0.668843, a: 1}
+    m_DisabledColor: {r: 0.5698112, g: 0.53218216, b: 0.53218216, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:

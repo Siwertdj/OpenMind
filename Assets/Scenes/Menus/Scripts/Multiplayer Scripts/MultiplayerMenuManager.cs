@@ -22,6 +22,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     [SerializeField] private float maxPlayers = 10;
     [SerializeField] private TextMeshProUGUI maxPlayersText;
     [SerializeField] private TextMeshProUGUI code;
+    [SerializeField] private Button          joinButton;
     
     private string classCode;
     private int    storyid;
@@ -145,10 +146,17 @@ public class MultiplayerMenuManager : MonoBehaviour
     {
         classCode = inputField.GetComponent<TMP_InputField>().text;
     }
+
+    private void ReactivateJoinButton()
+    {
+        if(SceneManager.GetSceneByName("MultiplayerScreenScene").isLoaded)
+            joinButton.interactable = true;
+    }
     
     public void JoinGame()
     {
-        MultiplayerManager.mm.JoinGame(classCode);
+        joinButton.interactable = false;
+        MultiplayerManager.mm.JoinGame(classCode, ReactivateJoinButton);
     }
     #endregion
     

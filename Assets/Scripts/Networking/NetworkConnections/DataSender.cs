@@ -99,7 +99,6 @@ public class DataSender : DataNetworker
                 {
                     onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
                     timeout = true;
-                    connecting.Dispose();
                     break;
                 }
                 
