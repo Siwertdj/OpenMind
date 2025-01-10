@@ -29,6 +29,11 @@ MonoBehaviour:
   - It seems <victimName> has gone home.
   - 'Still haven''t figured out who I am? Here''s another hint:'
   - <hint>
+  noMoreHintsDialogue:
+  - It seems <victimName> has gone home.
+  - You still haven't figured it out?
+  - I've given you my last hint.
+  - You're on your own now... good luck!
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2

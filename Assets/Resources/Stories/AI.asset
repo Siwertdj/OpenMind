@@ -29,6 +29,10 @@ MonoBehaviour:
   - <victimName> has gone home.
   - The computer calculated data about the culprit...
   - '"<hint>"'
+  noMoreHintsDialogue:
+  - <victimName> has gone home.
+  - The computer is trying to calculate more data...
+  - It seems the computer has run out of memory.
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2

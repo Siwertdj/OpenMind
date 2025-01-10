@@ -28,6 +28,7 @@ public class StoryObject : ScriptableObject
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;
     [SerializeField] public string[] hintDialogue;
+    [SerializeField] public string[] noMoreHintsDialogue;
     [SerializeField] public int numberOfCharacters;            // How many characters each session should have
     [SerializeField] public int numQuestions; // Amount of times the player can ask a question
     [SerializeField] public int minimumRemaining; // The amount of active characters at which the session should end

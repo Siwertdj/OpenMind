@@ -263,19 +263,29 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
-        // Add the new hint to the dictionary
-        wordReplacements["hint"] = string.Join(" ", GetCulprit().GetRandomTrait());
+        // Check if there are enough hints
+        string[] hintDialogue;
+        if (GetCulprit().RemainingQuestions.Count > 0)
+        {
+            // Add the new hint to the dictionary
+            wordReplacements["hint"] = string.Join(" ", GetCulprit().GetRandomTrait());
+            hintDialogue = story.hintDialogue;
+        }
+        else
+        {
+            hintDialogue = story.noMoreHintsDialogue;
+        }
 
         // Process dialogue (replace <> words)
         List<string> dialogue = new();
-        for (int i = 0; i < story.hintDialogue.Length; i++)
+        for (int i = 0; i < hintDialogue.Length; i++)
         {            
-            string line = ProcessDialogue(story.hintDialogue[i]);
+            string line = ProcessDialogue(hintDialogue[i]);
             dialogue.Add(line);
         }
 
         // Creates Dialogue that says who disappeared and provides a new hint.
-        StartDialogue(dialogue);
+        StartHintDialogue(dialogue);
     }
 
     /// <summary>
@@ -464,7 +474,7 @@ public class GameManager : MonoBehaviour
     /// Starts a new hint dialogue.
     /// </summary>
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
-    public async void StartDialogue(List<string> dialogue)
+    public async void StartHintDialogue(List<string> dialogue)
     {
         // Change the gamestate
         gameState = GameState.HintDialogue;
