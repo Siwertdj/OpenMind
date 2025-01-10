@@ -585,11 +585,6 @@ public class SystemTests
                     }
                 }
             }
-
-            /*
-
-        
-            */
             
             yield return new WaitForSeconds(1);
             yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
@@ -626,47 +621,19 @@ public class SystemTests
                 else Debug.Log("Could not find any button to continue!");
             }
         }
-
+        
         // Check if we have to choose a culprit
-       // Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+        Assert.AreEqual(SceneManager.GetSceneByName("EpilogueScene"), SceneManager.GetSceneAt(1));
         
-        // Start at the leftmost character
-        while (GameObject.Find("NavLeft"))
-        {
-            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
-            yield return new WaitForSeconds(2);
-        }
-            
-        // Find an active character and click to choose them
-        foreach (CharacterInstance c in GameManager.gm.currentCharacters)
-        {
-            if (c.isActive)
-            {
-                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
-                break;
-            }
-            else
-            {
-                if (GameObject.Find("NavRight"))
-                {
-                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
-                    yield return new WaitForSeconds(2);
-                }
-                else
-                {
-                    throw new Exception("There are no active characters");
-                }
-            }
-        }
+        // Choose one of the characters
+        GameObject.Find("Portrait Button(Clone)").GetComponent<Button>().onClick.Invoke();
 
-        
-        /*
         // Check if we are in the Dialogue scene
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
-        Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
+        Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(2));
         
         // Skip dialogue until first reflection moment
-        while (GameObject.Find("Input Field") == null)
+        while (GameObject.Find("InputField") == null)
         {
             yield return new WaitForSeconds(1);
                 
@@ -680,7 +647,7 @@ public class SystemTests
         yield return new WaitForSeconds(1);
         
         // Skip dialogue until second reflection moment
-        while (GameObject.Find("Input Field") == null)
+        while (GameObject.Find("InputField") == null)
         {
             yield return new WaitForSeconds(1);
                 
@@ -693,8 +660,8 @@ public class SystemTests
         GameObject.Find("Submit input Button").GetComponent<Button>().onClick.Invoke();
         yield return new WaitForSeconds(1);
         
-        // Skip dialogue until GameOver or GameWin
-        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameLossScene") && SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameWinScene"))
+        // Skip dialogue until GameOver
+        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("GameOverScene"))
         {
             yield return new WaitForSeconds(1);
                 
@@ -702,12 +669,9 @@ public class SystemTests
                 GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
         }
 
-        // Check if we are in the GameWin or GameOver scene
+        // Check if we are in the GameOver scene
         yield return new WaitForSeconds(3);
-        var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameLossScene");
-        var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
-        Assert.IsTrue(gameOver || gameWon);
-        yield return null;*/
+        Assert.AreEqual(SceneManager.GetSceneAt(1), SceneManager.GetSceneByName("GameOverScene"));
     }
 
     [UnityTest]
