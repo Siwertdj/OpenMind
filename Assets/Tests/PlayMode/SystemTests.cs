@@ -133,35 +133,14 @@ public class SystemTests
                     GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
             }
 
-            // Start at the leftmost character
-            while (GameObject.Find("NavLeft"))
-            {
-                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
-                yield return new WaitForSeconds(2);
-            }
+            //Debug.Log("currentcharactersbefore = " + GameManager.gm.currentCharacters.Count);
+            List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
             
-            // Find an active character and click to choose them
-            foreach (CharacterInstance c in GameManager.gm.currentCharacters)
-            {
-                if (c.isActive)
-                {
-                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
-                    break;
-                }
-                else
-                {
-                    if (GameObject.Find("NavRight"))
-                    {
-                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
-                        yield return new WaitForSeconds(2);
-                    }
-                    else
-                    {
-                        throw new Exception("There are no active characters");
-                    }
-                }
-            }
+            yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
 
+            
+            //Debug.Log("currentcharactersbefore = " + GameManager.gm.currentCharacters.Count);
+            
             yield return new WaitForSeconds(1);
             yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
@@ -731,6 +710,44 @@ public class SystemTests
     [UnityTest]
     public IEnumerator RetryGame()
     {
+        yield return null;
+    }
+
+    /// <summary>
+    /// Select a npc that has questions left.
+    /// </summary>
+    /// <param name="emptyQuestionCharacters"> The list of characters that have no questions left. </param>
+    /// <param name="currentCharacters"> The list of currentCharacters. </param>
+    public IEnumerator SelectNpc(List<CharacterInstance> emptyQuestionCharacters, List<CharacterInstance> currentCharacters)
+    {
+        // Start at the leftmost character
+        while (GameObject.Find("NavLeft"))
+        {
+            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke(); 
+            yield return new WaitForSeconds(2);
+        }
+        
+        // Find an active character and click to choose them
+        foreach (CharacterInstance c in currentCharacters)
+        {
+            if (c.isActive && !emptyQuestionCharacters.Any(emptyC => emptyC.characterName == c.characterName))
+            {
+                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
+                break;
+            }
+            else
+            {
+                if (GameObject.Find("NavRight"))
+                {
+                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                    yield return new WaitForSeconds(2);
+                }
+                else
+                {
+                    throw new Exception("There are no active characters");
+                }
+            }
+        }
         yield return null;
     }
 }
