@@ -281,7 +281,6 @@ public class DataListener : DataNetworker
             delayedRespondEvents.Raise(signature, false, "delayedRespondEvent");
         };
     }
-        
     
     /// <summary>
     /// Sends a response after receiving a message.
@@ -307,7 +306,6 @@ public class DataListener : DataNetworker
     {
         for (var i = 0; i < connections.Count; i++)
         {
-            Debug.Log("disconneded code run");
             DateTime now = DateTime.Now;
             if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds >= interval * 2)
             {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
@@ -146,7 +147,9 @@ public class Host : NetworkObject
             return;
         
         Debug.Log($"Received first notebook {((List<NetworkPackage>)o)[0].data}");
-        notebooks.Add((List<NetworkPackage>)o);
+        
+        AddNotebook((List<NetworkPackage>)o);
+        
         addNormalResponse = true;
     }
 
@@ -160,12 +163,17 @@ public class Host : NetworkObject
             Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
             sendFirstNotebook(o);
         }
-            
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
-        notebooks.Add(o);
+        AddNotebook(o);
         Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
+    }
+
+    private void AddNotebook(List<NetworkPackage> notebookData)
+    {
+        if(!notebooks.Contains(notebookData))
+            notebooks.Add(notebookData);
     }
     
     private List<NetworkPackage> GetRandomNotebook() =>
