@@ -30,8 +30,8 @@ public class SystemTests
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
         // Move DebugManager and copyright back to StartScreenScene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
+        //SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
+        //SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
                 
         yield return null;
     }
@@ -46,18 +46,17 @@ public class SystemTests
     {
         // TODO: perhaps check if there is anything under ddol, then move the objects if so.
         // Move the Toolbox and the SettingsManager to be not in ddol
-        if(GameObject.Find("Toolbox"))
-            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
+        //if(GameObject.Find("Toolbox"))
+        //    SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
         
-        if(GameObject.Find("SettingsManager"))
-            SceneManager.MoveGameObjectToScene(GameObject.Find("SettingsManager"), SceneManager.GetSceneAt(0));
+        //if(GameObject.Find("SettingsManager"))
+        //    SceneManager.MoveGameObjectToScene(GameObject.Find("SettingsManager"), SceneManager.GetSceneAt(0));
         
         // Unload additive scenes.
         if(SceneController.sc != null)
             SceneController.sc.UnloadAdditiveScenes();
     }
-
-    /*
+    
     [UnityTest]
     public IEnumerator PlayTheGame()
     {
@@ -101,8 +100,8 @@ public class SystemTests
             yield return new WaitForSeconds(1);
             
             // Find button (if it is active, and click it to proceed)
-            if (GameObject.Find("Button parent") != null)
-                GameObject.Find("Button parent").GetComponent<Button>().onClick.Invoke();
+            if (GameObject.Find("ContinueButton") != null)
+                GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
         }
 
         // Number of characters in the game
@@ -110,7 +109,7 @@ public class SystemTests
         
         // Number of characters that are left when you have to choose the culprit
         int charactersLeft = GameManager.gm.story.minimumRemaining;
-
+        
         // Play the main loop of the game
         for (int i = 0; i <= (numCharacters - charactersLeft); i++)
         {
@@ -118,46 +117,33 @@ public class SystemTests
 
             // Check if we are in the NPC Select scene
             Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
-            
-            // Use Notebook if not the first cycle
-            if (i > 0)
+
+            // Start at the leftmost character
+            while (GameObject.Find("NavLeft"))
             {
-                // Open Notebook
-                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
-
-                // Wait until loaded
-                yield return new WaitUntil(() =>
-                    SceneManager.GetSceneByName("NotebookScene").isLoaded);
-                
-                // Check if we are in the Notebook scene
-                Assert.AreEqual(SceneManager.GetSceneByName("NotebookScene"), SceneManager.GetSceneAt(2));
-                
-                // Open character tab
-                GameObject.Find("NameButton1").GetComponent<Button>().onClick.Invoke();
-                
-                // Log notes
-                GameObject.Find("Button").GetComponent<Button>().onClick.Invoke();
-                
-                // Open personal notes
-                GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
-                
-                // Close notebook
-                GameObject.Find("NotebookButton").GetComponent<Button>().onClick.Invoke();
-                yield return new WaitUntil(() =>
-                    SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-                
-                // Check if we are back in the NPC Select scene
-                Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
+                yield return new WaitForSeconds(2);
             }
-
-            // Find an active character and click to talk to them
+            
+            // Find an active character and click to choose them
             foreach (CharacterInstance c in GameManager.gm.currentCharacters)
             {
                 if (c.isActive)
                 {
-                    string name = "characterspace " + (GameManager.gm.currentCharacters.IndexOf(c) + 1);
-                    GameObject.Find(name).GetComponent<Button>().onClick.Invoke();
+                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
                     break;
+                }
+                else
+                {
+                    if (GameObject.Find("NavRight"))
+                    {
+                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                        yield return new WaitForSeconds(2);
+                    }
+                    else
+                    {
+                        throw new Exception("There are no active characters");
+                    }
                 }
             }
 
@@ -184,7 +170,7 @@ public class SystemTests
                     GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
             }
         }
-
+        /*
         // Check if we have to choose a culprit
         Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
         
@@ -244,8 +230,8 @@ public class SystemTests
         yield return new WaitForSeconds(3);
         var gameOver = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameOverScene");
         var gameWon = SceneManager.GetSceneAt(1) == SceneManager.GetSceneByName("GameWinScene");
-        Assert.IsTrue(gameOver || gameWon);
-    }*/
+        Assert.IsTrue(gameOver || gameWon);*/
+    }
 
     /// <summary>
     /// System level test for saving the game.
