@@ -62,7 +62,11 @@ public class DataSender : DataNetworker
         // onAckReceievedEvents.Subscribe("ACK", signature =>
         //     acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
         
-        onAckTimeoutEvents.Subscribe(pingSignature, _ => onDisconnectedEvents.Raise("Disconnect", null, false, "onDisconnectedEvents"));
+        onAckTimeoutEvents.Subscribe(pingSignature, _ =>
+        {
+            if (connected)
+                onDisconnectedEvents.Raise("Disconnect", null, false, "onDisconnectedEvents");
+        });
         AddOnDisconnectedEvent(_ => connected = false);
     }
     
@@ -79,7 +83,7 @@ public class DataSender : DataNetworker
         GiveDisplayWarning();
         
         //check if you are already connected
-        if (!socket.Connected)
+        if (!connected)
         {
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
@@ -98,6 +102,7 @@ public class DataSender : DataNetworker
                 double diff = (DateTime.Now - start).TotalMilliseconds;
                 if (diff > timeoutSeconds * 1000)
                 {
+                    Debug.Log("while loop timeout");
                     onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
                     timeout = true;
                     break;
@@ -106,8 +111,9 @@ public class DataSender : DataNetworker
                 yield return null;
             }
 
-            if (!socket.Connected && !timeout)
+            if (!connected && !timeout)
             {
+                Debug.Log("completed task loop timeout");
                 onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
             }
         }
@@ -266,7 +272,6 @@ public class DataSender : DataNetworker
 
         foreach (var acknowledgementTime in timeouts)
         {
-            Debug.Log($"Timeout: {acknowledgementTime.Signature}");
             logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature,
                 acknowledgementTime.Signature, false, "onAckTimeoutEvents");
         }
@@ -334,7 +339,6 @@ public class DataSender : DataNetworker
         if (!connected)
             return false;
         
-        Debug.Log("sent ping");
         SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval/500f);
         return false;
     }

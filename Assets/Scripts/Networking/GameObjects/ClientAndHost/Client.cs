@@ -29,9 +29,11 @@ public class Client : NetworkObject
     private Action               reactivateJoinButton;
     private MultiplayerState     multiplayerState = MultiplayerState.Infant;
 
-    private bool   tryReconnect;
-    private bool   isConnected;
-    private Action resendNotebook;
+    private       bool   tryReconnect;
+    private       bool   isConnected;
+    private       Action resendNotebook;
+    private const int    maxReconnectAttempts    = 3;
+    private       int    currentReconnectAttempt;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
@@ -41,6 +43,7 @@ public class Client : NetworkObject
     {
         if (tryReconnect)
         {
+            DebugLog("attempting to reconnect");
             tryReconnect = false;
             StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
         }
@@ -90,21 +93,48 @@ public class Client : NetworkObject
     
     private void Disconnected(object o)
     {
-        isConnected = false;
-        if (multiplayerState == MultiplayerState.Initialized || multiplayerState == MultiplayerState.UploadedNotebook)
-           tryReconnect = true;
-        
+        if ((multiplayerState == MultiplayerState.Initialized ||
+            multiplayerState == MultiplayerState.UploadedNotebook))
+        {
+            DebugLog($"attempting to reconnect due to disconnect");
+            tryReconnect = true;
+        }
+
         if (settings.IsDebug)
-            Debug.Log("(Client): Disconnected from the host.");
+            DebugError("(Client): Disconnected from the host.");
         else
             DisplayError("You got disconnected from the host, please check whether you and the host are connected to the internet.");
+        isConnected = false;
             
     }
     
     private void ConnectionTimeoutError(object o)
     {
+        if (multiplayerState == MultiplayerState.ReceivedNotebook)
+            return;
+        
+        if (multiplayerState != MultiplayerState.Infant)
+        {
+            DebugLog("connection timeout");
+            if (currentReconnectAttempt >= maxReconnectAttempts)
+            {
+                if (settings.IsDebug)
+                    DebugError($"(Client): No reconnects were made after attempt {currentReconnectAttempt}.");
+                else
+                    DisplayError("It looks like you got disconnected from the host, either you or the host are disconnected from the internet.");
+                return;
+            }
+            currentReconnectAttempt++;
+            if (settings.IsDebug)
+                DebugError($"(Client): Reconnect attempt: {currentReconnectAttempt}.");
+            DebugLog("attempting to reconnect due to timeout");
+            tryReconnect = true;
+            
+            return;
+        }
+        
         if (settings.IsDebug)
-            DebugError("(Client): No connection was made.");
+            DebugError("(Client): No connection could be established.");
         else
             DisplayError("No connection with the host could be established, please check if the entered classroom code is correct" +
                          " and whether you and the host are connected to the internet.");
@@ -113,8 +143,9 @@ public class Client : NetworkObject
     private void OnConnectionWithHost(object obj)
     {
         isConnected = true;
+        currentReconnectAttempt = 0;
         if (settings.IsDebug)
-            Debug.Log($"(Client): Connected with the host.");
+            DebugLog($"(Client): Connected with the host.");
 
         if (multiplayerState == MultiplayerState.UploadedNotebook)
             resendNotebook();
@@ -137,7 +168,7 @@ public class Client : NetworkObject
         int seeed = receivedData[1].GetData<int>();
         
         if (settings.IsDebug)
-            Debug.Log($"Received message from host, seed = {seeed} and story = {story}.");
+            DebugLog($"Received message from host, seed = {seeed} and story = {story}.");
         
         storyID(story);
         seed(seeed);
@@ -206,8 +237,13 @@ public class Client : NetworkObject
 
     private void DebugError(string error)
     {
-        Debug.Log(error);
+        DebugLog(error);
         reactivateJoinButton();
+    }
+
+    private void DebugLog(string message)
+    {
+        Debug.Log($"GameState: {multiplayerState}\nMessage: {message}");
     }
     
     #region debugMethods
@@ -217,16 +253,23 @@ public class Client : NetworkObject
         sender.AddOnDataSentEvent(settings.InitialisationDataSignature, DataSentInit);
         sender.AddOnNotConnectedListeningEvents(ListeningWhileDisconnected);
         sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
+        sender.AddOnAckTimeoutEvent(settings.PingDataSignature, AckTimeoutInit);
+        sender.AddOnDataSentEvent(settings.PingDataSignature, DataSentPing);
+    }
+    
+    private void DataSentPing(object o)
+    {
+        DebugLog($"(Client): Sent a ping of {o} bytes to the host.");
     }
     
     private void DataSentInit(object o)
     {
-        Debug.Log($"(Client): Sent {o} bytes to the host as an init request.");
+        DebugLog($"(Client): Sent {o} bytes to the host as an init request.");
     }
     
     private void AckTimeoutInit(object o)
     {
-        Debug.Log($"(Client): Ack with signature {o} timed out");
+        DebugLog($"(Client): Ack with signature {o} timed out");
     }
     
     private void ListeningWhileDisconnected(object obj)
@@ -241,7 +284,7 @@ public class Client : NetworkObject
     
     private void DataSentNotebook(object o)
     {
-        Debug.Log($"(Client): Sent {o} bytes to the host as a notebook data request.");
+        DebugLog($"(Client): Sent {o} bytes to the host as a notebook data request.");
     }
     #endregion
     
