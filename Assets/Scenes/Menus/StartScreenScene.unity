@@ -829,7 +829,7 @@ MonoBehaviour:
   popUpCanvas: {fileID: 1024159935}
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   startLoadIcon: {fileID: 11400000, guid: 334537c804656fe4995f51c51842dda5, type: 2}
-  copyright: {fileID: 2085541975}
+  copyright: {fileID: 0}
   startMenuMusic: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
 --- !u!1 &218964759
 GameObject:
