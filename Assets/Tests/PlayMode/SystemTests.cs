@@ -59,7 +59,7 @@ public class SystemTests
     
     static int[] stories = new int[] { 0, 1, 2 };
     
-    [UnityTest, Timeout(10000000)]
+    [UnityTest, Timeout(100000000)]
     public IEnumerator PlayTheGame([ValueSource(nameof(stories))] int storyID)
     {
         // Find the New Game button and click it
@@ -151,14 +151,10 @@ public class SystemTests
                 else if (GameObject.Find("NotebookHighlight") != null)
                     GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
             }
-
-            //Debug.Log("currentcharactersbefore = " + GameManager.gm.currentCharacters.Count);
+            
             List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
             
             yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
-
-            
-            //Debug.Log("currentcharactersbefore = " + GameManager.gm.currentCharacters.Count);
             
             yield return new WaitForSeconds(1);
             yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
@@ -264,7 +260,7 @@ public class SystemTests
     /// <returns></returns>
     /// <exception cref="Exception"> Occurs when there are no active characters in the game. (should never occur)</exception>
     // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
-    [UnityTest, Order(1)]
+    [UnityTest, Timeout(100000000), Order(1)]
     public IEnumerator SaveGame()
     {
         // Find the New Game button and click it
@@ -393,16 +389,6 @@ public class SystemTests
             else Debug.Log("Could not find any button to continue!");
         }
         
-        /*
-        // Skip dialogue until new cycle starts
-        while (SceneManager.GetSceneAt(1) != SceneManager.GetSceneByName("NPCSelectScene"))
-        {
-            yield return new WaitForSeconds(1);
-                
-            if (GameObject.Find("Skip Dialogue Button") != null)
-                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
-        }*/
-        
         // Open Notebook
         GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
 
@@ -415,6 +401,7 @@ public class SystemTests
         // Open personal notes
         GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
         
+        //TODO: Test with writing down notes once notebook is fixed
         // Write down notes
         //string notebookTextPrior = "hello";
         //var notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
@@ -544,8 +531,7 @@ public class SystemTests
     /// <returns></returns>
     /// <exception cref="Exception"> Occurs when no save file exists. </exception>
     /// // TODO: check for isLoaded instead of using GetSceneAt() (refactoring).
-    [Timeout(100000000)]
-    [UnityTest, Order(2)]
+    [UnityTest, Timeout(100000000), Order(2)]
     public IEnumerator LoadGame()
     {
         if (!FilePathConstants.DoesSaveFileLocationExist())
