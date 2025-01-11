@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         SceneController.sc.UnloadAdditiveScenes();
         
         // Start the game music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 2, true);
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 1, true);
         
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
