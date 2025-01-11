@@ -187,13 +187,14 @@ public class DialogueManager : MonoBehaviour
     public void WritePhoneDialogue(List<string> messages)
     {
         // Store the layout in which the messages will be placed
-        var phoneLayout = phoneField.transform.GetChild(0);
+        var phoneImage = phoneField.transform.GetChild(0);
+        var phoneLayout = phoneImage.GetChild(0).GetChild(0);
 
         // If the phone is not open yet, animate it opening
         if (!phoneField.activeSelf)
         {
             SettingsManager.sm.PlaySfxClip(phoneNotificationClip);
-            StartCoroutine(PhoneAnimation(phoneLayout, -1900, -80, 0.8f));
+            StartCoroutine(PhoneAnimation(phoneImage, -1900, -80, 0.8f));
         }
 
         // Adjust appropriate fields
@@ -223,6 +224,8 @@ public class DialogueManager : MonoBehaviour
         var nextMessageButton = phoneField.transform.GetChild(1).gameObject;
         nextMessageButton.SetActive(false);
         transform.localPosition = new Vector2(transform.localPosition.x, startingHeight);
+
+        // Wait before starting animation
         yield return new WaitForSeconds(additionalWait);
 
         float time = 0f;
