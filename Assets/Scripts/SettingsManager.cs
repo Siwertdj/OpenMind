@@ -184,14 +184,10 @@ public class SettingsManager : MonoBehaviour
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
-            // If the newclip is different than the current clip, we fade the new one in.
-            if (newClip != musicSource.clip)
-            {
-                if (musicIsFading)
-                    StopCoroutine(musicFadeCoroutine);
+            if (musicIsFading)
+                StopCoroutine(musicFadeCoroutine);
 
-                musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
-            }
+            musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
         
         // Set the music loop to the given parameter.
@@ -208,33 +204,39 @@ public class SettingsManager : MonoBehaviour
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
         musicIsFading = true;
-        
-        // Start loading the new clip
-        // In the clip settings, "Load in Background" should be enabled,
-        // otherwise the game could freeze until loading is done
-        if (!newClip.loadInBackground)
-            Debug.LogWarning(
-                $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
-                $"set to {newClip.loadInBackground}. " +
-                $"This could cause freezes while the clip is loading.");
-        newClip.LoadAudioData();
 
-        while (musicSource.volume > 0)
+        // Don't fade out if it's the same clip
+        if (newClip != musicSource.clip)
         {
-            musicSource.volume -= Time.deltaTime / fadeTime;
-            yield return null;
+            // Start loading the new clip
+            // In the clip settings, "Load in Background" should be enabled,
+            // otherwise the game could freeze until loading is done
+            if (!newClip.loadInBackground)
+                Debug.LogWarning(
+                    $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                    $"set to {newClip.loadInBackground}. " +
+                    $"This could cause freezes while the clip is loading.");
+            newClip.LoadAudioData();
+
+            while (musicSource.volume > 0)
+            {
+                musicSource.volume -= Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            musicSource.Stop();
+
+            // Unload the old clip (Unity does not do this automatically)
+            if (musicSource.clip != null)
+                musicSource.clip.UnloadAudioData();
+
+            // Wait for the new clip to finish loading
+            while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+                yield return null;
+
+            musicSource.clip = newClip;
         }
-        musicSource.Stop();
 
-        // Unload the old clip (Unity does not do this automatically)
-        if (musicSource.clip != null)
-            musicSource.clip.UnloadAudioData();
-    
-        // Wait for the new clip to finish loading
-        while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
-            yield return null;
-
-        musicSource.clip = newClip;
+        // Ensure the clip is playing
         musicSource.Play();
 
         // Fade in the clip
@@ -243,6 +245,8 @@ public class SettingsManager : MonoBehaviour
             musicSource.volume += Time.deltaTime / fadeTime;
             yield return null;
         }
+
+        Debug.Log(musicSource.clip);
 
         musicIsFading = false;
     }
