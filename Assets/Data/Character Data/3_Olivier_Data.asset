@@ -40,7 +40,7 @@ MonoBehaviour:
   - question: 12
     answer: {fileID: 11400000, guid: 29f0dcfce5a37cc42aeaf0448cd6ac4f, type: 2}
     trait:
-    - My parents say I am enthusiastic fot the future and I think I am great at listening.
+    - My parents say I am enthusiastic for the future and I think I am great at listening.
   - question: 6
     answer: {fileID: 11400000, guid: eb65b39b96542c349ae15d37784355b0, type: 2}
     trait:
@@ -49,7 +49,7 @@ MonoBehaviour:
   - question: 10
     answer: {fileID: 11400000, guid: 9b190406386349e41847fb479b012c81, type: 2}
     trait:
-    - I have a bachelors degree.
+    - I have a bachelor's degree.
   - question: 20
     answer: {fileID: 11400000, guid: d460966fdaa5f4a44a4cfe663c533b60, type: 2}
     trait:

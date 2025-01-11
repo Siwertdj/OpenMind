@@ -17,7 +17,8 @@ var searchData=
   ['populatecharacterstest_14',['PopulateCharactersTest',['../classGameManagerPlayTest.html#abb8c7381c8a07dc71afd3169507b2f49',1,'GameManagerPlayTest']]],
   ['populategrid_15',['PopulateGrid',['../classEpilogueManager.html#ae6ddc0e48bf33da6c1d99b7ee5098920',1,'EpilogueManager']]],
   ['popupmanager_16',['PopUpManager',['../classPopUpManager.html',1,'']]],
-  ['prologuecontroller_17',['PrologueController',['../classPrologueController.html',1,'']]],
-  ['prologuetest_18',['PrologueTest',['../classStartScreenPlayTest.html#a40d7240f03060a0b52f42c3471c49eb3',1,'StartScreenPlayTest']]],
-  ['promptbuttonstest_19',['PromptButtonsTest',['../classDialogueManagerPlayTest.html#a3cb13d03bc44e8144749e218134eccdc',1,'DialogueManagerPlayTest']]]
+  ['processdialogue_17',['ProcessDialogue',['../classGameManager.html#aabc460c900f8bc00fc39539c067a564d',1,'GameManager']]],
+  ['prologuecontroller_18',['PrologueController',['../classPrologueController.html',1,'']]],
+  ['prologuetest_19',['PrologueTest',['../classStartScreenPlayTest.html#a40d7240f03060a0b52f42c3471c49eb3',1,'StartScreenPlayTest']]],
+  ['promptbuttonstest_20',['PromptButtonsTest',['../classDialogueManagerPlayTest.html#a3cb13d03bc44e8144749e218134eccdc',1,'DialogueManagerPlayTest']]]
 ];

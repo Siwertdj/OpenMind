@@ -113,7 +113,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SkipDialogue</b> ()</
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a2ffd62480cdc96b38b30b2db7c69c373"><td class="memItemLeft" align="right" valign="top"><a id="a2ffd62480cdc96b38b30b2db7c69c373" name="a2ffd62480cdc96b38b30b2db7c69c373"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>inputDelay</b> = 0.5f</td></tr>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>inputDelay</b> = 0.3f</td></tr>
 <tr class="separator:a2ffd62480cdc96b38b30b2db7c69c373"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e0998ec18acb5c520721bb4f560886a"><td class="memItemLeft" align="right" valign="top"><a id="a0e0998ec18acb5c520721bb4f560886a" name="a0e0998ec18acb5c520721bb4f560886a"></a>
 UnityEvent&#160;</td><td class="memItemRight" valign="bottom"><b>OnDialogueComplete</b> = new()</td></tr>
@@ -147,9 +147,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndDialogue</b> ()</td></tr>
 <tr class="memdesc:a5e12649c463fe330c654340db39399f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes dialogue once it is finished. <br /></td></tr>
 <tr class="separator:a5e12649c463fe330c654340db39399f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6779c2277d65082a8e24215a0667f533"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#a6779c2277d65082a8e24215a0667f533">WritingAnimation</a> (string output, int stringIndex)</td></tr>
-<tr class="memdesc:a6779c2277d65082a8e24215a0667f533"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the text to the screen letter by letter.  <br /></td></tr>
-<tr class="separator:a6779c2277d65082a8e24215a0667f533"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06bacaa88608a0978cd64793596e5ad7"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#a06bacaa88608a0978cd64793596e5ad7">WritingAnimation</a> (string output)</td></tr>
+<tr class="memdesc:a06bacaa88608a0978cd64793596e5ad7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes the text to the screen letter by letter.  <br /></td></tr>
+<tr class="separator:a06bacaa88608a0978cd64793596e5ad7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -168,6 +168,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>audioEnabled</b> = tr
 <tr class="memitem:a4b0f2f42750e0afff3a9887f73b321f9"><td class="memItemLeft" align="right" valign="top"><a id="a4b0f2f42750e0afff3a9887f73b321f9" name="a4b0f2f42750e0afff3a9887f73b321f9"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>overrideDefaultSpeed</b> = true</td></tr>
 <tr class="separator:a4b0f2f42750e0afff3a9887f73b321f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71379c2a5708f62efdae2013027d5118"><td class="memItemLeft" align="right" valign="top"><a id="a71379c2a5708f62efdae2013027d5118" name="a71379c2a5708f62efdae2013027d5118"></a>
+readonly string&#160;</td><td class="memItemRight" valign="bottom"><b>soundlessSymbols</b> = &quot; !?.,&quot;</td></tr>
+<tr class="separator:a71379c2a5708f62efdae2013027d5118"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7d0585bf0fe159e0b8af1ef1d3a42d0"><td class="memItemLeft" align="right" valign="top"><a id="ad7d0585bf0fe159e0b8af1ef1d3a42d0" name="ad7d0585bf0fe159e0b8af1ef1d3a42d0"></a>
 Coroutine&#160;</td><td class="memItemRight" valign="bottom"><b>outputCoroutine</b></td></tr>
 <tr class="separator:ad7d0585bf0fe159e0b8af1ef1d3a42d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -327,8 +330,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>currentSentence</b>
 
 </div>
 </div>
-<a id="a6779c2277d65082a8e24215a0667f533" name="a6779c2277d65082a8e24215a0667f533"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6779c2277d65082a8e24215a0667f533">&#9670;&#160;</a></span>WritingAnimation()</h2>
+<a id="a06bacaa88608a0978cd64793596e5ad7" name="a06bacaa88608a0978cd64793596e5ad7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06bacaa88608a0978cd64793596e5ad7">&#9670;&#160;</a></span>WritingAnimation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,18 +343,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>currentSentence</b>
           <td class="memname">IEnumerator DialogueAnimator.WritingAnimation </td>
           <td>(</td>
           <td class="paramtype">string&#160;</td>
-          <td class="paramname"><em>output</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>output</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>stringIndex</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
   </td>

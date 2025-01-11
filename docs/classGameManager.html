@@ -125,6 +125,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>UnpauseGame</b> ()</t
 <tr class="memitem:af31faf614ebb7d1380f14b50a365320d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#af31faf614ebb7d1380f14b50a365320d">ToggleTutorial</a> (Button helpButton)</td></tr>
 <tr class="memdesc:af31faf614ebb7d1380f14b50a365320d"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called when the helpButton is clicked. It either activates or deactivates the tutorial.  <br /></td></tr>
 <tr class="separator:af31faf614ebb7d1380f14b50a365320d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabc460c900f8bc00fc39539c067a564d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#aabc460c900f8bc00fc39539c067a564d">ProcessDialogue</a> (string inputLine)</td></tr>
+<tr class="memdesc:aabc460c900f8bc00fc39539c067a564d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for keywords in <em>inputLine</em>  and replaces them with proper values.  <br /></td></tr>
+<tr class="separator:aabc460c900f8bc00fc39539c067a564d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae6086ba77a34c2b59da862919da1a8a6"><td class="memItemLeft" align="right" valign="top"><a id="ae6086ba77a34c2b59da862919da1a8a6" name="ae6086ba77a34c2b59da862919da1a8a6"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td></tr>
 <tr class="memdesc:ae6086ba77a34c2b59da862919da1a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the cycle when all questions have been asked. If we have too few characters remaining, we must select the culprit, otherwise we start a new cycle. <br /></td></tr>
@@ -141,9 +144,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td><
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndGame</b> ()</td></tr>
 <tr class="memdesc:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the game. <br /></td></tr>
 <tr class="separator:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a8af6c59e65b3a2cbd6e3946045a1ec79">StartDialogue</a> (List&lt; string &gt; dialogue)</td></tr>
-<tr class="memdesc:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
-<tr class="separator:a8af6c59e65b3a2cbd6e3946045a1ec79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a653be12e977020c8e72ed53c36c6e347"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a653be12e977020c8e72ed53c36c6e347">StartHintDialogue</a> (List&lt; string &gt; dialogue)</td></tr>
+<tr class="memdesc:a653be12e977020c8e72ed53c36c6e347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
+<tr class="separator:a653be12e977020c8e72ed53c36c6e347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cdd75ff0254229d6709046cda1d782e"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a1cdd75ff0254229d6709046cda1d782e">StartDialogue</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
 <tr class="memdesc:a1cdd75ff0254229d6709046cda1d782e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called to start Dialogue with a specific character, taking a <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a> as parameter. This toggles-off the NPCSelectScene, and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter. Then, it loads the DialogueScene.  <br /></td></tr>
 <tr class="separator:a1cdd75ff0254229d6709046cda1d782e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -187,6 +190,9 @@ Random&#160;</td><td class="memItemRight" valign="bottom"><b>random</b> = new Ra
 <tr class="memitem:ae65817df2e62178f4227cc6e1ddf5834"><td class="memItemLeft" align="right" valign="top"><a id="ae65817df2e62178f4227cc6e1ddf5834" name="ae65817df2e62178f4227cc6e1ddf5834"></a>
 <a class="el" href="classNotebookData.html">NotebookData</a>&#160;</td><td class="memItemRight" valign="bottom"><b>notebookData</b></td></tr>
 <tr class="separator:ae65817df2e62178f4227cc6e1ddf5834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a777fe40ab1dbf30008e51a787e7fa726"><td class="memItemLeft" align="right" valign="top">Dictionary&lt; string, string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a777fe40ab1dbf30008e51a787e7fa726">wordReplacements</a></td></tr>
+<tr class="memdesc:a777fe40ab1dbf30008e51a787e7fa726"><td class="mdescLeft">&#160;</td><td class="mdescRight">The dictionary containing replacements for certain keywords.  <br /></td></tr>
+<tr class="separator:a777fe40ab1dbf30008e51a787e7fa726"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -356,8 +362,35 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 
 </div>
 </div>
+<a id="aabc460c900f8bc00fc39539c067a564d" name="aabc460c900f8bc00fc39539c067a564d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabc460c900f8bc00fc39539c067a564d">&#9670;&#160;</a></span>ProcessDialogue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string GameManager.ProcessDialogue </td>
+          <td>(</td>
+          <td class="paramtype">string&#160;</td>
+          <td class="paramname"><em>inputLine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks for keywords in <em>inputLine</em>  and replaces them with proper values. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">inputLine</td><td>The line to be altered.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The inputLine with its keywords replaced with proper values.</dd></dl>
+
+</div>
+</div>
 <a id="a1cdd75ff0254229d6709046cda1d782e" name="a1cdd75ff0254229d6709046cda1d782e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1cdd75ff0254229d6709046cda1d782e">&#9670;&#160;</a></span>StartDialogue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -380,32 +413,6 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
   </dd>
 </dl>
 <p>TODO: Should use the id of a character instead of the <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a>. </p>
-
-</div>
-</div>
-<a id="a8af6c59e65b3a2cbd6e3946045a1ec79" name="a8af6c59e65b3a2cbd6e3946045a1ec79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8af6c59e65b3a2cbd6e3946045a1ec79">&#9670;&#160;</a></span>StartDialogue() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">async void GameManager.StartDialogue </td>
-          <td>(</td>
-          <td class="paramtype">List&lt; string &gt;&#160;</td>
-          <td class="paramname"><em>dialogue</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Starts a new hint dialogue. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
-  </table>
-  </dd>
-</dl>
 
 </div>
 </div>
@@ -446,6 +453,32 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
 
 </div>
 </div>
+<a id="a653be12e977020c8e72ed53c36c6e347" name="a653be12e977020c8e72ed53c36c6e347"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a653be12e977020c8e72ed53c36c6e347">&#9670;&#160;</a></span>StartHintDialogue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async void GameManager.StartHintDialogue </td>
+          <td>(</td>
+          <td class="paramtype">List&lt; string &gt;&#160;</td>
+          <td class="paramname"><em>dialogue</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Starts a new hint dialogue. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">dialogueObject</td><td>The object that needs to be passed along to the dialogue manager.</td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af31faf614ebb7d1380f14b50a365320d" name="af31faf614ebb7d1380f14b50a365320d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af31faf614ebb7d1380f14b50a365320d">&#9670;&#160;</a></span>ToggleTutorial()</h2>
 
@@ -469,6 +502,28 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a777fe40ab1dbf30008e51a787e7fa726" name="a777fe40ab1dbf30008e51a787e7fa726"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a777fe40ab1dbf30008e51a787e7fa726">&#9670;&#160;</a></span>wordReplacements</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dictionary&lt;string, string&gt; GameManager.wordReplacements</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= <span class="keyword">new</span>()</div>
+<div class="line">    {</div>
+<div class="line">        { <span class="stringliteral">&quot;victimName&quot;</span>, <span class="stringliteral">&quot;Placeholder name&quot;</span> },</div>
+<div class="line">        { <span class="stringliteral">&quot;hint&quot;</span>, <span class="stringliteral">&quot;Placeholder hint dialogue.&quot;</span> }</div>
+<div class="line">    }</div>
+</div><!-- fragment -->
+<p>The dictionary containing replacements for certain keywords. </p>
 
 </div>
 </div>

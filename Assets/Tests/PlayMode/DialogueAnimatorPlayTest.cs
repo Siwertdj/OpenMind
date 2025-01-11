@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -35,7 +36,7 @@ public class DialogueAnimatorPlayTest
     public void TearDown()
     {
         animator.CancelWriting();
-        textField.text = "";
+        GameObject.Destroy(textField.gameObject);
     }
     #endregion
 
@@ -180,6 +181,9 @@ public class DialogueAnimatorPlayTest
         yield return new WaitForSeconds(animator.Test_DelayInSeconds * n);
 
         animator.CancelWriting();
+
+        yield return new WaitForSeconds(animator.Test_DelayInSeconds);
+
         Assert.AreEqual(expectedText, textField.text);
     }
 

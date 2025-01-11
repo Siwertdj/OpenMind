@@ -38,7 +38,7 @@ var searchData=
   ['createbackbutton_35',['CreateBackButton',['../classDialogueManager.html#a00ce8784cb6d55e8905a2800da17a704',1,'DialogueManager']]],
   ['createcharacterpages_36',['CreateCharacterPages',['../classNotebookManager.html#af86f68457b5094528dabeddf0974e555',1,'NotebookManager']]],
   ['createcontinuebutton_37',['CreateContinueButton',['../classDialogueManager.html#a05c8f1b313240a670d3198a5c511b5b5',1,'DialogueManager']]],
-  ['createdialoguebackground_38',['CreateDialogueBackground',['../classDialogueManager.html#a656faf0cdf38437bb253fc60c806daba',1,'DialogueManager']]],
+  ['createdialoguebackground_38',['CreateDialogueBackground',['../classDialogueManager.html#ab2e3b2d4d227e4037667088c2e5d48dc',1,'DialogueManager']]],
   ['createopenquestion_39',['CreateOpenQuestion',['../classDialogueManager.html#aa1b422e7d6bd516d31a6d777d7cca9fc',1,'DialogueManager']]],
   ['createsavedata_40',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
   ['csetuptest_41',['CSetUpTest',['../classIntroductionManagerPlayTest.html#a158350597e5a383e445e300f7df7bf12',1,'IntroductionManagerPlayTest']]],
