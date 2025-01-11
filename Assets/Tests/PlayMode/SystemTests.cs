@@ -46,8 +46,8 @@ public class SystemTests
     {
         // TODO: perhaps check if there is anything under ddol, then move the objects if so.
         // Move the Toolbox and the SettingsManager to be not in ddol
-        //if(GameObject.Find("Toolbox"))
-        //    SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
+        if(GameObject.Find("Toolbox"))
+            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(0));    
         
         //if(GameObject.Find("SettingsManager"))
         //    SceneManager.MoveGameObjectToScene(GameObject.Find("SettingsManager"), SceneManager.GetSceneAt(0));
@@ -55,6 +55,8 @@ public class SystemTests
         // Unload additive scenes.
         if(SceneController.sc != null)
             SceneController.sc.UnloadAdditiveScenes();
+        
+        Debug.Log(SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
     }
     
     static int[] stories = new int[] { 0 };
@@ -525,6 +527,9 @@ public class SystemTests
         
         // Check if the numQuestionsAsked is equal
         Assert.AreEqual(gm.numQuestionsAsked, saveData.numQuestionsAsked);
+        
+        // Close the menu
+        GameObject.Find("ReturnButton").GetComponent<Button>().onClick.Invoke();
         
         yield return null;
     }
