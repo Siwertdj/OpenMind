@@ -427,7 +427,7 @@ public class GameManager : MonoBehaviour
 
     private async void StartPreEpilogueDialogue()
     {
-        gameState = GameState.Epilogue;
+        gameState = GameState.CulpritSelect;
 
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
@@ -461,7 +461,9 @@ public class GameManager : MonoBehaviour
     /// Starts the Epilogue
     /// </summary>
     private async void StartEpilogue()
-    {        
+    {
+        gameState = GameState.Epilogue;
+
         // Wait for the scene transition
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
@@ -598,7 +600,7 @@ public class GameManager : MonoBehaviour
     {
         // If we are coming from pre epilogue dialogue,
         // start epilogue and don't do anything else
-        if (gameState == GameState.Epilogue)
+        if (gameState == GameState.CulpritSelect)
         {
             StartEpilogue();
             return;
