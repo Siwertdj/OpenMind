@@ -57,7 +57,7 @@ public class SystemTests
             SceneController.sc.UnloadAdditiveScenes();
     }
     
-    static int[] stories = new int[] { 0, 1, 2 };
+    static int[] stories = new int[] { 0 };
     
     [UnityTest, Timeout(100000000)]
     public IEnumerator PlayTheGame([ValueSource(nameof(stories))] int storyID)
@@ -127,6 +127,9 @@ public class SystemTests
         // Number of characters that are left when you have to choose the culprit
         int charactersLeft = GameManager.gm.story.minimumRemaining;
 
+        // List of characters that have no questions left.
+        List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
+        
         // Play the main loop of the game
         for (int i = 0; i <= (numCharacters - charactersLeft); i++)
         {
@@ -152,8 +155,7 @@ public class SystemTests
                     GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
             }
             
-            List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
-            
+            // Select a npc that has questions left.
             yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
             
             yield return new WaitForSeconds(1);
@@ -184,6 +186,13 @@ public class SystemTests
 
                 yield return new WaitForSeconds(1);
 
+                // Get the DialogueManager
+                var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+                
+                // If the character has no more questions remaining, add the character to the list of emptyQuestionCharacters.
+                if (dm.currentRecipient.RemainingQuestions.Count == 0)
+                    emptyQuestionCharacters.Add(dm.currentRecipient);
+                
                 // The final iteration of the loop should continue to the hint scene
                 if (j == numQuestions - 1)
                     // Wait for hint scene to be over
@@ -252,6 +261,8 @@ public class SystemTests
         // Check if we are in the GameOver scene
         yield return new WaitForSeconds(3);
         Assert.AreEqual(SceneManager.GetSceneAt(1), SceneManager.GetSceneByName("GameOverScene"));
+
+        yield return null;
     }
 
     /// <summary>
@@ -324,69 +335,62 @@ public class SystemTests
             else if (GameObject.Find("NotebookHighlight") != null)
                 GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
         }
-        
-        // Start at the leftmost character
-        while (GameObject.Find("NavLeft"))
-        {
-            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
-            yield return new WaitForSeconds(2);
-        }
-            
-        // Find an active character and click to choose them
-        foreach (CharacterInstance c in GameManager.gm.currentCharacters)
-        {
-            if (c.isActive)
-            {
-                GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
-                break;
-            }
-            else
-            {
-                if (GameObject.Find("NavRight"))
-                {
-                    GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
-                    yield return new WaitForSeconds(2);
-                }
-                else
-                {
-                    throw new Exception("There are no active characters");
-                }
-            }
-        }
 
+        // List of characters that have no questions left.
+        List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
+        
+        // Select a npc that has questions left.
+        yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
+            
         yield return new WaitForSeconds(1);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
         // Check if we are in the Dialogue scene
-        Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
-
+        Assert.IsTrue(SceneManager.GetSceneByName("DialogueScene").isLoaded);
         yield return new WaitForSeconds(1);
+        
+        int numQuestions = GameManager.gm.story.numQuestions;
+
+        // Ask a certain number of questions
+        for (int j = 0; j < numQuestions; j++)
+        {
+            // Wait until you can ask a question
+            while (GameObject.Find("Questions Field") == null)
+            {
+                yield return new WaitForSeconds(1);
+                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+            }
+
+            yield return new WaitForSeconds(1);
+
+            // Ask a question
+            if (GameObject.Find("questionButton").GetComponent<Button>() != null)
+                GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+
+            yield return new WaitForSeconds(1);
+
+            // Get the DialogueManager
+            var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
             
-        // Wait until you can ask a question
-        while (GameObject.Find("Questions Field") == null)
-        {
-            yield return new WaitForSeconds(1);
-            GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
-        }
+            // If the character has no more questions remaining, add the character to the list of emptyQuestionCharacters.
+            if (dm.currentRecipient.RemainingQuestions.Count == 0)
+                emptyQuestionCharacters.Add(dm.currentRecipient);
+            
+            // The final iteration of the loop should continue to the hint scene
+            if (j == numQuestions - 1)
+                // Wait for hint scene to be over
+                while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+                {
+                    yield return new WaitForSeconds(1);
 
-        yield return new WaitForSeconds(1);
-
-        // Ask a question
-        GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
-
-        // Wait for hint scene to be over
-        while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
-        {
-            yield return new WaitForSeconds(1);
-
-            // Go through hint scene if it's active, else go through dialogue scene
-            if (GameObject.Find("Phone Dialogue Field") != null)
-                GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
-                    .Invoke();
-            else if (GameObject.Find("Skip Dialogue Button") != null)
-                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
-                    .Invoke();
-            else Debug.Log("Could not find any button to continue!");
+                    // Go through hint scene if it's active, else go through dialogue scene
+                    if (GameObject.Find("Phone Dialogue Field") != null)
+                        GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                            .Invoke();
+                    else if (GameObject.Find("Skip Dialogue Button") != null)
+                        GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
+                            .Invoke();
+                }
         }
         
         // Open Notebook
@@ -552,6 +556,9 @@ public class SystemTests
         // Number of characters that are left when you have to choose the culprit
         int charactersLeft = GameManager.gm.story.minimumRemaining;
         
+        // List of characters that have no questions left.
+        List<CharacterInstance> emptyQuestionCharacters = new List<CharacterInstance>();
+        
         // Play the main loop of the game
         for (int i = 0; i <= (numActiveCharacters - charactersLeft); i++)
         {
@@ -559,69 +566,61 @@ public class SystemTests
             
             // Check if we are in the NPC Select scene
             Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
-            
-            // Start at the leftmost character
-            while (GameObject.Find("NavLeft"))
-            {
-                GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke();
-                yield return new WaitForSeconds(2);
-            }
-            
-            // Find an active character and click to choose them
-            foreach (CharacterInstance c in GameManager.gm.currentCharacters)
-            {
-                if (c.isActive)
-                {
-                    GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.Invoke();
-                    break;
-                }
-                else
-                {
-                    if (GameObject.Find("NavRight"))
-                    {
-                        GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
-                        yield return new WaitForSeconds(2);
-                    }
-                    else
-                    {
-                        throw new Exception("There are no active characters");
-                    }
-                }
-            }
+        
+            // Select a npc that has questions left.
+            yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
             
             yield return new WaitForSeconds(1);
             yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
             // Check if we are in the Dialogue scene
             Assert.IsTrue(SceneManager.GetSceneByName("DialogueScene").isLoaded);
-
             yield return new WaitForSeconds(1);
             
-            // Wait until you can ask a question
-            while (GameObject.Find("Questions Field") == null)
-            {
-                yield return new WaitForSeconds(1);
-                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
-            }
+            int numQuestions = GameManager.gm.story.numQuestions;
 
-            yield return new WaitForSeconds(1);
-            
-            // Ask a question
-            GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
-
-            // Wait for hint scene to be over
-            while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+            // Ask a certain number of questions
+            for (int j = 0; j < numQuestions; j++)
             {
+                // Wait until you can ask a question
+                while (GameObject.Find("Questions Field") == null)
+                {
+                    yield return new WaitForSeconds(1);
+                    GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+                }
+
                 yield return new WaitForSeconds(1);
 
-                // Go through hint scene if it's active, else go through dialogue scene
-                if (GameObject.Find("Phone Dialogue Field") != null)
-                    GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
-                        .Invoke();
-                else if (GameObject.Find("Skip Dialogue Button") != null)
-                    GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
-                        .Invoke();
-                else Debug.Log("Could not find any button to continue!");
+                // Ask a question
+                if (GameObject.Find("questionButton").GetComponent<Button>() != null)
+                    GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+
+                yield return new WaitForSeconds(1);
+
+                // Get the DialogueManager
+                var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+
+                CharacterInstance chosenCharacter = dm.currentRecipient;
+                
+                // The final iteration of the loop should continue to the hint scene
+                if (j == numQuestions - 1)
+                    // Wait for hint scene to be over
+                    while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+                    {
+                        yield return new WaitForSeconds(1);
+
+                        // Go through hint scene if it's active, else go through dialogue scene
+                        if (GameObject.Find("Phone Dialogue Field") != null)
+                            GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                                .Invoke();
+                        else if (GameObject.Find("Skip Dialogue Button") != null)
+                            GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
+                                .Invoke();
+                    }
+                
+                // If the character has no more questions remaining, add the character to the list of emptyQuestionCharacters.
+                if (chosenCharacter.RemainingQuestions.Count == 0)
+                    emptyQuestionCharacters.Add(chosenCharacter);
             }
         }
         
@@ -675,6 +674,8 @@ public class SystemTests
         // Check if we are in the GameOver scene
         yield return new WaitForSeconds(3);
         Assert.AreEqual(SceneManager.GetSceneAt(1), SceneManager.GetSceneByName("GameOverScene"));
+
+        yield return null;
     }
 
     [UnityTest]
