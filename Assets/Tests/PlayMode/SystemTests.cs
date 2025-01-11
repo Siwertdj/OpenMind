@@ -204,7 +204,8 @@ public class SystemTests
 
                         // Go through hint scene if it's active, else go through dialogue scene
                         if (GameObject.Find("Phone Dialogue Field") != null)
-                            GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                            if (GameObject.Find("Next Dialogue Button") != null)
+                                GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
                                 .Invoke();
                         else if (GameObject.Find("Skip Dialogue Button") != null)
                             GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
@@ -387,8 +388,9 @@ public class SystemTests
 
                     // Go through hint scene if it's active, else go through dialogue scene
                     if (GameObject.Find("Phone Dialogue Field") != null)
-                        GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
-                            .Invoke();
+                        if (GameObject.Find("Next Dialogue Button") != null)
+                            GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                                .Invoke();
                     else if (GameObject.Find("Skip Dialogue Button") != null)
                         GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
                             .Invoke();
@@ -616,8 +618,9 @@ public class SystemTests
 
                         // Go through hint scene if it's active, else go through dialogue scene
                         if (GameObject.Find("Phone Dialogue Field") != null)
-                            GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
-                                .Invoke();
+                            if (GameObject.Find("Next Dialogue Button") != null)
+                                GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                                    .Invoke();
                         else if (GameObject.Find("Skip Dialogue Button") != null)
                             GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
                                 .Invoke();
@@ -680,12 +683,6 @@ public class SystemTests
         yield return new WaitForSeconds(3);
         Assert.AreEqual(SceneManager.GetSceneAt(1), SceneManager.GetSceneByName("GameOverScene"));
 
-        yield return null;
-    }
-
-    [UnityTest]
-    public IEnumerator ChangeSettings()
-    {
         yield return null;
     }
 
