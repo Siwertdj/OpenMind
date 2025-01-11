@@ -220,6 +220,8 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private IEnumerator PhoneAnimation(Transform transform, float startingHeight, float finalHeight, float additionalWait = 0f)
     {
+        var nextMessageButton = phoneField.transform.GetChild(1).gameObject;
+        nextMessageButton.SetActive(false);
         transform.localPosition = new Vector2(transform.localPosition.x, startingHeight);
         yield return new WaitForSeconds(additionalWait);
 
@@ -238,6 +240,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         transform.localPosition = new Vector2(transform.localPosition.x, finalHeight);
+        nextMessageButton.SetActive(true);
     }
 
     /// <summary>
