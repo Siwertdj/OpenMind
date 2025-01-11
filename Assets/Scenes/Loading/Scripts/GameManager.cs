@@ -435,9 +435,24 @@ public class GameManager : MonoBehaviour
             SceneController.TransitionType.Transition,
             true);
 
-        DialogueObject dialogueObject = new ContentDialogueObject(
-            story.preEpilogueDialogue.ToList(), null, 
-            DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // Create dialogueObject for phone story
+        {
+            dialogueObject = new PhoneDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // Psychic story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
+        else
+        {
+            dialogueObject = new ContentDialogueObject(
+                story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
 
         onDialogueStart.Raise(this, dialogueObject);
     }
