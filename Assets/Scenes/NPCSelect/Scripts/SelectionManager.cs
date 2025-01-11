@@ -268,6 +268,6 @@ public class SelectionManager : MonoBehaviour
 
     public GameButton Test_GetSelectionButtonRef() => confirmSelectionButton;
 
-#endif
+    #endif
     #endregion
 }
