@@ -246,8 +246,6 @@ public class SettingsManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log(musicSource.clip);
-
         musicIsFading = false;
     }
     #endregion
