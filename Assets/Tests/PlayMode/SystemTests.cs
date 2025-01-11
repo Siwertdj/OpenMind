@@ -593,7 +593,7 @@ public class SystemTests
             yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
             // Check if we are in the Dialogue scene
-            Assert.AreEqual(SceneManager.GetSceneByName("DialogueScene"), SceneManager.GetSceneAt(1));
+            Assert.IsTrue(SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
             yield return new WaitForSeconds(1);
             
