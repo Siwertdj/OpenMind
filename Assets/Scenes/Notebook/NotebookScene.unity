@@ -1171,14 +1171,14 @@ MonoBehaviour:
   characterInfo: {fileID: 929483351}
   personalButton: {fileID: 1758625910}
   nameButtons:
-  - {fileID: 1042755352}
-  - {fileID: 1120042310}
-  - {fileID: 145953728}
-  - {fileID: 718297963}
   - {fileID: 2416180925791512034}
   - {fileID: 1621794720}
   - {fileID: 1793050732}
   - {fileID: 4358358068967190811}
+  - {fileID: 1042755352}
+  - {fileID: 1120042310}
+  - {fileID: 145953728}
+  - {fileID: 718297963}
   personalInputField: {fileID: 657100576}
   currentTabText: {fileID: 1547554453}
   personalInputTitleText: {fileID: 355724332}
