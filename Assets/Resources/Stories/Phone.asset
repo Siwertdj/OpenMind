@@ -15,17 +15,26 @@ MonoBehaviour:
   storyName: The Mysterious Contact
   storyID: 0
   dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
-  hintBackground: {fileID: 3448788318129469726, guid: f0440f7d3580108409ceaa4a5aef2642, type: 3}
+  hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  additionalHintBackgroundObjects: []
   epilogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
-  storyIntroMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyGameMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyEpilogueMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
+  storyIntroMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
+  storyGameMusic: {fileID: 8300000, guid: 0ad27c3e394db5c49a9750fc59f8d673, type: 3}
+  storyEpilogueMusic: {fileID: 8300000, guid: b20e3c2360e5b3844a2d2a5711bc99ec, type: 3}
   storyEpilogueWonDialogue: {fileID: 11400000, guid: 91747bafca5141d4f9ee27c94ce9ba31, type: 2}
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 99c354101e36f6c499ffc2d63f2a4074, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: bb17142424422e6409d6943693dd0491, type: 2}
   victimDialogue: has gone home.
-  hintDialogue: '*beep beep* You got a new message!'
-  numberOfCharacters: 6
+  hintDialogue:
+  - It seems <victimName> has gone home.
+  - 'Still haven''t figured out who I am? Here''s another hint:'
+  - <hint>
+  noMoreHintsDialogue:
+  - It seems <victimName> has gone home.
+  - You still haven't figured it out?
+  - I've given you my last hint.
+  - You're on your own now... good luck!
+  numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
   immediateVictim: 0

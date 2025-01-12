@@ -11,9 +11,7 @@ using System.Linq;
 using System.Net;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
-using UnityEngine.UIElements;
-using Button = UnityEngine.UI.Button;
-using Image = UnityEngine.UI.Image;
+using UnityEngine.UI;
 
 /// <summary>
 /// The manager for the dialogue scene
@@ -32,19 +30,24 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject inputField;
     [SerializeField] private GameObject backgroundField;
     [SerializeField] private GameObject characterNameField;
+    [SerializeField] private GameObject phoneField;
 
     [Header("Prefabs")]
     [SerializeField] private EventSystem eventSystemPrefab;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
     [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
+    [SerializeField] private GameObject phoneDialogueBoxPrefab;
 
     [Header("Events")]
     public GameEvent onEndDialogue;
     public UnityEvent onEpilogueEnd;
     public GameEvent stopLoadIcon;
 
-    
+    [Header("Miscellaneous")]
+    [SerializeField] private AudioClip phoneNotificationClip;
+    [SerializeField] private float phoneAnimationDuration = 1f;
+        
     [FormerlySerializedAs("testDialogueObject")]
     [Header("Test variables")]
     [SerializeField] private DialogueContainer testDialogueContainer;
@@ -55,7 +58,6 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
-    private                       Component         dialogueStarter;
     
     // In this awake, we initialize some components in case it is loaded in isolation.
     // It does not need to rely on GameManager to be active, but it needs an eventsystem
@@ -66,7 +68,9 @@ public class DialogueManager : MonoBehaviour
             Instantiate(eventSystemPrefab);
             StartDialogue(null, testDialogueContainer.GetDialogue());
         }
-        
+
+        SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
+
         // Set static DialogueManager instance
         dm = this;
     }
@@ -78,10 +82,7 @@ public class DialogueManager : MonoBehaviour
     /// <param name="data">Should be an array where element 0 is the dialogue recipient, 
     /// and element 1 is the starting dialogue object.</param>
     public void StartDialogue(Component sender, params object[] data)
-    {
-        // Save the sender of the event that started dialogue
-        dialogueStarter = sender;
-        
+    {        
         // Change the text size
         characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
         ChangeTextSize();
@@ -134,6 +135,15 @@ public class DialogueManager : MonoBehaviour
     private void ExecuteNextObject()
     {
         currentObject = currentObject.Responses.First();
+
+        // If dialogue will end, do some additional things
+        if (currentObject is TerminateDialogueObject)
+        {
+            // If phone is active, animate it going down
+            if (phoneField.activeSelf)
+                StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
+        }
+
         currentObject.Execute();
     }
 
@@ -170,6 +180,83 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Writes a list of messages to a phone screen.
+    /// </summary>
+    /// <param name="messages">The list of messages to be written on the phone.</param>
+    public void WritePhoneDialogue(List<string> messages)
+    {
+        // Store the layout in which the messages will be placed
+        var phoneImage = phoneField.transform.GetChild(0);
+        var phoneLayout = phoneImage.GetChild(0).GetChild(0);
+
+        // If the phone is not open yet, animate it opening
+        if (!phoneField.activeSelf)
+        {
+            SettingsManager.sm.PlaySfxClip(phoneNotificationClip);
+            StartCoroutine(PhoneAnimation(phoneImage, -1900, -80, 0.8f));
+        }
+
+        // Adjust appropriate fields
+        imageField.SetActive(false);
+        questionsField.SetActive(false);
+        dialogueField.SetActive(false);
+        phoneField.SetActive(true);
+
+        // Remove previous messages
+        foreach (Transform child in phoneLayout)
+            Destroy(child.gameObject);
+
+        // Write the messages
+        foreach (string message in messages)
+            AddPhoneMessage(message, phoneLayout);
+
+        // Rebuild the layout
+        LayoutRebuilder.ForceRebuildLayoutImmediate(phoneLayout.GetComponent<RectTransform>());
+    }
+
+    /// <summary>
+    /// The animation for the phone being pulled up or down.
+    /// <para>I have found -1900 and -80 to be good values for the heights, 1 for the duration.</para>
+    /// </summary>
+    private IEnumerator PhoneAnimation(Transform transform, float startingHeight, float finalHeight, float additionalWait = 0f)
+    {
+        var nextMessageButton = phoneField.transform.GetChild(1).gameObject;
+        nextMessageButton.SetActive(false);
+        transform.localPosition = new Vector2(transform.localPosition.x, startingHeight);
+
+        // Wait before starting animation
+        yield return new WaitForSeconds(additionalWait);
+
+        float time = 0f;
+        while (time < phoneAnimationDuration)
+        {
+            time += Time.deltaTime;
+
+            // Use SmoothStep to create a dampened interpolation
+            float timeStep = Mathf.SmoothStep(0, 1, time / phoneAnimationDuration);
+            float height = Mathf.Lerp(startingHeight, finalHeight, timeStep);
+
+            transform.localPosition = new Vector2(transform.localPosition.x, height);
+
+            yield return null;
+        }
+
+        transform.localPosition = new Vector2(transform.localPosition.x, finalHeight);
+        nextMessageButton.SetActive(true);
+    }
+
+    /// <summary>
+    /// Creates a new message object in the given layout.
+    /// </summary>
+    /// <param name="message">The text be written in the message.</param>
+    /// <param name="phoneLayout">The parent transform for the message.</param>
+    private void AddPhoneMessage(string message, Transform phoneLayout)
+    {
+        var messageBox = Instantiate(phoneDialogueBoxPrefab, phoneLayout).GetComponent<ResizingTextBox>();
+        messageBox.SetText(message);
+    }
+
     public void PrintImage(Sprite newImage)
     {
         if (newImage == null)
@@ -191,12 +278,15 @@ public class DialogueManager : MonoBehaviour
     /// <param name="character">The character the dialogue will be with.</param>
     /// <param name="background">The background for the dialogue.</param>
     /// <returns></returns>
-    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, GameObject background = null)
+    public GameObject[] CreateDialogueBackground(StoryObject story, CharacterInstance character = null, params GameObject[] background)
     {
         List<GameObject> background_ = new();
 
         // If the passed background is null, we use 'dialogueBackground' as the default. Otherwise, we use the passed one.
-        background_.Add(background == null ? story.dialogueBackground : background);
+        if (background.Length == 0)
+            background_.Add(story.dialogueBackground);
+        else
+            background_.AddRange(background);
 
         // If a character is given, add that as well with the proper emotion
         if (character != null)
@@ -229,8 +319,7 @@ public class DialogueManager : MonoBehaviour
                 foreach (GameObject prefab in newBackground)
                 {
                     var image = Instantiate(prefab).GetComponent<Image>();
-                    image.rectTransform.SetParent(parent, false);
-                    
+                    image.rectTransform.SetParent(parent, false);                    
                 }
             }
         }
@@ -243,13 +332,11 @@ public class DialogueManager : MonoBehaviour
                 {
                     if (currentRecipient != null)
                         child.GetComponent<Image>().sprite =
-                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value)
-                                .Item2;
+                            currentRecipient.avatarEmotions.First(es => es.Item1 == emotion.Value).Item2;
                 }
             }
         }
     }
-
 
     /// <summary>
     /// Instantiates question (and return) buttons to the screen.
@@ -302,6 +389,23 @@ public class DialogueManager : MonoBehaviour
         // Write dialogue when button is pressed
         currentObject = responseDialogue;
         currentObject.Execute();
+    }
+
+    /// <summary>
+    /// Make required adjustments when text size was changed.
+    /// </summary>
+    private void OnTextSizeChanged()
+    {
+        if (phoneField.activeSelf)
+        {
+            // Resize all message boxes
+            foreach (var messageBox in phoneField.GetComponentsInChildren<ResizingTextBox>())
+                messageBox.AdjustFontSize();
+
+            // Rebuild layout
+            LayoutRebuilder.ForceRebuildLayoutImmediate(
+                phoneField.transform.GetChild(0).GetComponent<RectTransform>());
+        }
     }
 
     /// <summary>

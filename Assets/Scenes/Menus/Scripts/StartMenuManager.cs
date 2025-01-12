@@ -22,13 +22,9 @@ public class StartMenuManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onGameLoaded;
     public GameEvent startLoadIcon;
-
-    [Header("Copyright canvas")]
-    public Canvas copyright;
     
     [Header("Resources")]
     [SerializeField] AudioClip startMenuMusic;
-    private float startMenuMusicFadeInSpeed = 0f;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -39,18 +35,38 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, 1, true);
+        
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
     }
     
     /// <summary>
-    /// Activates the prompt which asks the player to skip the prologue
+    /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
+    /// Otherwise, start the prologue.
     /// </summary>
-    public void OpenSkipProloguePrompt()
+    public void StartPrologueOrPrompt()
     {
-        // Change menu's
-        mainMenuCanvas.SetActive(false);
-        skipPrologueCanvas.SetActive(true);
-        
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.prologueSeen))
+        {
+            // Change menu's
+            mainMenuCanvas.SetActive(false);
+            skipPrologueCanvas.SetActive(true);
+        }
+        else
+        {
+            StartPrologue();
+        }
+    }
+
+
+    /// <summary>
+    /// Close prologue prompt
+    /// </summary>
+    public void CloseProloguePrompt()
+    {
+        mainMenuCanvas.SetActive(true);
+        skipPrologueCanvas.SetActive(false);
     }
 
     /// <summary>

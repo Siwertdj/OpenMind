@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -12,19 +13,26 @@ public class SettingsManager : MonoBehaviour
 {
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
-    
-    // the audiomixer that contains all soundchannels
-    public AudioMixer audioMixer;
+
+    [Header("Component References")]
+    public AudioMixer audioMixer; // The audiomixer that contains all soundchannels
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
+    [Header("Settings (?)")]
+    [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    [SerializeField] AudioClip defaultButtonClickSound;
 
     public float TalkingDelay {  get; private set; }
-    
-    private AudioSource musicSource;
-    
+
     // TODO: Integrate this with text-size
-    public int maxLineLength = 30;
+    [NonSerialized] public int maxLineLength = 30;
     
     // Text size to be used for the text components
-    public TextSize textSize;
+    [NonSerialized] public TextSize textSize;
+
+    private Coroutine musicFadeCoroutine;
+    private bool musicIsFading = false;
     
     public enum TextSize
     {
@@ -32,16 +40,19 @@ public class SettingsManager : MonoBehaviour
         Medium,
         Large
     }
+
+    // Multipliers for different text sizes
+    public const float M_SMALL_TEXT = 0.8f;
+    public const float M_LARGE_TEXT = 1.4f;
+
+    public UnityEvent OnTextSizeChanged;
     
 
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
     [NonSerialized] public float sfxVolume = 0;
     [NonSerialized] public float talkingSpeed = 1;
-    [NonSerialized] public bool ttsEnabled = false;
     #endregion
-
-    [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
     
     private void Awake()
     {
@@ -50,9 +61,6 @@ public class SettingsManager : MonoBehaviour
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;
-        
-        // Set reference to music-audiosource by component
-        musicSource = GetComponents<AudioSource>()[0];
     }
     
     private void Start()
@@ -64,10 +72,10 @@ public class SettingsManager : MonoBehaviour
     private void ApplySavedSettings()
     {
         // Get the saved values
-        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
-        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 80);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 80);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
-        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
+        textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
         // Apply the saved values
         SetMusicVolume(musicVolume);
@@ -80,7 +88,24 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
-        PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(nameof(textSize), (int)textSize);
+    }
+
+    public void OnClick(Component sender, params object[] data)
+    {
+        AudioClip clip;
+        if (data[0] is AudioClip audioClip)
+            clip = audioClip;
+        else
+            clip = defaultButtonClickSound;
+
+        PlaySfxClip(clip);
+    }
+
+    public void PlaySfxClip(AudioClip clip)
+    {
+        sfxSource.clip = clip;
+        sfxSource.Play();
     }
     
     #region TextSize
@@ -119,7 +144,15 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(musicVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+
+        audioMixer.SetFloat(nameof(musicVolume), adjustedVolume);
         musicVolume = volume;
     }
 
@@ -129,24 +162,36 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(sfxVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+        audioMixer.SetFloat(nameof(sfxVolume), adjustedVolume);
         sfxVolume = volume;
     }
     
     /// <summary>
     /// this method should fade-out the previous track, then fade-in the new track
     /// </summary>
-    public void SwitchMusic(AudioClip newClip, float? fadeTime)
+    public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
+        // checks if newclip passed has a value
         if (newClip != null)
         {
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
-            // If the newclip is different than the current clip, we fade the new one in.
-            if (newClip != musicSource.clip)
-                StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+            if (musicIsFading)
+                StopCoroutine(musicFadeCoroutine);
+
+            musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
+        
+        // Set the music loop to the given parameter.
+        musicSource.loop = loop;
     }
 
     /// <summary>
@@ -158,20 +203,50 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
-        float startVolume = musicSource.volume;
-        while (musicSource.volume > 0)
+        musicIsFading = true;
+
+        // Don't fade out if it's the same clip
+        if (newClip != musicSource.clip)
         {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
-            yield return null;
+            // Start loading the new clip
+            // In the clip settings, "Load in Background" should be enabled,
+            // otherwise the game could freeze until loading is done
+            if (!newClip.loadInBackground)
+                Debug.LogWarning(
+                    $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                    $"set to {newClip.loadInBackground}. " +
+                    $"This could cause freezes while the clip is loading.");
+            newClip.LoadAudioData();
+
+            while (musicSource.volume > 0)
+            {
+                musicSource.volume -= Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            musicSource.Stop();
+
+            // Unload the old clip (Unity does not do this automatically)
+            if (musicSource.clip != null)
+                musicSource.clip.UnloadAudioData();
+
+            // Wait for the new clip to finish loading
+            while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+                yield return null;
+
+            musicSource.clip = newClip;
         }
-        musicSource.Stop();
-        musicSource.clip = newClip;
+
+        // Ensure the clip is playing
         musicSource.Play();
+
+        // Fade in the clip
         while (musicSource.volume < 1)
         {
-            musicSource.volume += startVolume * Time.deltaTime / fadeTime;
+            musicSource.volume += Time.deltaTime / fadeTime;
             yield return null;
         }
+
+        musicIsFading = false;
     }
     #endregion
 
