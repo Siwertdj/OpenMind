@@ -14,6 +14,7 @@ public class GameOverManager : MonoBehaviour
     [Header("Scene References")]
     [SerializeField] GameObject GameWonCanvas;
     [SerializeField] GameObject GameLossCanvas;
+    [SerializeField] GameObject SingleplayerButtons;
 
     [Header("Game Events")] 
     [SerializeField] private GameEvent onGameLoaded;
@@ -53,6 +54,7 @@ public class GameOverManager : MonoBehaviour
         sc = SceneController.sc;
         
         SetStatusCanvas();
+        SetButtons();
     }
 
     /// <summary>
@@ -70,6 +72,17 @@ public class GameOverManager : MonoBehaviour
             GameLossCanvas.SetActive(true);
             GameWonCanvas.SetActive(false);
         }
+    }
+    
+    /// <summary>
+    /// Only show the retry and restart buttons during singleplayer and not during multiplayer.
+    /// </summary>
+    private void SetButtons()
+    {
+        if(MultiplayerManager.mm)
+            SingleplayerButtons.SetActive(false);
+        else
+            SingleplayerButtons.SetActive(true);
     }
 
     public void ReturnToMenu()

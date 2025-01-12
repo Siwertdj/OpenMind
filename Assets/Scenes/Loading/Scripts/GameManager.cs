@@ -355,7 +355,7 @@ public class GameManager : MonoBehaviour
     private void MultiplayerNotebookExchange()
     {
         // Send notebook
-        if (MultiplayerManager.mm is not null) 
+        if (MultiplayerManager.mm) 
             MultiplayerManager.mm.SendNotebook();
     }
     
