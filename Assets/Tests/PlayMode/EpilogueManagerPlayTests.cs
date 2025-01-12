@@ -280,11 +280,10 @@ public class EpilogueManagerPlayTests
         // Waiting for the DialogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Get the DialogueManager.
-        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-        
+        // Get the EpilogueManager.
         var em = GameObject.Find("EpilogueManager").GetComponent<EpilogueManager>();
         
+        // End the Epilogue.
         em.EndEpilogue(hasWon);
 
         yield return new WaitUntil(() => SceneManager.GetSceneByName("GameOverScene").isLoaded); // Wait for scene to load.

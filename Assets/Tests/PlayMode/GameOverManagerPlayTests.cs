@@ -53,6 +53,7 @@ public class GameOverManagerPlayTests
         // Get the GameOverManager.
         gom = GameObject.Find("GameOverManager").GetComponent<GameOverManager>();
         
+        // Set the private variables in GameOverManager using this function.
         gom.StartGameOver(gm, false, gm.currentCharacters, gm.GetCulprit().id, story);
         
         // Move toolbox and DDOLs to NPCSelectScene to unload.
@@ -77,6 +78,7 @@ public class GameOverManagerPlayTests
 
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
+        // Unload the additive scenes.
         SceneController.sc.UnloadAdditiveScenes();
     }
     
