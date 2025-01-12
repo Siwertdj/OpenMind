@@ -29,11 +29,13 @@ public class QuestionDialogueObject : DialogueObject
 
         GenerateQuestions();
 
+        Debug.Log(questions.Count);
         // Add response to each question to list of responses
         foreach (Question question in questions)
             Responses.Add(new ResponseDialogueObject(question, background));
         
         dm.ReplaceBackground(background);
+        Debug.Log($"responses: {Responses.Count}");
         dm.InstantiatePromptButtons(this);
     }
 
@@ -46,6 +48,7 @@ public class QuestionDialogueObject : DialogueObject
         // (This value should possibly be public and adjustable from the GameManager)
         int questionsOnScreen = 2;
 
+        Debug.Log(GameManager.gm.HasQuestionsLeft());
         // Generate random list of questions
         if (GameManager.gm.HasQuestionsLeft())
         {

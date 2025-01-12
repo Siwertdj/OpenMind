@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
         
         //assign numQuestionsAsked
         numQuestionsAsked = saveData.numQuestionsAsked;
+        Debug.Log($"Loaded game with {numQuestionsAsked} questions.");
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
@@ -632,6 +633,7 @@ public class GameManager : MonoBehaviour
     /// <returns>True if player can ask more questions, otherwise false.</returns>
     public bool HasQuestionsLeft()
     {
+        Debug.Log($"numQuestionsAsked: {numQuestionsAsked}, story.numQuestions: {story.numQuestions}");
         return numQuestionsAsked < story.numQuestions;
     }
     #endregion

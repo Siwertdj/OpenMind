@@ -108,6 +108,7 @@ public class DialogueManager : MonoBehaviour
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
         
+        Debug.Log("execute dm 1 (r.111)");
         // Execute the starting object to begin dialogue
         currentObject.Execute();
     }
@@ -144,6 +145,7 @@ public class DialogueManager : MonoBehaviour
                 StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
         }
 
+        Debug.Log("execute dm 2 (r.148)");
         currentObject.Execute();
     }
 
@@ -344,9 +346,11 @@ public class DialogueManager : MonoBehaviour
     /// <param name="questionDialogueObject">A <see cref="QuestionDialogueObject"/> containing the questions and responses</param>
     public void InstantiatePromptButtons(QuestionDialogueObject questionDialogueObject)
     {
+        Debug.Log("instantiate prompt");
         // Instantiate button containing each responseDialogue
         foreach (ResponseDialogueObject response in questionDialogueObject.Responses)
         {
+            Debug.Log("adding button");
             // Instantiate and set parent
             Button button = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
 
@@ -388,6 +392,7 @@ public class DialogueManager : MonoBehaviour
 
         // Write dialogue when button is pressed
         currentObject = responseDialogue;
+        Debug.Log("execute dm 3 (r.395)");
         currentObject.Execute();
     }
 
@@ -470,6 +475,7 @@ public class DialogueManager : MonoBehaviour
         DestroyButtons();
         // TODO: Combineer met het unloaden van Dialoguescene
         currentObject = new TerminateDialogueObject();
+        Debug.Log("execute dm 4 (r.478)");
         currentObject.Execute();
     }
 
@@ -498,6 +504,7 @@ public class DialogueManager : MonoBehaviour
         DestroyButtons();
         for (int i = 0; i < 2; i++)
         {
+            Debug.Log("execute dm 5 (r.507)");
             currentObject.Execute();
         }
 
