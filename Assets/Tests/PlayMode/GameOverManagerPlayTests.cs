@@ -103,7 +103,6 @@ public class GameOverManagerPlayTests
         // Invoke the onClick of the culprit.
         go.transform.GetChild(culpritIndex).GetComponent<GameButton>().onClick.Invoke();
         
-        
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
         
         // Waiting for the DialogueManager to appear.
@@ -174,9 +173,14 @@ public class GameOverManagerPlayTests
     public void TearDown()
     {
         //TODO: see why loading gets unloaded.
+        // Move all toolboxes so that they can be unloaded.
+        var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
+        foreach (GameObject obj in objects)
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
+        
         // Move toolbox and DDOLs to Loading to unload
-        if (GameObject.Find("Toolbox") != null)
-            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        //if (GameObject.Find("Toolbox") != null)
+            //SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
 
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
@@ -243,7 +247,7 @@ public class GameOverManagerPlayTests
             if (charactersPrior.All(c => c.characterName != character.characterName))
                 hasSameCharacters = false;
         }
-        
+
         // Check if the bool hasSameCharacters returns true.
         Assert.IsTrue(hasSameCharacters);
 
