@@ -18,8 +18,9 @@ using UnityEngine;
 /// </summary>
 public class DataListener : DataNetworker
 {
-    private List<Socket> connections;
-    private List<bool>   isConnectionReceiving;
+    private List<Socket>   connections;
+    private List<bool>     isConnectionReceiving;
+    private List<DateTime> lastReceveivedMessage;
     
     ///<summary>when a connection is made, input is the socket the connect is made with</summary>
     private NetworkEvents onAcceptConnectionEvents;
@@ -51,6 +52,7 @@ public class DataListener : DataNetworker
         onAckSentEvents = new NetworkEvents();
         respondEvents = new NetworkEvents();
         delayedRespondEvents = new NetworkDelayedEvents();
+        lastReceveivedMessage = new List<DateTime>();
         
         if (!IPConnections.GetOwnIps().Contains(ipAddress))
         {
@@ -92,6 +94,7 @@ public class DataListener : DataNetworker
                 {
                     connections.Add(t.Result);
                     isConnectionReceiving.Add(false);
+                    lastReceveivedMessage.Add(DateTime.Now);
                     logWarning = onAcceptConnectionEvents.Raise("Connect", t.Result, clearOnAcceptConnectionEvents, "onAcceptConnectionEvent");
                 });
             }
@@ -182,6 +185,7 @@ public class DataListener : DataNetworker
     
     private void HandleReceivedData(List<NetworkPackage> networkData, int index, bool clearDataReceivedEvents, bool clearRespondEvents)
     {
+        lastReceveivedMessage[index] = DateTime.Now;
         string signature = networkData[0].GetData<string>();
         
         List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
@@ -279,7 +283,6 @@ public class DataListener : DataNetworker
             delayedRespondEvents.Raise(signature, false, "delayedRespondEvent");
         };
     }
-        
     
     /// <summary>
     /// Sends a response after receiving a message.
@@ -295,29 +298,32 @@ public class DataListener : DataNetworker
         
         if (!TryCreatePackage(signature, resp, out byte[] bytes))
             return;
-        
-        Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint}");
+        Debug.Log("Connection list length " + connections.Count + " socket index " + socketIndexAndMessage.Item1);
+        Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint} signature {signature}");
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }
-    
+
     /// <summary>
     /// Tests if the clients are still connected, if not the sockets are removed from the connection list.
+    /// <param name="signature">Signature of the message.</param>
+    /// <param name="interval">The maximum time between messages.</param>
     /// <param name="info">Return true if a client just disconnected.</param>
     /// </summary>
-    protected override bool IsDisconnected(out Socket info)
+    protected override bool IsDisconnected(string signature, int interval, out Socket info)
     {
         for (var i = 0; i < connections.Count; i++)
         {
-            if(!IsSocketConnected(connections[i]))
+            DateTime now = DateTime.Now;
+            if (now.Subtract(lastReceveivedMessage[i]).TotalMilliseconds >= interval * 2)
             {
                 info = connections[i];
-                connections.Remove(connections[i]);
-                
+                connections.RemoveAt(i);
+                isConnectionReceiving.RemoveAt(i);
+                lastReceveivedMessage.RemoveAt(i);
                 return true;
             }
         }
-
         info = null;
         return false;
     }

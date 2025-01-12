@@ -27,6 +27,7 @@ public class MultiplayerManager : MonoBehaviour
     
     void Awake()
     {
+        Debug.Log("Multiplayer Manager awoken");
         mm = this;
         DontDestroyOnLoad(gameObject);
         init = new MultiplayerInit();
@@ -64,7 +65,8 @@ public class MultiplayerManager : MonoBehaviour
     /// Join the game as the client using the classcode.
     /// </summary>
     /// <param name="classCode">the classcode from the host</param>
-    public void JoinGame(string classCode)
+    /// <param name="reactivateJoinButton">the action of reactvating the join button</param>
+    public void JoinGame(string classCode, Action reactivateJoinButton)
     {
         // Create the client
         client = gameObject.AddComponent<Client>();
@@ -73,7 +75,7 @@ public class MultiplayerManager : MonoBehaviour
         client.AssignSettings(doPopup, settings);
         
         // Connect to the host using the code
-        client.EnterClassroomCode(classCode, AssignSeed, AssignStory);
+        client.EnterClassroomCode(classCode, AssignSeed, AssignStory, reactivateJoinButton);
     }
     
     /// <summary>

@@ -20,14 +20,13 @@ public class PopUpManager : MonoBehaviour
         if (data.Length > 1 && data[1] is Color)
         {
             Color color = (Color)data[1];
-            color.a = 0.8f;
+            color.a = 0.9f;
             closePopUp.GetComponentInChildren<Image>().color = color;
         }
             
 
         popUpCanvas.enabled = true;
         closePopUp.interactable = true;
-        Debug.Log("Opened popup with " + text);
     }
 
     public void ClosePopUp() 
@@ -35,7 +34,6 @@ public class PopUpManager : MonoBehaviour
         popUpText.text = string.Empty;
         popUpCanvas.enabled = false;
         closePopUp.interactable = false;
-        Debug.Log("Closed popup");
     }
 
 }

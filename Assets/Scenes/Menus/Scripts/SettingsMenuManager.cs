@@ -15,10 +15,8 @@ public class SettingsMenuManager : MonoBehaviour
     [Header("Audio References")]
     [SerializeField] private GameObject audioSliderGroup;
 
-    private Slider musicVolumeSlider;
-    private Slider sfxVolumeSlider;
-    // SLIDERS
-    [SerializeField] private GameObject sliderGroup;
+    private GameSlider musicVolumeSlider;
+    private GameSlider sfxVolumeSlider;
     
     // Buttons from TextMenuOptions
     [SerializeField] private GameObject buttonGroup;
@@ -27,7 +25,7 @@ public class SettingsMenuManager : MonoBehaviour
     private GameButton activeButton;
     
     // Chosen text size
-    private SettingsManager.TextSize size;
+    private SettingsManager.TextSize textSize;
 
     // Example tmp_text objects
     [SerializeField] private TMP_Text characterNameField;
@@ -38,8 +36,8 @@ public class SettingsMenuManager : MonoBehaviour
     
     void Awake()
     {
-        // Set the active button.
-        size = SettingsManager.sm.textSize;
+        // Set the active text size button
+        textSize = SettingsManager.sm.textSize;
         activeButton = GetButton(SettingsManager.sm.textSize);
         SetActiveButton(activeButton);
         
@@ -56,16 +54,14 @@ public class SettingsMenuManager : MonoBehaviour
     private void Start()
     {
         // Get the sliders
-        Slider[] sliders = audioSliderGroup.GetComponentsInChildren<Slider>();
+        GameSlider[] sliders = audioSliderGroup.GetComponentsInChildren<GameSlider>();
         musicVolumeSlider = sliders[0];
         sfxVolumeSlider = sliders[1];
 
         // Set the values on the UI elements
-        musicVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.musicVolume);
-        sfxVolumeSlider.SetValueWithoutNotify(SettingsManager.sm.sfxVolume);
-        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);
-        textToSpeechToggle.SetIsOnWithoutNotify(SettingsManager.sm.ttsEnabled);
-        
+        musicVolumeSlider.UpdateSlider(SettingsManager.sm.musicVolume);
+        sfxVolumeSlider.UpdateSlider(SettingsManager.sm.sfxVolume);
+        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
     }
 
     /// <summary>
@@ -83,18 +79,21 @@ public class SettingsMenuManager : MonoBehaviour
     /// </summary>
     public void ExitSettings()
     {
-        // If a scenecontroller exists, we exit the settings using the transition-graph.
-        if (SceneController.sc != null)
+        if (SceneManager.GetSceneByName("StartScreenScene").isLoaded)
+        {
+            // '_ =' throws away the await
+            /*_ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
+                SceneController.SceneName.StartScreenScene,
+                SceneController.TransitionType.Unload);*/
+            SceneManager.UnloadSceneAsync("SettingsScene");
+        }
+        else if (SceneManager.GetSceneByName("Loading").isLoaded)
         {
             // '_ =' throws away the await
             _ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
                 SceneController.SceneName.Loading,
-                SceneController.TransitionType.Unload);
-        }
-        // otherwise, we use the built-in SceneManager to unload.
-        else
-        {
-            SceneManager.UnloadSceneAsync("SettingsScene");
+                SceneController.TransitionType.Unload,
+                true);
         }
     }
     
@@ -129,11 +128,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         SettingsManager.sm.SetTalkingSpeed(multiplier);
     }
-
-    public void SetTextToSpeech(bool isEnabled)
-    {
-        SettingsManager.sm.ttsEnabled = isEnabled;
-    }
     
     #region TextSettings
     
@@ -148,19 +142,17 @@ public class SettingsMenuManager : MonoBehaviour
         GameButton[] children = buttonGroup.GetComponentsInChildren<GameButton>();
         
         // Set all buttons (excluding return button) to the color white and disable all arrows.
-        for (int i = 0; i < children.Length - 1; i++)
-        {
+        for (int i = 0; i < children.Length; i++)
             children[i].GetComponent<Image>().color = Color.white;
-            children[i].transform.GetChild(1).gameObject.SetActive(false);
-        }
         
         // Set the chosen size to a green color and enable the arrow.
         activeButton = button;
         SetActiveButton(button);
-        size = GetTextSize(button);
+        textSize = GetTextSize(button);
         
         // Change the textSize from SettingsManager
-        SettingsManager.sm.textSize = size;
+        SettingsManager.sm.textSize = textSize;
+        SettingsManager.sm.OnTextSizeChanged.Invoke();
         
         // Change the fontSize of the example
         ChangeTextSize();
@@ -177,8 +169,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         // Set the chosen size to a green color
         button.GetComponent<Image>().color = Color.green;
-        // Enable the arrow
-        button.transform.GetChild(1).gameObject.SetActive(true);
     }
     
     /// <summary>

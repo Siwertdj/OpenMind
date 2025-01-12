@@ -11,10 +11,12 @@ using UnityEngine;
 
 public class CharacterData : ScriptableObject
 {
-    public string characterName;
-    public int id;
-    public Sprite avatar;
-    [Range(0.5f, 2f)] public float voicePitch = 1;
+    public                   string characterName;
+    public                   int    id;
+    public                   Sprite neutralAvatar;
+    public                   Sprite happyAvatar;
+    public                   Sprite unhappyAvatar;
+    [Range(0.5f, 2f)] public float  voicePitch = 1;
     public Vector2 facePivot = new(0.5f, 0.8f);
 
     [SerializeField] public KeyValuePair[] answers;
@@ -27,7 +29,7 @@ public class CharacterData : ScriptableObject
 [Serializable] public struct KeyValuePair
 {
     [SerializeField] public Question question;
-    [SerializeField] public List<string> answer;
+    [SerializeField] public DialogueContainer answer;
     [SerializeField] public List<string> trait;
 }
 
@@ -46,13 +48,5 @@ public class CharacterData : ScriptableObject
 [Serializable] public struct DialogueLine
 {
     [SerializeField]
-    public Emotion emotion;
-    [SerializeField]
     public string line;
-}
-
-public enum Emotion
-{
-    Happy,
-    Neutral
 }

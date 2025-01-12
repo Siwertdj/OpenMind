@@ -14,70 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Arslan
   id: 7
-  avatar: {fileID: 21300000, guid: d0ce3a83079c96b478cb536810ab3257, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: d0ce3a83079c96b478cb536810ab3257, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5088, y: 0.8084}
   answers:
   - question: 3
-    answer:
-    - Keanu Reeves is a big inspiration for me.
-    - "I think he\u2019s a cool and down to earth guy and that he didn\u2019t let
-      fame get to his head."
-    - He also cares a lot about others,
-    - 'for example when he shared a meal with a homeless person. '
+    answer: {fileID: 11400000, guid: c241b56e8c5a38b4e9d4b469e18cfd08, type: 2}
     trait:
     - Keanu Reeves is a big inspiration for me.
   - question: 6
-    answer:
-    - I think there are too many cutbacks on culture and university.
-    - Those cutbacks are super weird in my opinion.
-    - Investing in the youth and their education seems like a good idea to benefit
-      the economy.
-    - Those investments would also create more chances for people,
-    - so those cutbacks are very weird to me.
+    answer: {fileID: 11400000, guid: 2f8033df382a60e4aa4ae22fdec77123, type: 2}
     trait:
     - I think there too many cutbacks on education and culture.
   - question: 7
-    answer:
-    - I play a lot of videogames with friends,
-    - and we like to get together to play games or just talk.
+    answer: {fileID: 11400000, guid: 6a5c1cf5fa6f95b46909ff123ae583bb, type: 2}
     trait:
-    - I like to hangout with my friends.
+    - I like to hang out with my friends.
   - question: 9
-    answer:
-    - No, I am not religious.
-    - I am interested in theology though and I really enjoy learning about religions
+    answer: {fileID: 11400000, guid: bcb6e02204e731348be226fc9c1829f2, type: 2}
     trait:
     - I am not religious.
   - question: 11
-    answer:
-    - "I think it\u2019s very important to always treat others"
-    - 'how you would want to be treated.  '
+    answer: {fileID: 11400000, guid: 4374de6887c25474ba884839adedabf4, type: 2}
     trait:
     - I think you should treat other like you want to be treated.
   - question: 13
-    answer:
-    - That's a hard question.
-    - It's definitely either my mother or my girlfriend
+    answer: {fileID: 11400000, guid: 5cf7bf768f0099649bd1f02ede9d9da4, type: 2}
     trait:
-    - I think you should treat other like you want to be treated.
+    - The most important people in my life are my mother and my girlfriend.
   - question: 15
-    answer:
-    - I am super competitive.
-    - It's very hard for me to admit someone is better than me at something.
+    answer: {fileID: 11400000, guid: 39bc7c654de29df479a3765d2d012679, type: 2}
     trait:
     - I am very competitive.
   - question: 19
-    answer:
-    - If I won the lottery I would take my parents and my sister on a grand vacation.
+    answer: {fileID: 11400000, guid: 92f723dc8378c944c9036bd5d13cf64d, type: 2}
     trait:
     - If I won the lottery I would take a vacation with my parents and sister.
   - question: 2
-    answer:
-    - I'm doing well, thanks for asking!
-    - I hang out a lot with my colleagues and friends.
-    - I'm also part of a community for, primarily, Asian people.
-    - But really anyone is welcome to join.
+    answer: {fileID: 11400000, guid: 2dcc8ead48613d64cb696b6eaf1cf787, type: 2}
     trait:
     - I hang out with my colleagues and friends from a community for Asian people.
   greetings:

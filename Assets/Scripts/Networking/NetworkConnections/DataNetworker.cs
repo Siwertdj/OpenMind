@@ -24,7 +24,7 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     protected Socket     socket;
     protected IPEndPoint endPoint;
 
-    private NetworkEvents onDisconnectedEvents;
+    protected NetworkEvents onDisconnectedEvents;
 
     private bool isCheckingForDisconnection;
     
@@ -105,18 +105,19 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
         
         return true;
     }
-    
+
     /// <summary>
     /// Tests if the client and host are still connected, if not call the disconnection events.
-    /// <param name="intervalSeconds">the interval for checking for disconnections, in seconds</param>
     /// </summary>
-    public IEnumerator IsDisconnected(float intervalSeconds)
+    /// <param name="signature">signature of the messages</param>
+    /// <param name="intervalSeconds">the interval for checking for disconnections, in seconds</param>
+    public IEnumerator IsDisconnected(string signature, float intervalSeconds)
     {
         isCheckingForDisconnection = true;
         
         while (isCheckingForDisconnection)
         {
-            if (IsDisconnected(out Socket disconnectedSocket))
+            if (IsDisconnected(signature,(int)(intervalSeconds * 1000), out Socket disconnectedSocket))
             {
                 logError = onDisconnectedEvents.Raise("Disconnect", disconnectedSocket, false, "onDisconnectedEvents");
             }
@@ -126,7 +127,7 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
         }
     }
 
-    protected abstract bool IsDisconnected(out Socket info);
+    protected abstract bool IsDisconnected(string signature, int interval, out Socket info);
     
     /// <summary>
     /// Adds an event to the action of a socket disconnecting. The input is the socket that got disconnected.
@@ -140,13 +141,5 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     public void Dispose()
     {
         socket.Dispose();
-    }
-
-    /// <summary>
-    /// Test if the socket is still connected.
-    /// </summary>
-    protected bool IsSocketConnected(Socket s)
-    {
-        return !((s.Poll(1000, SelectMode.SelectRead) && (s.Available == 0)) || !s.Connected);
     }
 }

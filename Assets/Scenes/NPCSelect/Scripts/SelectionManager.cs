@@ -91,6 +91,7 @@ public class SelectionManager : MonoBehaviour
 
     #endregion
 
+  
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>
@@ -135,6 +136,7 @@ public class SelectionManager : MonoBehaviour
         if (!character.isActive)
             return;
 
+        /*
         // Start the epilogue scene if CulpritSelect is active
         if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
         {
@@ -147,7 +149,7 @@ public class SelectionManager : MonoBehaviour
             // Load the epilogue scene.
             GameManager.gm.StartEpilogueDialogue(character);
         }
-        else
+        else*/
         {
             // No special gamestate, so we start dialogue with the given character
             GameManager.gm.StartDialogue(character);
@@ -267,6 +269,6 @@ public class SelectionManager : MonoBehaviour
 
     public GameButton Test_GetSelectionButtonRef() => confirmSelectionButton;
 
-#endif
+    #endif
     #endregion
 }

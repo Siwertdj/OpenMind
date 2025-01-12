@@ -24,10 +24,6 @@ public class NotebookManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
         
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
@@ -35,9 +31,6 @@ public class NotebookManagerPlayTest
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
@@ -52,7 +45,9 @@ public class NotebookManagerPlayTest
     [TearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to scene to unload after
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NotebookScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("NotebookScene"));
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -65,7 +60,7 @@ public class NotebookManagerPlayTest
     public IEnumerator StartNotebookTest()
     {
         // Check if some basic properties hold
-        Assert.IsFalse(nm.characterInfo.activeSelf);
+        Assert.IsFalse(nm.Test_CharacterInfoField.activeSelf);
         Assert.IsTrue(nm.Test_PersonalInputField.gameObject.activeSelf);
         Assert.AreEqual(nm.notebookData, gm.notebookData);
         Assert.IsFalse(nm.Test_GetPersonalButton().interactable);
@@ -148,6 +143,39 @@ public class NotebookManagerPlayTest
             Assert.AreEqual(nm.notebookData.GetCharacterNotes(gm.currentCharacters[0]), newText);
         }
         
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator TabButtonsTest()
+    {
+        var bottomRow = GameObject.Find("Buttons Bottom Row").transform;
+        var topRow = GameObject.Find("Buttons Top Row").transform;
+
+        // Check for a CharacterIcon component on the first button
+        // It shouldn't have one, as this should be the Personal Notes button
+        int firstChildIcons = bottomRow.GetChild(0).GetComponentsInChildren<CharacterIcon>().Length;
+        Assert.AreEqual(0, firstChildIcons,
+            "The first button should not have any children with the CharacterIcon component, but " +
+            firstChildIcons + " was/were found.");
+
+        // Check if the rest of the bottom row is in the correct order
+        // (should contain the first characters)
+        for (int i = 1; i < bottomRow.childCount; i++)
+        {
+            var icon = bottomRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
+        // Check the top row as well (should contain the rest of the characters)
+        for (int i = 0; i < topRow.childCount; i++)
+        {
+            var icon = topRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i + bottomRow.childCount - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
         yield return null;
     }
 }

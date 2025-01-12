@@ -14,101 +14,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Isabella
   id: 18
-  avatar: {fileID: 21300000, guid: a0364568eb7954d45ab14fc330033a75, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: a0364568eb7954d45ab14fc330033a75, type: 3}
+  happyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 0}
   voicePitch: 1.6
   facePivot: {x: 0.4908, y: 0.7413}
   answers:
   - question: 1
-    answer:
-    - I'm 58.
+    answer: {fileID: 11400000, guid: 564dd2e589afb524e96459956e3c5c13, type: 2}
     trait:
     - I'm 58 years old.
   - question: 2
-    answer:
-    - I am a secretary and I have my own art studio.
-    - I have been living with my partner for a long time but we aren't married.
-    - So I'm enjoying life right now but I loved it even more when my son was a small
-      child.
-    - You automatically feel so useful.
+    answer: {fileID: 11400000, guid: 2ab85d4eeb986964bb5df1d3ebe7b709, type: 2}
     trait:
     - I am not married to my partner.
   - question: 6
-    answer:
-    - I'm left-wing.
-    - I listen to the radio a lot to keep up with politics.
-    - I'm opposed to the patriarchy and men in positions of power.
-    - Power corrupts and I think going against that creates more equality.
+    answer: {fileID: 11400000, guid: 3e077641d5a91f942b797323f196bf82, type: 2}
     trait:
     - I'm opposed to the patriarchy.
   - question: 7
-    answer:
-    - As an artist I have turned my hobby into my job.
-    - Additionally I like to read, especially English books.
-    - I also like watching TLC TV, to me it's the ultimate relaxation activity.
-    - I exercise as well but that's really only because it's necessary.
+    answer: {fileID: 11400000, guid: 6a759a14a9fefa148b7ab3412eae73a6, type: 2}
     trait:
     - One of my hobbies is reading.
   - question: 9
-    answer:
-    - Not at all!
-    - I was raised Catholic but I never believed in it myself.
-    - It has never brought me anything good.
-    - I thought it was very dogmatic and too suffocating.
+    answer: {fileID: 11400000, guid: 38d0e0626659efd44a57eb703e637560, type: 2}
     trait:
     - I was raised Catholic.
   - question: 10
-    answer:
-    - I have tried many different things, but I didn't finish most of them.
-    - Except art school.
-    - I'm very passionate about art.
-    - I love the classics and any type of art that is comforting.
-    - I don't need art to be shocking.
+    answer: {fileID: 11400000, guid: f27b23067dc63f3489c5a65419cd6655, type: 2}
     trait:
     - I have tried many different studies, but I didn't finish most of them.
   - question: 11
-    answer:
-    - I find it hard to understand that some people judge other groups of people.
-    - I think, "Why does it matter to you?"
-    - Just accept everyone the way they are, don't judge them.
-    - I think it's important to think about the future and the environment.
+    answer: {fileID: 11400000, guid: 3159acc1878753f4a8b687406f9a0b65, type: 2}
     trait:
     - I think it's important to think about the future and the environment.
   - question: 13
-    answer:
-    - My partner, my son and my sister.
-    - I always go to my sister when I have a problem.
+    answer: {fileID: 11400000, guid: de71e210a380022459dc82be82d15b89, type: 2}
     trait:
     - The most important person in my life are my partner, my son and my sister.
   - question: 14
-    answer:
-    - I'm kind, creative and humorous.
+    answer: {fileID: 11400000, guid: d41bd697c798f4548b55df4ee328c14e, type: 2}
     trait:
     - I'm a kind and humorous person.
   - question: 15
-    answer:
-    - I'm impatient and I lack perseverance sometimes.
-    - I'm also overstimulated quickly.
+    answer: {fileID: 11400000, guid: 18250d4e5d61a0645b874bb55bf31bd3, type: 2}
     trait:
     - I am an impatient person.
   - question: 19
-    answer:
-    - I would create more space for other artists.
+    answer: {fileID: 11400000, guid: 1ed82ccdcd22c1d45986303ca8d3c3db, type: 2}
     trait:
     - If I win the lottery I would create more space for artists.
   - question: 20
-    answer:
-    - I often buy organic foods, for environmental reasons.
-    - And I have a sweet tooth!
+    answer: {fileID: 11400000, guid: 5a49309d025f6bd45bc07c2f68b4e880, type: 2}
     trait:
     - I buy a lot of organic foods.
   - question: 17
-    answer:
-    - Definitely the asylum policy.
-    - I think we need to realise how great it is here and that human beings never
-      flee their country to seek fortune.
-    - They don't leave if they aren't in danger.
-    - It annoys me that many people aren't that open minded.
-    - What are they afraid of?
+    answer: {fileID: 11400000, guid: b8fce6cf258469b4b8eed91904b766fd, type: 2}
     trait:
     - A social issue I'm interested in is the asylum policy.
   greetings:

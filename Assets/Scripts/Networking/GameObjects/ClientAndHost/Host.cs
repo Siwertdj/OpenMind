@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
@@ -203,7 +204,9 @@ public class Host : NetworkObject
             return;
         
         Debug.Log($"Received first notebook {((List<NetworkPackage>)o)[0].data}");
-        notebooks.Add((List<NetworkPackage>)o);
+        
+        AddNotebook((List<NetworkPackage>)o);
+        
         addNormalResponse = true;
     }
     
@@ -222,9 +225,15 @@ public class Host : NetworkObject
         }
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
-        notebooks.Add(o);
+        AddNotebook(o);
         Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
+    }
+
+    private void AddNotebook(List<NetworkPackage> notebookData)
+    {
+        if(!notebooks.Contains(notebookData))
+            notebooks.Add(notebookData);
     }
     
     /// <summary>
@@ -238,6 +247,7 @@ public class Host : NetworkObject
     
     private void AddAdditionalDebugMessagesInit()
     {
+        StartCoroutine(listener.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         listener.AddOnAcceptConnectionsEvent(OnConnectionAccepted);
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);
@@ -277,6 +287,6 @@ public class Host : NetworkObject
     /// </summary>
     public override void Dispose()
     {
-        listener.Dispose();
+        listener?.Dispose();
     }
 }
