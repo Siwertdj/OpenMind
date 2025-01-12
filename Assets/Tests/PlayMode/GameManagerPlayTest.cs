@@ -58,6 +58,7 @@ public class GameManagerPlayTest
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
         SceneController.sc.UnloadAdditiveScenes();
+        Debug.Log("test");
     }
     
     // Input parameters for testing different inputs.

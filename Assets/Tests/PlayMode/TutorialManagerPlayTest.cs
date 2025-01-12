@@ -35,9 +35,6 @@ public class TutorialManagerPlayTest
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Initialize GameManager and start the game. 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();

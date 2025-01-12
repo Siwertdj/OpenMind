@@ -5,12 +5,9 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using WaitUntil = UnityEngine.WaitUntil;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class DialogueAnimatorPlayTest
 {
@@ -30,6 +27,7 @@ public class DialogueAnimatorPlayTest
 
         animator.Test_DelayInSeconds = 0.01f;
         animator.Test_DelayAfterSentence = 0.05f;
+        animator.Test_IgnoreSkipDelay = true;
 
         yield return null;
     }
@@ -38,7 +36,7 @@ public class DialogueAnimatorPlayTest
     public void TearDown()
     {
         animator.CancelWriting();
-        textField.text = "";
+        GameObject.Destroy(textField.gameObject);
     }
     #endregion
 
@@ -96,8 +94,8 @@ public class DialogueAnimatorPlayTest
             }
 
             // Await next line start
-            //yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
-            animator.SkipDialogue(true);
+            yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            animator.SkipDialogue();
         }
     }
 
@@ -183,6 +181,9 @@ public class DialogueAnimatorPlayTest
         yield return new WaitForSeconds(animator.Test_DelayInSeconds * n);
 
         animator.CancelWriting();
+
+        yield return new WaitForSeconds(animator.Test_DelayInSeconds);
+
         Assert.AreEqual(expectedText, textField.text);
     }
 

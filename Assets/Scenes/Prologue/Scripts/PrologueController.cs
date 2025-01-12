@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Manager class for cutscenes.
 /// </summary>
-public class CutsceneController : MonoBehaviour
+public class PrologueController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
     // The variables below are the UI components that we want to manipulate during the prologue scene
@@ -53,7 +53,10 @@ public class CutsceneController : MonoBehaviour
        backgroundIndex = 0;
        
        // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
+       SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
+       
+       // Update UserData
+       SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
@@ -141,7 +144,7 @@ public class CutsceneController : MonoBehaviour
     }
     
     #endregion
-
+    
     // This region contains methods that manipulate UI elements on the canvas.
     #region UIManipulators
     /// <summary>

@@ -14,17 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Psychic Sidekick
   storyID: 1
-  dialogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
-  hintBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
-  epilogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
-  storyIntroMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyGameMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
-  storyEpilogueMusic: {fileID: 8300000, guid: 0564008b562a7f34e968249372de6400, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  additionalHintBackgroundObjects:
+  - {fileID: 8379540494691323741, guid: c82f55dbcb4d36040b2a514dd2de4f17, type: 3}
+  - {fileID: 4608197996118494659, guid: 8521bf4181922a64eb68f26a42123678, type: 3}
+  epilogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  storyIntroMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
+  storyGameMusic: {fileID: 8300000, guid: 0ad27c3e394db5c49a9750fc59f8d673, type: 3}
+  storyEpilogueMusic: {fileID: 8300000, guid: b20e3c2360e5b3844a2d2a5711bc99ec, type: 3}
   storyEpilogueWonDialogue: {fileID: 0}
   storyEpilogueLossDialogueCulprit: {fileID: 0}
   storyEpilogueLossDialogueNPC: {fileID: 0}
   victimDialogue: has gone home.
-  hintDialogue: Hmm.. I am seeing something..
+  hintDialogue:
+  - I am sensing something... <victimName> has gone home...
+  - 'Hold on... the culprit has said something:'
+  - '"<hint>"'
+  noMoreHintsDialogue:
+  - I am sensing something... <victimName> has gone home...
+  - I am trying to reach the culprit, but I think my powers are fading...
+  - My powers are gone for now. You will have to figure this out on your own.
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2

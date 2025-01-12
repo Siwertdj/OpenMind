@@ -27,31 +27,31 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject characterInfo;
 
     [Header("Tab Select Button References")]
-    [SerializeField] private Button personalButton;
-    [SerializeField] private Button[] nameButtons;
+    [SerializeField] private GameButton personalButton;
+    [SerializeField] private GameButton[] nameButtons;
 
     [Header("Component References")]
     [SerializeField] private TMP_InputField personalInputField;
     [SerializeField] private TMP_Text currentTabText;
+    [SerializeField] private TMP_Text personalInputTitleText;
 
     [Header("Prefab References")]
-    [SerializeField] private GameObject logObjectPrefab;
-    [SerializeField] private GameObject inputObjectPrefab;
-    [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject pagePrefab;
+    [SerializeField] private GameObject inactiveNotePrefab;
+    [SerializeField] private GameObject introObjectPrefab;
+    [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject logObjectPrefab;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Assign character names to buttons
         InitializeTabButtons();
 
         // Get notebookdata
         notebookData = GameManager.gm.notebookData;
-        personalInputField.GetComponent<TMP_InputField>().text = notebookData.GetPersonalNotes();
-        personalInputField.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
 
         // Open custom notes page
         OpenPersonalNotes();
@@ -72,7 +72,17 @@ public class NotebookManager : MonoBehaviour
         {
             int id = i;
             var button = nameButtons[i];
-            button.GetComponentInChildren<CharacterIcon>().SetAvatar(characters[i]);
+            
+            // Set the icon avatar
+            var icon = button.GetComponentInChildren<CharacterIcon>();
+            icon.SetAvatar(characters[i]);
+
+            // Inactive characters should have a different looking icon
+            if (!characters[i].isActive)
+            {
+                icon.BackgroundColor = new Color(0.7f, 0.7f, 0.7f);
+                icon.OverlayColor = new Color(0.7f, 0.7f, 0.7f);
+            }
 
             button.onClick.AddListener(()=>OpenCharacterTab(id));
         }
@@ -102,7 +112,10 @@ public class NotebookManager : MonoBehaviour
         var inputField = personalInputField.GetComponent<TMP_InputField>();
         inputField.gameObject.SetActive(true);
         inputField.text = notebookData.GetPersonalNotes();
+
+        // Set font sizes
         inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
 
         // Make button clickable
         ChangeButtons(personalButton);
@@ -147,6 +160,18 @@ public class NotebookManager : MonoBehaviour
         // The queue which will hold all the character's info
         // This info will later be divided into pages
         Queue<GameObject> allCharacterInfo = new();
+
+        // If character is inactive, create note object
+        if (!currentCharacter.isActive)
+        {
+            var inactiveNoteObject = Instantiate(inactiveNotePrefab);
+            var noteText = inactiveNoteObject.GetComponentInChildren<TMP_Text>();
+
+            noteText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+            noteText.text = $"Note: {currentCharacter.characterName} {GameManager.gm.story.victimDialogue}";
+
+            allCharacterInfo.Enqueue(inactiveNoteObject);
+        }
 
         // Create icon & name object
         var introObject = Instantiate(introObjectPrefab);
@@ -380,10 +405,6 @@ public class NotebookManager : MonoBehaviour
     {
         // Reopen character tab (automatically applies settings)
         OpenCharacterTab(currentCharacterIndex);
-
-        // Change text size for personal input tab
-        personalInputField.GetComponent<TMP_InputField>().pointSize = 
-            SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
     }
 
     #region Test Variables
