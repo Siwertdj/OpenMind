@@ -22,6 +22,7 @@ public class MultiplayerManager : MonoBehaviour
     
     void Awake()
     {
+        Debug.Log("Multiplayer Manager awoken");
         mm = this;
         DontDestroyOnLoad(gameObject);
         init = new MultiplayerInit();
