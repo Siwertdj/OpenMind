@@ -55,7 +55,7 @@ MonoBehaviour:
   textSize: 0
   minWidth: 0
   maxWidth: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 8f475b193a727da47abaddff72545cbd, type: 3}
   textComponent: {fileID: 0}
   rectTransform: {fileID: 0}
   layoutElement: {fileID: 0}
