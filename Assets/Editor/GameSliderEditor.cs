@@ -13,6 +13,7 @@ public class GameSliderEditor : Editor
     private SerializedProperty valueRounding;
     private SerializedProperty valueText;
     private SerializedProperty valueInfo;
+    private SerializedProperty defaultValueEnabled;
     private SerializedProperty defaultValue;
     private SerializedProperty defaultValueRef;
     private SerializedProperty sliderComponentRef;
@@ -24,10 +25,11 @@ public class GameSliderEditor : Editor
     private void OnEnable()
     {
         step = serializedObject.FindProperty(nameof(step));
-        defaultValue = serializedObject.FindProperty(nameof(defaultValue));
         valueText = serializedObject.FindProperty(nameof(valueText));
         valueInfo = serializedObject.FindProperty(nameof(valueInfo));
         valueRounding = serializedObject.FindProperty(nameof(valueRounding));
+        defaultValue = serializedObject.FindProperty(nameof(defaultValue));
+        defaultValueEnabled = serializedObject.FindProperty(nameof(defaultValueEnabled));
         defaultValueRef = serializedObject.FindProperty(nameof(defaultValueRef));
         sliderComponentRef = serializedObject.FindProperty(nameof(sliderComponentRef));
     }
@@ -55,6 +57,7 @@ public class GameSliderEditor : Editor
         defaultValueGroup = EditorGUILayout.BeginFoldoutHeaderGroup(defaultValueGroup, "Default Value Settings");
         if (defaultValueGroup)
         {
+            EditorGUILayout.PropertyField(defaultValueEnabled, new GUIContent("Enable Default Value"));
             EditorGUILayout.PropertyField(defaultValueRef, new GUIContent("Default Value Ref"));
             EditorGUILayout.PropertyField(defaultValue, new GUIContent("Default Value Suggestion"));
         }

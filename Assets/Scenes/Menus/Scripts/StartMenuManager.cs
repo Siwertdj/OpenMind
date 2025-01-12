@@ -23,13 +23,9 @@ public class StartMenuManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onGameLoaded;
     public GameEvent startLoadIcon;
-
-    [Header("Copyright canvas")]
-    public Canvas copyright;
     
     [Header("Resources")]
     [SerializeField] AudioClip startMenuMusic;
-    private float startMenuMusicFadeInSpeed = 0f;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -40,25 +36,38 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        // Keep the copyright text on the screen in all scenes
-        DontDestroyOnLoad(copyright);
-
-        // Make popup and loading available at any point in the game
-        DontDestroyOnLoad(loadingScreen);
-        DontDestroyOnLoad(popUpScreen);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, 1, true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
+    }
+    
+    /// <summary>
+    /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
+    /// Otherwise, start the prologue.
+    /// </summary>
+    public void StartPrologueOrPrompt()
+    {
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.prologueSeen))
+        {
+            // Change menu's
+            mainMenuCanvas.SetActive(false);
+            skipPrologueCanvas.SetActive(true);
+        }
+        else
+        {
+            StartPrologue();
+        }
     }
 
+
     /// <summary>
-    /// Activates the prompt which asks the player to skip the prologue
+    /// Close prologue prompt
     /// </summary>
-    public void OpenSkipProloguePrompt()
+    public void CloseProloguePrompt()
     {
-        // Change menu's
-        mainMenuCanvas.SetActive(false);
-        skipPrologueCanvas.SetActive(true);
-        
+        mainMenuCanvas.SetActive(true);
+        skipPrologueCanvas.SetActive(false);
     }
 
     /// <summary>

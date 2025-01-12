@@ -13,23 +13,51 @@ using UnityEngine;
 /// </summary>
 public class Client : NetworkObject
 {
+    private enum MultiplayerState
+    {
+        Infant,
+        Connected,
+        Initialized,
+        UploadedNotebook,
+        ReceivedNotebook
+    }
+    
     private DataSender           sender;
     private Action<NotebookData> response;
     private Action<int>          storyID;
     private Action<int>          seed;
+    private Action               reactivateJoinButton;
+    private MultiplayerState     multiplayerState = MultiplayerState.Infant;
+
+    private       bool   tryReconnect;
+    private       bool   isConnected;
+    private       Action resendNotebook;
+    private const int    maxReconnectAttempts    = 3;
+    private       int    currentReconnectAttempt;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
     private List<CharacterInstance> activeCharacters;
-    
+
+    private void Update()
+    {
+        if (tryReconnect)
+        {
+            DebugLog("attempting to reconnect");
+            tryReconnect = false;
+            StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
+        }
+    }
+
     /// <summary>
     /// Enters a classroom code. This converts it back to an ip, connects with this ip and requests initialisation data.
     /// The seed and storyID actions are used to assign these values into the rest of the game.
     /// </summary>
-    public void EnterClassroomCode(string classroomCode, Action<int> seed, Action<int> storyID)
+    public void EnterClassroomCode(string classroomCode, Action<int> seed, Action<int> storyID, Action reactivateJoinButton)
     {
         this.seed = seed;
         this.storyID = storyID;
+        this.reactivateJoinButton = reactivateJoinButton;
         IPAddress hostAddress;
         IPv4Converter converter = new IPv4Converter();
         try
@@ -39,41 +67,74 @@ public class Client : NetworkObject
         catch (ArgumentException)
         {
             if (settings.IsDebug)
-                Debug.Log("(Client): Invalid classroom code");
+                DebugError("(Client): Invalid classroom code");
             else
                 DisplayError("Invalid classroom code.");
             return;
         }
         
-        sender = new DataSender(hostAddress, settings.ClientHostPortConnection);
+        sender = new DataSender(hostAddress, settings.ClientHostPortConnection, settings.PingDataSignature);
         sender.AddOnDisconnectedEvent(Disconnected);
         
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
         sender.AddOnConnectEvent(OnConnectionWithHost);
         sender.AddOnReceiveResponseEvent(settings.InitialisationDataSignature, ReceivedInitFromHost);
+
         
         //additional debugs if in debug mode
         if (settings.IsDebug)
             AddAdditionalDebugMessagesClassroomCode();
         
         StartCoroutine(sender.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
-        StartCoroutine(sender.IsDisconnected(settings.DisconnectedIntervalSeconds));
+        StartCoroutine(sender.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
         StartCoroutine(sender.ListenForResponse(settings.ListeningWhileNotConnectedIntervalSeconds));
     }
     
     private void Disconnected(object o)
     {
+        if ((multiplayerState == MultiplayerState.Initialized ||
+            multiplayerState == MultiplayerState.UploadedNotebook))
+        {
+            DebugLog($"attempting to reconnect due to disconnect");
+            tryReconnect = true;
+        }
+
         if (settings.IsDebug)
-            Debug.Log("(Client): Disconnected from the host.");
+            DebugError("(Client): Disconnected from the host.");
         else
             DisplayError("You got disconnected from the host, please check whether you and the host are connected to the internet.");
+        isConnected = false;
+            
     }
     
     private void ConnectionTimeoutError(object o)
     {
+        if (multiplayerState == MultiplayerState.ReceivedNotebook)
+            return;
+        
+        if (multiplayerState != MultiplayerState.Infant)
+        {
+            DebugLog("connection timeout");
+            if (currentReconnectAttempt >= maxReconnectAttempts)
+            {
+                if (settings.IsDebug)
+                    DebugError($"(Client): No reconnects were made after attempt {currentReconnectAttempt}.");
+                else
+                    DisplayError("It looks like you got disconnected from the host, either you or the host are disconnected from the internet.");
+                return;
+            }
+            currentReconnectAttempt++;
+            if (settings.IsDebug)
+                DebugError($"(Client): Reconnect attempt: {currentReconnectAttempt}.");
+            DebugLog("attempting to reconnect due to timeout");
+            tryReconnect = true;
+            
+            return;
+        }
+        
         if (settings.IsDebug)
-            Debug.Log("(Client): No connection was made.");
+            DebugError("(Client): No connection could be established.");
         else
             DisplayError("No connection with the host could be established, please check if the entered classroom code is correct" +
                          " and whether you and the host are connected to the internet.");
@@ -81,22 +142,33 @@ public class Client : NetworkObject
     
     private void OnConnectionWithHost(object obj)
     {
+        isConnected = true;
+        currentReconnectAttempt = 0;
         if (settings.IsDebug)
-            Debug.Log($"(Client): Connected with the host.");
-        
-        sender.SendDataAsync(settings.InitialisationDataSignature,
-            NetworkPackage.CreatePackage("Plz give init data!"), settings.AcknowledgementTimeoutSeconds);
+            DebugLog($"(Client): Connected with the host.");
+
+        if (multiplayerState == MultiplayerState.UploadedNotebook)
+            resendNotebook();
+
+        if (multiplayerState == MultiplayerState.Infant)
+        {
+            multiplayerState = MultiplayerState.Connected;
+            sender.SendDataAsync(settings.InitialisationDataSignature,
+                NetworkPackage.CreatePackage("Plz give init data!"),
+                settings.AcknowledgementTimeoutSeconds);
+        }
     }
     
     private void ReceivedInitFromHost(object o)
     {
+        multiplayerState = MultiplayerState.Initialized;
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         
         int story = receivedData[0].GetData<int>();
         int seeed = receivedData[1].GetData<int>();
         
         if (settings.IsDebug)
-            Debug.Log($"Received message from host, seed = {seeed} and story = {story}.");
+            DebugLog($"Received message from host, seed = {seeed} and story = {story}.");
         
         storyID(story);
         seed(seeed);
@@ -110,6 +182,13 @@ public class Client : NetworkObject
     /// <param name="currentCharacters">The list of current characters, this is required to correctly obtain the notes from each character.</param>
     public void SendNotebookData(Action<NotebookData> response, NotebookData notebookData, List<CharacterInstance> currentCharacters)
     {
+        if (!isConnected)
+        {
+            resendNotebook = () => SendNotebookData(response, notebookData, currentCharacters);
+            return;
+        }
+            
+        
         this.response = response;
         activeCharacters = currentCharacters;
         NotebookDataPackage package = new NotebookDataPackage(notebookData, currentCharacters);
@@ -117,13 +196,20 @@ public class Client : NetworkObject
         if (settings.IsDebug)
             AddAdditionalDebugMessagesNotebook();
         
+        sender.AddOnDataSentEvent(settings.NotebookDataSignature, ConfirmNotebookSent);
         sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
         sender.AddOnReceiveResponseEvent(settings.NotebookDataSignature, ReceivedNotebookDataFromOther);
         sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
     }
+
+    private void ConfirmNotebookSent(object o)
+    { 
+        multiplayerState = MultiplayerState.UploadedNotebook;
+    }
     
     private void ReceivedNotebookDataFromOther(object o)
-    {
+    { 
+        multiplayerState = MultiplayerState.ReceivedNotebook;
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
@@ -143,7 +229,21 @@ public class Client : NetworkObject
         if (doPopup is null)
             Debug.LogError("No popup for error handling was initialised");
         else
-            doPopup.Raise(this, error);
+        {
+            doPopup.Raise(this, error, new Color(0,0,0));
+            reactivateJoinButton();
+        }
+    }
+
+    private void DebugError(string error)
+    {
+        DebugLog(error);
+        reactivateJoinButton();
+    }
+
+    private void DebugLog(string message)
+    {
+        Debug.Log($"GameState: {multiplayerState}\nMessage: {message}");
     }
     
     #region debugMethods
@@ -151,29 +251,30 @@ public class Client : NetworkObject
     private void AddAdditionalDebugMessagesClassroomCode()
     {
         sender.AddOnDataSentEvent(settings.InitialisationDataSignature, DataSentInit);
-        sender.AddOnAckReceivedEvent(AckReceived);
-        sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
         sender.AddOnNotConnectedListeningEvents(ListeningWhileDisconnected);
+        sender.AddOnAckTimeoutEvent(settings.InitialisationDataSignature, AckTimeoutInit);
+        sender.AddOnAckTimeoutEvent(settings.PingDataSignature, AckTimeoutInit);
+        sender.AddOnDataSentEvent(settings.PingDataSignature, DataSentPing);
+    }
+    
+    private void DataSentPing(object o)
+    {
+        DebugLog($"(Client): Sent a ping of {o} bytes to the host.");
     }
     
     private void DataSentInit(object o)
     {
-        Debug.Log($"(Client): Sent {o} bytes to the host as an init request.");
-    }
-    
-    private void AckReceived(object o)
-    {
-        Debug.Log($"(Client): Received ACK with signature \"{o}\""); 
+        DebugLog($"(Client): Sent {o} bytes to the host as an init request.");
     }
     
     private void AckTimeoutInit(object o)
     {
-        Debug.Log($"(Client): Ack with signature {o} timed out");
+        DebugLog($"(Client): Ack with signature {o} timed out");
     }
     
     private void ListeningWhileDisconnected(object obj)
     {
-        Debug.Log("(Client): Disconnected while listening for response from host.");
+        //Debug.Log("(Client): Disconnected while listening for response from host.");
     }
     
     private void AddAdditionalDebugMessagesNotebook()
@@ -183,13 +284,13 @@ public class Client : NetworkObject
     
     private void DataSentNotebook(object o)
     {
-        Debug.Log($"(Client): Sent {o} bytes to the host as a notebook data request.");
+        DebugLog($"(Client): Sent {o} bytes to the host as a notebook data request.");
     }
     #endregion
     
     
     public override void Dispose()
     {
-        sender.Dispose();
+        sender?.Dispose();
     }
 }

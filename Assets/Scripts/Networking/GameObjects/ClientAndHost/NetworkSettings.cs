@@ -20,6 +20,9 @@ public class NetworkSettings : ScriptableObject
     [Tooltip("The signature used when sending and receiving the notebook data.")]
     public string NotebookDataSignature = "NotebookData";
     
+    [Tooltip("The signature used when pinging the host to check whether you are still connected.")]
+    public string PingDataSignature = "Ping";
+    
     [Tooltip("The port used to send messages from the client to the host and back.")]
     public ushort ClientHostPortConnection = 42069;
     #endregion

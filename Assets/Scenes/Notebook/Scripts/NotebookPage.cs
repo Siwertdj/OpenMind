@@ -64,7 +64,7 @@ public class NotebookPage
             string answerText = "";
 
             string questionText = GetQuestionText(question);
-            foreach (string s in _character.Answers[question])
+            foreach (string s in _character.Answers[question].GetStrings())
                 answerText += s + " ";
 
             result.Add((questionText, answerText));
@@ -83,7 +83,7 @@ public class NotebookPage
         }
         else
         {
-            return "I have not asked " + _character.characterName + "any questions.";
+            return "I have not asked " + _character.characterName + " any questions.";
         }
     }
     
