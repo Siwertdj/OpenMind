@@ -110,14 +110,14 @@ public class NetworkManager : MonoBehaviour
         
         StartCoroutine(dataListener.AcceptIncomingConnections());
         StartCoroutine(dataListener.ListenForIncomingData(0.1f));
-        StartCoroutine(dataListener.IsDisconnected(1f));
+        //StartCoroutine(dataListener.IsDisconnected(1f));
     }
     
     void SetupSender()
     {
         Debug.Log("Setting up sender");
         IPAddress address = IPAddress.Parse("145.136.157.36");
-        sender = new DataSender(address, IPConnections.Port);
+        //sender = new DataSender(address, IPConnections.Port);
         StartCoroutine(sender.DisplayAnyDebugs(0f));
         sender.AddOnConnectEvent(SenderConnect);
         sender.AddOnDataSentEvent("test", SenderDataSent);
@@ -128,7 +128,7 @@ public class NetworkManager : MonoBehaviour
         
         StartCoroutine(sender.Connect(10f));
         StartCoroutine(sender.ListenForResponse(2f));
-        StartCoroutine(sender.IsDisconnected(1f));
+       // StartCoroutine(sender.IsDisconnected(1f));
     }
     
     void SenderDisconnect(object o)

@@ -46,7 +46,7 @@ public class MultiplayerManager : MonoBehaviour
     
     public string GetClassCode() => host.CreateClassroomCode();
 
-    public void JoinGame(string classCode)
+    public void JoinGame(string classCode, Action reactivateJoinButton)
     {
         // Create the client
         client = gameObject.AddComponent<Client>();
@@ -55,7 +55,7 @@ public class MultiplayerManager : MonoBehaviour
         client.AssignSettings(doPopup, settings);
         
         // Connect to the host using the code
-        client.EnterClassroomCode(classCode, AssignSeed, AssignStory);
+        client.EnterClassroomCode(classCode, AssignSeed, AssignStory, reactivateJoinButton);
     }
     
     private void AssignSeed(int seed)

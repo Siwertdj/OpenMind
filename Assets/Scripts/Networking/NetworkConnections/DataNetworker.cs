@@ -24,7 +24,7 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
     protected Socket     socket;
     protected IPEndPoint endPoint;
 
-    private NetworkEvents onDisconnectedEvents;
+    protected NetworkEvents onDisconnectedEvents;
 
     private bool isCheckingForDisconnection;
     
@@ -106,13 +106,13 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
         return true;
     }
 
-    public IEnumerator IsDisconnected(float intervalSeconds)
+    public IEnumerator IsDisconnected(string signature, float intervalSeconds)
     {
         isCheckingForDisconnection = true;
         
         while (isCheckingForDisconnection)
         {
-            if (IsDisconnected(out Socket disconnectedSocket))
+            if (IsDisconnected(signature,(int)(intervalSeconds * 1000), out Socket disconnectedSocket))
             {
                 logError = onDisconnectedEvents.Raise("Disconnect", disconnectedSocket, false, "onDisconnectedEvents");
             }
@@ -122,7 +122,7 @@ public abstract class DataNetworker : NetworkDebugger, IDisposable
         }
     }
 
-    protected abstract bool IsDisconnected(out Socket info);
+    protected abstract bool IsDisconnected(string signature, int interval, out Socket info);
     
     /// <summary>
     /// Adds an event to the action of a socket disconnecting. The input is the socket that got disconnected.
