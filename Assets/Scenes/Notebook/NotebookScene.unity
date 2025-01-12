@@ -1180,8 +1180,8 @@ MonoBehaviour:
   - {fileID: 1793050732}
   - {fileID: 4358358068967190811}
   personalInputField: {fileID: 657100576}
-  currentTabText: {fileID: 0}
-  personalInputTitleText: {fileID: 0}
+  currentTabText: {fileID: 1547554453}
+  personalInputTitleText: {fileID: 355724332}
   pagePrefab: {fileID: 6495478036534208244, guid: a39a88ed79154474f8c29a9a917b4037, type: 3}
   inactiveNotePrefab: {fileID: 2691103649229140218, guid: 89d30f90ecaa88e4da9474f6c47f9041, type: 3}
   introObjectPrefab: {fileID: 2691103649229140218, guid: 38c91ccfad5bd0d499903d953b1ead4f, type: 3}
