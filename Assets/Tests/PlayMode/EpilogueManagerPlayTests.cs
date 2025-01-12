@@ -17,7 +17,7 @@ public class EpilogueManagerPlayTests
     private DialogueManager dm;
 
     /// <summary>
-    /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
+    /// Set up the game so that each test starts at the Epilogue with the chosen story.
     /// </summary>
     [UnitySetUp]
     public IEnumerator SetUp()
@@ -290,8 +290,7 @@ public class EpilogueManagerPlayTests
         yield return new WaitUntil(() => SceneManager.GetSceneByName("GameOverScene").isLoaded); // Wait for scene to load.
         
         // Waiting for the DialogueManager to appear.
-        // TODO: change the gameovermanager to "gameovermanager" instead of "gameovermananger".
-        yield return new WaitUntil(() => GameObject.Find("GameOverMananger") != null);
+        yield return new WaitUntil(() => GameObject.Find("GameOverManager") != null);
         
         if (hasWon)
         {
