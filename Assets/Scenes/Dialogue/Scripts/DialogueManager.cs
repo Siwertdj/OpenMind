@@ -255,7 +255,8 @@ public class DialogueManager : MonoBehaviour
     /// <param name="phoneLayout">The parent transform for the message.</param>
     private void AddPhoneMessage(string message, Transform phoneLayout)
     {
-        var messageBox = Instantiate(phoneDialogueBoxPrefab, phoneLayout).GetComponent<ResizingTextBox>();
+        GameObject phone = Instantiate(phoneDialogueBoxPrefab, phoneLayout);
+        var messageBox = phone.GetComponent<ResizingTextBox>();
         messageBox.SetText(message);
     }
 
