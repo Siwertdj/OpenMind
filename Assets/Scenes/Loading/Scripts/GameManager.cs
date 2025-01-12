@@ -46,10 +46,12 @@ public class GameManager : MonoBehaviour
         story { get; private set; } // Contains information about the current game pertaining to the story
     
     // Instances
-    public Random random = new Random(); //random variable is made global so it can be reused
+    public        Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
-    private SceneController sc;
-    public NotebookData notebookData;
+    private       SceneController sc;
+    public        NotebookData notebookData;
+    public        NotebookData multiplayerNotebookData;
+    public        bool multiplayerEpilogue;
 
     // Enumerations
     #region Enumerations
@@ -110,6 +112,13 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("SaveData incorrectly parsed.");
             }
         }
+        else if (data[0] is MultiplayerInit multiplayerInit)
+        {
+            story = Resources.LoadAll<StoryObject>("Stories")
+                .First(story => story.storyID == multiplayerInit.story);
+            random = new Random(multiplayerInit.seed);
+            NewGame();
+        }
         // Else, set the values passed to the correct variables below.
         else
         {
@@ -144,6 +153,7 @@ public class GameManager : MonoBehaviour
             
             NewGame();
         }
+        
     }
 
     /// <summary>
@@ -329,11 +339,24 @@ public class GameManager : MonoBehaviour
         // Start the Epilogue
         else
         {
+            // Change the gamestate
+            gameState = GameState.CulpritSelect;
+            
+            MultiplayerNotebookExchange();
+            multiplayerEpilogue = true;
+
             StartEpilogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
     }
+
+    private void MultiplayerNotebookExchange()
+    {
+        // Send notebook
+        MultiplayerManager.mm.SendNotebook();
+    }
+    
     #endregion
 
     #region InstantiateGameOrCycles
