@@ -42,6 +42,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void ReturnMain()
     {
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");
+        Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
     }
     
     /// <summary>

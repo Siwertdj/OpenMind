@@ -38,7 +38,7 @@ public class GameOverManager : MonoBehaviour
                     this.hasWon = hasWon;
                     break;
                 case List<CharacterInstance> characters:
-                    this.hasWon = hasWon;
+                    this.characters = characters;
                     break;
                 case int culpritID:
                     this.culpritID = culpritID;
@@ -89,6 +89,9 @@ public class GameOverManager : MonoBehaviour
     {
         SceneManager.LoadScene("StartScreenScene");
         // TODO: All DDOL-objects should not duplicate
+
+        if (MultiplayerManager.mm)
+            Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
     }
     
     /// <summary>

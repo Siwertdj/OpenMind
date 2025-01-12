@@ -115,7 +115,7 @@ public class Host : NetworkObject
         
         StartCoroutine(listener.AcceptIncomingConnections());
         StartCoroutine(listener.ListenForIncomingData(settings.IncomingDataIntervalSeconds));
-        StartCoroutine(listener.IsDisconnected(5));
+        StartCoroutine(listener.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         
         listener.AddOnAcceptConnectionsEvent(ManagePlayerAmount);
         listener.AddOnDisconnectedEvent(ManagePlayerAmount);
@@ -247,7 +247,6 @@ public class Host : NetworkObject
     
     private void AddAdditionalDebugMessagesInit()
     {
-        StartCoroutine(listener.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         listener.AddOnAcceptConnectionsEvent(OnConnectionAccepted);
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);
