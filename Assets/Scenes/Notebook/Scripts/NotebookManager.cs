@@ -62,7 +62,7 @@ public class NotebookManager : MonoBehaviour
         // Add listener to recreate tab when font size is changed
         SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
         showingMultiplayerNotebook = false;
-        personalButton.interactable = true;
+
         if (GameManager.gm.multiplayerEpilogue)
         {
             multiplayerCanvas.SetActive(true);
