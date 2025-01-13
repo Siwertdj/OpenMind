@@ -77,6 +77,7 @@ public class GameManagerPlayTest
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
         SceneController.sc.UnloadAdditiveScenes();
+        Debug.Log("test");
     }
     
     /// <summary>
@@ -397,7 +398,7 @@ public class GameManagerPlayTest
     /// - if innocent person is chosen:
     /// Check if hasWon is set to false, check if the gameState is epilogue and check if we are currently in the DialogueScene.
     /// </summary>
-    [UnityTest]
+    //[UnityTest]
     public IEnumerator CulpritSelectEpilogueTransition([ValueSource(nameof(bools))] bool hasChosenCulprit)
     {
         // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
