@@ -92,7 +92,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryA();
+                    StoryC();
                     break;
                 case 1:
                     StoryB();
@@ -391,6 +391,7 @@ public class IntroductionManager : MonoBehaviour
         try
         {
             text.text = storyText[TextIndex];
+            dialogueAnimator.CancelWriting();
             dialogueAnimator.WriteDialogue(storyText[TextIndex]);
         }
         catch
@@ -432,15 +433,16 @@ public class IntroductionManager : MonoBehaviour
         if (dialogueAnimator.IsOutputting)
         {
             dialogueAnimator.SkipDialogue();
+            typingAnimation.SkipDialogue();
         }
         else
         {
             continueButton.SetActive(false);
-            dialogueAnimator.gameObject.SetActive(false);
-            typingAnimation.gameObject.SetActive(false);
-            //currentTimeline.Play();
+            /*dialogueAnimator.gameObject.SetActive(false);
+            typingAnimation.gameObject.SetActive(false);*/
+            currentTimeline.Play();
         }
-        currentTimeline.Play();
+        //currentTimeline.Play();
     }
 
     #endregion

@@ -199,8 +199,8 @@ public class PrologueController : MonoBehaviour
     public void UpdateText()
     {
         textIndex++;
-        spokenText.text = receptionistText[textIndex];
-        //dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
+        //spokenText.text = receptionistText[textIndex];
+        dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
     }
     #endregion
 }
