@@ -1409,7 +1409,7 @@ MonoBehaviour:
   - Learning about these different perspectives can create new ways of thinking.
   - Sorry, I am talking a lot, aren't I?
   - I will leave you. You go enjoy talking to your old class mates and their family.
-    Have a nice time!
+  - Have a nice time!
   prologueMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
 --- !u!114 &1498838030
 MonoBehaviour:
@@ -2021,9 +2021,9 @@ RectTransform:
   m_Father: {fileID: 903298825}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 464.33942, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1969004739
 Animator:
