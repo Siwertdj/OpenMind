@@ -192,10 +192,10 @@ public class DialogueAnimator : MonoBehaviour
             
             // Don't write if the game is paused
             // '?' is used to make sure there is already an instance of the GameManager
-            /*while (GameManager.gm?.IsPaused == true)
+            while (GameManager.gm?.IsPaused == true)
             {
                 yield return null;
-            }*/
+            }
 
             // Play sound for letter
             if (!soundlessSymbols.Contains(output[stringIndex])
