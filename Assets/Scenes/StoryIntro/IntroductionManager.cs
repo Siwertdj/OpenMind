@@ -77,6 +77,9 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
+        /*dialogueAnimator.gameObject.SetActive(false);
+        typingAnimation.gameObject.SetActive(false);*/
+        
         continueButton.SetActive(true);
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
@@ -89,7 +92,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryB();
+                    StoryA();
                     break;
                 case 1:
                     StoryB();
@@ -435,6 +438,7 @@ public class IntroductionManager : MonoBehaviour
             continueButton.SetActive(false);
             dialogueAnimator.gameObject.SetActive(false);
             typingAnimation.gameObject.SetActive(false);
+            //currentTimeline.Play();
         }
         currentTimeline.Play();
     }
