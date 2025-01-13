@@ -20,7 +20,7 @@ public class MultiplayerManager : MonoBehaviour
     
     private Host                 host;
     private Client               client;
-    private MultiplayerInit      init;
+    public MultiplayerInit      init;
     private bool                 isSeedInitialized;
     private bool                 isStoryInitialized;
     private Action<NotebookData> notebookAction;
@@ -105,7 +105,7 @@ public class MultiplayerManager : MonoBehaviour
         {
             isStoryInitialized = false;
             isSeedInitialized = false;
-            StartCoroutine(LoadGame());
+            SceneManager.LoadScene("PrologueScene");
         }
     }
     
@@ -114,26 +114,7 @@ public class MultiplayerManager : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        StartCoroutine(LoadGame());
-    }
-    
-    /// <summary>
-    /// Load the game, from the multiplayer scene.
-    /// </summary>
-    IEnumerator LoadGame()
-    {
-        // Start the loadscene-operation
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
-        
-        // Within this while-loop, we wait until the scene is done loading. We check this every frame
-        while (!asyncLoad.isDone)
-            yield return null;
-        
-        onGameLoaded.Raise(this, init);
-        
-        // Finally, when the data has been sent, we then unload our currentscene
-        SceneManager.UnloadSceneAsync("MultiplayerScreenScene");  // unload this scene; no longer necessary
-        SceneManager.UnloadSceneAsync("StartScreenScene");
+        SceneManager.LoadScene("PrologueScene");
     }
     
     /// <summary>
