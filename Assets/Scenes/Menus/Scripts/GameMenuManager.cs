@@ -16,7 +16,6 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public async void ReturnToGame()
     {
-        
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 

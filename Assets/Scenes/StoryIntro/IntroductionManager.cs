@@ -77,9 +77,6 @@ public class IntroductionManager : MonoBehaviour
     /// <param name="data">The story that was chosen.</param>
     public void StartIntro(Component sender, params object[] data)
     {
-        /*dialogueAnimator.gameObject.SetActive(false);
-        typingAnimation.gameObject.SetActive(false);*/
-        
         continueButton.SetActive(true);
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
