@@ -16,21 +16,6 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public async void ReturnToGame()
     {
-        // Close the GameMenu, and return to the active scene (Dialogue or NPCSelect),
-        // which we choose by getting the activescene. 
-        // If GameMenu was open while we were not in one of these scenes, it should be an illegal 
-
-        Scene activeScene = SceneManager.GetSceneByName("NPCSelectScene");
-        if (!activeScene.isLoaded)
-        {
-            activeScene = SceneManager.GetSceneByName("DialogueScene");
-            if (!activeScene.isLoaded)
-            {
-                Debug.LogError("GameMenu can not be closed, as Dialogue and NPCSelect are not loaded.");
-                return;
-            }
-        }
-        
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
@@ -39,7 +24,7 @@ public class GameMenuManager : MonoBehaviour
             false);
         
         // After that is done, we call UIManager to finish the operation.
-        GameManager.gm.GetComponent<UIManager>().CloseMenu();        
+        FindObjectOfType<UIManager>().CloseMenu();
     }
 
     /// <summary>
@@ -89,21 +74,19 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
-        // Store DDOLs to be destroyed after transition
-        var DDOLs = GameObject.FindGameObjectWithTag("DDOLManager");
+        // Initiate toolbox to be destroyed after transition
         var toolbox = GameObject.FindGameObjectWithTag("Toolbox");
-
+        
         // Transition to start screen scene
         SceneManager.LoadScene("StartScreenScene");
 
         // TODO: Instead of using SceneManager, this should use the SceneController
-        //_ = SceneController.sc.TransitionScene(
+        // _ = SceneController.sc.TransitionScene(
         //    SceneController.SceneName.Loading,
         //    SceneController.SceneName.StartScreenScene,
         //    SceneController.TransitionType.Transition, true);
-
-        // Destroy DDOLs
-        Destroy(DDOLs);
+        
+        // Destroy toolbox
         Destroy(toolbox);
     }
 }

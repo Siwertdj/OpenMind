@@ -45,7 +45,7 @@ public class NotebookManager : MonoBehaviour
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
     /// </summary>
-    void Start()
+    private void Start()
     {
         // Assign character names to buttons
         InitializeTabButtons();

@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -13,6 +13,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.EventSystems;
 using Random = System.Random;
+using UnityEditor;
 
 /// <summary>
 /// A class that tests scene controller properties:
@@ -24,7 +25,19 @@ public class SceneControllerTests
 {
     private GameManager     gm;
     private SceneController sc;
-    
+    private static SceneController.SceneName[] transitionSceneNames = new SceneController.SceneName[]
+    {
+        SceneController.SceneName.Loading,
+        SceneController.SceneName.NPCSelectScene,
+        SceneController.SceneName.DialogueScene,
+        SceneController.SceneName.NotebookScene,
+        SceneController.SceneName.GameMenuScene,
+        SceneController.SceneName.SettingsScene,
+        SceneController.SceneName.GameOverScene,
+        SceneController.SceneName.TutorialScene,
+        SceneController.SceneName.EpilogueScene
+    };
+
     //all possible scene names
     private static SceneController.SceneName[] sceneNames =
         Enum.GetValues(typeof(SceneController.SceneName)).Cast<SceneController.SceneName>().ToArray();
@@ -32,17 +45,6 @@ public class SceneControllerTests
     private static SceneController.TransitionType[] transitionTypes =
         Enum.GetValues(typeof(SceneController.TransitionType)).Cast<SceneController.TransitionType>().ToArray();
     
-    [OneTimeSetUp]
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
     
     /// <summary>
     /// Sets up the unit tests:
@@ -53,45 +55,55 @@ public class SceneControllerTests
     /// - Initialises Gamemanager.gm.notebookData so loading NotebookScene doesn't throw an error
     /// </summary>
     [UnitySetUp]
-    public IEnumerator SetupUnitTest()
+    public IEnumerator Setup()
     {
-        SceneManager.LoadSceneAsync("Loading", LoadSceneMode.Additive);
-        
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+        // Unload the StartScreenScene
+        SceneManager.UnloadSceneAsync("StartScreenScene");
+
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
+        SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
-        //DisbleAllEventAndAudioListeners();
-        GameManager.gm.currentCharacters = new List<CharacterInstance>();
-        CharacterData dummyData = ScriptableObject.CreateInstance<CharacterData>();
-        dummyData.answers = Array.Empty<KeyValuePair>();
-        CharacterInstance dummy = new CharacterInstance(dummyData);
-        GameManager.gm.currentCharacters.AddRange(new[] {dummy, dummy, dummy, dummy});
-        SetProperty("story", GameManager.gm, ScriptableObject.CreateInstance<StoryObject>());
-        
-        GameManager.gm.notebookData = new NotebookData();
-        
         gm = GameManager.gm;
-        sc = SceneController.sc;
         
+        GameManager.gm.currentCharacters = new List<CharacterInstance>();
+        CharacterData dummyData = (CharacterData)AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData));
+        CharacterInstance dummy = new CharacterInstance(dummyData);
+        GameManager.gm.currentCharacters.AddRange(new[] { dummy, dummy, dummy, dummy });
+
+        SetProperty("story", GameManager.gm, ScriptableObject.CreateInstance<StoryObject>());
+
+        GameManager.gm.notebookData = new NotebookData();
+
+        sc = SceneController.sc;
+
         //unload the loading scene now
         SceneManager.UnloadSceneAsync("Loading");
+        
     }
     
-    [UnityTearDown]
-    public IEnumerator TearDownUnitTests()
+    [TearDown]
+    public void TearDown()
     {
-        yield return new WaitUntil(() =>
-        {
-            SceneManager.UnloadSceneAsync(
-                SceneManager.GetSceneAt(SceneManager.loadedSceneCount - 1));
-            
-            return SceneManager.loadedSceneCount == 1;
-        });
+        Debug.Log("Teardown");
+        
+        // Move all toolboxes so that they can be unloaded.
+        var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
+        foreach (GameObject obj in objects)
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetActiveScene());
+
+        SceneController.sc.UnloadAdditiveScenes();
     }
     
     /// <summary>
     /// Disables all event systems and audio systems to prevent the debug spam of having multiple of these systems.
     /// </summary>
-    private void DisbleAllEventAndAudioListeners()
+    private void DisableAllEventAndAudioListeners()
     {
         //disable event systems to prevent debug spam
         EventSystem[] eventSystems = UnityEngine.Object.FindObjectsOfType<EventSystem>();
@@ -122,8 +134,9 @@ public class SceneControllerTests
     /// Also tests whether the right scene gets loaded from SceneController.StartScene, since both properties are tested with this method.
     /// </summary>
     [UnityTest, Order(1)]
-    public IEnumerator TestSceneGraphReading([ValueSource(nameof(sceneNames))] SceneController.SceneName sceneName)
+    public IEnumerator TestSceneGraphReading([ValueSource(nameof(transitionSceneNames))] SceneController.SceneName sceneName)
     {
+        if (sc == null) throw new ArgumentException("SceneController was null");
         //creates scene graph
         sc.StartScene(sceneName);
         int i = 0;
@@ -145,18 +158,23 @@ public class SceneControllerTests
         
         Assert.IsTrue(finished);
     }
+
     
+
+
     /// <summary>
     /// Tests whether an invalid scene transition throws an error.
     /// Tests whether transitioning from an unloaded scene throws an error
     /// </summary>
     [UnityTest, Order(3)]
     public IEnumerator TestSceneTransitionValidity(
-        [ValueSource(nameof(sceneNames))] SceneController.SceneName from,
-        [ValueSource(nameof(sceneNames))] SceneController.SceneName to,
+        [ValueSource(nameof(transitionSceneNames))] SceneController.SceneName from,
+        [ValueSource(nameof(transitionSceneNames))] SceneController.SceneName to,
         [ValueSource(nameof(transitionTypes))] SceneController.TransitionType tt
         )
     {
+        if (sc == null) throw new ArgumentException("SceneController is null");
+
         GetValue("sceneGraph", sc, out object value1);
         GetValue("sceneToID", sc, out object value2);
         if (value1 is null || value2 is null)
@@ -257,11 +275,14 @@ public class SceneControllerTests
         if (from == to)
             return !SceneManager.GetSceneByName(from.ToString()).isLoaded;
         
-        bool transitionHappened = false; 
-        transitionHappened |= SceneManager.GetSceneByName(to.ToString()).isLoaded;
-        
+        bool transitionHappened = false;
+        // Loading will always be active during these transition
+        if (to != SceneController.SceneName.Loading)
+            transitionHappened |= SceneManager.GetSceneByName(to.ToString()).isLoaded;
+
         //if from is not active, a transition happened
         transitionHappened |= !SceneManager.GetSceneByName(from.ToString()).isLoaded;
+        
         return transitionHappened;
     }
 }

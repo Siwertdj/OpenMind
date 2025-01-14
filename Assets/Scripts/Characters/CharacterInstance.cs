@@ -27,7 +27,7 @@ public class CharacterInstance
 
     public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
-    public bool TalkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
+    public bool talkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
     
     /// <summary>
     /// The constructor for <see cref="CharacterInstance"/>.
@@ -52,10 +52,10 @@ public class CharacterInstance
     public DialogueObject GetGreeting([CanBeNull] GameObject[] background)
     {
         // If we havent talked to the NPC before..
-        if (!TalkedTo)
+        if (!talkedTo)
         {
             // Get greeting
-            TalkedTo = true;
+            talkedTo = true;
             return (data.firstGreeting != null 
                 ? data.firstGreeting.GetDialogue(background)
                 : new ContentDialogueObject("Hello", null, null));

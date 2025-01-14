@@ -37,11 +37,11 @@ MonoBehaviour:
   - question: 5
     answer: {fileID: 11400000, guid: dbc6fbf6c53f44343b07df714fd0a8a4, type: 2}
     trait:
-    - I enjoy activities with my friends, and I used to enjoy social media.
+    - I am worried about the growth of racism and inequality.
   - question: 9
     answer: {fileID: 11400000, guid: 5e380b79954ecd940b227074c58d9a16, type: 2}
     trait:
-    - I am not religioues
+    - I am not religious.
   - question: 14
     answer: {fileID: 11400000, guid: 8be837a538e7bbb4fac3e8469c6256d5, type: 2}
     trait:

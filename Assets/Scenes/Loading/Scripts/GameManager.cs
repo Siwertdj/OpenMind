@@ -1,9 +1,11 @@
 ﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,16 +24,6 @@ public class GameManager : MonoBehaviour
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
  
-    [Header("References")]
-    private TextMeshProUGUI introductionRoundText;
-    
-    #region Pausing
-    private int pauseStack = 0;
-    public bool IsPaused { get { return pauseStack > 0; } }
-    public void PauseGame() => pauseStack++;
-    public void UnpauseGame() => pauseStack--;
-    #endregion
-
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
     private int numQuestions; // Amount of times the player can ask a question
@@ -59,7 +51,6 @@ public class GameManager : MonoBehaviour
     {
         // Is there a gamestate for when the game is loading in?
         Loading,        //      --> NPCIntroduction, NPCSelect, HintDialogue(immediate victim)
-        NpcIntroduction,//      --> NpcSelect
         NpcSelect,      //      --> NpcDialogue
         CulpritSelect,  //      --> GameWon, GameLoss
         NpcDialogue,    //      --> NpcSelect, CulpritSelect
@@ -196,9 +187,9 @@ public class GameManager : MonoBehaviour
         
         //unload all scenes
         SceneController.sc.UnloadAdditiveScenes();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
-
+        
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, 1, true);
         
         //load npcSelect scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
@@ -219,15 +210,21 @@ public class GameManager : MonoBehaviour
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
-        // Start the music
-        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null);
-        // Initialize introduction-round
-        gameState = GameState.NpcIntroduction;
-        FindObjectOfType<GreetingManager>().UpdatePeopleGreeted(this); // TODO: Preferably we dont need this
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         // start first game cycle
         FirstCycle();
     }
-
+    
+    /// <summary>
+    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
+    /// </summary>
+    /// <param name="helpButton"></param>
+    public void ToggleTutorial(Button helpButton)
+    {
+        sc.ToggleTutorialScene(helpButton);
+    }
+    
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
@@ -245,8 +242,7 @@ public class GameManager : MonoBehaviour
         numQuestionsAsked = 0;
         // Start the game at the first scene; the NPC Selection scene
         sc.StartScene(SceneController.SceneName.NPCSelectScene);
-        
-        // Change the gamestate
+        // Change the gamestate;  we start with an introduction round.
         gameState = GameState.NpcSelect;
     }
     
@@ -262,15 +258,58 @@ public class GameManager : MonoBehaviour
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
 
-        // Tell the player what happened in between cycles
-        var dialogue = new List<string> {
-            $"{victimName} {story.victimDialogue}",
-            story.hintDialogue,
-        };
-        dialogue.AddRange(GetCulprit().GetRandomTrait());
+        // Check if there are enough hints
+        string[] hintDialogue;
+        if (GetCulprit().RemainingQuestions.Count > 0)
+        {
+            // Add the new hint to the dictionary
+            wordReplacements["hint"] = string.Join(" ", GetCulprit().GetRandomTrait());
+            hintDialogue = story.hintDialogue;
+        }
+        else
+        {
+            hintDialogue = story.noMoreHintsDialogue;
+        }
+
+        // Process dialogue (replace <> words)
+        List<string> dialogue = new();
+        for (int i = 0; i < hintDialogue.Length; i++)
+        {            
+            string line = ProcessDialogue(hintDialogue[i]);
+            dialogue.Add(line);
+        }
+
         // Creates Dialogue that says who disappeared and provides a new hint.
-        StartDialogue(dialogue);
+        StartHintDialogue(dialogue);
     }
+
+    /// <summary>
+    /// Checks for keywords in <paramref name="inputLine"/> and replaces them with proper values.
+    /// </summary>
+    /// <param name="inputLine">The line to be altered.</param>
+    /// <returns>The inputLine with its keywords replaced with proper values.</returns>
+    public string ProcessDialogue(string inputLine)
+    {
+        // Regular expression to find placeholders in the format <keyword>
+        string pattern = @"\<(\w+)\>";
+        var regex = new Regex(pattern);
+
+        // Replace matches with corresponding values from the replacements dictionary
+        return regex.Replace(inputLine, match =>
+        {
+            string key = match.Groups[1].Value; // Extract the keyword (e.g., "name", "hint")
+            return wordReplacements.TryGetValue(key, out string replacement) ? replacement : match.Value;
+        });
+    }
+
+    /// <summary>
+    /// The dictionary containing replacements for certain keywords.
+    /// </summary>
+    public Dictionary<string, string> wordReplacements = new()
+    {
+        { "victimName", "Placeholder name" },
+        { "hint", "Placeholder hint dialogue." }
+    };
 
     /// <summary>
     /// Ends the cycle when all questions have been asked.
@@ -280,11 +319,15 @@ public class GameManager : MonoBehaviour
     public void EndCycle() 
     {
         // Start Cycle as normal
-        if (EnoughCharactersRemaining())    
+        if (EnoughCharactersRemaining())
             StartCycle();
         // Start the Epilogue
         else
-            StartEpilogue();
+        {
+            StartPreEpilogueDialogue();
+            // Start the epilogue music
+            SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
+        }
     }
     #endregion
 
@@ -352,6 +395,7 @@ public class GameManager : MonoBehaviour
 
         // Victim put on inactive so we cant ask them questions
         victim.isActive = false;
+        wordReplacements["victimName"] = victim.characterName;
         return victim.characterName;
     }
     
@@ -376,13 +420,45 @@ public class GameManager : MonoBehaviour
     // This region contains methods that directly change the Game State.
     #region ChangeGameState
 
+    private async void StartPreEpilogueDialogue()
+    {
+        gameState = GameState.CulpritSelect;
+
+        await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition,
+            true);
+
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // Create dialogueObject for phone story
+        {
+            dialogueObject = new PhoneDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // Psychic story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
+        else
+        {
+            dialogueObject = new ContentDialogueObject(
+                story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+
+        onDialogueStart.Raise(this, dialogueObject);
+    }
+
     /// <summary>
     /// Starts the Epilogue
     /// </summary>
     private async void StartEpilogue()
     {
-        gameState = GameState.Epilogue;     // redundant?
-        
+        gameState = GameState.Epilogue;
+
         // Wait for the scene transition
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
@@ -393,8 +469,8 @@ public class GameManager : MonoBehaviour
         // Raise the EpilogueStart-event and pass all the necessary data
         onEpilogueStart.Raise(this, story, currentCharacters, GetCulprit().id);
         
-        // Then, Unload the toolbox
-        Destroy(GameObject.Find("Toolbox"));
+        // Then, destroy the gamemanager (but not the UImanager component)
+        Destroy(this);
     }
     
     /// <summary>
@@ -425,7 +501,7 @@ public class GameManager : MonoBehaviour
     /// Starts a new hint dialogue.
     /// </summary>
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
-    public async void StartDialogue(List<string> dialogue)
+    public async void StartHintDialogue(List<string> dialogue)
     {
         // Change the gamestate
         gameState = GameState.HintDialogue;
@@ -437,11 +513,38 @@ public class GameManager : MonoBehaviour
             SceneController.SceneName.DialogueScene,
             SceneController.TransitionType.Transition,
             true);
+        
+        // Create the appropriate DialogueObject
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // 0 corresponds to the phone story
+        {
+            dialogueObject = new PhoneDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // 1 corresponds to the sidekick story
+        {
+            dialogueObject = new ContentDialogueObject(
+                 dialogue[0], null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
 
-        var dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story,null, story.hintBackground));
-        
-        gameState = GameState.HintDialogue;
-        
+            var object2 = new ContentDialogueObject(
+                dialogue[1], null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[1]
+                ));
+            dialogueObject.Responses.Add(object2);
+
+            object2.Responses.Add(new ContentDialogueObject(
+                dialogue[2], null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]
+                )));
+        }
+        else
+        {
+            dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject);
@@ -473,12 +576,12 @@ public class GameManager : MonoBehaviour
         
         // Change the gamestate
         gameState = GameState.NpcDialogue;
+        
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
         onDialogueStart.Raise(this, dialogueObject, dialogueRecipient);
     }
-    
-    
+        
     /// <summary>
     /// Called by DialogueManager when dialogue is ended, by execution of a DialogueTerminateObject.
     /// Checks if questions are remaining:
@@ -487,6 +590,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // If we are coming from pre epilogue dialogue,
+        // start epilogue and don't do anything else
+        if (gameState == GameState.CulpritSelect)
+        {
+            StartEpilogue();
+            return;
+        }
+
+        // Start the game music
+        SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
@@ -502,9 +615,7 @@ public class GameManager : MonoBehaviour
     
             gameState = GameState.NpcSelect;
         }
-    }
-
-    
+    }    
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.
@@ -533,7 +644,7 @@ public class GameManager : MonoBehaviour
 
     public int AmountCharactersGreeted()
     {
-        return currentCharacters.Count(c => c.TalkedTo);
+        return currentCharacters.Count(c => c.talkedTo);
     }
     
     #endregion

@@ -33,7 +33,7 @@ MonoBehaviour:
   - question: 7
     answer: {fileID: 11400000, guid: 6a5c1cf5fa6f95b46909ff123ae583bb, type: 2}
     trait:
-    - I like to hangout with my friends.
+    - I like to hang out with my friends.
   - question: 9
     answer: {fileID: 11400000, guid: bcb6e02204e731348be226fc9c1829f2, type: 2}
     trait:
@@ -45,7 +45,7 @@ MonoBehaviour:
   - question: 13
     answer: {fileID: 11400000, guid: 5cf7bf768f0099649bd1f02ede9d9da4, type: 2}
     trait:
-    - I think you should treat other like you want to be treated.
+    - The most important people in my life are my mother and my girlfriend.
   - question: 15
     answer: {fileID: 11400000, guid: 39bc7c654de29df479a3765d2d012679, type: 2}
     trait:

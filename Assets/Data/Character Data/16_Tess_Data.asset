@@ -24,7 +24,8 @@ MonoBehaviour:
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: ed4a3d45428ed8d4eb0f0fe585718a24, type: 2}
-    trait: []
+    trait:
+    - I am 41 years old.
   - question: 3
     answer: {fileID: 11400000, guid: 0c451071cc9ea704bb77970f13c1d31e, type: 2}
     trait:
