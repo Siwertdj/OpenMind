@@ -23,6 +23,9 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private bool audioEnabled = true;
     [SerializeField] private bool overrideDefaultSpeed = true;
     [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
+
+    [Header("TextAudio")]
+    [SerializeField] private List<AudioClip> letterAudios;
     
     private readonly string soundlessSymbols = " !?.,";
     private Coroutine outputCoroutine;
@@ -150,7 +153,7 @@ public class DialogueAnimator : MonoBehaviour
                 // Write full sentence and then stop writing
                 IsOutputting = false;
                 StopCoroutine(outputCoroutine);
-                text.text = currentSentence;
+                text.maxVisibleCharacters = currentSentence.Length;
                 dialogueIndex++;
             }
             else if (dialogueIndex < currentDialogue.Count)
@@ -184,10 +187,37 @@ public class DialogueAnimator : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WritingAnimation(string output)
     {
+        audioSource.Stop();
         int stringIndex = 0;
-        text.text = ""; // Clear the previous sentence
+        text.text = output; // Clear the previous sentence
+        text.maxVisibleCharacters = 0;
+        bool skip = false;
 
         // Start writing sentence
+        foreach (char character in text.text) 
+        {
+            // Don't write if the game is paused
+            // '?' is used to make sure there is already an instance of the GameManager
+            while (GameManager.gm?.IsPaused == true)
+                yield return null;
+
+            if (!soundlessSymbols.Contains(character) && !skip)
+            {
+                audioSource.Stop();
+                audioSource.PlayOneShot(getCharAudio(character));
+            }
+            skip = !skip;
+
+
+            // Write letter to screen and increment stringIndex
+            text.maxVisibleCharacters++;
+
+            // Wait and continue with next letter
+            float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
+            yield return new WaitForSeconds(delay);
+        }
+
+        /*
         while (stringIndex < output.Length)
         {
             // Don't write if the game is paused
@@ -202,16 +232,31 @@ public class DialogueAnimator : MonoBehaviour
                 audioSource.Play();
 
             // Write letter to screen and increment stringIndex
-            text.text += output[stringIndex++];
+            text.maxVisibleCharacters++;
 
             // Wait and continue with next letter
             float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
             yield return new WaitForSeconds(delay);
         }
+        */
 
         // If sentence is finished, stop outputting
         IsOutputting = false;
         dialogueIndex++;
+    }
+
+    private AudioClip getCharAudio(char character)
+    {
+        System.Random random = new System.Random();
+        int[] notNullAudios = new[] { 0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 20, 24 };
+        int r = notNullAudios[random.Next(0, notNullAudios.Length)];
+        
+        AudioClip audioClip = letterAudios[(int)character % 32 - 1];
+
+        if (audioClip == null)
+            return letterAudios[r];
+        else
+            return audioClip;
     }
 
 #region Test Variables

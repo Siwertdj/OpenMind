@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: d0ce3a83079c96b478cb536810ab3257, type: 3}
   happyAvatar: {fileID: 0}
   unhappyAvatar: {fileID: 0}
-  voicePitch: 1
+  voicePitch: 0.896
   facePivot: {x: 0.5088, y: 0.8084}
   answers:
   - question: 3

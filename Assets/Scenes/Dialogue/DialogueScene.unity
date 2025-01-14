@@ -1152,6 +1152,33 @@ MonoBehaviour:
   audioEnabled: 1
   overrideDefaultSpeed: 0
   inputDelay: 0.5
+  letterAudios:
+  - {fileID: 8300000, guid: 4daccc9284a897047ad2dab93f78d527, type: 3}
+  - {fileID: 8300000, guid: 83a385caf78f7974dbe017358e8715d9, type: 3}
+  - {fileID: 8300000, guid: 7451da78e01f55048806fa4605a162df, type: 3}
+  - {fileID: 8300000, guid: de82534837765c6429962e2b82dd8ac0, type: 3}
+  - {fileID: 8300000, guid: 2f0231ce48b37c3469ef71370c3f7274, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: ddba57772c4ba88419d7884fa6edafa1, type: 3}
+  - {fileID: 8300000, guid: adf977392e3cab642b8c6e430e6caa92, type: 3}
+  - {fileID: 8300000, guid: c4d3a238668b97943af41fdd0a697003, type: 3}
+  - {fileID: 8300000, guid: de19cea2bfb9f43498fb6e58fc701a66, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: 0b7290c0e0b68d04597560fc18d119ba, type: 3}
+  - {fileID: 8300000, guid: 9d75a6d57052e904e9f70e1f91e294d0, type: 3}
+  - {fileID: 8300000, guid: 8f1da73d3a18e064cb7ccf84a1252d22, type: 3}
+  - {fileID: 8300000, guid: ab9ad4233e0b1a347bd5d53c120ceea1, type: 3}
+  - {fileID: 8300000, guid: 6e7e57ec83b14154680dc9c36ad8557f, type: 3}
+  - {fileID: 8300000, guid: 78edecc79df149b4a918d6c43d9c8ade, type: 3}
+  - {fileID: 8300000, guid: 5901c00f23ea7a94d979b4c40c47c023, type: 3}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: a07e886b5ab00bf4aa64692b7e1d1142, type: 3}
+  - {fileID: 8300000, guid: 28b0e3e0dbe43e248b6b825e29c01d5b, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 8300000, guid: e7ba292f167c02641900f417737caf30, type: 3}
+  - {fileID: 0}
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0
