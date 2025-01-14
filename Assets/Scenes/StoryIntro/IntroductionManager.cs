@@ -282,6 +282,9 @@ public class IntroductionManager : MonoBehaviour
         } 
     }
     
+    /// <summary>
+    /// This method is called when the phone needs to come up into the screen. 
+    /// </summary>
     public void PhoneUp()
     {
         BackgroundIndex++; 
@@ -289,6 +292,9 @@ public class IntroductionManager : MonoBehaviour
         PauseCurrentTimeline();
     }
     
+    /// <summary>
+    /// This method is called when the phone needs to leave the screen. 
+    /// </summary>
     public void PhoneDown()
     {
         HideOrShowTexts(false);
