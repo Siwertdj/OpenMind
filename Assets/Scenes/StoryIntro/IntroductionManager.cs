@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -33,18 +34,18 @@ public class IntroductionManager : MonoBehaviour
     public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]   storyText;   // Stores all the used text for the introduction. 
     public Image      background;
-    public Image phone; 
     private string characterName; 
     [SerializeField] public Image character;
     [SerializeField] public TMP_Text nameTag;
     [SerializeField] public GameObject nameTagImage; 
     
-    // Variables for introduction A
+    [Header("Variables for introduction A")]
     private                  GameObject[]  messages; 
     public                   GameObject[]  messageLocations;
     public                   TMP_Text      typingText;
     [SerializeField] public  TextMessage[] textMessages;
     [SerializeField] private Transform     canvasTransform;
+    [SerializeField] private Image         phone;
     
     // Variables for introduction B
     private bool vision = true;
@@ -143,7 +144,7 @@ public class IntroductionManager : MonoBehaviour
         
         currentTimeline.Play();
         BackgroundIndex = 0;
-        background.sprite = backgrounds[BackgroundIndex];
+        background.sprite = backgrounds[3];
     }
     
     /// <summary>
@@ -244,7 +245,7 @@ public class IntroductionManager : MonoBehaviour
         PauseCurrentTimeline();
         sendButton.gameObject.SetActive(false);
         typingText.gameObject.SetActive(false);
-        background.sprite = backgrounds[3]; // Change the background to the phone background. 
+        phone.sprite = backgrounds[2];      // Change the background to the phone background. 
         TextMessageIndex++;
         
         // Make sure the four most recent texts are shown on the screen. 
@@ -279,6 +280,19 @@ public class IntroductionManager : MonoBehaviour
         {
             PauseCurrentTimeline(); // The first time the background is changed, the timeline does not have to be paused. 
         } 
+    }
+    
+    public void PhoneUp()
+    {
+        BackgroundIndex++; 
+        phone.sprite = backgrounds[BackgroundIndex];
+        PauseCurrentTimeline();
+    }
+    
+    public void PhoneDown()
+    {
+        HideOrShowTexts(false);
+        phone.sprite = backgrounds[0];
     }
     
     /// <summary>
