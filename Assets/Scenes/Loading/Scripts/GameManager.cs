@@ -520,19 +520,19 @@ public class GameManager : MonoBehaviour
         else if (story.storyID == 1) // 1 corresponds to the sidekick story
         {
             dialogueObject = new ContentDialogueObject(
-                new() { dialogue[0] }, null,
+                dialogue[0], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]));
 
             var object2 = new ContentDialogueObject(
-                new() { dialogue[1] }, null,
+                dialogue[1], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[1]
                 ));
             dialogueObject.Responses.Add(object2);
 
             object2.Responses.Add(new ContentDialogueObject(
-                new() { dialogue[2] }, null,
+                dialogue[2], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]
                 )));
@@ -566,7 +566,7 @@ public class GameManager : MonoBehaviour
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
         var dialogueObject = new ContentDialogueObject(
-            character.GetGreeting(),
+            character.GetGreeting(null),
             null,
             background);
         dialogueObject.Responses.Add(new QuestionDialogueObject(background));
@@ -644,7 +644,7 @@ public class GameManager : MonoBehaviour
 
     public int AmountCharactersGreeted()
     {
-        return currentCharacters.Count(c => c.TalkedTo);
+        return currentCharacters.Count(c => c.talkedTo);
     }
     
     #endregion

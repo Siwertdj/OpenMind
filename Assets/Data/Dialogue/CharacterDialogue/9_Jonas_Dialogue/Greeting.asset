@@ -13,4 +13,15 @@ MonoBehaviour:
   m_Name: Greeting
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: I'm Jonas. I don't know if you remember me. We've seen each other at a
+      few parties.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: Are you enjoying your time here?
+    image: {fileID: 0}
+    background: []
