@@ -533,6 +533,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &529785979
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,6 +906,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1014752755
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1211,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioClips: []
 --- !u!1 &1342648052
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1394,7 @@ GameObject:
   - component: {fileID: 1721332685}
   - component: {fileID: 1721332687}
   m_Layer: 0
-  m_Name: GameOverMananger
+  m_Name: GameOverManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

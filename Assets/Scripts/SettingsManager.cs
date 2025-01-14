@@ -244,7 +244,8 @@ public class SettingsManager : MonoBehaviour
         }
 
         // Ensure the clip is playing
-        musicSource.Play();
+        if (!musicSource.isPlaying)
+            musicSource.Play();
 
         // Fade in the clip
         while (musicSource.volume < 1)

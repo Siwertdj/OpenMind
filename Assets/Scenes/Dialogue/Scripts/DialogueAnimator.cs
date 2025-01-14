@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -15,7 +16,7 @@ using UnityEngine.EventSystems;
 public class DialogueAnimator : MonoBehaviour
 {
     [Header("Component references")]
-    [SerializeField] private TMP_Text text;
+    [SerializeField] public TMP_Text text;
 
     [Header("Settings")]
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
@@ -40,7 +41,6 @@ public class DialogueAnimator : MonoBehaviour
     /// </summary>
     public bool InOpenQuestion { private get;  set; } = false;
     
-
     /// <summary>
     /// Is dialogue currently being written?
     /// </summary>
@@ -51,7 +51,7 @@ public class DialogueAnimator : MonoBehaviour
     private string currentSentence = "";
 
     [NonSerialized] public UnityEvent OnDialogueComplete = new();
-
+    
     /// <summary>
     /// Sets the properties of the text when loaded
     /// </summary>

@@ -34,6 +34,10 @@ MonoBehaviour:
   - You still haven't figured it out?
   - I've given you my last hint.
   - You're on your own now... good luck!
+  preEpilogueDialogue:
+  - The reunion is about to finish.
+  - I hope you've figured out who I am by now.
+  - Now is the time to come find me!
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
