@@ -51,7 +51,7 @@ public class DialogueContainer : ScriptableObject
         
         // End with TerminateDialogueObject
         AppendToLeaf(output, new TerminateDialogueObject());
-
+        
         return output;
     }
 

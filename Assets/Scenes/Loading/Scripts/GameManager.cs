@@ -565,12 +565,9 @@ public class GameManager : MonoBehaviour
             true);
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
-        var dialogueObject = new ContentDialogueObject(
-            character.GetGreeting(null),
-            null,
-            background);
+        var dialogueObject = character.GetGreeting(background);
         dialogueObject.Responses.Add(new QuestionDialogueObject(background));
-
+        
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
         
