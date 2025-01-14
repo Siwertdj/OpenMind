@@ -41,10 +41,10 @@ public class SettingsManager : MonoBehaviour
                 : largeTextLineLength;
         }
     }
-    
+
     private Coroutine musicFadeCoroutine;
     private bool musicIsFading = false;
-    
+
     #region Text Size
     // Text size to be used for the text components
     [NonSerialized] public TextSize textSize;
@@ -68,8 +68,8 @@ public class SettingsManager : MonoBehaviour
     #endregion
 
     #region Settings Variables
-    [NonSerialized] public float musicVolume  = 0;
-    [NonSerialized] public float sfxVolume    = 0;
+    [NonSerialized] public float musicVolume = 0;
+    [NonSerialized] public float sfxVolume = 0;
     [NonSerialized] public float talkingSpeed = 1;
     #endregion
     
