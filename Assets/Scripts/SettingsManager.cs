@@ -22,7 +22,14 @@ public class SettingsManager : MonoBehaviour
     [Header("Settings (?)")]
     [SerializeField] float defaultMusicFadeInTime = 0.5f;
     [SerializeField] AudioClip defaultButtonClickSound;
-
+    
+    #region Pausing
+    private int  pauseStack = 0;
+    public  bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
+    
     public float TalkingDelay {  get; private set; }
 
     // TODO: Integrate this with text-size

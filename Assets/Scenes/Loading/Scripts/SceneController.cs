@@ -352,7 +352,7 @@ public class SceneController : MonoBehaviour
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
             {
                 menuButton.SetActive(true);
-                GameManager.gm.UnpauseGame();
+                SettingsManager.sm.UnpauseGame();
                 crossOverlay.SetActive(false);
                 _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
                     TransitionType.Unload, false);
@@ -360,7 +360,7 @@ public class SceneController : MonoBehaviour
             else // Notebook is NOT loaded.. so open it
             {
                 menuButton.SetActive(false);
-                GameManager.gm.PauseGame();
+                SettingsManager.sm.PauseGame();
                 crossOverlay.SetActive(true);
                 _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
                     TransitionType.Additive, false);
@@ -402,12 +402,12 @@ public class SceneController : MonoBehaviour
            // Get the SceneName enum from the activeScene.
            SceneName baseScene = SceneName.Loading;
            
-           GameManager.gm.UnpauseGame();
+           SettingsManager.sm.UnpauseGame();
            _ = TransitionScene(SceneName.TutorialScene, baseScene, TransitionType.Unload, false);
        }
        else
        {
-           GameManager.gm.PauseGame();
+           SettingsManager.sm.PauseGame();
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive, false);
        }
        
