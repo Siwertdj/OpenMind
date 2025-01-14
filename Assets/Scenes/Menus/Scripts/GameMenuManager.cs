@@ -88,11 +88,5 @@ public class GameMenuManager : MonoBehaviour
         
         // Destroy toolbox
         Destroy(toolbox);
-        
-        /*// After that is done, we call UIManager to finish the operation.
-        FindObjectOfType<UIManager>().CloseMenu();*/
-        
-        GameManager.gm?.UnpauseGame();
-        
     }
 }
