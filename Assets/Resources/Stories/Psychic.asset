@@ -35,6 +35,10 @@ MonoBehaviour:
   - I am sensing something... <victimName> has gone home...
   - I am trying to reach the culprit, but I think my powers are fading...
   - My powers are gone for now. You will have to figure this out on your own.
+  preEpilogueDialogue:
+  - Crap! The reunion is about to end.
+  - I think we've gathered all the information we can.
+  - Time to decide the culprit.
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2

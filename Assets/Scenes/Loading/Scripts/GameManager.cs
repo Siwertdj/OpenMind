@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour
         // Start the Epilogue
         else
         {
-            StartEpilogue();
+            StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
@@ -425,13 +425,45 @@ public class GameManager : MonoBehaviour
     // This region contains methods that directly change the Game State.
     #region ChangeGameState
 
+    private async void StartPreEpilogueDialogue()
+    {
+        gameState = GameState.CulpritSelect;
+
+        await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition,
+            true);
+
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // Create dialogueObject for phone story
+        {
+            dialogueObject = new PhoneDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // Psychic story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
+        else
+        {
+            dialogueObject = new ContentDialogueObject(
+                story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+
+        onDialogueStart.Raise(this, dialogueObject);
+    }
+
     /// <summary>
     /// Starts the Epilogue
     /// </summary>
     private async void StartEpilogue()
     {
-        gameState = GameState.Epilogue;     // redundant?
-        
+        gameState = GameState.Epilogue;
+
         // Wait for the scene transition
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
@@ -566,9 +598,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // If we are coming from pre epilogue dialogue,
+        // start epilogue and don't do anything else
+        if (gameState == GameState.CulpritSelect)
+        {
+            StartEpilogue();
+            return;
+        }
+
         // Start the game music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
-        
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
