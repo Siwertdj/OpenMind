@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.TextCore.Text;
-
 public class CharacterIcon : MonoBehaviour
 {
     private const float ZOOM_FACTOR = 1.8f;
