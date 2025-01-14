@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: It's been a long time since graduation.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 1
-    text: Good to see you again!
+    text: Hey! Let's chat.
     image: {fileID: 0}
     background: []

@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hello. It's me, Linda! I know your parents from way back.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 1
-    text: Lovely to see you at this reunion!
+    text: Hello.
     image: {fileID: 0}
     background: []

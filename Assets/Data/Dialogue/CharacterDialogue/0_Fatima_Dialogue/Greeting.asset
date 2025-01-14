@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hello! I was not here at the last reunion, this is my first one!
+    text: Hello!
     image: {fileID: 0}
     background: []

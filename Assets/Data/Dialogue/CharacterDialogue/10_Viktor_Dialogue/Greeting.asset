@@ -15,11 +15,6 @@ MonoBehaviour:
   voicePitch: 1
   segments:
   - type: 0
-    emotion: 0
-    text: Hi, I'm Viktor!
-    image: {fileID: 0}
-    background: []
-  - type: 0
     emotion: 1
     text: We talked about internships at the last alumni meeting. It's hard to forget!
     image: {fileID: 0}

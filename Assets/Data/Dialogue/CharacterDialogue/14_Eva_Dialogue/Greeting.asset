@@ -15,12 +15,7 @@ MonoBehaviour:
   voicePitch: 1
   segments:
   - type: 0
-    emotion: 0
-    text: Hi! I'm Eva. I tagged along with some friends.
-    image: {fileID: 0}
-    background: []
-  - type: 0
     emotion: 1
-    text: Oh, you've heard about me? All good things, I hope!
+    text: Hey!
     image: {fileID: 0}
     background: []

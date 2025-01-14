@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Good to see you here! I'm David, your old roommate's friend.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 0
-    text: I came here mostly to catch up with everyone.
+    text: What's up?
     image: {fileID: 0}
     background: []

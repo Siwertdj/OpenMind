@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hey, good to see you. The reunion's been great so far!
+    text: Hey.
     image: {fileID: 0}
     background: []

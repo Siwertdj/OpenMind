@@ -16,11 +16,11 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hello, I'm Suus.
+    text: Hello.
     image: {fileID: 0}
     background: []
   - type: 0
     emotion: 1
-    text: The food has been my favorite part of the day!
+    text: 
     image: {fileID: 0}
     background: []

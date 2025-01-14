@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hi, Arslan here.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 0
-    text: Hi! I think I recognize a few faces.
+    text: Hi again!
     image: {fileID: 0}
     background: []

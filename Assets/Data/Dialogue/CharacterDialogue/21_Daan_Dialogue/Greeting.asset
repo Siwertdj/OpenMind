@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hey, you! It's me, Daan!
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 1
-    text: Haven't seen you in years, but it feels like yesterday, doesn't it?
+    text: Hey, you!
     image: {fileID: 0}
     background: []
