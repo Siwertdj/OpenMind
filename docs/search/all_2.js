@@ -46,7 +46,7 @@ var searchData=
   ['createopenquestion_43',['CreateOpenQuestion',['../classDialogueManager.html#aa1b422e7d6bd516d31a6d777d7cca9fc',1,'DialogueManager']]],
   ['createsavedata_44',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
   ['csetuptest_45',['CSetUpTest',['../classIntroductionManagerPlayTest.html#a158350597e5a383e445e300f7df7bf12',1,'IntroductionManagerPlayTest']]],
-  ['culpritselectepiloguetransition_46',['CulpritSelectEpilogueTransition',['../classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563',1,'GameManagerPlayTest']]],
+  ['culpritselectepiloguetransition_46',['CulpritSelectEpilogueTransition',['../classEpilogueManagerPlayTests.html#ac14d1115dbf77f2a87289fceb0cf5f47',1,'EpilogueManagerPlayTests']]],
   ['customgameevent_47',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
   ['cycletransition_48',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
 ];

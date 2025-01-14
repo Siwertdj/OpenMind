@@ -7,8 +7,10 @@ var searchData=
   ['replacebackground_4',['ReplaceBackground',['../classDialogueManager.html#a92dfe15e258730e2247c93ef6c6ae5f2',1,'DialogueManager']]],
   ['responsedialogueobject_5',['ResponseDialogueObject',['../classResponseDialogueObject.html#a75773f64e447fa77ccbb5f82822a3e59',1,'ResponseDialogueObject']]],
   ['restart_6',['Restart',['../classGameOverManager.html#a16d38329b4e8fc2b32e15982b19d26f4',1,'GameOverManager']]],
-  ['retrievingfromgamemanagerreturnsnoerrors_7',['RetrievingFromGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#a2d947008f897b0524196735b2a6e7117',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['retry_8',['Retry',['../classGameOverManager.html#acfcfa4c551b5a51a99cbf3f7e021ebd7',1,'GameOverManager']]],
-  ['returntogame_9',['ReturnToGame',['../classGameMenuManager.html#afd82a853c41a5c3b3a38894265c2a28d',1,'GameMenuManager']]],
-  ['returntomainmenu_10',['ReturnToMainMenu',['../classGameMenuManager.html#a23fa6c8c604e44d358beff64af659c18',1,'GameMenuManager']]]
+  ['restartstorytest_7',['RestartStoryTest',['../classGameOverManagerPlayTests.html#a670d2fce37373c3014671d68f1006620',1,'GameOverManagerPlayTests']]],
+  ['retrievingfromgamemanagerreturnsnoerrors_8',['RetrievingFromGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#a2d947008f897b0524196735b2a6e7117',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['retry_9',['Retry',['../classGameOverManager.html#acfcfa4c551b5a51a99cbf3f7e021ebd7',1,'GameOverManager']]],
+  ['retrystorytest_10',['RetryStoryTest',['../classGameOverManagerPlayTests.html#afc71f00dc7069fba85b4cb90c583f281',1,'GameOverManagerPlayTests']]],
+  ['returntogame_11',['ReturnToGame',['../classGameMenuManager.html#afd82a853c41a5c3b3a38894265c2a28d',1,'GameMenuManager']]],
+  ['returntomainmenu_12',['ReturnToMainMenu',['../classGameMenuManager.html#a23fa6c8c604e44d358beff64af659c18',1,'GameMenuManager']]]
 ];

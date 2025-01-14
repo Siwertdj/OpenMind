@@ -8,5 +8,6 @@ var searchData=
   ['gamemanagerplaytest_5',['GameManagerPlayTest',['../classGameManagerPlayTest.html',1,'']]],
   ['gamemenumanager_6',['GameMenuManager',['../classGameMenuManager.html',1,'']]],
   ['gameovermanager_7',['GameOverManager',['../classGameOverManager.html',1,'']]],
-  ['gameslider_8',['GameSlider',['../classGameSlider.html',1,'']]]
+  ['gameovermanagerplaytests_8',['GameOverManagerPlayTests',['../classGameOverManagerPlayTests.html',1,'']]],
+  ['gameslider_9',['GameSlider',['../classGameSlider.html',1,'']]]
 ];

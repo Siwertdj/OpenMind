@@ -81,8 +81,9 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a575d7aa4c2e938dc3f7643a3c0d3cb3c"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManagerPlayTest.html#a575d7aa4c2e938dc3f7643a3c0d3cb3c">SetUp</a> ()</td></tr>
-<tr class="memdesc:a575d7aa4c2e938dc3f7643a3c0d3cb3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">SetUp which is run for every test (currently WaitForSeconds is used, this will probably be changed in the future. Refer to #testing channel for the correct implementation (sanders dingetje met WaitUntil)).  <br /></td></tr>
+<tr class="memitem:a575d7aa4c2e938dc3f7643a3c0d3cb3c"><td class="memItemLeft" align="right" valign="top"><a id="a575d7aa4c2e938dc3f7643a3c0d3cb3c" name="a575d7aa4c2e938dc3f7643a3c0d3cb3c"></a>
+IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>SetUp</b> ()</td></tr>
+<tr class="memdesc:a575d7aa4c2e938dc3f7643a3c0d3cb3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set up the game so that each test starts at the NPCSelectScene with the chosen story. <br /></td></tr>
 <tr class="separator:a575d7aa4c2e938dc3f7643a3c0d3cb3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa89a5d1b27e6dd8550daa5ed25805be1"><td class="memItemLeft" align="right" valign="top"><a id="aa89a5d1b27e6dd8550daa5ed25805be1" name="aa89a5d1b27e6dd8550daa5ed25805be1"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> ()</td></tr>
@@ -116,9 +117,14 @@ IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>EnoughCharacte
 IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>ChooseVictimTest</b> ()</td></tr>
 <tr class="memdesc:a7d18d9f180022e6ccc0b34d8073b5de3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the "GetRandomVictimNoCulprit" returns a <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a> that is not the culprit. <br /></td></tr>
 <tr class="separator:a7d18d9f180022e6ccc0b34d8073b5de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8d0388c01b563f44ed742de2797e563"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManagerPlayTest.html#aa8d0388c01b563f44ed742de2797e563">CulpritSelectEpilogueTransition</a> ([ValueSource(nameof(bools))] bool hasChosenCulprit)</td></tr>
-<tr class="memdesc:aa8d0388c01b563f44ed742de2797e563"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the transition between culprit selection and epilogue works intended by looking at the following:  <br /></td></tr>
-<tr class="separator:aa8d0388c01b563f44ed742de2797e563"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ce7f7c8b6b01100b5639e05da00ff0d"><td class="memItemLeft" align="right" valign="top"><a id="a0ce7f7c8b6b01100b5639e05da00ff0d" name="a0ce7f7c8b6b01100b5639e05da00ff0d"></a>
+IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycleTest</b> ([ValueSource(nameof(bools))] bool enoughCharacters)</td></tr>
+<tr class="memdesc:a0ce7f7c8b6b01100b5639e05da00ff0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the "EndCycle" method sets 1 character to inactive if there are enough characters remaining, else check if no characters get set to inactive. <br /></td></tr>
+<tr class="separator:a0ce7f7c8b6b01100b5639e05da00ff0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ee437b8c76387a677b6763703544235"><td class="memItemLeft" align="right" valign="top"><a id="a0ee437b8c76387a677b6763703544235" name="a0ee437b8c76387a677b6763703544235"></a>
+IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>StartDialogueTest</b> ()</td></tr>
+<tr class="memdesc:a0ee437b8c76387a677b6763703544235"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the "StartDialogue" has the correct gameState (NpcDialogue) and checks if the DialogueScene is loaded. <br /></td></tr>
+<tr class="separator:a0ee437b8c76387a677b6763703544235"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1109853125cb5210a7f428cd5f6c3f89"><td class="memItemLeft" align="right" valign="top"><a id="a1109853125cb5210a7f428cd5f6c3f89" name="a1109853125cb5210a7f428cd5f6c3f89"></a>
 IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>EndDialogueGameCycleTest</b> ()</td></tr>
 <tr class="memdesc:a1109853125cb5210a7f428cd5f6c3f89"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if EndDialogue returns to the NPCSelect state when there are questions left. <br /></td></tr>
@@ -154,51 +160,6 @@ static bool[]&#160;</td><td class="memItemRight" valign="bottom"><b>bools</b> = 
 static int[]&#160;</td><td class="memItemRight" valign="bottom"><b>ints</b> = new int[] { 0, 1, 2 }</td></tr>
 <tr class="separator:a6ff78c71b1b969a467d2dcd6edc2feba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa8d0388c01b563f44ed742de2797e563" name="aa8d0388c01b563f44ed742de2797e563"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8d0388c01b563f44ed742de2797e563">&#9670;&#160;</a></span>CulpritSelectEpilogueTransition()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerator GameManagerPlayTest.CulpritSelectEpilogueTransition </td>
-          <td>(</td>
-          <td class="paramtype">[ValueSource(nameof(bools))] bool&#160;</td>
-          <td class="paramname"><em>hasChosenCulprit</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Check whether the transition between culprit selection and epilogue works intended by looking at the following: </p>
-<ul>
-<li>if culprit is chosen: Check if hasWon is set to true, check if the gameState is epilogue and check if we are currently in the DialogueScene.</li>
-<li>if innocent person is chosen: Check if hasWon is set to false, check if the gameState is epilogue and check if we are currently in the DialogueScene. </li>
-</ul>
-
-</div>
-</div>
-<a id="a575d7aa4c2e938dc3f7643a3c0d3cb3c" name="a575d7aa4c2e938dc3f7643a3c0d3cb3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a575d7aa4c2e938dc3f7643a3c0d3cb3c">&#9670;&#160;</a></span>SetUp()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">IEnumerator GameManagerPlayTest.SetUp </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>SetUp which is run for every test (currently WaitForSeconds is used, this will probably be changed in the future. Refer to #testing channel for the correct implementation (sanders dingetje met WaitUntil)). </p>
-<p>Set up the game so that each test starts at the NPCSelectScene with the chosen story. </p>
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>Assets/Tests/PlayMode/GameManagerPlayTest.cs</li>
 </ul>
