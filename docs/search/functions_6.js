@@ -12,7 +12,7 @@ var searchData=
   ['getculprittest_9',['GetCulpritTest',['../classGameManagerPlayTest.html#ad446db72a008ad55d42ba4bcaac79082',1,'GameManagerPlayTest']]],
   ['getdialogue_10',['GetDialogue',['../classDialogueContainer.html#a463a4fe884eb620e598933b0be8afea9',1,'DialogueContainer']]],
   ['getfontsize_11',['GetFontSize',['../classSettingsManager.html#aee76b879f7ff9367b0fc82478b5048af',1,'SettingsManager']]],
-  ['getgreeting_12',['GetGreeting',['../classCharacterInstance.html#adc519ed027a8b3c4f667b78307a7e961',1,'CharacterInstance']]],
+  ['getgreeting_12',['GetGreeting',['../classCharacterInstance.html#a51bc5b849cc01cdc71d98325015dc245',1,'CharacterInstance']]],
   ['getgreetingtest_13',['GetGreetingTest',['../classCharacterInstanceEditTest.html#a9b81f719778e856c5d086362f59db8ae',1,'CharacterInstanceEditTest']]],
   ['getnotes_14',['GetNotes',['../classNotebookPage.html#a70adf757d74df21c247c1f48827af786',1,'NotebookPage']]],
   ['getnotestest_15',['GetNotesTest',['../classNotebookPageEditTest.html#a0baef3fa2ae1cb8fb99f1bee437020f3',1,'NotebookPageEditTest']]],

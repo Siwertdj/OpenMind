@@ -28,7 +28,7 @@ var searchData=
   ['closeprologueprompt_25',['CloseProloguePrompt',['../classStartMenuManager.html#ac965ad34f80eb7acefc8037d228c3b1f',1,'StartMenuManager']]],
   ['computer_26',['Computer',['../classIntroductionManager.html#aefe2c3e67fbfa66b82e93bcd1f371590',1,'IntroductionManager']]],
   ['computertest_27',['ComputerTest',['../classIntroductionManagerPlayTest.html#aacff2489222c32494a9c7238ca408687',1,'IntroductionManagerPlayTest']]],
-  ['contentdialogueobject_28',['ContentDialogueObject',['../classContentDialogueObject.html#a0abc5bfaf35aa48383ccb911fc44190f',1,'ContentDialogueObject']]],
+  ['contentdialogueobject_28',['ContentDialogueObject',['../classContentDialogueObject.html#a3386f8785a0e8ad62125d2db7bc8c744',1,'ContentDialogueObject']]],
   ['continuecurrenttimeline_29',['ContinueCurrentTimeline',['../classIntroductionManager.html#af60b5d169482bb4b9894d88012c799ba',1,'IntroductionManager']]],
   ['continuegame_30',['ContinueGame',['../classStartMenuManager.html#a90cb33482dfc0185ad9b238f9a3f779f',1,'StartMenuManager']]],
   ['continuetalking_31',['ContinueTalking',['../classDialogueManager.html#a2ce173f6c3ce12c042d519611c133580',1,'DialogueManager']]],

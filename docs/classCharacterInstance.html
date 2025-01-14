@@ -87,9 +87,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aced72f3c0760acb5e2f8986e2e018eeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#aced72f3c0760acb5e2f8986e2e018eeb">CharacterInstance</a> (<a class="el" href="classCharacterData.html">CharacterData</a> data)</td></tr>
 <tr class="memdesc:aced72f3c0760acb5e2f8986e2e018eeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The constructor for <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a>. Sets this instances variables to the information from data  <br /></td></tr>
 <tr class="separator:aced72f3c0760acb5e2f8986e2e018eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adc519ed027a8b3c4f667b78307a7e961"><td class="memItemLeft" align="right" valign="top">List&lt; string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#adc519ed027a8b3c4f667b78307a7e961">GetGreeting</a> ()</td></tr>
-<tr class="memdesc:adc519ed027a8b3c4f667b78307a7e961"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random greeting from the character's list of greetings.  <br /></td></tr>
-<tr class="separator:adc519ed027a8b3c4f667b78307a7e961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51bc5b849cc01cdc71d98325015dc245"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classDialogueObject.html">DialogueObject</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacterInstance.html#a51bc5b849cc01cdc71d98325015dc245">GetGreeting</a> ([CanBeNull] GameObject[] background)</td></tr>
+<tr class="memdesc:a51bc5b849cc01cdc71d98325015dc245"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a random greeting from the character's list of greetings.  <br /></td></tr>
+<tr class="separator:a51bc5b849cc01cdc71d98325015dc245"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ab1640164c12283cb1f5a68f31b66e9"><td class="memItemLeft" align="right" valign="top"><a id="a5ab1640164c12283cb1f5a68f31b66e9" name="a5ab1640164c12283cb1f5a68f31b66e9"></a>
 Sprite&#160;</td><td class="memItemRight" valign="bottom"><b>GetAvatar</b> ()</td></tr>
 <tr class="separator:a5ab1640164c12283cb1f5a68f31b66e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -136,9 +136,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCulprit</b></td></t
 <tr class="memitem:ab64e4f0df1b2cada0d05c970ce9d1891"><td class="memItemLeft" align="right" valign="top"><a id="ab64e4f0df1b2cada0d05c970ce9d1891" name="ab64e4f0df1b2cada0d05c970ce9d1891"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>isActive</b></td></tr>
 <tr class="separator:ab64e4f0df1b2cada0d05c970ce9d1891"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b85951e0013e870a965e23571ebce74"><td class="memItemLeft" align="right" valign="top"><a id="a6b85951e0013e870a965e23571ebce74" name="a6b85951e0013e870a965e23571ebce74"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>TalkedTo</b></td></tr>
-<tr class="separator:a6b85951e0013e870a965e23571ebce74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79bcfa90dbece02b609dad61495babaf"><td class="memItemLeft" align="right" valign="top"><a id="a79bcfa90dbece02b609dad61495babaf" name="a79bcfa90dbece02b609dad61495babaf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>talkedTo</b></td></tr>
+<tr class="separator:a79bcfa90dbece02b609dad61495babaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -210,16 +210,17 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TryAdd</b> (List&lt;(
 
 </div>
 </div>
-<a id="adc519ed027a8b3c4f667b78307a7e961" name="adc519ed027a8b3c4f667b78307a7e961"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adc519ed027a8b3c4f667b78307a7e961">&#9670;&#160;</a></span>GetGreeting()</h2>
+<a id="a51bc5b849cc01cdc71d98325015dc245" name="a51bc5b849cc01cdc71d98325015dc245"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51bc5b849cc01cdc71d98325015dc245">&#9670;&#160;</a></span>GetGreeting()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">List&lt; string &gt; CharacterInstance.GetGreeting </td>
+          <td class="memname"><a class="el" href="classDialogueObject.html">DialogueObject</a> CharacterInstance.GetGreeting </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">[CanBeNull] GameObject[]&#160;</td>
+          <td class="paramname"><em>background</em></td><td>)</td>
           <td></td>
         </tr>
       </table>

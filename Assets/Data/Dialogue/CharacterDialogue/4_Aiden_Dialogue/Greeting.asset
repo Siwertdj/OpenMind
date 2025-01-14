@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Greeting
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: Yo! I came with some old friends.
+    image: {fileID: 0}
+    background: []

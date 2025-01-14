@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Greeting
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Hey, good to see you. The reunion's been great so far!
+    image: {fileID: 0}
+    background: []

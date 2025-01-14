@@ -13,4 +13,14 @@ MonoBehaviour:
   m_Name: Greeting
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Hello! Good to see a friendly face.
+    image: {fileID: 0}
+    background: []
+  - type: 0
+    emotion: 1
+    text: Haven't seen you in a long time!
+    image: {fileID: 0}
+    background: []

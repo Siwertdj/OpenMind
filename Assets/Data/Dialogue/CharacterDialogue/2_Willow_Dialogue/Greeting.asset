@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Greeting
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 1
+    text: Hi, I'm Willow. I have so many crazy stories tell from back in the day!
+    image: {fileID: 0}
+    background: []
