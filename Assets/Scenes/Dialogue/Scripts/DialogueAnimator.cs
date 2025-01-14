@@ -139,7 +139,7 @@ public class DialogueAnimator : MonoBehaviour
     public void SkipDialogue()
     {
         // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
-        if (GameManager.gm?.IsPaused == true && SceneManager.GetSceneByName("DialogueScene").isLoaded || !InDialogue || InOpenQuestion)
+        if (SettingsManager.sm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue
@@ -192,10 +192,8 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Don't write if the game is paused
             // '?' is used to make sure there is already an instance of the GameManager
-            while (SceneManager.GetSceneByName("DialogueScene").isLoaded && GameManager.gm?.IsPaused == true)
-            {
+            while (SettingsManager.sm?.IsPaused == true)
                 yield return null;
-            }
 
             // Play sound for letter
             if (!soundlessSymbols.Contains(output[stringIndex])
