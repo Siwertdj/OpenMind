@@ -22,13 +22,13 @@ public class GameManager : MonoBehaviour
     [Header("Events")] 
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
- 
-
+    
     #region Pausing
     private int pauseStack = 0;
     public bool IsPaused { get { return pauseStack > 0; } }
     public void PauseGame() => pauseStack++;
     public void UnpauseGame() => pauseStack--;
+    
     #endregion
 
     // GAME VARIABLES

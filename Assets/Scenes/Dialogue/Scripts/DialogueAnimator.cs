@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -138,7 +139,7 @@ public class DialogueAnimator : MonoBehaviour
     public void SkipDialogue()
     {
         // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
-        if (GameManager.gm?.IsPaused == true || !InDialogue || InOpenQuestion)
+        if (GameManager.gm?.IsPaused == true && SceneManager.GetSceneByName("DialogueScene").isLoaded || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue
@@ -189,10 +190,9 @@ public class DialogueAnimator : MonoBehaviour
         // Start writing sentence
         while (stringIndex < output.Length)
         {
-            
             // Don't write if the game is paused
             // '?' is used to make sure there is already an instance of the GameManager
-            while (GameManager.gm?.IsPaused == true)
+            while (SceneManager.GetSceneByName("DialogueScene").isLoaded && GameManager.gm?.IsPaused == true)
             {
                 yield return null;
             }

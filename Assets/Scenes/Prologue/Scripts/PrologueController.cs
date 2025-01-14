@@ -82,7 +82,6 @@ public class PrologueController : MonoBehaviour
             continueButton.gameObject.SetActive(false);  // Disable continuebutton
             playableDirector.Play(); // Resume timeline.
         }
-        //dialogueAnimator.CancelWriting(); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>
