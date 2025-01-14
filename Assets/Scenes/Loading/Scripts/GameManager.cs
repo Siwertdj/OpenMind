@@ -641,6 +641,12 @@ public class GameManager : MonoBehaviour
     {
         return numQuestionsAsked < story.numQuestions;
     }
+
+    public int AmountCharactersGreeted()
+    {
+        return currentCharacters.Count(c => c.TalkedTo);
+    }
+    
     #endregion
 
     // This region contains methods necessary purely for debugging-purposes.

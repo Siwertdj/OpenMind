@@ -7,12 +7,13 @@ var searchData=
   ['updatecharacternotes_4',['UpdateCharacterNotes',['../classNotebookData.html#aa36006a75b9f6b1a88bd0555507f35b2',1,'NotebookData']]],
   ['updatecharacternotestest_5',['UpdateCharacterNotesTest',['../classNotebookPageDataTest.html#aa91d4bde14647c6e3a69596b432ee966',1,'NotebookPageDataTest']]],
   ['updateintrotext_6',['UpdateIntroText',['../classPrologueController.html#ac69a894870ae0af1f0331f09f87af4f4',1,'PrologueController']]],
-  ['updatepersonalnotes_7',['UpdatePersonalNotes',['../classNotebookData.html#a0b1dae68770e75eacce2fda7dda5ae56',1,'NotebookData']]],
-  ['updatepersonalnotestest_8',['UpdatePersonalNotesTest',['../classNotebookPageDataTest.html#a57fc657b47f324e9b83814b26b7cf733',1,'NotebookPageDataTest']]],
-  ['updatetext_9',['UpdateText',['../classPrologueController.html#a350107bfbc5114a763abde75835233cb',1,'PrologueController']]],
+  ['updatepeoplegreeted_7',['UpdatePeopleGreeted',['../classSelectionManager.html#abfc1670b6d5672b78cca5f2b3b4d136b',1,'SelectionManager']]],
+  ['updatepersonalnotes_8',['UpdatePersonalNotes',['../classNotebookData.html#a0b1dae68770e75eacce2fda7dda5ae56',1,'NotebookData']]],
+  ['updatepersonalnotestest_9',['UpdatePersonalNotesTest',['../classNotebookPageDataTest.html#a57fc657b47f324e9b83814b26b7cf733',1,'NotebookPageDataTest']]],
   ['updatetext_10',['updateText',['../classIntroductionManager.html#a89d45623311cd4ee3d0d351a817e8fc6',1,'IntroductionManager']]],
-  ['updatetransitiontext_11',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
-  ['updatetutorialtest_12',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
-  ['updatetutorialtext_13',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]],
-  ['updateuserdatavalue_14',['UpdateUserDataValue',['../classSaveUserData.html#abdf77a69073271d4b177c086a09c5797',1,'SaveUserData']]]
+  ['updatetext_11',['UpdateText',['../classPrologueController.html#a350107bfbc5114a763abde75835233cb',1,'PrologueController']]],
+  ['updatetransitiontext_12',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
+  ['updatetutorialtest_13',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
+  ['updatetutorialtext_14',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]],
+  ['updateuserdatavalue_15',['UpdateUserDataValue',['../classSaveUserData.html#abdf77a69073271d4b177c086a09c5797',1,'SaveUserData']]]
 ];
