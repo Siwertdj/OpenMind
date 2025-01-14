@@ -19,9 +19,3 @@ MonoBehaviour:
     text: Hey hey!
     image: {fileID: 0}
     background: []
-  - type: 0
-    emotion: 0
-    text: I still know a few people around here. I have been having a lot of interesting
-      conversations.
-    image: {fileID: 0}
-    background: []

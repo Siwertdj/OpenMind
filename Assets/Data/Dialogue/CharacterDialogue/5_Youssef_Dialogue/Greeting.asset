@@ -15,12 +15,7 @@ MonoBehaviour:
   voicePitch: 1
   segments:
   - type: 0
-    emotion: 0
-    text: Hi, I'm Youssef! I came here with my cousin.
-    image: {fileID: 0}
-    background: []
-  - type: 0
     emotion: 1
-    text: I'm enjoying the reunion so far. It's been such a nice event!
+    text: Hello!
     image: {fileID: 0}
     background: []

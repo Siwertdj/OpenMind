@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Yo! I came with some old friends.
+    text: Yo!
     image: {fileID: 0}
     background: []

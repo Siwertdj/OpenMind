@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hey, long time no see.
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 0
-    text: I've been pretty good! How about you?
+    text: Hey.
     image: {fileID: 0}
     background: []

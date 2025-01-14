@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hi, I'm Giulietta! Did we have class together?
+    text: Hi!
     image: {fileID: 0}
     background: []

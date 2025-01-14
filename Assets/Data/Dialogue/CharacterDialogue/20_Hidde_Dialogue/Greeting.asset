@@ -16,11 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Remember me, Hidde? We've seen eachother at the reunion last year, right?
-    image: {fileID: 0}
-    background: []
-  - type: 0
-    emotion: 1
-    text: Let's have a great time today as well!
+    text: Hey there.
     image: {fileID: 0}
     background: []

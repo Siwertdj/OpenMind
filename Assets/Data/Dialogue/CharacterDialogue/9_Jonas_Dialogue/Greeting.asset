@@ -15,13 +15,7 @@ MonoBehaviour:
   voicePitch: 1
   segments:
   - type: 0
-    emotion: 0
-    text: I'm Jonas. I don't know if you remember me. We've seen each other at a
-      few parties.
-    image: {fileID: 0}
-    background: []
-  - type: 0
     emotion: 1
-    text: Are you enjoying your time here?
+    text: Hey! Let's catch up!
     image: {fileID: 0}
     background: []

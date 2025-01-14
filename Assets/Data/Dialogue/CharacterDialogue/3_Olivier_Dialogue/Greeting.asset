@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Hi, I'm Olivier! We had a few classes together. Those were fun times!
+    text: Howdy.
     image: {fileID: 0}
     background: []
