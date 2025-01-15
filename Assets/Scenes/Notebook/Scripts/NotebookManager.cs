@@ -44,6 +44,7 @@ public class NotebookManager : MonoBehaviour
     
     public  Button     multiplayerButton;
     private bool       showingMultiplayerNotebook;
+    private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
     public  GameObject inputField;
     public  GameObject multiplayerCanvas;
     
@@ -61,7 +62,6 @@ public class NotebookManager : MonoBehaviour
 
         // Add listener to recreate tab when font size is changed
         SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
-        showingMultiplayerNotebook = false;
 
         if (GameManager.gm.multiplayerEpilogue)
         {
@@ -77,10 +77,11 @@ public class NotebookManager : MonoBehaviour
     
     public void ToggleMultiplayerNotebook()
     {
-        Debug.Log($"MultiplayerNotebook other: {GameManager.gm.multiplayerNotebookData.GetCharacterNotes(currentCharacter)}");
-        Debug.Log($"MultiplayerNotebook self: {GameManager.gm.notebookData.GetCharacterNotes(currentCharacter)}");
+        justSwitchedBetweenNormalAndMultiplayerNotebook = true;
         if (showingMultiplayerNotebook)
         {
+            showingMultiplayerNotebook = false;
+            
             InitializeTabButtons();
             notebookData = GameManager.gm.notebookData;
             // Open custom notes page
@@ -88,12 +89,12 @@ public class NotebookManager : MonoBehaviour
 
             // Add listener to recreate tab when font size is changed
             SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
-            showingMultiplayerNotebook = false;
         }
         else
         {
             if (GameManager.gm.multiplayerNotebookData != null)
             {
+                showingMultiplayerNotebook = true;
                 InitializeTabButtons();
                 notebookData = GameManager.gm.multiplayerNotebookData;
                 // Open custom notes page
@@ -101,13 +102,14 @@ public class NotebookManager : MonoBehaviour
 
                 // Add listener to recreate tab when font size is changed
                 SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
-                showingMultiplayerNotebook = true;
             }
             else
             {
                 Debug.Log("No multiplayer notebook exists.");
             }
         }
+
+        justSwitchedBetweenNormalAndMultiplayerNotebook = false;
     }
 
     /// <summary>
@@ -194,9 +196,6 @@ public class NotebookManager : MonoBehaviour
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
 
-        // Save notes
-        SaveNotes();
-
         // Deactivate the personal notes tab if it's opened
         if (personalInputField.gameObject.activeInHierarchy)
             personalInputField.gameObject.SetActive(false);
@@ -235,13 +234,13 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
-        inputObjectField.onEndEdit.AddListener(_ => SaveNotes());
+        inputObjectField.onValueChanged.AddListener(_ => SaveNotes());
         
 
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
-
+        
         // Create objects for all q&a pairs
         var log = notebookData.GetAnswers(currentCharacter);
         foreach (var (question, answer) in log)
@@ -419,15 +418,16 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
+        if (justSwitchedBetweenNormalAndMultiplayerNotebook)
+            return;
+        
         if (personalInputField.IsActive())
         {
-            Debug.Log($"Updating personal notes: \"{notebookData.GetPersonalNotes()}\" with \"{personalInputField.GetComponent<TMP_InputField>().text}\"");
             // Save the written personal text to the notebook data
             notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
-            Debug.Log($"Updating character notes {currentCharacter.characterName}: \"{notebookData.GetCharacterNotes(currentCharacter)}\" with \"{characterCustomInput.GetComponent<TMP_InputField>().text}\"");
             // Save the written character text to the notebook data
             notebookData.UpdateCharacterNotes(currentCharacter, 
                 characterCustomInput.GetComponent<TMP_InputField>().text);

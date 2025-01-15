@@ -89,4 +89,16 @@ public class NotebookData
     {
         return _personalNotes;
     }
+
+    public override string ToString()
+    {
+        string output = $"personal: {_personalNotes}, characterNotes:[";
+        foreach (var kv in _pages)
+        {
+            output += $"{kv.Key.characterName}: {kv.Value.GetNotes()}, ";
+        }
+        output = output.Substring(0, output.Length - 2);
+        output += "]";
+        return output;
+    }
 }

@@ -52,8 +52,9 @@ public class NotebookDataPackage
             CharacterInstance instance =
                 characters.Find(cc => cc.id == keyValuePair.Key);
             pages.Add(instance, new NotebookPage(instance));
+            pages[instance].SetNotes(keyValuePair.Value);
         }
-
+        
         return new NotebookData(pages, personalNotes);
     }
 }

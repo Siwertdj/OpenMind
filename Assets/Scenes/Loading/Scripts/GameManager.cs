@@ -41,35 +41,9 @@ public class GameManager : MonoBehaviour
     public        Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
     private       SceneController sc;
-
-    private NotebookData NotebookData;
-    public NotebookData notebookData
-    {
-        get
-        {
-            return NotebookData;
-        }
-        set
-        {
-            Debug.Log("assigning to notebookData");
-            NotebookData = value;
-        }
-    }
-    
-    private NotebookData MultiplayerNotebookData;
-    public NotebookData multiplayerNotebookData
-    {
-        get
-        {
-            return MultiplayerNotebookData;
-        }
-        set
-        {
-            Debug.Log("assigning to multiplayerNotebookData");
-            MultiplayerNotebookData = value;
-        }
-    }
-    public        bool multiplayerEpilogue;
+    public NotebookData notebookData;
+    public  NotebookData multiplayerNotebookData;
+    public  bool         multiplayerEpilogue;
 
     // Enumerations
     #region Enumerations
