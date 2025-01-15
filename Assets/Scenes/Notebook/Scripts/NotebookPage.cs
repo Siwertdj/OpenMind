@@ -10,6 +10,7 @@ public class NotebookPage
 {
     private readonly CharacterInstance _character;
     private string _notes;
+    private string _placeholder;
 
     /// <summary>
     /// Constructor for making a new empty page.
@@ -18,7 +19,8 @@ public class NotebookPage
     public NotebookPage(CharacterInstance character)
     {
         _character = character;
-        _notes = "Notes on " + character.characterName + ".\n";
+        _notes = string.Empty;
+        _placeholder = "Notes on " + character.characterName + ".\n";
     }
 
     /// <summary>
@@ -32,6 +34,16 @@ public class NotebookPage
         _notes = notes;
     }
     
+    /// <summary>
+    /// Method that fetches placeholder text in case player hasn't written any notes yet.
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlaceholder()
+    {
+        return _placeholder;
+    }
+
+
     /// <summary>
     /// Method which gets the notes contained on this page.
     /// For external use.
