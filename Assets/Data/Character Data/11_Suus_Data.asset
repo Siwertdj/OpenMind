@@ -20,7 +20,7 @@ MonoBehaviour:
   voicePitch: 1
   facePivot: {x: 0.5009, y: 0.7489}
   firstGreeting: {fileID: 11400000, guid: e17ba941815a37643ba520bf5ee9779b, type: 2}
-  greeting: {fileID: 11400000, guid: 82c0b09daf560d14c9c6e6eac7aa4b52, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: 51388fe8106387444b579a019b40c421, type: 2}

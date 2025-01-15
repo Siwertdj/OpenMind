@@ -63,7 +63,7 @@ public class CharacterInstance
         // if its null, default to "Hello".
         return (data.greeting != null 
             ? data.greeting.GetDialogue(background) 
-            : new ContentDialogueObject("Hello", null, null));
+            : new ContentDialogueObject("Hello", null, background));
         
     }
 
