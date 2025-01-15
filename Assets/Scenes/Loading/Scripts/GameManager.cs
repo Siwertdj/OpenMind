@@ -22,14 +22,6 @@ public class GameManager : MonoBehaviour
     [Header("Events")] 
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
- 
-
-    #region Pausing
-    private int pauseStack = 0;
-    public bool IsPaused { get { return pauseStack > 0; } }
-    public void PauseGame() => pauseStack++;
-    public void UnpauseGame() => pauseStack--;
-    #endregion
 
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
@@ -345,7 +337,7 @@ public class GameManager : MonoBehaviour
             MultiplayerNotebookExchange();
             multiplayerEpilogue = true;
 
-            StartEpilogue();
+            StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
@@ -448,13 +440,45 @@ public class GameManager : MonoBehaviour
     // This region contains methods that directly change the Game State.
     #region ChangeGameState
 
+    private async void StartPreEpilogueDialogue()
+    {
+        gameState = GameState.CulpritSelect;
+
+        await sc.TransitionScene(
+            SceneController.SceneName.DialogueScene,
+            SceneController.SceneName.DialogueScene,
+            SceneController.TransitionType.Transition,
+            true);
+
+        DialogueObject dialogueObject;
+        if (story.storyID == 0) // Create dialogueObject for phone story
+        {
+            dialogueObject = new PhoneDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+        else if (story.storyID == 1) // Psychic story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
+        else
+        {
+            dialogueObject = new ContentDialogueObject(
+                story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+        }
+
+        onDialogueStart.Raise(this, dialogueObject);
+    }
+
     /// <summary>
     /// Starts the Epilogue
     /// </summary>
     private async void StartEpilogue()
     {
-        gameState = GameState.Epilogue;     // redundant?
-        
+        gameState = GameState.Epilogue;
+
         // Wait for the scene transition
         await sc.TransitionScene(
             SceneController.SceneName.DialogueScene,
@@ -519,19 +543,19 @@ public class GameManager : MonoBehaviour
         else if (story.storyID == 1) // 1 corresponds to the sidekick story
         {
             dialogueObject = new ContentDialogueObject(
-                new() { dialogue[0] }, null,
+                dialogue[0], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]));
 
             var object2 = new ContentDialogueObject(
-                new() { dialogue[1] }, null,
+                dialogue[1], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[1]
                 ));
             dialogueObject.Responses.Add(object2);
 
             object2.Responses.Add(new ContentDialogueObject(
-                new() { dialogue[2] }, null,
+                dialogue[2], null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]
                 )));
@@ -564,12 +588,9 @@ public class GameManager : MonoBehaviour
             true);
         
         GameObject[] background = DialogueManager.dm.CreateDialogueBackground(story, character, story.dialogueBackground);
-        var dialogueObject = new ContentDialogueObject(
-            character.GetGreeting(),
-            null,
-            background);
+        var dialogueObject = character.GetGreeting(background);
         dialogueObject.Responses.Add(new QuestionDialogueObject(background));
-
+        
         // Until DialogueManager gets its information, it shouldnt do anything there.
         var dialogueRecipient = character;
         
@@ -589,9 +610,16 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public async void EndDialogue(Component sender, params object[] data)
     {
+        // If we are coming from pre epilogue dialogue,
+        // start epilogue and don't do anything else
+        if (gameState == GameState.CulpritSelect)
+        {
+            StartEpilogue();
+            return;
+        }
+
         // Start the game music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
-        
         if (!HasQuestionsLeft())
         {
             // No questions left, so we end the cycle 
@@ -633,6 +661,12 @@ public class GameManager : MonoBehaviour
     {
         return numQuestionsAsked < story.numQuestions;
     }
+
+    public int AmountCharactersGreeted()
+    {
+        return currentCharacters.Count(c => c.talkedTo);
+    }
+    
     #endregion
 
     // This region contains methods necessary purely for debugging-purposes.

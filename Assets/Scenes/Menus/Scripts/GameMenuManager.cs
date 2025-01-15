@@ -16,7 +16,6 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public async void ReturnToGame()
     {
-        
         // transition.
         await SceneController.sc.TransitionScene(
             SceneController.SceneName.GameMenuScene, 
@@ -75,10 +74,9 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
-        // Store DDOLs to be destroyed after transition
-        var DDOLs = GameObject.FindGameObjectWithTag("DDOLManager");
+        // Initiate toolbox to be destroyed after transition
         var toolbox = GameObject.FindGameObjectWithTag("Toolbox");
-
+        
         // Transition to start screen scene
         SceneManager.LoadScene("StartScreenScene");
 
@@ -87,7 +85,7 @@ public class GameMenuManager : MonoBehaviour
         //    SceneController.SceneName.Loading,
         //    SceneController.SceneName.StartScreenScene,
         //    SceneController.TransitionType.Transition, true);
-
+        
         // Destroy toolbox
         Destroy(toolbox);
     }

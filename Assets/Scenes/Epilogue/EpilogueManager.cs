@@ -204,7 +204,12 @@ public class EpilogueManager : MonoBehaviour
             SceneController.SceneName.GameOverScene,
             SceneController.TransitionType.Transition,
             true);
-        
+
+        // Set the gameState.
+        if (hasWon)
+            GameManager.gm.gameState = GameManager.GameState.GameWon;
+        else
+            GameManager.gm.gameState = GameManager.GameState.GameLoss;
         
         // Send the game values to the GameOver-scene. 
         onEpilogueEnd.Raise(this, hasWon, characters, culpritId, story);

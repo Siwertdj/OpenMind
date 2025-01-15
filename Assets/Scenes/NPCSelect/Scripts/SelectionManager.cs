@@ -98,9 +98,10 @@ public class SelectionManager : MonoBehaviour
     /// <param name="sceneType"> Can take "dialogue" or "decidecriminal" as value. </param>
     private void SetHeaderText()
     {
-        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
-            headerText.text = "Who do you think it was?";
-        else
+        // TODO: There must be a more efficient way to do this, using a 'NPCIntroduction'-gamestate
+        if (GameManager.gm.AmountCharactersGreeted() < GameManager.gm.currentCharacters.Count)
+            UpdatePeopleGreeted();
+        else 
             headerText.text = "Who do you want to talk to?";
     }
     
@@ -123,6 +124,24 @@ public class SelectionManager : MonoBehaviour
             newOption.transform.position = newOption.transform.parent.position;
         }
     }
+
+
+    #region Greetings
+    /// <summary>
+    /// Called every time NPCSelectScene opens (and this script awakens).
+    /// It updates the header text with the amount of NPCs that have been greeted.
+    /// If all NPCs have been greeted, change gamestate.
+    /// </summary>
+    public void UpdatePeopleGreeted()
+    {
+        int currentGreeted = GameManager.gm.AmountCharactersGreeted();
+        int total = GameManager.gm.currentCharacters.Count;
+        headerText.text = $"People greeted: {currentGreeted}/{total}";
+        if (currentGreeted == total)
+            GameManager.gm.gameState = GameManager.GameState.NpcSelect;
+    }
+
+    #endregion
 
     #region Selection Button Logic
     /// <summary>

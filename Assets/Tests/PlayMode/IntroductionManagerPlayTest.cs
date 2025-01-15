@@ -90,8 +90,8 @@ public class IntroductionManagerPlayTest
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
-        Assert.AreEqual(0, im.textMessageIndex);
-        Assert.AreEqual(0, im.backgroundIndex);
+        Assert.AreEqual(0, im.TextMessageIndex);
+        Assert.AreEqual(0, im.BackgroundIndex);
         Assert.AreEqual(0, im.TextIndex);
         
         Assert.IsNotNull(im.sendButton);
@@ -133,9 +133,9 @@ public class IntroductionManagerPlayTest
     public IEnumerator SendMessageTest()
     {
         im.StoryA();
-        int index = im.textMessageIndex;
+        int index = im.TextMessageIndex;
         im.SendText();
-        Assert.AreEqual(index+1, im.textMessageIndex);
+        Assert.AreEqual(index+1, im.TextMessageIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         yield return null;
     }
@@ -147,9 +147,9 @@ public class IntroductionManagerPlayTest
     public IEnumerator ChangeBackgroundTest()
     {
         im.StoryA();
-        int index = im.backgroundIndex;
+        int index = im.BackgroundIndex;
         im.ChangeBackground();
-        Assert.AreEqual(index+1, im.backgroundIndex);
+        Assert.AreEqual(index+1, im.BackgroundIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         yield return null;
     }
@@ -168,7 +168,7 @@ public class IntroductionManagerPlayTest
         Assert.IsTrue(im.typingText.IsActive());
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // Check if the message that is being typed belongs to the player. 
-        Assert.AreEqual( TextMessage.Sender.Player,im.textMessages[im.textMessageIndex + im.messageLocations.Length - 1].sender);
+        Assert.AreEqual( TextMessage.Sender.Player,im.textMessages[im.TextMessageIndex + im.messageLocations.Length - 1].sender);
         yield return null;
     }
     
