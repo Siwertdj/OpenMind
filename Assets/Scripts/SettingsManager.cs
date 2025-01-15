@@ -22,17 +22,36 @@ public class SettingsManager : MonoBehaviour
     [Header("Settings (?)")]
     [SerializeField] float defaultMusicFadeInTime = 0.5f;
     [SerializeField] AudioClip defaultButtonClickSound;
-
+    
+    #region Pausing
+    private int  pauseStack = 0;
+    public  bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
+    
     public float TalkingDelay {  get; private set; }
 
-    // TODO: Integrate this with text-size
-    [NonSerialized] public int maxLineLength = 30;
-    
-    // Text size to be used for the text components
-    [NonSerialized] public TextSize textSize;
+    public int maxLineLength
+    {
+        get
+        {
+            return textSize == TextSize.Small ? smallTextLineLength
+                : textSize == TextSize.Medium ? mediumextLineLength 
+                : largeTextLineLength;
+        }
+    }
 
     private Coroutine musicFadeCoroutine;
     private bool musicIsFading = false;
+
+    #region Text Size
+    // Text size to be used for the text components
+    [NonSerialized] public TextSize textSize;
+    
+    private int smallTextLineLength = 90;
+    private int mediumextLineLength = 70;
+    private int largeTextLineLength = 50;
     
     public enum TextSize
     {
@@ -46,7 +65,7 @@ public class SettingsManager : MonoBehaviour
     public const float M_LARGE_TEXT = 1.4f;
 
     public UnityEvent OnTextSizeChanged;
-    
+    #endregion
 
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
@@ -237,7 +256,8 @@ public class SettingsManager : MonoBehaviour
         }
 
         // Ensure the clip is playing
-        musicSource.Play();
+        if (!musicSource.isPlaying)
+            musicSource.Play();
 
         // Fade in the clip
         while (musicSource.volume < 1)

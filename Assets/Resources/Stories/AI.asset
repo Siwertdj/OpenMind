@@ -34,6 +34,9 @@ MonoBehaviour:
   - The computer is trying to calculate more data...
   - It seems all these calculations have been too heavy on the computer's processor.
   - The circuit boards are fried. You will not receive any more hints.
+  preEpilogueDialogue:
+  - The reunion will come to an end soon.
+  - It is time to ???
   numberOfCharacters: 8
   numQuestions: 1
   minimumRemaining: 2
