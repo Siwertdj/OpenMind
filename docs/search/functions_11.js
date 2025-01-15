@@ -17,10 +17,11 @@ var searchData=
   ['togglenotebookscene_14',['ToggleNotebookScene',['../classSceneController.html#ac8e77a46899ee7d761c7697fa7b0091a',1,'SceneController']]],
   ['toggletutorial_15',['ToggleTutorial',['../classGameManager.html#af31faf614ebb7d1380f14b50a365320d',1,'GameManager']]],
   ['toggletutorialscene_16',['ToggleTutorialScene',['../classSceneController.html#ad960129d0fdb5a6a7d30012f0f60ecd3',1,'SceneController']]],
-  ['transition_17',['Transition',['../classUIManager.html#a518af48c433a734ad76e1310be143222',1,'UIManager']]],
-  ['transitionanimation_18',['TransitionAnimation',['../classUIManager.html#a62e8e87aeda96e991b1f77d74da62f1c',1,'UIManager']]],
-  ['transitioning_19',['Transitioning',['../classSceneController.html#a24a286e1b2b8d61a2a846bfbfa557898',1,'SceneController']]],
-  ['transitionscene_20',['TransitionScene',['../classSceneController.html#a73f0dddeafe7f87348ab61ea856ceb6d',1,'SceneController']]],
-  ['typeanimation_21',['TypeAnimation',['../classIntroductionManager.html#af1a4cced1c7945f4662a29b9d5fb60da',1,'IntroductionManager']]],
-  ['typeanimationtest_22',['TypeAnimationTest',['../classIntroductionManagerPlayTest.html#a20526ed4deee0e022ce73594d5386d82',1,'IntroductionManagerPlayTest']]]
+  ['tomainmenu_17',['ToMainMenu',['../classStorySelectionManager.html#a69f3fb7014bdf5130c33df0c523207ee',1,'StorySelectionManager']]],
+  ['transition_18',['Transition',['../classUIManager.html#a518af48c433a734ad76e1310be143222',1,'UIManager']]],
+  ['transitionanimation_19',['TransitionAnimation',['../classUIManager.html#a62e8e87aeda96e991b1f77d74da62f1c',1,'UIManager']]],
+  ['transitioning_20',['Transitioning',['../classSceneController.html#a24a286e1b2b8d61a2a846bfbfa557898',1,'SceneController']]],
+  ['transitionscene_21',['TransitionScene',['../classSceneController.html#a73f0dddeafe7f87348ab61ea856ceb6d',1,'SceneController']]],
+  ['typeanimation_22',['TypeAnimation',['../classIntroductionManager.html#af1a4cced1c7945f4662a29b9d5fb60da',1,'IntroductionManager']]],
+  ['typeanimationtest_23',['TypeAnimationTest',['../classIntroductionManagerPlayTest.html#a20526ed4deee0e022ce73594d5386d82',1,'IntroductionManagerPlayTest']]]
 ];
