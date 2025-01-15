@@ -2290,7 +2290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
-  settings: {fileID: 11400000, guid: b4179a4f3a4c05d4eaa7a2218aba9475, type: 2}
+  settings: {fileID: 11400000, guid: 88c162381e94ded40aee7a0b74fd5466, type: 2}
   doPopup: {fileID: 11400000, guid: 4a33ccc5dd0b3214488901071e211369, type: 2}
 --- !u!4 &900397779
 Transform:

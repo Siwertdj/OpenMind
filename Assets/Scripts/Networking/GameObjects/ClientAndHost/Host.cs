@@ -220,13 +220,15 @@ public class Host : NetworkObject
         {
             // dataToSendSecondClient = o;
             // readyToSentFirstClientSecondClientNotebook = true;
-            Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
+            if (settings.IsDebug)
+                Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
             sendFirstNotebook(o);
         }
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
         AddNotebook(o);
-        Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
+        if (settings.IsDebug)
+            Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
     }
 

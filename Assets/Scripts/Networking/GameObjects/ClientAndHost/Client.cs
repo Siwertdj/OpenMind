@@ -215,6 +215,9 @@ public class Client : NetworkObject
     { 
         multiplayerState = MultiplayerState.ReceivedNotebook;
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
+        if (settings.IsDebug)
+            foreach (var receivedDat in receivedData)
+                DebugLog($"Received notebook data from host: {receivedDat.GetData<string>()}");
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
         response(notebookData);
