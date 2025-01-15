@@ -103,7 +103,7 @@ public class NotebookManager : MonoBehaviour
         currentCharacterIndex = -1;
 
         // Save character notes
-        if (characterInfo.activeSelf) SaveNotes();
+        if (!personalInputField.IsActive()) SaveNotes();
 
         // Close the character tab 
         characterInfo.SetActive(false);
@@ -370,7 +370,7 @@ public class NotebookManager : MonoBehaviour
         if (personalInputField.IsActive())
         {
             // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);            
+            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
