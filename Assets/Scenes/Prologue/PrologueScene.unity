@@ -1385,9 +1385,7 @@ MonoBehaviour:
   illusions:
   - {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
   - {fileID: 21300000, guid: f2861768c92ff8c46b7aba52169623c9, type: 3}
-  - {fileID: 21300000, guid: 1e5ff48cb3a309d4e9a460dfb08da429, type: 3}
-  - {fileID: 21300000, guid: fab911f99cfad8e4c88c762a9523bc6f, type: 3}
-  - {fileID: 21300000, guid: bb73f3777b31601439ca9e9a19f753f2, type: 3}
+  - {fileID: 21300000, guid: 72bcd2e03f2c1f74082c8af599233efd, type: 3}
   receptionistText:
   - Welcome at the reunion of Capra University.
   - 'Before you can enter, I want you to answer some questions. '

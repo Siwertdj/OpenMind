@@ -114,71 +114,10 @@ public class IntroductionManager : MonoBehaviour
         UpdateUserDataByStory(story);
     }
     
-    // This region contains methods that regulate the different storylines. 
-    #region StoryLines
-    
     /// <summary>
-    /// Method that prepares the scene to play storyline A. 
+    /// This method updates the User Data by story. This way the game keeps track of whether or not the player has already
+    /// completed this story. Depending on this data, different features may be available (e.g. the skip button). 
     /// </summary>
-    public void StoryA()
-    {
-        messages = new GameObject[textMessages.Length];
-        for(int i = 0; i < textMessages.Length; i++)
-        {
-            // Instantiate the TextMessages
-            GameObject instantiatedMessage = Instantiate(textMessages[i].message, canvasTransform);
-            TMP_Text tmpText = instantiatedMessage.GetComponentInChildren<TMP_Text>();
-            if (tmpText != null) // When the text component is null, it is an empty text
-            {
-                tmpText.text = textMessages[i].messageContent; // Change the content to the correct content
-            }
-            // Make sure the messages end up at the correct location in the hierarchy. 
-            // Otherwise, it might be the case that they will overlap with other game objects. 
-            instantiatedMessage.transform.SetSiblingIndex(canvasTransform.childCount - 6);
-            messages[i] = instantiatedMessage; // Add the instantiated message to the textMessage array
-        }
-        // Initialize the right timeline and indices for story A. 
-        currentTimeline = introStoryA;
-        currentTimeline.time = 0; // Reset the timeline to the start
-        currentTimeline.RebuildGraph();
-        
-        currentTimeline.Play();
-        BackgroundIndex = 0;
-        background.sprite = backgrounds[3];
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline B. 
-    /// </summary>
-    public void StoryB()
-    {
-        character.sprite = backgrounds[5];
-        currentTimeline = introStoryB;
-        currentTimeline.time = 0; // Reset the timeline to the start
-        currentTimeline.RebuildGraph();
-        
-        TextIndex = 4;
-        background.sprite = backgrounds[4];
-        characterName = "Alex";
-        currentTimeline.Play();
-    }
-    
-    /// <summary>
-    /// Method that prepares the scene to play storyline C. 
-    /// </summary>
-    public void StoryC()
-    {
-        currentTimeline = introStoryC;
-        currentTimeline.time = 0; // Reset the timeline to the start
-        currentTimeline.RebuildGraph();
-        
-        TextIndex = 19;
-        background.sprite = backgrounds[11];
-        character.sprite = backgrounds[9];
-        characterName = "Receptionist";
-        currentTimeline.Play();
-    }
-
     private void UpdateUserDataByStory(StoryObject story)
     {
         // initialize with arbitrary value.
@@ -210,10 +149,67 @@ public class IntroductionManager : MonoBehaviour
         
         // update userdata
         SaveUserData.Saver.UpdateUserDataValue(query, true);
-
-        
     }
     
+    // This region contains methods that regulate the different storylines. 
+    #region StoryLines
+    /// <summary>
+    /// Method that prepares the scene to play storyline A. 
+    /// </summary>
+    public void StoryA()
+    {
+        BackgroundIndex = 0;
+        messages = new GameObject[textMessages.Length];
+        for(int i = 0; i < textMessages.Length; i++)
+        {
+            // Instantiate the TextMessages
+            GameObject instantiatedMessage = Instantiate(textMessages[i].message, canvasTransform);
+            TMP_Text tmpText = instantiatedMessage.GetComponentInChildren<TMP_Text>();
+            if (tmpText != null) // When the text component is null, it is an empty text
+            {
+                tmpText.text = textMessages[i].messageContent; // Change the content to the correct content
+            }
+            // Make sure the messages end up at the correct location in the hierarchy. 
+            // Otherwise, it might be the case that they will overlap with other game objects. 
+            instantiatedMessage.transform.SetSiblingIndex(canvasTransform.childCount - 6);
+            messages[i] = instantiatedMessage; // Add the instantiated message to the textMessage array
+        }
+        // Initialize the right timeline and indices for story A. 
+        currentTimeline = introStoryA;
+        ResetTimeline();
+        
+        currentTimeline.Play();
+        background.sprite = backgrounds[3];
+    }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline B. 
+    /// </summary>
+    public void StoryB()
+    {
+        character.sprite = backgrounds[5];
+        currentTimeline = introStoryB;
+        ResetTimeline();
+        
+        TextIndex = 4;
+        background.sprite = backgrounds[4];
+        characterName = "Alex";
+        currentTimeline.Play();
+    }
+    
+    /// <summary>
+    /// Method that prepares the scene to play storyline C. 
+    /// </summary>
+    public void StoryC()
+    {
+        currentTimeline = introStoryC;
+        ResetTimeline();
+        TextIndex = 19;
+        background.sprite = backgrounds[11];
+        character.sprite = backgrounds[9];
+        characterName = "Receptionist";
+        currentTimeline.Play();
+    }
     #endregion
     
     // This region contains methods regarding introduction A.
@@ -287,7 +283,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void PhoneUp()
     {
-        BackgroundIndex++; 
+        BackgroundIndex++;
         phone.sprite = backgrounds[BackgroundIndex];
         PauseCurrentTimeline();
     }
@@ -370,7 +366,7 @@ public class IntroductionManager : MonoBehaviour
     {
         nameTag.text = "Computer";
         character.sprite = backgrounds[10];
-        updateText();
+        UpdateText();
     }
     
     #endregion
@@ -384,7 +380,7 @@ public class IntroductionManager : MonoBehaviour
     {
         nameTag.text = characterName;
         nameTagImage.gameObject.SetActive(true);
-        updateText();
+        UpdateText();
     }
     
     /// <summary>
@@ -393,13 +389,13 @@ public class IntroductionManager : MonoBehaviour
     public void ChangePlayerText()
     {
         nameTagImage.gameObject.SetActive(false);
-        updateText();
+        UpdateText();
     }
     
     /// <summary>
     /// This method updates the text that is shown on the screen. 
     /// </summary>
-    public void updateText()
+    private void UpdateText()
     {
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
@@ -455,13 +451,19 @@ public class IntroductionManager : MonoBehaviour
         else
         {
             continueButton.SetActive(false);
-            /*dialogueAnimator.gameObject.SetActive(false);
-            typingAnimation.gameObject.SetActive(false);*/
             currentTimeline.Play();
         }
-        //currentTimeline.Play();
     }
-
+    
+    /// <summary>
+    /// This method makes sure the timeline starts playing from the beginning. 
+    /// </summary>
+    private void ResetTimeline()
+    {
+        currentTimeline.time = 0; // Reset the timeline to the start
+        currentTimeline.RebuildGraph();
+        
+    }
     #endregion
     
     // This region contains methods that handle the starting of the game at the end of the introduction
