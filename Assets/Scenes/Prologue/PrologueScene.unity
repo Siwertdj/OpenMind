@@ -294,7 +294,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 35bdfd31fb97d5f4589b3eb109417556, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -802,7 +802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9433962, g: 0.88702977, b: 0.88702977, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -986,7 +986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2bc1904e3f7ec5a4d91d414ffad39928, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c7a73a6b9b86d44ba26ce78e7d67471, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1383,8 +1383,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3df754030d764b34688b4e268d7f4aae, type: 3}
   - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
   illusions:
-  - {fileID: 21300000, guid: 65901e19fa8175f4f932c779cd6f993a, type: 3}
-  - {fileID: 21300000, guid: f2861768c92ff8c46b7aba52169623c9, type: 3}
+  - {fileID: 21300000, guid: 35bdfd31fb97d5f4589b3eb109417556, type: 3}
+  - {fileID: 21300000, guid: 22dc94cc2b104d04980078e81f316bd2, type: 3}
   - {fileID: 21300000, guid: 72bcd2e03f2c1f74082c8af599233efd, type: 3}
   receptionistText:
   - Welcome at the reunion of Capra University.
@@ -1394,19 +1394,20 @@ MonoBehaviour:
   - What did you see?
   - Maybe you saw a butterfly and some lines.
   - 'But did you notice the image was actually black and white? '
-  - 'By adding a grid of colored lines, your brain makes you believe the image is
-    in color. '
-  - 'Try it for yourself! You can remove the lines with the toggle on top of the
-    screen. '
+  - By adding a grid of colored lines..
+  - '.. your brain makes you believe the image is in color. '
+  - 'Try it for yourself! '
+  - You can remove the lines with the toggle on top of the screen.
   - 'Amazing right? '
   - Your brain can often fool you. Just look outside for example!
   - What shapes do you recognize in these clouds?
-  - I see a bunny, but maybe you saw something else!
+  - I see a T-rex, but maybe you saw something else!
   - Your outlook on certain things may differ from those around you.
   - Reality can be perceived in different ways.
-  - Learning about these different perspectives can create new ways of thinking.
+  - Learning about these different perspectives ..
+  - ..can create new ways of thinking.
   - Sorry, I am talking a lot, aren't I?
-  - I will leave you. You go enjoy talking to your old class mates and their family.
+  - I will leave you. You go enjoy the reunion.
   - Have a nice time!
   prologueMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
 --- !u!114 &1498838030
@@ -2021,7 +2022,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 441.09058, y: 0}
+  m_SizeDelta: {x: 464.33942, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1969004739
 Animator:
