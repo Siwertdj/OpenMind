@@ -39,6 +39,6 @@ MonoBehaviour:
   - I hope you've figured out who I am by now.
   - Now is the time to come find me!
   numberOfCharacters: 8
-  numQuestions: 1
-  minimumRemaining: 2
+  numQuestions: 2
+  minimumRemaining: 4
   immediateVictim: 0

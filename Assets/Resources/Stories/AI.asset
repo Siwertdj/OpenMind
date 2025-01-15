@@ -21,9 +21,9 @@ MonoBehaviour:
   storyIntroMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
   storyGameMusic: {fileID: 8300000, guid: 0ad27c3e394db5c49a9750fc59f8d673, type: 3}
   storyEpilogueMusic: {fileID: 8300000, guid: b20e3c2360e5b3844a2d2a5711bc99ec, type: 3}
-  storyEpilogueWonDialogue: {fileID: 0}
-  storyEpilogueLossDialogueCulprit: {fileID: 0}
-  storyEpilogueLossDialogueNPC: {fileID: 0}
+  storyEpilogueWonDialogue: {fileID: 11400000, guid: 713c26f4f654be5438236d883440cdeb, type: 2}
+  storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 1b02eeff34c2c8c49ba62200f63a7a64, type: 2}
+  storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: 5e9ad781e678e6d49b227dace3e4c423, type: 2}
   victimDialogue: has gone home.
   hintDialogue:
   - <victimName> has gone home.
@@ -36,8 +36,9 @@ MonoBehaviour:
   - The circuit boards are fried. You will not receive any more hints.
   preEpilogueDialogue:
   - The reunion will come to an end soon.
-  - It is time to ???
+  - We have gathered a lot of information.
+  - It is time to identify the culprit.
   numberOfCharacters: 8
-  numQuestions: 1
-  minimumRemaining: 2
+  numQuestions: 2
+  minimumRemaining: 4
   immediateVictim: 0
