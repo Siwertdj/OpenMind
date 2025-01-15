@@ -282,6 +282,13 @@ public class GameManagerPlayTest
         }
         else
         {
+            // Get the DialogueManager.
+            dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+            // End the HintDialogue.
+            dm.currentObject = new TerminateDialogueObject();
+            dm.currentObject.Execute();
+            
             yield return new WaitUntil(() => SceneManager.GetSceneByName("EpilogueScene").isLoaded); // Wait for scene to load.
             
             // Check if no characters have disappeared.

@@ -74,7 +74,19 @@ public class EpilogueManagerPlayTests
         // Waiting for the DialogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Get the DialogueManager.
+        // Get the DialogueManager from the regular dialogue.
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager from the HintDialogue.
         dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         
         // End the dialogue.
@@ -85,6 +97,7 @@ public class EpilogueManagerPlayTests
         
         // Waiting for the EpilogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("EpilogueManager") != null);
+        
         
     }
     
