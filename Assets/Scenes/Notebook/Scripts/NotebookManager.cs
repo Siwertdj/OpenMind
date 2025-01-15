@@ -180,13 +180,15 @@ public class NotebookManager : MonoBehaviour
 
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
-        var inpuObjectField = inputObject.GetComponent<TMP_InputField>();
-        inpuObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
-        inpuObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
+        var inputObjectField = inputObject.GetComponent<TMP_InputField>();
+        inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
+        inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
+        inputObjectField.onEndEdit.AddListener(_ => SaveNotes());
+        
 
-        inpuObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
