@@ -16,6 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hrllo, I'm Suus. The food here is my favorite!
+    text: Hello, I'm Suus. The food here is my favorite!
     image: {fileID: 0}
-    background: []
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
