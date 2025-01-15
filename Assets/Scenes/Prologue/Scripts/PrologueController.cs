@@ -2,24 +2,28 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using Debug = System.Diagnostics.Debug;
 
 /// <summary>
 /// Manager class for cutscenes.
 /// </summary>
 public class PrologueController : MonoBehaviour
 {
-    public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
+    [SerializeField] public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
+    
     // The variables below are the UI components that we want to manipulate during the prologue scene
     [Header("Image refs")]
     [SerializeField] private Image textBubbleImage;
-    [SerializeField] private Image    backgroundImage;
-    [SerializeField] private Image    illusionImage;
+    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image illusionImage;
     
     [Header("Text refs")]
     [SerializeField] private TMP_Text introText;
@@ -31,17 +35,17 @@ public class PrologueController : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private DialogueAnimator dialogueAnimator;
 
-    [Header("Prologue data")] // The arrays below store data that is required at a later stadium of the prologue
-    [SerializeField] private Sprite[] backgrounds; // Stores all the background images
-    [SerializeField] private Sprite[] illusions; // Stores all the optical illusion images
+    [FormerlySerializedAs("backgrounds")]
+    [Header("Prologue data")]                           // The arrays below store data that is required at a later stadium of the prologue
+    [SerializeField] private Sprite[] sprites;          // Stores all the sprites used in the prologue
     [SerializeField] private string[] receptionistText; // Stores all the text spoken by the receptionist
 
     [Header("Resources")] 
     [SerializeField] private AudioClip prologueMusic;
     
-    private int textIndex; // Index to keep track of the text that needs to be spoken
-    private int backgroundIndex; // Index to keep track of the background that needs to be used
-    private Transform checkmarkTransform; // This is the checkmark image on the toggler
+    private int textIndex;                  // Index to keep track of the text that needs to be spoken
+    private int backgroundIndex;            // Index to keep track of the background that needs to be used
+    private Transform checkmarkTransform;   // This is the checkmark image on the toggler
     
     /// <summary>
     /// This method is called when the scene is started this script belongs to is activated. 
@@ -49,23 +53,18 @@ public class PrologueController : MonoBehaviour
     private void Start()
     {
        checkmarkTransform = imageToggler.transform.Find("Background/Checkmark"); // Access the Checkmark GameObject via the Toggle's hierarchy
-       // Intialize indices
-       textIndex = -1; 
-       backgroundIndex = 0;
        
-       // Set Cutscene-music
+       // Set prologue-music
        SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
        
        // Update UserData
        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
        
-       playableDirector.RebuildGraph();
-       playableDirector.Play();
+       ResetTimeline();
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
     #region TimelineManipulators
-    
     /// <summary>
     /// This method is called via a signal receiver when continueButton is clicked and the
     /// timeline has to be resumed.
@@ -94,20 +93,18 @@ public class PrologueController : MonoBehaviour
         playableDirector.Pause();
         continueButton.gameObject.SetActive(true); // Make sure timeline can manually be resumed. 
     }
-
-    /// <summary>
-    /// This method is called when the timeline reaches the end of the prologue.
-    /// When this method is called, the StorySelect scene is loaded. 
-    /// </summary>
-    public void LoadSelectStory()
-    {
-        playableDirector.Stop();
-        playableDirector.time = 0;
-        playableDirector.Evaluate(); // Force the timeline to reset to its starting state
-        dialogueAnimator.CancelWriting();
-        SceneManager.LoadScene("StorySelectScene");
-    }
     
+    /// <summary>
+    /// This method resets the timeline and makes sure it is played from the start. 
+    /// </summary>
+    private void ResetTimeline()
+    {
+        textIndex = 0;
+        backgroundIndex = 0;
+        playableDirector.time = 0;
+        playableDirector.RebuildGraph();
+        playableDirector.Play();
+    }
     #endregion
     
     // This region contains methods that (de)activate UI elements on the canvas.
@@ -117,7 +114,7 @@ public class PrologueController : MonoBehaviour
     /// </summary>
     public void ActivateCloudIllusion()
     {
-        illusionImage.sprite = illusions[2]; // Sprite 2 is the cloud illusion. 
+        illusionImage.sprite = sprites[5]; // Sprite 2 is the cloud illusion. 
     }
     /// <summary>
     /// This method makes sure the UI for the receptionist dialog is activated. 
@@ -158,14 +155,17 @@ public class PrologueController : MonoBehaviour
     /// This method is called when the toggler is clicked. Depending on the value of the toggler isOn,
     /// a different image is shown. 
     /// </summary>
-    public void OnToggleValueChanged(bool isOn)
+    public void OnToggleValueChanged(bool toggleIsOn)
     {
-        imageToggler.isOn = isOn;  
-        checkmarkTransform.gameObject.SetActive(isOn);
-        if (isOn) illusionImage.sprite = illusions[0];
+        imageToggler.isOn = toggleIsOn;  
+        checkmarkTransform.gameObject.SetActive(toggleIsOn);
+        if (toggleIsOn)
+        {
+            illusionImage.sprite = sprites[3];
+        }
         else
         {
-            illusionImage.sprite = illusions[1];
+            illusionImage.sprite = sprites[4];
         }
     }
     
@@ -177,11 +177,11 @@ public class PrologueController : MonoBehaviour
         backgroundIndex++;
         try
         {
-            backgroundImage.sprite = backgrounds[backgroundIndex];
+            backgroundImage.sprite = sprites[backgroundIndex];
         }
         catch
         {
-            backgroundImage.sprite = backgrounds[0];
+            backgroundImage.sprite = sprites[0];
         }
     }
     /// <summary>
@@ -195,11 +195,31 @@ public class PrologueController : MonoBehaviour
     /// <summary>
     /// This method updates the text that is shown when the receptionist speaks by using the spokenText array. 
     /// </summary>
-    public void UpdateText()
+    private void UpdateText()
     {
+        try
+        {
+            dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
+        }
+        catch
+        {
+            textIndex = 0;
+            //Debug.LogError("Error: No more text to speak.");
+        }
         textIndex++;
-        //spokenText.text = receptionistText[textIndex];
-        dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
     }
     #endregion
+    
+    /// <summary>
+    /// This method is called when the timeline reaches the end of the prologue.
+    /// When this method is called, the StorySelect scene is loaded. 
+    /// </summary>
+    public void LoadSelectStory()
+    {
+        /*playableDirector.Stop();
+        playableDirector.time = 0;
+        playableDirector.Evaluate(); // Force the timeline to reset to its starting state
+        dialogueAnimator.CancelWriting();*/
+        SceneManager.LoadScene("StorySelectScene");
+    }
 }
