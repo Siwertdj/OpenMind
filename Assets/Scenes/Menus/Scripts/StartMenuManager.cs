@@ -36,14 +36,6 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        // Keep the copyright text on the screen in all scenes
-        DontDestroyOnLoad(copyright);
-
-        // Make popup and loading available at any point in the game
-        DontDestroyOnLoad(loadingScreen);
-        DontDestroyOnLoad(popUpScreen);
-        
-        //SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
         SettingsManager.sm.SwitchMusic(startMenuMusic, 1, true);
         
         // update user data; create a file if it didnt exist already
