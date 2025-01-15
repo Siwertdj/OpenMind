@@ -639,6 +639,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &330808627
 GameObject:
@@ -763,6 +764,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!225 &330808633
 CanvasGroup:
@@ -1448,8 +1450,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedColor: {r: 1, g: 1, b: 1, a: 0.88235295}
-  defaultColor: {r: 0.5622641, g: 0.5622641, b: 0.5622641, a: 0.88235295}
-  inactiveColor: {r: 0.23018861, g: 0.23018861, b: 0.23018861, a: 0.88235295}
+  defaultColor: {r: 0.23137255, g: 0.23137255, b: 0.23137255, a: 0.88235295}
+  inactiveColor: {r: 0.56078434, g: 0.56078434, b: 0.56078434, a: 0.88235295}
   scroller: {fileID: 1885397429}
   iconPrefab: {fileID: 8512552333905423466, guid: de437236670d9134a85876b278b7a03b, type: 3}
 --- !u!1 &1659958910
@@ -1665,6 +1667,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1818185164
 GameObject:
