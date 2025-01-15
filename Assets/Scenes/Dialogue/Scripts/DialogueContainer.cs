@@ -229,6 +229,14 @@ public class DialogueContainer : ScriptableObject
     /// </summary>
     public static void AddLeaf(DialogueObject treeHead, DialogueObject newLeaf)
     {
+        // If treehead has no responses, then add newleaf to it and return.
+        if (treeHead.Responses.Count == 0)
+        {
+            treeHead.Responses.Add(newLeaf);
+            return;
+        }
+        // else..
+        
         // Currentnode starts at TreeHead. LastNode starts as null.
         DialogueObject lastNode = null;
         DialogueObject currentNode = treeHead;
@@ -239,6 +247,7 @@ public class DialogueContainer : ScriptableObject
             lastNode = currentNode;
             currentNode = currentNode.Responses.First();
         }
+        
         // Now, if currentNode is a TerminateDialogueObject, we want to replace it with newLeaf, 
         // and set TerminateDialogueObject to be the newleaf's first response.
         if (lastNode.Responses.First() is TerminateDialogueObject)
