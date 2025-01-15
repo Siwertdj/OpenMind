@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -45,7 +46,7 @@ public class DataSender : DataNetworker
     /// Creates a data sender object using an IPAddress and a port to create an endpoint.
     /// The ipAddress should point to the device you want to send the message to.
     /// </summary>
-    public DataSender([DisallowNull] IPAddress ipAddress, ushort port) : base(ipAddress, port)
+    public DataSender([DisallowNull] IPAddress ipAddress, ushort port, string pingSignature) : base(ipAddress, port)
     {
         onDataSentEvents = new NetworkEvents();
         onReceiveResponseEvents = new NetworkEvents();
@@ -60,6 +61,13 @@ public class DataSender : DataNetworker
         //when an ack is received, untrack all ackTimes that match the received signature.
         // onAckReceievedEvents.Subscribe("ACK", signature =>
         //     acknowledgementTimes = acknowledgementTimes.FindAll(at => at.Signature != (string)signature));
+        
+        onAckTimeoutEvents.Subscribe(pingSignature, _ =>
+        {
+            if (connected)
+                onDisconnectedEvents.Raise("Disconnect", null, false, "onDisconnectedEvents");
+        });
+        AddOnDisconnectedEvent(_ => connected = false);
     }
     
     /// <summary>
@@ -75,7 +83,7 @@ public class DataSender : DataNetworker
         GiveDisplayWarning();
         
         //check if you are already connected
-        if (!socket.Connected)
+        if (!connected)
         {
             Task connecting = socket.ConnectAsync(endPoint)
                 .ContinueWith(t =>
@@ -94,6 +102,7 @@ public class DataSender : DataNetworker
                 double diff = (DateTime.Now - start).TotalMilliseconds;
                 if (diff > timeoutSeconds * 1000)
                 {
+                    Debug.Log("while loop timeout");
                     onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
                     timeout = true;
                     break;
@@ -101,9 +110,16 @@ public class DataSender : DataNetworker
                 
                 yield return null;
             }
+
+            if (!connected && !timeout)
+            {
+                Debug.Log("completed task loop timeout");
+                onConnectionTimeoutEvents.Raise("Timeout", null, false, "onConnectionTimeoutEvent");
+            }
         }
         else
             logWarning = "Socket was already connected, so nothing happened.";
+        
     }
     
     /// <summary>
@@ -196,7 +212,7 @@ public class DataSender : DataNetworker
                 
                 yield return new WaitUntil(() =>
                 {
-                    //CheckForTimeouts();
+                    CheckForTimeouts();
                     return task.IsCompleted;
                 });
             }
@@ -228,6 +244,10 @@ public class DataSender : DataNetworker
             {
                 logError = onAckReceievedEvents.Raise(signature,
                     receivedTailPackages[0].GetData<string>(), clearResponseEvents, "onAckReceivedEvent");
+                
+                Debug.Log($"Received ack: {receivedTailPackages[0].GetData<string>()}");
+                
+                acknowledgementTimes.RemoveAll(ackt => ackt.Signature == receivedTailPackages[0].GetData<string>());
             }
             catch (InvalidCastException e)
             {
@@ -249,10 +269,13 @@ public class DataSender : DataNetworker
     {
         List<AcknowledgementTime> timeouts =
             acknowledgementTimes.FindAll(ackt => ackt.HasTimedOut());
-        
+
         foreach (var acknowledgementTime in timeouts)
-            logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature, acknowledgementTime.Signature, false, "onAckTimeoutEvents");
-        
+        {
+            logWarning = onAckTimeoutEvents.Raise(acknowledgementTime.Signature,
+                acknowledgementTime.Signature, false, "onAckTimeoutEvents");
+        }
+
         acknowledgementTimes.RemoveAll(timeouts.Contains);
     }
     
@@ -265,12 +288,11 @@ public class DataSender : DataNetworker
         onConnectEvents.Subscribe("Connect", action);
     
     /// <summary>
-    /// Adds an action to the event of connecting with a host.
-    /// When connecting to a host, the given action is called.
-    /// The object is the task created when attempting to connect with a host.
+    /// Adds an action to the event of timeing out while trying to connect to the host
+    /// The object is null.
     /// </summary>
     public void AddOnConnectionTimeoutEvent(Action<object> action) =>
-        onConnectEvents.Subscribe("Timeout", action);
+        onConnectionTimeoutEvents.Subscribe("Timeout", action);
     
     /// <summary>
     /// Adds an action to the event of completing the send action.
@@ -311,16 +333,17 @@ public class DataSender : DataNetworker
     public void AddOnNotConnectedListeningEvents(Action<object> action) =>
         onNotConnectedListeningEvents.Subscribe("Disconnect", action);
 
-    protected override bool IsDisconnected(out Socket info)
+    /// <summary>
+    /// Tests if the client is still connected to the host.
+    /// <param name="info">Return true if the client just got disconnected.</param>
+    /// </summary>
+    protected override bool IsDisconnected(string signature, int interval, out Socket info)
     {
-        if (!socket.Connected && connected)
-        {
-            connected = false;
-            info = socket;
-            return true;
-        }
-
         info = null;
+        if (!connected)
+            return false;
+        
+        SendDataAsync(signature, NetworkPackage.CreatePackage("Plz give ping!"), interval/500f);
         return false;
     }
 }

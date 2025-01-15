@@ -161,6 +161,7 @@ public class GameManager : MonoBehaviour
         
         //assign numQuestionsAsked
         numQuestionsAsked = saveData.numQuestionsAsked;
+
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
@@ -346,7 +347,8 @@ public class GameManager : MonoBehaviour
     private void MultiplayerNotebookExchange()
     {
         // Send notebook
-        MultiplayerManager.mm.SendNotebook();
+        if (MultiplayerManager.mm) 
+            MultiplayerManager.mm.SendNotebook();
     }
     
     #endregion

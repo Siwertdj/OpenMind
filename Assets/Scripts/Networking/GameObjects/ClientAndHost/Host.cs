@@ -7,15 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using JetBrains.Annotations;
 using Newtonsoft.Json;
 using UnityEngine;
 using Random = System.Random;
 
+/// <summary>
+/// Handles the host side of networking.
+/// This script can be active and inactive (separate from the active and inactive of objects in unity.)
+/// </summary>
 public class Host : NetworkObject
 {
     private DataListener                 listener;
     private int                          seed;
     private int                          storyID;
+    private int maxPlayers;
     private List<List<NetworkPackage>>   notebooks = new ();
     private Action<List<NetworkPackage>> sendFirstNotebook;
     private Action<List<NetworkPackage>> assignNotebookData;
@@ -23,6 +29,7 @@ public class Host : NetworkObject
     private bool addNormalResponse = false;
     private bool readyToSentFirstClientSecondClientNotebook;
     private List<NetworkPackage> dataToSendSecondClient;
+    private bool isListening;
     
     private void Update()
     {
@@ -41,6 +48,28 @@ public class Host : NetworkObject
         }
     }
     
+    /// <summary>
+    /// Enforce the player limit.
+    /// If too many players are connected, stop listening for connections.
+    /// If less players than the limit are connected keep/start listening.
+    /// </summary>
+    private void ManagePlayerAmount(object obj)
+    {
+        int playerCount = listener.GetPlayerAmount();
+        
+        if (isListening && playerCount >= maxPlayers)
+        {
+            listener.CancelListeningForConnections();
+            isListening = false;
+        }
+        
+        if (!isListening && playerCount < maxPlayers)
+        {
+            StartCoroutine(listener.AcceptIncomingConnections());
+            isListening = true;
+        }
+    }
+    
     private IEnumerator SendDataWithDelay()
     {
         yield return new WaitForSeconds(1);
@@ -54,16 +83,28 @@ public class Host : NetworkObject
         sendFirstNotebook(dataToSendSecondClient);
     }
     
+    /// <summary>
+    /// Create a classroom code using the IP adress.
+    /// </summary>
     public string CreateClassroomCode()
     {
         IPv4Converter converter = new IPv4Converter();
         return converter.ConvertToCode(ownIP);
     }
-
-    public void Lobby(int storyID, int seed)
+    
+    /// <summary>
+    /// Start hosting the game.
+    /// Start listening for connections and for incoming data.
+    /// Start the notebook exchange.
+    /// </summary>
+    /// <param name="storyID">the storyID</param>
+    /// <param name="seed">the seed</param>
+    /// <param name="maxPlayers">the maximum amount of players that can join the game</param>
+    public void Lobby(int storyID, int seed, int maxPlayers)
     {
         this.seed = seed;
         this.storyID = storyID;
+        this.maxPlayers = maxPlayers;
         
         listener = new DataListener(ownIP, settings.ClientHostPortConnection);
         StartCoroutine(listener.DisplayAnyDebugs(settings.DisplayDebugIntervalSeconds));
@@ -74,10 +115,24 @@ public class Host : NetworkObject
         
         StartCoroutine(listener.AcceptIncomingConnections());
         StartCoroutine(listener.ListenForIncomingData(settings.IncomingDataIntervalSeconds));
+        StartCoroutine(listener.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
+        
+        listener.AddOnAcceptConnectionsEvent(ManagePlayerAmount);
+        listener.AddOnDisconnectedEvent(ManagePlayerAmount);
         
         ActivateNotebookExchange();
+
+        isListening = true;
     }
+
+    /// <summary>
+    /// Returns the amount of players connected to the host.
+    /// </summary>
+    public int PlayerAmount() => listener.GetPlayerAmount();
     
+    /// <summary>
+    /// Send the storyID and the seed to the client.
+    /// </summary>
     private List<NetworkPackage> SendInit(List<NetworkPackage> arg)
     {
         if (settings.IsDebug)
@@ -91,6 +146,9 @@ public class Host : NetworkObject
     }
 
     #region Notebook
+    /// <summary>
+    /// Start the exchanging of notebooks.
+    /// </summary>
     private void ActivateNotebookExchange()
     {
         sendFirstNotebook =
@@ -146,10 +204,15 @@ public class Host : NetworkObject
             return;
         
         Debug.Log($"Received first notebook {((List<NetworkPackage>)o)[0].data}");
-        notebooks.Add((List<NetworkPackage>)o);
+        
+        AddNotebook((List<NetworkPackage>)o);
+        
         addNormalResponse = true;
     }
-
+    
+    /// <summary>
+    /// Add the received notebook to the notebook list and return a random notebook.
+    /// </summary>
     private List<NetworkPackage> ReceiveAndRespondWithNotebook(List<NetworkPackage> o)
     {
         //if client and second upload, assign notebook to the first upload if it was also a client
@@ -160,14 +223,22 @@ public class Host : NetworkObject
             Debug.Log($"sending first notebook, sending {o[0].data}, {addNormalResponse}");
             sendFirstNotebook(o);
         }
-            
         
         List<NetworkPackage> randomNotebook = GetRandomNotebook();
-        notebooks.Add(o);
+        AddNotebook(o);
         Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
     }
+
+    private void AddNotebook(List<NetworkPackage> notebookData)
+    {
+        if(!notebooks.Contains(notebookData))
+            notebooks.Add(notebookData);
+    }
     
+    /// <summary>
+    /// Get a random notebook from the notebook list.
+    /// </summary>
     private List<NetworkPackage> GetRandomNotebook() =>
         notebooks[notebookRandom.Next(notebooks.Count)];
     #endregion
@@ -176,7 +247,6 @@ public class Host : NetworkObject
     
     private void AddAdditionalDebugMessagesInit()
     {
-        StartCoroutine(listener.IsDisconnected(settings.DisconnectedIntervalSeconds));
         listener.AddOnAcceptConnectionsEvent(OnConnectionAccepted);
         listener.AddOnDisconnectedEvent(OnDisconnect);
         listener.AddOnDataReceivedEvent(settings.InitialisationDataSignature, OnDataReceived);
@@ -211,8 +281,11 @@ public class Host : NetworkObject
     }
     #endregion
     
+    /// <summary>
+    /// Dispose of the host when quitting the game.
+    /// </summary>
     public override void Dispose()
     {
-        listener.Dispose();
+        listener?.Dispose();
     }
 }

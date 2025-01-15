@@ -6,7 +6,7 @@ using System;
 using System.Net;
 using UnityEngine;
 
-public abstract class NetworkObject : MonoBehaviour, IDisposable
+public abstract class NetworkObject : MonoBehaviour//, IDisposable
 {
     protected IPAddress       ownIP;
     protected NetworkSettings settings;

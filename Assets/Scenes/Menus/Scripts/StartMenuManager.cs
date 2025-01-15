@@ -40,13 +40,8 @@ public class StartMenuManager : MonoBehaviour
         
         // update user data; create a file if it didnt exist already
         SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
-        
-        // The game can't be paused while in the Main Menu, so reset pause-stack
-        while (SettingsManager.sm?.IsPaused == true)
-            SettingsManager.sm.UnpauseGame();
-        
     }
-
+    
     /// <summary>
     /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
     /// Otherwise, start the prologue.

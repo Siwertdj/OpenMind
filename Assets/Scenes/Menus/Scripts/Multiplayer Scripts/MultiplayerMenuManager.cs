@@ -19,9 +19,11 @@ public class MultiplayerMenuManager : MonoBehaviour
 
 
     [Header("Paramaters")] 
-    [SerializeField] private float maxPlayers = 10;
+    [SerializeField] private int maxPlayers;
     [SerializeField] private TextMeshProUGUI maxPlayersText;
     [SerializeField] private TextMeshProUGUI code;
+    [SerializeField] private TextMeshProUGUI playerCountText;
+    [SerializeField] private Button          joinButton;
     
     private string classCode;
     private int    storyid;
@@ -40,6 +42,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void ReturnMain()
     {
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");
+        Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
     }
     
     /// <summary>
@@ -68,9 +71,9 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// Sets the max players a session can have using a slider.
     /// </summary>
     /// <param name="num">The value of the slider.</param>
-    public void SetMaxPlayers(float num)
+    public void SetMaxPlayers(Slider slider)
     {
-        maxPlayers = num;
+        maxPlayers = (int)slider.value;
     }
 
     /// <summary>
@@ -104,12 +107,13 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// <param name="storyid">the chosen story</param>
     public void HostGame(int id)
     {
+        Debug.Log("started hosting game");
         storyid = id;
         storyCanvas.SetActive(false);
         lobbyCanvas.SetActive(true);
         
         // Start hosting
-        MultiplayerManager.mm.HostGame(storyid);
+        MultiplayerManager.mm.HostGame(storyid, maxPlayers);
         
         // Create a code
         classCode = MultiplayerManager.mm.GetClassCode();
@@ -145,16 +149,29 @@ public class MultiplayerMenuManager : MonoBehaviour
     {
         classCode = inputField.GetComponent<TMP_InputField>().text;
     }
+
+    private void ReactivateJoinButton()
+    {
+        if(SceneManager.GetSceneByName("MultiplayerScreenScene").isLoaded)
+            joinButton.interactable = true;
+    }
     
     public void JoinGame()
     {
-        MultiplayerManager.mm.JoinGame(classCode);
+        joinButton.interactable = false;
+        MultiplayerManager.mm.JoinGame(classCode, ReactivateJoinButton);
     }
     #endregion
     
     public void Update()
     {
-        maxPlayersText.text = maxPlayers.ToString();
-        code.text = classCode;
+        if(hostCanvas.activeInHierarchy)
+            maxPlayersText.text = maxPlayers.ToString();
+        
+        if (lobbyCanvas.activeInHierarchy)
+        {
+            code.text = classCode;
+            playerCountText.text = MultiplayerManager.mm.GetPlayerAmount() + "/ " + maxPlayers + " players joined";
+        }
     }
 }
