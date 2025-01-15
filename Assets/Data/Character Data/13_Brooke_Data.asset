@@ -19,6 +19,8 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.5003, y: 0.8103}
+  firstGreeting: {fileID: 11400000, guid: e84c7184928ddd2419b3f08470c0391d, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: e3cf4ff88fe989e4a84fc7e241ce2376, type: 2}

@@ -22,13 +22,9 @@ public class StartMenuManager : MonoBehaviour
     [Header("Events")]
     public GameEvent onGameLoaded;
     public GameEvent startLoadIcon;
-
-    [Header("Copyright canvas")]
-    public Canvas copyright;
     
     [Header("Resources")]
     [SerializeField] AudioClip startMenuMusic;
-    private float startMenuMusicFadeInSpeed = 0f;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -39,10 +35,15 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed, true);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, 1, true);
         
         // update user data; create a file if it didnt exist already
         SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
+        
+        // The game can't be paused while in the Main Menu, so reset pause-stack
+        while (SettingsManager.sm?.IsPaused == true)
+            SettingsManager.sm.UnpauseGame();
+        
     }
     
     /// <summary>

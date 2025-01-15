@@ -363,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 101.25, y: -18.616028}
+  m_AnchoredPosition: {x: 101.25, y: -18.615967}
   m_SizeDelta: {x: 202.49542, y: 212.76733}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &480671211
@@ -386,7 +386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 448b1abebbf9cd34f8ecda29244b324c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f87952a716ce0c84791b5f3d26265530, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -461,6 +461,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &519420028
 GameObject:
@@ -1014,6 +1015,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1546507292
 GameObject:

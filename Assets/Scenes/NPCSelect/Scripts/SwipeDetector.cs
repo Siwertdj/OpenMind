@@ -47,7 +47,7 @@ public class SwipeDetector : MonoBehaviour
     private void CheckSwipe()
     {
         // Don't do anything if the game is paused
-        if (GameManager.gm?.IsPaused == true)
+        if (SettingsManager.sm?.IsPaused == true)
             return;
 
         //Check if Horizontal swipe

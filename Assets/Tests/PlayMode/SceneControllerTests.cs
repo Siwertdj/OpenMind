@@ -90,7 +90,11 @@ public class SceneControllerTests
     public void TearDown()
     {
         Debug.Log("Teardown");
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetActiveScene());
+        
+        // Move all toolboxes so that they can be unloaded.
+        var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
+        foreach (GameObject obj in objects)
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetActiveScene());
 
         SceneController.sc.UnloadAdditiveScenes();

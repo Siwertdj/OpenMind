@@ -19,10 +19,13 @@ MonoBehaviour:
   unhappyAvatar: {fileID: 0}
   voicePitch: 1
   facePivot: {x: 0.4951, y: 0.7515}
+  firstGreeting: {fileID: 11400000, guid: 0e8771eac8c34724aa15ba6e8f2a4f40, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
     answer: {fileID: 11400000, guid: ed4a3d45428ed8d4eb0f0fe585718a24, type: 2}
-    trait: []
+    trait:
+    - I am 41 years old.
   - question: 3
     answer: {fileID: 11400000, guid: 0c451071cc9ea704bb77970f13c1d31e, type: 2}
     trait:

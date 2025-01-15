@@ -13,7 +13,7 @@ public class SettingsEditTest
     public void Setup()
     {
         EditorSceneManager.OpenScene("Assets/Scenes/Menus/StartScreenScene.unity");
-        sm = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
+        sm = GameObject.FindObjectOfType<SettingsManager>(true);
     }
 
     /// <summary>

@@ -778,8 +778,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -10}
-  m_SizeDelta: {x: 20, y: 20}
+  m_AnchoredPosition: {x: 20.6, y: -14.380516}
+  m_SizeDelta: {x: 29.15923, y: 28.761}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &693449043
 CanvasRenderer:
@@ -1374,6 +1374,7 @@ MonoBehaviour:
   illusionImage: {fileID: 381591057}
   introText: {fileID: 1772810423}
   nameBoxText: {fileID: 1662234308}
+  spokenText: {fileID: 2033686005}
   imageToggler: {fileID: 1937756968}
   continueButton: {fileID: 198219724}
   dialogueAnimator: {fileID: 429653936}
@@ -1408,7 +1409,7 @@ MonoBehaviour:
   - Learning about these different perspectives can create new ways of thinking.
   - Sorry, I am talking a lot, aren't I?
   - I will leave you. You go enjoy talking to your old class mates and their family.
-    Have a nice time!
+  - Have a nice time!
   prologueMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
 --- !u!114 &1498838030
 MonoBehaviour:
@@ -1738,7 +1739,7 @@ MonoBehaviour:
   m_text: Before the game starts, you will be introduced to the theme of the game.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1906,8 +1907,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -108.42711, y: 887}
-  m_SizeDelta: {x: 120.27, y: 23.282}
+  m_AnchoredPosition: {x: -241.6246, y: 762.0143}
+  m_SizeDelta: {x: 75.5832, y: 73.2773}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1947413339
 GameObject:
@@ -2022,7 +2023,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 464.33942, y: 0}
+  m_SizeDelta: {x: 441.09058, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1969004739
 Animator:

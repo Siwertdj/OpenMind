@@ -22,14 +22,36 @@ public class SettingsManager : MonoBehaviour
     [Header("Settings (?)")]
     [SerializeField] float defaultMusicFadeInTime = 0.5f;
     [SerializeField] AudioClip defaultButtonClickSound;
-
+    
+    #region Pausing
+    private int  pauseStack = 0;
+    public  bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
+    
     public float TalkingDelay {  get; private set; }
 
-    // TODO: Integrate this with text-size
-    [NonSerialized] public int maxLineLength = 30;
-    
+    public int maxLineLength
+    {
+        get
+        {
+            return textSize == TextSize.Small ? smallTextLineLength
+                : textSize == TextSize.Medium ? mediumextLineLength 
+                : largeTextLineLength;
+        }
+    }
+
+    private Coroutine musicFadeCoroutine;
+    private bool musicIsFading = false;
+
+    #region Text Size
     // Text size to be used for the text components
     [NonSerialized] public TextSize textSize;
+    
+    private int smallTextLineLength = 90;
+    private int mediumextLineLength = 70;
+    private int largeTextLineLength = 50;
     
     public enum TextSize
     {
@@ -43,7 +65,7 @@ public class SettingsManager : MonoBehaviour
     public const float M_LARGE_TEXT = 1.4f;
 
     public UnityEvent OnTextSizeChanged;
-    
+    #endregion
 
     #region Settings Variables
     [NonSerialized] public float musicVolume = 0;
@@ -181,11 +203,10 @@ public class SettingsManager : MonoBehaviour
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
-            // If the newclip is different than the current clip, we fade the new one in.
-            if (newClip != musicSource.clip)
-            {
-                StartCoroutine(FadeOutMusic(newClip, _fadeTime));
-            }
+            if (musicIsFading)
+                StopCoroutine(musicFadeCoroutine);
+
+            musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
         
         // Set the music loop to the given parameter.
@@ -201,44 +222,51 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
-        // initialize variables
-        float startVolume = musicSource.volume;
-        
-        // Start loading the new clip
-        // In the clip settings, "Load in Background" should be enabled,
-        // otherwise the game could freeze until loading is done
-        if (!newClip.loadInBackground)
-            Debug.LogWarning(
-                $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
-                $"set to {newClip.loadInBackground}. " +
-                $"This could cause freezes while the clip is loading.");
-        newClip.LoadAudioData();
+        musicIsFading = true;
 
-        while (musicSource.volume > 0)
+        // Don't fade out if it's the same clip
+        if (newClip != musicSource.clip)
         {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
-            yield return null;
+            // Start loading the new clip
+            // In the clip settings, "Load in Background" should be enabled,
+            // otherwise the game could freeze until loading is done
+            if (!newClip.loadInBackground)
+                Debug.LogWarning(
+                    $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                    $"set to {newClip.loadInBackground}. " +
+                    $"This could cause freezes while the clip is loading.");
+            newClip.LoadAudioData();
+
+            while (musicSource.volume > 0)
+            {
+                musicSource.volume -= Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            musicSource.Stop();
+
+            // Unload the old clip (Unity does not do this automatically)
+            if (musicSource.clip != null)
+                musicSource.clip.UnloadAudioData();
+
+            // Wait for the new clip to finish loading
+            while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+                yield return null;
+
+            musicSource.clip = newClip;
         }
-        musicSource.Stop();
-        // Unload the old clip (Unity does not do this automatically)
-        if (musicSource.clip != null)
-            musicSource.clip.UnloadAudioData();
-    
 
-        // Wait for the new clip to finish loading
-        while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
-            yield return null;
-
-        musicSource.clip = newClip;
-        musicSource.Play();
+        // Ensure the clip is playing
+        if (!musicSource.isPlaying)
+            musicSource.Play();
 
         // Fade in the clip
         while (musicSource.volume < 1)
         {
-            musicSource.volume += startVolume * Time.deltaTime / fadeTime;
+            musicSource.volume += Time.deltaTime / fadeTime;
             yield return null;
         }
 
+        musicIsFading = false;
     }
     #endregion
 

@@ -16,6 +16,7 @@ public class StoryObject : ScriptableObject
     [Header("Story Assets")]
     [SerializeField] public GameObject dialogueBackground;
     [SerializeField] public GameObject        hintBackground;
+    [SerializeField] public GameObject[]      additionalHintBackgroundObjects;
     [SerializeField] public GameObject        epilogueBackground;
     [SerializeField] public AudioClip         storyIntroMusic;
     [SerializeField] public AudioClip         storyGameMusic;
@@ -26,7 +27,9 @@ public class StoryObject : ScriptableObject
 
     [Header("Game Settings")] 
     [SerializeField] public string victimDialogue;
-    [SerializeField] public string hintDialogue;
+    [SerializeField] public string[] hintDialogue;
+    [SerializeField] public string[] noMoreHintsDialogue;
+    [SerializeField] public string[] preEpilogueDialogue;
     [SerializeField] public int numberOfCharacters;            // How many characters each session should have
     [SerializeField] public int numQuestions; // Amount of times the player can ask a question
     [SerializeField] public int minimumRemaining; // The amount of active characters at which the session should end
