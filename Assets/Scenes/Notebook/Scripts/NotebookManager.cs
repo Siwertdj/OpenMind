@@ -77,7 +77,8 @@ public class NotebookManager : MonoBehaviour
     
     public void ToggleMultiplayerNotebook()
     {
-        Debug.Log($"MultiplayerNotebook: {GameManager.gm.multiplayerNotebookData.GetCharacterNotes(currentCharacter)}");
+        Debug.Log($"MultiplayerNotebook other: {GameManager.gm.multiplayerNotebookData.GetCharacterNotes(currentCharacter)}");
+        Debug.Log($"MultiplayerNotebook self: {GameManager.gm.notebookData.GetCharacterNotes(currentCharacter)}");
         if (showingMultiplayerNotebook)
         {
             InitializeTabButtons();
