@@ -52,7 +52,8 @@ public class PrologueController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-       checkmarkTransform = imageToggler.transform.Find("Background/Checkmark"); // Access the Checkmark GameObject via the Toggle's hierarchy
+        // Access the Checkmark GameObject via the Toggle's hierarchy
+       checkmarkTransform = imageToggler.transform.Find("Background/Checkmark"); 
        
        // Set prologue-music
        SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
@@ -60,6 +61,7 @@ public class PrologueController : MonoBehaviour
        // Update UserData
        SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
        
+       // Reset the timeline (necessary for when the prologue is played again)
        ResetTimeline();
     }
     
@@ -107,15 +109,16 @@ public class PrologueController : MonoBehaviour
     }
     #endregion
     
-    // This region contains methods that (de)activate UI elements on the canvas.
-    #region UIActivators
+    // This region contains all the methods regarding the text that is shown during the prologue. 
+    #region Prologue Text
     /// <summary>
-    /// This method makes sure the cloud illusion is shown. 
+    /// This method updates the introduction text. Since there are only two segments of text, there is no array needed. 
     /// </summary>
-    public void ActivateCloudIllusion()
+    public void UpdateIntroText()
     {
-        illusionImage.sprite = sprites[5]; // Sprite 2 is the cloud illusion. 
+        introText.text = "Not everything is as it seems...";
     }
+    
     /// <summary>
     /// This method makes sure the UI for the receptionist dialog is activated. 
     /// </summary>
@@ -126,17 +129,10 @@ public class PrologueController : MonoBehaviour
         nameBoxText.gameObject.SetActive(true);
         dialogueAnimator.gameObject.SetActive(true);
         
-        UpdateText(); // Update the text that is shown
+        UpdateText();    // Update the text that is shown
         PauseTimeline(); // Pause the timeline such that the player can read the text. 
     }
     
-    /// <summary>
-    /// This method makes sure the grid illusion is shown. 
-    /// </summary>
-    public void ActivateGridIllusion()
-    {
-        imageToggler.gameObject.SetActive(true); // Only the toggler needs to be activated. The image is shown via the timeline. 
-    }
     /// <summary>
     /// This method makes sure the UI of the receptionist dialog is deactivated. 
     /// </summary>
@@ -145,51 +141,6 @@ public class PrologueController : MonoBehaviour
         textBubbleImage.gameObject.SetActive(false);
         nameBoxText.gameObject.SetActive(false);
         dialogueAnimator.gameObject.SetActive(false);
-    }
-    
-    #endregion
-    
-    // This region contains methods that manipulate UI elements on the canvas.
-    #region UIManipulators
-    /// <summary>
-    /// This method is called when the toggler is clicked. Depending on the value of the toggler isOn,
-    /// a different image is shown. 
-    /// </summary>
-    public void OnToggleValueChanged(bool toggleIsOn)
-    {
-        imageToggler.isOn = toggleIsOn;  
-        checkmarkTransform.gameObject.SetActive(toggleIsOn);
-        if (toggleIsOn)
-        {
-            illusionImage.sprite = sprites[3];
-        }
-        else
-        {
-            illusionImage.sprite = sprites[4];
-        }
-    }
-    
-    /// <summary>
-    /// This method changes the background by using the backgrounds array. 
-    /// </summary>
-    public void UpdateBackground()
-    {
-        backgroundIndex++;
-        try
-        {
-            backgroundImage.sprite = sprites[backgroundIndex];
-        }
-        catch
-        {
-            backgroundImage.sprite = sprites[0];
-        }
-    }
-    /// <summary>
-    /// This method updates the introduction text. Since there are only two segments of text, there is no array needed. 
-    /// </summary>
-    public void UpdateIntroText()
-    {
-        introText.text = "Not everything is as it seems...";
     }
     
     /// <summary>
@@ -210,16 +161,65 @@ public class PrologueController : MonoBehaviour
     }
     #endregion
     
+    // This region contains all methods regarding the 'illusion' assignments of the prologue. 
+    #region Illusions
+    /// <summary>
+    /// This method makes sure the grid illusion is shown. 
+    /// </summary>
+    public void ActivateGridIllusion()
+    {
+        imageToggler.gameObject.SetActive(true); // Only the toggler needs to be activated. The image is shown via the timeline. 
+    }
+    
+    /// <summary>
+    /// This method is called when the toggler is clicked. Depending on the value of the toggler isOn,
+    /// a different image is shown. 
+    /// </summary>
+    public void OnToggleValueChanged(bool toggleIsOn)
+    {
+        imageToggler.isOn = toggleIsOn;
+        checkmarkTransform.gameObject.SetActive(toggleIsOn);
+        if (toggleIsOn)
+        {
+            illusionImage.sprite = sprites[3];
+        }
+        else
+        {
+            illusionImage.sprite = sprites[4];
+        }
+    }
+    
+    /// <summary>
+    /// This method makes sure the cloud illusion is shown. 
+    /// </summary>
+    public void ActivateCloudIllusion()
+    {
+        illusionImage.sprite = sprites[5]; // Sprite 2 is the cloud illusion. 
+    }
+    #endregion
+    
+    /// <summary>
+    /// This method changes the background by using the backgrounds array. 
+    /// </summary>
+    public void UpdateBackground()
+    {
+        backgroundIndex++;
+        try
+        {
+            backgroundImage.sprite = sprites[backgroundIndex];
+        }
+        catch
+        {
+            backgroundImage.sprite = sprites[0];
+        }
+    }
+    
     /// <summary>
     /// This method is called when the timeline reaches the end of the prologue.
     /// When this method is called, the StorySelect scene is loaded. 
     /// </summary>
     public void LoadSelectStory()
     {
-        /*playableDirector.Stop();
-        playableDirector.time = 0;
-        playableDirector.Evaluate(); // Force the timeline to reset to its starting state
-        dialogueAnimator.CancelWriting();*/
         SceneManager.LoadScene("StorySelectScene");
     }
 }
