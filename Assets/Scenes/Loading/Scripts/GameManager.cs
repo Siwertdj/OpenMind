@@ -335,9 +335,10 @@ public class GameManager : MonoBehaviour
             // Change the gamestate
             gameState = GameState.CulpritSelect;
             
-            MultiplayerNotebookExchange();
-            multiplayerEpilogue = true;
-
+            // Exchange notebooks in case of multiplayer
+            if (MultiplayerManager.mm)
+                MultiplayerNotebookExchange();
+            
             StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
@@ -347,8 +348,8 @@ public class GameManager : MonoBehaviour
     private void MultiplayerNotebookExchange()
     {
         // Send notebook
-        if (MultiplayerManager.mm) 
-            MultiplayerManager.mm.SendNotebook();
+        MultiplayerManager.mm.SendNotebook();
+        multiplayerEpilogue = true;
     }
     
     #endregion
