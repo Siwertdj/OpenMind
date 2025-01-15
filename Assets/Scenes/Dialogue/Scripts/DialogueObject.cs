@@ -41,10 +41,16 @@ public class ContentDialogueObject : DialogueObject
     /// </summary>
     /// <param name="dialogue">The text</param>
     /// <param name="background">The background</param>
-    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
+    public ContentDialogueObject([CanBeNull] object dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
     {
         // Set this object's local variables to match the parameter-values of the constructor
-        this.dialogue = dialogue;
+        // Handle dialogue as string or List<string>
+        this.dialogue = dialogue switch
+        {
+            string singleDialogue => new List<string> { singleDialogue },
+            List<string> dialogueList => dialogueList,
+            _ => new List<string>() // Default to an empty list if null or unsupported type
+        };
         this.image = image; 
         this.background = background;
         if (emotion.HasValue)

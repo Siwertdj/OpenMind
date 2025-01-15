@@ -37,7 +37,7 @@ public class GameOverManager : MonoBehaviour
                     this.hasWon = hasWon;
                     break;
                 case List<CharacterInstance> characters:
-                    this.hasWon = hasWon;
+                    this.characters = characters;
                     break;
                 case int culpritID:
                     this.culpritID = culpritID;
