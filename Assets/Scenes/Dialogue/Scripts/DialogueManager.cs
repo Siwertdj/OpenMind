@@ -428,6 +428,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void CreateBackButton()
     {
+        Debug.Log("Create back button");
         Button backButton = Instantiate(buttonPrefab, questionsField.transform).GetComponent<Button>();
         backButton.name = "backButton";
         backButton.gameObject.tag = "Button";
