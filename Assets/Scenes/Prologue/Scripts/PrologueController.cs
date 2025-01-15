@@ -12,18 +12,19 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Manager class for cutscenes.
 /// </summary>
-public class CutsceneController : MonoBehaviour
+public class PrologueController : MonoBehaviour
 {
     public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
     // The variables below are the UI components that we want to manipulate during the prologue scene
     [Header("Image refs")]
     [SerializeField] private Image textBubbleImage;
-    [SerializeField] private Image backgroundImage;
-    [SerializeField] private Image illusionImage;
-
+    [SerializeField] private Image    backgroundImage;
+    [SerializeField] private Image    illusionImage;
+    
     [Header("Text refs")]
     [SerializeField] private TMP_Text introText;
     [SerializeField] private TMP_Text nameBoxText;
+    [SerializeField] private TMP_Text spokenText;
 
     [Header("Misc. refs")]
     [SerializeField] private Toggle imageToggler;
@@ -53,7 +54,13 @@ public class CutsceneController : MonoBehaviour
        backgroundIndex = 0;
        
        // Set Cutscene-music
-       SettingsManager.sm.SwitchMusic(prologueMusic,null);
+       SettingsManager.sm.SwitchMusic(prologueMusic,null, true);
+       
+       // Update UserData
+       SaveUserData.Saver.UpdateUserDataValue(FetchUserData.UserDataQuery.prologueSeen, true);
+       
+       playableDirector.RebuildGraph();
+       playableDirector.Play();
     }
     
     // This region contains methods that directly manipulate the timeline. These methods are called via signal emitters
@@ -75,7 +82,6 @@ public class CutsceneController : MonoBehaviour
             continueButton.gameObject.SetActive(false);  // Disable continuebutton
             playableDirector.Play(); // Resume timeline.
         }
-        //dialogueAnimator.CancelWriting(); // Makes sure player can continue when texteffect is not finished
     }
     
     /// <summary>
@@ -95,6 +101,10 @@ public class CutsceneController : MonoBehaviour
     /// </summary>
     public void LoadSelectStory()
     {
+        playableDirector.Stop();
+        playableDirector.time = 0;
+        playableDirector.Evaluate(); // Force the timeline to reset to its starting state
+        dialogueAnimator.CancelWriting();
         SceneManager.LoadScene("StorySelectScene");
     }
     
@@ -141,7 +151,7 @@ public class CutsceneController : MonoBehaviour
     }
     
     #endregion
-
+    
     // This region contains methods that manipulate UI elements on the canvas.
     #region UIManipulators
     /// <summary>
@@ -188,6 +198,7 @@ public class CutsceneController : MonoBehaviour
     public void UpdateText()
     {
         textIndex++;
+        //spokenText.text = receptionistText[textIndex];
         dialogueAnimator.WriteDialogue(receptionistText[textIndex]);
     }
     #endregion

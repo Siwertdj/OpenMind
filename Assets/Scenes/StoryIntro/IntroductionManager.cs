@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
@@ -19,26 +20,32 @@ using Vector2 = System.Numerics.Vector2;
 public class IntroductionManager : MonoBehaviour
 {
     // PlayableDirectors manage the different timelines for the different stories
+    [Header("Stories")]
     public PlayableDirector introStoryA;
     public PlayableDirector introStoryB;
     public PlayableDirector introStoryC;
     
-    // General variables
+    [Header("Buttons")]
+    public GameObject continueButton;
+    public Button sendButton;
+    [SerializeField] GameObject skipButton;
+    
+    [Header("General Variables")]
     public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
     public String[]   storyText;   // Stores all the used text for the introduction. 
     public Image      background;
-    public GameObject continueButton;
-    public Button     sendButton;
     private string characterName; 
     [SerializeField] public Image character;
-    [SerializeField] public TMP_Text nameTag; 
+    [SerializeField] public TMP_Text nameTag;
+    [SerializeField] public GameObject nameTagImage; 
     
-    // Variables for introduction A
+    [Header("Variables for introduction A")]
     private                  GameObject[]  messages; 
     public                   GameObject[]  messageLocations;
     public                   TMP_Text      typingText;
     [SerializeField] public  TextMessage[] textMessages;
     [SerializeField] private Transform     canvasTransform;
+    [SerializeField] private Image         phone;
     
     // Variables for introduction B
     private bool vision = true;
@@ -52,9 +59,9 @@ public class IntroductionManager : MonoBehaviour
     
     // Variables to keep track of the state of the introduction within this code. 
     public PlayableDirector currentTimeline; // public for testing purposes
-    public int backgroundIndex { get; set; } = 0;         // backgrounds[backgroundIndex] is the currently shown background.
+    public int BackgroundIndex { get; set; } = 0;    // backgrounds[backgroundIndex] is the currently shown background.
     public int TextIndex { get; set; } = 0;         // text[textIndex] is the currently shown text. 
-    public int textMessageIndex { get; set; } = 0;
+    public int TextMessageIndex { get; set; } = 0;
     
     // GameEvent, necessary for passing the right story to Loading
     public GameEvent onGameLoaded;
@@ -78,7 +85,7 @@ public class IntroductionManager : MonoBehaviour
             // set story-variable
             story = storyObject;
             // Start the music
-            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null);
+            SettingsManager.sm.SwitchMusic(story.storyIntroMusic, null, true);
             // depending on the chosen storyline, play the intro to the story
             switch (storyObject.storyID)
             {
@@ -102,6 +109,9 @@ public class IntroductionManager : MonoBehaviour
             // Return to StorySelectScene and try again.
             SceneManager.LoadScene("StorySelectScene");
         }
+        
+        // Do behavior based on UserData
+        UpdateUserDataByStory(story);
     }
     
     // This region contains methods that regulate the different storylines. 
@@ -133,8 +143,8 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline.RebuildGraph();
         
         currentTimeline.Play();
-        backgroundIndex = 0;
-        background.sprite = backgrounds[backgroundIndex];
+        BackgroundIndex = 0;
+        background.sprite = backgrounds[3];
     }
     
     /// <summary>
@@ -168,6 +178,41 @@ public class IntroductionManager : MonoBehaviour
         characterName = "Receptionist";
         currentTimeline.Play();
     }
+
+    private void UpdateUserDataByStory(StoryObject story)
+    {
+        // initialize with arbitrary value.
+        FetchUserData.UserDataQuery query = FetchUserData.UserDataQuery.playedBefore;
+        
+        // operate
+        switch (story.storyID)
+        {
+            case 0:
+                query = FetchUserData.UserDataQuery.storyAIntroSeen;
+                break;
+            case 1:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            case 2:
+                query = FetchUserData.UserDataQuery.storyBIntroSeen;
+                break;
+            default:
+                Debug.LogError("Invalid story, could not fetch userdata.");
+                break;
+        }
+        
+        // Do behavior based on query result.
+        // In this casse, set skipButton active ONLY if query returns true.
+        if (FetchUserData.Loader.GetUserDataValue(query))
+        {
+            skipButton.SetActive(true);
+        }
+        
+        // update userdata
+        SaveUserData.Saver.UpdateUserDataValue(query, true);
+
+        
+    }
     
     #endregion
     
@@ -200,19 +245,18 @@ public class IntroductionManager : MonoBehaviour
         PauseCurrentTimeline();
         sendButton.gameObject.SetActive(false);
         typingText.gameObject.SetActive(false);
-        background.sprite = backgrounds[3]; // Change the background to the phone background. 
-        textMessageIndex++;
+        phone.sprite = backgrounds[2];      // Change the background to the phone background. 
+        TextMessageIndex++;
         
         // Make sure the four most recent texts are shown on the screen. 
         HideOrShowTexts(false); // Old messages need to be removed. 
-        for (int i = textMessageIndex; i < textMessageIndex + 4; i++)
+        for (int i = TextMessageIndex; i < TextMessageIndex + 4; i++)
         {
-            messages[i].transform.position = messageLocations[i-textMessageIndex].transform.position;
+            messages[i].transform.position = messageLocations[i-TextMessageIndex].transform.position;
             messages[i].SetActive(true);
         }
         HideOrShowTexts(true); // Show the new texts. 
     }
-    
     
     /// <summary>
     /// This method changes the background of the scene. 
@@ -220,22 +264,41 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeBackground()
     {
         HideOrShowTexts(false); // When the background is changed, the texts need to be hidden. 
-        backgroundIndex++; // Keep track of the background that needs to be shown. 
+        BackgroundIndex++; // Keep track of the background that needs to be shown. 
         try
         {
-            background.sprite = backgrounds[backgroundIndex];
+            background.sprite = backgrounds[BackgroundIndex];
         }
         catch
         {
             Debug.LogError("Error: No more available backgrounds.");
-            backgroundIndex = 0;
-            background.sprite = backgrounds[backgroundIndex];
+            BackgroundIndex = 0;
+            background.sprite = backgrounds[BackgroundIndex];
         }
         
-        if (backgroundIndex > 0)
+        if (BackgroundIndex > 0)
         {
             PauseCurrentTimeline(); // The first time the background is changed, the timeline does not have to be paused. 
         } 
+    }
+    
+    /// <summary>
+    /// This method is called when the phone needs to come up into the screen. 
+    /// </summary>
+    public void PhoneUp()
+    {
+        BackgroundIndex++; 
+        phone.sprite = backgrounds[BackgroundIndex];
+        PauseCurrentTimeline();
+    }
+    
+    /// <summary>
+    /// This method is called when the phone needs to leave the screen. 
+    /// </summary>
+    public void PhoneDown()
+    {
+        HideOrShowTexts(false);
+        phone.sprite = backgrounds[0];
     }
     
     /// <summary>
@@ -252,14 +315,8 @@ public class IntroductionManager : MonoBehaviour
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
         // Write the next message, '+ messageLocations.Length' is to account for the empty messages. 
-        typingText.text = textMessages[textMessageIndex + messageLocations.Length].messageContent;
-        typingAnimation.WriteDialogue(textMessages[textMessageIndex + messageLocations.Length].messageContent);
-    }
-    
-    public void HideDialog()
-    {
-        dialogueAnimator.gameObject.SetActive(false);
-        textbubble.SetActive(false);
+        typingText.text = textMessages[TextMessageIndex + messageLocations.Length].messageContent;
+        typingAnimation.WriteDialogue(textMessages[TextMessageIndex + messageLocations.Length].messageContent);
     }
     
     #endregion
@@ -285,7 +342,7 @@ public class IntroductionManager : MonoBehaviour
     
     #endregion
     
-    
+    // This region contains methods regarding introduction C.
     #region Introduction C
     /// <summary>
     /// This method changes the sprite of the character into the computer. 
@@ -326,6 +383,7 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeCharacterText()
     {
         nameTag.text = characterName;
+        nameTagImage.gameObject.SetActive(true);
         updateText();
     }
     
@@ -334,7 +392,7 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void ChangePlayerText()
     {
-        nameTag.text = "You";
+        nameTagImage.gameObject.SetActive(false);
         updateText();
     }
     
@@ -345,12 +403,13 @@ public class IntroductionManager : MonoBehaviour
     {
         PauseCurrentTimeline();
         // Activate UI elements for the player text. 
-        //dialogueAnimator.gameObject.SetActive(true);
+        dialogueAnimator.gameObject.SetActive(true);
         textbubble.SetActive(true);
         try
         {
             text.text = storyText[TextIndex];
-            //dialogueAnimator.WriteDialogue(storyText[TextIndex]);
+            dialogueAnimator.CancelWriting();
+            dialogueAnimator.WriteDialogue(storyText[TextIndex]);
         }
         catch
         {
@@ -360,6 +419,15 @@ public class IntroductionManager : MonoBehaviour
         TextIndex++; // Keep track of which text needs to be shown. 
     }
     
+    /// <summary>
+    /// This method removes the dialog from the screen. 
+    /// </summary>
+    public void HideDialog()
+    {
+        dialogueAnimator.gameObject.SetActive(false);
+        textbubble.SetActive(false);
+        nameTagImage.gameObject.SetActive(false);
+    }
     #endregion
     
     // This region contains methods that directly manipulate the timeline
@@ -382,14 +450,16 @@ public class IntroductionManager : MonoBehaviour
         if (dialogueAnimator.IsOutputting)
         {
             dialogueAnimator.SkipDialogue();
+            typingAnimation.SkipDialogue();
         }
         else
         {
             continueButton.SetActive(false);
-            //dialogueAnimator.gameObject.SetActive(false);
-            typingAnimation.gameObject.SetActive(false);
+            /*dialogueAnimator.gameObject.SetActive(false);
+            typingAnimation.gameObject.SetActive(false);*/
             currentTimeline.Play();
         }
+        //currentTimeline.Play();
     }
 
     #endregion
@@ -424,10 +494,14 @@ public class IntroductionManager : MonoBehaviour
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary
         
-        // Make sure tutorial is automatically loaded when the game starts. 
-        GameObject tutorial = GameObject.Find("HelpButton");
-        Button helpButton = tutorial.GetComponentInChildren<Button>();
-        helpButton.onClick.Invoke();
+        // Make sure tutorial is automatically loaded when the game starts..
+        // .. IF this is the first time playing. (has not played before)
+        if (!FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.playedBefore))
+        {
+            GameObject tutorial = GameObject.Find("HelpButton");
+            Button helpButton = tutorial.GetComponentInChildren<Button>();
+            helpButton.onClick.Invoke();
+        }
     }
     #endregion
     

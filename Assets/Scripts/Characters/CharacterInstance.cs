@@ -2,6 +2,7 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// <summary>
@@ -24,7 +25,7 @@ public class CharacterInstance
 
     public bool isCulprit;      // This character is the culprit and a random characteristic is revealed every cycle
     public bool isActive;       // If they havent yet been the victim, should be true. Use this to track who is "alive" and you can talk to, and who can be removed by the culprit
-    public bool TalkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
+    public bool talkedTo;       // If the player has already talked to this NPC in the current cycle, should be false at the start of every cycle and set to true once the player has talked with them
     
     /// <summary>
     /// The constructor for <see cref="CharacterInstance"/>.
@@ -46,17 +47,24 @@ public class CharacterInstance
     /// Get a random greeting from the character's list of greetings.
     /// </summary>
     /// <returns>A greeting in the form of dialogue segments.</returns>
-    public List<string> GetGreeting()
+    public DialogueObject GetGreeting([CanBeNull] GameObject[] background)
     {
-        // Pick random greeting from data list
-        if (data.greetings != null && data.greetings.Length > 0)
+        // If we havent talked to the NPC before..
+        if (!talkedTo)
         {
-            int randomInt = new System.Random().Next(data.greetings.Length);
-            return data.greetings[randomInt].lines;
+            // Get greeting
+            talkedTo = true;
+            return (data.firstGreeting != null 
+                ? data.firstGreeting.GetDialogue(background)
+                : new ContentDialogueObject("Hello", null, null));
         }
-
-        // If no greeting was found, return default greeting
-        return new() { "Hello" };
+        
+        // If we have talked to the NPC before, try to get the greeting-dialopgue.
+        // if its null, default to "Hello".
+        return (data.greeting != null 
+            ? data.greeting.GetDialogue(background) 
+            : new ContentDialogueObject("Hello", null, null));
+        
     }
 
     private void ParseEmotionSprites(Sprite neutralSprite, Sprite happySprite, Sprite unhappySprite)

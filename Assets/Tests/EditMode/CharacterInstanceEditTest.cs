@@ -26,7 +26,7 @@ public class CharacterInstanceEditTest
         // Get some random characters to set up the tests
         CharacterData c1 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/0_Fatima_Data.asset", typeof(CharacterData)); // This will be the "main" character during the tests
         mainCharacterData = c1;
-        CharacterData c2 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/1_Guilietta_Data.asset", typeof(CharacterData)); // This will be the culprit
+        CharacterData c2 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/1_Giulietta_Data.asset", typeof(CharacterData)); // This will be the culprit
         CharacterData c3 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/2_Willow_Data.asset", typeof(CharacterData)); // This will be the chosen culprit
         CharacterData c4 = (CharacterData) AssetDatabase.LoadAssetAtPath("Assets/Data/Character Data/3_Olivier_Data.asset", typeof(CharacterData));
         
@@ -89,20 +89,21 @@ public class CharacterInstanceEditTest
         if (!greetings)
         {
             CharacterData data = mainCharacterData;
-            mainCharacter.data.greetings = new DialogueLines[] { }; // Create data without segmentslines
-            var lines = mainCharacter.GetGreeting();
+            ContentDialogueObject dialogueObject = (ContentDialogueObject)mainCharacter.GetGreeting(null);
             
             // The only thing returned should be "Hello"
-            Assert.AreEqual(lines.Count, 1);
-            Assert.AreEqual(lines[0], "Hello");
+            Assert.AreEqual(DialogueContainer.TreeLength(dialogueObject), 1);
+            Assert.AreEqual(dialogueObject.dialogue.Count, 1);
+            Assert.AreEqual(dialogueObject.dialogue[0], "Hello");
             
             mainCharacter.data = data; // Put data with segmentslines back for other tests
         }
         else
         {
-            var lines = mainCharacter.GetGreeting();
-            Assert.IsNotNull(lines); // Test if some segmentslines get returned
+            var dialogueObject = mainCharacter.GetGreeting(null);
+            Assert.IsNotNull(dialogueObject); // Test if some segmentslines get returned
         }
+
     }
     
     [Test]

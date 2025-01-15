@@ -26,12 +26,6 @@ public class IntroductionManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"),
-            SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"),
-            SceneManager.GetSceneByName("StartScreenScene"));
-        
         // Unload the StartScreenScene
         SceneManager.UnloadSceneAsync("StartScreenScene");
         
@@ -39,12 +33,8 @@ public class IntroductionManagerPlayTest
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform
-            .SetParent(GameObject.Find("Toolbox").transform);
-        
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        
+       
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
         
         SceneManager.LoadScene("IntroStoryScene");
@@ -56,8 +46,12 @@ public class IntroductionManagerPlayTest
     [TearDown]
     public void TearDown()
     {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"),
+        // Move toolbox and DDOLs to unload after
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), 
             SceneManager.GetSceneByName("IntroStoryScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"),
+            SceneManager.GetSceneByName("IntroStoryScene"));
+
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -96,8 +90,8 @@ public class IntroductionManagerPlayTest
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
-        Assert.AreEqual(0, im.textMessageIndex);
-        Assert.AreEqual(0, im.backgroundIndex);
+        Assert.AreEqual(0, im.TextMessageIndex);
+        Assert.AreEqual(0, im.BackgroundIndex);
         Assert.AreEqual(0, im.TextIndex);
         
         Assert.IsNotNull(im.sendButton);
@@ -139,9 +133,9 @@ public class IntroductionManagerPlayTest
     public IEnumerator SendMessageTest()
     {
         im.StoryA();
-        int index = im.textMessageIndex;
+        int index = im.TextMessageIndex;
         im.SendText();
-        Assert.AreEqual(index+1, im.textMessageIndex);
+        Assert.AreEqual(index+1, im.TextMessageIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         yield return null;
     }
@@ -153,9 +147,9 @@ public class IntroductionManagerPlayTest
     public IEnumerator ChangeBackgroundTest()
     {
         im.StoryA();
-        int index = im.backgroundIndex;
+        int index = im.BackgroundIndex;
         im.ChangeBackground();
-        Assert.AreEqual(index+1, im.backgroundIndex);
+        Assert.AreEqual(index+1, im.BackgroundIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         yield return null;
     }
@@ -174,7 +168,7 @@ public class IntroductionManagerPlayTest
         Assert.IsTrue(im.typingText.IsActive());
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // Check if the message that is being typed belongs to the player. 
-        Assert.AreEqual( TextMessage.Sender.Player,im.textMessages[im.textMessageIndex + im.messageLocations.Length - 1].sender);
+        Assert.AreEqual( TextMessage.Sender.Player,im.textMessages[im.TextMessageIndex + im.messageLocations.Length - 1].sender);
         yield return null;
     }
     
@@ -317,7 +311,7 @@ public class IntroductionManagerPlayTest
         im.ChangePlayerText();
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        Assert.AreEqual("You", im.nameTag.text);
+        Assert.AreEqual(false, im.nameTagImage.activeSelf);
         yield return null;
     }
     

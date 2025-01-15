@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -40,10 +41,16 @@ public class ContentDialogueObject : DialogueObject
     /// </summary>
     /// <param name="dialogue">The text</param>
     /// <param name="background">The background</param>
-    public ContentDialogueObject([CanBeNull] List<string> dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
+    public ContentDialogueObject([CanBeNull] object dialogue, [CanBeNull] Sprite image, GameObject[] background, Emotion? emotion = null)
     {
         // Set this object's local variables to match the parameter-values of the constructor
-        this.dialogue = dialogue;
+        // Handle dialogue as string or List<string>
+        this.dialogue = dialogue switch
+        {
+            string singleDialogue => new List<string> { singleDialogue },
+            List<string> dialogueList => dialogueList,
+            _ => new List<string>() // Default to an empty list if null or unsupported type
+        };
         this.image = image; 
         this.background = background;
         if (emotion.HasValue)
@@ -80,5 +87,46 @@ public class TerminateDialogueObject : DialogueObject
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
         // Also pass along the currentObject, which is used for the Epilogue scene.
         DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);
+    }
+}
+
+/// <summary>
+/// A child of DialogueObject. Executing this object will show the 
+/// previousMessages and the first element of remainingMessages.
+/// A response for the next messages is automatically created.
+/// </summary>
+public class PhoneDialogueObject : DialogueObject
+{
+    private List<string> remainingMessages;
+    private List<string> previousMessages;
+
+    public PhoneDialogueObject(List<string> remainingMessages, List<string> previousMessages, GameObject[] background)
+    {
+        this.background = background;
+        this.remainingMessages = remainingMessages;
+        
+        // Create an empty list of messages if there were no previous messages
+        this.previousMessages = previousMessages ?? new List<string>();
+        this.previousMessages.Add(remainingMessages[0]);
+
+        // Remove the new message from the list
+        this.remainingMessages.RemoveAt(0);
+    }
+
+    /// <summary>
+    /// Write previousMessages and the first remainingMessage to the screen.
+    /// Automatically adds next messages as response object.
+    /// </summary>
+    public override void Execute()
+    {
+        var dm = DialogueManager.dm;
+
+        dm.ReplaceBackground(background);
+        dm.WritePhoneDialogue(previousMessages);
+
+        if (remainingMessages.Count <= 0)
+            Responses.Add(new TerminateDialogueObject());
+        else
+            Responses.Add(new PhoneDialogueObject(remainingMessages, previousMessages, background));
     }
 }

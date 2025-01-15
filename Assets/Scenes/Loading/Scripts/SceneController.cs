@@ -37,7 +37,8 @@ public class SceneController : MonoBehaviour
         GameOverScene,
         TutorialScene,
         EpilogueScene,
-        StartScreenScene
+        StartScreenScene,
+        StorySelectScene
     }
 
     /// <summary>
@@ -165,7 +166,7 @@ public class SceneController : MonoBehaviour
                 foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
                 {
                     if (enumValue.ToString()[0] == trans)
-                    {
+                    { 
                         sceneGraph[i].Add((sceneToID[toScene], enumValue));
                         found = true;
                         break;
@@ -343,21 +344,23 @@ public class SceneController : MonoBehaviour
     /// Function to load the notebook.
     /// </summary>
     // this method is not tested
-    public void ToggleNotebookScene(Button button)
+    public void ToggleNotebookScene(Button button, GameObject menuButton)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
             // If notebook is already open, close it
             if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
             {
-                GameManager.gm.UnpauseGame();
+                menuButton.SetActive(true);
+                SettingsManager.sm.UnpauseGame();
                 crossOverlay.SetActive(false);
                 _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
                     TransitionType.Unload, false);
             }
             else // Notebook is NOT loaded.. so open it
             {
-                GameManager.gm.PauseGame();
+                menuButton.SetActive(false);
+                SettingsManager.sm.PauseGame();
                 crossOverlay.SetActive(true);
                 _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
                     TransitionType.Additive, false);
@@ -399,12 +402,12 @@ public class SceneController : MonoBehaviour
            // Get the SceneName enum from the activeScene.
            SceneName baseScene = SceneName.Loading;
            
-           GameManager.gm.UnpauseGame();
+           SettingsManager.sm.UnpauseGame();
            _ = TransitionScene(SceneName.TutorialScene, baseScene, TransitionType.Unload, false);
        }
        else
        {
-           GameManager.gm.PauseGame();
+           SettingsManager.sm.PauseGame();
            _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive, false);
        }
        
