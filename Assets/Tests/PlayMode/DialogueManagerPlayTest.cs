@@ -50,8 +50,30 @@ public class DialogueManagerPlayTest
         gm.StartDialogue(character);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
+        // Wait for the DialogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
         // Set global variable
         dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // Complete the greeting.
+        while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+        {
+            dm.OnDialogueComplete();
+            yield return new WaitForSeconds(1);
+        }
+        
+        // Start dialogue scene.
+        gm.StartDialogue(character);
+        
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
+
+        // Wait for the DialogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Set global variable
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
     }
 
     /// <summary>
@@ -177,8 +199,12 @@ public class DialogueManagerPlayTest
     public IEnumerator BackButtonTest()
     {
         // Complete the dialogue and move to the BackButton screen.
-        dm.OnDialogueComplete();
-
+        while (GameObject.Find("backButton") == null)
+        {
+            dm.OnDialogueComplete();
+            yield return new WaitForSeconds(1);
+        }
+        
         // Check if we are currently in the gameState NpcDialogue
         Assert.AreEqual(GameManager.GameState.NpcDialogue, gm.gameState);
         bool inDialogueScene = SceneManager.GetSceneByName("DialogueScene").isLoaded;
