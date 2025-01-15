@@ -421,11 +421,13 @@ public class NotebookManager : MonoBehaviour
     {
         if (personalInputField.IsActive())
         {
+            Debug.Log($"Updating personal notes: \"{notebookData.GetPersonalNotes()}\" with \"{personalInputField.GetComponent<TMP_InputField>().text}\"");
             // Save the written personal text to the notebook data
             notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
         else
         {
+            Debug.Log($"Updating character notes {currentCharacter.characterName}: \"{notebookData.GetCharacterNotes(currentCharacter)}\" with \"{characterCustomInput.GetComponent<TMP_InputField>().text}\"");
             // Save the written character text to the notebook data
             notebookData.UpdateCharacterNotes(currentCharacter, 
                 characterCustomInput.GetComponent<TMP_InputField>().text);
