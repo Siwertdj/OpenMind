@@ -19,8 +19,10 @@ public class CharacterData : ScriptableObject
     [Range(0.5f, 2f)] public float  voicePitch = 1;
     public Vector2 facePivot = new(0.5f, 0.8f);
 
-    [SerializeField] public KeyValuePair[] answers;
-    [SerializeField] public DialogueLines[] greetings;
+    [SerializeField] public DialogueContainer firstGreeting;
+    [SerializeField] public DialogueContainer greeting;
+    [SerializeField] public KeyValuePair[]    answers;
+    [SerializeField] public DialogueLines[]   greetings;
 }
 
 /// <summary>

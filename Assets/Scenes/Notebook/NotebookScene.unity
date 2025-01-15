@@ -1165,8 +1165,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ceced0234eab5be47b4f0dd412122263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tabAnimationDuration: 0
-  expandedTabHeight: 0
+  tabAnimationDuration: 0.25
+  expandedTabHeight: 60
   collapsedTabHeight: 0
   characterInfo: {fileID: 929483351}
   personalButton: {fileID: 1758625910}

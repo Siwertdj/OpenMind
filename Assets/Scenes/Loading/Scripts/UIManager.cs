@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public async void OpenMenu()
     {
-        GameManager.gm.PauseGame();
+        SettingsManager.sm.PauseGame();
         gameButtons.SetActive(false);
 
         
@@ -53,8 +53,7 @@ public class UIManager : MonoBehaviour
     /// </summary>
     public void CloseMenu()
     {
-        if (GameManager.gm != null)
-            GameManager.gm.UnpauseGame();
+        SettingsManager.sm?.UnpauseGame();
         gameButtons.SetActive(true);
     }
 
