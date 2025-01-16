@@ -27,31 +27,27 @@ public class IntroductionManager : MonoBehaviour
     
     [Header("Buttons")]
     public GameObject continueButton;
-    public Button sendButton;
+    [SerializeField] Button     sendButton; // Send message button
     [SerializeField] GameObject skipButton;
     
     [Header("General Variables")]
-    public Sprite[]   backgrounds; // Stores all the used backgrounds for the introduction.
-    public String[]   storyText;   // Stores all the used text for the introduction. 
+    public Sprite[]   sprites;      // Stores all the used sprites for the introduction.
+    public String[]   storyText;    // Stores all the used text for the introduction. 
     public Image      background;
-    private string characterName; 
+    private bool   changeSprite;    // This boolean is used to flip between versions of charactersprites
+    private string characterName;   // Name of the character that is currently speaking
+    
     [SerializeField] public Image character;
     [SerializeField] public TMP_Text nameTag;
-    [SerializeField] public GameObject nameTagImage; 
+    [SerializeField] GameObject nameTagImage; 
     
     [Header("Variables for introduction A")]
-    private                  GameObject[]  messages; 
-    public                   GameObject[]  messageLocations;
-    public                   TMP_Text      typingText;
-    [SerializeField] public  TextMessage[] textMessages;
-    [SerializeField] private Transform     canvasTransform;
-    [SerializeField] private Image         phone;
-    
-    // Variables for introduction B
-    private bool vision = true;
-    
-    // Variable for introduction C
-    private bool computer = true; 
+    private                  GameObject[]  messages;         // Contains the instantiated TextMessage objects
+    public                   GameObject[]  messageLocations; // Locations on the screen where TextMessages can be shown
+    public                   TMP_Text      typingText;       // Text that will be used for the typing animation
+    [SerializeField] public  TextMessage[] textMessages;     // Contains the non-instantiated TextMessage objects
+    [SerializeField] private Transform     canvasTransform;  // Necessary to instantiate the textmessage prefabs
+    [SerializeField] private Image         phone;            // The phone 
     
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
@@ -79,6 +75,7 @@ public class IntroductionManager : MonoBehaviour
     public void StartIntro(Component sender, params object[] data)
     {
         continueButton.SetActive(true);
+        changeSprite = true; 
         // depending on the chosen storyline, play the intro to the story
         if (data[0] is StoryObject storyObject)
         {
@@ -109,7 +106,6 @@ public class IntroductionManager : MonoBehaviour
             // Return to StorySelectScene and try again.
             SceneManager.LoadScene("StorySelectScene");
         }
-        
         // Do behavior based on UserData
         UpdateUserDataByStory(story);
     }
@@ -179,7 +175,7 @@ public class IntroductionManager : MonoBehaviour
         ResetTimeline();
         
         currentTimeline.Play();
-        background.sprite = backgrounds[3];
+        background.sprite = sprites[3];
     }
     
     /// <summary>
@@ -187,12 +183,12 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void StoryB()
     {
-        character.sprite = backgrounds[5];
+        character.sprite = sprites[5];
         currentTimeline = introStoryB;
         ResetTimeline();
         
         TextIndex = 4;
-        background.sprite = backgrounds[4];
+        background.sprite = sprites[4];
         characterName = "Alex";
         currentTimeline.Play();
     }
@@ -205,8 +201,8 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline = introStoryC;
         ResetTimeline();
         TextIndex = 19;
-        background.sprite = backgrounds[11];
-        character.sprite = backgrounds[9];
+        background.sprite = sprites[11];
+        character.sprite = sprites[9];
         characterName = "Receptionist";
         currentTimeline.Play();
     }
@@ -214,6 +210,27 @@ public class IntroductionManager : MonoBehaviour
     
     // This region contains methods regarding introduction A.
     #region Introduction A
+    /// <summary>
+    /// This method shows a new text on the screen and makes sure old texts are removed if necessary. 
+    /// </summary>
+    public void SendText()
+    {
+        PauseCurrentTimeline();
+        sendButton.gameObject.SetActive(false);
+        typingText.gameObject.SetActive(false);
+        phone.sprite = sprites[2]; // Change the background to the phone background. 
+        TextMessageIndex++;
+        
+        // Make sure the four most recent texts are shown on the screen. 
+        HideOrShowTexts(false);     // Old messages need to be removed. 
+        for (int i = TextMessageIndex; i < TextMessageIndex + 4; i++)
+        {
+            messages[i].transform.position = messageLocations[i-TextMessageIndex].transform.position;
+            messages[i].SetActive(true);
+        }
+        HideOrShowTexts(true); // Show the new texts. 
+    }
+    
     /// <summary>
     /// Depending on the value of show, this method either hides of shows the text messages on the screen.
     /// </summary>
@@ -234,48 +251,21 @@ public class IntroductionManager : MonoBehaviour
     }
     
     /// <summary>
-    /// This method shows a new text on the screen and makes sure old texts are removed if necessary. 
-    /// </summary>
-    public void SendText()
-    {
-        PauseCurrentTimeline();
-        sendButton.gameObject.SetActive(false);
-        typingText.gameObject.SetActive(false);
-        phone.sprite = backgrounds[2];      // Change the background to the phone background. 
-        TextMessageIndex++;
-        
-        // Make sure the four most recent texts are shown on the screen. 
-        HideOrShowTexts(false); // Old messages need to be removed. 
-        for (int i = TextMessageIndex; i < TextMessageIndex + 4; i++)
-        {
-            messages[i].transform.position = messageLocations[i-TextMessageIndex].transform.position;
-            messages[i].SetActive(true);
-        }
-        HideOrShowTexts(true); // Show the new texts. 
-    }
-    
-    /// <summary>
     /// This method changes the background of the scene. 
     /// </summary>
     public void ChangeBackground()
     {
-        HideOrShowTexts(false); // When the background is changed, the texts need to be hidden. 
         BackgroundIndex++; // Keep track of the background that needs to be shown. 
         try
         {
-            background.sprite = backgrounds[BackgroundIndex];
+            background.sprite = sprites[BackgroundIndex];
         }
         catch
         {
             Debug.LogError("Error: No more available backgrounds.");
             BackgroundIndex = 0;
-            background.sprite = backgrounds[BackgroundIndex];
+            background.sprite = sprites[BackgroundIndex];
         }
-        
-        if (BackgroundIndex > 0)
-        {
-            PauseCurrentTimeline(); // The first time the background is changed, the timeline does not have to be paused. 
-        } 
     }
     
     /// <summary>
@@ -284,7 +274,7 @@ public class IntroductionManager : MonoBehaviour
     public void PhoneUp()
     {
         BackgroundIndex++;
-        phone.sprite = backgrounds[BackgroundIndex];
+        phone.sprite = sprites[BackgroundIndex];
         PauseCurrentTimeline();
     }
     
@@ -294,7 +284,7 @@ public class IntroductionManager : MonoBehaviour
     public void PhoneDown()
     {
         HideOrShowTexts(false);
-        phone.sprite = backgrounds[0];
+        phone.sprite = sprites[0];
     }
     
     /// <summary>
@@ -304,12 +294,15 @@ public class IntroductionManager : MonoBehaviour
     {
         continueButton.SetActive(false); //This button is not necessary now, because we have another button to continue. 
         PauseCurrentTimeline();
+        
         // Reset the typing animation object
         typingAnimation.gameObject.SetActive(true);
         typingAnimation.CancelWriting();
+        
         // Activate the UI elements for the typing animation
         sendButton.gameObject.SetActive(true);
         typingText.gameObject.SetActive(true);
+        
         // Write the next message, '+ messageLocations.Length' is to account for the empty messages. 
         typingText.text = textMessages[TextMessageIndex + messageLocations.Length].messageContent;
         typingAnimation.WriteDialogue(textMessages[TextMessageIndex + messageLocations.Length].messageContent);
@@ -324,16 +317,16 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void Vision()
     {
-        if (vision)
+        if (changeSprite)
         {
-            character.sprite = backgrounds[6];
+            character.sprite = sprites[6];
         }
         else
         {
-            character.sprite = backgrounds[5];
+            character.sprite = sprites[5];
         }
         
-        vision = !vision; 
+        changeSprite = !changeSprite; 
     }
     
     #endregion
@@ -345,18 +338,18 @@ public class IntroductionManager : MonoBehaviour
     /// </summary>
     public void Computer()
     {
-        if (computer)
+        if (changeSprite)
         {
-            character.sprite = backgrounds[9];
-            background.sprite = backgrounds[4];
+            character.sprite = sprites[9];
+            background.sprite = sprites[4];
         }
         else
         {
-            character.sprite = backgrounds[7];
-            background.sprite = backgrounds[11];
+            character.sprite = sprites[7];
+            background.sprite = sprites[11];
         }
         
-        computer = !computer; 
+        changeSprite = !changeSprite; 
     }
     
     /// <summary>
@@ -365,7 +358,7 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeComputerText()
     {
         nameTag.text = "Computer";
-        character.sprite = backgrounds[10];
+        character.sprite = sprites[10];
         UpdateText();
     }
     

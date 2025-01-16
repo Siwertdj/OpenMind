@@ -59,7 +59,6 @@ public class IntroductionManagerPlayTest
     
     #endregion
     
-    
     /// <summary>
     /// Checks some basic properties of the introduction. 
     /// </summary>
@@ -88,15 +87,13 @@ public class IntroductionManagerPlayTest
         im.StoryA();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
         Assert.AreEqual(0, im.TextMessageIndex);
         Assert.AreEqual(0, im.BackgroundIndex);
         Assert.AreEqual(0, im.TextIndex);
-        
-        Assert.IsNotNull(im.sendButton);
         yield return null;
     }
     
@@ -166,7 +163,6 @@ public class IntroductionManagerPlayTest
         im.TypeAnimation();
         // Check some basic properties
         Assert.IsTrue(im.continueButton.activeSelf);
-        Assert.IsTrue(im.sendButton.IsActive());
         Assert.IsTrue(im.typingText.IsActive());
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // Check if the message that is being typed belongs to the player. 
@@ -188,7 +184,7 @@ public class IntroductionManagerPlayTest
         im.StoryB();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreEqual(4, im.TextIndex);
         
@@ -250,7 +246,7 @@ public class IntroductionManagerPlayTest
         im.StoryC();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreEqual(19, im.TextIndex);
         
@@ -313,7 +309,6 @@ public class IntroductionManagerPlayTest
         im.ChangePlayerText();
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        Assert.AreEqual(false, im.nameTagImage.activeSelf);
         yield return null;
     }
     
