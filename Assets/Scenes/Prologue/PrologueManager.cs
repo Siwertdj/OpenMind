@@ -15,7 +15,7 @@ using Debug = System.Diagnostics.Debug;
 /// <summary>
 /// Manager class for cutscenes.
 /// </summary>
-public class PrologueController : MonoBehaviour
+public class PrologueManager : MonoBehaviour
 {
     [SerializeField] public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
     
