@@ -17,7 +17,7 @@ using Debug = System.Diagnostics.Debug;
 /// </summary>
 public class PrologueManager : MonoBehaviour
 {
-    [SerializeField] public PlayableDirector playableDirector; // Enables us to manually pause and continue the timeline
+    [SerializeField] public PlayableDirector prologueTimeline; // Enables us to manually pause and continue the timeline
     
     // The variables below are the UI components that we want to manipulate during the prologue scene
     [Header("Image refs")]
@@ -81,7 +81,7 @@ public class PrologueManager : MonoBehaviour
         {
             imageToggler.gameObject.SetActive(false); // Make sure toggler is removed from the screen.
             continueButton.gameObject.SetActive(false);  // Disable continuebutton
-            playableDirector.Play(); // Resume timeline.
+            prologueTimeline.Play(); // Resume timeline.
         }
     }
     
@@ -92,7 +92,7 @@ public class PrologueManager : MonoBehaviour
     /// </summary>
     public void PauseTimeline()
     {
-        playableDirector.Pause();
+        prologueTimeline.Pause();
         continueButton.gameObject.SetActive(true); // Make sure timeline can manually be resumed. 
     }
     
@@ -103,9 +103,9 @@ public class PrologueManager : MonoBehaviour
     {
         textIndex = 0;
         backgroundIndex = 0;
-        playableDirector.time = 0;
-        playableDirector.RebuildGraph();
-        playableDirector.Play();
+        prologueTimeline.time = 0;
+        prologueTimeline.RebuildGraph();
+        prologueTimeline.Play();
     }
     #endregion
     
