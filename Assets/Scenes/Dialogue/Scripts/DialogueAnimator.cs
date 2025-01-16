@@ -198,7 +198,7 @@ public class DialogueAnimator : MonoBehaviour
         {
             // Don't write if the game is paused
             // '?' is used to make sure there is already an instance of the GameManager
-            while (GameManager.gm?.IsPaused == true)
+            while (SettingsManager.sm.IsPaused == true)
                 yield return null;
 
             if (!soundlessSymbols.Contains(character) && !skip)
@@ -216,29 +216,6 @@ public class DialogueAnimator : MonoBehaviour
             float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
             yield return new WaitForSeconds(delay);
         }
-
-        /*
-        while (stringIndex < output.Length)
-        {
-            // Don't write if the game is paused
-            // '?' is used to make sure there is already an instance of the GameManager
-            while (SettingsManager.sm?.IsPaused == true)
-                yield return null;
-
-            // Play sound for letter
-            if (!soundlessSymbols.Contains(output[stringIndex])
-                && stringIndex % 2 == 0 && audioEnabled
-                && audioSource != null)
-                audioSource.Play();
-
-            // Write letter to screen and increment stringIndex
-            text.maxVisibleCharacters++;
-
-            // Wait and continue with next letter
-            float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
-            yield return new WaitForSeconds(delay);
-        }
-        */
 
         // If sentence is finished, stop outputting
         IsOutputting = false;
