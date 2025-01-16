@@ -10,7 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c1218d048a0c254b8553e0eeb869fcd, type: 3}
-  m_Name: AI_EpilogueDialogue
+  m_Name: Psychic_EpilogueLoseScenarioDialogue_NPC
   m_EditorClassIdentifier: 
   voicePitch: 1
-  segments: []
+  segments:
+  - type: 0
+    emotion: 0
+    text: Yes, I heard something was going on, but I don't know the exact details..
+    image: {fileID: 0}
+    background:
+    - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+    - {fileID: 9502603552588199, guid: b01e84a10d59b074a8b1a0e15fedde73, type: 3}
