@@ -62,11 +62,6 @@ public class NotebookData
     }
     
     /// <summary>
-    /// Get the answers the player has obtained from a character.
-    /// </summary>
-    public List<(string, string)> GetAnswers(CharacterInstance character) => _pages[character].QuestionText();
-    
-    /// <summary>
     /// Save the text that the player has written about a character to the notebookpage.
     /// </summary>
     public void UpdateCharacterNotes(CharacterInstance character, string notes)

@@ -192,19 +192,6 @@ public class NotebookManager : MonoBehaviour
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
-        // Create objects for all q&a pairs
-        var log = notebookData.GetAnswers(currentCharacter);
-        foreach (var (question, answer) in log)
-        {
-            var logObject = Instantiate(logObjectPrefab).GetComponent<NotebookLogObject>();
-            logObject.SetText(question, answer);
-
-            allCharacterInfo.Enqueue(logObject.gameObject);
-
-            // Make sure the layout group is displayed properly
-            LayoutRebuilder.ForceRebuildLayoutImmediate(logObject.GetComponent<RectTransform>());
-        }
-
         CreateCharacterPages(allCharacterInfo);
 
         // Make button clickable
