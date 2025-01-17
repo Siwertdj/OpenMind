@@ -11,13 +11,13 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    private GameObject characterCustomInput;
-    private TMP_InputField personalCustomInput;
-    private CharacterInstance currentCharacter;
-    private int currentCharacterIndex;
-    private int currentPageIndex;
-    private Button selectedButton;
-    [NonSerialized] public NotebookData notebookData;
+    private                GameObject        characterCustomInput;
+    private                TMP_InputField    personalCustomInput;
+    private                CharacterInstance currentCharacter;
+    private                int               currentCharacterIndex;
+    private                int               currentPageIndex;
+    private                Button            selectedButton;
+    [NonSerialized] public NotebookData      notebookData;
 
     [Header("Settings")]
     [SerializeField] private float tabAnimationDuration;
@@ -52,6 +52,9 @@ public class NotebookManager : MonoBehaviour
 
         // Get notebookdata
         notebookData = GameManager.gm.notebookData;
+        
+        // Create personal notes
+        CreatePersonalPage();
 
         // Open custom notes page
         OpenPersonalNotes();
@@ -108,31 +111,34 @@ public class NotebookManager : MonoBehaviour
         // Activate written personal notes  
         personalInfo.SetActive(true);
 
-        // The queue which will hold all the personal info  
-        //Queue<GameObject> allPersonalInfo = new();
+        // Make button clickable
+        ChangeButtons(personalButton);
+        
+        // Set the appropriate footer text
+        currentTabText.text = "Personal Notes";
+    }
 
+    private void CreatePersonalPage()
+    {
         // Create personal notes title object  
         var titleObject = Instantiate(titleObjectPrefab);  
         titleObject.GetComponent<NotebookTitleObject>().SetInfo("Personal Notes");  
-        //allPersonalInfo.Enqueue(titleObject);  
   
         // Create the custom input field object  
         var inputObject = Instantiate(inputObjectPrefab);  
         var inputObjectField = inputObject.GetComponent<TMP_InputField>();
 
+        // Set the saved text to the notebook
         inputObjectField.text = notebookData.GetPersonalNotes();
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = "Write down your thoughts!";
-
-        personalCustomInput = inputObjectField;
         
         inputObjectField.onEndEdit.AddListener(_ => SavePersonalData());  
   
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;  
-        characterCustomInput = inputObject; // Also set the reference so that it can be saved  
-        //allPersonalInfo.Enqueue(inputObject);
+        personalCustomInput = inputObjectField; // Also set the reference so that it can be saved  
 
-        // Create the first page  
+        // Create the personal notes page  
         var pagePersonal = Instantiate(pagePrefab, personalInfo.transform);
         
         //Set its parent with a vertical layout group component  
@@ -141,12 +147,6 @@ public class NotebookManager : MonoBehaviour
         
         // Force rebuild the layout so the height values are correct  
         LayoutRebuilder.ForceRebuildLayoutImmediate(pagePersonal.GetComponent<RectTransform>());
-
-        // Make button clickable
-        ChangeButtons(personalButton);
-        
-        // Set the appropriate footer text
-        currentTabText.text = "Personal Notes";
     }
     
     /// <summary>
@@ -163,18 +163,14 @@ public class NotebookManager : MonoBehaviour
 
         currentCharacterIndex = id;
         
-        // destroy personal page
-        foreach (Transform page in personalInfo.transform)
-            Destroy(page.gameObject);
-        
         // Destroy info from the previous character
         // Keep track of number of pages so we display the correct number
         int prevPageCount = characterInfo.transform.childCount;
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
 
-        // Deactivate the personal notes tab if it's opened
-        if (characterInfo.gameObject.activeInHierarchy)
+        // Deactivate the personal notes tab if it's opened and remove that page
+        if (personalInfo.gameObject.activeInHierarchy)
             personalInfo.SetActive(false);
         
         // Activate written character notes
@@ -207,7 +203,7 @@ public class NotebookManager : MonoBehaviour
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
         var inputObjectField = inputObject.GetComponent<TMP_InputField>();
-
+        
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
@@ -370,23 +366,8 @@ public class NotebookManager : MonoBehaviour
     }
     
     /// <summary>
-    /// Save the notes on the (character) inputfield to the notebookdata.
+    /// Save the notes of the character inputfield to the notebookdata.
     /// </summary>
-    public void SaveNotes()
-    {
-        if (personalInfo.activeInHierarchy)
-        {
-            // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(personalCustomInput.GetComponent<TMP_InputField>().text);
-        }
-        else
-        {
-            // Save the written character text to the notebook data
-            notebookData.UpdateCharacterNotes(currentCharacter, 
-                characterCustomInput.GetComponent<TMP_InputField>().text);
-        }
-    }
-
     public void SaveCharacterData()
     {
         // Save the written character text to the notebook data
@@ -394,6 +375,9 @@ public class NotebookManager : MonoBehaviour
             characterCustomInput.GetComponent<TMP_InputField>().text);
     }
 
+    /// <summary>
+    /// Save the notes of the personal inputfield to the notebookdata.
+    /// </summary>
     public void SavePersonalData()
     {
         // Save the written personal text to the notebook data

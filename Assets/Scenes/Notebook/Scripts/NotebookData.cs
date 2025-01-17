@@ -29,8 +29,6 @@ public class NotebookData
             NotebookPage page = new NotebookPage(character);
             _pages[character] = page;
         }
-        
-        //_personalNotes = "Write down your thoughts.";
     }
 
     /// <summary>
