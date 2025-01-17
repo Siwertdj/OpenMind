@@ -40,7 +40,6 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject inactiveNotePrefab;
     [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
-    [SerializeField] private GameObject logObjectPrefab;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
@@ -181,13 +180,13 @@ public class NotebookManager : MonoBehaviour
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
         var inputObjectField = inputObject.GetComponent<TMP_InputField>();
+
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
         inputObjectField.onEndEdit.AddListener(_ => SaveNotes());
         
-
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
@@ -341,14 +340,6 @@ public class NotebookManager : MonoBehaviour
         // Compare the total height of content to the height of the layout group container
         float containerHeight = parent.rect.height;
         return totalHeight > containerHeight;
-    }
-
-    /// <summary>
-    /// Make the character log visible or not.
-    /// </summary>
-    public void ToggleCharacterInfo()
-    {
-        characterInfo.SetActive(!characterInfo.activeInHierarchy);
     }
     
     /// <summary>
