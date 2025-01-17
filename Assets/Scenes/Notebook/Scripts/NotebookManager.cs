@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class NotebookManager : MonoBehaviour
 {
     private GameObject characterCustomInput;
+    private TMP_InputField personalCustomInput;
     private CharacterInstance currentCharacter;
     private int currentCharacterIndex;
     private int currentPageIndex;
@@ -25,21 +26,21 @@ public class NotebookManager : MonoBehaviour
 
     [Header("Field References")]
     [SerializeField] private GameObject characterInfo;
+    [SerializeField] private GameObject personalInfo;
 
     [Header("Tab Select Button References")]
     [SerializeField] private GameButton personalButton;
     [SerializeField] private GameButton[] nameButtons;
 
     [Header("Component References")]
-    [SerializeField] private TMP_InputField personalInputField;
     [SerializeField] private TMP_Text currentTabText;
-    [SerializeField] private TMP_Text personalInputTitleText;
 
     [Header("Prefab References")]
     [SerializeField] private GameObject pagePrefab;
     [SerializeField] private GameObject inactiveNotePrefab;
     [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject titleObjectPrefab;
 
     /// <summary>
     /// On startup, go to the personal notes and make sure the correct data is shown
@@ -101,20 +102,45 @@ public class NotebookManager : MonoBehaviour
         // An id of -1 signifies the custom notes tab
         currentCharacterIndex = -1;
 
-        // Save character notes
-        if (!personalInputField.IsActive()) SaveNotes();
-
         // Close the character tab 
         characterInfo.SetActive(false);
 
-        // Activate input field
-        var inputField = personalInputField.GetComponent<TMP_InputField>();
-        inputField.gameObject.SetActive(true);
-        inputField.text = notebookData.GetPersonalNotes();
+        // Activate written personal notes  
+        personalInfo.SetActive(true);
 
-        // Set font sizes
-        inputField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
-        personalInputTitleText.fontSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_LARGE_TEXT;
+        // The queue which will hold all the personal info  
+        //Queue<GameObject> allPersonalInfo = new();
+
+        // Create personal notes title object  
+        var titleObject = Instantiate(titleObjectPrefab);  
+        titleObject.GetComponent<NotebookTitleObject>().SetInfo("Personal Notes");  
+        //allPersonalInfo.Enqueue(titleObject);  
+  
+        // Create the custom input field object  
+        var inputObject = Instantiate(inputObjectPrefab);  
+        var inputObjectField = inputObject.GetComponent<TMP_InputField>();
+
+        inputObjectField.text = notebookData.GetPersonalNotes();
+        inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
+            = "Write down your thoughts!";
+
+        personalCustomInput = inputObjectField;
+        
+        inputObjectField.onEndEdit.AddListener(_ => SavePersonalData());  
+  
+        inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;  
+        characterCustomInput = inputObject; // Also set the reference so that it can be saved  
+        //allPersonalInfo.Enqueue(inputObject);
+
+        // Create the first page  
+        var pagePersonal = Instantiate(pagePrefab, personalInfo.transform);
+        
+        //Set its parent with a vertical layout group component  
+        titleObject.GetComponent<RectTransform>().SetParent(pagePersonal.transform, false);
+        inputObject.GetComponent<RectTransform>().SetParent(pagePersonal.transform, false);
+        
+        // Force rebuild the layout so the height values are correct  
+        LayoutRebuilder.ForceRebuildLayoutImmediate(pagePersonal.GetComponent<RectTransform>());
 
         // Make button clickable
         ChangeButtons(personalButton);
@@ -136,20 +162,21 @@ public class NotebookManager : MonoBehaviour
         }
 
         currentCharacterIndex = id;
-
+        
+        // destroy personal page
+        foreach (Transform page in personalInfo.transform)
+            Destroy(page.gameObject);
+        
         // Destroy info from the previous character
         // Keep track of number of pages so we display the correct number
         int prevPageCount = characterInfo.transform.childCount;
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
 
-        // Save notes
-        SaveNotes();
-
         // Deactivate the personal notes tab if it's opened
-        if (personalInputField.gameObject.activeInHierarchy)
-            personalInputField.gameObject.SetActive(false);
-
+        if (characterInfo.gameObject.activeInHierarchy)
+            personalInfo.SetActive(false);
+        
         // Activate written character notes
         characterInfo.SetActive(true);
 
@@ -185,7 +212,7 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
-        inputObjectField.onEndEdit.AddListener(_ => SaveNotes());
+        inputObjectField.onEndEdit.AddListener(_ => SaveCharacterData());
         
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
@@ -347,10 +374,10 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
-        if (personalInputField.IsActive())
+        if (personalInfo.activeInHierarchy)
         {
             // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
+            notebookData.UpdatePersonalNotes(personalCustomInput.GetComponent<TMP_InputField>().text);
         }
         else
         {
@@ -358,6 +385,19 @@ public class NotebookManager : MonoBehaviour
             notebookData.UpdateCharacterNotes(currentCharacter, 
                 characterCustomInput.GetComponent<TMP_InputField>().text);
         }
+    }
+
+    public void SaveCharacterData()
+    {
+        // Save the written character text to the notebook data
+        notebookData.UpdateCharacterNotes(currentCharacter, 
+            characterCustomInput.GetComponent<TMP_InputField>().text);
+    }
+
+    public void SavePersonalData()
+    {
+        // Save the written personal text to the notebook data
+        notebookData.UpdatePersonalNotes(personalCustomInput.GetComponent<TMP_InputField>().text);
     }
     
     /// <summary>
@@ -394,7 +434,7 @@ public class NotebookManager : MonoBehaviour
 
     #region Test Variables
 #if UNITY_INCLUDE_TESTS
-    public TMP_InputField Test_PersonalInputField { get { return personalInputField; } }
+    public TMP_InputField Test_PersonalInputField { get { return personalCustomInput; } }
     public Button Test_GetPersonalButton() => personalButton;
     public Button[] Test_GetNameButtons() => nameButtons;
     public GameObject Test_CharacterInfoField { get { return characterInfo; } }
