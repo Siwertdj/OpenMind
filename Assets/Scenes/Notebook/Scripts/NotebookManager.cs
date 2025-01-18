@@ -117,7 +117,11 @@ public class NotebookManager : MonoBehaviour
         // Set the appropriate footer text
         currentTabText.text = "Personal Notes";
     }
-
+    
+    /// <summary>
+    /// Create the personal notes page.
+    /// The page consists of the "personal notes" title and the inputfield.
+    /// </summary>
     private void CreatePersonalPage()
     {
         // Create personal notes title object  
@@ -205,7 +209,7 @@ public class NotebookManager : MonoBehaviour
         var inputObjectField = inputObject.GetComponent<TMP_InputField>();
         
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
+        inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
         inputObjectField.onEndEdit.AddListener(_ => SaveCharacterData());

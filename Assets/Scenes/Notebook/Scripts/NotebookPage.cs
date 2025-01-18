@@ -20,7 +20,6 @@ public class NotebookPage
     {
         _character = character;
         _notes = string.Empty;
-        _placeholder = "Notes on " + character.characterName + ".\n";
     }
 
     /// <summary>
@@ -40,6 +39,7 @@ public class NotebookPage
     /// <returns></returns>
     public string GetPlaceholder()
     {
+        _placeholder = "Notes on " + _character.characterName + ".\n";
         return _placeholder;
     }
 
