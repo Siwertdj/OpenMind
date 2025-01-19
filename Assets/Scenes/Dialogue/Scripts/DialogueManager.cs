@@ -360,7 +360,7 @@ public class DialogueManager : MonoBehaviour
 
             // Set styling for button
             buttonText.enableAutoSizing = true;
-            buttonText.fontSize = SettingsManager.sm.GetFontSize();
+            buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
             buttonText.font = customFont;
 
             // Add event when clicking the button
@@ -434,8 +434,8 @@ public class DialogueManager : MonoBehaviour
 
         TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
-        buttonText.enableAutoSizing = false;
-        buttonText.fontSize = SettingsManager.sm.GetFontSize();
+        buttonText.enableAutoSizing = true;
+        buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
         buttonText.font = customFont;
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
@@ -485,7 +485,7 @@ public class DialogueManager : MonoBehaviour
 
         buttonText.text = "Ask another question";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
+        buttonText.fontSizeMax = 40;
         button.onClick.AddListener(() => ContinueTalking());
     }
 

@@ -83,10 +83,10 @@ public class SelectionManager : MonoBehaviour
     {
         int fontSize = SettingsManager.sm.GetFontSize();
         // Change the fontSize of the confirmSelectionButton
-        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         
         // Change the fontSize of the headerText
-        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        headerText.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
     }
 
     #endregion
