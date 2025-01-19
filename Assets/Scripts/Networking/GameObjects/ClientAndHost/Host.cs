@@ -290,4 +290,14 @@ public class Host : NetworkObject
     {
         listener?.Dispose();
     }
+    
+    private void DisplayError(string error)
+    {
+        if (doPopup is null)
+            Debug.LogError("No popup for error handling was initialised");
+        else
+        {
+            doPopup.Raise(this, error, new Color(0,0,0));
+        }
+    }
 }

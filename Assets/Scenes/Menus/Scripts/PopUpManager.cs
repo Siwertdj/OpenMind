@@ -23,7 +23,6 @@ public class PopUpManager : MonoBehaviour
             color.a = 0.9f;
             closePopUp.GetComponentInChildren<Image>().color = color;
         }
-            
 
         popUpCanvas.enabled = true;
         closePopUp.interactable = true;
