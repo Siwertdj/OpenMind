@@ -90,7 +90,7 @@ public class NotebookManagerPlayTest
         Assert.AreNotEqual(textBefore, textAfter);
         
         bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
-        nm.SaveNotes();
+        nm.SavePersonalData();
         
         // Check if the new text is equal to the dummy text
         if (active)
@@ -122,7 +122,7 @@ public class NotebookManagerPlayTest
         string newText = "hello";
         nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
         
-        nm.SaveNotes();
+        nm.SavePersonalData();
         
         var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
