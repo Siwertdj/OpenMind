@@ -10,7 +10,8 @@ var searchData=
   ['notebookpagedatatest_7',['NotebookPageDataTest',['../classNotebookPageDataTest.html',1,'']]],
   ['notebookpageedittest_8',['NotebookPageEditTest',['../classNotebookPageEditTest.html',1,'']]],
   ['notebooktabbutton_9',['NotebookTabButton',['../classNotebookTabButton.html',1,'']]],
-  ['npcselectoverview_10',['NPCSelectOverview',['../classNPCSelectOverview.html',1,'']]],
-  ['npcselectplaytest_11',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
-  ['npcselectscroller_12',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]]
+  ['notebooktitleobject_10',['NotebookTitleObject',['../classNotebookTitleObject.html',1,'']]],
+  ['npcselectoverview_11',['NPCSelectOverview',['../classNPCSelectOverview.html',1,'']]],
+  ['npcselectplaytest_12',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
+  ['npcselectscroller_13',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]]
 ];

@@ -72,7 +72,6 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classNotebookPage-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">NotebookPage Class Reference</div></div>
@@ -99,20 +98,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ad92f79f4b9073a2664edbfac783ea8ea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNotebookPage.html#ad92f79f4b9073a2664edbfac783ea8ea">SetNotes</a> (string input)</td></tr>
 <tr class="memdesc:ad92f79f4b9073a2664edbfac783ea8ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method which sets the notes on this page to the input. For external use.  <br /></td></tr>
 <tr class="separator:ad92f79f4b9073a2664edbfac783ea8ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afc69e14b5d3062295c1ee78ed680156a"><td class="memItemLeft" align="right" valign="top"><a id="afc69e14b5d3062295c1ee78ed680156a" name="afc69e14b5d3062295c1ee78ed680156a"></a>
-List&lt;(string, string)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>QuestionText</b> ()</td></tr>
-<tr class="memdesc:afc69e14b5d3062295c1ee78ed680156a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add the title and question text together for each questions that has been asked. <br /></td></tr>
-<tr class="separator:afc69e14b5d3062295c1ee78ed680156a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3852aa90cff310c024324342b7fc3491"><td class="memItemLeft" align="right" valign="top"><a id="a3852aa90cff310c024324342b7fc3491" name="a3852aa90cff310c024324342b7fc3491"></a>
-string&#160;</td><td class="memItemRight" valign="bottom"><b>Intro</b> ()</td></tr>
-<tr class="memdesc:a3852aa90cff310c024324342b7fc3491"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starting text for the character log. <br /></td></tr>
-<tr class="separator:a3852aa90cff310c024324342b7fc3491"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:ac44ac56ea2d14cdf6b2535db3aad4dec"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNotebookPage.html#ac44ac56ea2d14cdf6b2535db3aad4dec">GetQuestionText</a> (Question questionType)</td></tr>
-<tr class="memdesc:ac44ac56ea2d14cdf6b2535db3aad4dec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method which gives a string based on the type of question that was asked. To use as a prefix to the answer.  <br /></td></tr>
-<tr class="separator:ac44ac56ea2d14cdf6b2535db3aad4dec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -230,41 +215,6 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>_placeholder</b></t
 
 <p>Method that fetches placeholder text in case player hasn't written any notes yet. </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="ac44ac56ea2d14cdf6b2535db3aad4dec" name="ac44ac56ea2d14cdf6b2535db3aad4dec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac44ac56ea2d14cdf6b2535db3aad4dec">&#9670;&#160;</a></span>GetQuestionText()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">string NotebookPage.GetQuestionText </td>
-          <td>(</td>
-          <td class="paramtype">Question&#160;</td>
-          <td class="paramname"><em>questionType</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Method which gives a string based on the type of question that was asked. To use as a prefix to the answer. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">questionType</td><td>The type of question.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>String relating to the questiontype.</dd></dl>
 
 </div>
 </div>

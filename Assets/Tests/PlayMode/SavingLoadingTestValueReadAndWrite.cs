@@ -139,7 +139,6 @@ public class SavingLoadingTestValueReadAndWrite
             inactiveCharacterIds = inactiveCharacterIds.ToArray(),
             culpritId = culpritId,
             remainingQuestions = remainingQuestions.ToArray(),
-            askedQuestionsPerCharacter = askedQuestions.ToArray(),
             personalNotes = RandS(128),
             numQuestionsAsked = numQuestionsAsked,
             characterNotes = characterNotes.ToArray()
@@ -185,8 +184,6 @@ public class SavingLoadingTestValueReadAndWrite
             CompareQuestionList);
         Assert.AreEqual(sd1.personalNotes, sd2.personalNotes, msg + ":personalNotes");
         ListEquals(sd1.characterNotes, sd2.characterNotes, msg + ":characterNotes", CompareStringTuple);
-        ListEquals(sd1.askedQuestionsPerCharacter, sd2.askedQuestionsPerCharacter,
-            msg + ":askedQuestionsPerCharacter", CompareQuestionList);
         Assert.AreEqual(sd1.numQuestionsAsked, sd2.numQuestionsAsked, msg + ":numQuestionsAsked");
     }
     

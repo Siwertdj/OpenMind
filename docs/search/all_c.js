@@ -20,11 +20,12 @@ var searchData=
   ['notebookpagedatatest_17',['NotebookPageDataTest',['../classNotebookPageDataTest.html',1,'']]],
   ['notebookpageedittest_18',['NotebookPageEditTest',['../classNotebookPageEditTest.html',1,'']]],
   ['notebooktabbutton_19',['NotebookTabButton',['../classNotebookTabButton.html',1,'']]],
-  ['notebooktutorialtest_20',['NotebookTutorialTest',['../classTutorialManagerPlayTest.html#a140a1b98c25f35edf23a7866b6ebf13e',1,'TutorialManagerPlayTest']]],
-  ['npcdialoguetohintdialoguegamestatetest_21',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
-  ['npcdialoguetonpcselectgamestatetest_22',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
-  ['npcselectoverview_23',['NPCSelectOverview',['../classNPCSelectOverview.html',1,'']]],
-  ['npcselectplaytest_24',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
-  ['npcselectscroller_25',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]],
-  ['npcselecttonpcdialoguegamestatetest_26',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
+  ['notebooktitleobject_20',['NotebookTitleObject',['../classNotebookTitleObject.html',1,'']]],
+  ['notebooktutorialtest_21',['NotebookTutorialTest',['../classTutorialManagerPlayTest.html#a140a1b98c25f35edf23a7866b6ebf13e',1,'TutorialManagerPlayTest']]],
+  ['npcdialoguetohintdialoguegamestatetest_22',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
+  ['npcdialoguetonpcselectgamestatetest_23',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
+  ['npcselectoverview_24',['NPCSelectOverview',['../classNPCSelectOverview.html',1,'']]],
+  ['npcselectplaytest_25',['NPCSelectPlayTest',['../classNPCSelectPlayTest.html',1,'']]],
+  ['npcselectscroller_26',['NPCSelectScroller',['../classNPCSelectScroller.html',1,'']]],
+  ['npcselecttonpcdialoguegamestatetest_27',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
 ];

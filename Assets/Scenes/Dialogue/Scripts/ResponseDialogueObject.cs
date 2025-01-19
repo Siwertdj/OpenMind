@@ -76,10 +76,6 @@ public class ResponseDialogueObject : DialogueObject
         CharacterInstance character = DialogueManager.dm.currentRecipient;
         character.RemainingQuestions.Remove(question);
         
-        // Write answers to notebook
-        // TODO: Possibly ommit this in multiplayer version
-        character.AskedQuestions.Add(question);
-        
         // Return answer to the question
         return character.Answers[question].GetDialogue();
     }
