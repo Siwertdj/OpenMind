@@ -103,7 +103,7 @@ public class NotebookManager : MonoBehaviour
         currentCharacterIndex = -1;
 
         // Save character notes
-        SaveNotes();
+        if (!personalInputField.IsActive()) SaveNotes();
 
         // Close the character tab 
         characterInfo.SetActive(false);
@@ -180,8 +180,15 @@ public class NotebookManager : MonoBehaviour
 
         // Create the custom input field object
         var inputObject = Instantiate(inputObjectPrefab);
-        inputObject.GetComponent<TMP_InputField>().text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObject.GetComponent<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        var inputObjectField = inputObject.GetComponent<TMP_InputField>();
+        inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
+        inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text 
+            = notebookData.GetCharacterPlaceholder(currentCharacter);
+        
+        inputObjectField.onEndEdit.AddListener(_ => SaveNotes());
+        
+
+        inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObject; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
 
@@ -362,7 +369,7 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveNotes()
     {
-        if (personalInputField.gameObject.activeInHierarchy)
+        if (personalInputField.IsActive())
         {
             // Save the written personal text to the notebook data
             notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);

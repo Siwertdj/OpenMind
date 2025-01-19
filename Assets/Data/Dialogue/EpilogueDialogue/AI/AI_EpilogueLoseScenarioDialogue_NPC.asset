@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1c1218d048a0c254b8553e0eeb869fcd, type: 3}
-  m_Name: 11-Suus-FirstGreeting
+  m_Name: AI_EpilogueLoseScenarioDialogue_NPC
   m_EditorClassIdentifier: 
   voicePitch: 1
   segments:
   - type: 0
-    emotion: 1
-    text: Hello, I'm Suus. The food here is my favorite!
+    emotion: 0
+    text: Sorry, I don't recall ever writing such a paper.. you must have the wrong
+      person in front of you.
     image: {fileID: 0}
     background:
     - {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}

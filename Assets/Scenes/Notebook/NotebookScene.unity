@@ -370,6 +370,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &213787016
 GameObject:
@@ -1330,7 +1331,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 612412759}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -1343,7 +1344,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Write down your thoughts here....
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
@@ -1370,10 +1371,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
+  m_fontSize: 55.85
   m_fontSizeBase: 40
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 2
@@ -1570,7 +1571,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.8235295, g: 0.8235295, b: 0.8235295, a: 1}
-  m_Text: Write down your thoughts here.
+  m_Text: 
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -1982,6 +1983,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &732030172
 GameObject:
@@ -2076,7 +2078,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Write down your thoughts here.\u200B"
+  m_text: "\u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
@@ -2426,6 +2428,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1107247795
 GameObject:
@@ -2703,6 +2706,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1151966900
 GameObject:
@@ -3437,6 +3441,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1001 &1634323372
 PrefabInstance:
@@ -3855,6 +3860,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1001 &1793050728
 PrefabInstance:
@@ -4065,6 +4071,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1 &1844896266
 GameObject:
@@ -4264,6 +4271,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips:
   - {fileID: 8300000, guid: 653821de99eef1d41abd4ea7dca7ded7, type: 3}
   - {fileID: 8300000, guid: a6444c1a7c06a3a40b6d9591a0392db2, type: 3}
@@ -4402,6 +4410,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips:
   - {fileID: 8300000, guid: 653821de99eef1d41abd4ea7dca7ded7, type: 3}
   - {fileID: 8300000, guid: a6444c1a7c06a3a40b6d9591a0392db2, type: 3}
@@ -4616,6 +4625,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1001 &4358358068967190807
 PrefabInstance:
@@ -4826,6 +4836,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
+  audioEnabled: 1
   audioClips: []
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
