@@ -84,7 +84,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Component sender, params object[] data)
     {        
         // Change the text size
-        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
         
         // Retrieve and set the dialogue object
@@ -359,8 +359,8 @@ public class DialogueManager : MonoBehaviour
             buttonText.text = GetPromptText(response.question);
 
             // Set styling for button
-            buttonText.enableAutoSizing = false;
-            buttonText.fontSize = SettingsManager.sm.GetFontSize();
+            buttonText.enableAutoSizing = true;
+            buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
             buttonText.font = customFont;
 
             // Add event when clicking the button
@@ -434,8 +434,8 @@ public class DialogueManager : MonoBehaviour
 
         TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
-        buttonText.enableAutoSizing = false;
-        buttonText.fontSize = SettingsManager.sm.GetFontSize();
+        buttonText.enableAutoSizing = true;
+        buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
         buttonText.font = customFont;
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
@@ -485,7 +485,7 @@ public class DialogueManager : MonoBehaviour
 
         buttonText.text = "Ask another question";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
+        buttonText.fontSizeMax = 40;
         button.onClick.AddListener(() => ContinueTalking());
     }
 
@@ -568,22 +568,22 @@ public class DialogueManager : MonoBehaviour
             Question.Name => "What's your name?",
             Question.Age => "How old are you?",
             Question.LifeGeneral => "How's life?",
-            Question.Inspiration => "Is there anyone that inspires you?",
+            Question.Inspiration => "Who inspires you?",
             Question.Sexuality => "What is your sexual orientation?",
             Question.Wellbeing => "How are you doing?",
             Question.Political => "What are your political thoughts?",
-            Question.Personality => "Can you describe what your personality is like?",
+            Question.Personality => "Can you describe your personality?",
             Question.Hobby => "What are some of your hobbies?",
             Question.CulturalBackground => "What is your cultural background?",
             Question.Religion => "Are you religious?",
             Question.Education => "What is your education level?",
-            Question.CoreValues => "What core values are the most important to you?",
-            Question.ImportantPeople => "Who are the most important people in your life?",
-            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.CoreValues => "What core values are important to you?",
+            Question.ImportantPeople => "Who matters most to you?",
+            Question.PositiveTrait => "What is your best trait?",
             Question.NegativeTrait => "What is a bad trait you may have?",
             Question.OddTrait => "Do you have any odd traits?",
             Question.SocialIssues => "What social issues are you interested in?",
-            Question.EducationSystem => "What is you opinion on the Dutch school system?",
+            Question.EducationSystem => "Your thoughts on the Dutch school system?",
             Question.Lottery => "If you win the lottery, what would you do?",
             Question.Diet => "Do you have any dietary restrictions?",
             _ => "",
