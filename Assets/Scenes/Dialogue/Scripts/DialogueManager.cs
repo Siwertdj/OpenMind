@@ -84,7 +84,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Component sender, params object[] data)
     {        
         // Change the text size
-        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
         
         // Retrieve and set the dialogue object
@@ -359,7 +359,7 @@ public class DialogueManager : MonoBehaviour
             buttonText.text = GetPromptText(response.question);
 
             // Set styling for button
-            buttonText.enableAutoSizing = false;
+            buttonText.enableAutoSizing = true;
             buttonText.fontSize = SettingsManager.sm.GetFontSize();
             buttonText.font = customFont;
 
