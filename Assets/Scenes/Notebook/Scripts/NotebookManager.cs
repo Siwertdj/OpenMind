@@ -11,7 +11,7 @@ using UnityEngine.UI;
 /// </summary>
 public class NotebookManager : MonoBehaviour
 {
-    private                GameObject        characterCustomInput;
+    private                TMP_InputField        characterCustomInput;
     private                TMP_InputField    personalCustomInput;
     private                CharacterInstance currentCharacter;
     private                int               currentCharacterIndex;
@@ -124,9 +124,13 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void CreatePersonalPage()
     {
+        Queue<GameObject> allPersonalInfo = new();
+        
         // Create personal notes title object  
         var titleObject = Instantiate(titleObjectPrefab);  
-        titleObject.GetComponent<NotebookTitleObject>().SetInfo("Personal Notes");  
+        titleObject.GetComponent<NotebookTitleObject>().SetInfo("Personal Notes"); 
+        
+        allPersonalInfo.Enqueue(titleObject);
   
         // Create the custom input field object  
         var inputObject = Instantiate(inputObjectPrefab);  
@@ -137,20 +141,15 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = "Write down your thoughts!";
         
+        allPersonalInfo.Enqueue(inputObject);
+        
         inputObjectField.onEndEdit.AddListener(_ => SavePersonalData());  
   
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;  
         personalCustomInput = inputObjectField; // Also set the reference so that it can be saved  
-
-        // Create the personal notes page  
-        var pagePersonal = Instantiate(pagePrefab, personalInfo.transform);
         
-        //Set its parent with a vertical layout group component  
-        titleObject.GetComponent<RectTransform>().SetParent(pagePersonal.transform, false);
-        inputObject.GetComponent<RectTransform>().SetParent(pagePersonal.transform, false);
-        
-        // Force rebuild the layout so the height values are correct  
-        LayoutRebuilder.ForceRebuildLayoutImmediate(pagePersonal.GetComponent<RectTransform>());
+        // Create the page using the allpersonalinfo queue
+        CreatePage(allPersonalInfo, personalInfo);
     }
     
     /// <summary>
@@ -168,12 +167,10 @@ public class NotebookManager : MonoBehaviour
         currentCharacterIndex = id;
         
         // Destroy info from the previous character
-        // Keep track of number of pages so we display the correct number
-        int prevPageCount = characterInfo.transform.childCount;
         foreach (Transform page in characterInfo.transform)
             Destroy(page.gameObject);
 
-        // Deactivate the personal notes tab if it's opened and remove that page
+        // Deactivate the personal notes tab if it's opened
         if (personalInfo.gameObject.activeInHierarchy)
             personalInfo.SetActive(false);
         
@@ -184,7 +181,6 @@ public class NotebookManager : MonoBehaviour
         currentCharacter = GameManager.gm.currentCharacters[id];
 
         // The queue which will hold all the character's info
-        // This info will later be divided into pages
         Queue<GameObject> allCharacterInfo = new();
 
         // If character is inactive, create note object
@@ -208,27 +204,27 @@ public class NotebookManager : MonoBehaviour
         var inputObject = Instantiate(inputObjectPrefab);
         var inputObjectField = inputObject.GetComponent<TMP_InputField>();
         
+        // Set the notebook text
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
+        // Save notes on end edit
         inputObjectField.onEndEdit.AddListener(_ => SaveCharacterData());
         
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
-        characterCustomInput = inputObject; // Also set the reference so that it can be saved
+        characterCustomInput = inputObjectField; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
-
-        CreateCharacterPages(allCharacterInfo);
+        
+        // Create the page using the allCHaracterInfo queue
+        CreatePage(allCharacterInfo, characterInfo);
 
         // Make button clickable
         ChangeButtons(nameButtons[id]);
 
         // Set appropriate footer text
         currentTabText.text = 
-            currentCharacter.characterName + "\n" +
-            "Page " + (currentPageIndex + 1) + "/" + 
-            (characterInfo.transform.childCount - prevPageCount);
-
+            currentCharacter.characterName;
     }
 
     /// <summary>
@@ -245,26 +241,10 @@ public class NotebookManager : MonoBehaviour
             // The index is less than 0, so navigate to previous character
             NavigateCharacters(currentCharacterIndex - 1);
         }
-        else if (newIndex >= characterInfo.transform.childCount)
-        {
-            // The index is greater than the amount of pages, so navigate to next character
-            NavigateCharacters(currentCharacterIndex + 1);
-        }
         else
         {
-            // The index is within the current character's bounds, so navigate to given page
-            var prevPage = characterInfo.transform.GetChild(currentPageIndex).gameObject;
-            var newPage = characterInfo.transform.GetChild(currentPageIndex + direction).gameObject;
-
-            prevPage.SetActive(false);
-            newPage.SetActive(true);
-
-            currentPageIndex = newIndex;        
-            
-            // Set appropriate footer text
-            currentTabText.text =
-                currentCharacter.characterName + "\n" +
-                "Page " + (currentPageIndex + 1) + "/" + characterInfo.transform.childCount;
+            // Navigate to next character
+            NavigateCharacters(currentCharacterIndex + 1);
         }
     }
 
@@ -284,91 +264,28 @@ public class NotebookManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Create all pages in one go. Creates multiple GameObjects each containing
-    /// a part of the notebook data regarding the selected character. All pages apart
-    /// from the first are automatically set to inactive.
+    /// Create a page from the queue. Creates multiple GameObjects each containing
+    /// a part of the notebook data regarding the character/ personal notes.
     /// </summary>
-    private void CreateCharacterPages(Queue<GameObject> allCharacterInfo)
+    private void CreatePage(Queue<GameObject> dataQueue, GameObject panel)
     {
-        currentPageIndex = 0;
-
-        // Create the first page
-        var page = Instantiate(pagePrefab, characterInfo.transform);
+        // Create the page
+        var page = Instantiate(pagePrefab, panel.transform);
 
         // While there are still notebook objects to be placed
-        while (allCharacterInfo.Count > 0)
+        while (dataQueue.Count > 0)
         {
             // Dequeue an object
-            var go = allCharacterInfo.Dequeue();
+            var go = dataQueue.Dequeue();
 
             // Set its parent with a vertical layout group component
             go.GetComponent<RectTransform>().SetParent(page.transform, false);
 
             // Force rebuild the layout so the height values are correct
             LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
-
-            // If it doesn't fit, make a new page and place it in there
-            // If it does fit, move on to the next object
-            if (IsPageOverflowing(page.GetComponent<RectTransform>()))
-            {
-                // Page is overflowing, so create a new page
-                page = Instantiate(pagePrefab, characterInfo.transform);
-
-                // Add object to this new page instead
-                go.GetComponent<RectTransform>().SetParent(page.transform, false);
-                LayoutRebuilder.ForceRebuildLayoutImmediate(page.GetComponent<RectTransform>());
-
-                // TODO: Find an alternative to this, as it is quite slow
-                // It is currently necessary to make sure the layout size is set immediately
-                Canvas.ForceUpdateCanvases();
-
-                // Set the new page to be inactive
-                page.SetActive(false);
-            }
         }
     }
 
-    /// <summary>
-    /// Returns true if the collective height of the children is greater than
-    /// the height of the given gameObject.
-    /// </summary>
-    /// <param name="parent">The RectTransform of the gameObject to be checked, 
-    /// this gameObject must also have a VerticalLayoutGroup component.
-    /// </param>
-    public bool IsPageOverflowing(RectTransform parent)
-    {
-        // Get the VerticalLayoutGroup component        
-        if (!parent.TryGetComponent<VerticalLayoutGroup>(out var layoutGroup))
-        {
-            Debug.LogError("VerticalLayoutGroup not found!");
-            return false;
-        }
-
-        // Get padding and spacing from the VerticalLayoutGroup
-        float spacing = layoutGroup.spacing;
-        float padding = layoutGroup.padding.top + layoutGroup.padding.bottom;
-
-        // Calculate the total height of all children
-        float totalHeight = 0f;
-        int childCount = parent.childCount;
-
-        for (int i = 0; i < childCount; i++)
-        {
-            RectTransform child = parent.GetChild(i).GetComponent<RectTransform>();
-            if (child != null)
-            {
-                totalHeight += child.rect.height;
-                if (i > 0) totalHeight += spacing; // Add spacing between items
-            }
-        }
-
-        totalHeight += padding;
-
-        // Compare the total height of content to the height of the layout group container
-        float containerHeight = parent.rect.height;
-        return totalHeight > containerHeight;
-    }
-    
     /// <summary>
     /// Save the notes of the character inputfield to the notebookdata.
     /// </summary>
