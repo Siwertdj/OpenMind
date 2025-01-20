@@ -45,7 +45,7 @@ public class NotebookManager : MonoBehaviour
     public  Button     multiplayerButton;
     private bool       showingMultiplayerNotebook;
     private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
-    public  GameObject inputField;
+    public  GameObject personalInputField;
     public  GameObject multiplayerCanvas;
     
     
@@ -270,21 +270,8 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObjectField; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
-        
-        // Create objects for all q&a pairs
-        var log = notebookData.GetAnswers(currentCharacter);
-        foreach (var (question, answer) in log)
-        {
-            var logObject = Instantiate(logObjectPrefab).GetComponent<NotebookLogObject>();
-            logObject.SetText(question, answer);
 
-            allCharacterInfo.Enqueue(logObject.gameObject);
-
-            // Make sure the layout group is displayed properly
-            LayoutRebuilder.ForceRebuildLayoutImmediate(logObject.GetComponent<RectTransform>());
-        }
-
-        CreateCharacterPages(allCharacterInfo);
+        CreatePage(allCharacterInfo, characterInfo);
 
         // Make button clickable
         ChangeButtons(nameButtons[id]);
@@ -377,19 +364,13 @@ public class NotebookManager : MonoBehaviour
     public void SaveNotes()
     {
         if (justSwitchedBetweenNormalAndMultiplayerNotebook)
+        {
             return;
-        
-        if (personalInputField.IsActive())
-        {
-            // Save the written personal text to the notebook data
-            notebookData.UpdatePersonalNotes(personalInputField.GetComponent<TMP_InputField>().text);
         }
-        else
-        {
-            // Save the written character text to the notebook data
-            notebookData.UpdateCharacterNotes(currentCharacter, 
-                characterCustomInput.GetComponent<TMP_InputField>().text);
-        }
+
+        // Save the written character text to the notebook data
+        notebookData.UpdateCharacterNotes(currentCharacter, 
+            characterCustomInput.GetComponent<TMP_InputField>().text);
     }
     
     /// <summary>
