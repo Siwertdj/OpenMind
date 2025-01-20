@@ -226,7 +226,7 @@ public class IntroductionManager : MonoBehaviour
         
         // Make sure the four most recent texts are shown on the screen. 
         HideOrShowTexts(false);     // Old messages need to be removed. 
-        for (int i = TextMessageIndex; i < TextMessageIndex + 4; i++)
+        for (int i = TextMessageIndex; i < TextMessageIndex + 5; i++)
         {
             messages[i].transform.position = messageLocations[i-TextMessageIndex].transform.position;
             messages[i].SetActive(true);

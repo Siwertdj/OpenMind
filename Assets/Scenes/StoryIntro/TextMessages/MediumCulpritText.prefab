@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.633}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.7736, y: -1.4162}
-  m_SizeDelta: {x: 282.1427, y: 43.2562}
+  m_AnchoredPosition: {x: 21.8714, y: -1.4576}
+  m_SizeDelta: {x: 235.3585, y: 43.2562}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1898627862210764247
 CanvasRenderer:
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -8.846779, y: -11.5792885, z: 4.1875, w: -15.479461}
+  m_margin: {x: -19.114906, y: -0.13690944, z: 1.6590424, w: -0.25730804}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 143260809314775086}
   - component: {fileID: 7986182684434751262}
   m_Layer: 0
-  m_Name: LargeCulpritText
+  m_Name: MediumCulpritText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,8 +169,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -1.246}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 522.2366, y: 14.5223}
-  m_SizeDelta: {x: 370, y: 112.8854}
+  m_AnchoredPosition: {x: 492.42578, y: 27.2077}
+  m_SizeDelta: {x: 370, y: 87.5144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &143260809314775086
 CanvasRenderer:
