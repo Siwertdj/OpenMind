@@ -295,12 +295,13 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 386369042}
+  - {fileID: 930531609}
   m_Father: {fileID: 1238301442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 161.449}
-  m_SizeDelta: {x: 354.63513, y: 419.7}
+  m_AnchoredPosition: {x: 0, y: 143}
+  m_SizeDelta: {x: 322.2519, y: 419.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &228368348
 MonoBehaviour:
@@ -643,7 +644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &930531609
 RectTransform:
   m_ObjectHideFlags: 0
@@ -653,15 +654,15 @@ RectTransform:
   m_GameObject: {fileID: 930531608}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.55102175, y: 0.55102175, z: 0.55102175}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1807932667}
-  m_Father: {fileID: 1238301442}
+  m_Father: {fileID: 228368347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -125.533455, y: -266.14255}
+  m_AnchoredPosition: {x: -176.35, y: 207}
   m_SizeDelta: {x: 352.6953, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &930531610
@@ -911,7 +912,7 @@ MonoBehaviour:
   - 'I have been excellent, thank you. '
   - 'And you? Wait, don''t tell me.  '
   - 'The spirits tell me you have been through a life changing event lately.  '
-  - 'Hahaha still receiving messages from the other side I see? '
+  - 'Haha still receiving messages from the other side I see? '
   - 'Always have, always will. '
   - 'By the way, have you seen Nathan?  '
   - He was just here, but he seemed to have disappeared.
@@ -1304,7 +1305,6 @@ RectTransform:
   - {fileID: 1300033501}
   - {fileID: 1775969666}
   - {fileID: 228368347}
-  - {fileID: 930531609}
   - {fileID: 1342074083}
   - {fileID: 1464702359}
   m_Father: {fileID: 0}
