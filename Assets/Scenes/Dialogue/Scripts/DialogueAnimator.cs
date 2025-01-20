@@ -27,7 +27,9 @@ public class DialogueAnimator : MonoBehaviour
 
     [Header("TextAudio")]
     [SerializeField] private List<AudioClip> letterAudios;
-    
+    [SerializeField] private List<AudioClip> altAudios;
+    [SerializeField] private AudioClip pop;
+     
     private readonly string soundlessSymbols = " !?.,";
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
@@ -196,6 +198,8 @@ public class DialogueAnimator : MonoBehaviour
         // Start writing sentence
         foreach (char character in text.text) 
         {
+            float pitch = audioSource.pitch;
+
             // Don't write if the game is paused
             // '?' is used to make sure there is already an instance of the GameManager
             while (SettingsManager.sm.IsPaused == true)
@@ -204,10 +208,11 @@ public class DialogueAnimator : MonoBehaviour
             if (!soundlessSymbols.Contains(character) && !skip)
             {
                 audioSource.Stop();
+                audioSource.PlayOneShot(pop);
                 audioSource.PlayOneShot(getCharAudio(character));
             }
+            audioSource.pitch = pitch;
             skip = !skip;
-
 
             // Write letter to screen and increment stringIndex
             text.maxVisibleCharacters++;
@@ -215,6 +220,7 @@ public class DialogueAnimator : MonoBehaviour
             // Wait and continue with next letter
             float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
             yield return new WaitForSeconds(delay);
+            
         }
 
         // If sentence is finished, stop outputting
@@ -225,6 +231,7 @@ public class DialogueAnimator : MonoBehaviour
     private AudioClip getCharAudio(char character)
     {
         System.Random random = new System.Random();
+        /*
         int[] notNullAudios = new[] { 0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 20, 24 };
         int r = notNullAudios[random.Next(0, notNullAudios.Length)];
         
@@ -234,6 +241,8 @@ public class DialogueAnimator : MonoBehaviour
             return letterAudios[r];
         else
             return audioClip;
+        */
+        return altAudios[random.Next(0, altAudios.Count)];
     }
 
 #region Test Variables

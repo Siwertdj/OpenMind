@@ -1179,6 +1179,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 8300000, guid: e7ba292f167c02641900f417737caf30, type: 3}
   - {fileID: 0}
+  altAudios:
+  - {fileID: 8300000, guid: 9cc902acda26afc4987bdb5311824703, type: 3}
+  - {fileID: 8300000, guid: 3760d432fc64b51428b8cec828fda940, type: 3}
+  - {fileID: 8300000, guid: 3a45b68e5ba0fd04e96890b8c7587098, type: 3}
+  - {fileID: 8300000, guid: f14095b3fed015447aa52bf037852a51, type: 3}
+  pop: {fileID: 8300000, guid: 8bedb43e07acfa74fbe4d7402147be0d, type: 3}
 --- !u!114 &826756118
 MonoBehaviour:
   m_ObjectHideFlags: 0

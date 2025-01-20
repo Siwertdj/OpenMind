@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: d0ce3a83079c96b478cb536810ab3257, type: 3}
   happyAvatar: {fileID: 0}
   unhappyAvatar: {fileID: 0}
-  voicePitch: 0.896
+  voicePitch: 0.6
   facePivot: {x: 0.5088, y: 0.8084}
   firstGreeting: {fileID: 11400000, guid: d9e6dce2c9baa11408384aa80a3bbafb, type: 2}
   greeting: {fileID: 0}
