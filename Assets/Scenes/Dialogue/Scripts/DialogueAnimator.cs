@@ -208,8 +208,12 @@ public class DialogueAnimator : MonoBehaviour
             if (!soundlessSymbols.Contains(character) && !skip)
             {
                 audioSource.Stop();
+                audioSource.volume = 1f;
                 audioSource.PlayOneShot(pop);
-                audioSource.PlayOneShot(getCharAudio(character));
+                Debug.Log(audioSource.volume);
+                audioSource.volume = 0.1f;
+                audioSource.PlayOneShot(getCharAudio());
+                Debug.Log(audioSource.volume);
             }
             audioSource.pitch = pitch;
             skip = !skip;
@@ -228,20 +232,9 @@ public class DialogueAnimator : MonoBehaviour
         dialogueIndex++;
     }
 
-    private AudioClip getCharAudio(char character)
+    private AudioClip getCharAudio()
     {
         System.Random random = new System.Random();
-        /*
-        int[] notNullAudios = new[] { 0, 1, 2, 3, 4, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 19, 20, 24 };
-        int r = notNullAudios[random.Next(0, notNullAudios.Length)];
-        
-        AudioClip audioClip = letterAudios[(int)character % 32 - 1];
-
-        if (audioClip == null)
-            return letterAudios[r];
-        else
-            return audioClip;
-        */
         return altAudios[random.Next(0, altAudios.Count)];
     }
 
