@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,12 +7,15 @@ using UnityEngine.UI;
 
 public class PopUpManager : MonoBehaviour
 {
-    public Button closePopUp;
-    public Canvas popUpCanvas;
-    public TextMeshProUGUI popUpText;
-
+    public  Button          closePopUp;
+    public  Canvas          popUpCanvas;
+    public  TextMeshProUGUI popUpText;
+    private DateTime        startTime;
+    
     public void OpenPopUp(Component sender, params object[] data)
     {
+        startTime = DateTime.Now;
+        
         string text = "no text found.";
         if (data[0] is string) 
             text = (string)data[0];
@@ -30,9 +34,12 @@ public class PopUpManager : MonoBehaviour
 
     public void ClosePopUp() 
     {
-        popUpText.text = string.Empty;
-        popUpCanvas.enabled = false;
-        closePopUp.interactable = false;
+        // Make sure the player doesn't accidentally click the popup away before reading it.
+        if (DateTime.Now.Subtract(startTime).Seconds >= 1)
+        {
+            popUpText.text = string.Empty;
+            popUpCanvas.enabled = false;
+            closePopUp.interactable = false;
+        }
     }
-
 }

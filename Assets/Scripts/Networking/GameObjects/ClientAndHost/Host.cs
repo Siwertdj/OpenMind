@@ -30,6 +30,7 @@ public class Host : NetworkObject
     private bool readyToSentFirstClientSecondClientNotebook;
     private List<NetworkPackage> dataToSendSecondClient;
     private bool isListening;
+    private bool receivedNotebookPopup;
     
     private void Update()
     {
@@ -45,6 +46,12 @@ public class Host : NetworkObject
             Debug.Log("coroutine");
             readyToSentFirstClientSecondClientNotebook = false;
             StartCoroutine(SendDataWithDelay1());
+        }
+
+        if (receivedNotebookPopup)
+        {
+            DisplayError("You've received a notebook! Go take a look!");
+            receivedNotebookPopup = false;
         }
     }
     
@@ -123,6 +130,7 @@ public class Host : NetworkObject
         ActivateNotebookExchange();
 
         isListening = true;
+        receivedNotebookPopup = false;
     }
 
     /// <summary>
@@ -182,6 +190,9 @@ public class Host : NetworkObject
         // assignNotebookData(
         //     new NotebookDataPackage(notebook[0], currentCharacters).ConvertToNotebookData());
         this.assignNotebookData(notebook);
+        
+        // show pop up that the host received a notebook
+        receivedNotebookPopup = true;
     }
     
     /// <summary>
@@ -196,7 +207,13 @@ public class Host : NetworkObject
         {
             //if host was first upload
             if (assignNotebookData != null)
+            {
+                Debug.Log($"Received first notebook from phone.");
                 assignNotebookData((List<NetworkPackage>)o);
+                
+                // Show popup that the host received a notbook
+                receivedNotebookPopup = true;
+            }
         }
         
         //if not first upload
@@ -231,7 +248,11 @@ public class Host : NetworkObject
             Debug.Log($"Obtained {o[0].data} and returned with {randomNotebook[0].data}");
         return randomNotebook;
     }
-
+    
+    /// <summary>
+    /// Adds the notebook in the list, only if it's not already there.
+    /// To prevent duplicate notebooks.
+    /// </summary>
     private void AddNotebook(List<NetworkPackage> notebookData)
     {
         if(!notebooks.Contains(notebookData))
