@@ -326,12 +326,10 @@ public class IntroductionManager : MonoBehaviour
         if (changeSprite)
         {
             computer.sprite = sprites[9];
-            //character.sprite = sprites[9];
         }
         else
         {
             computer.sprite = sprites[10];
-            //character.sprite = sprites[7];
         }
         changeSprite = !changeSprite; 
     }

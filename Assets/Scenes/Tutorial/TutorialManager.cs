@@ -34,19 +34,12 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // Make sure nothing from 'previous' tutorial is active. 
-        helpHighlight.SetActive(false);       
-        textBox.gameObject.SetActive(false);   
-        TutorialTimeline.Pause();
-        // Initialize the tutorial button
-        GameObject tutorial = GameObject.Find("HelpButton");
-        tutorialButton = tutorial.GetComponentInChildren<Button>();
-        // Remove the stop tutorial feature from the continue button
-        continueButton.onClick.RemoveListener(StopTutorial);
+        InitializeTutorial();
         
         // The type of tutorial that is shown, depends on the scene that is currently loaded. 
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
         {
+            tutorialButton.enabled = true; 
             // The hint the player should receive during this scene. 
             text.text = "Try to find the culprit!";
             textBox.gameObject.SetActive(true);
@@ -56,6 +49,7 @@ public class TutorialManager : MonoBehaviour
         }
         else if (SceneManager.GetSceneByName("GameLossScene").isLoaded || SceneManager.GetSceneByName("GameWinScene").isLoaded)
         {
+            tutorialButton.enabled = true; 
             // The hint the player should receive during these scenes. 
             text.text = "Restart game, try again with the same characters, or quit?";
             textBox.gameObject.SetActive(true);
@@ -85,10 +79,36 @@ public class TutorialManager : MonoBehaviour
             
             notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
             tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 
+            
             // Start the tutorial
             StartTutorial();
         }
         
+    }
+    
+    /// <summary>
+    /// This method resets the tutorial to the beginning state (useful for when tutorial is already played) 
+    /// and initializes necessary components. 
+    /// </summary>
+    private void InitializeTutorial()
+    {
+        // Make sure nothing from 'previous' tutorial is active. 
+        helpHighlight.SetActive(false);
+        textBox.gameObject.SetActive(false);
+        TutorialTimeline.Pause();
+        
+        // Initialize the tutorial button
+        GameObject tutorial = GameObject.Find("HelpButton");
+        tutorialButton = tutorial.GetComponentInChildren<Button>();
+        
+        // When the player watches the tutorial for the first time, it cannot be skipped. 
+        if (!FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.playedBefore))
+        {
+            tutorialButton.enabled = false;
+        }
+        
+        // Remove the stop tutorial feature from the continue button for the duration of the tutorial.
+        continueButton.onClick.RemoveListener(StopTutorial);
     }
     
     /// <summary>
@@ -136,6 +156,7 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void StopTutorial()
     {
+        tutorialButton.enabled = true; 
         tutorialButton.onClick.Invoke(); // Clicking the tutorial button again closes the scene. 
     }
     
