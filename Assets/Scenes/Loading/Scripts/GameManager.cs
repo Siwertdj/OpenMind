@@ -335,21 +335,10 @@ public class GameManager : MonoBehaviour
             // Change the gamestate
             gameState = GameState.CulpritSelect;
             
-            // Exchange notebooks in case of multiplayer
-            if (MultiplayerManager.mm)
-                MultiplayerNotebookExchange();
-            
             StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
-    }
-
-    private void MultiplayerNotebookExchange()
-    {
-        // Send notebook
-        MultiplayerManager.mm.SendNotebook();
-        multiplayerEpilogue = true;
     }
     
     #endregion
@@ -618,6 +607,10 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.CulpritSelect)
         {
             StartEpilogue();
+            
+            // Start exchanging notebooks if in multiplayer mode  
+            if(MultiplayerManager.mm)  
+                MultiplayerNotebookExchange();
             return;
         }
 
@@ -639,6 +632,13 @@ public class GameManager : MonoBehaviour
             gameState = GameState.NpcSelect;
         }
     }    
+    
+    private void MultiplayerNotebookExchange()
+    {
+        // Send notebook
+        MultiplayerManager.mm.SendNotebook();
+        multiplayerEpilogue = true;
+    }
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.

@@ -31,6 +31,7 @@ public class Host : NetworkObject
     private List<NetworkPackage> dataToSendSecondClient;
     private bool isListening;
     private bool receivedNotebookPopup;
+    private bool waitingOnNotebook;
     
     private void Update()
     {
@@ -52,6 +53,12 @@ public class Host : NetworkObject
         {
             DisplayError("You've received a notebook! Go take a look!");
             receivedNotebookPopup = false;
+        }
+
+        if (waitingOnNotebook)
+        {
+            DisplayError("Searching for a notebook. Please wait.");
+            waitingOnNotebook = false;
         }
     }
     
@@ -131,6 +138,7 @@ public class Host : NetworkObject
 
         isListening = true;
         receivedNotebookPopup = false;
+        waitingOnNotebook = false;
     }
 
     /// <summary>
@@ -177,6 +185,7 @@ public class Host : NetworkObject
         //if host was first upload
         if (notebooks.Count == 0)
         {
+            waitingOnNotebook = true;
             ReceiveFirstNotebookFromClient(listPackage);
             return;
         }
@@ -211,8 +220,9 @@ public class Host : NetworkObject
                 Debug.Log($"Received first notebook from phone.");
                 assignNotebookData((List<NetworkPackage>)o);
                 
-                // Show popup that the host received a notbook
+                // Show popup that the host received a notebook
                 receivedNotebookPopup = true;
+                waitingOnNotebook = false;
             }
         }
         

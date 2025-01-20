@@ -187,7 +187,6 @@ public class Client : NetworkObject
             resendNotebook = () => SendNotebookData(response, notebookData, currentCharacters);
             return;
         }
-            
         
         this.response = response;
         activeCharacters = currentCharacters;
@@ -219,7 +218,7 @@ public class Client : NetworkObject
             foreach (KeyValuePair<int, string> characterNotes in receivedData[0].GetData<NotebookDataPackage>().characterNotes)
                 DebugLog($"Received notebook data from host: {characterNotes.Key}, character notes: {characterNotes.Value}");
         else 
-            DisplayError("You have received a notebook from someone. Go and take a look!");
+            DisplayError("You've received a notebook from someone. Go and take a look!");
         
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
