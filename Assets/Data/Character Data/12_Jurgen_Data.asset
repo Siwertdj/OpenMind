@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Jurgen
   id: 12
   neutralAvatar: {fileID: 21300000, guid: 82bbdd03deed054459b9a03e12616e01, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
-  voicePitch: 0.7
+  happyAvatar: {fileID: 21300000, guid: caa1f18950b2f264a8a0ab8230486b86, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 3a88b9ca68a58c844b6c87355a3a8fb5, type: 3}
+  voicePitch: 1
   facePivot: {x: 0.5091, y: 0.7742}
   firstGreeting: {fileID: 11400000, guid: deeb31ec5652d20458c738561e3cbf1e, type: 2}
   greeting: {fileID: 0}

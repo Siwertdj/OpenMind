@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Olivier
   id: 3
   neutralAvatar: {fileID: 21300000, guid: 4fd19ba46f9fb984b8712a7a57e3f9a6, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
-  voicePitch: 1
+  happyAvatar: {fileID: 21300000, guid: 90e5f9e4e89ee02408b5da45f51ecdb3, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 2688e08a07c11f24392737bad6c208e3, type: 3}
+  voicePitch: 1.1
   facePivot: {x: 0.5007, y: 0.8389}
   firstGreeting: {fileID: 11400000, guid: 87f520fb49817eb4fb176232b53b713c, type: 2}
   greeting: {fileID: 0}

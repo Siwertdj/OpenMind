@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Jonas
   id: 9
   neutralAvatar: {fileID: 21300000, guid: 5e091d5f420e4dd4784e9b0f1440e220, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
-  voicePitch: 0.6
+  happyAvatar: {fileID: 21300000, guid: c8e9619eaf545014cb7c11b84f6c6d17, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 92d29887d67c03b49a99c6a59c1ed6ee, type: 3}
+  voicePitch: 1
   facePivot: {x: 0.5084, y: 0.7997}
   firstGreeting: {fileID: 11400000, guid: 101b2f964e9a9e84f8baeed4d2de3730, type: 2}
   greeting: {fileID: 0}
