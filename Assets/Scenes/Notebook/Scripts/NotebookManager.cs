@@ -263,7 +263,7 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
-        inputObjectField.onValueChanged.AddListener(_ => SaveNotes());
+        inputObjectField.onValueChanged.AddListener(_ => SaveCharacterData());
         // Save notes on end edit
         inputObjectField.onEndEdit.AddListener(_ => SaveCharacterData());
         
@@ -345,6 +345,10 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveCharacterData()
     {
+        if (justSwitchedBetweenNormalAndMultiplayerNotebook)
+        {
+            return;
+        }
         // Save the written character text to the notebook data
         notebookData.UpdateCharacterNotes(currentCharacter, 
             characterCustomInput.GetComponent<TMP_InputField>().text);
@@ -355,22 +359,12 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SavePersonalData()
     {
-        characterInfo.SetActive(!characterInfo.activeInHierarchy);
-    }
-    
-    /// <summary>
-    /// Save the notes on the (character) inputfield to the notebookdata.
-    /// </summary>
-    public void SaveNotes()
-    {
         if (justSwitchedBetweenNormalAndMultiplayerNotebook)
         {
             return;
         }
-
         // Save the written character text to the notebook data
-        notebookData.UpdateCharacterNotes(currentCharacter, 
-            characterCustomInput.GetComponent<TMP_InputField>().text);
+        notebookData.UpdatePersonalNotes(personalCustomInput.GetComponent<TMP_InputField>().text);
     }
     
     /// <summary>
