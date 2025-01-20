@@ -90,7 +90,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryC();
+                    StoryA();
                     break;
                 case 1:
                     StoryB();
