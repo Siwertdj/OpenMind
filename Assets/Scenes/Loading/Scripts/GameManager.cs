@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         
         //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
         //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
-        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+        foreach (var valueTuple in saveData.remainingQuestions)
             currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
         
         //assign all data to the current characters
@@ -171,7 +171,6 @@ public class GameManager : MonoBehaviour
             c.isCulprit = saveData.culpritId == c.id;
 
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         

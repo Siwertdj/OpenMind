@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Huh? What do you mean, I was the one texting you? Sorry, i think you've
+    text: Huh? What do you mean, I was the one texting you? Sorry, I think you've
       got the wrong person..
     image: {fileID: 0}
     background:

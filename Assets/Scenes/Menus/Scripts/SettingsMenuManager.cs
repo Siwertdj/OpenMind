@@ -42,8 +42,8 @@ public class SettingsMenuManager : MonoBehaviour
         SetActiveButton(activeButton);
         
         // Change the text size
-        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
-        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
+        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
     }
 
@@ -178,10 +178,10 @@ public class SettingsMenuManager : MonoBehaviour
     {
         int fontSize = SettingsManager.sm.GetFontSize();
         // Change the fontSize of the confirmSelectionButton
-        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         
         // Change the fontSize of the headerText
-        dialogueBox.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        dialogueBox.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
     }
     
     /// <summary>

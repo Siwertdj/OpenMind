@@ -29,8 +29,6 @@ public class NotebookData
             NotebookPage page = new NotebookPage(character);
             _pages[character] = page;
         }
-        
-        _personalNotes = "Write down your thoughts.";
     }
 
     /// <summary>
@@ -45,17 +43,21 @@ public class NotebookData
     }
 
     /// <summary>
+    /// Gets placeholder text from character
+    /// </summary>
+    public string GetCharacterPlaceholder(CharacterInstance character)
+    {
+        return _pages[character].GetPlaceholder();
+    }
+
+
+    /// <summary>
     /// Get the notes the player has written about a character.
     /// </summary>
     public string GetCharacterNotes(CharacterInstance character)
     {
         return _pages[character].GetNotes();
     }
-    
-    /// <summary>
-    /// Get the answers the player has obtained from a character.
-    /// </summary>
-    public List<(string, string)> GetAnswers(CharacterInstance character) => _pages[character].QuestionText();
     
     /// <summary>
     /// Save the text that the player has written about a character to the notebookpage.

@@ -63,9 +63,9 @@ public class DialogueAnimator : MonoBehaviour
         if (text == null)
             return;
 
-        text.enableAutoSizing = false;
-        ChangeTextSize(SettingsManager.sm.GetFontSize());
-        audioSource = GetComponent<AudioSource>();
+        text.enableAutoSizing = true;       // Set autosizing to true for the text-component.
+        ChangeTextSize(SettingsManager.sm.GetFontSize());   // change the textsize based on settings
+        audioSource = GetComponent<AudioSource>();      // set audiosource reference, for the talking-sfx
     }
     
     /// <summary>
@@ -74,8 +74,8 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="fontSize"></param>
     public void ChangeTextSize(int fontSize)
     {
-        // Set the fontSize.
-        text.fontSize = fontSize;
+        // set the max font size - so it shrinks if it would otherwise overflow (for robustness)
+        text.fontSizeMax = fontSize;
     }
     
     /// <summary>
