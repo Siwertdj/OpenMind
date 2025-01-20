@@ -114,10 +114,6 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>OnClick</b> (Componen
 <tr class="memitem:a057e1c3490676bc917c0de7df5503845"><td class="memItemLeft" align="right" valign="top"><a id="a057e1c3490676bc917c0de7df5503845" name="a057e1c3490676bc917c0de7df5503845"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>PlaySfxClip</b> (AudioClip clip)</td></tr>
 <tr class="separator:a057e1c3490676bc917c0de7df5503845"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee76b879f7ff9367b0fc82478b5048af"><td class="memItemLeft" align="right" valign="top"><a id="aee76b879f7ff9367b0fc82478b5048af" name="aee76b879f7ff9367b0fc82478b5048af"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFontSize</b> ()</td></tr>
-<tr class="memdesc:aee76b879f7ff9367b0fc82478b5048af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the fontSize of the dialogue text. <br /></td></tr>
-<tr class="separator:aee76b879f7ff9367b0fc82478b5048af"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12a365111f36edf0424015041786eee6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsManager.html#a12a365111f36edf0424015041786eee6">SetMasterVolume</a> (float volume)</td></tr>
 <tr class="memdesc:a12a365111f36edf0424015041786eee6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called through <a class="el" href="classSettingsMenuManager.html">SettingsMenuManager</a> to set the volume of the Master-channel of the Audiomixer.  <br /></td></tr>
 <tr class="separator:a12a365111f36edf0424015041786eee6"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -131,8 +127,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFontSize</b> ()</td
 void&#160;</td><td class="memItemRight" valign="bottom"><b>SwitchMusic</b> (AudioClip newClip, float? fadeTime, bool loop)</td></tr>
 <tr class="memdesc:afb5b5d6eeb00e0800c5e8bb87fc2daac"><td class="mdescLeft">&#160;</td><td class="mdescRight">this method should fade-out the previous track, then fade-in the new track <br /></td></tr>
 <tr class="separator:afb5b5d6eeb00e0800c5e8bb87fc2daac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07c8bbea7e4900d63f15794807f3c86a"><td class="memItemLeft" align="right" valign="top"><a id="a07c8bbea7e4900d63f15794807f3c86a" name="a07c8bbea7e4900d63f15794807f3c86a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetTalkingSpeed</b> (float multiplier)</td></tr>
+<tr class="memitem:aee76b879f7ff9367b0fc82478b5048af"><td class="memItemLeft" align="right" valign="top"><a id="aee76b879f7ff9367b0fc82478b5048af" name="aee76b879f7ff9367b0fc82478b5048af"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>GetFontSize</b> ()</td></tr>
+<tr class="memdesc:aee76b879f7ff9367b0fc82478b5048af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the fontSize of the dialogue text. <br /></td></tr>
+<tr class="separator:aee76b879f7ff9367b0fc82478b5048af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c8bbea7e4900d63f15794807f3c86a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSettingsManager.html#a07c8bbea7e4900d63f15794807f3c86a">SetTalkingSpeed</a> (float multiplier)</td></tr>
+<tr class="memdesc:a07c8bbea7e4900d63f15794807f3c86a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Takes a multiplier that changes the talking speed. If the multiplier is '3', it should be 3 times as fast.  <br /></td></tr>
 <tr class="separator:a07c8bbea7e4900d63f15794807f3c86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -179,12 +179,12 @@ Properties</h2></td></tr>
 <tr class="memitem:a074daf3c59f2ce1766b1ff9cf10b9fd1"><td class="memItemLeft" align="right" valign="top"><a id="a074daf3c59f2ce1766b1ff9cf10b9fd1" name="a074daf3c59f2ce1766b1ff9cf10b9fd1"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>IsPaused</b><code> [get]</code></td></tr>
 <tr class="separator:a074daf3c59f2ce1766b1ff9cf10b9fd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memItemLeft" align="right" valign="top"><a id="ac026b1a753f14d28ac4d4a96759b4bca" name="ac026b1a753f14d28ac4d4a96759b4bca"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>TalkingDelay</b><code> [get, private set]</code></td></tr>
-<tr class="separator:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a21ce03d2bbeac72397840116afc9c660"><td class="memItemLeft" align="right" valign="top"><a id="a21ce03d2bbeac72397840116afc9c660" name="a21ce03d2bbeac72397840116afc9c660"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>maxLineLength</b><code> [get]</code></td></tr>
 <tr class="separator:a21ce03d2bbeac72397840116afc9c660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memItemLeft" align="right" valign="top"><a id="ac026b1a753f14d28ac4d4a96759b4bca" name="ac026b1a753f14d28ac4d4a96759b4bca"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>TalkingDelay</b><code> [get, private set]</code></td></tr>
+<tr class="separator:ac026b1a753f14d28ac4d4a96759b4bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -212,12 +212,6 @@ AudioClip&#160;</td><td class="memItemRight" valign="bottom"><b>defaultButtonCli
 <tr class="memitem:a8a7df67ced0294f7b8f85749a018f3e5"><td class="memItemLeft" align="right" valign="top"><a id="a8a7df67ced0294f7b8f85749a018f3e5" name="a8a7df67ced0294f7b8f85749a018f3e5"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>pauseStack</b> = 0</td></tr>
 <tr class="separator:a8a7df67ced0294f7b8f85749a018f3e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89c1e8092a9b887072f18612567b83c2"><td class="memItemLeft" align="right" valign="top"><a id="a89c1e8092a9b887072f18612567b83c2" name="a89c1e8092a9b887072f18612567b83c2"></a>
-Coroutine&#160;</td><td class="memItemRight" valign="bottom"><b>musicFadeCoroutine</b></td></tr>
-<tr class="separator:a89c1e8092a9b887072f18612567b83c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09a18d3499c750b9c539872f8a256d21"><td class="memItemLeft" align="right" valign="top"><a id="a09a18d3499c750b9c539872f8a256d21" name="a09a18d3499c750b9c539872f8a256d21"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>musicIsFading</b> = false</td></tr>
-<tr class="separator:a09a18d3499c750b9c539872f8a256d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab52ab4a6f4cdb3d6f694c8c3e822bd5e"><td class="memItemLeft" align="right" valign="top"><a id="ab52ab4a6f4cdb3d6f694c8c3e822bd5e" name="ab52ab4a6f4cdb3d6f694c8c3e822bd5e"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>smallTextLineLength</b> = 90</td></tr>
 <tr class="separator:ab52ab4a6f4cdb3d6f694c8c3e822bd5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -227,6 +221,15 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>mediumextLineLength</b
 <tr class="memitem:af10a89256121f95e80c8dcfa6be64ba2"><td class="memItemLeft" align="right" valign="top"><a id="af10a89256121f95e80c8dcfa6be64ba2" name="af10a89256121f95e80c8dcfa6be64ba2"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>largeTextLineLength</b> = 50</td></tr>
 <tr class="separator:af10a89256121f95e80c8dcfa6be64ba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8df14d38df3c68db53e6bc8069e3cbb"><td class="memItemLeft" align="right" valign="top"><a id="ac8df14d38df3c68db53e6bc8069e3cbb" name="ac8df14d38df3c68db53e6bc8069e3cbb"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>defaultTalkingDelay</b> = 0.05f</td></tr>
+<tr class="separator:ac8df14d38df3c68db53e6bc8069e3cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c1e8092a9b887072f18612567b83c2"><td class="memItemLeft" align="right" valign="top"><a id="a89c1e8092a9b887072f18612567b83c2" name="a89c1e8092a9b887072f18612567b83c2"></a>
+Coroutine&#160;</td><td class="memItemRight" valign="bottom"><b>musicFadeCoroutine</b></td></tr>
+<tr class="separator:a89c1e8092a9b887072f18612567b83c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09a18d3499c750b9c539872f8a256d21"><td class="memItemLeft" align="right" valign="top"><a id="a09a18d3499c750b9c539872f8a256d21" name="a09a18d3499c750b9c539872f8a256d21"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>musicIsFading</b> = false</td></tr>
+<tr class="separator:a09a18d3499c750b9c539872f8a256d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="aa65144c4be7c744b43560487925f556d" name="aa65144c4be7c744b43560487925f556d"></a>
@@ -347,6 +350,32 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>largeTextLineLength</b
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">volume</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a07c8bbea7e4900d63f15794807f3c86a" name="a07c8bbea7e4900d63f15794807f3c86a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c8bbea7e4900d63f15794807f3c86a">&#9670;&#160;</a></span>SetTalkingSpeed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void SettingsManager.SetTalkingSpeed </td>
+          <td>(</td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>multiplier</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Takes a multiplier that changes the talking speed. If the multiplier is '3', it should be 3 times as fast. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">multiplier</td><td></td></tr>
   </table>
   </dd>
 </dl>
