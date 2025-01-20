@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hi, I'm Willow. I Remember plenty crazy stories from the past! I have so
+    text: Hi, I'm Willow. I remember plenty crazy stories from the past! I have so
       many to tell.
     image: {fileID: 0}
     background: []

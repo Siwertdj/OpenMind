@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I am currently studying to get my bachelors degree at university.
+    text: I am currently studying to get my bachelor's degree at university.
     image: {fileID: 0}
     background: []

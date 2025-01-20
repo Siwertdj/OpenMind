@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: No, I am not religious. I am interested in theology though and I really
-      enjoy learning about religions
+    text: No, I am not religious. However, I am interested in theology and I really
+      enjoy learning about religions.
     image: {fileID: 0}
     background: []

@@ -54,7 +54,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 733f57dac33dc6840a17f6668fe71a26, type: 2}
     trait:
-    - If I won the lottery I would invest the money in a music career.
+    - If I would win the lottery, I would invest the money in a music career.
   - question: 18
     answer: {fileID: 11400000, guid: 7be52b6c6ac842a41be5e3ecfd7ba409, type: 2}
     trait:

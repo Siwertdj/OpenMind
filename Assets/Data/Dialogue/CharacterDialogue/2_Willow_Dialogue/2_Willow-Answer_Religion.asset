@@ -17,6 +17,6 @@ MonoBehaviour:
   - type: 0
     emotion: 0
     text: No, I'm not religious. Generally I have no problem with religions and their
-      ideas but I think the execution is problematic in many cases.
+      ideas, but I think the execution is problematic in many cases.
     image: {fileID: 0}
     background: []

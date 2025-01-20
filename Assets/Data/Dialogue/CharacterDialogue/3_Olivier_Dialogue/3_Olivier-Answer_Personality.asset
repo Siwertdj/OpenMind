@@ -23,7 +23,7 @@ MonoBehaviour:
     background: []
   - type: 0
     emotion: 2
-    text: "But sometimes I think I\u2019m a little too dominant in conversation which
-      actually makes me a worse listener.  "
+    text: "But sometimes I think I\u2019m a little too dominant in conversation,
+      which might actually make me a worse listener. "
     image: {fileID: 0}
     background: []
