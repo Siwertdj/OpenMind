@@ -171,7 +171,7 @@ public class MultiplayerMenuManager : MonoBehaviour
         if (lobbyCanvas.activeInHierarchy)
         {
             code.text = classCode;
-            playerCountText.text = MultiplayerManager.mm.GetPlayerAmount() + "/ " + maxPlayers + " players joined";
+            playerCountText.text = MultiplayerManager.mm.GetPlayerAmount() + " of " + maxPlayers + " players in game";
         }
     }
 }
