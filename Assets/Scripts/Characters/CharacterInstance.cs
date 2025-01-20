@@ -16,7 +16,6 @@ public class CharacterInstance
     public Dictionary<Question, DialogueContainer> Answers = new();
     public Dictionary<Question, List<string>> Traits = new();
     public List<Question> RemainingQuestions = new();
-    public List<Question> AskedQuestions = new();
 
     public string       characterName;
     public int          id;
@@ -56,14 +55,14 @@ public class CharacterInstance
             talkedTo = true;
             return (data.firstGreeting != null 
                 ? data.firstGreeting.GetDialogue(background)
-                : new ContentDialogueObject("Hello", null, null));
+                : new ContentDialogueObject("Hello.", null, background));
         }
         
         // If we have talked to the NPC before, try to get the greeting-dialopgue.
         // if its null, default to "Hello".
         return (data.greeting != null 
             ? data.greeting.GetDialogue(background) 
-            : new ContentDialogueObject("Hello", null, background));
+            : new ContentDialogueObject("Hello.", null, background));
         
     }
 

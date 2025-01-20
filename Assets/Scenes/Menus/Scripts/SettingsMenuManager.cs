@@ -42,13 +42,13 @@ public class SettingsMenuManager : MonoBehaviour
         SetActiveButton(activeButton);
         
         // Change the text size
-        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
-        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
+        dialogueBox.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
     }
 
     [Header("Accessibility References")]
-    [SerializeField] private GameSlider talkingSpeedSlider;
+    [SerializeField] private GameSlider textSpeedSlider;
     [SerializeField] private Toggle textToSpeechToggle;
 
     private void Start()
@@ -61,7 +61,7 @@ public class SettingsMenuManager : MonoBehaviour
         // Set the values on the UI elements
         musicVolumeSlider.UpdateSlider(SettingsManager.sm.musicVolume);
         sfxVolumeSlider.UpdateSlider(SettingsManager.sm.sfxVolume);
-        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
+        textSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
     }
 
     /// <summary>
@@ -178,10 +178,10 @@ public class SettingsMenuManager : MonoBehaviour
     {
         int fontSize = SettingsManager.sm.GetFontSize();
         // Change the fontSize of the confirmSelectionButton
-        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        characterNameField.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         
         // Change the fontSize of the headerText
-        dialogueBox.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        dialogueBox.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
     }
     
     /// <summary>
