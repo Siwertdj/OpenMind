@@ -25,7 +25,7 @@ public class PopUpManager : MonoBehaviour
         if (data.Length > 1 && data[1] is Color)
         {
             Color color = (Color)data[1];
-            color.a = 0.9f;
+            color.a = 0.8f;
             closePopUp.GetComponentInChildren<Image>().color = color;
         }
         if (data.Length > 2)

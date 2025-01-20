@@ -51,7 +51,7 @@ public class Client : NetworkObject
 
         if (notebookReceivedPopup)
         {
-            DisplayError("You've received a notebook from someone. Go and take a look!");
+            DisplayPopUp("You've received a notebook! Go take a look!");
             notebookReceivedPopup = false;
         }
     }

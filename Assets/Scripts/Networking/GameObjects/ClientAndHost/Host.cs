@@ -51,7 +51,7 @@ public class Host : NetworkObject
 
         if (notebookReceivedPopup)
         {
-            DisplayError("You've received a notebook! Go take a look!");
+            DisplayPopUp("You've received a notebook! Go take a look!");
             notebookReceivedPopup = false;
         }
 
@@ -319,15 +319,5 @@ public class Host : NetworkObject
     public override void Dispose()
     {
         listener?.Dispose();
-    }
-
-    private void DisplayError(string error)
-    {
-        if (doPopup is null)
-            Debug.LogError("No popup for error handling was initialised");
-        else
-        {
-            doPopup.Raise(this, error, new Color(0,0,0));
-        }
     }
 }
