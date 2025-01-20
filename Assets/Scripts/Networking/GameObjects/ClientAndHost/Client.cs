@@ -34,6 +34,7 @@ public class Client : NetworkObject
     private       Action resendNotebook;
     private const int    maxReconnectAttempts    = 3;
     private       int    currentReconnectAttempt;
+    private       bool   notebookReceivedPopup;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
@@ -46,6 +47,12 @@ public class Client : NetworkObject
             DebugLog("attempting to reconnect");
             tryReconnect = false;
             StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
+        }
+
+        if (notebookReceivedPopup)
+        {
+            DisplayError("You've received a notebook from someone. Go and take a look!");
+            notebookReceivedPopup = false;
         }
     }
 
@@ -87,6 +94,8 @@ public class Client : NetworkObject
         StartCoroutine(sender.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
         StartCoroutine(sender.ListenForResponse(settings.ListeningWhileNotConnectedIntervalSeconds));
+
+        notebookReceivedPopup = false;
     }
     
     private void Disconnected(object o)
@@ -193,13 +202,12 @@ public class Client : NetworkObject
         if (settings.IsDebug)
             AddAdditionalDebugMessagesNotebook();
         
+        DisplayWaitNotebook();
+        
         sender.AddOnDataSentEvent(settings.NotebookDataSignature, ConfirmNotebookSent);
         sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
         sender.AddOnReceiveResponseEvent(settings.NotebookDataSignature, ReceivedNotebookDataFromOther);
         sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
-        
-        DisplayWaitNotebook();
-        
     }
 
     private void ConfirmNotebookSent(object o)
@@ -219,7 +227,8 @@ public class Client : NetworkObject
             foreach (KeyValuePair<int, string> characterNotes in receivedData[0].GetData<NotebookDataPackage>().characterNotes)
                 DebugLog($"Received notebook data from host: {characterNotes.Key}, character notes: {characterNotes.Value}");
         else
-            DisplayError("You've received a notebook from someone. Go and take a look!");
+            notebookReceivedPopup = true;
+            
         
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();

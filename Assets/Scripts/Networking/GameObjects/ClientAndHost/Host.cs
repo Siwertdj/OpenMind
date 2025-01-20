@@ -30,8 +30,8 @@ public class Host : NetworkObject
     private bool readyToSentFirstClientSecondClientNotebook;
     private List<NetworkPackage> dataToSendSecondClient;
     private bool isListening;
-    private bool receivedNotebookPopup;
-    private bool waitingOnNotebook;
+    private bool notebookReceivedPopup;
+    private bool startWaitingOnNotebook;
     
     private void Update()
     {
@@ -49,16 +49,16 @@ public class Host : NetworkObject
             StartCoroutine(SendDataWithDelay1());
         }
 
-        if (receivedNotebookPopup)
+        if (notebookReceivedPopup)
         {
             DisplayError("You've received a notebook! Go take a look!");
-            receivedNotebookPopup = false;
+            notebookReceivedPopup = false;
         }
 
-        if (waitingOnNotebook)
+        if (startWaitingOnNotebook)
         {
-            DisplayError("Searching for a notebook. Please wait.");
-            waitingOnNotebook = false;
+            DisplayWaitNotebook();
+            startWaitingOnNotebook = false;
         }
     }
     
@@ -137,8 +137,8 @@ public class Host : NetworkObject
         ActivateNotebookExchange();
 
         isListening = true;
-        receivedNotebookPopup = false;
-        waitingOnNotebook = false;
+        notebookReceivedPopup = false;
+        startWaitingOnNotebook = false;
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public class Host : NetworkObject
         //if host was first upload
         if (notebooks.Count == 0)
         {
-            waitingOnNotebook = true;
+            startWaitingOnNotebook = true;
             ReceiveFirstNotebookFromClient(listPackage);
             return;
         }
@@ -201,7 +201,7 @@ public class Host : NetworkObject
         this.assignNotebookData(notebook);
         
         // show pop up that the host received a notebook
-        receivedNotebookPopup = true;
+        notebookReceivedPopup = true;
     }
     
     /// <summary>
@@ -221,8 +221,7 @@ public class Host : NetworkObject
                 assignNotebookData((List<NetworkPackage>)o);
                 
                 // Show popup that the host received a notebook
-                receivedNotebookPopup = true;
-                waitingOnNotebook = false;
+                notebookReceivedPopup = true;
             }
         }
         
@@ -235,9 +234,6 @@ public class Host : NetworkObject
         AddNotebook((List<NetworkPackage>)o);
         
         addNormalResponse = true;
-        
-        // let the client know that they should wait on the notebook
-        DisplayWaitNotebook();
     }
     
     /// <summary>
