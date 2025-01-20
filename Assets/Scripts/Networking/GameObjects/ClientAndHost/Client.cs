@@ -34,6 +34,7 @@ public class Client : NetworkObject
     private       Action resendNotebook;
     private const int    maxReconnectAttempts    = 3;
     private       int    currentReconnectAttempt;
+    private       bool   notebookReceivedPopup;
     
     //basically a copy from Gamemanager.gm.currentCharacters.
     //This is a separate variable to limit coupling as much as possible
@@ -46,6 +47,12 @@ public class Client : NetworkObject
             DebugLog("attempting to reconnect");
             tryReconnect = false;
             StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
+        }
+
+        if (notebookReceivedPopup)
+        {
+            DisplayPopUp("You've received a notebook! Go take a look!");
+            notebookReceivedPopup = false;
         }
     }
 
@@ -75,11 +82,9 @@ public class Client : NetworkObject
         
         sender = new DataSender(hostAddress, settings.ClientHostPortConnection, settings.PingDataSignature);
         sender.AddOnDisconnectedEvent(Disconnected);
-        
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
         sender.AddOnConnectEvent(OnConnectionWithHost);
         sender.AddOnReceiveResponseEvent(settings.InitialisationDataSignature, ReceivedInitFromHost);
-
         
         //additional debugs if in debug mode
         if (settings.IsDebug)
@@ -89,6 +94,8 @@ public class Client : NetworkObject
         StartCoroutine(sender.IsDisconnected(settings.PingDataSignature, settings.DisconnectedIntervalSeconds));
         StartCoroutine(sender.Connect(settings.ConnectionTimeoutSeconds));
         StartCoroutine(sender.ListenForResponse(settings.ListeningWhileNotConnectedIntervalSeconds));
+
+        notebookReceivedPopup = false;
     }
     
     private void Disconnected(object o)
@@ -187,7 +194,6 @@ public class Client : NetworkObject
             resendNotebook = () => SendNotebookData(response, notebookData, currentCharacters);
             return;
         }
-            
         
         this.response = response;
         activeCharacters = currentCharacters;
@@ -195,6 +201,8 @@ public class Client : NetworkObject
         
         if (settings.IsDebug)
             AddAdditionalDebugMessagesNotebook();
+        
+        DisplayWaitNotebook();
         
         sender.AddOnDataSentEvent(settings.NotebookDataSignature, ConfirmNotebookSent);
         sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
@@ -212,12 +220,16 @@ public class Client : NetworkObject
     /// Convert it back to notebookdata.
     /// </summary>
     private void ReceivedNotebookDataFromOther(object o)
-    { 
+    {
         multiplayerState = MultiplayerState.ReceivedNotebook;
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         if (settings.IsDebug)
             foreach (KeyValuePair<int, string> characterNotes in receivedData[0].GetData<NotebookDataPackage>().characterNotes)
                 DebugLog($"Received notebook data from host: {characterNotes.Key}, character notes: {characterNotes.Value}");
+        else
+            notebookReceivedPopup = true;
+            
+        
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
         NotebookData notebookData = notebookDataPackage.ConvertToNotebookData();
         response(notebookData);
@@ -238,20 +250,23 @@ public class Client : NetworkObject
         else
         {
             doPopup.Raise(this, error, new Color(0,0,0));
-            reactivateJoinButton();
+            if(multiplayerState == MultiplayerState.Infant)
+                reactivateJoinButton();
         }
     }
 
     private void DebugError(string error)
     {
         DebugLog(error);
-        reactivateJoinButton();
+        if(multiplayerState == MultiplayerState.Infant)
+            reactivateJoinButton();
     }
 
     private void DebugLog(string message)
     {
         Debug.Log($"GameState: {multiplayerState}\nMessage: {message}");
     }
+    
     
     #region debugMethods
     

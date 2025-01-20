@@ -40,5 +40,5 @@ MonoBehaviour:
   - Now is the time to come find me!
   numberOfCharacters: 4
   numQuestions: 1
-  minimumRemaining: 2
+  minimumRemaining: 4
   immediateVictim: 0
