@@ -33,12 +33,15 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
         }
     }
     
-    internal void DisplayPopUp(string text)
+    internal void ReceivedNotebookPopUp()
     {
         if (doPopup is null)
             Debug.LogError("No popup for error handling was initialised");
         else
-            doPopup.Raise(this, text, new Color(0,0,0));
+        {
+            string message = "You've received a notebook! Go take a look!";
+            doPopup.Raise(this, message, new Color(0,0,0));
+        }
     }
     
     public abstract void Dispose();

@@ -51,7 +51,7 @@ public class Host : NetworkObject
 
         if (notebookReceivedPopup)
         {
-            DisplayPopUp("You've received a notebook! Go take a look!");
+            ReceivedNotebookPopUp();
             notebookReceivedPopup = false;
         }
 
