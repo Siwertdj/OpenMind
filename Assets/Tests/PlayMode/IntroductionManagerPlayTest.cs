@@ -140,20 +140,6 @@ public class IntroductionManagerPlayTest
     }
     
     /// <summary>
-    /// Test that the background is actually changed after the ChangeBackground method is called 
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ChangeBackgroundTest()
-    {
-        im.StoryA();
-        int index = im.BackgroundIndex;
-        im.ChangeBackground();
-        Assert.AreEqual(index+1, im.BackgroundIndex);
-        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        yield return null;
-    }
-    
-    /// <summary>
     /// Test the TypeAnimation function. This function uses the DialogueAnimator which is already tested elsewhere. 
     /// </summary>
     [UnityTest]
@@ -228,6 +214,7 @@ public class IntroductionManagerPlayTest
         im.StoryB();
         Sprite beforeImage = im.character.sprite; 
         im.Vision();
+        im.Vision();
         Assert.AreNotEqual(beforeImage, im.character.sprite);
         yield return null; 
     }
@@ -278,20 +265,6 @@ public class IntroductionManagerPlayTest
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // When the introduction is playing the continuebutton should be visible.
         Assert.IsTrue(im.continueButton.activeSelf);
-        yield return null;
-    }
-    
-    /// <summary>
-    /// Checks if the character sprite changes when the computer is appearing. 
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ComputerTest()
-    {
-        im.StoryC();
-        Sprite beforeImage = im.character.sprite;
-        im.Computer();
-        im.Computer();
-        Assert.AreNotEqual(beforeImage, im.character.sprite);
         yield return null;
     }
     

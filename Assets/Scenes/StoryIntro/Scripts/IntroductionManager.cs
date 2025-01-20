@@ -30,6 +30,17 @@ public class IntroductionManager : MonoBehaviour
     [SerializeField] Button     sendButton; // Send message button
     [SerializeField] GameObject skipButton;
     
+    [Header("Variables for introduction A")]
+    private                  GameObject[]  messages;         // Contains the instantiated TextMessage objects
+    public                   GameObject[]  messageLocations; // Locations on the screen where TextMessages can be shown
+    public                   TMP_Text      typingText;       // Text that will be used for the typing animation
+    [SerializeField] public  TextMessage[] textMessages;     // Contains the non-instantiated TextMessage objects
+    [SerializeField] private Transform     canvasTransform;  // Necessary to instantiate the textmessage prefabs
+    [SerializeField] private Image         phone;            // The phone on which the messages are shown
+    
+    [Header("Variables for introduction C")]
+    [SerializeField] private Image computer;                 // AI sidekick 
+    
     [Header("General Variables")]
     public Sprite[]   sprites;      // Stores all the used sprites for the introduction.
     public String[]   storyText;    // Stores all the used text for the introduction. 
@@ -37,17 +48,9 @@ public class IntroductionManager : MonoBehaviour
     private bool   changeSprite;    // This boolean is used to flip between versions of charactersprites
     private string characterName;   // Name of the character that is currently speaking
     
-    [SerializeField] public Image character;
-    [SerializeField] public TMP_Text nameTag;
-    [SerializeField] GameObject nameTagImage; 
-    
-    [Header("Variables for introduction A")]
-    private                  GameObject[]  messages;         // Contains the instantiated TextMessage objects
-    public                   GameObject[]  messageLocations; // Locations on the screen where TextMessages can be shown
-    public                   TMP_Text      typingText;       // Text that will be used for the typing animation
-    [SerializeField] public  TextMessage[] textMessages;     // Contains the non-instantiated TextMessage objects
-    [SerializeField] private Transform     canvasTransform;  // Necessary to instantiate the textmessage prefabs
-    [SerializeField] private Image         phone;            // The phone 
+    [SerializeField] public Image      character;
+    [SerializeField] public TMP_Text   nameTag;
+    [SerializeField]        GameObject nameTagImage; 
     
     // The variables below are the UI components that we want to manipulate during the introduction
     [SerializeField] private DialogueAnimator dialogueAnimator;
@@ -201,8 +204,8 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline = introStoryC;
         ResetTimeline();
         TextIndex = 19;
-        background.sprite = sprites[11];
-        character.sprite = sprites[9];
+        background.sprite = sprites[4];
+        character.sprite = sprites[7];
         characterName = "Receptionist";
         currentTimeline.Play();
     }
@@ -247,24 +250,6 @@ public class IntroductionManager : MonoBehaviour
             {
                 message.SetActive(false);
             }
-        }
-    }
-    
-    /// <summary>
-    /// This method changes the background of the scene. 
-    /// </summary>
-    public void ChangeBackground()
-    {
-        BackgroundIndex++; // Keep track of the background that needs to be shown. 
-        try
-        {
-            background.sprite = sprites[BackgroundIndex];
-        }
-        catch
-        {
-            Debug.LogError("Error: No more available backgrounds.");
-            BackgroundIndex = 0;
-            background.sprite = sprites[BackgroundIndex];
         }
     }
     
@@ -340,15 +325,14 @@ public class IntroductionManager : MonoBehaviour
     {
         if (changeSprite)
         {
-            character.sprite = sprites[9];
-            background.sprite = sprites[4];
+            computer.sprite = sprites[9];
+            //character.sprite = sprites[9];
         }
         else
         {
-            character.sprite = sprites[7];
-            background.sprite = sprites[11];
+            computer.sprite = sprites[10];
+            //character.sprite = sprites[7];
         }
-        
         changeSprite = !changeSprite; 
     }
     
@@ -358,7 +342,7 @@ public class IntroductionManager : MonoBehaviour
     public void ChangeComputerText()
     {
         nameTag.text = "Computer";
-        character.sprite = sprites[10];
+        computer.sprite = sprites[10];
         UpdateText();
     }
     
