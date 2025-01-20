@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Tess
   id: 16
   neutralAvatar: {fileID: 21300000, guid: d28d604b71d7de04986139bd5f77adbb, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
+  happyAvatar: {fileID: 21300000, guid: df13c15aafd0c474794e96e7f972cd07, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: c6ef74d672398604aaece56e3b4e0b65, type: 3}
   voicePitch: 1
   facePivot: {x: 0.4951, y: 0.7515}
   firstGreeting: {fileID: 11400000, guid: 0e8771eac8c34724aa15ba6e8f2a4f40, type: 2}

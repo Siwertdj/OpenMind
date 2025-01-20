@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Eva
   id: 14
   neutralAvatar: {fileID: 21300000, guid: 854afebe6edd6f84bb555f34546d4551, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
+  happyAvatar: {fileID: 21300000, guid: c4aad29826dbc5f40808d92c12ba44f2, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: c341da6588cfba64faa2d1d23d1d1730, type: 3}
   voicePitch: 1
   facePivot: {x: 0.4725, y: 0.7244}
   firstGreeting: {fileID: 11400000, guid: 1a10e6e891bdd6a45891775b1c5656ff, type: 2}

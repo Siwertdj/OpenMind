@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Isabella
   id: 18
   neutralAvatar: {fileID: 21300000, guid: a0364568eb7954d45ab14fc330033a75, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
+  happyAvatar: {fileID: 21300000, guid: e69b90e6227b70649afa1f2821ca760e, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 937f3e22246657d4bbd37a135d6dc0a5, type: 3}
   voicePitch: 1.6
   facePivot: {x: 0.4908, y: 0.7413}
   firstGreeting: {fileID: 11400000, guid: 90ef825ac1eace042b91c59c6f40c99c, type: 2}
