@@ -87,11 +87,12 @@ public class NotebookManager : MonoBehaviour
         {
             showingMultiplayerNotebook = false;
             
-            InitializeTabButtons();
             notebookData = GameManager.gm.notebookData;
-            // Open custom notes page
+            
+            // Open personal notes and update the text
             OpenPersonalNotes();
-
+            personalCustomInput.text = notebookData.GetPersonalNotes();
+            
             // Add listener to recreate tab when font size is changed
             SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
         }
@@ -100,10 +101,12 @@ public class NotebookManager : MonoBehaviour
             if (GameManager.gm.multiplayerNotebookData != null)
             {
                 showingMultiplayerNotebook = true;
-                InitializeTabButtons();
+
                 notebookData = GameManager.gm.multiplayerNotebookData;
-                // Open custom notes page
+                
+                // Open personal notes and update the text
                 OpenPersonalNotes();
+                personalCustomInput.text = notebookData.GetPersonalNotes();
 
                 // Add listener to recreate tab when font size is changed
                 SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
