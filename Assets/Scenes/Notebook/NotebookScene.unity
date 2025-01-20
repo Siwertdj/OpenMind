@@ -1014,6 +1014,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabAnimationDuration: 0.25
+  shoveAnimationDuration: 0.5
+  shoveAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   expandedTabHeight: 60
   collapsedTabHeight: 0
   characterInfo: {fileID: 929483351}
@@ -1029,6 +1054,8 @@ MonoBehaviour:
   - {fileID: 145953728}
   - {fileID: 718297963}
   currentTabText: {fileID: 1547554453}
+  notebookTransform: {fileID: 732030173}
+  backgroundImage: {fileID: 1151966905}
   pagePrefab: {fileID: 6495478036534208244, guid: a39a88ed79154474f8c29a9a917b4037, type: 3}
   inactiveNotePrefab: {fileID: 2691103649229140218, guid: 89d30f90ecaa88e4da9474f6c47f9041, type: 3}
   introObjectPrefab: {fileID: 2691103649229140218, guid: 38c91ccfad5bd0d499903d953b1ead4f, type: 3}
@@ -1488,7 +1515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 732030173}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Notebook parent object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

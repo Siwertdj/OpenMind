@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Manager class for the notebook scene.
@@ -18,9 +20,12 @@ public class NotebookManager : MonoBehaviour
     private                int               currentPageIndex;
     private                Button            selectedButton;
     [NonSerialized] public NotebookData      notebookData;
+    private Coroutine shoveAnimationCoroutine;
 
     [Header("Settings")]
     [SerializeField] private float tabAnimationDuration;
+    [SerializeField] private float shoveAnimationDuration;
+    [SerializeField] private AnimationCurve shoveAnimationCurve;
     [SerializeField] private float expandedTabHeight;
     [SerializeField] private float collapsedTabHeight;
 
@@ -34,6 +39,8 @@ public class NotebookManager : MonoBehaviour
 
     [Header("Component References")]
     [SerializeField] private TMP_Text currentTabText;
+    [SerializeField] private RectTransform notebookTransform;
+    [SerializeField] private Image backgroundImage;
 
     [Header("Prefab References")]
     [SerializeField] private GameObject pagePrefab;
@@ -61,6 +68,10 @@ public class NotebookManager : MonoBehaviour
 
         // Add listener to recreate tab when font size is changed
         SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
+
+        // Animate notebook moving in
+        float startPos = Screen.width / 2 + notebookTransform.rect.width / 2;
+        ShoveAnimation(startPos, 0, true);
     }
     
     /// <summary>
@@ -335,6 +346,65 @@ public class NotebookManager : MonoBehaviour
     {
         // Reopen character tab (automatically applies settings)
         OpenCharacterTab(currentCharacterIndex);
+    }
+
+    /// <summary>
+    /// Animates notebook moving from the <paramref name="startPos"/> to the <paramref name="endPos"/>.
+    /// </summary>
+    /// <param name="startPos">The position from which the animation will start.</param>
+    /// <param name="endPos">The position in which the animation will end.</param>
+    /// <param name="fadingIn">Is the background going to fade in our out?</param>
+    /// <param name="tcs">The TaskCompletionSource to define when the animation is complete.</param>
+    public void ShoveAnimation(float startPos, float endPos, bool fadingIn, TaskCompletionSource<bool> tcs = null)
+    {
+        if (shoveAnimationCoroutine != null) 
+            StopCoroutine(shoveAnimationCoroutine);
+
+        shoveAnimationCoroutine = StartCoroutine(AnimateNotebook(startPos, endPos, fadingIn, tcs));
+    }
+
+    /// <summary>
+    /// Animates notebook shoving out of the screen. 
+    /// Has a TaskCompletionSource so that it is awaitable.
+    /// </summary>
+    public Task ShoveOutNotebook()
+    {
+        var tcs = new TaskCompletionSource<bool>();
+
+        ShoveAnimation(
+            notebookTransform.localPosition.x, 
+            Screen.width / 2 + notebookTransform.rect.width / 2,
+            false, tcs);
+
+        return tcs.Task;
+    }
+
+    /// <summary>
+    /// The coroutine which animates the notebook moving horizontally.
+    /// This coroutine shouldn't be started directly, instead, call <see cref="ShoveAnimation(float, float, TaskCompletionSource{bool})"/>
+    /// </summary>
+    private IEnumerator AnimateNotebook(float startPos, float endPos, bool fadingIn, TaskCompletionSource<bool> tcs)
+    {
+        float time = 0;
+        while (time < shoveAnimationDuration)
+        {
+            time += Time.deltaTime;
+
+            // Move notebook
+            float timeStep = shoveAnimationCurve.Evaluate(time / shoveAnimationDuration);
+            float x = Mathf.Lerp(startPos, endPos, timeStep);
+            notebookTransform.localPosition = new Vector2(x, notebookTransform.localPosition.y);
+
+            // Fade background
+            var color = backgroundImage.color;
+            color.a = fadingIn ? Mathf.Lerp(0, 0.9f, timeStep) : Mathf.Lerp(0.9f, 0, timeStep);
+            backgroundImage.color = color;
+
+            yield return null;
+        }
+
+        notebookTransform.localPosition = new Vector2(endPos, notebookTransform.localPosition.y);
+        tcs?.SetResult(true);
     }
 
     #region Test Variables

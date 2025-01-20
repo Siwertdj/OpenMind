@@ -344,27 +344,33 @@ public class SceneController : MonoBehaviour
     /// Function to load the notebook.
     /// </summary>
     // this method is not tested
-    public void ToggleNotebookScene(Button button, GameObject menuButton)
+    public async void ToggleNotebookScene(Button button, GameObject menuButton)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
-            // If notebook is already open, close it
-            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-            {
-                menuButton.SetActive(true);
-                SettingsManager.sm.UnpauseGame();
-                crossOverlay.SetActive(false);
-                _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
-                    TransitionType.Unload, false);
-            }
-            else // Notebook is NOT loaded.. so open it
-            {
-                menuButton.SetActive(false);
-                SettingsManager.sm.PauseGame();
-                crossOverlay.SetActive(true);
-                _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
-                    TransitionType.Additive, false);
-            }
+        // If notebook is already open, close it
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            SettingsManager.sm.UnpauseGame();
+
+            var nm = FindObjectOfType<NotebookManager>();
+            button.interactable = false;
+            await nm.ShoveOutNotebook();
+            button.interactable = true;
+
+            menuButton.SetActive(true);
+            crossOverlay.SetActive(false);
+            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
+                TransitionType.Unload, false);
+        }
+        else // Notebook is NOT loaded.. so open it
+        {
+            menuButton.SetActive(false);
+            crossOverlay.SetActive(true);
+            SettingsManager.sm.PauseGame();
+            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
+                TransitionType.Additive, false);
+        }
     }
     
     /// <summary>
