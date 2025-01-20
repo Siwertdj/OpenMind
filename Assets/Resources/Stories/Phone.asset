@@ -38,7 +38,7 @@ MonoBehaviour:
   - The reunion is about to finish.
   - I hope you've figured out who I am by now.
   - Now is the time to come find me!
-  numberOfCharacters: 4
-  numQuestions: 1
+  numberOfCharacters: 8
+  numQuestions: 2
   minimumRemaining: 4
   immediateVictim: 0
