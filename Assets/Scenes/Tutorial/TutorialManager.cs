@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Plastic.Antlr3.Runtime.Debug;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
@@ -34,63 +35,93 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        InitializeTutorial();
+        ResetTutorial(); // Make sure all hints start with a clean slate. 
         
         // The type of tutorial that is shown, depends on the scene that is currently loaded. 
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
         {
-            tutorialButton.enabled = true; 
-            // The hint the player should receive during this scene. 
-            text.text = "Try to find the culprit!";
-            textBox.gameObject.SetActive(true);
-            // Make sure the small tutorial can be closed by tapping the screen
-            continueButton.gameObject.SetActive(true);
-            continueButton.onClick.AddListener(StopTutorial); // Add the stop tutorial feature from the continue button
+            DialogueHint();
         }
         else if (SceneManager.GetSceneByName("GameLossScene").isLoaded || SceneManager.GetSceneByName("GameWinScene").isLoaded)
         {
-            tutorialButton.enabled = true; 
-            // The hint the player should receive during these scenes. 
-            text.text = "Restart game, try again with the same characters, or quit?";
-            textBox.gameObject.SetActive(true);
-            // Make sure the small tutorial can be closed by tapping the screen
-            continueButton.gameObject.SetActive(true);
-            continueButton.onClick.AddListener(StopTutorial); // Add the stop tutorial feature from the continue button
+            EndScreenHint();
+        }
+        else if (SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+        {
+            EpilogueHint();
+        }
+        else if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            NotebookHint();
         }
         else // In all other cases (namely the NPCSelectScene) the actual tutorial needs to be played. 
         {
-            // Initialize the notebook for the notebook tutorial
-            GameObject notebook = GameObject.Find("Notebook Button");
-            
-            try
-            {
-                notebookButton = notebook.GetComponentInChildren<GameButton>();
-            }
-            catch
-            {
-                Debug.LogError("There is no notebookbutton");
-            }
-            
-            // Close notebook if it is already opened.
-            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-            {
-                notebookButton.onClick.Invoke();
-            }
-            
-            notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
-            tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 
-            
-            // Start the tutorial
-            StartTutorial();
+            ActivateTutorial();
         }
-        
     }
     
+    // This region contains the methods that are called in the different scenes. 
+    #region Hint methods
+    /// <summary>
+    /// This method is responsible for activating a hint. The content of the hint is determined by the methods below. 
+    /// </summary>
+    private void ActivateHint()
+    {
+        tutorialButton.enabled = true;
+        textBox.gameObject.SetActive(true);
+        // Make sure the hint can be closed by tapping the screen
+        continueButton.gameObject.SetActive(true);
+        continueButton.onClick.AddListener(StopTutorial); // Add the stop tutorial feature from the continue button
+    }
+    
+    /// <summary>
+    /// This method is responsible for showing the hint during the Dialogue scene. 
+    /// </summary>
+    private void DialogueHint()
+    {
+        // The hint the player should receive during this scene. 
+        text.text = "Ask this person a question to find out if they are the culprit!";
+        ActivateHint();
+    }
+    
+    /// <summary>
+    /// This method is responsible for showing the hint during the Notebook scene. 
+    /// </summary>
+    private void NotebookHint()
+    {
+        // The hint the player should receive during this scene. 
+        text.text = "In your Notebook you can write down gathered information.";
+        ActivateHint();
+    }
+    
+    /// <summary>
+    /// This method is responsible for showing the hint during the Epilogue scene. 
+    /// </summary>
+    private void EpilogueHint()
+    {
+        // The hint the player should receive during this scene. 
+        text.text = "Select the person you think is the culprit. When in doubt, consult your notebook.";
+        ActivateHint();
+    }
+    
+    /// <summary>
+    /// This method is responsible for showing the hint during the epilogue scene. 
+    /// </summary>
+    private void EndScreenHint()
+    {
+        // The hint the player should receive during these scenes. 
+        text.text = "Restart game, try again with the same characters, or quit?";
+        ActivateHint();
+    }
+    #endregion
+    
+    // This region contains methods regarding the tutorial in the NPCSelect scene.
+    #region Tutorial
     /// <summary>
     /// This method resets the tutorial to the beginning state (useful for when tutorial is already played) 
     /// and initializes necessary components. 
     /// </summary>
-    private void InitializeTutorial()
+    private void ResetTutorial()
     {
         // Make sure nothing from 'previous' tutorial is active. 
         helpHighlight.SetActive(false);
@@ -112,15 +143,34 @@ public class TutorialManager : MonoBehaviour
     }
     
     /// <summary>
-    /// This method activates the help button highlight
+    /// This method initializes necessary variables for the tutorial and then activates the tutorial. 
     /// </summary>
-    public void HighlightHelp()
+    private void ActivateTutorial()
     {
-        helpHighlight.gameObject.SetActive(true);
+        // Initialize the notebook for the notebook tutorial
+        GameObject notebook = GameObject.Find("Notebook Button");
+        
+        try
+        {
+            notebookButton = notebook.GetComponentInChildren<GameButton>();
+        }
+        catch
+        {
+            Debug.LogError("There is no notebookbutton");
+        }
+        
+        // Close notebook if it is already opened.
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            notebookButton.onClick.Invoke();
+        }
+        
+        notebookButton.enabled = false;                             // Make sure the notebook can not be (de)activated during the tutorial. 
+        tutorialButton.onClick.AddListener(EnableNotebookButton);   // When the tutorial is stopped, the notebook button should regain normal functionality. 
+        
+        // Start the tutorial
+        StartTutorial();
     }
-    
-    // This region contains methods regarding the starting, stopping and pausing of the tutorial.
-    #region StartStopPauseTutorial
     
     /// <summary>
     /// This method is called when the help button is clicked.
@@ -156,10 +206,18 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     public void StopTutorial()
     {
-        tutorialButton.enabled = true; 
+        tutorialButton.enabled = true;
         tutorialButton.onClick.Invoke(); // Clicking the tutorial button again closes the scene. 
     }
     
+    
+    /// <summary>
+    /// This method activates the help button highlight
+    /// </summary>
+    public void HighlightHelp()
+    {
+        helpHighlight.gameObject.SetActive(true);
+    }
     #endregion
     
     // This region contains methods regarding the part of the tutorial where the notebook is involved.

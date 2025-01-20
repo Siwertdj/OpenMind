@@ -483,8 +483,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -0.004, y: 0.759, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 3.1030884, y: -3.6691}
+  m_SizeDelta: {x: -55.8555, y: -98.3619}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &386369043
 CanvasGroup:
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 70.33038, y: 40, z: 73.06644, w: 40}
+  m_margin: {x: 2.0682068, y: 11.037933, z: 6.872284, w: 0.6943055}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1442,7 +1442,6 @@ GameObject:
   - component: {fileID: 1242056047}
   - component: {fileID: 1242056051}
   - component: {fileID: 1242056052}
-  - component: {fileID: 1242056050}
   - component: {fileID: 1242056049}
   - component: {fileID: 1242056048}
   m_Layer: 0
@@ -1504,21 +1503,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1242056050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1242056046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Events:
-    m_Signals: []
-    m_Events: []
 --- !u!222 &1242056051
 CanvasRenderer:
   m_ObjectHideFlags: 0

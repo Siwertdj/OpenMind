@@ -373,10 +373,10 @@ MonoBehaviour:
   - 'This game consists of multiple cycles. '
   - During a cycle you can ask 2 questions.
   - 'Just swipe through the room and select the character you want to talk to. '
-  - Gathered information will be written in your notebook.
+  - Write down gathered information in your notebook.
   - You can enter the notebook by clicking on the notebook icon. Try it!
-  - To find gathered information, just go to the tab of the character.
-  - You can also write down your own thoughts.
+  - 'Write down information about a character on their own tab. '
+  - You also have a personal tab to write down your thoughts.
   - 'Now exit the notebook by clicking on the icon again. '
   - After you have asked your questions, one character will leave the game.
   - Then you will receive a hint about the culprit.
@@ -1494,6 +1494,6 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1420621290}
   - {fileID: 475655578}
   - {fileID: 2113601860}
+  - {fileID: 1420621290}
