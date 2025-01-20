@@ -397,7 +397,7 @@ public class NotebookManager : MonoBehaviour
 
             // Fade background
             var color = backgroundImage.color;
-            color.a = fadingIn ? Mathf.Lerp(0, 0.9f, timeStep) : Mathf.Lerp(0.9f, 0, timeStep);
+            color.a = fadingIn ? Mathf.Lerp(0, 0.9f, timeStep) : Mathf.Lerp(0.9f, 0, time / shoveAnimationDuration);
             backgroundImage.color = color;
 
             yield return null;

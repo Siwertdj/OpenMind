@@ -353,9 +353,14 @@ public class SceneController : MonoBehaviour
         {
             SettingsManager.sm.UnpauseGame();
 
-            var nm = FindObjectOfType<NotebookManager>();
+            // The button should not be clickable again while the notebook is closing
             button.interactable = false;
+
+            // Find the NotebookManager & do the animation
+            var nm = FindObjectOfType<NotebookManager>();
             await nm.ShoveOutNotebook();
+
+            // Make the button interactable again
             button.interactable = true;
 
             menuButton.SetActive(true);
