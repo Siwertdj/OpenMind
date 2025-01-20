@@ -30,8 +30,10 @@ public class SettingsManager : MonoBehaviour
     public void UnpauseGame() => pauseStack--;
     #endregion
     
-    public float TalkingDelay {  get; private set; }
-
+    #region Text Size Variables
+    // Text size to be used for the text components
+    [NonSerialized] public TextSize textSize;
+    
     public int maxLineLength
     {
         get
@@ -41,13 +43,6 @@ public class SettingsManager : MonoBehaviour
                 : largeTextLineLength;
         }
     }
-
-    private Coroutine musicFadeCoroutine;
-    private bool musicIsFading = false;
-
-    #region Text Size
-    // Text size to be used for the text components
-    [NonSerialized] public TextSize textSize;
     
     private int smallTextLineLength = 90;
     private int mediumextLineLength = 70;
@@ -68,10 +63,17 @@ public class SettingsManager : MonoBehaviour
     #endregion
 
     #region Settings Variables
-    [NonSerialized] public float musicVolume = 0;
-    [NonSerialized] public float sfxVolume = 0;
-    [NonSerialized] public float talkingSpeed = 1;
+
+    private                float defaultTalkingDelay = 0.05f;
+    [NonSerialized] public float musicVolume         = 0;
+    [NonSerialized] public float sfxVolume           = 0;
+    [NonSerialized] public float talkingSpeed        = 1;
     #endregion
+    
+    public float TalkingDelay {  get; private set; }
+
+    private Coroutine musicFadeCoroutine;
+    private bool musicIsFading = false;
     
     private void Awake()
     {
@@ -126,26 +128,6 @@ public class SettingsManager : MonoBehaviour
         sfxSource.clip = clip;
         sfxSource.Play();
     }
-    
-    #region TextSize
-
-    /// <summary>
-    /// Get the fontSize of the dialogue text.
-    /// </summary>
-    public int GetFontSize()
-    {
-        switch (textSize)
-        {
-            case TextSize.Small:
-                return 55;
-            case TextSize.Medium:
-                return 70;
-            default:
-                return 85;
-        }
-    }
-
-    #endregion
 
     #region Audio
     /// <summary>
@@ -271,9 +253,30 @@ public class SettingsManager : MonoBehaviour
     #endregion
 
     #region Accessibility
+    /// <summary>
+    /// Get the fontSize of the dialogue text.
+    /// </summary>
+    public int GetFontSize()
+    {
+        switch (textSize)
+        {
+            case TextSize.Small:
+                return 55;
+            case TextSize.Medium:
+                return 70;
+            default:
+                return 85;
+        }
+    }
+    
+    /// <summary>
+    /// Takes a multiplier that changes the talking speed.
+    /// If the multiplier is '3', it should be 3 times as fast.
+    /// </summary>
+    /// <param name="multiplier"></param>
     public void SetTalkingSpeed(float multiplier) 
     { 
-        TalkingDelay = 0.05f * multiplier;
+        TalkingDelay = defaultTalkingDelay / multiplier;
         talkingSpeed = multiplier;
     }
     #endregion

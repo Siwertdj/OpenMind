@@ -48,7 +48,7 @@ public class SettingsMenuManager : MonoBehaviour
     }
 
     [Header("Accessibility References")]
-    [SerializeField] private GameSlider talkingSpeedSlider;
+    [SerializeField] private GameSlider textSpeedSlider;
     [SerializeField] private Toggle textToSpeechToggle;
 
     private void Start()
@@ -61,7 +61,7 @@ public class SettingsMenuManager : MonoBehaviour
         // Set the values on the UI elements
         musicVolumeSlider.UpdateSlider(SettingsManager.sm.musicVolume);
         sfxVolumeSlider.UpdateSlider(SettingsManager.sm.sfxVolume);
-        talkingSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
+        textSpeedSlider.slider.SetValueWithoutNotify(SettingsManager.sm.talkingSpeed);        
     }
 
     /// <summary>
