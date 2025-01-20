@@ -237,6 +237,7 @@ public class Host : NetworkObject
         addNormalResponse = true;
         
         // let the client know that they should wait on the notebook
+        DisplayWaitNotebook();
     }
     
     /// <summary>

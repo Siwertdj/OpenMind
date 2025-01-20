@@ -198,7 +198,8 @@ public class Client : NetworkObject
         sender.AddOnReceiveResponseEvent(settings.NotebookDataSignature, ReceivedNotebookDataFromOther);
         sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
         
-        DisplayError("Searching for another notebook. Please wait.");
+        DisplayWaitNotebook();
+        
     }
 
     private void ConfirmNotebookSent(object o)
@@ -240,30 +241,23 @@ public class Client : NetworkObject
         else
         {
             doPopup.Raise(this, error, new Color(0,0,0));
-            reactivateJoinButton();
-        }
-    }
-    
-    private void DisplayWaitNotebook(string error)
-    {
-        if (doPopup is null)
-            Debug.LogError("No popup for error handling was initialised");
-        else
-        {
-            doPopup.Raise(this, error, new Color(0,0,0), true);
+            if(multiplayerState == MultiplayerState.Infant)
+                reactivateJoinButton();
         }
     }
 
     private void DebugError(string error)
     {
         DebugLog(error);
-        reactivateJoinButton();
+        if(multiplayerState == MultiplayerState.Infant)
+            reactivateJoinButton();
     }
 
     private void DebugLog(string message)
     {
         Debug.Log($"GameState: {multiplayerState}\nMessage: {message}");
     }
+    
     
     #region debugMethods
     

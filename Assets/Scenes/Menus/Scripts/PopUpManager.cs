@@ -45,7 +45,7 @@ public class PopUpManager : MonoBehaviour
     public void ClosePopUp() 
     {
         // Make sure the player doesn't accidentally click the popup away before reading it.
-        if (!closeOnReceivedNotebook && DateTime.Now.Subtract(startTime).Seconds >= 1)
+        if (!closeOnReceivedNotebook && DateTime.Now.Subtract(startTime).Seconds >= 2)
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;

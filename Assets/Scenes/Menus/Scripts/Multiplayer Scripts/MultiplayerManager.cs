@@ -32,6 +32,7 @@ public class MultiplayerManager : MonoBehaviour
         mm = this;
         DontDestroyOnLoad(gameObject);
         init = new MultiplayerInit();
+        playerReceivedNotebook = false;
     }
     
     /// <summary>

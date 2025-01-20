@@ -22,6 +22,17 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
             Debug.Log($"Current ip address: {IPConnections.GetOwnIps()[0]}");
     }
     
+    internal void DisplayWaitNotebook()
+    {
+        string message = "Searching for another notebook. Please wait.";
+        if (doPopup is null)
+            Debug.LogError("No popup for error handling was initialised");
+        else
+        {
+            doPopup.Raise(this, message, new Color(0,0,0), true);
+        }
+    }
+    
     public abstract void Dispose();
     
     private void OnApplicationQuit()
