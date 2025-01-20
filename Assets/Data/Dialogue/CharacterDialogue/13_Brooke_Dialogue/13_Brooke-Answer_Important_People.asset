@@ -17,6 +17,6 @@ MonoBehaviour:
   - type: 0
     emotion: 1
     text: My boyfriend is the most important person in my life. We are getting married
-      soon
+      soon.
     image: {fileID: 0}
     background: []

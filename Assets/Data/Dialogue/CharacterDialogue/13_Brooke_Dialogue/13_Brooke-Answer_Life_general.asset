@@ -18,6 +18,6 @@ MonoBehaviour:
     emotion: 1
     text: "Good! I am a digital designer and I volunteer. I live with my fianc\xE9,
       cat and bonus child in a small town. I have lots of friends from different
-      places. From class, going out and from volunteering."
+      places, such as from class, going out and from volunteering."
     image: {fileID: 0}
     background: []
