@@ -75,11 +75,9 @@ public class Client : NetworkObject
         
         sender = new DataSender(hostAddress, settings.ClientHostPortConnection, settings.PingDataSignature);
         sender.AddOnDisconnectedEvent(Disconnected);
-        
         sender.AddOnConnectionTimeoutEvent(ConnectionTimeoutError);
         sender.AddOnConnectEvent(OnConnectionWithHost);
         sender.AddOnReceiveResponseEvent(settings.InitialisationDataSignature, ReceivedInitFromHost);
-
         
         //additional debugs if in debug mode
         if (settings.IsDebug)
@@ -199,6 +197,8 @@ public class Client : NetworkObject
         sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
         sender.AddOnReceiveResponseEvent(settings.NotebookDataSignature, ReceivedNotebookDataFromOther);
         sender.SendDataAsync(settings.NotebookDataSignature, package.CreatePackage(), settings.AcknowledgementTimeoutSeconds);
+        
+        DisplayError("Searching for another notebook. Please wait.");
     }
 
     private void ConfirmNotebookSent(object o)
@@ -211,13 +211,13 @@ public class Client : NetworkObject
     /// Convert it back to notebookdata.
     /// </summary>
     private void ReceivedNotebookDataFromOther(object o)
-    { 
+    {
         multiplayerState = MultiplayerState.ReceivedNotebook;
         List<NetworkPackage> receivedData = (List<NetworkPackage>)o;
         if (settings.IsDebug)
             foreach (KeyValuePair<int, string> characterNotes in receivedData[0].GetData<NotebookDataPackage>().characterNotes)
                 DebugLog($"Received notebook data from host: {characterNotes.Key}, character notes: {characterNotes.Value}");
-        else 
+        else
             DisplayError("You've received a notebook from someone. Go and take a look!");
         
         NotebookDataPackage notebookDataPackage = new NotebookDataPackage(receivedData[0], activeCharacters);
@@ -241,6 +241,16 @@ public class Client : NetworkObject
         {
             doPopup.Raise(this, error, new Color(0,0,0));
             reactivateJoinButton();
+        }
+    }
+    
+    private void DisplayWaitNotebook(string error)
+    {
+        if (doPopup is null)
+            Debug.LogError("No popup for error handling was initialised");
+        else
+        {
+            doPopup.Raise(this, error, new Color(0,0,0), true);
         }
     }
 

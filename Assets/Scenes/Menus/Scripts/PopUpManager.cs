@@ -11,7 +11,8 @@ public class PopUpManager : MonoBehaviour
     public  Canvas          popUpCanvas;
     public  TextMeshProUGUI popUpText;
     private DateTime        startTime;
-    
+    private bool closeOnReceivedNotebook;
+
     public void OpenPopUp(Component sender, params object[] data)
     {
         startTime = DateTime.Now;
@@ -27,22 +28,34 @@ public class PopUpManager : MonoBehaviour
             color.a = 0.9f;
             closePopUp.GetComponentInChildren<Image>().color = color;
         }
-        if (data.Length > 2 && data[2] is bool)
+        if (data.Length > 2)
         {
+            closeOnReceivedNotebook = true;
             closePopUp.interactable = false;
         }
         else
         {
+            closeOnReceivedNotebook = false;
             closePopUp.interactable = true;
         }
-
+        
         popUpCanvas.enabled = true;
     }
 
     public void ClosePopUp() 
     {
         // Make sure the player doesn't accidentally click the popup away before reading it.
-        if (DateTime.Now.Subtract(startTime).Seconds >= 1)
+        if (!closeOnReceivedNotebook && DateTime.Now.Subtract(startTime).Seconds >= 1)
+        {
+            popUpText.text = string.Empty;
+            popUpCanvas.enabled = false;
+            closePopUp.interactable = false;
+        }
+    }
+
+    public void Update()
+    {
+        if (closeOnReceivedNotebook && MultiplayerManager.mm.playerReceivedNotebook)
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;

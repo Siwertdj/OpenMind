@@ -20,10 +20,11 @@ public class MultiplayerManager : MonoBehaviour
     
     private Host                 host;
     private Client               client;
-    public MultiplayerInit      init;
+    public  MultiplayerInit      init;
     private bool                 isSeedInitialized;
     private bool                 isStoryInitialized;
-    private Action<NotebookData> notebookAction;
+    public  Action<NotebookData> notebookAction;
+    public bool                  playerReceivedNotebook;
     
     void Awake()
     {
@@ -123,8 +124,11 @@ public class MultiplayerManager : MonoBehaviour
     public void SendNotebook()
     {
         notebookAction = receivedNotebook =>
+        {
             GameManager.gm.multiplayerNotebookData = receivedNotebook;
-
+            playerReceivedNotebook = true;
+        };
+            
         if (client == null)
         {
             host.AddOwnNotebook(notebookAction, 

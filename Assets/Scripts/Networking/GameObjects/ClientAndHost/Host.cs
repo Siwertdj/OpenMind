@@ -235,6 +235,8 @@ public class Host : NetworkObject
         AddNotebook((List<NetworkPackage>)o);
         
         addNormalResponse = true;
+        
+        // let the client know that they should wait on the notebook
     }
     
     /// <summary>
@@ -321,7 +323,7 @@ public class Host : NetworkObject
     {
         listener?.Dispose();
     }
-    
+
     private void DisplayError(string error)
     {
         if (doPopup is null)
