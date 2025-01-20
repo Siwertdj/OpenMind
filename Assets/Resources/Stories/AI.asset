@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Lost Paper
   storyID: 2
-  dialogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: dfd884602b5ca334494c1346591cbefb, type: 3}
   hintBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
   additionalHintBackgroundObjects: []
   epilogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}

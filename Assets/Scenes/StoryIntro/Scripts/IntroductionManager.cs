@@ -90,7 +90,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryA();
+                    StoryC();
                     break;
                 case 1:
                     StoryB();
@@ -204,7 +204,7 @@ public class IntroductionManager : MonoBehaviour
         currentTimeline = introStoryC;
         ResetTimeline();
         TextIndex = 19;
-        background.sprite = sprites[4];
+        background.sprite = sprites[11];
         character.sprite = sprites[7];
         characterName = "Receptionist";
         currentTimeline.Play();

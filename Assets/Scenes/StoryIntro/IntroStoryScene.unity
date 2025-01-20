@@ -970,7 +970,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
   - {fileID: 21300000, guid: 3dd7786da48f15341b65b9df036e135f, type: 3}
   - {fileID: 21300000, guid: b19a2cd9a2585d74e8b4b6d37505e3a8, type: 3}
-  - {fileID: 21300000, guid: 3420fff798d9eb24dbf3e17a790ce041, type: 3}
+  - {fileID: 21300000, guid: a41e7bfb3775cf049ace01dcb8eca48e, type: 3}
   storyText:
   - Unknown? I must have removed their number..
   - Let's look around, maybe I recognize someone.
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   - I put all kinds of data into my computer ..
   - .. and asked it to determine who the rightful author is.
   - But it is taking too long and only giving vague hints.
-  - 'BEEP BEEP The author is currently in the cafeteria. '
+  - 'The author is currently in the cafeteria. '
   - 'Maybe you can help me? '
   - Sure!
   - You can ask the people present questions ...
@@ -2132,7 +2132,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f8d5e30e942e59e42803536c205c9a22, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8a81c5aaff1e6d545984820d209c2dd3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2167,8 +2167,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -73.9579, y: -70}
-  m_SizeDelta: {x: 100.0183, y: 85.6852}
+  m_AnchoredPosition: {x: -78, y: -62}
+  m_SizeDelta: {x: 104.5236, y: 49.6431}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1464702360
 MonoBehaviour:

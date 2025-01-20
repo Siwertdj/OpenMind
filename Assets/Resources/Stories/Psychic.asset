@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Psychic Sidekick
   storyID: 1
-  dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: 64f13b6a847648142a34de14b6e30a54, type: 3}
   hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
   additionalHintBackgroundObjects:
   - {fileID: 8379540494691323741, guid: c82f55dbcb4d36040b2a514dd2de4f17, type: 3}

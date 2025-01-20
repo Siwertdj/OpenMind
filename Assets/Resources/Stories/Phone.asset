@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Mysterious Contact
   storyID: 0
-  dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: 11e4c486b4dfc1b46b178c950ffb7027, type: 3}
   hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
   additionalHintBackgroundObjects: []
   epilogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}

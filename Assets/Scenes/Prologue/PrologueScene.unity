@@ -1134,9 +1134,9 @@ MonoBehaviour:
   continueButton: {fileID: 198219724}
   dialogueAnimator: {fileID: 429653936}
   sprites:
-  - {fileID: 21300000, guid: 110389d9c2c6fca45869f88b15a816f5, type: 3}
+  - {fileID: 21300000, guid: bf12da933516af646b5bea5395b9d9df, type: 3}
   - {fileID: 21300000, guid: 3df754030d764b34688b4e268d7f4aae, type: 3}
-  - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
+  - {fileID: 21300000, guid: a41e7bfb3775cf049ace01dcb8eca48e, type: 3}
   - {fileID: 21300000, guid: 35bdfd31fb97d5f4589b3eb109417556, type: 3}
   - {fileID: 21300000, guid: 22dc94cc2b104d04980078e81f316bd2, type: 3}
   - {fileID: 21300000, guid: 72bcd2e03f2c1f74082c8af599233efd, type: 3}
