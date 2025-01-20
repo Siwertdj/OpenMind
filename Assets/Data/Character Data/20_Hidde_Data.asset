@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Hidde
   id: 20
   neutralAvatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
+  happyAvatar: {fileID: 21300000, guid: b64f405cd687c1740b7f6349110730f3, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 0b28ca71bda9c4346a08af2f8181e69a, type: 3}
   voicePitch: 1
   facePivot: {x: 0.4999, y: 0.7849}
   firstGreeting: {fileID: 11400000, guid: daf57514ee70f41428000b24408f83cf, type: 2}
