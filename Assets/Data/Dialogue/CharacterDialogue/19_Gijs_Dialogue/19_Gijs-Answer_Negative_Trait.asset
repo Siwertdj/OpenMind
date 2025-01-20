@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: I am not very good with money, I am very lucky I have a job that pays relatively
+    text: I am not very good with money. I am very lucky I have a job that pays relatively
       well.
     image: {fileID: 0}
     background: []

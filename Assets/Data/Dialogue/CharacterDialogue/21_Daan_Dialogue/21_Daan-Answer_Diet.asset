@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: 'No, but my girlfriend is a vegetarian. Because of that I have been eating
-      less meat for the last couple of years. I have to admit that because of environmental
-      issues I think it''s not that bad to eat less meat. '
+    text: 'No, but my girlfriend is a vegetarian. Because of that, I have been eating
+      less meat for the last couple of years. I have to admit that, because of environmental
+      issues, I think it''s not that bad to eat less meat. '
     image: {fileID: 0}
     background: []
