@@ -37,8 +37,8 @@ public class SelectionManager : MonoBehaviour
     private void Awake()
     {
         // Change the text size
-        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
-        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
+        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
         
         // stop loading animation (if it is playing)
@@ -69,9 +69,9 @@ public class SelectionManager : MonoBehaviour
         if (data[0] is int fontSize)
         {
             // Change the fontSize of the confirmSelectionButton
-            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
             // Change the fontSize of the headerText
-            headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            headerText.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         }
     }
     
@@ -83,10 +83,10 @@ public class SelectionManager : MonoBehaviour
     {
         int fontSize = SettingsManager.sm.GetFontSize();
         // Change the fontSize of the confirmSelectionButton
-        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         
         // Change the fontSize of the headerText
-        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        headerText.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
     }
 
     #endregion
