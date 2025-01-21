@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,10 +15,12 @@ public class GameSlider : MonoBehaviour
     [SerializeField] private bool defaultValueEnabled;
     [SerializeField] private RectTransform defaultValueRef;
     [SerializeField] private Slider sliderComponentRef;
+    [SerializeField] private float partitionSpace;
+    [SerializeField] private GameObject partitionLinePrefab;
 
     public Slider slider { get { return sliderComponentRef; } }
 
-    private void Start()
+    private void OnEnable()
     {
         slider.onValueChanged.AddListener(UpdateSlider);
         UpdateSlider(slider.value);
@@ -26,15 +29,45 @@ public class GameSlider : MonoBehaviour
         if (defaultValueEnabled)
         {
             // Set the default value sample to the correct position
-            var rectTransform = (RectTransform)defaultValueRef.transform.parent;
-            defaultValueRef.localPosition = new Vector2(
-                -rectTransform.rect.width * (defaultValue / (slider.maxValue + slider.minValue)),
-                defaultValueRef.localPosition.y);
+            defaultValueRef.transform.localPosition = new Vector2(
+                GetValuePositionOnSlider(defaultValue),
+                defaultValueRef.transform.localPosition.y);
         }
         else
         {
             defaultValueRef.gameObject.SetActive(false);
         }
+
+        // Add partition lines
+        if (partitionSpace > 0)
+        {
+            var parent = (RectTransform)defaultValueRef.transform.parent;
+            for (float v = slider.minValue; v < slider.maxValue; v += partitionSpace)
+            {
+                Debug.Log(v);
+                // Partitions should not be placed outside of slider bounds
+                if (v <= slider.minValue || v >= slider.maxValue)
+                    continue;
+
+                // Partitions should not be placed over the default value
+                if (defaultValueEnabled && v == defaultValue)
+                    continue;
+
+                // Place partition line
+                var line = Instantiate(partitionLinePrefab, parent);
+                line.transform.localPosition = new Vector2(
+                    GetValuePositionOnSlider(v), 
+                    line.transform.localPosition.y);
+            }
+        }
+    }
+
+    private float GetValuePositionOnSlider(float value)
+    {
+        var fillRect = (RectTransform)defaultValueRef.transform.parent;
+        float totalValue = slider.maxValue - slider.minValue;
+        float f = value / totalValue - slider.minValue / totalValue; // The factor of the current value
+        return fillRect.rect.width * f - fillRect.rect.width / 2; // The new local x position
     }
 
     public void UpdateSlider(float value)

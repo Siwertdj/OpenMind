@@ -17,9 +17,12 @@ public class GameSliderEditor : Editor
     private SerializedProperty defaultValue;
     private SerializedProperty defaultValueRef;
     private SerializedProperty sliderComponentRef;
+    private SerializedProperty partitionSpace;
+    private SerializedProperty partitionLinePrefab;
 
     private bool valueTextGroup = false;
     private bool defaultValueGroup = false;
+    private bool partitionGroup = false;
     #endregion
 
     private void OnEnable()
@@ -32,6 +35,8 @@ public class GameSliderEditor : Editor
         defaultValueEnabled = serializedObject.FindProperty(nameof(defaultValueEnabled));
         defaultValueRef = serializedObject.FindProperty(nameof(defaultValueRef));
         sliderComponentRef = serializedObject.FindProperty(nameof(sliderComponentRef));
+        partitionSpace = serializedObject.FindProperty(nameof(partitionSpace));
+        partitionLinePrefab = serializedObject.FindProperty(nameof(partitionLinePrefab));
     }
 
     public override void OnInspectorGUI()
@@ -62,6 +67,16 @@ public class GameSliderEditor : Editor
             EditorGUILayout.PropertyField(defaultValue, new GUIContent("Default Value Suggestion"));
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
+
+        partitionGroup = EditorGUILayout.BeginFoldoutHeaderGroup(partitionGroup, "Partition Line Settings");
+        if (partitionGroup)
+        {
+        }
+        EditorGUILayout.EndFoldoutHeaderGroup();
+
+        EditorGUILayout.PropertyField(partitionSpace, new GUIContent("Partition Line Distance"));
+        EditorGUILayout.PropertyField(partitionLinePrefab, new GUIContent("Partition Line Prefab"));
+
 
         serializedObject.ApplyModifiedProperties();
     }
