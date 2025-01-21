@@ -2428,7 +2428,6 @@ MonoBehaviour:
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   settings: {fileID: 11400000, guid: b4179a4f3a4c05d4eaa7a2218aba9475, type: 2}
   doPopup: {fileID: 11400000, guid: 4a33ccc5dd0b3214488901071e211369, type: 2}
-  playerReceivedNotebook: 0
 --- !u!4 &900397779
 Transform:
   m_ObjectHideFlags: 0
@@ -3898,7 +3897,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return
+  m_text: Stop Hosting Game
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: -6604001070486894589, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}

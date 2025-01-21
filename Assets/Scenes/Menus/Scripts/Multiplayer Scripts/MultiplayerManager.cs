@@ -24,7 +24,7 @@ public class MultiplayerManager : MonoBehaviour
     private bool                 isSeedInitialized;
     private bool                 isStoryInitialized;
     public  Action<NotebookData> notebookAction;
-    public bool                  playerReceivedNotebook;
+    [NonSerialized]public bool                  playerReceivedNotebook;
     
     void Awake()
     {
@@ -45,12 +45,6 @@ public class MultiplayerManager : MonoBehaviour
     {
         init.story = storyID;
         
-        // Create and activate the host
-        host = gameObject.AddComponent<Host>();
-        
-        // Assign the settings
-        host.AssignSettings(doPopup, settings);
-        
         // Create a seed
         init.seed = new Random().Next(int.MaxValue);
         
@@ -61,8 +55,17 @@ public class MultiplayerManager : MonoBehaviour
     /// <summary>
     /// Create a classroom code, as the host.
     /// </summary>
-    public string GetClassCode() => host.CreateClassroomCode();
-    
+    public string GetClassCode()
+    {
+        // Create and activate the host
+        host = gameObject.AddComponent<Host>();
+        
+        // Assign the settings
+        host.AssignSettings(doPopup, settings);
+        
+        return host.CreateClassroomCode();
+    }
+
     /// <summary>
     /// Join the game as the client using the classcode.
     /// </summary>
@@ -150,5 +153,24 @@ public class MultiplayerManager : MonoBehaviour
     public int GetPlayerAmount()
     {
         return host.PlayerAmount();
+    }
+    
+    /// <summary>
+    /// Destroy the socket and host/client.
+    /// </summary>
+    public void KillMultiplayer()
+    {
+        if (client != null)
+        {
+            client.Dispose();
+            Destroy(client);
+        }
+
+        if (host != null)
+        {
+            host.Dispose();
+            Destroy(host);
+        }
+        
     }
 }

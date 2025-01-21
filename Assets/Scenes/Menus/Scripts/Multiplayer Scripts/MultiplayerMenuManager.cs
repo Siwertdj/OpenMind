@@ -42,6 +42,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void ReturnMain()
     {
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");
+        MultiplayerManager.mm.KillMultiplayer();
         Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
     }
     
@@ -52,9 +53,10 @@ public class MultiplayerMenuManager : MonoBehaviour
     {
         hostCanvas.SetActive(false);
         joinCanvas.SetActive(false);
+        lobbyCanvas.SetActive(false);
         multiplayerCanvas.SetActive(true);
+        MultiplayerManager.mm.KillMultiplayer();
     }
-
 
     #region Host
 
@@ -112,11 +114,11 @@ public class MultiplayerMenuManager : MonoBehaviour
         storyCanvas.SetActive(false);
         lobbyCanvas.SetActive(true);
         
-        // Start hosting
-        MultiplayerManager.mm.HostGame(storyid, maxPlayers);
-        
         // Create a code
         classCode = MultiplayerManager.mm.GetClassCode();
+        
+        // Start hosting
+        MultiplayerManager.mm.HostGame(storyid, maxPlayers);
     }
 
     /// <summary>
