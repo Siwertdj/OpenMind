@@ -189,34 +189,34 @@ public class DataListener : DataNetworker
         string signature = networkData[0].GetData<string>();
         
         List<NetworkPackage> receivedTailPackages = networkData.Skip(1).ToList();
-        Debug.Log($"Received data in listening {receivedTailPackages[0].data}");
+        //Debug.Log($"Received data in listening {receivedTailPackages[0].data}");
         
-        Debug.Log("onDataReceivedEvent");
+        //Debug.Log("onDataReceivedEvent");
         logError = onDataReceivedEvents.Raise(signature, receivedTailPackages, clearDataReceivedEvents, "onDataReceivedEvent");
         if (logError != "")
             return;
         
-        Debug.Log("onAckSentEvent");
+        //Debug.Log("onAckSentEvent");
         //respond with an ack
         logError = onAckSentEvents.Raise("ACK", (index, signature), false, "onAckSentEvent");
         if (logError != "")
             return;
         
-        Debug.Log("respondEvent");
+        //Debug.Log("respondEvent");
         //responds to the sender
         logError = respondEvents.Raise(signature, (index, receivedTailPackages),
             clearRespondEvents, "respondEvent");
         if (logError != "")
             return;
         
-        Debug.Log("delayedRespondEvent");
+        //Debug.Log("delayedRespondEvent");
         logError = delayedRespondEvents.InputData(signature, (index, receivedTailPackages),
             clearRespondEvents, "delayedRespondEvent");
         if (logError != "")
             return;
         
         isConnectionReceiving[index] = false;
-        Debug.Log("finish reading");
+        //Debug.Log("finish reading");
     }
     
     /// <summary>
@@ -298,8 +298,8 @@ public class DataListener : DataNetworker
         
         if (!TryCreatePackage(signature, resp, out byte[] bytes))
             return;
-        Debug.Log("Connection list length " + connections.Count + " socket index " + socketIndexAndMessage.Item1);
-        Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint} signature {signature}");
+        //Debug.Log("Connection list length " + connections.Count + " socket index " + socketIndexAndMessage.Item1);
+        //Debug.Log($"sending: {resp[0].data} to {connections[socketIndexAndMessage.Item1].RemoteEndPoint} signature {signature}");
         connections[socketIndexAndMessage.Item1].SendAsync(bytes, SocketFlags.None).ContinueWith(
             t => logError = onResponseSentEvents.Raise(signature, t.Result, clearResponseSentEvents, "onResponseSentEvent"));
     }

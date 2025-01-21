@@ -109,7 +109,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     /// <param name="storyid">the chosen story</param>
     public void HostGame(int id)
     {
-        Debug.Log("started hosting game");
         storyid = id;
         storyCanvas.SetActive(false);
         lobbyCanvas.SetActive(true);
