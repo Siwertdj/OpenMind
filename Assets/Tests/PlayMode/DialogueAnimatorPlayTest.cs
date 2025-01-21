@@ -22,10 +22,12 @@ public class DialogueAnimatorPlayTest
         GameObject textObject = new GameObject("TestTextObject");
 
         textField = textObject.AddComponent<TextMeshProUGUI>();
+        AudioSource audioSource = textObject.AddComponent<AudioSource>();
         animator = textObject.AddComponent<DialogueAnimator>();
         animator.Test_SetTextComponent(textField);
+        animator.Test_SetAudioSource(audioSource);
 
-        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayInSeconds = 0.01f;   
         animator.Test_DelayAfterSentence = 0.05f;
         animator.Test_IgnoreSkipDelay = true;
 

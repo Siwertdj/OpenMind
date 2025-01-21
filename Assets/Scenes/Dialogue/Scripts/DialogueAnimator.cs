@@ -155,7 +155,8 @@ public class DialogueAnimator : MonoBehaviour
                 // Write full sentence and then stop writing
                 IsOutputting = false;
                 StopCoroutine(outputCoroutine);
-                text.maxVisibleCharacters = currentSentence.Length;
+                text.text = currentSentence;
+                //text.maxVisibleCharacters = currentSentence.Length;
                 dialogueIndex++;
             }
             else if (dialogueIndex < currentDialogue.Count)
@@ -189,14 +190,16 @@ public class DialogueAnimator : MonoBehaviour
     /// <returns></returns>
     private IEnumerator WritingAnimation(string output)
     {
-        audioSource.Stop();
-        text.text = output; // Clear the previous sentence
-        text.maxVisibleCharacters = 0;
+        //text.text = output; // Clear the previous sentence
+        //text.maxVisibleCharacters = 0;
+        int stringIndex = 0;
         bool skip = false;
+        text.text = string.Empty;
 
         // Start writing sentence
-        foreach (char character in text.text) 
+        foreach (char character in output) 
         {
+            Debug.Log(audioSource == null);
             float pitch = audioSource.pitch;
 
             // Don't write if the game is paused
@@ -216,7 +219,7 @@ public class DialogueAnimator : MonoBehaviour
             skip = !skip;
 
             // Write letter to screen and increment stringIndex
-            text.maxVisibleCharacters++;
+            text.text += output[stringIndex++];
 
             // Wait and continue with next letter
             float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
@@ -252,6 +255,8 @@ public class DialogueAnimator : MonoBehaviour
         set { delayAfterSentence = value; }
     }
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+
+    public void Test_SetAudioSource(AudioSource audioSource) => this.audioSource = audioSource;
 
     public bool Test_IgnoreSkipDelay
     {
