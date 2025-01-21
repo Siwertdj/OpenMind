@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: David
   id: 8
-  neutralAvatar: {fileID: 21300000, guid: e4c27b771386d3140a228a3a2c25e000, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: aa84276fd5a1f6d46af5d2dc2646a869, type: 3}
   happyAvatar: {fileID: 21300000, guid: daae6ae9af99b094fbe337f57db176d8, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: f1bcb30226dad834c864561f5c149c89, type: 3}
   voicePitch: 1
