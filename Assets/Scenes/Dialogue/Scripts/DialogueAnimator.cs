@@ -26,7 +26,6 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
 
     [Header("TextAudio")]
-    [SerializeField] private List<AudioClip> letterAudios;
     [SerializeField] private List<AudioClip> altAudios;
     [SerializeField] private AudioClip pop;
      
@@ -68,6 +67,7 @@ public class DialogueAnimator : MonoBehaviour
         text.enableAutoSizing = true;       // Set autosizing to true for the text-component.
         ChangeTextSize(SettingsManager.sm.GetFontSize());   // change the textsize based on settings
         audioSource = GetComponent<AudioSource>();      // set audiosource reference, for the talking-sfx
+        audioSource.volume = SettingsManager.sm.sfxVolume;
     }
     
     /// <summary>
@@ -190,7 +190,6 @@ public class DialogueAnimator : MonoBehaviour
     private IEnumerator WritingAnimation(string output)
     {
         audioSource.Stop();
-        int stringIndex = 0;
         text.text = output; // Clear the previous sentence
         text.maxVisibleCharacters = 0;
         bool skip = false;
@@ -207,13 +206,11 @@ public class DialogueAnimator : MonoBehaviour
 
             if (!soundlessSymbols.Contains(character) && !skip)
             {
-                audioSource.Stop();
-                audioSource.volume = 1f;
+                audioSource.Stop(); // stop previous letter's audio
                 audioSource.PlayOneShot(pop);
-                Debug.Log(audioSource.volume);
-                audioSource.volume = 0.1f;
+                audioSource.volume /= 2; // turn down volume to prevent heavy bass
                 audioSource.PlayOneShot(getCharAudio());
-                Debug.Log(audioSource.volume);
+                audioSource.volume *= 2; // turn volume back up
             }
             audioSource.pitch = pitch;
             skip = !skip;
@@ -232,6 +229,9 @@ public class DialogueAnimator : MonoBehaviour
         dialogueIndex++;
     }
 
+    /// <summary>
+    /// Returns random audio from list of audios in serialized field
+    /// </summary>
     private AudioClip getCharAudio()
     {
         System.Random random = new System.Random();
