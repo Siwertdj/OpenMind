@@ -15,10 +15,10 @@ public class GameSliderEditor : Editor
     private SerializedProperty valueInfo;
     private SerializedProperty defaultValueEnabled;
     private SerializedProperty defaultValue;
-    private SerializedProperty defaultValueRef;
     private SerializedProperty sliderComponentRef;
     private SerializedProperty partitionSpace;
     private SerializedProperty partitionLinePrefab;
+    private SerializedProperty partitionsFieldRect;
 
     private bool valueTextGroup = false;
     private bool defaultValueGroup = false;
@@ -33,10 +33,10 @@ public class GameSliderEditor : Editor
         valueRounding = serializedObject.FindProperty(nameof(valueRounding));
         defaultValue = serializedObject.FindProperty(nameof(defaultValue));
         defaultValueEnabled = serializedObject.FindProperty(nameof(defaultValueEnabled));
-        defaultValueRef = serializedObject.FindProperty(nameof(defaultValueRef));
         sliderComponentRef = serializedObject.FindProperty(nameof(sliderComponentRef));
         partitionSpace = serializedObject.FindProperty(nameof(partitionSpace));
         partitionLinePrefab = serializedObject.FindProperty(nameof(partitionLinePrefab));
+        partitionsFieldRect = serializedObject.FindProperty(nameof(partitionsFieldRect));
     }
 
     public override void OnInspectorGUI()
@@ -63,7 +63,6 @@ public class GameSliderEditor : Editor
         if (defaultValueGroup)
         {
             EditorGUILayout.PropertyField(defaultValueEnabled, new GUIContent("Enable Default Value"));
-            EditorGUILayout.PropertyField(defaultValueRef, new GUIContent("Default Value Ref"));
             EditorGUILayout.PropertyField(defaultValue, new GUIContent("Default Value Suggestion"));
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
@@ -71,12 +70,14 @@ public class GameSliderEditor : Editor
         partitionGroup = EditorGUILayout.BeginFoldoutHeaderGroup(partitionGroup, "Partition Line Settings");
         if (partitionGroup)
         {
+            EditorGUILayout.PropertyField(partitionSpace, new GUIContent("Partition Line Distance"));
+            EditorGUILayout.PropertyField(partitionLinePrefab, new GUIContent("Partition Line Prefab"));
         }
         EditorGUILayout.EndFoldoutHeaderGroup();
 
-        EditorGUILayout.PropertyField(partitionSpace, new GUIContent("Partition Line Distance"));
-        EditorGUILayout.PropertyField(partitionLinePrefab, new GUIContent("Partition Line Prefab"));
-
+        EditorGUILayout.Space();
+        EditorGUILayout.LabelField("Required Fields & References", EditorStyles.boldLabel);
+        EditorGUILayout.PropertyField(partitionsFieldRect, new GUIContent("Partitions Field Rect Transform"));
 
         serializedObject.ApplyModifiedProperties();
     }
