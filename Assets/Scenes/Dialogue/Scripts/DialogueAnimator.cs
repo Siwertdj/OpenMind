@@ -24,7 +24,11 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private bool audioEnabled = true;
     [SerializeField] private bool overrideDefaultSpeed = true;
     [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
-    
+
+    [Header("TextAudio")]
+    [SerializeField] private List<AudioClip> letterSounds;
+    [SerializeField] private AudioClip popSound;
+
     private readonly string soundlessSymbols = " !?.,";
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
@@ -63,6 +67,7 @@ public class DialogueAnimator : MonoBehaviour
         text.enableAutoSizing = true;       // Set autosizing to true for the text-component.
         ChangeTextSize(SettingsManager.sm.GetFontSize());   // change the textsize based on settings
         audioSource = GetComponent<AudioSource>();      // set audiosource reference, for the talking-sfx
+        audioSource.volume = SettingsManager.sm.sfxVolume;
     }
     
     /// <summary>
@@ -199,7 +204,13 @@ public class DialogueAnimator : MonoBehaviour
             if (!soundlessSymbols.Contains(output[stringIndex])
                 && stringIndex % 2 == 0 && audioEnabled
                 && audioSource != null)
-                audioSource.Play();
+            {
+                audioSource.Stop(); // stop previous letter's audio
+                audioSource.PlayOneShot(popSound);
+                audioSource.volume /= 2; // turn down volume to prevent heavy bass
+                audioSource.PlayOneShot(getCharAudio());
+                audioSource.volume *= 2; // turn volume back up
+            }
 
             // Write letter to screen and increment stringIndex
             text.text += output[stringIndex++];
@@ -214,7 +225,17 @@ public class DialogueAnimator : MonoBehaviour
         dialogueIndex++;
     }
 
-#region Test Variables
+    /// <summary>
+    /// Returns random audio from list of audios in serialized field
+    /// </summary>
+    private AudioClip getCharAudio()
+    {
+        System.Random random = new System.Random();
+        return letterSounds[random.Next(0, letterSounds.Count)];
+    }
+
+
+    #region Test Variables
 #if UNITY_INCLUDE_TESTS
     public float Test_DelayInSeconds
     { 
