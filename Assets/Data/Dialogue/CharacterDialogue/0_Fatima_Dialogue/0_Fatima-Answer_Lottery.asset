@@ -16,11 +16,11 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: If I won the lottery I would do something good for the world.
+    text: If I would win the lottery, I would do something good for the world.
     image: {fileID: 0}
     background: []
   - type: 0
     emotion: 1
-    text: 'Like building an orphanage in Morocco. '
+    text: 'Such as building an orphanage in Morocco. '
     image: {fileID: 0}
     background: []

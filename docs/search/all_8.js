@@ -10,7 +10,7 @@ var searchData=
   ['instantnavigate_7',['InstantNavigate',['../classNPCSelectScroller.html#ae87d78e4c34851971e0ef7abc81842f8',1,'NPCSelectScroller']]],
   ['introductionmanager_8',['IntroductionManager',['../classIntroductionManager.html',1,'']]],
   ['introductionmanagerplaytest_9',['IntroductionManagerPlayTest',['../classIntroductionManagerPlayTest.html',1,'']]],
-  ['introductionsetuptest_10',['IntroductionSetUpTest',['../classIntroductionManagerPlayTest.html#a5db7b3122704215c4741d804cad2184e',1,'IntroductionManagerPlayTest']]],
+  ['introductionsetuptest_10',['IntroductionSetUpTest',['../classIntroductionManagerPlayTest.html#a5db7b3122704215c4741d804cad2184e',1,'IntroductionManagerPlayTest.IntroductionSetUpTest()'],['../classPrologueManagerPlayTest.html#a588a5d147221620fcda3bb1ae413d74f',1,'PrologueManagerPlayTest.IntroductionSetUpTest()']]],
   ['isoutputting_11',['IsOutputting',['../classDialogueAnimator.html#adab53ca340fe47679ab35790f546a879',1,'DialogueAnimator']]],
   ['isoutputtingchecktest_12',['IsOutputtingCheckTest',['../classDialogueAnimatorPlayTest.html#ab028990827d34a49f871fba1ecbf1798',1,'DialogueAnimatorPlayTest']]]
 ];

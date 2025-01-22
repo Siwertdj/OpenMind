@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Seize the day. I have a "carpe diem" poster hanging above my bed.
+    text: Seize the day! I have a "carpe diem" poster hanging above my bed.
     image: {fileID: 0}
     background: []

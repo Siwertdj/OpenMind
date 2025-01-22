@@ -88,10 +88,6 @@ Inheritance diagram for TutorialManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a27594b54d713cbea58c8bce188b0667b"><td class="memItemLeft" align="right" valign="top"><a id="a27594b54d713cbea58c8bce188b0667b" name="a27594b54d713cbea58c8bce188b0667b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>HighlightHelp</b> ()</td></tr>
-<tr class="memdesc:a27594b54d713cbea58c8bce188b0667b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method activates the help button highlight. <br /></td></tr>
-<tr class="separator:a27594b54d713cbea58c8bce188b0667b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab8d968809fb34d64a9ab50c1127fc60a"><td class="memItemLeft" align="right" valign="top"><a id="ab8d968809fb34d64a9ab50c1127fc60a" name="ab8d968809fb34d64a9ab50c1127fc60a"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>StartTutorial</b> ()</td></tr>
 <tr class="memdesc:ab8d968809fb34d64a9ab50c1127fc60a"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called when the help button is clicked. It makes sure game elements enter a 'tutorial mode'. <br /></td></tr>
@@ -108,9 +104,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>PauseTutorial</b> ()<
 void&#160;</td><td class="memItemRight" valign="bottom"><b>StopTutorial</b> ()</td></tr>
 <tr class="memdesc:a6c0db1f0dda3a5444f0aa657bb87f507"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method closes the tutorial scene. <br /></td></tr>
 <tr class="separator:a6c0db1f0dda3a5444f0aa657bb87f507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27594b54d713cbea58c8bce188b0667b"><td class="memItemLeft" align="right" valign="top"><a id="a27594b54d713cbea58c8bce188b0667b" name="a27594b54d713cbea58c8bce188b0667b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>HighlightHelp</b> ()</td></tr>
+<tr class="memdesc:a27594b54d713cbea58c8bce188b0667b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method activates the help button highlight. <br /></td></tr>
+<tr class="separator:a27594b54d713cbea58c8bce188b0667b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5775ed776dd41ee8af9b0453329f3d76"><td class="memItemLeft" align="right" valign="top"><a id="a5775ed776dd41ee8af9b0453329f3d76" name="a5775ed776dd41ee8af9b0453329f3d76"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ActivateNotebookTutorial</b> ()</td></tr>
-<tr class="memdesc:a5775ed776dd41ee8af9b0453329f3d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method activates the tutorial in the notebook. <br /></td></tr>
+<tr class="memdesc:a5775ed776dd41ee8af9b0453329f3d76"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method activates the part of the tutorial that takes place in the notebook. <br /></td></tr>
 <tr class="separator:a5775ed776dd41ee8af9b0453329f3d76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af6a82caaef8572fd66b75c9afcf74f2f"><td class="memItemLeft" align="right" valign="top"><a id="af6a82caaef8572fd66b75c9afcf74f2f" name="af6a82caaef8572fd66b75c9afcf74f2f"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateTutorialText</b> ()</td></tr>
@@ -148,6 +148,30 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr>
 <tr class="memdesc:a51ab9e8dbee6bbd7a9e59a1e86c62c72"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is called when the tutorial is started. It decides which hint needs to be shown. <br /></td></tr>
 <tr class="separator:a51ab9e8dbee6bbd7a9e59a1e86c62c72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98a2c2de3a749b36cefcef4899683f22"><td class="memItemLeft" align="right" valign="top"><a id="a98a2c2de3a749b36cefcef4899683f22" name="a98a2c2de3a749b36cefcef4899683f22"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ActivateHint</b> ()</td></tr>
+<tr class="memdesc:a98a2c2de3a749b36cefcef4899683f22"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is responsible for activating a hint. The content of the hint is determined by the methods below. <br /></td></tr>
+<tr class="separator:a98a2c2de3a749b36cefcef4899683f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ae143a19c5dc4da17896bf6a09d2e1b"><td class="memItemLeft" align="right" valign="top"><a id="a8ae143a19c5dc4da17896bf6a09d2e1b" name="a8ae143a19c5dc4da17896bf6a09d2e1b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DialogueHint</b> ()</td></tr>
+<tr class="memdesc:a8ae143a19c5dc4da17896bf6a09d2e1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is responsible for showing the hint during the Dialogue scene. <br /></td></tr>
+<tr class="separator:a8ae143a19c5dc4da17896bf6a09d2e1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea789603a86e48151d00979bb7c65b22"><td class="memItemLeft" align="right" valign="top"><a id="aea789603a86e48151d00979bb7c65b22" name="aea789603a86e48151d00979bb7c65b22"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>EpilogueHint</b> ()</td></tr>
+<tr class="memdesc:aea789603a86e48151d00979bb7c65b22"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is responsible for showing the hint during the Epilogue scene. <br /></td></tr>
+<tr class="separator:aea789603a86e48151d00979bb7c65b22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ea1979e285e80f2c1d35a8dc0faaf6f"><td class="memItemLeft" align="right" valign="top"><a id="a7ea1979e285e80f2c1d35a8dc0faaf6f" name="a7ea1979e285e80f2c1d35a8dc0faaf6f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>NotebookHint</b> ()</td></tr>
+<tr class="memdesc:a7ea1979e285e80f2c1d35a8dc0faaf6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method is responsible for showing the hint during the Notebook scene. <br /></td></tr>
+<tr class="separator:a7ea1979e285e80f2c1d35a8dc0faaf6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8eae47b43a0eb6067b224174b516517"><td class="memItemLeft" align="right" valign="top"><a id="ac8eae47b43a0eb6067b224174b516517" name="ac8eae47b43a0eb6067b224174b516517"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ResetTutorial</b> ()</td></tr>
+<tr class="memdesc:ac8eae47b43a0eb6067b224174b516517"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method resets the tutorial to the beginning state (useful for when tutorial is already played) and initializes necessary components. <br /></td></tr>
+<tr class="separator:ac8eae47b43a0eb6067b224174b516517"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03a7116a7dfbce164ec52de8abe33789"><td class="memItemLeft" align="right" valign="top"><a id="a03a7116a7dfbce164ec52de8abe33789" name="a03a7116a7dfbce164ec52de8abe33789"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ActivateTutorial</b> ()</td></tr>
+<tr class="memdesc:a03a7116a7dfbce164ec52de8abe33789"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method initializes necessary variables for the tutorial and then activates the tutorial. <br /></td></tr>
+<tr class="separator:a03a7116a7dfbce164ec52de8abe33789"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abf7f8ff1296ca04829b2bb0fad4d7d71"><td class="memItemLeft" align="right" valign="top"><a id="abf7f8ff1296ca04829b2bb0fad4d7d71" name="abf7f8ff1296ca04829b2bb0fad4d7d71"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>DeactivateNotebookTutorial</b> ()</td></tr>
 <tr class="memdesc:abf7f8ff1296ca04829b2bb0fad4d7d71"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method deactivates the tutorial in the notebook. <br /></td></tr>

@@ -10,9 +10,10 @@ var searchData=
   ['navigationcoroutine_7',['NavigationCoroutine',['../classNPCSelectScroller.html#a0931d3412ff5b8f7b817807b7a88ff9b',1,'NPCSelectScroller']]],
   ['newgame_8',['NewGame',['../classGameManager.html#a1b93489e7f14e9befad8c46af39225e5',1,'GameManager']]],
   ['notebookdata_9',['NotebookData',['../classNotebookData.html#a4fa2f25cc1b4351468569f85f18e2a39',1,'NotebookData.NotebookData()'],['../classNotebookData.html#a6665232f66e805ab2f5c0705d7d80d72',1,'NotebookData.NotebookData(Dictionary&lt; CharacterInstance, NotebookPage &gt; pages, string personalNotes)']]],
-  ['notebookpage_10',['NotebookPage',['../classNotebookPage.html#a4e741a7d9e0dc6b6edc0df01e7a28b8b',1,'NotebookPage.NotebookPage(CharacterInstance character)'],['../classNotebookPage.html#ac8535d73d560f863cf00a5a91390d12c',1,'NotebookPage.NotebookPage(string notes, CharacterInstance character)']]],
-  ['notebooktutorialtest_11',['NotebookTutorialTest',['../classTutorialManagerPlayTest.html#a140a1b98c25f35edf23a7866b6ebf13e',1,'TutorialManagerPlayTest']]],
-  ['npcdialoguetohintdialoguegamestatetest_12',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
-  ['npcdialoguetonpcselectgamestatetest_13',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
-  ['npcselecttonpcdialoguegamestatetest_14',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
+  ['notebookhint_10',['NotebookHint',['../classTutorialManager.html#a7ea1979e285e80f2c1d35a8dc0faaf6f',1,'TutorialManager']]],
+  ['notebookpage_11',['NotebookPage',['../classNotebookPage.html#a4e741a7d9e0dc6b6edc0df01e7a28b8b',1,'NotebookPage.NotebookPage(CharacterInstance character)'],['../classNotebookPage.html#ac8535d73d560f863cf00a5a91390d12c',1,'NotebookPage.NotebookPage(string notes, CharacterInstance character)']]],
+  ['notebooktutorialtest_12',['NotebookTutorialTest',['../classTutorialManagerPlayTest.html#a140a1b98c25f35edf23a7866b6ebf13e',1,'TutorialManagerPlayTest']]],
+  ['npcdialoguetohintdialoguegamestatetest_13',['NpcDialogueToHintDialogueGameStateTest',['../classGameManagerPlayTest.html#a994d469d0b67850182e0f714dac3197d',1,'GameManagerPlayTest']]],
+  ['npcdialoguetonpcselectgamestatetest_14',['NpcDialogueToNPCSelectGameStateTest',['../classGameManagerPlayTest.html#a666738f10a3c95abe04fc7129001eca7',1,'GameManagerPlayTest']]],
+  ['npcselecttonpcdialoguegamestatetest_15',['NpcSelectToNpcDialogueGameStateTest',['../classGameManagerPlayTest.html#a2f11f40f86427ee9f3ca9a0bb27204b0',1,'GameManagerPlayTest']]]
 ];

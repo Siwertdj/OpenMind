@@ -18,7 +18,7 @@ var searchData=
   ['textmessage_15',['TextMessage',['../classTextMessage.html',1,'']]],
   ['togglenotebook_16',['ToggleNotebook',['../classUIManager.html#a214a53f97bf8298300f79e344f174dc9',1,'UIManager']]],
   ['togglenotebookscene_17',['ToggleNotebookScene',['../classSceneController.html#ac8e77a46899ee7d761c7697fa7b0091a',1,'SceneController']]],
-  ['toggletutorial_18',['ToggleTutorial',['../classGameManager.html#af31faf614ebb7d1380f14b50a365320d',1,'GameManager']]],
+  ['toggletutorial_18',['ToggleTutorial',['../classUIManager.html#ad8095cad370115a09bf0c95c2edea2b2',1,'UIManager']]],
   ['toggletutorialscene_19',['ToggleTutorialScene',['../classSceneController.html#ad960129d0fdb5a6a7d30012f0f60ecd3',1,'SceneController']]],
   ['tomainmenu_20',['ToMainMenu',['../classStorySelectionManager.html#a69f3fb7014bdf5130c33df0c523207ee',1,'StorySelectionManager']]],
   ['transition_21',['Transition',['../classUIManager.html#a518af48c433a734ad76e1310be143222',1,'UIManager']]],

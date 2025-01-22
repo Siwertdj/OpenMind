@@ -212,15 +212,6 @@ public class GameManager : MonoBehaviour
         FirstCycle();
     }
     
-    /// <summary>
-    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
-    /// </summary>
-    /// <param name="helpButton"></param>
-    public void ToggleTutorial(Button helpButton)
-    {
-        sc.ToggleTutorialScene(helpButton);
-    }
-    
     // This region contains methods that start or end the cycles.
     #region Cycles
     /// <summary>
