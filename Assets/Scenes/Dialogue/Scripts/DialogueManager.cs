@@ -507,7 +507,7 @@ public class DialogueManager : MonoBehaviour
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.
-    /// If a button should not be destroyed do not give it the "Button" tag .
+    /// If a button should not be destroyed do not give it the "Button" tag.
     /// </summary>
     private void DestroyButtons()
     {
