@@ -1,4 +1,4 @@
-﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -90,7 +90,7 @@ public class IntroductionManager : MonoBehaviour
             switch (storyObject.storyID)
             {
                 case 0:
-                    StoryA();
+                    StoryC();
                     break;
                 case 1:
                     StoryB();
@@ -332,6 +332,20 @@ public class IntroductionManager : MonoBehaviour
             computer.sprite = sprites[10];
         }
         changeSprite = !changeSprite; 
+    }
+    
+    public void ReceptionistEmotion()
+    {
+        if (changeSprite)
+        {
+            character.sprite = sprites[12];
+        }
+        else
+        {
+            character.sprite = sprites[7];
+        }
+        changeSprite = !changeSprite;
+        
     }
     
     /// <summary>

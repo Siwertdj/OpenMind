@@ -966,11 +966,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 870b3eb7338b6894fa7d70b246b97afe, type: 3}
   - {fileID: 21300000, guid: 1706e87b8a2c3e942bd3425960063a62, type: 3}
   - {fileID: 21300000, guid: 53691987360df514e8f044db0e7231c5, type: 3}
-  - {fileID: 21300000, guid: 295eb262c57e73d4bbae122726be8975, type: 3}
+  - {fileID: 21300000, guid: 3bed61230d709754eafcf1ddd0273267, type: 3}
   - {fileID: 21300000, guid: 68e4a7b0ab2b96b4881b1abaa13e3a88, type: 3}
   - {fileID: 21300000, guid: 3dd7786da48f15341b65b9df036e135f, type: 3}
   - {fileID: 21300000, guid: b19a2cd9a2585d74e8b4b6d37505e3a8, type: 3}
   - {fileID: 21300000, guid: a41e7bfb3775cf049ace01dcb8eca48e, type: 3}
+  - {fileID: 21300000, guid: e7b4e7ce644206f47b684f9f78c8d51b, type: 3}
   storyText:
   - Unknown? I must have removed their number..
   - Let's look around, maybe I recognize someone.
@@ -2562,6 +2563,7 @@ MonoBehaviour:
     m_Signals:
     - {fileID: 11400000, guid: 3621246dd98bc7542b4ddc207d1e79b8, type: 2}
     - {fileID: 11400000, guid: 6256c7f88870f1a4aa91fddfb4a4552a, type: 2}
+    - {fileID: 11400000, guid: c568cf89052572a4aa3c14cb9ee83828, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -2591,6 +2593,20 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1187182886}
+          m_TargetAssemblyTypeName: IntroductionManager, Scripts
+          m_MethodName: ReceptionistEmotion
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &1794158285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2610,7 +2626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1794158286
 RectTransform:
   m_ObjectHideFlags: 0
