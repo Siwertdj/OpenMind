@@ -143,7 +143,7 @@ public class DialogueManager : MonoBehaviour
             if (phoneField.activeSelf)
                 StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
         }
-
+        
         currentObject.Execute();
     }
 

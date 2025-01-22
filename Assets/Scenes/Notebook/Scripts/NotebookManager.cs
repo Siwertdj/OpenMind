@@ -47,6 +47,15 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject inactiveNotePrefab;
     [SerializeField] private GameObject introObjectPrefab;
     [SerializeField] private GameObject inputObjectPrefab;
+    [SerializeField] private GameObject logObjectPrefab;
+    
+    public  Button     multiplayerButton;
+    private bool       showingMultiplayerNotebook;
+    private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
+    public  GameObject personalInputField;
+    public  GameObject multiplayerCanvas;
+    
+    
     [SerializeField] private GameObject titleObjectPrefab;
 
     /// <summary>
@@ -54,10 +63,7 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        // Assign character names to buttons
         InitializeTabButtons();
-
-        // Get notebookdata
         notebookData = GameManager.gm.notebookData;
         
         // Create personal notes
@@ -72,8 +78,58 @@ public class NotebookManager : MonoBehaviour
         // Animate notebook moving in
         float startPos = Screen.width / 2 + notebookTransform.rect.width / 2;
         ShoveAnimation(startPos, 0, true);
+        if (GameManager.gm.multiplayerEpilogue)
+        {
+            multiplayerCanvas.SetActive(true);
+            multiplayerButton.interactable = true;
+        }
+        else
+        {
+            multiplayerCanvas.SetActive(false);
+            multiplayerButton.interactable = false;
+        }
     }
     
+    public void ToggleMultiplayerNotebook()
+    {
+        justSwitchedBetweenNormalAndMultiplayerNotebook = true;
+        if (showingMultiplayerNotebook)
+        {
+            showingMultiplayerNotebook = false;
+            
+            notebookData = GameManager.gm.notebookData;
+            
+            // Open personal notes and update the text
+            OpenPersonalNotes();
+            personalCustomInput.text = notebookData.GetPersonalNotes();
+            
+            // Add listener to recreate tab when font size is changed
+            SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
+        }
+        else
+        {
+            if (GameManager.gm.multiplayerNotebookData != null)
+            {
+                showingMultiplayerNotebook = true;
+
+                notebookData = GameManager.gm.multiplayerNotebookData;
+                
+                // Open personal notes and update the text
+                OpenPersonalNotes();
+                personalCustomInput.text = notebookData.GetPersonalNotes();
+
+                // Add listener to recreate tab when font size is changed
+                SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
+            }
+            else
+            {
+                Debug.Log("No multiplayer notebook exists.");
+            }
+        }
+
+        justSwitchedBetweenNormalAndMultiplayerNotebook = false;
+    }
+
     /// <summary>
     /// Initialize the tab buttons (custom notes & character tabs), 
     /// For characters, use their names as the button text and add the button event.
@@ -220,14 +276,14 @@ public class NotebookManager : MonoBehaviour
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
+        inputObjectField.onValueChanged.AddListener(_ => SaveCharacterData());
         // Save notes on end edit
         inputObjectField.onEndEdit.AddListener(_ => SaveCharacterData());
         
         inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
         characterCustomInput = inputObjectField; // Also set the reference so that it can be saved
         allCharacterInfo.Enqueue(inputObject);
-        
-        // Create the page using the allCHaracterInfo queue
+
         CreatePage(allCharacterInfo, characterInfo);
 
         // Make button clickable
@@ -302,6 +358,10 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SaveCharacterData()
     {
+        if (justSwitchedBetweenNormalAndMultiplayerNotebook)
+        {
+            return;
+        }
         // Save the written character text to the notebook data
         notebookData.UpdateCharacterNotes(currentCharacter, 
             characterCustomInput.GetComponent<TMP_InputField>().text);
@@ -312,7 +372,11 @@ public class NotebookManager : MonoBehaviour
     /// </summary>
     public void SavePersonalData()
     {
-        // Save the written personal text to the notebook data
+        if (justSwitchedBetweenNormalAndMultiplayerNotebook)
+        {
+            return;
+        }
+        // Save the written character text to the notebook data
         notebookData.UpdatePersonalNotes(personalCustomInput.GetComponent<TMP_InputField>().text);
     }
     
