@@ -20,7 +20,7 @@ public class CharacterInstanceEditTest
     private CharacterData           mainCharacterData;
     private CharacterInstance       mainCharacter;
     
-    [OneTimeSetUp]
+    [SetUp]
     public void Setup()
     {
         // Get some random characters to set up the tests

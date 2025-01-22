@@ -49,6 +49,7 @@ public class EpilogueManagerPlayTests
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
         SceneManager.LoadScene("EpilogueScene");
+        gm.gameState = GameManager.GameState.Epilogue;
         
         // Waiting for the EpilogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("EpilogueManager") != null);
@@ -126,7 +127,7 @@ public class EpilogueManagerPlayTests
             GameObject.Destroy(obj);
         
         // Move all DDOLs so that they can be unloaded.
-        var DDOLs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
+        var DDOLs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "DDOLs");
         foreach (GameObject obj in DDOLs) 
             GameObject.Destroy(obj);
 
