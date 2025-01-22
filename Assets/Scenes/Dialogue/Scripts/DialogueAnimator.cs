@@ -207,9 +207,9 @@ public class DialogueAnimator : MonoBehaviour
             {
                 audioSource.Stop(); // stop previous letter's audio
                 audioSource.PlayOneShot(popSound);
-                audioSource.volume /= 2; // turn down volume to prevent heavy bass
+                audioSource.volume /= 10; // turn down volume to prevent heavy bass
                 audioSource.PlayOneShot(getCharAudio());
-                audioSource.volume *= 2; // turn volume back up
+                audioSource.volume *= 10; // turn volume back up
             }
 
             // Write letter to screen and increment stringIndex
