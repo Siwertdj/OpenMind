@@ -17,7 +17,7 @@ MonoBehaviour:
   - type: 0
     emotion: 0
     text: I think my best trait is that I'm a very chill 'go-with-the-flow' kind
-      of person. Though sometimes I can be a little too chill to the point I just
-      don't do things I don't feel like doing
+      of person. Though sometimes, I can be a little too chill to the point I just
+      don't do things I don't feel like doing.
     image: {fileID: 0}
     background: []
