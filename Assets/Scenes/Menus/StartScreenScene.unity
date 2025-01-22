@@ -1307,6 +1307,9 @@ MonoBehaviour:
   OnTextSizeChanged:
     m_PersistentCalls:
       m_Calls: []
+  OnAudioSettingsChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &582075137
 Transform:
   m_ObjectHideFlags: 0

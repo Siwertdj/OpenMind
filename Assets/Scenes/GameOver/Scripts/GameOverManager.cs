@@ -12,19 +12,19 @@ using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
     [Header("Scene References")]
-    [SerializeField] GameObject GameWonCanvas;
-    [SerializeField] GameObject GameLossCanvas;
-    [SerializeField] GameObject SingleplayerButtons;
+    [SerializeField] private GameObject gameWonCanvas;
+    [SerializeField] private GameObject gameLossCanvas;
+    [SerializeField] private GameObject[] singleplayerButtons;
 
     [Header("Game Events")] 
     [SerializeField] private GameEvent onGameLoaded;
     
     // Game Variables
-    private bool                    hasWon;
+    private bool hasWon;
     private List<CharacterInstance> characters;
-    private int                     culpritID;
-    private StoryObject             story;
-    private SceneController         sc;
+    private int culpritID;
+    private StoryObject story;
+    private SceneController sc;
     
     
     public void StartGameOver(Component sender, params object[] data)
@@ -64,13 +64,13 @@ public class GameOverManager : MonoBehaviour
     {
         if (hasWon)
         {
-            GameLossCanvas.SetActive(false);
-            GameWonCanvas.SetActive(true);
+            gameLossCanvas.SetActive(false);
+            gameWonCanvas.SetActive(true);
         }
         else
         {
-            GameLossCanvas.SetActive(true);
-            GameWonCanvas.SetActive(false);
+            gameLossCanvas.SetActive(true);
+            gameWonCanvas.SetActive(false);
         }
     }
     
@@ -79,10 +79,9 @@ public class GameOverManager : MonoBehaviour
     /// </summary>
     private void SetButtons()
     {
-        if(MultiplayerManager.mm)
-            SingleplayerButtons.SetActive(false);
-        else
-            SingleplayerButtons.SetActive(true);
+        // Don't let the player restart if we are in multiplayer
+        foreach (var button in singleplayerButtons)
+            button.SetActive(MultiplayerManager.mm == null);
     }
 
     public void ReturnToMenu()
