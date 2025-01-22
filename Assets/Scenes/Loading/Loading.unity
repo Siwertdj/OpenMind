@@ -448,8 +448,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546507294}
-        m_TargetAssemblyTypeName: GameManager, Scripts
+      - m_Target: {fileID: 1546507295}
+        m_TargetAssemblyTypeName: UIManager, Scripts
         m_MethodName: ToggleTutorial
         m_Mode: 2
         m_Arguments:

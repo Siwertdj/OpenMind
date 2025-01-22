@@ -68,6 +68,15 @@ public class UIManager : MonoBehaviour
             SceneController.sc.ToggleNotebookScene(button, menuButton);
         }
     }
+    
+    /// <summary>
+    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
+    /// </summary>
+    /// <param name="helpButton"></param>
+    public void ToggleTutorial(Button helpButton)
+    {
+        SceneController.sc.ToggleTutorialScene(helpButton);
+    }
 
     /// <summary>
     /// Starts a transition-animation, using coroutines.
