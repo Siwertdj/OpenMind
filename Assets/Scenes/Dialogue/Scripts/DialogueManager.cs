@@ -36,7 +36,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private EventSystem eventSystemPrefab;
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private GameObject avatarPrefab; // A prefab containing a character
-    [SerializeField] private GameObject[] backgroundPrefabs; // The list of backgrounds for use in character dialogue
     [SerializeField] private GameObject phoneDialogueBoxPrefab;
 
     [Header("Events")]

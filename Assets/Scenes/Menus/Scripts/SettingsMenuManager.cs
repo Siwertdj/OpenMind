@@ -81,10 +81,6 @@ public class SettingsMenuManager : MonoBehaviour
     {
         if (SceneManager.GetSceneByName("StartScreenScene").isLoaded)
         {
-            // '_ =' throws away the await
-            /*_ = SceneController.sc.TransitionScene(SceneController.SceneName.SettingsScene,
-                SceneController.SceneName.StartScreenScene,
-                SceneController.TransitionType.Unload);*/
             SceneManager.UnloadSceneAsync("SettingsScene");
         }
         else if (SceneManager.GetSceneByName("Loading").isLoaded)

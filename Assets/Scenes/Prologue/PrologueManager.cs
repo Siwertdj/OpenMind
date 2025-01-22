@@ -155,7 +155,6 @@ public class PrologueManager : MonoBehaviour
         catch
         {
             textIndex = 0;
-            //Debug.LogError("Error: No more text to speak.");
         }
         textIndex++;
     }

@@ -154,25 +154,10 @@ public class SelectionManager : MonoBehaviour
         if (!character.isActive)
             return;
 
-        /*
-        // Start the epilogue scene if CulpritSelect is active
-        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
-        {
-            // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-            GameManager.gm.FinalChosenCuplrit = character;
-
-            // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-            GameManager.gm.hasWon = GameManager.gm.GetCulprit().characterName == character.characterName;
-
-            // Load the epilogue scene.
-            GameManager.gm.StartEpilogueDialogue(character);
-        }
-        else*/
-        {
-            // No special gamestate, so we start dialogue with the given character
-            GameManager.gm.StartDialogue(character);
-        }
+        // No special gamestate, so we start dialogue with the given character
+        GameManager.gm.StartDialogue(character);
     }
+
     /// <summary>
     /// Enables the character selection button & sets it to the selected character.
     /// </summary>

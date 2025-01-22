@@ -75,7 +75,6 @@ public class GameOverManager : MonoBehaviour
     public void ReturnToMenu()
     {
         SceneManager.LoadScene("StartScreenScene");
-        // TODO: All DDOL-objects should not duplicate
     }
     
     /// <summary>

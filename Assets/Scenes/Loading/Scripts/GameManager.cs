@@ -24,10 +24,6 @@ public class GameManager : MonoBehaviour
     public                    GameEvent   onEpilogueStart;
 
     // GAME VARIABLES
-    /*private int numberOfCharacters; // How many characters each session should have
-    private int numQuestions; // Amount of times the player can ask a question
-    private int minimumRemaining; // The amount of active characters at which the session should end
-    private bool immediateVictim; // Start the first round with an inactive characters*/
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
     public List<CharacterInstance> currentCharacters;   // The list of the characters in the current game. This includes both active and inactive characters
     [NonSerialized] public GameState gameState;     // This gamestate is tracked to do transitions properly and work the correct behaviour of similar methods

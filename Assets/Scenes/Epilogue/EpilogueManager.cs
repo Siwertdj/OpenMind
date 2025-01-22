@@ -1,3 +1,5 @@
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -81,9 +83,7 @@ public class EpilogueManager : MonoBehaviour
         { 
             // Create a new SelectOption object.
             GameObject newOption = Instantiate(portraitPrefab, parent);
-            // TODO: Set avatar
-            /*newOption.GetComponentInChildren<Image>().sprite = 
-                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;    */
+            // Set avatar
             newOption.GetComponent<CharacterIcon>().SetAvatar(character);
             
             newOption.GetComponent<GameButton>().onClick.AddListener(delegate { CharacterSelected(character); });
@@ -93,7 +93,6 @@ public class EpilogueManager : MonoBehaviour
     private void CharacterSelected(CharacterInstance chosenCharacter)
     {
         // Set win state
-        //bool hasWon = culpritId == chosenCharacter.id;
         bool hasWon = chosenCharacter.isCulprit;
         
         StartEpilogueDialogue(chosenCharacter, hasWon, hasWon);
@@ -109,9 +108,8 @@ public class EpilogueManager : MonoBehaviour
     /// <param name="character"> The character which has been chosen. </param>
     public async void StartEpilogueDialogue(CharacterInstance character, bool hasWon, bool startCulpritDialogue)
     {
-        // TODO: Fix the transitions here.
         // Transition to the dialogue scene.
-        // If its already laoded, unload it first.
+        // If its already loaded, unload it first.
         if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
         {
             await sc.TransitionScene(
