@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I really respect Mark Rutte. The way he followed through the last couple
-      of years. You can say what you want but when you look at what he has achieved
+    text: I really respect Mark Rutte and the way he followed through the last couple
+      of years. You can say what you want, but when you look at what he has achieved
       and the way he has done it, with complete surrender. A private life didn't
       exist for him. I think that is really something.
     image: {fileID: 0}

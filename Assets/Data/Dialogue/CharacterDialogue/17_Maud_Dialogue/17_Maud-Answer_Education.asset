@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I have a HBO master's degree in pedagogy.
+    text: I have an HBO master's degree in pedagogy.
     image: {fileID: 0}
     background: []

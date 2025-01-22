@@ -17,7 +17,7 @@ MonoBehaviour:
   - type: 0
     emotion: 1
     text: My core values are fairness, leniency and helpfulness. It's important that
-      people don't think only about themselves and that they try to empathise with
+      people don't only think about themselves and that they try to empathise with
       others.
     image: {fileID: 0}
     background: []

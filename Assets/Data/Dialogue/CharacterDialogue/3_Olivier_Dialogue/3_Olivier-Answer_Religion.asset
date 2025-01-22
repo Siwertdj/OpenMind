@@ -16,9 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: 'Yes, I am Christian. Religion to me is who I think God is, and who God
-      wants to be, to me. I think God created a beautiful world but things happened
-      that made it not beautiful anymore but that I am loved and that my purpose
-      is to contribute to make it beautiful again. '
+    text: Yes, I am Christian. Religion to me is who I think God is, and who God
+      wants to be, to me. I think God created a beautiful world, but things happened
+      that made it not beautiful anymore. However, I know I am loved and that my
+      purpose is to contribute to make it beautiful again.
     image: {fileID: 0}
     background: []
