@@ -64,10 +64,10 @@ public class DebugManager : MonoBehaviour
         {
             if (!(DisablePopups || ignores.Contains(condition) || type == LogType.Log))
             {
-                int result = DisplayDialogComplex(type.ToString(),
+                /*int result = DisplayDialogComplex(type.ToString(),
                     $"Condition: {condition}\nStacktrace:\n{stackTrace}",
-                    "OK", "Ignore this message from now on.", "Disable all pop-ups");
-                
+                    "OK", "Ignore this message from now on.", "Disable all pop-ups");*/
+                int result = 0;
                 if (result == 1)
                     ignores.Add(condition);
                 else if (result == 2)
