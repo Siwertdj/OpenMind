@@ -26,19 +26,19 @@ MonoBehaviour:
   storyEpilogueWonDialogue: {fileID: 11400000, guid: 343e5905858ea414280d99ae8eb62bc7, type: 2}
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 69b86c83f87104745b78f7fe4dbc75f2, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: ba3fbe3417af7a545a212bda404ea94c, type: 2}
-  victimDialogue: has gone home.
+  victimDialogue: has disappeared.
   hintDialogue:
-  - I am sensing something... <victimName> has gone home...
-  - 'Hold on... the culprit has said something:'
+  - I noticed that <victimName> has disappeared..
+  - 'Hold on... I''m sensing something the culprit just said: :'
   - '"<hint>"'
   noMoreHintsDialogue:
-  - I am sensing something... <victimName> has gone home...
-  - I am trying to reach the culprit, but I think my powers are fading...
-  - My powers are gone for now. You will have to figure this out on your own.
+  - noticed that <victimName> has disappeared.
+  - 'I am trying to reach the culprit, but I''m sensing nothing. '
+  - You will have to trust your own instincts for now..
   preEpilogueDialogue:
   - Oh no, the reunion is about to end!
   - I think we've gathered all the information we can.
-  - Time to decide the culprit.
+  - 'Time to decide who is responsible for the disappearances. '
   numberOfCharacters: 8
   numQuestions: 2
   minimumRemaining: 4

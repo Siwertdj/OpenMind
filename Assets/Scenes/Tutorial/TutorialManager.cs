@@ -36,22 +36,18 @@ public class TutorialManager : MonoBehaviour
     {
         ResetTutorial(); // Make sure all hints start with a clean slate. 
         
-        // The type of tutorial that is shown, depends on the scene that is currently loaded. 
-        if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+        // The type of tutorial that is shown, depends on the scene that is currently loaded.
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded) // Since the notebook is loaded on top of another scene, this check has to come first. 
+        {
+            NotebookHint();
+        }
+        else if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
         {
             DialogueHint();
-        }
-        else if (SceneManager.GetSceneByName("GameLossScene").isLoaded || SceneManager.GetSceneByName("GameWinScene").isLoaded)
-        {
-            EndScreenHint();
         }
         else if (SceneManager.GetSceneByName("EpilogueScene").isLoaded)
         {
             EpilogueHint();
-        }
-        else if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-        {
-            NotebookHint();
         }
         else // In all other cases (namely the NPCSelectScene) the actual tutorial needs to be played. 
         {
@@ -78,8 +74,62 @@ public class TutorialManager : MonoBehaviour
     /// </summary>
     private void DialogueHint()
     {
-        // The hint the player should receive during this scene. 
-        text.text = "Ask this person a question to find out if they are the culprit!";
+        // First try to determine the gamestate to distinguish between different types of dialogue. 
+        try
+        {
+            GameManager gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+            switch (gm.gameState)
+            {
+                case GameManager.GameState.NpcDialogue:
+                    text.text = "Ask this person a question to find out if they are the culprit!";
+                    break;
+                case GameManager.GameState.HintDialogue:
+                    text.text = "Try to match the hint to a character in the game.";
+                    break;
+                case GameManager.GameState.Epilogue:
+                    text.text = "Did you choose the right character?";
+                    break;
+            }
+        }
+        catch
+        {
+            // At the end of the game, the gamemanager does not exist anymore, so there is no gamestate.
+            // In that case you are confronting the culprit. 
+            text.text = "Did you find the culprit?";
+        }
+        ActivateHint();
+    }
+    
+    /// <summary>
+    /// This method is responsible for showing the hint during the Epilogue scene. 
+    /// </summary>
+    private void EpilogueHint()
+    {
+        try
+        {
+            EpilogueManager em = GameObject.Find("EpilogueManager").GetComponent<EpilogueManager>();
+            switch (em.story.storyID)
+            {
+                case 0: // The mysterious contact
+                    text.text =
+                        "Select the person you think is sending you messages. When in doubt, consult your notebook.";
+                    break;
+                case 1: // The psychic sidekick
+                    text.text =
+                        "Select the person you think is responsible for the disappearances. When in doubt, consult your notebook.";
+                    break;
+                case 2: // The stolen paper
+                    text.text =
+                        "Select the person you think is the rightful author. When in doubt, consult your notebook.";
+                    break;
+            }
+        }
+        catch
+        {
+            text.text = "Select the character you think is the culprit";
+            Debug.LogError("Unable to detect which story is currently played.");
+        }
+        
         ActivateHint();
     }
     
@@ -90,26 +140,6 @@ public class TutorialManager : MonoBehaviour
     {
         // The hint the player should receive during this scene. 
         text.text = "In your Notebook you can write down gathered information.";
-        ActivateHint();
-    }
-    
-    /// <summary>
-    /// This method is responsible for showing the hint during the Epilogue scene. 
-    /// </summary>
-    private void EpilogueHint()
-    {
-        // The hint the player should receive during this scene. 
-        text.text = "Select the person you think is the culprit. When in doubt, consult your notebook.";
-        ActivateHint();
-    }
-    
-    /// <summary>
-    /// This method is responsible for showing the hint during the epilogue scene. 
-    /// </summary>
-    private void EndScreenHint()
-    {
-        // The hint the player should receive during these scenes. 
-        text.text = "Restart game, try again with the same characters, or quit?";
         ActivateHint();
     }
     #endregion
@@ -222,7 +252,7 @@ public class TutorialManager : MonoBehaviour
     // This region contains methods regarding the part of the tutorial where the notebook is involved.
     #region NotebookTutorial
     /// <summary>
-    /// This method activates the tutorial in the notebook. 
+    /// This method activates the part of the tutorial that takes place in the notebook. 
     /// </summary>
     public void ActivateNotebookTutorial()
     {
@@ -311,5 +341,4 @@ public class TutorialManager : MonoBehaviour
     }
     
     #endregion
-    
    }
