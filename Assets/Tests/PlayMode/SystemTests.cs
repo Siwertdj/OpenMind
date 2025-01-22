@@ -14,6 +14,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using UnityEditor;
+using UnityEngine.UI;
 using Scene = UnityEngine.SceneManagement.Scene;
 
 public class SystemTests
@@ -241,10 +242,26 @@ public class SystemTests
         
         //TODO: Test with writing down notes once notebook is fixed
         // Write down notes
-        //string notebookTextPrior = "hello";
-        //var notebookManager = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
-        //notebookManager.inputField.GetComponent<TMP_InputField>().text = notebookTextPrior;
-        //notebookManager.inputField.GetComponent<TMP_InputField>().onEndEdit.Invoke(notebookTextPrior);
+        string notebookTextPrior = "hello";
+        TMP_InputField personalNotes = GameObject.Find("Personal Notes Input Field").GetComponent<TMP_InputField>();
+        personalNotes.text = notebookTextPrior;
+        foreach (var button in 
+                 GameObject.Find("Buttons Top Row").GetComponentsInChildren<Button>().Union(
+                     GameObject.Find("Buttons Bottom Row").GetComponentsInChildren<Button>()))
+        {
+            if (button.name == "PersonalButton")
+                continue;
+            
+            button.onClick.Invoke();
+            yield return null;
+            
+            yield return new WaitWhile(() => GameObject.Find("Character Info Field") is null);
+            yield return new WaitWhile(() =>
+                GameObject.Find("Character Info Field").GetComponentInChildren<TMP_InputField>() is null);
+            TMP_InputField TMPcharacterNotes = GameObject.Find("Character Info Field").GetComponentInChildren<TMP_InputField>();
+            TMPcharacterNotes.text = notebookTextPrior + " " + button.name;
+        }
+        
         
         // Close notebook
         GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
@@ -614,13 +631,16 @@ public class SystemTests
             GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke(); 
             yield return new WaitForSeconds(swipeDuration);
         }
+
+        yield return new WaitUntil(() =>
+            GameObject.Find("Confirm Selection Button") is not null &&
+            GameObject.Find("Confirm Selection Button").GetComponent<GameButton>() is not null);
         
         // Find an active character and click to choose them
         foreach (CharacterInstance c in currentCharacters)
         {
             if (c.isActive && emptyQuestionCharacters.All(emptyC => emptyC.characterName != c.characterName))
             {
-                //Debug.Log(GameObject.Find("Confirm Selection Button").GetComponent<Button>().onClick.GetPersistentEventCount());
                 GameObject.Find("Confirm Selection Button").GetComponent<GameButton>().onClick.Invoke();
                 break;
             }
@@ -628,7 +648,7 @@ public class SystemTests
             if (GameObject.Find("NavRight"))
             {
                 GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
-                yield return null;
+                yield return new WaitForSeconds(swipeDuration);
             }
             else
             {
