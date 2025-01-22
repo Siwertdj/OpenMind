@@ -25,8 +25,7 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private bool overrideDefaultSpeed = true;
     [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
 
-    [Header("TextAudio")]
-    [SerializeField] private List<AudioClip> letterSounds;
+    [Header("Speaking Audio")]
     [SerializeField] private AudioClip popSound;
 
     private readonly string soundlessSymbols = " !?.,";
@@ -64,20 +63,30 @@ public class DialogueAnimator : MonoBehaviour
         if (text == null)
             return;
 
-        text.enableAutoSizing = true;       // Set autosizing to true for the text-component.
-        ChangeTextSize(SettingsManager.sm.GetFontSize());   // change the textsize based on settings
-        audioSource = GetComponent<AudioSource>();      // set audiosource reference, for the talking-sfx
-        audioSource.volume = SettingsManager.sm.sfxVolume;
+        // Set text size & add listener
+        text.enableAutoSizing = true; // Set autosizing to true for the text-component.
+        UpdateTextSize();
+        SettingsManager.sm.OnTextSizeChanged.AddListener(UpdateTextSize);
+
+        // Set volume & add listener
+        audioSource = GetComponent<AudioSource>(); // Set audiosource reference, for the talking-sfx
+        UpdateVolume();
+        SettingsManager.sm.OnAudioSettingsChanged.AddListener(UpdateVolume);
     }
     
     /// <summary>
     /// Change the fontSize of the text
     /// </summary>
     /// <param name="fontSize"></param>
-    public void ChangeTextSize(int fontSize)
+    public void UpdateTextSize()
     {
         // set the max font size - so it shrinks if it would otherwise overflow (for robustness)
-        text.fontSizeMax = fontSize;
+        text.fontSizeMax = SettingsManager.sm.GetFontSize();
+    }
+
+    private void UpdateVolume()
+    {
+        audioSource.volume = SettingsManager.sm.sfxVolume;
     }
     
     /// <summary>
@@ -221,16 +230,6 @@ public class DialogueAnimator : MonoBehaviour
         IsOutputting = false;
         dialogueIndex++;
     }
-
-    /// <summary>
-    /// Returns random audio from list of audios in serialized field
-    /// </summary>
-    private AudioClip getCharAudio()
-    {
-        System.Random random = new System.Random();
-        return letterSounds[random.Next(0, letterSounds.Count)];
-    }
-
 
     #region Test Variables
 #if UNITY_INCLUDE_TESTS
