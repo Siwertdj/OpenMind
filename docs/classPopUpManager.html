@@ -73,14 +73,11 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classPopUpManager-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">PopUpManager Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Method in this class are raised by Game Events to start and stop the loading icon animation.  
- <a href="classPopUpManager.html#details">More...</a></p>
 <div class="dynheader">
 Inheritance diagram for PopUpManager:</div>
 <div class="dyncontent">
@@ -90,34 +87,39 @@ Inheritance diagram for PopUpManager:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a00bf81bedb2a2064e7ada93be0767f25"><td class="memItemLeft" align="right" valign="top"><a id="a00bf81bedb2a2064e7ada93be0767f25" name="a00bf81bedb2a2064e7ada93be0767f25"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenPopUp</b> ()</td></tr>
-<tr class="memdesc:a00bf81bedb2a2064e7ada93be0767f25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables canvas to show loading animation. <br /></td></tr>
-<tr class="separator:a00bf81bedb2a2064e7ada93be0767f25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a936de60318c488e17d75b087a288c6ca"><td class="memItemLeft" align="right" valign="top"><a id="a936de60318c488e17d75b087a288c6ca" name="a936de60318c488e17d75b087a288c6ca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OpenPopUp</b> (Component sender, params object[] data)</td></tr>
+<tr class="separator:a936de60318c488e17d75b087a288c6ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7f90a353bd8ffd08364a87616708f0fa"><td class="memItemLeft" align="right" valign="top"><a id="a7f90a353bd8ffd08364a87616708f0fa" name="a7f90a353bd8ffd08364a87616708f0fa"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>ClosePopUp</b> ()</td></tr>
-<tr class="memdesc:a7f90a353bd8ffd08364a87616708f0fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Waits for certain amount of second before stopping load animation. <br /></td></tr>
 <tr class="separator:a7f90a353bd8ffd08364a87616708f0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a307e8886697a67e6febb2e81cc3dd7c2"><td class="memItemLeft" align="right" valign="top"><a id="a307e8886697a67e6febb2e81cc3dd7c2" name="a307e8886697a67e6febb2e81cc3dd7c2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Update</b> ()</td></tr>
+<tr class="separator:a307e8886697a67e6febb2e81cc3dd7c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
+<tr class="memitem:a3ecb026f93bcba015f017030bece7540"><td class="memItemLeft" align="right" valign="top"><a id="a3ecb026f93bcba015f017030bece7540" name="a3ecb026f93bcba015f017030bece7540"></a>
+Button&#160;</td><td class="memItemRight" valign="bottom"><b>closePopUp</b></td></tr>
+<tr class="separator:a3ecb026f93bcba015f017030bece7540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad8c064ceb9d22f33e75bb9b43ea5de74"><td class="memItemLeft" align="right" valign="top"><a id="ad8c064ceb9d22f33e75bb9b43ea5de74" name="ad8c064ceb9d22f33e75bb9b43ea5de74"></a>
 Canvas&#160;</td><td class="memItemRight" valign="bottom"><b>popUpCanvas</b></td></tr>
 <tr class="separator:ad8c064ceb9d22f33e75bb9b43ea5de74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a928c5dd65e3505dfc1fa305b3ab3e924"><td class="memItemLeft" align="right" valign="top"><a id="a928c5dd65e3505dfc1fa305b3ab3e924" name="a928c5dd65e3505dfc1fa305b3ab3e924"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>guaranteeLoadDuration</b></td></tr>
-<tr class="separator:a928c5dd65e3505dfc1fa305b3ab3e924"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab29ab19a29fd0282cc5a49319864fd2b"><td class="memItemLeft" align="right" valign="top"><a id="ab29ab19a29fd0282cc5a49319864fd2b" name="ab29ab19a29fd0282cc5a49319864fd2b"></a>
+TextMeshProUGUI&#160;</td><td class="memItemRight" valign="bottom"><b>popUpText</b></td></tr>
+<tr class="separator:ab29ab19a29fd0282cc5a49319864fd2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
-Private Member Functions</h2></td></tr>
-<tr class="memitem:ad07bb41cb6d3c7f952579fd602529388"><td class="memItemLeft" align="right" valign="top"><a id="ad07bb41cb6d3c7f952579fd602529388" name="ad07bb41cb6d3c7f952579fd602529388"></a>
-IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>IconWait</b> ()</td></tr>
-<tr class="separator:ad07bb41cb6d3c7f952579fd602529388"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a0851901c8e5b2fa5a804441934220bbc"><td class="memItemLeft" align="right" valign="top"><a id="a0851901c8e5b2fa5a804441934220bbc" name="a0851901c8e5b2fa5a804441934220bbc"></a>
+DateTime&#160;</td><td class="memItemRight" valign="bottom"><b>startTime</b></td></tr>
+<tr class="separator:a0851901c8e5b2fa5a804441934220bbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6aa703d7b48314d36c53c817e6fd291"><td class="memItemLeft" align="right" valign="top"><a id="ac6aa703d7b48314d36c53c817e6fd291" name="ac6aa703d7b48314d36c53c817e6fd291"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>closeOnReceivedNotebook</b></td></tr>
+<tr class="separator:ac6aa703d7b48314d36c53c817e6fd291"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Method in this class are raised by Game Events to start and stop the loading icon animation. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>Assets/Scenes/Loading/Scripts/PopUpManager.cs</li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>Assets/Scenes/Menus/Scripts/PopUpManager.cs</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

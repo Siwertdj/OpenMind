@@ -14,10 +14,12 @@ var searchData=
   ['endtutorialtest_11',['EndTutorialTest',['../classTutorialManagerPlayTest.html#aa834d70b740e6c8fe51c1644003cbfd6',1,'TutorialManagerPlayTest']]],
   ['enoughcharactersremaining_12',['EnoughCharactersRemaining',['../classGameManager.html#a4d79f33e1ecb977c578db38960217dd1',1,'GameManager']]],
   ['enoughcharacterstest_13',['EnoughCharactersTest',['../classGameManagerPlayTest.html#a411a4f732219cfa1d659d40346df8806',1,'GameManagerPlayTest']]],
-  ['epiloguehint_14',['EpilogueHint',['../classTutorialManager.html#aea789603a86e48151d00979bb7c65b22',1,'TutorialManager']]],
-  ['epiloguemanager_15',['EpilogueManager',['../classEpilogueManager.html',1,'']]],
-  ['epiloguemanagerplaytests_16',['EpilogueManagerPlayTests',['../classEpilogueManagerPlayTests.html',1,'']]],
-  ['execute_17',['Execute',['../classDialogueObject.html#a54220ab0dc2f91861bf5069d7506f551',1,'DialogueObject.Execute()'],['../classContentDialogueObject.html#a7ab72903da997fa8e63d320baf38e0f4',1,'ContentDialogueObject.Execute()'],['../classTerminateDialogueObject.html#ada38f773fa795bd59ac1a1efad44a44b',1,'TerminateDialogueObject.Execute()'],['../classPhoneDialogueObject.html#ac5bffe6017e52f5b6d5818327d28aa08',1,'PhoneDialogueObject.Execute()'],['../classOpenResponseDialogueObject.html#a7d68e073d0aa39398905b05102c5f368',1,'OpenResponseDialogueObject.Execute()'],['../classQuestionDialogueObject.html#a2564f5197435ad0301d05d4b050f6e08',1,'QuestionDialogueObject.Execute()'],['../classResponseDialogueObject.html#a5e6f2607c99c22f17252e7630700aed6',1,'ResponseDialogueObject.Execute()']]],
-  ['executenextobject_18',['ExecuteNextObject',['../classDialogueManager.html#a14afcc4d005f9faa9368b71ed8ee9908',1,'DialogueManager']]],
-  ['exitsettings_19',['ExitSettings',['../classSettingsMenuManager.html#a3ed6223e3166e0acc899edda52b8cd8f',1,'SettingsMenuManager']]]
+  ['enterclassroomcode_14',['EnterClassroomCode',['../classClient.html#a4e7617c5811157bbb0c3c535b6dce40b',1,'Client']]],
+  ['epiloguehint_15',['EpilogueHint',['../classTutorialManager.html#aea789603a86e48151d00979bb7c65b22',1,'TutorialManager']]],
+  ['epiloguemanager_16',['EpilogueManager',['../classEpilogueManager.html',1,'']]],
+  ['epiloguemanagerplaytests_17',['EpilogueManagerPlayTests',['../classEpilogueManagerPlayTests.html',1,'']]],
+  ['events_18',['events',['../classNetworkEvents.html#ab255208f4a7568edb1e87c6c4018ccd8',1,'NetworkEvents']]],
+  ['execute_19',['Execute',['../classDialogueObject.html#a54220ab0dc2f91861bf5069d7506f551',1,'DialogueObject.Execute()'],['../classContentDialogueObject.html#a7ab72903da997fa8e63d320baf38e0f4',1,'ContentDialogueObject.Execute()'],['../classTerminateDialogueObject.html#ada38f773fa795bd59ac1a1efad44a44b',1,'TerminateDialogueObject.Execute()'],['../classPhoneDialogueObject.html#ac5bffe6017e52f5b6d5818327d28aa08',1,'PhoneDialogueObject.Execute()'],['../classOpenResponseDialogueObject.html#a7d68e073d0aa39398905b05102c5f368',1,'OpenResponseDialogueObject.Execute()'],['../classQuestionDialogueObject.html#a2564f5197435ad0301d05d4b050f6e08',1,'QuestionDialogueObject.Execute()'],['../classResponseDialogueObject.html#a5e6f2607c99c22f17252e7630700aed6',1,'ResponseDialogueObject.Execute()']]],
+  ['executenextobject_20',['ExecuteNextObject',['../classDialogueManager.html#a14afcc4d005f9faa9368b71ed8ee9908',1,'DialogueManager']]],
+  ['exitsettings_21',['ExitSettings',['../classSettingsMenuManager.html#a3ed6223e3166e0acc899edda52b8cd8f',1,'SettingsMenuManager']]]
 ];

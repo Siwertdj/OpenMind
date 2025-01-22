@@ -1,24 +1,7 @@
 var searchData=
 [
-  ['objectivetexttest_0',['ObjectiveTextTest',['../classTutorialManagerPlayTest.html#ac3b413586d4fca409b0a748d7234b4cb',1,'TutorialManagerPlayTest']]],
-  ['onbuttonclick_1',['OnButtonClick',['../classDialogueManager.html#abab84129c3ca0c685869298e9f7fc450',1,'DialogueManager']]],
-  ['onbuttonclicktest_2',['OnButtonClickTest',['../classDialogueManagerPlayTest.html#a92759305705c6b19126e038f1b7b7889',1,'DialogueManagerPlayTest']]],
-  ['onchangedtextsize_3',['OnChangedTextSize',['../classDialogueManager.html#a840bb80986e5ea8e58367779eafde9a1',1,'DialogueManager.OnChangedTextSize()'],['../classSelectionManager.html#a7d8811132eefe9815b7ca8fb242cf388',1,'SelectionManager.OnChangedTextSize()']]],
-  ['onchangedtextsizetest_4',['OnChangedTextSizeTest',['../classDialogueManagerPlayTest.html#a06cd7fa096687aa064e5901daf1b1d29',1,'DialogueManagerPlayTest.OnChangedTextSizeTest()'],['../classNPCSelectPlayTest.html#aa1ee963790dc751cfd62946e4ecf2358',1,'NPCSelectPlayTest.OnChangedTextSizeTest()']]],
-  ['ondestroy_5',['OnDestroy',['../classSettingsMenuManager.html#a478c37eefdd33203f4b90fe8826d1164',1,'SettingsMenuManager']]],
-  ['ondialoguecomplete_6',['OnDialogueComplete',['../classDialogueManager.html#abe9e87d44e910fa555f1f54200e095f1',1,'DialogueManager']]],
-  ['ondialoguecompletetest_7',['OnDialogueCompleteTest',['../classDialogueManagerPlayTest.html#ab0b989fcc8fd809b56620e0ed82b1e01',1,'DialogueManagerPlayTest']]],
-  ['ondisable_8',['OnDisable',['../classGameEventListener.html#a31d742a3f342a583325dd2fff80de358',1,'GameEventListener']]],
-  ['onenable_9',['OnEnable',['../classGameEventListener.html#af1d5585a115b74d5e304d79fa73775ab',1,'GameEventListener']]],
-  ['oneventraised_10',['OnEventRaised',['../classGameEventListener.html#a80db09b3e43a86b2a0a5832da81a5c47',1,'GameEventListener']]],
-  ['ontextsizechanged_11',['OnTextSizeChanged',['../classDialogueManager.html#a293c22132389efdfab0b7a87f0c31407',1,'DialogueManager.OnTextSizeChanged()'],['../classNotebookManager.html#aa26cd049019adff10ee024b2ce33c13d',1,'NotebookManager.OnTextSizeChanged()']]],
-  ['ontogglevaluechanged_12',['OnToggleValueChanged',['../classPrologueManager.html#ad7577473a30ae1dab2cf81cc8dc96530',1,'PrologueManager']]],
-  ['opencharactertab_13',['OpenCharacterTab',['../classNotebookManager.html#a3c04114671b216544cc1e0b64017b5a9',1,'NotebookManager']]],
-  ['openmenu_14',['OpenMenu',['../classUIManager.html#a05733c9cb003a5f95d51ecc752832985',1,'UIManager']]],
-  ['openpersonalnotes_15',['OpenPersonalNotes',['../classNotebookManager.html#a45879daf9e6b5809bcd825936c9a10be',1,'NotebookManager']]],
-  ['openpersonalnotestest_16',['OpenPersonalNotesTest',['../classNotebookManagerPlayTest.html#aae725aa0ec7b28707f3288f8f559ea6b',1,'NotebookManagerPlayTest']]],
-  ['openpopup_17',['OpenPopUp',['../classPopUpManager.html#a00bf81bedb2a2064e7ada93be0767f25',1,'PopUpManager']]],
-  ['openresponsedialogueobject_18',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html#a9a28e880a0f4e2af012adb277a16fc53',1,'OpenResponseDialogueObject']]],
-  ['opensettings_19',['OpenSettings',['../classGameMenuManager.html#a3c35ab667ebc4874ddce489e88d6ed66',1,'GameMenuManager']]],
-  ['optionstest_20',['OptionsTest',['../classSelectionManagerTest.html#aec278a045a07ce121c5d83eb42e0765e',1,'SelectionManagerTest']]]
+  ['manageplayeramount_0',['ManagePlayerAmount',['../classHost.html#aa21c5481facb7f1fd1970575ae7ea350',1,'Host']]],
+  ['modifycharrange_1',['ModifyCharRange',['../classPossibleCharacterDefinition.html#a5ea932b074737f49de3c0361a3adfbe2',1,'PossibleCharacterDefinition']]],
+  ['multilinewritingdelaytest_2',['MultiLineWritingDelayTest',['../classDialogueAnimatorPlayTest.html#a6759e128aacfa319438fca90db6478ed',1,'DialogueAnimatorPlayTest']]],
+  ['multiplayerstarttest_3',['MultiplayerStartTest',['../classMultiplayerMenuPlayTests.html#aae6a630c05172eb730f54bd87edaf08d',1,'MultiplayerMenuPlayTests']]]
 ];

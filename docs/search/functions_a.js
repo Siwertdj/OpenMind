@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['multilinewritingdelaytest_0',['MultiLineWritingDelayTest',['../classDialogueAnimatorPlayTest.html#a6759e128aacfa319438fca90db6478ed',1,'DialogueAnimatorPlayTest']]]
+  ['killmultiplayer_0',['KillMultiplayer',['../classMultiplayerManager.html#a23595f170191ed58c5c6588248460019',1,'MultiplayerManager']]]
 ];

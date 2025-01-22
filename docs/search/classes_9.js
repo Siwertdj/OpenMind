@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['openresponsedialogueobject_0',['OpenResponseDialogueObject',['../classOpenResponseDialogueObject.html',1,'']]]
+  ['load_0',['Load',['../classLoad.html',1,'']]],
+  ['loadingscreenmanager_1',['LoadingScreenManager',['../classLoadingScreenManager.html',1,'']]]
 ];

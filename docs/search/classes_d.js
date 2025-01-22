@@ -1,24 +1,8 @@
 var searchData=
 [
-  ['save_0',['Save',['../classSave.html',1,'']]],
-  ['savedata_1',['SaveData',['../classSaveData.html',1,'']]],
-  ['saveuserdata_2',['SaveUserData',['../classSaveUserData.html',1,'']]],
-  ['savingloadingtestfilepaths_3',['SavingLoadingTestFilePaths',['../classSavingLoadingTestFilePaths.html',1,'']]],
-  ['savingloadingtestvaluereadandwrite_4',['SavingLoadingTestValueReadAndWrite',['../classSavingLoadingTestValueReadAndWrite.html',1,'']]],
-  ['scenecontroller_5',['SceneController',['../classSceneController.html',1,'']]],
-  ['scenecontrollertests_6',['SceneControllerTests',['../classSceneControllerTests.html',1,'']]],
-  ['selectionmanager_7',['SelectionManager',['../classSelectionManager.html',1,'']]],
-  ['selectionmanagertest_8',['SelectionManagerTest',['../classSelectionManagerTest.html',1,'']]],
-  ['selectoption_9',['SelectOption',['../classSelectOption.html',1,'']]],
-  ['settingsedittest_10',['SettingsEditTest',['../classSettingsEditTest.html',1,'']]],
-  ['settingsmanager_11',['SettingsManager',['../classSettingsManager.html',1,'']]],
-  ['settingsmenumanager_12',['SettingsMenuManager',['../classSettingsMenuManager.html',1,'']]],
-  ['startmenumanager_13',['StartMenuManager',['../classStartMenuManager.html',1,'']]],
-  ['startscreenplaytest_14',['StartScreenPlayTest',['../classStartScreenPlayTest.html',1,'']]],
-  ['startscreentest_15',['StartScreenTest',['../classStartScreenTest.html',1,'']]],
-  ['storyobject_16',['StoryObject',['../classStoryObject.html',1,'']]],
-  ['storyselectionmanager_17',['StorySelectionManager',['../classStorySelectionManager.html',1,'']]],
-  ['storyselectionmanagerplaytest_18',['StorySelectionManagerPlayTest',['../classStorySelectionManagerPlayTest.html',1,'']]],
-  ['swipedetector_19',['SwipeDetector',['../classSwipeDetector.html',1,'']]],
-  ['systemtests_20',['SystemTests',['../classSystemTests.html',1,'']]]
+  ['phonedialogueobject_0',['PhoneDialogueObject',['../classPhoneDialogueObject.html',1,'']]],
+  ['popupmanager_1',['PopUpManager',['../classPopUpManager.html',1,'']]],
+  ['possiblecharacterdefinition_2',['PossibleCharacterDefinition',['../classPossibleCharacterDefinition.html',1,'']]],
+  ['prologuemanager_3',['PrologueManager',['../classPrologueManager.html',1,'']]],
+  ['prologuemanagerplaytest_4',['PrologueManagerPlayTest',['../classPrologueManagerPlayTest.html',1,'']]]
 ];

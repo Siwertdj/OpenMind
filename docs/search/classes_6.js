@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keyvaluepair_0',['KeyValuePair',['../structKeyValuePair.html',1,'']]]
+  ['host_0',['Host',['../classHost.html',1,'']]]
 ];

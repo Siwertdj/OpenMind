@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['fetchuserdata_0',['FetchUserData',['../classFetchUserData.html',1,'']]],
-  ['filepathconstants_1',['FilePathConstants',['../classFilePathConstants.html',1,'']]]
+  ['epiloguemanager_0',['EpilogueManager',['../classEpilogueManager.html',1,'']]],
+  ['epiloguemanagerplaytests_1',['EpilogueManagerPlayTests',['../classEpilogueManagerPlayTests.html',1,'']]]
 ];
