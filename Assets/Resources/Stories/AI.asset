@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bacd756deb4a9e4e9ebe58f48a10d29, type: 3}
   m_Name: AI
   m_EditorClassIdentifier: 
-  storyName: The Lost Paper
+  storyName: The Stolen Paper
   storyID: 2
-  dialogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: dfd884602b5ca334494c1346591cbefb, type: 3}
   hintBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
   additionalHintBackgroundObjects: []
   epilogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
@@ -24,20 +24,20 @@ MonoBehaviour:
   storyEpilogueWonDialogue: {fileID: 11400000, guid: 713c26f4f654be5438236d883440cdeb, type: 2}
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 1b02eeff34c2c8c49ba62200f63a7a64, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: 5e9ad781e678e6d49b227dace3e4c423, type: 2}
-  victimDialogue: has gone home.
+  victimDialogue: is definitely  not the author.
   hintDialogue:
-  - <victimName> has gone home.
-  - The computer calculated data about the culprit...
+  - '<victimName> is definitely not the author. '
+  - 'A characteristic beloning to the real author is the following: '
   - '"<hint>"'
   noMoreHintsDialogue:
   - <victimName> has gone home.
-  - The computer is trying to calculate more data...
-  - It seems all these calculations have been too heavy on the computer's processor.
+  - I'm trying to calculate more data...
+  - It seems all these calculations have been too heavy on my processor.
   - The circuit boards are fried. You will not receive any more hints.
   preEpilogueDialogue:
   - The reunion will come to an end soon.
-  - We have gathered a lot of information.
-  - It is time to identify the culprit.
+  - 'I hope you have identified the right author. '
+  - It is time to let everybode know who is the real author!
   numberOfCharacters: 8
   numQuestions: 2
   minimumRemaining: 4
