@@ -15,7 +15,7 @@ MonoBehaviour:
   storyName: The Stolen Paper
   storyID: 2
   dialogueBackground: {fileID: 3448788318129469726, guid: dfd884602b5ca334494c1346591cbefb, type: 3}
-  hintBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
+  hintBackground: {fileID: 3448788318129469726, guid: 176a22c1bdd4c86448e097407cbac382, type: 3}
   additionalHintBackgroundObjects: []
   epilogueBackground: {fileID: 3448788318129469726, guid: 2aa10b6eb50dffe43b2e8e3c986edc5c, type: 3}
   storyIntroMusic: {fileID: 8300000, guid: fb4cb0d1f32ef524c8e502188350586b, type: 3}
