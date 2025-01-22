@@ -16,7 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: If I would win the lottery, I would take my parents and my sister on a
-      grand vacation.
+    text: If I won the lottery I would take my parents and my sister on a grand vacation.
     image: {fileID: 0}
     background: []

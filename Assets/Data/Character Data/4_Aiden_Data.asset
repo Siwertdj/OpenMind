@@ -42,7 +42,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 9a7b48db4cf19b741a6efbc5f250592e, type: 2}
     trait:
-    - If I would win the lottery, I would buy a house.
+    - If I won the lottery I would buy a house.
   - question: 11
     answer: {fileID: 11400000, guid: 745213ec7a4d1664c910844c175c7f14, type: 2}
     trait:

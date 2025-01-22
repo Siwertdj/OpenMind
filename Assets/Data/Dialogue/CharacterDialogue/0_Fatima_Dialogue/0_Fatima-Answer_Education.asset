@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I have a master's degree.
+    text: I have a master's degree
     image: {fileID: 0}
     background: []

@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I would buy a house for my mother. From the remaining money, I would set
+    text: I would buy a house for my mother. From the remaining money I would set
       half of it aside to help my children buy a house in the future. The rest will
       be donated to charity. I'm committed to a charity against inequality of opportunity.
     image: {fileID: 0}

@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I'm politically left. I don't follow all debates, but I think it's important
+    text: I'm politically left. I don't follow all debates but I think it's important
       to always vote. I try to encourage other people to vote too.
     image: {fileID: 0}
     background: []

@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: No, we eat an AVG everyday, but we have started eating more varied meals.
+    text: No, we eat an AVG everyday but we have started eating more varied meals.
       We also try to eat less meat.
     image: {fileID: 0}
     background: []

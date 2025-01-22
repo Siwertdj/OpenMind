@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I really like music. I like listening, but I really love to sing! When
-      I have time I also like to write my own music.
+    text: I really like music. I like listening but I love to sing! When I have time
+      I also like to write my own music.
     image: {fileID: 0}
     background: []

@@ -16,8 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I am enjoying life right now, because I am busy doing things I'm interested
-      in. I really like gaming and art, and then I mean art in the broadest sense
-      of the word.
+    text: I am enjoying life right now because I am busy doing things I'm interested
+      in. I really like gaming and art. I mean art in the broadest sense of the word.
     image: {fileID: 0}
     background: []

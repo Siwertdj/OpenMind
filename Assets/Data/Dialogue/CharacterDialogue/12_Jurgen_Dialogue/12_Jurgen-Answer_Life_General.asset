@@ -17,9 +17,9 @@ MonoBehaviour:
   - type: 0
     emotion: 0
     text: I am having a good time, very challenging. I think that is part of being
-      around 30 years old. Before your thirties, life is all about preparing, but
-      now it's time for the real thing. I am an entrepreneur. I do sports, movement
-      and body-oriented work. I live together with housemates who are also my friends
+      around 30 years old. Before your thirties life is all about preparing, now
+      it's time for the real thing. I am an entrepreneur. I do sports, movement and
+      body-oriented work. I live together with housemates who are also my friends
       and I have a long-term girlfriend.
     image: {fileID: 0}
     background: []

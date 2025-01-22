@@ -16,7 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I am super extroverted! I study a lot, but I also love meeting up with
-      friends.
+    text: I am super extroverted, I study a lot but I also love meeting up with friends.
     image: {fileID: 0}
     background: []

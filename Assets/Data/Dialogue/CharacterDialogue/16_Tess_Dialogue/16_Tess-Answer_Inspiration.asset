@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: I love Prince! I cried so much when I heard he died.
+    text: I love Prince, I cried so much when I heard he died.
     image: {fileID: 0}
     background: []

@@ -16,9 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: 'Life is and has been great. I have a ton of friends, both old and new,
-      and I love my family and my girlfriend. Over the last couple of years, I learned
-      that, even in hard times, there are good things to be appreciated. So even
-      though things are kind of hard right now, I am still doing well. '
+    text: 'Life is and has been great. I have a ton of friends, old and new and I
+      love my family and my girlfriend. Over the last couple of years I learned that
+      even in hard times there are good things to be appreciated. So even though
+      things are kind of hard right now I am still doing well. '
     image: {fileID: 0}
     background: []

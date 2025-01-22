@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: My girlfriend is, without a doubt, the most important person in my life.
+    text: My girlfriend is the most important person in my life. Without a doubt.
     image: {fileID: 0}
     background: []

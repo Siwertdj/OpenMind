@@ -18,7 +18,7 @@ MonoBehaviour:
     emotion: 0
     text: I like that it's possible to stack diploma's. Someone that starts at vmbo
       will be able to go to MBO, HBO or even to university eventually. That being
-      said, I'm absolutely not a fan of standardized tests. That way, you are not
+      said, I'm absolutely not a fan of standardized tests. That way you are not
       testing someone's actual skill. The only thing you are testing is how good
       someone is at reading from a book and remembering the information.
     image: {fileID: 0}

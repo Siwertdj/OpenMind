@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: I'm overzealous. Sometimes, I take on too much work. I'm very disciplined,
+    text: I'm overzealous. Sometimes I take on too much work and I'm very disciplined
       so I can push myself a bit too far.
     image: {fileID: 0}
     background: []

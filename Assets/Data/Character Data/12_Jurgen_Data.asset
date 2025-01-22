@@ -69,7 +69,7 @@ MonoBehaviour:
   - question: 16
     answer: {fileID: 11400000, guid: ba55b24f953062d49ba0f82f9e864cfd, type: 2}
     trait:
-    - A lot of people think I'm more rigid than I really am.
+    - A lot of people think I'm more rigid than I am.
   - question: 18
     answer: {fileID: 11400000, guid: 0fc53eff92386934fb4a923ddf2fe8d4, type: 2}
     trait:
@@ -77,12 +77,11 @@ MonoBehaviour:
   - question: 20
     answer: {fileID: 11400000, guid: f6434b312dce34e48a93ba1c761bbd66, type: 2}
     trait:
-    - I do intermittent fasting.
+    - I do intermittend fasting.
   - question: 17
     answer: {fileID: 11400000, guid: 2bc3408c800cc774e92ed3459d5d51c8, type: 2}
     trait:
-    - I think people take in too much external news and suffering, as well as too
-      many problems.
+    - I think people take in too much external news, problems and suffering.
   greetings:
   - lines:
     - Hey!

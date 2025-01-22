@@ -49,8 +49,8 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 88c36fb6f23aa9843a64733a01739b9f, type: 2}
     trait:
-    - If I would win the lottery, I would quit my job a travel through South Africa
-      with my partner.
+    - If I won the lottery I would quit my job a travel through South-Africa with
+      my partner.
   - question: 3
     answer: {fileID: 11400000, guid: 8e21a93a6cbfe494bbaf0d742fb301cf, type: 2}
     trait:

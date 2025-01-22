@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: People think I look a lot younger than I actually am. They also don't expect
-      me to listen to heavy music. Some people just don't understand you.
+    text: People think I look a lot younger than I am. And they don't expect me to
+      listen to heavy music. Some people just don't understand you.
     image: {fileID: 0}
     background: []

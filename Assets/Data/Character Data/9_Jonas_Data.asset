@@ -37,11 +37,11 @@ MonoBehaviour:
   - question: 4
     answer: {fileID: 11400000, guid: 530e9b9d17adc5a428c36e81003c7ca8, type: 2}
     trait:
-    - I am transgender and asexual.
+    - I am a transgender and asexual.
   - question: 5
     answer: {fileID: 11400000, guid: c51c0dedc55716f4d9959ed79d4aba9e, type: 2}
     trait:
-    - I enjoy my life right now, because I am busy doing things I'm interested in.
+    - I enjoy my life right now because I am busy doing things I'm interested in.
   - question: 9
     answer: {fileID: 11400000, guid: e406ec4630174ea40a41092e40adaf37, type: 2}
     trait:
@@ -49,7 +49,7 @@ MonoBehaviour:
   - question: 10
     answer: {fileID: 11400000, guid: 664ec4fb04cff9b4e97f48aa0c9dc4cf, type: 2}
     trait:
-    - I am studying to get my bachelor's degree at university.
+    - I am studying to get my bachelors degree at university.
   - question: 11
     answer: {fileID: 11400000, guid: 32302fa9e397a084eaa6d3dc0171571b, type: 2}
     trait:
@@ -61,7 +61,7 @@ MonoBehaviour:
   - question: 13
     answer: {fileID: 11400000, guid: 3976f3a7ea1ea754799481a9332ce942, type: 2}
     trait:
-    - My granddad is the most important person in my life.
+    - My granda is the most important person in my life.
   - question: 15
     answer: {fileID: 11400000, guid: 134bcd4e601f82c4faacbacd0f1a3f1b, type: 2}
     trait:
@@ -69,8 +69,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 877d5fe79a9b54f4fab5e25d6e9b37c6, type: 2}
     trait:
-    - If I would win the lottery, I would pay off my student debt and donate that
-      what is left.
+    - If I win the lottery I would pay off my student debt and donate what is left.
   - question: 6
     answer: {fileID: 11400000, guid: b427158b60fbe1149bb781294603307a, type: 2}
     trait:

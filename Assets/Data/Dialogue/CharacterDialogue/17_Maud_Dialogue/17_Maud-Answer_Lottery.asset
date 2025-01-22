@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: 'If I would win the lottery, I would travel around the world immediately!
-      I would start as far away as possible. After that, I would probably have about
-      eight different volunteering jobs. '
+    text: 'If I win the lottery I would travel the world immediately! I would start
+      as far away as possible. After that I would probably have about 8 different
+      volunteering jobs. '
     image: {fileID: 0}
     background: []

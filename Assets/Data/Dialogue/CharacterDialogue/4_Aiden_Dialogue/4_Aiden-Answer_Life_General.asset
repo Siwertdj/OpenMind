@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I am living the dream! I have a lot of ambitious friends and nice colleagues.
-      I also own a gym. I like training there, so I can eat whatever I want.
+    text: Yes, I am living the dream! I have a lot of ambitious friends and nice
+      colleagues. I own a gym, I like training there so I can eat whatever I want.
     image: {fileID: 0}
     background: []
   - type: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     background: []
   - type: 0
     emotion: 2
-    text: 'I do still live with my parents though. I wish I could get a place of
+    text: 'I do still live with my parents though, I wish I could get a place of
       my own. '
     image: {fileID: 0}
     background: []

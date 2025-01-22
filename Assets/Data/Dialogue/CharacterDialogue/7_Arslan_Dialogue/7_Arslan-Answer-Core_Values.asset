@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: "I think it\u2019s very important to always treat others the way you would
+    text: "I think it\u2019s very important to always treat others how you would
       want to be treated."
     image: {fileID: 0}
     background: []

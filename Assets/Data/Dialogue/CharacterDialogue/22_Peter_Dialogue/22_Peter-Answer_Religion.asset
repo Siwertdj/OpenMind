@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: No. I used to be an atheist, but I've slowly been shifting towards agnosticism.
-      From my scientific training, I've learned that there are things you can't see,
-      but are definitely there, and the other way around.
+    text: No. I used to be an atheist but I've slowly been shifting towards agnosticism.
+      From my scientific training I've learned that there are things you can't see
+      but are definitely there. And the other way around.
     image: {fileID: 0}
     background: []

@@ -65,7 +65,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: d0be23d3f198ad947a6020ca9e14f53d, type: 2}
     trait:
-    - If I would win the lottery, I would buy a house for my mother, save some for
+    - If I win the lottery someday I would buy a house for my mother, save some for
       my children and donate the rest to a charity.
   - question: 17
     answer: {fileID: 11400000, guid: 5d9fa90a6e4583f40a11d072179c26d7, type: 2}

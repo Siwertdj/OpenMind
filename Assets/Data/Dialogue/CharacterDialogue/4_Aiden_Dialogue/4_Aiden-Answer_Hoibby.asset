@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: 'I really enjoy exercising, like cardio and strength training, in my gym
-      of course. I also enjoy reading, cooking and, most of all, eating Italian food. '
+    text: 'I really enjoy exercising, like cardio and strength training. In my gym
+      of course. I also enjoy reading, cooking and, especially, eating Italian food.  '
     image: {fileID: 0}
     background: []

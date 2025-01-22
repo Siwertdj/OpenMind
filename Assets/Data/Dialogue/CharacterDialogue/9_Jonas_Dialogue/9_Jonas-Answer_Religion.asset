@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I am not religious anymore. I grew up going to church, but I don't believe
-      in God and I don't follow those doctrines.
+    text: I am not religious anymore. I grew up going to church but I don't believe
+      in god and I don't follow those doctrines.
     image: {fileID: 0}
     background: []

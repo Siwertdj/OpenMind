@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: If I would win the lottery, I would invest the money in a music career.
+    text: If I won the lottery I would invest the money in a music career.
     image: {fileID: 0}
     background: []

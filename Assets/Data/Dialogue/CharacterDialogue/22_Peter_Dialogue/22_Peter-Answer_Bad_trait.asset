@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: I'm dominant. To reach your goal, you have to stand your ground, which
-      can come across as dominance.
+    text: I'm dominant. To reach your goal you have to stand your ground which can
+      come across as dominance.
     image: {fileID: 0}
     background: []

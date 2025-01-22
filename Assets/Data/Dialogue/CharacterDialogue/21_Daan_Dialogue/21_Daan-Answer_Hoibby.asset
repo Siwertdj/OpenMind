@@ -16,9 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I like gaming, watching movies, tv shows and YouTube videos. I love losing
-      myself in the algorithm and an hour later you're still watching stupid videos.
-      I enjoy going out for dinner too. My favourite cuisine is Italian. And I have
-      a black belt in a martial art!
+    text: I still like gaming and I like watching movies, tv shows and YouTube videos.
+      I love losing myself in the algorithm and an hour later you're still watching
+      stupid videos. I enjoy going out for dinner too. My favourite cuisine is Italian.
+      And I have a black belt in a martial art!
     image: {fileID: 0}
     background: []

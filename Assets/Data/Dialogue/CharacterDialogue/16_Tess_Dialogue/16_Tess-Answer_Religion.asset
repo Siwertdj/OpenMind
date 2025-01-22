@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: "I am not religious, but I do consider myself spiritual. I believe that
-      there\u2019s more than what we can currently see. I do everything on feeling
-      and I always listen to my gut feeling."
+    text: "I am not religious but I do consider myself spiritual. I believe that
+      there\u2019s more than what we can currently see. I do everything on feeling,
+      I always listen to my gut feeling."
     image: {fileID: 0}
     background: []

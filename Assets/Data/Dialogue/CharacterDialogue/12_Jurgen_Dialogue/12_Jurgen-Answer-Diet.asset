@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Yes, I do intermittent fasting. Besides that, I eat a farmer's diet.
+    text: Yes, I do intermittent fasting. Besides that I eat a farmer's diet.
     image: {fileID: 0}
     background: []

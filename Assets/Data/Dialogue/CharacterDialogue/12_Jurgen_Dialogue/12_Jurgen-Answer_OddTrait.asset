@@ -16,10 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: A lot of people think I'm much more rigid than I actually am. They think
-      I'm a very closed off person, even though I am not like that at all. I think
-      it is because people find it hard to read me, so they can't get an accurate
-      idea of who I am. When people get to know me, they learn that I'm actually
-      really approachable.
+    text: A lot of people think I'm much more rigid than I am. They think I'm a very
+      closed off person even though I am not like that at all. I think it is because
+      people find it hard to read me so they can't get an accurate idea of who I
+      am. When people get to know me they learn that I'm actually really approachable.
     image: {fileID: 0}
     background: []

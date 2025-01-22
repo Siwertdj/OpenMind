@@ -16,15 +16,15 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I really like doing things with friends, such as partying, going out to
-      eat, going on a vacation or doing some arts and crafts. If it's with my friends,
-      it's a good time.
+    text: 'I really like doing things with friends, could be anything: partying,
+      going out to eat, going on a vacation or doing some arts and crafts. If it''s
+      with my friends, it''s a good time.'
     image: {fileID: 0}
     background: []
   - type: 0
     emotion: 2
-    text: I also used to be on social media a lot. However, recently it has lessened,
-      because of some heavy things that have been happening lately, but I don't really
-      like to talk about that.
+    text: I also used to be on social media a lot but recently it has lessened because
+      of some heavy things that have been happening lately, but I don't really like
+      to talk about that.
     image: {fileID: 0}
     background: []

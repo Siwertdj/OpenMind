@@ -17,7 +17,7 @@ MonoBehaviour:
   - type: 0
     emotion: 1
     text: I'm having a good time. I live in an apartment on my own. I have stability
-      and a decent income. At the same time, I have enough freedom and time to use
+      and a decent income. At the same time I have enough freedom and time to use
       the money on doing fun things with my friends.
     image: {fileID: 0}
     background: []

@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: My girlfriend is definitely the most important person to me. I talk to
-      her everyday and I can always go to her when I have a problem.
+    text: My girlfriend is definitely the most important person to me, I talk to
+      her everyday and I can always come to her when I have a problem.
     image: {fileID: 0}
     background: []

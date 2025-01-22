@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: 'If I would win the lottery, I would buy myself a huge house and I would
-      get a small pet goat. '
+    text: 'If I won the lottery I would buy myself a huge house and I would get a
+      small pet goat. '
     image: {fileID: 0}
     background: []

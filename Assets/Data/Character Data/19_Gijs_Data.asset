@@ -60,7 +60,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 704ee36ebcff29e4e9d87bf164ca2aa8, type: 2}
     trait:
-    - If I would win the lottery, I would buy myself a big house and a small goat.
+    - If I won the lottery I would buy myself a big house and a small goat.
   greetings:
   - lines:
     - Hey hey!

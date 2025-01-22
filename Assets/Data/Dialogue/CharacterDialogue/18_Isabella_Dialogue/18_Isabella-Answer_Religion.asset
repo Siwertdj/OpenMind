@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: Not at all! I was raised Catholic. but I never believed in it myself. It
+    text: Not at all! I was raised Catholic but I never believed in it myself. It
       has never brought me anything good. I thought it was very dogmatic and too
       suffocating.
     image: {fileID: 0}

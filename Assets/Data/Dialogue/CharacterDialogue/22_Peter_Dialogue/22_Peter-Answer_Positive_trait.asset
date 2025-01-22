@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: That I'm interested in a lot of things, such as in other people's stories
-      and a variety of other topics. I'm also good at listening to people, so in
-      that sense, I'm also helpful.
+    text: That I'm interested in a lot of things. In other people's stories and a
+      variety of other topics. I'm also good at listening to people so in that sense
+      I'm also helpful.
     image: {fileID: 0}
     background: []

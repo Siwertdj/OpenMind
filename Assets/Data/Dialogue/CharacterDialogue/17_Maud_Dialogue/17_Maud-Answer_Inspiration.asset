@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I respect Sylvana Simons, and people in general who refuse to let anyone
-      stop them from speaking the truth.
+    text: I respect Sylvana Simons. So people who are refusing to let anyone stop
+      them from speaking the truth.
     image: {fileID: 0}
     background: []

@@ -65,7 +65,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 1ed82ccdcd22c1d45986303ca8d3c3db, type: 2}
     trait:
-    - If I would win the lottery, I would create more space for artists.
+    - If I win the lottery I would create more space for artists.
   - question: 20
     answer: {fileID: 11400000, guid: 5a49309d025f6bd45bc07c2f68b4e880, type: 2}
     trait:
