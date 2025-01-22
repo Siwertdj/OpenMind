@@ -527,9 +527,19 @@ public class GameManager : MonoBehaviour
                 story.hintBackground, story.additionalHintBackgroundObjects[0]
                 )));
         }
+        else if (story.storyID == 2) // 2 corresponds to the AI story
+        {
+            dialogueObject = new ContentDialogueObject(
+                dialogue, null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
         else
         {
-            dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+            dialogueObject = new ContentDialogueObject(
+                dialogue, null, 
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground));
         }
 
         // The gameevent here should pass the information to Dialoguemanager
