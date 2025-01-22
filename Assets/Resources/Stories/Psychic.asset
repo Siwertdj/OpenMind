@@ -29,7 +29,7 @@ MonoBehaviour:
   victimDialogue: has disappeared.
   hintDialogue:
   - I noticed that <victimName> has disappeared..
-  - 'Hold on... I''m sensing something the culprit just said: :'
+  - 'Hold on... I''m sensing something the culprit just said:'
   - '"<hint>"'
   noMoreHintsDialogue:
   - noticed that <victimName> has disappeared.
