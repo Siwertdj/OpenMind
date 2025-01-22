@@ -29,7 +29,7 @@ MonoBehaviour:
   - question: 6
     answer: {fileID: 11400000, guid: 2f8033df382a60e4aa4ae22fdec77123, type: 2}
     trait:
-    - I think there too many cutbacks on education and culture.
+    - I think there are too many cutbacks on education and culture.
   - question: 7
     answer: {fileID: 11400000, guid: 6a5c1cf5fa6f95b46909ff123ae583bb, type: 2}
     trait:
@@ -41,7 +41,7 @@ MonoBehaviour:
   - question: 11
     answer: {fileID: 11400000, guid: 4374de6887c25474ba884839adedabf4, type: 2}
     trait:
-    - I think you should treat other like you want to be treated.
+    - I think you should treat others like you want to be treated.
   - question: 13
     answer: {fileID: 11400000, guid: 5cf7bf768f0099649bd1f02ede9d9da4, type: 2}
     trait:
@@ -53,7 +53,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 92f723dc8378c944c9036bd5d13cf64d, type: 2}
     trait:
-    - If I won the lottery I would take a vacation with my parents and sister.
+    - If I would win the lottery, I would take a vacation with my parents and sister.
   - question: 2
     answer: {fileID: 11400000, guid: 2dcc8ead48613d64cb696b6eaf1cf787, type: 2}
     trait:

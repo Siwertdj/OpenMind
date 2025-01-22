@@ -21,10 +21,11 @@ public class EpilogueManager : MonoBehaviour
     [SerializeField] private GameEvent onEpilogueEnd;
     
     // Private Variables
-    private StoryObject             story;
     private List<CharacterInstance> characters;
     private int                     culpritId;
     private SceneController         sc;
+    
+    public StoryObject             story;
     
     #region EpilogueFlow
     // 1. Player selects who they think is the culprit

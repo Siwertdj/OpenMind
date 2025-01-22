@@ -25,11 +25,11 @@ MonoBehaviour:
   - question: 4
     answer: {fileID: 11400000, guid: 3d54e4bf2cedee845869b8597dc4b5fa, type: 2}
     trait:
-    - I am pansexual and I think I am monogamous but I'm not sure yet.
+    - I am pansexual. I also think I am monogamous, but I'm not sure yet.
   - question: 2
     answer: {fileID: 11400000, guid: f4a6f184e35261344997f0104321a670, type: 2}
     trait:
-    - My life is going great but I am worried about racism and inequality.
+    - My life is going great, but I am worried about racism and inequality.
   - question: 7
     answer: {fileID: 11400000, guid: 8d42b495bd098b642ba2ef9e628664fb, type: 2}
     trait:
@@ -53,11 +53,11 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 79747a32aca3d384da9f1e5a58bbaf90, type: 2}
     trait:
-    - If I won the lottery I would buy a house and go on a vacation.
+    - If I would win the lottery, I would buy a house and go on a vacation.
   - question: 18
     answer: {fileID: 11400000, guid: 194a3a3da1cf1d44a9258bc32069b290, type: 2}
     trait:
     - I think a lot of people don't fit the current education system.
   greetings:
   - lines:
-    - Hi
+    - Hi there!

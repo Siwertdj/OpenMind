@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8111abedaa74482498a1886160089d40, type: 3}
   m_Name: PlayerMessage1
   m_EditorClassIdentifier: 
-  message: {fileID: 7612559206328335424, guid: 02a56b658b068504f8ea40bdd350428c, type: 3}
+  message: {fileID: 7612559206328335424, guid: d59012c70be31e341a3506605f163146, type: 3}
   messageContent: I'm here now!
   sender: 0

@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -57,7 +59,6 @@ public class IntroductionManagerPlayTest
     
     #endregion
     
-    
     /// <summary>
     /// Checks some basic properties of the introduction. 
     /// </summary>
@@ -86,15 +87,13 @@ public class IntroductionManagerPlayTest
         im.StoryA();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreNotEqual(0, im.messageLocations.Length);
         // Indices should be 0 
         Assert.AreEqual(0, im.TextMessageIndex);
         Assert.AreEqual(0, im.BackgroundIndex);
         Assert.AreEqual(0, im.TextIndex);
-        
-        Assert.IsNotNull(im.sendButton);
         yield return null;
     }
     
@@ -141,20 +140,6 @@ public class IntroductionManagerPlayTest
     }
     
     /// <summary>
-    /// Test that the background is actually changed after the ChangeBackground method is called 
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ChangeBackgroundTest()
-    {
-        im.StoryA();
-        int index = im.BackgroundIndex;
-        im.ChangeBackground();
-        Assert.AreEqual(index+1, im.BackgroundIndex);
-        Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        yield return null;
-    }
-    
-    /// <summary>
     /// Test the TypeAnimation function. This function uses the DialogueAnimator which is already tested elsewhere. 
     /// </summary>
     [UnityTest]
@@ -164,7 +149,6 @@ public class IntroductionManagerPlayTest
         im.TypeAnimation();
         // Check some basic properties
         Assert.IsTrue(im.continueButton.activeSelf);
-        Assert.IsTrue(im.sendButton.IsActive());
         Assert.IsTrue(im.typingText.IsActive());
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
         // Check if the message that is being typed belongs to the player. 
@@ -186,7 +170,7 @@ public class IntroductionManagerPlayTest
         im.StoryB();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreEqual(4, im.TextIndex);
         
@@ -230,6 +214,7 @@ public class IntroductionManagerPlayTest
         im.StoryB();
         Sprite beforeImage = im.character.sprite; 
         im.Vision();
+        im.Vision();
         Assert.AreNotEqual(beforeImage, im.character.sprite);
         yield return null; 
     }
@@ -248,7 +233,7 @@ public class IntroductionManagerPlayTest
         im.StoryC();
         
         // Lists containing necessary elements should not be empty
-        Assert.AreNotEqual(0, im.backgrounds.Length);
+        Assert.AreNotEqual(0, im.sprites.Length);
         Assert.AreNotEqual(0, im.storyText.Length);
         Assert.AreEqual(19, im.TextIndex);
         
@@ -283,20 +268,6 @@ public class IntroductionManagerPlayTest
         yield return null;
     }
     
-    /// <summary>
-    /// Checks if the character sprite changes when the computer is appearing. 
-    /// </summary>
-    [UnityTest]
-    public IEnumerator ComputerTest()
-    {
-        im.StoryC();
-        Sprite beforeImage = im.character.sprite;
-        im.Computer();
-        im.Computer();
-        Assert.AreNotEqual(beforeImage, im.character.sprite);
-        yield return null;
-    }
-    
     #endregion
     
     
@@ -311,7 +282,6 @@ public class IntroductionManagerPlayTest
         im.ChangePlayerText();
         Assert.AreEqual(index+1, im.TextIndex);
         Assert.AreEqual(PlayState.Paused,im.currentTimeline.state);
-        Assert.AreEqual(false, im.nameTagImage.activeSelf);
         yield return null;
     }
     

@@ -29,7 +29,8 @@ MonoBehaviour:
   - question: 3
     answer: {fileID: 11400000, guid: 9ddc1cffe80fbb64eb127cb7d290ca70, type: 2}
     trait:
-    - My parents say I am enthusiastic fot the future and I think I am great at listening.
+    - "Sifan Hassan is very inspiring to me. I think it's great that we\u2019re giving
+      women a chance and that she\u2019s really going for it."
   - question: 9
     answer: {fileID: 11400000, guid: add9cdc5262bc594f95f845c014cae99, type: 2}
     trait:
@@ -46,7 +47,7 @@ MonoBehaviour:
   - question: 6
     answer: {fileID: 11400000, guid: eb65b39b96542c349ae15d37784355b0, type: 2}
     trait:
-    - I am worried about the political climate because we're listening to each other
+    - I am worried about the political climate, because we're listening to each other
       less and less.
   - question: 10
     answer: {fileID: 11400000, guid: 9b190406386349e41847fb479b012c81, type: 2}

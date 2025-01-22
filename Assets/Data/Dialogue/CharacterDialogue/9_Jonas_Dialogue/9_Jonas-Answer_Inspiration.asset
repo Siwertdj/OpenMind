@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I am a fan of the work that public figures do. But I am not really a fan
+    text: I am a fan of the work that public figures do, but I am not really a fan
       of the public figures themselves.
     image: {fileID: 0}
     background: []
