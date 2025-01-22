@@ -444,19 +444,27 @@ public class DialogueManager : MonoBehaviour
     /// Continues the dialogue after answering the open question.
     /// </summary>
     public void AnswerOpenQuestion()
-    {        
-        // Assign the text from the inputField to inputText and add it to the list of answers.
-        inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
-        // Can use this to write the inputText to somewhere, here..
+    {
+        TMP_InputField input = inputField.GetComponentInChildren<TMP_InputField>();
+        if (input.text != string.Empty)
+        {
+            // Assign the text from the inputField to inputText and add it to the list of answers.
+            inputText = input.text;
+            // Can use this to write the inputText to somewhere, here..
 
-        // Disable the input field.
-        inputField.SetActive(false);
-        
-        // Reset the text from the input field.
-        inputText = "";
+            // Disable the input field.
+            inputField.SetActive(false);
 
-        animator.InOpenQuestion = false;
-        ExecuteNextObject();
+            // Reset the text from the input field.
+            inputText = "";
+
+            animator.InOpenQuestion = false;
+            ExecuteNextObject();
+        }
+        else
+        {
+            input.placeholder.GetComponentInChildren<TMP_Text>().text = "Please enter text to continue...";
+        }
     }
 
     
