@@ -92,9 +92,9 @@ public class CharacterInstanceEditTest
             ContentDialogueObject dialogueObject = (ContentDialogueObject)mainCharacter.GetGreeting(null);
             
             // The only thing returned should be "Hello"
-            Assert.AreEqual(DialogueContainer.TreeLength(dialogueObject), 4);
-            Assert.AreEqual(dialogueObject.dialogue.Count, 1);
-            Assert.AreEqual(dialogueObject.dialogue[0], "Hello. I'm Fatima");
+            Assert.AreEqual(4, DialogueContainer.TreeLength(dialogueObject));
+            Assert.AreEqual(1, dialogueObject.dialogue.Count);
+            Assert.AreEqual("Hello. I'm Fatima", dialogueObject.dialogue[0]);
             
             mainCharacter.data = data; // Put data with segmentslines back for other tests
         }
