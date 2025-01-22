@@ -30,6 +30,8 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private AnimationCurve shoveAnimationCurve;
     [SerializeField] private float expandedTabHeight;
     [SerializeField] private float collapsedTabHeight;
+    [SerializeField] private string ownNotebookSwipeText;
+    [SerializeField] private string otherNotebookSwipeText;
 
     [Header("Field References")]
     [SerializeField] private GameObject characterInfo;
@@ -54,6 +56,7 @@ public class NotebookManager : MonoBehaviour
     public  Button     multiplayerButton;
     private bool       showingMultiplayerNotebook;
     private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
+    private bool isClosing = false;
     public  GameObject personalInputField;
     public  GameObject multiplayerCanvas;
 
@@ -84,8 +87,8 @@ public class NotebookManager : MonoBehaviour
         ShoveAnimation(startPos, 0);
         FadeAnimation(true);
 
-        if (GameManager.gm.multiplayerEpilogue)
-        {
+        //if (GameManager.gm.multiplayerEpilogue)
+        //{
             // Get swipe detector & add listeners
             swipeDetector = GetComponent<SwipeDetector>();
             swipeDetector.OnSwipeLeft.AddListener(OpenOwnNotebook);
@@ -93,12 +96,13 @@ public class NotebookManager : MonoBehaviour
 
             multiplayerCanvas.SetActive(true);
             multiplayerButton.interactable = true;
-        }
-        else
-        {
-            multiplayerCanvas.SetActive(false);
-            multiplayerButton.interactable = false;
-        }
+            multiplayerButton.GetComponentInChildren<TMP_Text>().text = ownNotebookSwipeText;
+        //}
+        //else
+        //{
+        //    multiplayerCanvas.SetActive(false);
+        //    multiplayerButton.interactable = false;
+        //}
     }
     
     private void OpenOwnNotebook()
@@ -128,6 +132,10 @@ public class NotebookManager : MonoBehaviour
         // Wait for animation to finish
         yield return new WaitForSeconds(shoveAnimationDuration);
 
+        // If the notebook is in the process of closing, don't do anything more
+        if (isClosing)
+            yield break;
+
         // Switch notebook data
         ToggleMultiplayerNotebook();
 
@@ -147,22 +155,22 @@ public class NotebookManager : MonoBehaviour
             notebookData = GameManager.gm.notebookData;
             
             // Open personal notes and update the text
-            OpenPersonalNotes();
             personalCustomInput.text = notebookData.GetPersonalNotes();
+            multiplayerButton.GetComponentInChildren<TMP_Text>().text = ownNotebookSwipeText;
             
             // Add listener to recreate tab when font size is changed
             SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
         }
         else
         {
-            showingMultiplayerNotebook = true;
+            showingMultiplayerNotebook = true; 
+            multiplayerButton.GetComponentInChildren<TMP_Text>().text = otherNotebookSwipeText;
             if (GameManager.gm.multiplayerNotebookData != null)
             {
                 notebookData = GameManager.gm.multiplayerNotebookData;
                 
                 // Open personal notes and update the text
-                OpenPersonalNotes();
-                personalCustomInput.text = notebookData.GetPersonalNotes();
+                personalCustomInput.text = notebookData.GetPersonalNotes();                
 
                 // Add listener to recreate tab when font size is changed
                 SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
@@ -172,6 +180,8 @@ public class NotebookManager : MonoBehaviour
                 Debug.LogError("Tried to open multiplayer notebook, but no such multiplayer notebook exists.");
             }
         }
+
+        OpenPersonalNotes();
 
         justSwitchedBetweenNormalAndMultiplayerNotebook = false;
     }
@@ -488,6 +498,7 @@ public class NotebookManager : MonoBehaviour
     public Task ShoveOutNotebook()
     {
         var tcs = new TaskCompletionSource<bool>();
+        isClosing = true;
 
         ShoveAnimation(
             notebookTransform.localPosition.x, 
