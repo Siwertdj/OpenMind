@@ -263,7 +263,8 @@ public class NotebookManager : MonoBehaviour
         
         inputObjectField.onEndEdit.AddListener(_ => SavePersonalData());  
   
-        inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;  
+        inputObjectField.pointSize = SettingsManager.sm.GetFontSize() * SettingsManager.M_SMALL_TEXT;
+        inputObjectField.interactable = !GameManager.gm.multiplayerEpilogue;
         personalCustomInput = inputObjectField; // Also set the reference so that it can be saved  
         
         // Create the page using the allpersonalinfo queue
@@ -324,6 +325,7 @@ public class NotebookManager : MonoBehaviour
         
         // Set the notebook text
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
+        inputObjectField.interactable = !GameManager.gm.multiplayerEpilogue;
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         
