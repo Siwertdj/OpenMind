@@ -403,8 +403,8 @@ public class DialogueManager : MonoBehaviour
                 messageBox.AdjustFontSize();
 
             // Rebuild layout
-            LayoutRebuilder.ForceRebuildLayoutImmediate(
-                phoneField.transform.GetChild(0).GetComponent<RectTransform>());
+            foreach (var rectTransform in phoneField.GetComponentsInChildren<RectTransform>())
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
     }
 
