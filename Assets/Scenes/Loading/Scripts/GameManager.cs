@@ -429,6 +429,12 @@ public class GameManager : MonoBehaviour
                 DialogueManager.dm.CreateDialogueBackground(story, null, 
                 story.hintBackground, story.additionalHintBackgroundObjects[0]));
         }
+        else if (story.storyID == 2) // AI story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
         else
         {
             dialogueObject = new ContentDialogueObject(

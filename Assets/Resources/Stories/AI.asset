@@ -29,7 +29,7 @@ MonoBehaviour:
   victimDialogue: is definitely  not the author.
   hintDialogue:
   - '<victimName> is definitely not the author. '
-  - 'A characteristic beloning to the real author is the following: '
+  - 'A characteristic belonging to the real author is the following: '
   - '"<hint>"'
   noMoreHintsDialogue:
   - <victimName> has gone home.
