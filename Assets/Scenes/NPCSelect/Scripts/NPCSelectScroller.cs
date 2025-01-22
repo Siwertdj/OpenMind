@@ -155,7 +155,7 @@ public class NPCSelectScroller : MonoBehaviour
     {
         // Wait until the parent objects are scaled properly
         yield return new WaitForEndOfFrame();
-
+        
         scrollable.localPosition = GetTargetPos(childIndex);
         OnCharacterSelected.Invoke();
     }

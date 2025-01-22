@@ -336,7 +336,6 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void PopulateCharacters()
     {
-        Debug.Log("populating");
         // Start by emptying the list
         currentCharacters = new List<CharacterInstance>();
         
