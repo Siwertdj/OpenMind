@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: 'I love the old rapper Rakim. The lyrics he writes are always so beautiful
+    text: 'I love the old rapper Rakim. The lyrics he writes are always so beautiful,
       and they really helped me to expand my view of the world. '
     image: {fileID: 0}
     background: []

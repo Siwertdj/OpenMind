@@ -17,6 +17,6 @@ MonoBehaviour:
   - type: 0
     emotion: 1
     text: The most important person in my life is my boyfriend. I always go to him
-      when I have a problem. Although I often wait too long before I ask for help.
+      when I have a problem, although I often wait too long before I ask for help.
     image: {fileID: 0}
     background: []

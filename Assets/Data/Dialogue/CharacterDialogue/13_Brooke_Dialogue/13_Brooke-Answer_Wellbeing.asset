@@ -17,9 +17,9 @@ MonoBehaviour:
   - type: 0
     emotion: 0
     text: I'm doing pretty good. This is a weird time in my life. For the first time
-      I actually have money but I don't have enough time to spend it. I have the
+      I actually have money, but I don't have enough time to spend it. I have the
       opportunity to do things that I didn't have enough money for in the past, like
-      buying a drum kit! If I only go to work and come home to eat and sleep I would
-      get really sad. So busy life it is.
+      buying a drum kit! If I would only go to work and come home to eat and sleep,
+      I would get really sad. So a busy life it is!
     image: {fileID: 0}
     background: []

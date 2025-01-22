@@ -33,7 +33,7 @@ MonoBehaviour:
   - question: 6
     answer: {fileID: 11400000, guid: 7052c20a4fda7714ca971589c82e7d23, type: 2}
     trait:
-    - I vote left.
+    - I vote left-wing.
   - question: 7
     answer: {fileID: 11400000, guid: 07cd5da83d011a74380a3ca66e07f34b, type: 2}
     trait:

@@ -23,7 +23,7 @@ MonoBehaviour:
     background: []
   - type: 0
     emotion: 2
-    text: 'I was always dismissed as some kind of criminal even though that was not
-      the case at all. '
+    text: 'I was always dismissed as some kind of criminal, even though that was
+      not the case at all. '
     image: {fileID: 0}
     background: []

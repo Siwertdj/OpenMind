@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I enjoy going to the movies or the theatre and I watch tv and listen to
-      the radio. I also exercise.
+    text: I enjoy going to the movies or theatre, and I watch tv and listen to the
+      radio. I also exercise often.
     image: {fileID: 0}
     background: []
