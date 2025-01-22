@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I am vegetarian. Sometimes I accidentally eat vegan because animal products
+    text: I am vegetarian. Sometimes I accidentally eat vegan, because animal products
       are expensive. So many people are hungry and we are throwing away billions
       of kilograms of food.
     image: {fileID: 0}

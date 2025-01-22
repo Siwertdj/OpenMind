@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: I am bisexual. But I'm not in a relationship or anything
+    text: I am bisexual, but I'm not in a relationship or anything.
     image: {fileID: 0}
     background: []

@@ -29,11 +29,11 @@ MonoBehaviour:
   - question: 7
     answer: {fileID: 11400000, guid: af530381e2c6a4944a2c07c6932fa84f, type: 2}
     trait:
-    - My biggest hobby is reading books and listening to audiobooks.
+    - My favorite hobby is reading books and listening to audiobooks.
   - question: 10
     answer: {fileID: 11400000, guid: a703cf613ba470a4dbd1f40db3ab05fd, type: 2}
     trait:
-    - I got a master's degree.
+    - I have a master's degree.
   - question: 12
     answer: {fileID: 11400000, guid: 5756106de2604cd4a96b5e9ec012243f, type: 2}
     trait:
@@ -45,11 +45,11 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: a473de4ea983a114f858454634e7ed79, type: 2}
     trait:
-    - If I won the lottery I would build an orphanage in Morocco.
+    - If I would win the lottery, I would build an orphanage in Morocco.
   - question: 9
     answer: {fileID: 11400000, guid: 937abf0fa5c759c428d1c54e0dcbd33a, type: 2}
     trait:
-    - I am muslim.
+    - I am a muslim.
   - question: 18
     answer: {fileID: 11400000, guid: 190c218aaf2e24e4f904153021da4e1c, type: 2}
     trait:
@@ -57,7 +57,7 @@ MonoBehaviour:
   - question: 16
     answer: {fileID: 11400000, guid: 260d8c4cc891d33439c3d19007b9aaec, type: 2}
     trait:
-    - It suprises people that I can get really angry.
+    - It surprises people that I can get really angry.
   greetings:
   - lines:
     - Hi there!

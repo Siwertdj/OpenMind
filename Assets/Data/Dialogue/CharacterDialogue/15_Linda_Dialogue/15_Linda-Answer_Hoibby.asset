@@ -16,10 +16,10 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: "I love to bike and I read a lot. I\u2019ve actually been reading to three
-      Turkish kids and it\u2019s always so much fun. They even call me grandma now!
-      They used not really talk in school, and when they did it was only ever in
-      Turkish, but now they speak Dutch very well. It\u2019s so important to me to
-      get out of your social bubble sometimes. "
+    text: "I love to ride my bike and I read a lot. I\u2019ve actually been reading
+      to three Turkish kids and it\u2019s always so much fun. They even call me grandma
+      now! They used to not really talk in school, and when they did, it was only
+      ever in Turkish, but now they speak Dutch very well. It\u2019s so important
+      to me to get out of your social bubble sometimes. "
     image: {fileID: 0}
     background: []

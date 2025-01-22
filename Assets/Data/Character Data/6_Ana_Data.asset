@@ -41,7 +41,7 @@ MonoBehaviour:
   - question: 8
     answer: {fileID: 11400000, guid: 6cb81d071641faa4ab28c5ab9d32c27d, type: 2}
     trait:
-    - My parents taught me love my family and to keep my home tidy.
+    - My parents taught me to love my family and to keep my home tidy.
   - question: 11
     answer: {fileID: 11400000, guid: 78523ac631f329846b148da374c30ad3, type: 2}
     trait:

@@ -69,7 +69,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 9334c4c0a82538c4aa2d13c219d2fd44, type: 2}
     trait:
-    - If I win the lottery I would book a huge trip.
+    - If I would win the lottery, I would book a huge trip.
   - question: 20
     answer: {fileID: 11400000, guid: 51d4da1a50a1f5e42b3251817f887402, type: 2}
     trait:

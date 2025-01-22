@@ -17,8 +17,8 @@ MonoBehaviour:
   - type: 0
     emotion: 0
     text: I am a vegetarian. Originally I became a vegetarian because of the climate
-      issues but now I have even more reasons. I'm against animal cruelty and I never
-      really thought that meat was that interesting anyway. I would like to be vegan
-      actually.
+      issues, but now I have even more reasons. I'm against animal cruelty and I
+      never really thought that meat was that interesting anyway. I would like to
+      be vegan actually.
     image: {fileID: 0}
     background: []
