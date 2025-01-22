@@ -238,6 +238,10 @@ PlayableDirector:
     value: {fileID: 1496048347}
   - key: {fileID: 4884999494600596787, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
     value: {fileID: 1496048348}
+  - key: {fileID: -746867135044495653, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1327221823}
+  - key: {fileID: 8410479496101567054, guid: 0d71f51352848ba40ac9d961fbc745ab, type: 2}
+    value: {fileID: 1327221828}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &107210727
@@ -1403,6 +1407,7 @@ GameObject:
   - component: {fileID: 1239055692}
   - component: {fileID: 1239055691}
   - component: {fileID: 1239055693}
+  - component: {fileID: 1239055694}
   m_Layer: 0
   m_Name: StoryA
   m_TagString: Untagged
@@ -1439,6 +1444,10 @@ PlayableDirector:
     value: {fileID: 1208453424}
   - key: {fileID: 467203956781326507, guid: 87cc3c6c94684c94b8a81b04ff674c41, type: 2}
     value: {fileID: 0}
+  - key: {fileID: -8453529654893952331, guid: 87cc3c6c94684c94b8a81b04ff674c41, type: 2}
+    value: {fileID: 1327221823}
+  - key: {fileID: -3149105396510596686, guid: 87cc3c6c94684c94b8a81b04ff674c41, type: 2}
+    value: {fileID: 1327221828}
   m_ExposedReferences:
     m_References:
     - 4d5045c0239cdb14c826a2beee20f179: {fileID: 0}
@@ -1469,6 +1478,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ca7fe906b0d5a544a54eaf1ec698581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1239055694
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239055690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1242056046
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1833,8 @@ GameObject:
   - component: {fileID: 1327221824}
   - component: {fileID: 1327221826}
   - component: {fileID: 1327221825}
+  - component: {fileID: 1327221827}
+  - component: {fileID: 1327221828}
   m_Layer: 0
   m_Name: LargeBackground
   m_TagString: Untagged
@@ -1867,6 +1899,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1327221823}
   m_CullTransparentMesh: 1
+--- !u!225 &1327221827
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327221823}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &1327221828
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327221823}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1342074082
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,6 +2144,10 @@ PlayableDirector:
     value: {fileID: 1775969669}
   - key: {fileID: 8272419536829382864, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
     value: {fileID: 1208453424}
+  - key: {fileID: 7911415181216582089, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+    value: {fileID: 1327221823}
+  - key: {fileID: -8855467976219858541, guid: fa298d424a1bd6a4796c1702409f8af5, type: 2}
+    value: {fileID: 1327221828}
   m_ExposedReferences:
     m_References: []
 --- !u!114 &1407954287
