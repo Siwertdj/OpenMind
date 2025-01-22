@@ -24,6 +24,7 @@ public class PrologueManager : MonoBehaviour
     [SerializeField] private Image textBubbleImage;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image illusionImage;
+    [SerializeField] private Image receptionistImage; 
     
     [Header("Text refs")]
     [SerializeField] private TMP_Text introText;
@@ -34,8 +35,7 @@ public class PrologueManager : MonoBehaviour
     [SerializeField] private Toggle imageToggler;
     [SerializeField] private Button continueButton;
     [SerializeField] private DialogueAnimator dialogueAnimator;
-
-    [FormerlySerializedAs("backgrounds")]
+    
     [Header("Prologue data")]                           // The arrays below store data that is required at a later stadium of the prologue
     [SerializeField] private Sprite[] sprites;          // Stores all the sprites used in the prologue
     [SerializeField] private string[] receptionistText; // Stores all the text spoken by the receptionist
@@ -46,6 +46,7 @@ public class PrologueManager : MonoBehaviour
     private int textIndex;                  // Index to keep track of the text that needs to be spoken
     private int backgroundIndex;            // Index to keep track of the background that needs to be used
     private Transform checkmarkTransform;   // This is the checkmark image on the toggler
+    private bool receptionistEmotion; 
     
     /// <summary>
     /// This method is called when the scene is started this script belongs to is activated. 
@@ -212,6 +213,22 @@ public class PrologueManager : MonoBehaviour
         {
             backgroundImage.sprite = sprites[0];
         }
+    }
+    
+    /// <summary>
+    /// This method changes the sprite of the receptionist to show her emotions.
+    /// </summary>
+    public void ChangeReceptionist()
+    {
+        if (receptionistEmotion)
+        {
+            receptionistImage.sprite = sprites[7];
+        }
+        else
+        {
+            receptionistImage.sprite = sprites[6];
+        }
+        receptionistEmotion = !receptionistEmotion; 
     }
     
     /// <summary>
