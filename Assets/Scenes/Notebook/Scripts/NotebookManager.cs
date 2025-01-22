@@ -100,6 +100,9 @@ public class NotebookManager : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Opens own notebook if it is not yet open
+    /// </summary>
     private void OpenOwnNotebook()
     {
         if (!showingMultiplayerNotebook || isTransitioningNotebook)
@@ -108,6 +111,9 @@ public class NotebookManager : MonoBehaviour
         StartCoroutine(SwitchNotebooks());
     }
 
+    /// <summary>
+    /// Opens other person's notebook if it is not yet open
+    /// </summary>
     private void OpenOtherNotebook()
     {
         if (showingMultiplayerNotebook || isTransitioningNotebook)
@@ -116,6 +122,9 @@ public class NotebookManager : MonoBehaviour
         StartCoroutine(SwitchNotebooks());
     }
 
+    /// <summary>
+    /// A coroutine which closes the current notebook & opens the other.
+    /// </summary>
     private IEnumerator SwitchNotebooks()
     {
         isTransitioningNotebook = true;
@@ -140,6 +149,9 @@ public class NotebookManager : MonoBehaviour
         isTransitioningNotebook = false;
     }
 
+    /// <summary>
+    /// Switches between whatever notebook is currently on the screen.
+    /// </summary>
     public void ToggleMultiplayerNotebook()
     {
         justSwitchedBetweenNormalAndMultiplayerNotebook = true;
