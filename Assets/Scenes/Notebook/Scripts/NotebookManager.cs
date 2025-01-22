@@ -21,6 +21,8 @@ public class NotebookManager : MonoBehaviour
     private                Button            selectedButton;
     [NonSerialized] public NotebookData      notebookData;
     private Coroutine shoveAnimationCoroutine;
+    private Coroutine fadeAnimationCoroutine;
+    private bool isTransitioningNotebook = false;
 
     [Header("Settings")]
     [SerializeField] private float tabAnimationDuration;
@@ -54,6 +56,8 @@ public class NotebookManager : MonoBehaviour
     private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
     public  GameObject personalInputField;
     public  GameObject multiplayerCanvas;
+
+    private SwipeDetector swipeDetector;
     
     
     [SerializeField] private GameObject titleObjectPrefab;
@@ -77,9 +81,16 @@ public class NotebookManager : MonoBehaviour
 
         // Animate notebook moving in
         float startPos = Screen.width / 2 + notebookTransform.rect.width / 2;
-        ShoveAnimation(startPos, 0, true);
+        ShoveAnimation(startPos, 0);
+        FadeAnimation(true);
+
         if (GameManager.gm.multiplayerEpilogue)
         {
+            // Get swipe detector & add listeners
+            swipeDetector = GetComponent<SwipeDetector>();
+            swipeDetector.OnSwipeLeft.AddListener(OpenOwnNotebook);
+            swipeDetector.OnSwipeRight.AddListener(OpenOtherNotebook);
+
             multiplayerCanvas.SetActive(true);
             multiplayerButton.interactable = true;
         }
@@ -90,6 +101,42 @@ public class NotebookManager : MonoBehaviour
         }
     }
     
+    private void OpenOwnNotebook()
+    {
+        if (!showingMultiplayerNotebook || isTransitioningNotebook)
+            return;
+
+        StartCoroutine(SwitchNotebooks());
+    }
+
+    private void OpenOtherNotebook()
+    {
+        if (showingMultiplayerNotebook || isTransitioningNotebook)
+            return;
+
+        StartCoroutine(SwitchNotebooks());
+    }
+
+    private IEnumerator SwitchNotebooks()
+    {
+        isTransitioningNotebook = true;
+
+        float screenEdge = Screen.width / 2 + notebookTransform.rect.width / 2;
+        float endPos = showingMultiplayerNotebook ? -screenEdge : screenEdge;
+        ShoveAnimation(0, endPos);
+        
+        // Wait for animation to finish
+        yield return new WaitForSeconds(shoveAnimationDuration);
+
+        // Switch notebook data
+        ToggleMultiplayerNotebook();
+
+        ShoveAnimation(-endPos, 0);
+
+        yield return new WaitForSeconds(shoveAnimationDuration);
+        isTransitioningNotebook = false;
+    }
+
     public void ToggleMultiplayerNotebook()
     {
         justSwitchedBetweenNormalAndMultiplayerNotebook = true;
@@ -108,10 +155,9 @@ public class NotebookManager : MonoBehaviour
         }
         else
         {
+            showingMultiplayerNotebook = true;
             if (GameManager.gm.multiplayerNotebookData != null)
             {
-                showingMultiplayerNotebook = true;
-
                 notebookData = GameManager.gm.multiplayerNotebookData;
                 
                 // Open personal notes and update the text
@@ -123,7 +169,7 @@ public class NotebookManager : MonoBehaviour
             }
             else
             {
-                Debug.Log("No multiplayer notebook exists.");
+                Debug.LogError("Tried to open multiplayer notebook, but no such multiplayer notebook exists.");
             }
         }
 
@@ -419,12 +465,20 @@ public class NotebookManager : MonoBehaviour
     /// <param name="endPos">The position in which the animation will end.</param>
     /// <param name="fadingIn">Is the background going to fade in our out?</param>
     /// <param name="tcs">The TaskCompletionSource to define when the animation is complete.</param>
-    public void ShoveAnimation(float startPos, float endPos, bool fadingIn, TaskCompletionSource<bool> tcs = null)
+    public void ShoveAnimation(float startPos, float endPos, TaskCompletionSource<bool> tcs = null)
     {
         if (shoveAnimationCoroutine != null) 
             StopCoroutine(shoveAnimationCoroutine);
 
-        shoveAnimationCoroutine = StartCoroutine(AnimateNotebook(startPos, endPos, fadingIn, tcs));
+        shoveAnimationCoroutine = StartCoroutine(AnimateNotebook(startPos, endPos, tcs));
+    }
+
+    public void FadeAnimation(bool fadingIn)
+    {
+        if (fadeAnimationCoroutine != null)
+            StopCoroutine(fadeAnimationCoroutine);
+
+        fadeAnimationCoroutine = StartCoroutine(AnimateBackground(fadingIn));
     }
 
     /// <summary>
@@ -438,7 +492,9 @@ public class NotebookManager : MonoBehaviour
         ShoveAnimation(
             notebookTransform.localPosition.x, 
             Screen.width / 2 + notebookTransform.rect.width / 2,
-            false, tcs);
+            tcs);
+
+        FadeAnimation(false);
 
         return tcs.Task;
     }
@@ -447,7 +503,7 @@ public class NotebookManager : MonoBehaviour
     /// The coroutine which animates the notebook moving horizontally.
     /// This coroutine shouldn't be started directly, instead, call <see cref="ShoveAnimation(float, float, TaskCompletionSource{bool})"/>
     /// </summary>
-    private IEnumerator AnimateNotebook(float startPos, float endPos, bool fadingIn, TaskCompletionSource<bool> tcs)
+    private IEnumerator AnimateNotebook(float startPos, float endPos, TaskCompletionSource<bool> tcs)
     {
         float time = 0;
         while (time < shoveAnimationDuration)
@@ -459,16 +515,28 @@ public class NotebookManager : MonoBehaviour
             float x = Mathf.Lerp(startPos, endPos, timeStep);
             notebookTransform.localPosition = new Vector2(x, notebookTransform.localPosition.y);
 
-            // Fade background
-            var color = backgroundImage.color;
-            color.a = fadingIn ? Mathf.Lerp(0, 0.9f, timeStep) : Mathf.Lerp(0.9f, 0, time / shoveAnimationDuration);
-            backgroundImage.color = color;
-
             yield return null;
         }
 
         notebookTransform.localPosition = new Vector2(endPos, notebookTransform.localPosition.y);
         tcs?.SetResult(true);
+    }
+
+    private IEnumerator AnimateBackground(bool fadingIn)
+    {
+        float time = 0;
+        while (time < shoveAnimationDuration)
+        {
+            time += Time.deltaTime;
+            float timeStep = time / shoveAnimationDuration;
+
+            // Fade background
+            var color = backgroundImage.color;
+            color.a = fadingIn ? Mathf.Lerp(0, 0.9f, timeStep) : Mathf.Lerp(0.9f, 0, timeStep);
+            backgroundImage.color = color;
+
+            yield return null;
+        }
     }
 
     #region Test Variables

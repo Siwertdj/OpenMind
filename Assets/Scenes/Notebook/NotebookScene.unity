@@ -988,6 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 566939179}
   - component: {fileID: 566939180}
+  - component: {fileID: 566939181}
   m_Layer: 0
   m_Name: NotebookManager
   m_TagString: Untagged
@@ -1074,6 +1075,19 @@ MonoBehaviour:
   personalInputField: {fileID: 0}
   multiplayerCanvas: {fileID: 1408689663}
   titleObjectPrefab: {fileID: 2691103649229140218, guid: b26c134c0509e1d4b86cb7bdc6b64e50, type: 3}
+--- !u!114 &566939181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566939177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0814762a70d9db843a27a44d2ce67ce9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swipeThreshold: 20
 --- !u!1 &593553344
 GameObject:
   m_ObjectHideFlags: 0
