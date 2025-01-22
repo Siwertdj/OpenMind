@@ -507,7 +507,7 @@ public class DialogueManager : MonoBehaviour
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.
-    /// If a button should not be destroyed do not give it the "Button" tag .
+    /// If a button should not be destroyed do not give it the "Button" tag.
     /// </summary>
     private void DestroyButtons()
     {
@@ -531,8 +531,6 @@ public class DialogueManager : MonoBehaviour
         {
             // Change the characterNameField fontSize
             characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-            // Change the animator text fontSize
-            animator.ChangeTextSize(fontSize);
             // Change the question and return button fontSize if they are present.
             foreach (Button b in questionsField.GetComponentsInChildren<Button>())
             {
@@ -551,7 +549,6 @@ public class DialogueManager : MonoBehaviour
         // Set the fontSize.
         int fontSize = SettingsManager.sm.GetFontSize();
         characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-        animator.ChangeTextSize(fontSize);
     }
 
     #endregion

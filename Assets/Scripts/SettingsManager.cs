@@ -68,6 +68,8 @@ public class SettingsManager : MonoBehaviour
     [NonSerialized] public float musicVolume         = 0;
     [NonSerialized] public float sfxVolume           = 0;
     [NonSerialized] public float talkingSpeed        = 1;
+
+    public UnityEvent OnAudioSettingsChanged;
     #endregion
     
     public float TalkingDelay {  get; private set; }
@@ -155,6 +157,8 @@ public class SettingsManager : MonoBehaviour
 
         audioMixer.SetFloat(nameof(musicVolume), adjustedVolume);
         musicVolume = volume;
+
+        OnAudioSettingsChanged.Invoke();
     }
 
     /// <summary>
@@ -172,6 +176,8 @@ public class SettingsManager : MonoBehaviour
 
         audioMixer.SetFloat(nameof(sfxVolume), adjustedVolume);
         sfxVolume = volume;
+
+        OnAudioSettingsChanged.Invoke();
     }
     
     /// <summary>

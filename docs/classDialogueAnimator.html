@@ -92,9 +92,9 @@ Inheritance diagram for DialogueAnimator:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ade638b85609423a715fd14111a019ec2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#ade638b85609423a715fd14111a019ec2">ChangeTextSize</a> (int fontSize)</td></tr>
-<tr class="memdesc:ade638b85609423a715fd14111a019ec2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the fontSize of the text.  <br /></td></tr>
-<tr class="separator:ade638b85609423a715fd14111a019ec2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6976ea93c05182580ed631d6f0c76f23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#a6976ea93c05182580ed631d6f0c76f23">UpdateTextSize</a> ()</td></tr>
+<tr class="memdesc:a6976ea93c05182580ed631d6f0c76f23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the fontSize of the text.  <br /></td></tr>
+<tr class="separator:a6976ea93c05182580ed631d6f0c76f23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a023f088aff2b746c9a076e33fa05807d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#a023f088aff2b746c9a076e33fa05807d">WriteDialogue</a> (List&lt; string &gt; output, float pitch=1)</td></tr>
 <tr class="memdesc:a023f088aff2b746c9a076e33fa05807d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Puts dialogue on screen.  <br /></td></tr>
 <tr class="separator:a023f088aff2b746c9a076e33fa05807d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -143,6 +143,9 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr>
 <tr class="memdesc:a27adbfbcbec50038ef7dca9415ea9720"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the properties of the text when loaded. <br /></td></tr>
 <tr class="separator:a27adbfbcbec50038ef7dca9415ea9720"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd569fc5d0d381a155d4e4e6aea2a797"><td class="memItemLeft" align="right" valign="top"><a id="abd569fc5d0d381a155d4e4e6aea2a797" name="abd569fc5d0d381a155d4e4e6aea2a797"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateVolume</b> ()</td></tr>
+<tr class="separator:abd569fc5d0d381a155d4e4e6aea2a797"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1993d02ef8a30f7468cfe35a5fc7762"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classDialogueAnimator.html#ac1993d02ef8a30f7468cfe35a5fc7762">WriteSentence</a> (string output)</td></tr>
 <tr class="memdesc:ac1993d02ef8a30f7468cfe35a5fc7762"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper function for <a class="el" href="classDialogueAnimator.html#a023f088aff2b746c9a076e33fa05807d" title="Puts dialogue on screen.">WriteDialogue</a> which writes a single sentence.  <br /></td></tr>
 <tr class="separator:ac1993d02ef8a30f7468cfe35a5fc7762"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -168,6 +171,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>audioEnabled</b> = tr
 <tr class="memitem:a4b0f2f42750e0afff3a9887f73b321f9"><td class="memItemLeft" align="right" valign="top"><a id="a4b0f2f42750e0afff3a9887f73b321f9" name="a4b0f2f42750e0afff3a9887f73b321f9"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>overrideDefaultSpeed</b> = true</td></tr>
 <tr class="separator:a4b0f2f42750e0afff3a9887f73b321f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a847cacb38b5c698a30d46fa02b1802a5"><td class="memItemLeft" align="right" valign="top"><a id="a847cacb38b5c698a30d46fa02b1802a5" name="a847cacb38b5c698a30d46fa02b1802a5"></a>
+AudioClip&#160;</td><td class="memItemRight" valign="bottom"><b>popSound</b></td></tr>
+<tr class="separator:a847cacb38b5c698a30d46fa02b1802a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71379c2a5708f62efdae2013027d5118"><td class="memItemLeft" align="right" valign="top"><a id="a71379c2a5708f62efdae2013027d5118" name="a71379c2a5708f62efdae2013027d5118"></a>
 readonly string&#160;</td><td class="memItemRight" valign="bottom"><b>soundlessSymbols</b> = &quot; !?.,&quot;</td></tr>
 <tr class="separator:a71379c2a5708f62efdae2013027d5118"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,17 +202,16 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>currentSentence</b>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Handles putting dialogue on the screen. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ade638b85609423a715fd14111a019ec2" name="ade638b85609423a715fd14111a019ec2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ade638b85609423a715fd14111a019ec2">&#9670;&#160;</a></span>ChangeTextSize()</h2>
+<a id="a6976ea93c05182580ed631d6f0c76f23" name="a6976ea93c05182580ed631d6f0c76f23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6976ea93c05182580ed631d6f0c76f23">&#9670;&#160;</a></span>UpdateTextSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void DialogueAnimator.ChangeTextSize </td>
+          <td class="memname">void DialogueAnimator.UpdateTextSize </td>
           <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>fontSize</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>

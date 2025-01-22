@@ -11,9 +11,10 @@ var searchData=
   ['updatepersonalnotes_8',['UpdatePersonalNotes',['../classNotebookData.html#a0b1dae68770e75eacce2fda7dda5ae56',1,'NotebookData']]],
   ['updatepersonalnotestest_9',['UpdatePersonalNotesTest',['../classNotebookPageDataTest.html#a57fc657b47f324e9b83814b26b7cf733',1,'NotebookPageDataTest']]],
   ['updatetext_10',['UpdateText',['../classPrologueManager.html#ada5632259d2b6d67efb66472cbb763ca',1,'PrologueManager.UpdateText()'],['../classIntroductionManager.html#ab84600432caecfcc07319d696e012ff6',1,'IntroductionManager.UpdateText()']]],
-  ['updatetransitiontext_11',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
-  ['updatetutorialtest_12',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
-  ['updatetutorialtext_13',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]],
-  ['updateuserdatabystory_14',['UpdateUserDataByStory',['../classIntroductionManager.html#acfff658ec50af288436613a94942c7dd',1,'IntroductionManager']]],
-  ['updateuserdatavalue_15',['UpdateUserDataValue',['../classSaveUserData.html#abdf77a69073271d4b177c086a09c5797',1,'SaveUserData']]]
+  ['updatetextsize_11',['UpdateTextSize',['../classDialogueAnimator.html#a6976ea93c05182580ed631d6f0c76f23',1,'DialogueAnimator']]],
+  ['updatetransitiontext_12',['UpdateTransitionText',['../classUIManager.html#a83cf1d1209bc562bd0c06751e3c2ad45',1,'UIManager']]],
+  ['updatetutorialtest_13',['UpdateTutorialTest',['../classTutorialManagerPlayTest.html#a128b77ab50c59ea704be5b713ab5f014',1,'TutorialManagerPlayTest']]],
+  ['updatetutorialtext_14',['UpdateTutorialText',['../classTutorialManager.html#af6a82caaef8572fd66b75c9afcf74f2f',1,'TutorialManager']]],
+  ['updateuserdatabystory_15',['UpdateUserDataByStory',['../classIntroductionManager.html#acfff658ec50af288436613a94942c7dd',1,'IntroductionManager']]],
+  ['updateuserdatavalue_16',['UpdateUserDataValue',['../classSaveUserData.html#abdf77a69073271d4b177c086a09c5797',1,'SaveUserData']]]
 ];
