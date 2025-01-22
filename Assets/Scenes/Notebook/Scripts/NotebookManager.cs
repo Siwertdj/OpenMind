@@ -91,12 +91,12 @@ public class NotebookManager : MonoBehaviour
             swipeDetector.OnSwipeLeft.AddListener(OpenOwnNotebook);
             swipeDetector.OnSwipeRight.AddListener(OpenOtherNotebook);
 
-            multiplayerInstructionText.gameObject.SetActive(true);
+            multiplayerInstructionText.transform.parent.gameObject.SetActive(true);
             multiplayerInstructionText.text = ownNotebookSwipeText;
     }
         else
         {
-            multiplayerInstructionText.gameObject.SetActive(false);
+            multiplayerInstructionText.transform.parent.gameObject.SetActive(false);
         }
     }
     
