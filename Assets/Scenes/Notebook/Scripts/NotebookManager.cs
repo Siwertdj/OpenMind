@@ -43,6 +43,7 @@ public class NotebookManager : MonoBehaviour
 
     [Header("Component References")]
     [SerializeField] private TMP_Text currentTabText;
+    [SerializeField] private TMP_Text multiplayerInstructionText;
     [SerializeField] private RectTransform notebookTransform;
     [SerializeField] private Image backgroundImage;
 
@@ -53,16 +54,12 @@ public class NotebookManager : MonoBehaviour
     [SerializeField] private GameObject inputObjectPrefab;
     [SerializeField] private GameObject logObjectPrefab;
     
-    public  Button     multiplayerButton;
-    private bool       showingMultiplayerNotebook;
-    private bool       justSwitchedBetweenNormalAndMultiplayerNotebook;
+    private bool showingMultiplayerNotebook;
+    private bool justSwitchedBetweenNormalAndMultiplayerNotebook;
     private bool isClosing = false;
-    public  GameObject personalInputField;
-    public  GameObject multiplayerCanvas;
 
     private SwipeDetector swipeDetector;
-    
-    
+        
     [SerializeField] private GameObject titleObjectPrefab;
 
     /// <summary>
@@ -87,22 +84,20 @@ public class NotebookManager : MonoBehaviour
         ShoveAnimation(startPos, 0);
         FadeAnimation(true);
 
-        //if (GameManager.gm.multiplayerEpilogue)
-        //{
+        if (GameManager.gm.multiplayerEpilogue)
+        {
             // Get swipe detector & add listeners
             swipeDetector = GetComponent<SwipeDetector>();
             swipeDetector.OnSwipeLeft.AddListener(OpenOwnNotebook);
             swipeDetector.OnSwipeRight.AddListener(OpenOtherNotebook);
 
-            multiplayerCanvas.SetActive(true);
-            multiplayerButton.interactable = true;
-            multiplayerButton.GetComponentInChildren<TMP_Text>().text = ownNotebookSwipeText;
-        //}
-        //else
-        //{
-        //    multiplayerCanvas.SetActive(false);
-        //    multiplayerButton.interactable = false;
-        //}
+            multiplayerInstructionText.gameObject.SetActive(true);
+            multiplayerInstructionText.text = ownNotebookSwipeText;
+    }
+        else
+        {
+            multiplayerInstructionText.gameObject.SetActive(false);
+        }
     }
     
     private void OpenOwnNotebook()
@@ -156,7 +151,7 @@ public class NotebookManager : MonoBehaviour
             
             // Open personal notes and update the text
             personalCustomInput.text = notebookData.GetPersonalNotes();
-            multiplayerButton.GetComponentInChildren<TMP_Text>().text = ownNotebookSwipeText;
+            multiplayerInstructionText.text = ownNotebookSwipeText;
             
             // Add listener to recreate tab when font size is changed
             SettingsManager.sm.OnTextSizeChanged.AddListener(OnTextSizeChanged);
@@ -164,7 +159,7 @@ public class NotebookManager : MonoBehaviour
         else
         {
             showingMultiplayerNotebook = true; 
-            multiplayerButton.GetComponentInChildren<TMP_Text>().text = otherNotebookSwipeText;
+            multiplayerInstructionText.text = otherNotebookSwipeText;
             if (GameManager.gm.multiplayerNotebookData != null)
             {
                 notebookData = GameManager.gm.multiplayerNotebookData;
