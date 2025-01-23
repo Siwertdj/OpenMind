@@ -143,7 +143,7 @@ public class DialogueManager : MonoBehaviour
             if (phoneField.activeSelf)
                 StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
         }
-
+        
         currentObject.Execute();
     }
 
@@ -444,19 +444,27 @@ public class DialogueManager : MonoBehaviour
     /// Continues the dialogue after answering the open question.
     /// </summary>
     public void AnswerOpenQuestion()
-    {        
-        // Assign the text from the inputField to inputText and add it to the list of answers.
-        inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
-        // Can use this to write the inputText to somewhere, here..
+    {
+        TMP_InputField input = inputField.GetComponentInChildren<TMP_InputField>();
+        if (input.text != string.Empty)
+        {
+            // Assign the text from the inputField to inputText and add it to the list of answers.
+            inputText = input.text;
+            // Can use this to write the inputText to somewhere, here..
 
-        // Disable the input field.
-        inputField.SetActive(false);
-        
-        // Reset the text from the input field.
-        inputText = "";
+            // Disable the input field.
+            inputField.SetActive(false);
 
-        animator.InOpenQuestion = false;
-        ExecuteNextObject();
+            // Reset the text from the input field.
+            inputText = "";
+
+            animator.InOpenQuestion = false;
+            ExecuteNextObject();
+        }
+        else
+        {
+            input.placeholder.GetComponentInChildren<TMP_Text>().text = "Please enter text to continue...";
+        }
     }
 
     
@@ -507,7 +515,7 @@ public class DialogueManager : MonoBehaviour
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.
-    /// If a button should not be destroyed do not give it the "Button" tag .
+    /// If a button should not be destroyed do not give it the "Button" tag.
     /// </summary>
     private void DestroyButtons()
     {
@@ -531,8 +539,6 @@ public class DialogueManager : MonoBehaviour
         {
             // Change the characterNameField fontSize
             characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-            // Change the animator text fontSize
-            animator.ChangeTextSize(fontSize);
             // Change the question and return button fontSize if they are present.
             foreach (Button b in questionsField.GetComponentsInChildren<Button>())
             {
@@ -551,7 +557,6 @@ public class DialogueManager : MonoBehaviour
         // Set the fontSize.
         int fontSize = SettingsManager.sm.GetFontSize();
         characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-        animator.ChangeTextSize(fontSize);
     }
 
     #endregion

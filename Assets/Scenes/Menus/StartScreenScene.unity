@@ -823,10 +823,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ContinueButton: {fileID: 2019508185}
-  PopUpManager: {fileID: 1855584165}
+  LoadingScreenManager: {fileID: 0}
   mainMenuCanvas: {fileID: 547122918}
   skipPrologueCanvas: {fileID: 152492394}
-  popUpCanvas: {fileID: 1024159935}
+  loadingScreen: {fileID: 0}
+  popUpScreen: {fileID: 0}
   onGameLoaded: {fileID: 11400000, guid: 0f17cf3f649dfab469de842bc9074b5b, type: 2}
   startLoadIcon: {fileID: 11400000, guid: 334537c804656fe4995f51c51842dda5, type: 2}
   startMenuMusic: {fileID: 8300000, guid: 0106ca17161b61a43bc9c5a2796798bd, type: 3}
@@ -3685,14 +3686,14 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1753946556}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 217989643}
         m_TargetAssemblyTypeName: StartMenuManager, Scripts
-        m_MethodName: StartPrologueOrPrompt
+        m_MethodName: OpenMultiplayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
