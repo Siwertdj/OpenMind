@@ -23,6 +23,90 @@ public class SystemTests
 {
     private List<bool> greeted = new();
     
+    #region start
+    //clicking new game at the start of the game
+    private const string Start_NewButtonName              = "NewGameButton";
+    //clicking new game at the start of the game
+    private const string Start_ContinueButtonName         = "ContinueButton";
+    //saying yes to view the prologue
+    private const string Start_YesPrologueButtonName      = "YesButton";
+    private const string Start_PrologueSceneName          = "PrologueScene";
+    //clicking this button skips dialogue and progresses the prologue
+    private const string Start_PrologueContinueButtonName = "Button parent";
+    private const string Start_StorySelectSceneName       = "StorySelectScene";
+    #endregion
+    
+    #region story intro
+    //button to select story A
+    private const string Intro_StoryAButtonName             = "StoryA_Button";
+    //button to select story B
+    private const string Intro_StoryBButtonName             = "StoryB_Button";
+    //button to select story C
+    private const string Intro_StoryCButtonName             = "StoryC_Button";
+    private const string Intro_IntroStorySceneName          = "IntroStoryScene";
+    //clicking this button progresses the intro
+    private const string Intro_IntroStoryContinueButtonName = "ContinueButton";
+    private const string Intro_NPCSelectSceneName           = "NPCSelectScene";
+    #endregion
+    
+    #region tutorial and menu
+    private const string Tutorial_TutorialSceneName      = "TutorialScene";
+    //button 1 for continuing the tutorial
+    private const string Tutorial_ContinueButton1Name    = "ContinueButton";
+    //button 2 for continuing the tutorial
+    private const string Tutorial_ContinueButton2Name    = "Notebook Button";
+    //the menu button in npcSelect
+    private const string Tutorial_MenuButtonName         = "Menu Button";
+    private const string Tutorial_GameMenuSceneName      = "GameMenuScene";
+    //the button to save the game
+    private const string Tutorial_SaveGameButtonName     = "SaveButton";
+    //closes the menu
+    private const string Tutorial_ReturnToGameButtonName = "ReturnButton";
+    #endregion
+    
+    #region notebook scene constants
+    //the name of the gameobject representing character notes
+    private const string Notebook_CharacterInputFieldName = "Character Info Field";
+    //the name of the gameobject representing personal notes
+    private const string Notebook_PersonalInputFieldName  = "Personal Info Field";
+    //clicking this button opens the notebook
+    private const string Notebook_NotebookButtonName      = "Notebook Button";
+    private const string Notebook_NotebookSceneName       = "NotebookScene";
+    //clicking this button opens the personal notes
+    private const string Notebook_PersonalNotesButtonName = "PersonalButton";
+    //gameobject representing the buttons at the top row of the notebook
+    private const string Notebook_ButtonsTopRowName       = "Buttons Top Row";
+    //gameobject representing the buttons at the bottom row of the notebook
+    private const string Notebook_ButtonsBottomRowName    = "Buttons Bottom Row";
+    #endregion
+    
+    #region dialogue and npcSelect
+    //The NPCSelect scroller responsible for scrolling in the npcselect screne
+    private const string Dialogue_ScrollerObjectName        = "Scroller";
+    //the left arrow in npcselect scene
+    private const string Dialogue_NavLeftName               = "NavLeft";
+    //the right arrow in npcselect scene
+    private const string Dialogue_NavRightName              = "NavRight";
+    //button in npcSelect confirming to talk to a character
+    private const string Dialogue_ConfirmTalkButtonName     = "Confirm Selection Button";
+    private const string Dialogue_DialogueSceneName         = "DialogueScene";
+    private const string Dialogue_DialogueManagerName       = "DialogueManager";
+    //the button to continue talking to a character in dialogue
+    private const string Dialogue_ContinueTalkingButtonName = "Skip Dialogue Button";
+    //the button to ask a question to a character
+    private const string Dialogue_QuestionButtonName        = "questionButton";
+    //the gameobject representing the phone in the hint scene of story A
+    private const string Dialogue_PhoneFieldName            = "Phone Dialogue Field";
+    //the button to continue the hint scene in story A
+    private const string Dialogue_PhoneContinueButtonName   = "Next Dialogue Button";
+    //the question field which contains all 3 buttons in dialogue
+    private const string Dialogue_QuestionFieldName         = "Questions Field";
+    #endregion
+    
+    #region epilogue
+    private const string Epilogue_EpilogueSceneName = "EpilogueScene";
+    #endregion
+    
     /// <summary>
     /// Set up for each of the system level tests.
     /// </summary>
@@ -231,57 +315,60 @@ public class SystemTests
         yield return FullConversation(GameManager.gm.story.numQuestions, emptyQuestionCharacters);
         
         // Open Notebook
-        GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Tutorial_ContinueButton2Name).GetComponent<Button>().onClick.Invoke();
 
         // Wait until loaded
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NotebookScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Notebook_NotebookSceneName).isLoaded);
                 
         // Check if we are in the Notebook scene
-        Assert.AreEqual(SceneManager.GetSceneByName("NotebookScene"), SceneManager.GetSceneAt(2));
+        Assert.AreEqual(SceneManager.GetSceneByName(Notebook_NotebookSceneName), SceneManager.GetSceneAt(2));
                 
         // Open personal notes
-        GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Notebook_PersonalNotesButtonName).GetComponent<Button>().onClick.Invoke();
         
 
         //write character notes
         string notebookTextPrior = "hello";
-        TMP_InputField personalNotes = GameObject.Find("Personal Notes Input Field").GetComponent<TMP_InputField>();
+
+        TMP_InputField personalNotes = GameObject.Find(Notebook_PersonalInputFieldName).GetComponentInChildren<TMP_InputField>();
         personalNotes.text = notebookTextPrior;
         foreach (var button in 
-                 GameObject.Find("Buttons Top Row").GetComponentsInChildren<Button>().Union(
-                     GameObject.Find("Buttons Bottom Row").GetComponentsInChildren<Button>()))
+                 GameObject.Find(Notebook_ButtonsTopRowName).GetComponentsInChildren<Button>().Union(
+                     GameObject.Find(Notebook_ButtonsBottomRowName).GetComponentsInChildren<Button>()))
         {
-            if (button.name == "PersonalButton")
+            if (button.name == Notebook_PersonalNotesButtonName)
                 continue;
             
             button.onClick.Invoke();
             yield return null;
             
-            yield return new WaitWhile(() => GameObject.Find("Character Info Field") is null);
+            yield return new WaitWhile(() => GameObject.Find(Notebook_CharacterInputFieldName) is null);
             yield return new WaitWhile(() =>
-                GameObject.Find("Character Info Field").GetComponentInChildren<TMP_InputField>() is null);
-            TMP_InputField TMPcharacterNotes = GameObject.Find("Character Info Field").GetComponentInChildren<TMP_InputField>();
+                GameObject.Find(Notebook_CharacterInputFieldName).GetComponentInChildren<TMP_InputField>() is null);
+            TMP_InputField TMPcharacterNotes = GameObject.Find(Notebook_CharacterInputFieldName).GetComponentInChildren<TMP_InputField>();
             TMPcharacterNotes.text = notebookTextPrior + " " + button.name;
         }
         
         
         // Close notebook
-        GameObject.Find("Notebook Button").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Notebook_NotebookButtonName).GetComponent<Button>().onClick.Invoke();
         yield return new WaitUntil(() =>
-            SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+            SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded);
         
         // Check if we are back in the NPC Select scene
-        Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
-        
+        Assert.AreEqual(SceneManager.GetSceneByName(Intro_NPCSelectSceneName), SceneManager.GetSceneAt(1));
+
+        yield return new WaitWhile(() => GameObject.Find(Tutorial_MenuButtonName) is null);
+
         // Open the menu
-        GameObject.Find("Menu Button").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Tutorial_MenuButtonName).GetComponent<Button>().onClick.Invoke();
         
         // Wait until loaded
         yield return new WaitUntil(() =>
-            SceneManager.GetSceneByName("GameMenuScene").isLoaded);
+            SceneManager.GetSceneByName(Tutorial_GameMenuSceneName).isLoaded);
         
         // Save the game
-        GameObject.Find("SaveButton").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Tutorial_SaveGameButtonName).GetComponent<Button>().onClick.Invoke();
         
         bool saveFileExists = FilePathConstants.DoesSaveFileLocationExist();
         Assert.IsTrue(saveFileExists);
@@ -358,7 +445,7 @@ public class SystemTests
         Assert.AreEqual(gm.numQuestionsAsked, saveData.numQuestionsAsked);
         
         // Close the menu
-        GameObject.Find("ReturnButton").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Tutorial_ReturnToGameButtonName).GetComponent<Button>().onClick.Invoke();
     }
 
     /// <summary>
@@ -374,10 +461,10 @@ public class SystemTests
             throw new Exception("No save file exists");
         
         // Find the New Game button and click it
-        GameObject.Find("ContinueButton").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Start_ContinueButtonName).GetComponent<Button>().onClick.Invoke();
         
         // Check if we are in the Dialogue scene
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded);
         
         // Retrieve the data from the save file
         SaveData saveData = Load.Loader.GetSaveData();
@@ -394,69 +481,16 @@ public class SystemTests
         // Play the main loop of the game
         for (int i = 0; i <= (numActiveCharacters - charactersLeft); i++)
         {
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+            yield return new WaitUntil(() => SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded);
             
             // Check if we are in the NPC Select scene
-            Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+            Assert.AreEqual(SceneManager.GetSceneByName(Intro_NPCSelectSceneName), SceneManager.GetSceneAt(1));
         
             // Select a npc that has questions left.
             yield return SelectNpc(emptyQuestionCharacters, GameManager.gm.currentCharacters);
-            
-            yield return new WaitForSeconds(1);
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
 
-            // Check if we are in the Dialogue scene
-            Assert.IsTrue(SceneManager.GetSceneByName("DialogueScene").isLoaded);
-            yield return new WaitForSeconds(1);
-            
-            int numQuestions = GameManager.gm.story.numQuestions;
-
-            // Ask a certain number of questions
-            for (int j = 0; j < numQuestions; j++)
-            {
-                // Wait until you can ask a question
-                while (GameObject.Find("Questions Field") == null)
-                {
-                    yield return new WaitForSeconds(1);
-                    GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
-                }
-
-                yield return new WaitForSeconds(1);
-
-                // Ask a question
-                if (GameObject.Find("questionButton").GetComponent<Button>() != null)
-                    GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
-
-                yield return new WaitForSeconds(1);
-
-                // Get the DialogueManager
-                var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
-
-                CharacterInstance chosenCharacter = dm.currentRecipient;
-                
-                // The final iteration of the loop should continue to the hint scene
-                if (j == numQuestions - 1)
-                    // Wait for hint scene to be over
-                    while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
-                    {
-                        yield return new WaitForSeconds(1);
-
-                        // Go through hint scene if it's active, else go through dialogue scene
-                        if (GameObject.Find("Phone Dialogue Field") != null)
-                        {
-                            if (GameObject.Find("Next Dialogue Button") != null)
-                                GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
-                                    .Invoke();
-                        }
-                        else if (GameObject.Find("Skip Dialogue Button") != null)
-                            GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
-                                .Invoke();
-                    }
-                
-                // If the character has no more questions remaining, add the character to the list of emptyQuestionCharacters.
-                if (chosenCharacter.RemainingQuestions.Count == 0)
-                    emptyQuestionCharacters.Add(chosenCharacter);
-            }
+            yield return FullConversation(GameManager.gm.story.numQuestions,
+                emptyQuestionCharacters);
         }
         
         // Check if we have to choose a culprit
@@ -520,21 +554,21 @@ public class SystemTests
     private IEnumerator PlayUntilStorySelect()
     {
         // Find the New Game button and click it
-        GameObject.Find("NewGameButton").GetComponent<Button>().onClick.Invoke();
+        GameObject.Find(Start_NewButtonName).GetComponent<Button>().onClick.Invoke();
 
         // Choose to view the prologue
-        GameObject.Find("YesButton").GetComponent<Button>().onClick.Invoke();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("PrologueScene").isLoaded);
+        GameObject.Find(Start_YesPrologueButtonName).GetComponent<Button>().onClick.Invoke();
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Start_PrologueSceneName).isLoaded);
 
         // Check if we are in the prologue
-        Assert.AreEqual(SceneManager.GetSceneByName("PrologueScene"), SceneManager.GetActiveScene());
+        Assert.AreEqual(SceneManager.GetSceneByName(Start_PrologueSceneName), SceneManager.GetActiveScene());
 
-        yield return PlayThroughScene("PrologueScene", new List<string>(){"Button parent"});
+        yield return PlayThroughScene(Start_PrologueSceneName, new List<string>(){Start_PrologueContinueButtonName});
         
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("StorySelectScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Start_StorySelectSceneName).isLoaded);
         
         // Check if we are in the StorySelect scene
-        Assert.AreEqual(SceneManager.GetSceneByName("StorySelectScene"), SceneManager.GetActiveScene());
+        Assert.AreEqual(SceneManager.GetSceneByName(Start_StorySelectSceneName), SceneManager.GetActiveScene());
         
     }
     
@@ -548,33 +582,33 @@ public class SystemTests
         switch (storyID)
         {
             case 0:
-                buttonName = "StoryA_Button";
+                buttonName = Intro_StoryAButtonName;
                 break;
             case 1:
-                buttonName = "StoryB_Button";
+                buttonName = Intro_StoryBButtonName;
                 break;
             case 2:
-                buttonName = "StoryC_Button";
+                buttonName = Intro_StoryCButtonName;
                 break;
         }
 
         // Select story
         GameObject.Find(buttonName).GetComponent<Button>().onClick.Invoke();
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Intro_IntroStorySceneName).isLoaded);
         
         // Check if we are in the story intro
-        Assert.AreEqual(SceneManager.GetSceneByName("IntroStoryScene"), SceneManager.GetActiveScene());
+        Assert.AreEqual(SceneManager.GetSceneByName(Intro_IntroStorySceneName), SceneManager.GetActiveScene());
         
-        yield return PlayThroughScene("IntroStoryScene", new List<string>(){"ContinueButton"});
+        yield return PlayThroughScene(Intro_IntroStorySceneName, new List<string>(){Intro_IntroStoryContinueButtonName});
         
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded);
 
         // Check if we are in the NPC Select scene
-        Assert.AreEqual(SceneManager.GetSceneByName("NPCSelectScene"), SceneManager.GetSceneAt(1));
+        Assert.AreEqual(SceneManager.GetSceneByName(Intro_NPCSelectSceneName), SceneManager.GetSceneAt(1));
     }
 
-    private IEnumerator PlayTutorial() => PlayThroughScene("TutorialScene",
-        new List<string>() { "ContinueButton", "Notebook Button" });
+    private IEnumerator PlayTutorial() => PlayThroughScene(Tutorial_TutorialSceneName,
+        new List<string>() { Tutorial_ContinueButton1Name, Tutorial_ContinueButton2Name });
 
     /// <summary>
     /// plays through a scene by clicking the given buttons
@@ -608,31 +642,31 @@ public class SystemTests
         if (greeted.Count == 0)
             greeted.AddRange(currentCharacters.Select(_ => false));
         
-        float swipeDuration = GameObject.Find("Scroller").GetComponent<NPCSelectScroller>()
+        float swipeDuration = GameObject.Find(Dialogue_ScrollerObjectName).GetComponent<NPCSelectScroller>()
             .scrollDuration;
         // Start at the leftmost character
-        while (GameObject.Find("NavLeft"))
+        while (GameObject.Find(Dialogue_NavLeftName))
         {
-            GameObject.Find("NavLeft").GetComponent<Button>().onClick.Invoke(); 
+            GameObject.Find(Dialogue_NavLeftName).GetComponent<Button>().onClick.Invoke(); 
             yield return new WaitForSeconds(swipeDuration);
         }
 
         yield return new WaitUntil(() =>
-            GameObject.Find("Confirm Selection Button") is not null &&
-            GameObject.Find("Confirm Selection Button").GetComponent<GameButton>() is not null);
+            GameObject.Find(Dialogue_ConfirmTalkButtonName) is not null &&
+            GameObject.Find(Dialogue_ConfirmTalkButtonName).GetComponent<GameButton>() is not null);
         
         // Find an active character and click to choose them
         foreach (CharacterInstance c in currentCharacters)
         {
             if (c.isActive && emptyQuestionCharacters.All(emptyC => emptyC.characterName != c.characterName))
             {
-                GameObject.Find("Confirm Selection Button").GetComponent<GameButton>().onClick.Invoke();
+                GameObject.Find(Dialogue_ConfirmTalkButtonName).GetComponent<GameButton>().onClick.Invoke();
                 break;
             }
 
-            if (GameObject.Find("NavRight"))
+            if (GameObject.Find(Dialogue_NavRightName))
             {
-                GameObject.Find("NavRight").GetComponent<Button>().onClick.Invoke();
+                GameObject.Find(Dialogue_NavRightName).GetComponent<Button>().onClick.Invoke();
                 yield return new WaitForSeconds(swipeDuration);
             }
             else
@@ -642,16 +676,16 @@ public class SystemTests
         }
         
         //yield return new WaitForSeconds(1);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded);
+        yield return new WaitUntil(() => SceneManager.GetSceneByName(Dialogue_DialogueSceneName).isLoaded);
 
         // Check if we are in the Dialogue scene
-        Assert.IsTrue(SceneManager.GetSceneByName("DialogueScene").isLoaded);
+        Assert.IsTrue(SceneManager.GetSceneByName(Dialogue_DialogueSceneName).isLoaded);
         
         //wait for events to fire and the currentRecipient to be assigned
         yield return new WaitWhile(() =>
-            GameObject.Find("DialogueManager").GetComponent<DialogueManager>().currentRecipient is null);
+            GameObject.Find(Dialogue_DialogueManagerName).GetComponent<DialogueManager>().currentRecipient is null);
 
-        var rep = GameObject.Find("DialogueManager").GetComponent<DialogueManager>()
+        var rep = GameObject.Find(Dialogue_DialogueManagerName).GetComponent<DialogueManager>()
             .currentRecipient;
         
         //check if we need to do a greeting
@@ -661,7 +695,7 @@ public class SystemTests
             //do a greeting
             yield return KeepTalking();
             
-            yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+            yield return new WaitUntil(() => SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded);
             
             //select an npc again
             yield return SelectNpc(emptyQuestionCharacters, currentCharacters);
@@ -675,11 +709,11 @@ public class SystemTests
     private IEnumerator KeepTalking()
     {
         // Wait until you can ask a question, or the dialogue ends
-        while (GameObject.Find("Questions Field") == null && SceneManager.GetSceneByName("DialogueScene").isLoaded)
+        while (GameObject.Find(Dialogue_QuestionFieldName) == null && SceneManager.GetSceneByName(Dialogue_DialogueSceneName).isLoaded)
         {
             yield return null;
-            if (GameObject.Find("Skip Dialogue Button") != null)
-                GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick.Invoke();
+            if (GameObject.Find(Dialogue_ContinueTalkingButtonName) != null)
+                GameObject.Find(Dialogue_ContinueTalkingButtonName).GetComponent<Button>().onClick.Invoke();
         }
     }
 
@@ -690,15 +724,15 @@ public class SystemTests
         {
             // Wait until you can ask a question
             yield return KeepTalking();
-
+            
             //wait for the button to load
             yield return new WaitWhile(() =>
-                GameObject.Find("questionButton").GetComponent<Button>() is null);
-            
-            GameObject.Find("questionButton").GetComponent<Button>().onClick.Invoke();
+                GameObject.Find(Dialogue_QuestionButtonName).GetComponent<Button>() is null);
+
+            GameObject.Find(Dialogue_QuestionButtonName).GetComponent<Button>().onClick.Invoke();
 
             // Get the DialogueManager
-            var dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+            var dm = GameObject.Find(Dialogue_DialogueManagerName).GetComponent<DialogueManager>();
             
             // If the character has no more questions remaining, add the character to the list of emptyQuestionCharacters.
             if (dm.currentRecipient.RemainingQuestions.Count == 0)
@@ -707,19 +741,19 @@ public class SystemTests
             // The final iteration of the loop should continue to the hint scene
             if (j == numQuestions - 1)
                 // Wait for hint scene to be over
-                while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded && !SceneManager.GetSceneByName("EpilogueScene").isLoaded)
+                while (!SceneManager.GetSceneByName(Intro_NPCSelectSceneName).isLoaded && !SceneManager.GetSceneByName(Epilogue_EpilogueSceneName).isLoaded)
                 {
                     yield return null;
 
                     // Go through hint scene if it's active, else go through dialogue scene
-                    if (GameObject.Find("Phone Dialogue Field") != null)
+                    if (GameObject.Find(Dialogue_PhoneFieldName) != null)
                     {
-                        if (GameObject.Find("Next Dialogue Button") != null)
-                            GameObject.Find("Next Dialogue Button").GetComponent<Button>().onClick
+                        if (GameObject.Find(Dialogue_PhoneContinueButtonName) != null)
+                            GameObject.Find(Dialogue_PhoneContinueButtonName).GetComponent<Button>().onClick
                                 .Invoke();
                     }
-                    else if (GameObject.Find("Skip Dialogue Button") != null)
-                        GameObject.Find("Skip Dialogue Button").GetComponent<Button>().onClick
+                    else if (GameObject.Find(Dialogue_ContinueTalkingButtonName) != null)
+                        GameObject.Find(Dialogue_ContinueTalkingButtonName).GetComponent<Button>().onClick
                             .Invoke();
                 }
         }

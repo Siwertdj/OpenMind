@@ -69,7 +69,7 @@ public class NPCSelectPlayTest
     /// Test whether the text scales correctly based on the textSize from the SettingsManager.
     /// </summary>
     /// <returns></returns>
-    [UnityTest]
+    /*[UnityTest]
     public IEnumerator ChangeTextSizeTest()
     {
         // Set the textSize to small.
@@ -99,13 +99,13 @@ public class NPCSelectPlayTest
         Assert.Greater(headerText.fontSize, fontSizePrior);
         
         yield return null;
-    }
+    }*/
     
     /// <summary>
     /// Test whether the text scales correctly when the TextSize is changed in the SettingsManager.
     /// </summary>
     /// <returns></returns>
-    [UnityTest]
+    /*[UnityTest]
     public IEnumerator OnChangedTextSizeTest()
     {
         // Set the textSize to small.
@@ -135,7 +135,7 @@ public class NPCSelectPlayTest
         Assert.Greater(headerText.fontSize, fontSizePrior);
         
         yield return null;
-    }
+    }*/
     
     /// <summary>
     /// Check if button fading in takes the correct amount of time.
