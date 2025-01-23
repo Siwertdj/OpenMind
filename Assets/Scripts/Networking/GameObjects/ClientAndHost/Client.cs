@@ -191,7 +191,7 @@ public class Client : NetworkObject
     {
         if (!isConnected)
         {
-            DisplayError("Can't send notebook data because the client is not connected.");
+            DisplayError("Can't exchange notebook data because you are not connected.");
             resendNotebook = () => SendNotebookData(response, notebookData, currentCharacters);
             return;
         }
