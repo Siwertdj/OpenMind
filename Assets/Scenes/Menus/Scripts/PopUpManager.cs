@@ -7,11 +7,12 @@ using UnityEngine.UI;
 
 public class PopUpManager : MonoBehaviour
 {
-    public  Button          closePopUp;
     public  Canvas          popUpCanvas;
+    public  GameObject      popUpButtonCanvas;
     public  TextMeshProUGUI popUpText;
+    public  Image           background;
     private DateTime        startTime;
-    private bool closeOnReceivedNotebook;
+    private bool            closeOnReceivedNotebook;
 
     public void OpenPopUp(Component sender, params object[] data)
     {
@@ -25,18 +26,19 @@ public class PopUpManager : MonoBehaviour
         if (data.Length > 1 && data[1] is Color)
         {
             Color color = (Color)data[1];
-            color.a = 0.8f;
-            closePopUp.GetComponentInChildren<Image>().color = color;
+            color.a = 0.75f; 
+            background.GetComponentInChildren<Image>().color = color;
         }
+        
         if (data.Length > 2)
         {
             closeOnReceivedNotebook = true;
-            closePopUp.interactable = false;
+            popUpButtonCanvas.SetActive(false);
         }
         else
         {
             closeOnReceivedNotebook = false;
-            closePopUp.interactable = true;
+            popUpButtonCanvas.SetActive(true);
         }
         
         popUpCanvas.enabled = true;
@@ -49,7 +51,7 @@ public class PopUpManager : MonoBehaviour
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;
-            closePopUp.interactable = false;
+            popUpButtonCanvas.SetActive(false);
         }
     }
 
@@ -59,7 +61,7 @@ public class PopUpManager : MonoBehaviour
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;
-            closePopUp.interactable = false;
+            popUpButtonCanvas.SetActive(false);
         }
     }
 }
