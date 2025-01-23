@@ -462,7 +462,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1016,7 +1017,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &1546507292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,6 +1093,7 @@ MonoBehaviour:
   onDialogueStart: {fileID: 11400000, guid: ced7badacb84f2e4fa92f2776c51cbc8, type: 2}
   onEpilogueStart: {fileID: 11400000, guid: 58ea9222c9f504647b65c1adfc2d1c14, type: 2}
   hasWon: 0
+  multiplayerEpilogue: 0
 --- !u!114 &1546507295
 MonoBehaviour:
   m_ObjectHideFlags: 0
