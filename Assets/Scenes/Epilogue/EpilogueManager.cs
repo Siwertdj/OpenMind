@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
@@ -21,10 +22,11 @@ public class EpilogueManager : MonoBehaviour
     [SerializeField] private GameEvent onEpilogueEnd;
     
     // Private Variables
-    private StoryObject             story;
     private List<CharacterInstance> characters;
     private int                     culpritId;
     private SceneController         sc;
+    
+    public StoryObject             story;
     
     #region EpilogueFlow
     // 1. Player selects who they think is the culprit
@@ -80,11 +82,11 @@ public class EpilogueManager : MonoBehaviour
         { 
             // Create a new SelectOption object.
             GameObject newOption = Instantiate(portraitPrefab, parent);
-            // TODO: Set avatar
-            /*newOption.GetComponentInChildren<Image>().sprite = 
-                character.avatarEmotions.First(se => se.Item1 == Emotion.Neutral).Item2;    */
+            // set avatar
             newOption.GetComponent<CharacterIcon>().SetAvatar(character);
-            
+            // set name - there should only be 1 TMP-component in this prefab.
+            newOption.GetComponentInChildren<TMP_Text>().text = character.characterName;
+            // Add delegate to onclick-event
             newOption.GetComponent<GameButton>().onClick.AddListener(delegate { CharacterSelected(character); });
         }
     }

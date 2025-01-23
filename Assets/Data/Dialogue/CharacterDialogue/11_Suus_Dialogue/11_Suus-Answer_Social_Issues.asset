@@ -16,9 +16,9 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: There is a lot of poverty in the Netherlands, for different reasons. It's
-      sad to see. We are living in a good country. If you don't agree with that because
-      so many things are changing then we sometimes tell someone:"well, then just
-      move to another country".
+    text: 'There is a lot of poverty in the Netherlands, for different reasons. It''s
+      sad to see. We are living in a good country. If you don''t agree with that
+      because so many things are changing, then we sometimes tell someone: "well,
+      then just move to another country".'
     image: {fileID: 0}
     background: []

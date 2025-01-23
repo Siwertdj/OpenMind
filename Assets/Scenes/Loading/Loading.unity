@@ -363,8 +363,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 215.00003, y: 207.79987}
-  m_SizeDelta: {x: 215, y: 207.7983}
+  m_AnchoredPosition: {x: 173.43407, y: 178.10974}
+  m_SizeDelta: {x: 173.434, y: 178.1081}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &480671211
 MonoBehaviour:
@@ -448,8 +448,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1546507294}
-        m_TargetAssemblyTypeName: GameManager, Scripts
+      - m_Target: {fileID: 1546507295}
+        m_TargetAssemblyTypeName: UIManager, Scripts
         m_MethodName: ToggleTutorial
         m_Mode: 2
         m_Arguments:
@@ -462,7 +462,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +610,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -983,7 +984,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1016,7 +1017,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &1546507292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1094,7 @@ MonoBehaviour:
   onEpilogueStart: {fileID: 11400000, guid: 58ea9222c9f504647b65c1adfc2d1c14, type: 2}
   onNPCSelectLoad: {fileID: 11400000, guid: 994534eb95046b24a90579b35c9ac1a5, type: 2}
   hasWon: 0
+  multiplayerEpilogue: 0
 --- !u!114 &1546507295
 MonoBehaviour:
   m_ObjectHideFlags: 0

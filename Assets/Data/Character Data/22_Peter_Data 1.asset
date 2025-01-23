@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: 088a0440883d6c44daed691a01e0d7be, type: 3}
   happyAvatar: {fileID: 21300000, guid: 67f1c524200bec8458c43b9e6c1c906d, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: 2082c9c1a79aa064e997def953ab0a71, type: 3}
-  voicePitch: 2
+  voicePitch: 1
   facePivot: {x: 0.5, y: 0.8}
   firstGreeting: {fileID: 11400000, guid: 60ab798926622054fa4b6952b7832cb7, type: 2}
   greeting: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   - question: 6
     answer: {fileID: 11400000, guid: f9dd247990610ee42a9ebc7dc561e766, type: 2}
     trait:
-    - It bothers me that the political debated seem to be more about personal character
+    - It bothers me that the political debates seem to be more about personal character
       than the argument.
   - question: 7
     answer: {fileID: 11400000, guid: 38f528e391367f24faf2481f3e20ba36, type: 2}
@@ -58,7 +58,7 @@ MonoBehaviour:
   - question: 11
     answer: {fileID: 11400000, guid: 6e5163bbc8c831d4eab6cc30a58a14bd, type: 2}
     trait:
-    - My core values are integrity,reliability, connection and courage.
+    - My core values are integrity, reliability, connection and courage.
   - question: 13
     answer: {fileID: 11400000, guid: f06a589c6b5b0f644b36080d1da14d66, type: 2}
     trait:
@@ -76,7 +76,7 @@ MonoBehaviour:
     answer: {fileID: 11400000, guid: 879962de5eefffa46acbb3d959d7e477, type: 2}
     trait:
     - A social issue I'm interested in is the migration, immigrant and asylum seeker
-      problem.
+      problems.
   greetings:
   - lines:
     - Hi there.

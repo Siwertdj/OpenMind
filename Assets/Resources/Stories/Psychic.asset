@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   storyName: The Psychic Sidekick
   storyID: 1
-  dialogueBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
-  hintBackground: {fileID: 3448788318129469726, guid: e61044c9b95d01a4b9eac9d8850a2b7f, type: 3}
+  dialogueBackground: {fileID: 3448788318129469726, guid: 64f13b6a847648142a34de14b6e30a54, type: 3}
+  hintBackground: {fileID: 3448788318129469726, guid: 11e4c486b4dfc1b46b178c950ffb7027, type: 3}
   additionalHintBackgroundObjects:
   - {fileID: 8379540494691323741, guid: c82f55dbcb4d36040b2a514dd2de4f17, type: 3}
   - {fileID: 4608197996118494659, guid: 8521bf4181922a64eb68f26a42123678, type: 3}
@@ -26,19 +26,19 @@ MonoBehaviour:
   storyEpilogueWonDialogue: {fileID: 11400000, guid: 343e5905858ea414280d99ae8eb62bc7, type: 2}
   storyEpilogueLossDialogueCulprit: {fileID: 11400000, guid: 69b86c83f87104745b78f7fe4dbc75f2, type: 2}
   storyEpilogueLossDialogueNPC: {fileID: 11400000, guid: ba3fbe3417af7a545a212bda404ea94c, type: 2}
-  victimDialogue: has gone home.
+  victimDialogue: has disappeared.
   hintDialogue:
-  - I am sensing something... <victimName> has gone home...
-  - 'Hold on... the culprit has said something:'
+  - I noticed that <victimName> has disappeared..
+  - 'Hold on... I''m sensing something the culprit just said:'
   - '"<hint>"'
   noMoreHintsDialogue:
-  - I am sensing something... <victimName> has gone home...
-  - I am trying to reach the culprit, but I think my powers are fading...
-  - My powers are gone for now. You will have to figure this out on your own.
+  - noticed that <victimName> has disappeared.
+  - 'I am trying to reach the culprit, but I''m sensing nothing. '
+  - You will have to trust your own instincts for now..
   preEpilogueDialogue:
   - Oh no, the reunion is about to end!
   - I think we've gathered all the information we can.
-  - Time to decide the culprit.
+  - 'Time to decide who is responsible for the disappearances. '
   numberOfCharacters: 8
   numQuestions: 2
   minimumRemaining: 4

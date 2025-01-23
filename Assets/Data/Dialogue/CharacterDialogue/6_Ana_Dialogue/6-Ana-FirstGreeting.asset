@@ -16,7 +16,7 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: Hey Hey!
+    text: Hey hey!
     image: {fileID: 0}
     background: []
   - type: 0

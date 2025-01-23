@@ -114,6 +114,9 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public void NavigateLeft()
     {
+        if (SettingsManager.sm?.IsPaused == true)
+            return;
+
         if (SelectedChild > 0)
         {
             SelectedChild -= 1;
@@ -126,6 +129,9 @@ public class NPCSelectScroller : MonoBehaviour
     /// </summary>
     public void NavigateRight()
     {
+        if (SettingsManager.sm?.IsPaused == true)
+            return;
+
         if (SelectedChild < Children.Length - 1)
         {
             SelectedChild += 1;
@@ -154,7 +160,7 @@ public class NPCSelectScroller : MonoBehaviour
     {
         // Wait until the parent objects are scaled properly
         yield return new WaitForEndOfFrame();
-
+        
         scrollable.localPosition = GetTargetPos(childIndex);
         OnCharacterSelected.Invoke();
     }

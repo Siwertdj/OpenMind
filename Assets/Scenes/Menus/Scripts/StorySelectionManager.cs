@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Linq;
 using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,13 +27,35 @@ public class StorySelectionManager : MonoBehaviour
     [SerializeField] private GameButton storyButtonC;
 
     [Header("Text Objects")] 
-    [SerializeField] private TMP_Text storyAComplete;
-    [SerializeField] private TMP_Text storyBComplete;
-    [SerializeField] private TMP_Text storyCComplete;
+    [SerializeField] private Image storyAComplete;
+    [SerializeField] private Image storyBComplete;
+    [SerializeField] private Image storyCComplete;
     
     private void Awake()
     {
-        UpdateButtons();
+        if(MultiplayerManager.mm)
+            StartIntroMultiplayer();
+        else
+            UpdateButtons();
+    }
+    
+    /// <summary>
+    /// Start the correct intro in multiplayer mode. The host has chosen the story already.
+    /// </summary>
+    private void StartIntroMultiplayer()
+    {
+        switch (MultiplayerManager.mm.init.story)
+        {
+            case 0:
+                StoryASelected();
+                break;
+            case 1:
+                StoryBSelected();
+                break;
+            case 2:
+                StoryCSelected();
+                break;
+        }
     }
 
     /// <summary>

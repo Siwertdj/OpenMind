@@ -74,6 +74,8 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
+        SettingsManager.sm.UnpauseGame();
+
         // Initiate toolbox to be destroyed after transition
         var toolbox = GameObject.FindGameObjectWithTag("Toolbox");
         

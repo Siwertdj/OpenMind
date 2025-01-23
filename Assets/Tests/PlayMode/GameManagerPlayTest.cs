@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -282,6 +284,13 @@ public class GameManagerPlayTest
         }
         else
         {
+            // Get the DialogueManager.
+            dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+            // End the HintDialogue.
+            dm.currentObject = new TerminateDialogueObject();
+            dm.currentObject.Execute();
+            
             yield return new WaitUntil(() => SceneManager.GetSceneByName("EpilogueScene").isLoaded); // Wait for scene to load.
             
             // Check if no characters have disappeared.

@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: 25b3950b4c4ae2c499bd25449e0065e1, type: 3}
   happyAvatar: {fileID: 21300000, guid: b60093a81e1910847806f7c81ef21e85, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: ec5c77b024c14d448a0328a6559f1669, type: 3}
-  voicePitch: 1.5
+  voicePitch: 1.8
   facePivot: {x: 0.5503, y: 0.6731}
   firstGreeting: {fileID: 11400000, guid: 4a8d522a3110b46448235fa7037dee8b, type: 2}
   greeting: {fileID: 0}
@@ -54,7 +54,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 733f57dac33dc6840a17f6668fe71a26, type: 2}
     trait:
-    - If I won the lottery I would invest the money in a music career.
+    - If I would win the lottery, I would invest the money in a music career.
   - question: 18
     answer: {fileID: 11400000, guid: 7be52b6c6ac842a41be5e3ecfd7ba409, type: 2}
     trait:

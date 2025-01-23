@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: 0f52c1de0ccae014cb512f83c1a7bea6, type: 3}
   happyAvatar: {fileID: 21300000, guid: 1f1f34c6ea99fce458fa04077f374a72, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: 3f70d7ed769b6b54da7da9b16061e56c, type: 3}
-  voicePitch: 1.6
+  voicePitch: 1.8
   facePivot: {x: 0.4968, y: 0.8412}
   firstGreeting: {fileID: 11400000, guid: 9f713e518bfeab442897b1f00190ca30, type: 2}
   greeting: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   - question: 8
     answer: {fileID: 11400000, guid: 6cb81d071641faa4ab28c5ab9d32c27d, type: 2}
     trait:
-    - My parents taught me love my family and to keep my home tidy.
+    - My parents taught me to love my family and to keep my home tidy.
   - question: 11
     answer: {fileID: 11400000, guid: 78523ac631f329846b148da374c30ad3, type: 2}
     trait:

@@ -17,7 +17,7 @@ MonoBehaviour:
   neutralAvatar: {fileID: 21300000, guid: 12fead2588da20c4e8ef4c1ad0f312d0, type: 3}
   happyAvatar: {fileID: 21300000, guid: 034f2e114a16a6941960e5ce922a88ea, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: 60e70efe9b54f844c92ed3bc426aabeb, type: 3}
-  voicePitch: 1.2
+  voicePitch: 1
   facePivot: {x: 0.4874, y: 0.8599}
   firstGreeting: {fileID: 11400000, guid: 747ca9c6adf8e2c45a1f2b55c90ba7ef, type: 2}
   greeting: {fileID: 0}
@@ -42,7 +42,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 9a7b48db4cf19b741a6efbc5f250592e, type: 2}
     trait:
-    - If I won the lottery I would buy a house.
+    - If I would win the lottery, I would buy a house.
   - question: 11
     answer: {fileID: 11400000, guid: 745213ec7a4d1664c910844c175c7f14, type: 2}
     trait:

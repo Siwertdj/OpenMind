@@ -90,6 +90,7 @@ public class SelectionManager : MonoBehaviour
     }
 
     #endregion
+
   
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
@@ -163,7 +164,7 @@ public class SelectionManager : MonoBehaviour
 
             // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
             GameManager.gm.hasWon = GameManager.gm.GetCulprit().characterName == character.characterName;
-
+            
             // Load the epilogue scene.
             GameManager.gm.StartEpilogueDialogue(character);
         }
@@ -198,7 +199,7 @@ public class SelectionManager : MonoBehaviour
             button.interactable = false;
             text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
-
+        
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
 

@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 2
-    text: I think the education system is made for only one kind of person. But there
-      are many people that don't fit that label. I think there should be different
-      levels of education but what they represent right now has to change.
+    text: I think the education system is made for only one kind of person. However,
+      there are many people that don't fit that label. I think there should be different
+      levels of education, but what they represent right now has to change.
     image: {fileID: 0}
     background: []
