@@ -38,10 +38,12 @@ public class GameManager : MonoBehaviour
         story { get; private set; } // Contains information about the current game pertaining to the story
     
     // Instances
-    public Random random = new Random(); //random variable is made global so it can be reused
+    public        Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
-    private SceneController sc;
+    private       SceneController sc;
     public NotebookData notebookData;
+    public  NotebookData multiplayerNotebookData;
+    public  bool         multiplayerEpilogue;
 
     // Enumerations
     #region Enumerations
@@ -102,6 +104,13 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("SaveData incorrectly parsed.");
             }
         }
+        else if (data[0] is MultiplayerInit multiplayerInit)
+        {
+            story = Resources.LoadAll<StoryObject>("Stories")
+                .First(story => story.storyID == multiplayerInit.story);
+            random = new Random(multiplayerInit.seed);
+            NewGame();
+        }
         // Else, set the values passed to the correct variables below.
         else
         {
@@ -136,6 +145,7 @@ public class GameManager : MonoBehaviour
             
             NewGame();
         }
+        
     }
 
     /// <summary>
@@ -151,6 +161,7 @@ public class GameManager : MonoBehaviour
         
         //assign numQuestionsAsked
         numQuestionsAsked = saveData.numQuestionsAsked;
+
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
@@ -161,7 +172,7 @@ public class GameManager : MonoBehaviour
         
         //then assign each instance in the same order they were saved. Even if the order doesn't matter, it may still matter in the future.
         //the order of askedQuestionsPerCharacter is a copy of the order of the old currentCharacters
-        foreach (var valueTuple in saveData.askedQuestionsPerCharacter)
+        foreach (var valueTuple in saveData.remainingQuestions)
             currentCharacters.Add(newCurrentCharacters.Find(ncc => ncc.id == valueTuple.Item1));
         
         //assign all data to the current characters
@@ -171,7 +182,6 @@ public class GameManager : MonoBehaviour
             c.isCulprit = saveData.culpritId == c.id;
 
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
-            c.AskedQuestions = saveData.askedQuestionsPerCharacter.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
@@ -212,15 +222,6 @@ public class GameManager : MonoBehaviour
         // Start the game music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         FirstCycle();
-    }
-    
-    /// <summary>
-    /// This method is called when the helpButton is clicked. It either activates or deactivates the tutorial. 
-    /// </summary>
-    /// <param name="helpButton"></param>
-    public void ToggleTutorial(Button helpButton)
-    {
-        sc.ToggleTutorialScene(helpButton);
     }
     
     // This region contains methods that start or end the cycles.
@@ -322,11 +323,15 @@ public class GameManager : MonoBehaviour
         // Start the Epilogue
         else
         {
+            // Change the gamestate
+            gameState = GameState.CulpritSelect;
+            
             StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
     }
+    
     #endregion
 
     #region InstantiateGameOrCycles
@@ -593,6 +598,10 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.CulpritSelect)
         {
             StartEpilogue();
+            
+            // Start exchanging notebooks if in multiplayer mode  
+            if(MultiplayerManager.mm)  
+                MultiplayerNotebookExchange();
             return;
         }
 
@@ -614,6 +623,13 @@ public class GameManager : MonoBehaviour
             gameState = GameState.NpcSelect;
         }
     }    
+    
+    private void MultiplayerNotebookExchange()
+    {
+        // Send notebook
+        MultiplayerManager.mm.SendNotebook();
+        multiplayerEpilogue = true;
+    }
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.

@@ -16,7 +16,7 @@ MonoBehaviour:
   id: 10
   neutralAvatar: {fileID: 21300000, guid: da416209f36323b48bc76b6e6548930c, type: 3}
   happyAvatar: {fileID: 21300000, guid: 2e0e3a342d679b04e9ede4926e434b07, type: 3}
-  unhappyAvatar: {fileID: 0}
+  unhappyAvatar: {fileID: 21300000, guid: efaf77f4a732d26469aa0143241324c2, type: 3}
   voicePitch: 1
   facePivot: {x: 0.5019, y: 0.8557}
   firstGreeting: {fileID: 11400000, guid: 8a51957d45ccaf34aa57d5cd3020b074, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - question: 2
     answer: {fileID: 11400000, guid: 09ef022089a73424e996166fc88138e7, type: 2}
     trait:
-    - I am a software developer that lives with his wive and has three kids.
+    - I am a software developer that lives with his wife and three kids.
   - question: 3
     answer: {fileID: 11400000, guid: f8ebeff49f4c7e04e832d26c07941e94, type: 2}
     trait:
@@ -69,7 +69,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 727f7e5a7b372264196da65a5ee70564, type: 2}
     trait:
-    - If I win the lottery I would spend it on traveling.
+    - If I would win the lottery, I would spend it on traveling.
   - question: 20
     answer: {fileID: 11400000, guid: 7fe581527a8468d4d913b0eeae1b2680, type: 2}
     trait:

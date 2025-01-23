@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -90,7 +92,7 @@ public class NotebookManagerPlayTest
         Assert.AreNotEqual(textBefore, textAfter);
         
         bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
-        nm.SaveNotes();
+        nm.SavePersonalData();
         
         // Check if the new text is equal to the dummy text
         if (active)
@@ -122,7 +124,7 @@ public class NotebookManagerPlayTest
         string newText = "hello";
         nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
         
-        nm.SaveNotes();
+        nm.SavePersonalData();
         
         var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         

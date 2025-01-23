@@ -24,7 +24,10 @@ public class DialogueAnimator : MonoBehaviour
     [SerializeField] private bool audioEnabled = true;
     [SerializeField] private bool overrideDefaultSpeed = true;
     [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
-    
+
+    [Header("Speaking Audio")]
+    [SerializeField] private AudioClip popSound;
+
     private readonly string soundlessSymbols = " !?.,";
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
@@ -60,19 +63,30 @@ public class DialogueAnimator : MonoBehaviour
         if (text == null)
             return;
 
-        text.enableAutoSizing = false;
-        ChangeTextSize(SettingsManager.sm.GetFontSize());
-        audioSource = GetComponent<AudioSource>();
+        // Set text size & add listener
+        text.enableAutoSizing = true; // Set autosizing to true for the text-component.
+        UpdateTextSize();
+        SettingsManager.sm.OnTextSizeChanged.AddListener(UpdateTextSize);
+
+        // Set volume & add listener
+        audioSource = GetComponent<AudioSource>(); // Set audiosource reference, for the talking-sfx
+        UpdateVolume();
+        SettingsManager.sm.OnAudioSettingsChanged.AddListener(UpdateVolume);
     }
     
     /// <summary>
     /// Change the fontSize of the text
     /// </summary>
     /// <param name="fontSize"></param>
-    public void ChangeTextSize(int fontSize)
+    public void UpdateTextSize()
     {
-        // Set the fontSize.
-        text.fontSize = fontSize;
+        // set the max font size - so it shrinks if it would otherwise overflow (for robustness)
+        text.fontSizeMax = SettingsManager.sm.GetFontSize();
+    }
+
+    private void UpdateVolume()
+    {
+        audioSource.volume = SettingsManager.sm.sfxVolume;
     }
     
     /// <summary>
@@ -199,7 +213,10 @@ public class DialogueAnimator : MonoBehaviour
             if (!soundlessSymbols.Contains(output[stringIndex])
                 && stringIndex % 2 == 0 && audioEnabled
                 && audioSource != null)
-                audioSource.Play();
+            {
+                audioSource.Stop(); // stop previous letter's audio
+                audioSource.PlayOneShot(popSound);
+            }
 
             // Write letter to screen and increment stringIndex
             text.text += output[stringIndex++];
@@ -214,7 +231,7 @@ public class DialogueAnimator : MonoBehaviour
         dialogueIndex++;
     }
 
-#region Test Variables
+    #region Test Variables
 #if UNITY_INCLUDE_TESTS
     public float Test_DelayInSeconds
     { 

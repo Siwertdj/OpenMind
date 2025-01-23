@@ -84,7 +84,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Component sender, params object[] data)
     {        
         // Change the text size
-        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
         
         // Retrieve and set the dialogue object
@@ -143,7 +143,7 @@ public class DialogueManager : MonoBehaviour
             if (phoneField.activeSelf)
                 StartCoroutine(PhoneAnimation(phoneField.transform.GetChild(0), -80, -1900));
         }
-
+        
         currentObject.Execute();
     }
 
@@ -359,8 +359,8 @@ public class DialogueManager : MonoBehaviour
             buttonText.text = GetPromptText(response.question);
 
             // Set styling for button
-            buttonText.enableAutoSizing = false;
-            buttonText.fontSize = SettingsManager.sm.GetFontSize();
+            buttonText.enableAutoSizing = true;
+            buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
             buttonText.font = customFont;
 
             // Add event when clicking the button
@@ -403,8 +403,8 @@ public class DialogueManager : MonoBehaviour
                 messageBox.AdjustFontSize();
 
             // Rebuild layout
-            LayoutRebuilder.ForceRebuildLayoutImmediate(
-                phoneField.transform.GetChild(0).GetComponent<RectTransform>());
+            foreach (var rectTransform in phoneField.GetComponentsInChildren<RectTransform>())
+                LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
     }
 
@@ -434,8 +434,8 @@ public class DialogueManager : MonoBehaviour
 
         TMP_Text buttonText = backButton.GetComponentInChildren<TMP_Text>();
         buttonText.text = "Talk to someone else";
-        buttonText.enableAutoSizing = false;
-        buttonText.fontSize = SettingsManager.sm.GetFontSize();
+        buttonText.enableAutoSizing = true;
+        buttonText.fontSizeMax = SettingsManager.sm.GetFontSize();
         buttonText.font = customFont;
         backButton.onClick.AddListener(() => BacktoNPCScreen());
     }
@@ -444,19 +444,27 @@ public class DialogueManager : MonoBehaviour
     /// Continues the dialogue after answering the open question.
     /// </summary>
     public void AnswerOpenQuestion()
-    {        
-        // Assign the text from the inputField to inputText and add it to the list of answers.
-        inputText = inputField.GetComponentInChildren<TMP_InputField>().text;
-        // Can use this to write the inputText to somewhere, here..
+    {
+        TMP_InputField input = inputField.GetComponentInChildren<TMP_InputField>();
+        if (input.text != string.Empty)
+        {
+            // Assign the text from the inputField to inputText and add it to the list of answers.
+            inputText = input.text;
+            // Can use this to write the inputText to somewhere, here..
 
-        // Disable the input field.
-        inputField.SetActive(false);
-        
-        // Reset the text from the input field.
-        inputText = "";
+            // Disable the input field.
+            inputField.SetActive(false);
 
-        animator.InOpenQuestion = false;
-        ExecuteNextObject();
+            // Reset the text from the input field.
+            inputText = "";
+
+            animator.InOpenQuestion = false;
+            ExecuteNextObject();
+        }
+        else
+        {
+            input.placeholder.GetComponentInChildren<TMP_Text>().text = "Please enter text to continue...";
+        }
     }
 
     
@@ -485,7 +493,7 @@ public class DialogueManager : MonoBehaviour
 
         buttonText.text = "Ask another question";
         buttonText.enableAutoSizing = false;
-        buttonText.fontSize = 40;
+        buttonText.fontSizeMax = 40;
         button.onClick.AddListener(() => ContinueTalking());
     }
 
@@ -507,7 +515,7 @@ public class DialogueManager : MonoBehaviour
 
     /// <summary>
     /// Destroys all buttons with the "Button" tag currently in the scene.
-    /// If a button should not be destroyed do not give it the "Button" tag .
+    /// If a button should not be destroyed do not give it the "Button" tag.
     /// </summary>
     private void DestroyButtons()
     {
@@ -531,8 +539,6 @@ public class DialogueManager : MonoBehaviour
         {
             // Change the characterNameField fontSize
             characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-            // Change the animator text fontSize
-            animator.ChangeTextSize(fontSize);
             // Change the question and return button fontSize if they are present.
             foreach (Button b in questionsField.GetComponentsInChildren<Button>())
             {
@@ -551,7 +557,6 @@ public class DialogueManager : MonoBehaviour
         // Set the fontSize.
         int fontSize = SettingsManager.sm.GetFontSize();
         characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-        animator.ChangeTextSize(fontSize);
     }
 
     #endregion
@@ -568,22 +573,22 @@ public class DialogueManager : MonoBehaviour
             Question.Name => "What's your name?",
             Question.Age => "How old are you?",
             Question.LifeGeneral => "How's life?",
-            Question.Inspiration => "Is there anyone that inspires you?",
+            Question.Inspiration => "Who inspires you?",
             Question.Sexuality => "What is your sexual orientation?",
             Question.Wellbeing => "How are you doing?",
             Question.Political => "What are your political thoughts?",
-            Question.Personality => "Can you describe what your personality is like?",
+            Question.Personality => "Can you describe your personality?",
             Question.Hobby => "What are some of your hobbies?",
             Question.CulturalBackground => "What is your cultural background?",
             Question.Religion => "Are you religious?",
             Question.Education => "What is your education level?",
-            Question.CoreValues => "What core values are the most important to you?",
-            Question.ImportantPeople => "Who are the most important people in your life?",
-            Question.PositiveTrait => "What do you think is your best trait?",
+            Question.CoreValues => "What core values are important to you?",
+            Question.ImportantPeople => "Who matters most to you?",
+            Question.PositiveTrait => "What is your best trait?",
             Question.NegativeTrait => "What is a bad trait you may have?",
             Question.OddTrait => "Do you have any odd traits?",
             Question.SocialIssues => "What social issues are you interested in?",
-            Question.EducationSystem => "What is you opinion on the Dutch school system?",
+            Question.EducationSystem => "Your thoughts on the Dutch school system?",
             Question.Lottery => "If you win the lottery, what would you do?",
             Question.Diet => "Do you have any dietary restrictions?",
             _ => "",

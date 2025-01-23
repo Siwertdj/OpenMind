@@ -16,6 +16,6 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I am muslim, but I only recently started wearing a hijab
+    text: I am muslim, but I only recently started wearing a hijab.
     image: {fileID: 0}
     background: []

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8111abedaa74482498a1886160089d40, type: 3}
   m_Name: CulpritMessage5
   m_EditorClassIdentifier: 
+  message: {fileID: 3207015520342109000, guid: 58c5b03b4503d13438d43200cca621d2, type: 3}
   messageContent: See you in a bit!
   sender: 1
-  message: {fileID: 3207015520342109000, guid: 3812a612c2307564692381494a1548ed, type: 3}

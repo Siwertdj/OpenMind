@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: I am the most important person in my life. That might sound a bit narcissistic
+    text: I am the most important person in my life. That might sound a bit narcissistic,
       but I'm the constant factor in my life. When I have a problem and I really
-      don't know what to do anymore I go to my dad for financial help and advice.
+      don't know what to do anymore, I go to my dad for financial help and advice.
     image: {fileID: 0}
     background: []

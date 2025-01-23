@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -350,23 +352,6 @@ public class SystemTests
             Assert.AreEqual(characterNotes[i].Item1, saveData.characterNotes[i].Item1);
             // Check if the second elements of the pairs are equal
             Assert.AreEqual(characterNotes[i].Item2, saveData.characterNotes[i].Item2);
-        }
-        
-        // Check if the askedQuestionsPerCharacter are equal by checking the following 2 properties:
-        // 1: Check if the array of askedQuestionsPerCharacter has the same length as the array of
-        // askedQuestionsPerCharacter from the saveData.
-        // 2: Check if both arrays contain the same elements.
-        (int, List<Question>)[] askedQuestionsPerCharArray =
-            gm.currentCharacters.Select(a => (a.id, a.AskedQuestions)).ToArray();
-        // Check if the arrays have the same length
-        Assert.AreEqual(askedQuestionsPerCharArray.Length, saveData.askedQuestionsPerCharacter.Length);
-        // Check if both arrays contain the same elements
-        for (int i = 0; i < askedQuestionsPerCharArray.Length; i++)
-        {
-            // Check if the first elements of the pairs are equal
-            Assert.AreEqual(askedQuestionsPerCharArray[i].Item1, saveData.askedQuestionsPerCharacter[i].Item1);
-            // Check if the second elements of the pairs (question list) are equal
-            Assert.IsTrue(askedQuestionsPerCharArray[i].Item2.All(saveData.askedQuestionsPerCharacter[i].Item2.Contains));
         }
         
         // Check if the numQuestionsAsked is equal

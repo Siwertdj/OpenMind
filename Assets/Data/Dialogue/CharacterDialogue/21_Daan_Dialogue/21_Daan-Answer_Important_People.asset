@@ -16,7 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 1
-    text: My girlfriend is the most important person in my life. I speak to my parents,
-      sister and my best friend on a regular basis. And I have a large group of friends.
+    text: My girlfriend is the most important person in my life. I talk to my parents,
+      sister and my best friend on a regular basis, and I also have a large group
+      of friends.
     image: {fileID: 0}
     background: []

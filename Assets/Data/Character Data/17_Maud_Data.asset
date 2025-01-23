@@ -16,8 +16,8 @@ MonoBehaviour:
   id: 17
   neutralAvatar: {fileID: 21300000, guid: 3b74707e22c91414cb65ffc4b6911812, type: 3}
   happyAvatar: {fileID: 21300000, guid: 923bef4250de3fd4d82d560c58f6cb99, type: 3}
-  unhappyAvatar: {fileID: 0}
-  voicePitch: 1.6
+  unhappyAvatar: {fileID: 21300000, guid: 26aed1791157c1c49ba8b28571db7131, type: 3}
+  voicePitch: 1.7
   facePivot: {x: 0.4993, y: 0.6548}
   firstGreeting: {fileID: 11400000, guid: 002493ecd8f085c4fa96e30b551dd22f, type: 2}
   greeting: {fileID: 0}
@@ -66,7 +66,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: 4e822d0f95416114993df264412d39db, type: 2}
     trait:
-    - If I win the lottery I would travel the world and start volunteering.
+    - If I would win the lottery, I would travel the world and start volunteering.
   - question: 20
     answer: {fileID: 11400000, guid: a2be3137f33a22c4d9eb3ae513ff0b5c, type: 2}
     trait:
@@ -74,7 +74,7 @@ MonoBehaviour:
   - question: 17
     answer: {fileID: 11400000, guid: 5916920f3500c664bba8e8d05ef0c40c, type: 2}
     trait:
-    - If I have an opinion I won't keep my mouth shut.
+    - If I have an opinion, I won't keep my mouth shut.
   greetings:
   - lines:
     - Hello there.

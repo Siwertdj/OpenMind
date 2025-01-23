@@ -15,8 +15,8 @@ MonoBehaviour:
   characterName: Jurgen
   id: 12
   neutralAvatar: {fileID: 21300000, guid: 82bbdd03deed054459b9a03e12616e01, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
+  happyAvatar: {fileID: 21300000, guid: caa1f18950b2f264a8a0ab8230486b86, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 3a88b9ca68a58c844b6c87355a3a8fb5, type: 3}
   voicePitch: 1
   facePivot: {x: 0.5091, y: 0.7742}
   firstGreeting: {fileID: 11400000, guid: deeb31ec5652d20458c738561e3cbf1e, type: 2}
@@ -69,7 +69,7 @@ MonoBehaviour:
   - question: 16
     answer: {fileID: 11400000, guid: ba55b24f953062d49ba0f82f9e864cfd, type: 2}
     trait:
-    - A lot of people think I'm more rigid than I am.
+    - A lot of people think I'm more rigid than I really am.
   - question: 18
     answer: {fileID: 11400000, guid: 0fc53eff92386934fb4a923ddf2fe8d4, type: 2}
     trait:
@@ -77,11 +77,12 @@ MonoBehaviour:
   - question: 20
     answer: {fileID: 11400000, guid: f6434b312dce34e48a93ba1c761bbd66, type: 2}
     trait:
-    - I do intermittend fasting.
+    - I do intermittent fasting.
   - question: 17
     answer: {fileID: 11400000, guid: 2bc3408c800cc774e92ed3459d5d51c8, type: 2}
     trait:
-    - I think people take in too much external news, problems and suffering.
+    - I think people take in too much external news and suffering, as well as too
+      many problems.
   greetings:
   - lines:
     - Hey!

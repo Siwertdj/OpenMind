@@ -29,8 +29,6 @@ public class NotebookData
             NotebookPage page = new NotebookPage(character);
             _pages[character] = page;
         }
-        
-        //_personalNotes = "Write down your thoughts.";
     }
 
     /// <summary>
@@ -62,11 +60,6 @@ public class NotebookData
     }
     
     /// <summary>
-    /// Get the answers the player has obtained from a character.
-    /// </summary>
-    public List<(string, string)> GetAnswers(CharacterInstance character) => _pages[character].QuestionText();
-    
-    /// <summary>
     /// Save the text that the player has written about a character to the notebookpage.
     /// </summary>
     public void UpdateCharacterNotes(CharacterInstance character, string notes)
@@ -88,5 +81,17 @@ public class NotebookData
     public string GetPersonalNotes()
     {
         return _personalNotes;
+    }
+
+    public override string ToString()
+    {
+        string output = $"personal: {_personalNotes}, characterNotes:[";
+        foreach (var kv in _pages)
+        {
+            output += $"{kv.Key.characterName}: {kv.Value.GetNotes()}, ";
+        }
+        output = output.Substring(0, output.Length - 2);
+        output += "]";
+        return output;
     }
 }

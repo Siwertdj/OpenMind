@@ -16,8 +16,8 @@ MonoBehaviour:
   segments:
   - type: 0
     emotion: 0
-    text: "I\u2019m doing well. I still live with my parents and my dog. The bachelor
-      degree I\u2019m doing is also very interesting and I have a friend group that
-      I hang out with a lot andI always go to them if I have any problems. "
+    text: "I\u2019m doing well. I still live with my parents and my dog. The bachelor's
+      degree I\u2019m currently doing is also very interesting. I also have a friend
+      group that I hang out with a lot andI always go to them if I have any problems. "
     image: {fileID: 0}
     background: []

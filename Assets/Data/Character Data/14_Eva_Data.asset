@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Eva
   id: 14
   neutralAvatar: {fileID: 21300000, guid: 854afebe6edd6f84bb555f34546d4551, type: 3}
-  happyAvatar: {fileID: 0}
-  unhappyAvatar: {fileID: 0}
-  voicePitch: 1
+  happyAvatar: {fileID: 21300000, guid: c4aad29826dbc5f40808d92c12ba44f2, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: c341da6588cfba64faa2d1d23d1d1730, type: 3}
+  voicePitch: 1.8
   facePivot: {x: 0.4725, y: 0.7244}
   firstGreeting: {fileID: 11400000, guid: 1a10e6e891bdd6a45891775b1c5656ff, type: 2}
   greeting: {fileID: 0}
@@ -65,7 +65,7 @@ MonoBehaviour:
   - question: 19
     answer: {fileID: 11400000, guid: d0be23d3f198ad947a6020ca9e14f53d, type: 2}
     trait:
-    - If I win the lottery someday I would buy a house for my mother, save some for
+    - If I would win the lottery, I would buy a house for my mother, save some for
       my children and donate the rest to a charity.
   - question: 17
     answer: {fileID: 11400000, guid: 5d9fa90a6e4583f40a11d072179c26d7, type: 2}
