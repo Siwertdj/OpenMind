@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
             c.isCulprit = saveData.culpritId == c.id;
 
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            c.talkedTo = saveData.charactersGreeted.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
