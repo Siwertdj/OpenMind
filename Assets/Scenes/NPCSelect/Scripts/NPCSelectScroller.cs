@@ -78,7 +78,7 @@ public class NPCSelectScroller : MonoBehaviour
         swipeDetector = GetComponent<SwipeDetector>();
         swipeDetector.OnSwipeLeft.AddListener(NavigateRight);
         swipeDetector.OnSwipeRight.AddListener(NavigateLeft);
-
+        
         // Get references to the nav button objects
         try
         {
@@ -106,8 +106,7 @@ public class NPCSelectScroller : MonoBehaviour
     private void Start()
     {
         // Set the initially selected child
-        SelectedChild = Children.Length / 2;
-        StartCoroutine(InstantNavigate(SelectedChild));
+        SelectedChild = 0;
     }
 
     /// <summary>
@@ -208,6 +207,44 @@ public class NPCSelectScroller : MonoBehaviour
         return new Vector2(
             -Children[childIndex].localPosition.x,
             scrollable.localPosition.y);
+    }
+
+    /// <summary>
+    /// Get the index of the character in the list of children.
+    /// </summary>
+    /// <param name="character"></param>
+    /// <returns></returns>
+    private int GetCharacterIndex(CharacterInstance character)
+    {
+        int index = 0;
+        for (int i = 0; i < Children.Length; i++)
+        {
+            CharacterInstance characterChild = Children[i].GetComponentInChildren<SelectOption>().character;
+            // Check if the character id matches the character given as the parameter.
+            if (characterChild.id == character.id)
+            {
+                index = i;
+            }
+        }
+
+        return index;
+    }
+    
+    /// <summary>
+    /// Set the selected character to be the last character which was talked to during the dialogue.
+    /// </summary>
+    public async void SetSelectedCharacter(Component sender, params object[] data)
+    {
+        if (data.Length > 0 && data[0] is CharacterInstance recipient)
+        {
+            SelectedChild = GetCharacterIndex(recipient);
+        }
+        else
+        {
+            SelectedChild = 0;
+        }
+        
+        StartCoroutine(InstantNavigate(SelectedChild));
     }
 
     #region Test Variables
