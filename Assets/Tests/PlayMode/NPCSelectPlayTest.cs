@@ -23,9 +23,6 @@ public class NPCSelectPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -34,7 +31,7 @@ public class NPCSelectPlayTest
 
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
-        SceneManager.LoadScene("NPCSelectScene");
+        SceneManager.LoadScene("NPCSelectScene", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
 
         sm = GameObject.Find("SelectionManager").GetComponent<SelectionManager>();
@@ -49,7 +46,14 @@ public class NPCSelectPlayTest
         // Move toolbox and DDOLs to scene to unload after
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NPCSelectScene"));
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("NPCSelectScene"));
-        SceneController.sc.UnloadAdditiveScenes();
+        GameObject.Destroy(GameObject.Find("DDOLs"));
+        GameObject.Destroy(GameObject.Find("Toolbox"));
+        GameObject.Destroy(GameObject.Find("Canvas"));
+        GameObject.Destroy(GameObject.Find("SelectionManager"));
+        
+        
+        SceneManager.UnloadSceneAsync("NPCSelectScene");
+        //note: for some reason unity really refuses to unload the npcSelectScene (Loading is still active) and refuses to destroy the SelectionManager and Canvas objects.
     }
 
     /// <summary>

@@ -17,6 +17,7 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
     [UnitySetUp]
     public IEnumerator Setup()
     {
+        SceneManager.LoadScene("StartScreenScene");
         SceneManager.LoadScene("MultiplayerScreenScene");
         yield return new WaitUntil(() =>
             SceneManager.GetSceneByName("MultiplayerScreenScene").isLoaded);
@@ -29,10 +30,13 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
     {
         SceneManager.MoveGameObjectToScene(GameObject.Find("MultiplayerManager"), 
             SceneManager.GetSceneAt(0));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), 
+            SceneManager.GetSceneAt(0));
         
         Destroy(GameObject.Find("MultiplayerManager"));
         Destroy(GameObject.Find("Canvas"));
         Destroy(GameObject.Find("MultiplayerMenuManager"));
+        Destroy(GameObject.Find("DDOLs"));
         
         if (SceneManager.GetSceneByName("SettingsScene").isLoaded)
             SceneManager.UnloadSceneAsync("SettingsScene");
