@@ -39,7 +39,7 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
             Debug.LogError("No popup for error handling was initialised");
         else
         {
-            string message = "You've received a notebook! Go take a look!";
+            string message = "You've received someone else's notebook! Go take a look. It might change your mind on who the culprit is...";
             doPopup.Raise(this, message, "Notification", true);
         }
     }
