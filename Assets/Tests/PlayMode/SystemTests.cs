@@ -240,8 +240,8 @@ public class SystemTests
         // Open personal notes
         GameObject.Find("PersonalButton").GetComponent<Button>().onClick.Invoke();
         
-        //TODO: Test with writing down notes once notebook is fixed
-        // Write down notes
+
+        //write character notes
         string notebookTextPrior = "hello";
         TMP_InputField personalNotes = GameObject.Find("Personal Notes Input Field").GetComponent<TMP_InputField>();
         personalNotes.text = notebookTextPrior;
