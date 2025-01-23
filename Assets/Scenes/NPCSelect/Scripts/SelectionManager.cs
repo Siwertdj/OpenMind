@@ -199,7 +199,7 @@ public class SelectionManager : MonoBehaviour
             button.interactable = false;
             text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
-
+        
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
 

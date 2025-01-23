@@ -489,11 +489,6 @@ MonoBehaviour:
   audioEnabled: 1
   overrideDefaultSpeed: 0
   inputDelay: 0.5
-  letterSounds:
-  - {fileID: 8300000, guid: a64e578d777954f47a31bb147c036507, type: 3}
-  - {fileID: 8300000, guid: 5637889a55b1b934b93c98dd941f0a13, type: 3}
-  - {fileID: 8300000, guid: ab38c26dab8de484aa1ef6e45e3a63b2, type: 3}
-  - {fileID: 8300000, guid: 240d21a4707f2514bb8f36e3ceb453b8, type: 3}
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!82 &429653937
 AudioSource:
@@ -976,6 +971,7 @@ RectTransform:
   - {fileID: 1772810419}
   - {fileID: 198219723}
   - {fileID: 1937756969}
+  - {fileID: 546638290}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2174,7 +2170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -0.004, y: 0.759, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.7597046, y: -14.290695}
+  m_AnchoredPosition: {x: 45, y: -15}
   m_SizeDelta: {x: 888.32544, y: 313.1851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2033686003
@@ -2275,7 +2271,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 1.608795, y: 1.585022, z: 1.5887755, w: 12.88356}
+  m_margin: {x: 1.608795, y: 1.585022, z: 40.757294, w: 12.88356}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

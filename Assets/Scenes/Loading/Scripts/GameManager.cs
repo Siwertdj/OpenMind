@@ -214,8 +214,9 @@ public class GameManager : MonoBehaviour
     {
         // Populate the list of characters, unless its empty and contains a culprit
         // (It could be instantiated if the game was restarted)
-        if (currentCharacters.Count == 0 || 
-            (currentCharacters.Count > 0 && currentCharacters.Any(c => c.isCulprit)))
+        if (!(currentCharacters.Count > 0 && 
+              currentCharacters.All(c => c.isActive) && 
+              currentCharacters.Any(c => c.isCulprit)))
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
