@@ -269,7 +269,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &68716955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1811,7 +1812,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &674081659
 GameObject:
   m_ObjectHideFlags: 0
@@ -1947,7 +1949,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &709119423
 GameObject:
   m_ObjectHideFlags: 0
@@ -3326,7 +3329,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!114 &1574819273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4611,7 +4615,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!1 &2036292602
 GameObject:
   m_ObjectHideFlags: 0
