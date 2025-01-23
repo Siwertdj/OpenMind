@@ -20,7 +20,6 @@ public class MultiplayerMenuManager : MonoBehaviour
 
     [Header("Paramaters")] 
     [SerializeField] private int maxPlayers;
-    [SerializeField] private TextMeshProUGUI maxPlayersText;
     [SerializeField] private TextMeshProUGUI code;
     [SerializeField] private TextMeshProUGUI playerCountText;
     [SerializeField] private Button          joinButton;
@@ -166,8 +165,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     public void Update()
     {
-        if(hostCanvas.activeInHierarchy)
-            maxPlayersText.text = maxPlayers.ToString();
         
         if (lobbyCanvas.activeInHierarchy)
         {

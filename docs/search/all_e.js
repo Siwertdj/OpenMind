@@ -8,7 +8,7 @@ var searchData=
   ['onbuttonclick_5',['OnButtonClick',['../classDialogueManager.html#abab84129c3ca0c685869298e9f7fc450',1,'DialogueManager']]],
   ['onbuttonclicktest_6',['OnButtonClickTest',['../classDialogueManagerPlayTest.html#a92759305705c6b19126e038f1b7b7889',1,'DialogueManagerPlayTest']]],
   ['onchangedtextsize_7',['OnChangedTextSize',['../classDialogueManager.html#a840bb80986e5ea8e58367779eafde9a1',1,'DialogueManager.OnChangedTextSize()'],['../classSelectionManager.html#a7d8811132eefe9815b7ca8fb242cf388',1,'SelectionManager.OnChangedTextSize()']]],
-  ['onchangedtextsizetest_8',['OnChangedTextSizeTest',['../classDialogueManagerPlayTest.html#a06cd7fa096687aa064e5901daf1b1d29',1,'DialogueManagerPlayTest.OnChangedTextSizeTest()'],['../classNPCSelectPlayTest.html#aa1ee963790dc751cfd62946e4ecf2358',1,'NPCSelectPlayTest.OnChangedTextSizeTest()']]],
+  ['onchangedtextsizetest_8',['OnChangedTextSizeTest',['../classNPCSelectPlayTest.html#aa1ee963790dc751cfd62946e4ecf2358',1,'NPCSelectPlayTest']]],
   ['oncharacterselected_9',['OnCharacterSelected',['../classNPCSelectScroller.html#a1d88a2be6ef859668f0689f81be4dcc7',1,'NPCSelectScroller']]],
   ['onconnectevents_10',['onConnectEvents',['../classDataSender.html#a527b7370865963757c0110cefd136a8d',1,'DataSender']]],
   ['onconnectiontimeoutevents_11',['onConnectionTimeoutEvents',['../classDataSender.html#a9a98ad77908195270b544b68a1ff8dd2',1,'DataSender']]],

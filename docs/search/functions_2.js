@@ -13,7 +13,7 @@ var searchData=
   ['changeplayertexttest_10',['ChangePlayerTextTest',['../classIntroductionManagerPlayTest.html#a805abae983b79835047f1c32ed5e7ddc',1,'IntroductionManagerPlayTest']]],
   ['changereceptionist_11',['ChangeReceptionist',['../classPrologueManager.html#a82a2f63951a72f8e9ef7c1503df62495',1,'PrologueManager']]],
   ['changetextsize_12',['ChangeTextSize',['../classDialogueManager.html#a0eb798ed2471a91481bf86a610bf22d2',1,'DialogueManager.ChangeTextSize()'],['../classSettingsMenuManager.html#aac0f8e22a82f0bcef719178562285667',1,'SettingsMenuManager.ChangeTextSize()'],['../classSelectionManager.html#a8301ed2681e9731837bf4aab5f4dc06a',1,'SelectionManager.ChangeTextSize()']]],
-  ['changetextsizetest_13',['ChangeTextSizeTest',['../classNPCSelectPlayTest.html#ade0dd2958e26b3b01ebd4231fcdc8b00',1,'NPCSelectPlayTest.ChangeTextSizeTest()'],['../classDialogueManagerPlayTest.html#aaa7a4493115fbbdd0bad7191e603c228',1,'DialogueManagerPlayTest.ChangeTextSizeTest()']]],
+  ['changetextsizetest_13',['ChangeTextSizeTest',['../classNPCSelectPlayTest.html#ade0dd2958e26b3b01ebd4231fcdc8b00',1,'NPCSelectPlayTest']]],
   ['characterinactivetest_14',['CharacterInactiveTest',['../classNPCSelectPlayTest.html#aee43ee17f8a6a72b5e1620087caa506a',1,'NPCSelectPlayTest']]],
   ['characterinstance_15',['CharacterInstance',['../classCharacterInstance.html#aced72f3c0760acb5e2f8986e2e018eeb',1,'CharacterInstance']]],
   ['characterinstanceinittest_16',['CharacterInstanceInitTest',['../classCharacterInstanceEditTest.html#ac0f55e14722c86e67a0c60a53b41b1a1',1,'CharacterInstanceEditTest']]],
