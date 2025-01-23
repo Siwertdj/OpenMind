@@ -1355,7 +1355,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e7b4e7ce644206f47b684f9f78c8d51b, type: 3}
   - {fileID: 21300000, guid: 3bed61230d709754eafcf1ddd0273267, type: 3}
   receptionistText:
-  - Welcome at the reunion of Capra University.
+  - Welcome to the reunion of Capra University.
   - 'Before you can enter, I want you to answer some questions. '
   - Walk with me?
   - I'm going to show you an image for three seconds, ready?

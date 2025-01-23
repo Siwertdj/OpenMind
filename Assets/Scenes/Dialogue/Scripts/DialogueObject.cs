@@ -85,8 +85,9 @@ public class TerminateDialogueObject : DialogueObject
     public override void Execute()
     {
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
-        // Also pass along the currentObject, which is used for the Epilogue scene.
-        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);
+        // Pass along the currentObject, which is used for the Epilogue scene and
+        // pass along the currentrecipient, which is used to set the npc which was last talked to in NpcSelect.
+        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject, DialogueManager.dm.currentRecipient);
     }
 }
 
