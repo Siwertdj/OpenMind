@@ -129,6 +129,6 @@ public class StartMenuManager : MonoBehaviour
 
     public void OpenCredits()
     {
-        SceneManager.LoadScene("CreditScene", LoadSceneMode.Additive);
+        SceneManager.LoadScene("CreditsScene", LoadSceneMode.Additive);
     }
 }
