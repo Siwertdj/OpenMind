@@ -9,6 +9,7 @@ public class PopUpManager : MonoBehaviour
 {
     public  Canvas          popUpCanvas;
     public  GameObject      popUpButtonCanvas;
+    public  TextMeshProUGUI popUpTitleText;
     public  TextMeshProUGUI popUpText;
     public  Image           background;
     private DateTime        startTime;
@@ -34,11 +35,13 @@ public class PopUpManager : MonoBehaviour
         {
             closeOnReceivedNotebook = true;
             popUpButtonCanvas.SetActive(false);
+            popUpTitleText.text = "Notification";
         }
         else
         {
             closeOnReceivedNotebook = false;
             popUpButtonCanvas.SetActive(true);
+            popUpTitleText.text = "Error";
         }
         
         popUpCanvas.enabled = true;
