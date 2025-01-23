@@ -428,6 +428,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 830541257}
     m_Modifications:
     - target: {fileID: 573881519215293474, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 573881519215293474, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
+    - target: {fileID: 573881519215293474, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1721332685}
@@ -475,6 +483,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2024872226118183208, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2024872226118183208, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
     - target: {fileID: 2024872226118183208, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -583,6 +599,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4323604898592390406, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4323604898592390406, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
+      propertyPath: audioClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
     - target: {fileID: 4323604898592390406, guid: 6dadf68514528f34b8abcf7c52cb3cc4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
