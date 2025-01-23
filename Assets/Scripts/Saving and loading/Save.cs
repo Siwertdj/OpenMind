@@ -95,6 +95,8 @@ public class Save
             .Select(a => (a.id, a.RemainingQuestions)).ToArray();
         (int, string)[] characterNotes = GameManager.gm.currentCharacters
             .Select(c => (c.id, gameManager.notebookData.GetCharacterNotes(c))).ToArray();
+        (int, bool)[] charactersGreeted = GameManager.gm.currentCharacters
+            .Select(c => (c.id, c.talkedTo)).ToArray();
 
         return new SaveData
         {
@@ -105,7 +107,8 @@ public class Save
             remainingQuestions = remainingQuestions,
             personalNotes = gameManager.notebookData.GetPersonalNotes(),
             characterNotes = characterNotes,
-            numQuestionsAsked = gameManager.numQuestionsAsked
+            numQuestionsAsked = gameManager.numQuestionsAsked,
+            charactersGreeted = charactersGreeted,
         };
     }
 }

@@ -19,6 +19,7 @@ public class SaveData
     public string                  personalNotes;
     public (int, string)[]         characterNotes;
     public int                     numQuestionsAsked;
+    public (int, bool)[]        charactersGreeted;
 }
 
 /// <summary>
