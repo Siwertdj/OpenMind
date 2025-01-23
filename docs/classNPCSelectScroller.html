@@ -97,6 +97,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>NavigateLeft</b> ()</
 void&#160;</td><td class="memItemRight" valign="bottom"><b>NavigateRight</b> ()</td></tr>
 <tr class="memdesc:a8b05b3c1331c742a33818e42ce2d04c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Smoothly move one child to the right. <br /></td></tr>
 <tr class="separator:a8b05b3c1331c742a33818e42ce2d04c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2196b0d9718e8ac1f7e82417c2f9753"><td class="memItemLeft" align="right" valign="top"><a id="ad2196b0d9718e8ac1f7e82417c2f9753" name="ad2196b0d9718e8ac1f7e82417c2f9753"></a>
+async void&#160;</td><td class="memItemRight" valign="bottom"><b>SetSelectedCharacter</b> (Component sender, params object[] data)</td></tr>
+<tr class="memdesc:ad2196b0d9718e8ac1f7e82417c2f9753"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the selected character to be the last character which was talked to during the dialogue. <br /></td></tr>
+<tr class="separator:ad2196b0d9718e8ac1f7e82417c2f9753"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -147,6 +151,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Start</b> ()</td></tr
 <tr class="memitem:afa52ee14117b0e1c114c69478d527ef0"><td class="memItemLeft" align="right" valign="top">Vector3&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNPCSelectScroller.html#afa52ee14117b0e1c114c69478d527ef0">GetTargetPos</a> (int childIndex)</td></tr>
 <tr class="memdesc:afa52ee14117b0e1c114c69478d527ef0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the position which the first child needs to have in order to center the target child.  <br /></td></tr>
 <tr class="separator:afa52ee14117b0e1c114c69478d527ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bfe17e1e1db97648e18afcdbbc5170a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classNPCSelectScroller.html#a8bfe17e1e1db97648e18afcdbbc5170a">GetCharacterIndex</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
+<tr class="memdesc:a8bfe17e1e1db97648e18afcdbbc5170a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the index of the character in the list of children.  <br /></td></tr>
+<tr class="separator:a8bfe17e1e1db97648e18afcdbbc5170a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -173,6 +180,41 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>selectedChild</b></td>
 <tr class="separator:ae1982b686a2a953dda26e59931191e5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8bfe17e1e1db97648e18afcdbbc5170a" name="a8bfe17e1e1db97648e18afcdbbc5170a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bfe17e1e1db97648e18afcdbbc5170a">&#9670;&#160;</a></span>GetCharacterIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int NPCSelectScroller.GetCharacterIndex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td>
+          <td class="paramname"><em>character</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the index of the character in the list of children. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">character</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="afa52ee14117b0e1c114c69478d527ef0" name="afa52ee14117b0e1c114c69478d527ef0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afa52ee14117b0e1c114c69478d527ef0">&#9670;&#160;</a></span>GetTargetPos()</h2>
 

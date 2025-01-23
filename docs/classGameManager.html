@@ -113,16 +113,16 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a5a95dd5a934abd62a92bdc50a2ea05c3">StartGame</a> (Component sender, params object[] data)</td></tr>
 <tr class="memdesc:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the game. If a story is passed along, starts a new game with that story. If savedata is passed along loads the game with that data.  <br /></td></tr>
 <tr class="separator:a5a95dd5a934abd62a92bdc50a2ea05c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ed399772f0694d6fee3e4658195b4f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a0ed399772f0694d6fee3e4658195b4f4">LoadGame</a> (<a class="el" href="classSaveData.html">SaveData</a> saveData)</td></tr>
-<tr class="memdesc:a0ed399772f0694d6fee3e4658195b4f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the game using savedata passed along.  <br /></td></tr>
-<tr class="separator:a0ed399772f0694d6fee3e4658195b4f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbc023df6b5cf601f45144d98826471b"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#acbc023df6b5cf601f45144d98826471b">LoadGame</a> (<a class="el" href="classSaveData.html">SaveData</a> saveData)</td></tr>
+<tr class="memdesc:acbc023df6b5cf601f45144d98826471b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Loads the game using savedata passed along.  <br /></td></tr>
+<tr class="separator:acbc023df6b5cf601f45144d98826471b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aabc460c900f8bc00fc39539c067a564d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#aabc460c900f8bc00fc39539c067a564d">ProcessDialogue</a> (string inputLine)</td></tr>
 <tr class="memdesc:aabc460c900f8bc00fc39539c067a564d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks for keywords in <em>inputLine</em>  and replaces them with proper values.  <br /></td></tr>
 <tr class="separator:aabc460c900f8bc00fc39539c067a564d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae6086ba77a34c2b59da862919da1a8a6"><td class="memItemLeft" align="right" valign="top"><a id="ae6086ba77a34c2b59da862919da1a8a6" name="ae6086ba77a34c2b59da862919da1a8a6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td></tr>
-<tr class="memdesc:ae6086ba77a34c2b59da862919da1a8a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the cycle when all questions have been asked. If we have too few characters remaining, we must select the culprit, otherwise we start a new cycle. <br /></td></tr>
-<tr class="separator:ae6086ba77a34c2b59da862919da1a8a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a4fe3aaf9901c64e29053ecb54fa919"><td class="memItemLeft" align="right" valign="top"><a id="a4a4fe3aaf9901c64e29053ecb54fa919" name="a4a4fe3aaf9901c64e29053ecb54fa919"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> recipient)</td></tr>
+<tr class="memdesc:a4a4fe3aaf9901c64e29053ecb54fa919"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ends the cycle when all questions have been asked. If we have too few characters remaining, we must select the culprit, otherwise we start a new cycle. <br /></td></tr>
+<tr class="separator:a4a4fe3aaf9901c64e29053ecb54fa919"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8775f68a5dd9fb3580aa4d0ff393313"><td class="memItemLeft" align="right" valign="top"><a id="ae8775f68a5dd9fb3580aa4d0ff393313" name="ae8775f68a5dd9fb3580aa4d0ff393313"></a>
 <a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td><td class="memItemRight" valign="bottom"><b>GetCulprit</b> ()</td></tr>
 <tr class="memdesc:ae8775f68a5dd9fb3580aa4d0ff393313"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the culprit, used to give hints for the companion Assumes a culprit exists. <br /></td></tr>
@@ -135,9 +135,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>EndCycle</b> ()</td><
 void&#160;</td><td class="memItemRight" valign="bottom"><b>EndGame</b> ()</td></tr>
 <tr class="memdesc:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the game. <br /></td></tr>
 <tr class="separator:a0c10b4d89c6e37a4433a54a5b7b04500"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a653be12e977020c8e72ed53c36c6e347"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a653be12e977020c8e72ed53c36c6e347">StartHintDialogue</a> (List&lt; string &gt; dialogue)</td></tr>
-<tr class="memdesc:a653be12e977020c8e72ed53c36c6e347"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
-<tr class="separator:a653be12e977020c8e72ed53c36c6e347"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b">StartHintDialogue</a> (List&lt; string &gt; dialogue, <a class="el" href="classCharacterInstance.html">CharacterInstance</a> recipient)</td></tr>
+<tr class="memdesc:a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts a new hint dialogue.  <br /></td></tr>
+<tr class="separator:a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1cdd75ff0254229d6709046cda1d782e"><td class="memItemLeft" align="right" valign="top">async void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGameManager.html#a1cdd75ff0254229d6709046cda1d782e">StartDialogue</a> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> character)</td></tr>
 <tr class="memdesc:a1cdd75ff0254229d6709046cda1d782e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can be called to start Dialogue with a specific character, taking a <a class="el" href="classCharacterInstance.html" title="An instance of a character. Takes a set of CharacterData Each character in the game is a different a ...">CharacterInstance</a> as parameter. This toggles-off the NPCSelectScene, and switches the dialogueRecipient-variable to the characterInstance that is passed as a parameter. Then, it loads the DialogueScene.  <br /></td></tr>
 <tr class="separator:a1cdd75ff0254229d6709046cda1d782e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,6 +163,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:aa870dc5d005f687d67790eb7348a26f7"><td class="memItemLeft" align="right" valign="top"><a id="aa870dc5d005f687d67790eb7348a26f7" name="aa870dc5d005f687d67790eb7348a26f7"></a>
 <a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onEpilogueStart</b></td></tr>
 <tr class="separator:aa870dc5d005f687d67790eb7348a26f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2c9229031f625be8fb936990b6ac6a7"><td class="memItemLeft" align="right" valign="top"><a id="ae2c9229031f625be8fb936990b6ac6a7" name="ae2c9229031f625be8fb936990b6ac6a7"></a>
+<a class="el" href="classGameEvent.html">GameEvent</a>&#160;</td><td class="memItemRight" valign="bottom"><b>onNPCSelectLoad</b></td></tr>
+<tr class="separator:ae2c9229031f625be8fb936990b6ac6a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a53f25bde001b9155ab9cba1327b89c"><td class="memItemLeft" align="right" valign="top"><a id="a3a53f25bde001b9155ab9cba1327b89c" name="a3a53f25bde001b9155ab9cba1327b89c"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>numQuestionsAsked</b></td></tr>
 <tr class="separator:a3a53f25bde001b9155ab9cba1327b89c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,14 +219,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Awake</b> ()</td></tr
 void&#160;</td><td class="memItemRight" valign="bottom"><b>NewGame</b> ()</td></tr>
 <tr class="memdesc:a1b93489e7f14e9befad8c46af39225e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a new game. <br /></td></tr>
 <tr class="separator:a1b93489e7f14e9befad8c46af39225e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a9c87f9440395ce025bb3c2bf02eab5"><td class="memItemLeft" align="right" valign="top"><a id="a8a9c87f9440395ce025bb3c2bf02eab5" name="a8a9c87f9440395ce025bb3c2bf02eab5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>FirstCycle</b> ()</td></tr>
-<tr class="memdesc:a8a9c87f9440395ce025bb3c2bf02eab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Works like StartCycle, but can optionally skip the immediate victim. This method starts the game with a special SceneTransition-invocation for the first scene of the game. <br /></td></tr>
-<tr class="separator:a8a9c87f9440395ce025bb3c2bf02eab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a102338bd3022cda89aadf0fdefdbd4f2"><td class="memItemLeft" align="right" valign="top"><a id="a102338bd3022cda89aadf0fdefdbd4f2" name="a102338bd3022cda89aadf0fdefdbd4f2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>StartCycle</b> ()</td></tr>
-<tr class="memdesc:a102338bd3022cda89aadf0fdefdbd4f2"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main cycle of the game. This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to, at that point the cycle ends and the player has to choose which NPC they think is the culprit. <br /></td></tr>
-<tr class="separator:a102338bd3022cda89aadf0fdefdbd4f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a097f2269b12481dd8a0073bef00b6d6f"><td class="memItemLeft" align="right" valign="top"><a id="a097f2269b12481dd8a0073bef00b6d6f" name="a097f2269b12481dd8a0073bef00b6d6f"></a>
+async void&#160;</td><td class="memItemRight" valign="bottom"><b>FirstCycle</b> ()</td></tr>
+<tr class="memdesc:a097f2269b12481dd8a0073bef00b6d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Works like StartCycle, but can optionally skip the immediate victim. This method starts the game with a special SceneTransition-invocation for the first scene of the game. <br /></td></tr>
+<tr class="separator:a097f2269b12481dd8a0073bef00b6d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d649eec422e973af011ff55e29960ed"><td class="memItemLeft" align="right" valign="top"><a id="a3d649eec422e973af011ff55e29960ed" name="a3d649eec422e973af011ff55e29960ed"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>StartCycle</b> (<a class="el" href="classCharacterInstance.html">CharacterInstance</a> recipient)</td></tr>
+<tr class="memdesc:a3d649eec422e973af011ff55e29960ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main cycle of the game. This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to, at that point the cycle ends and the player has to choose which NPC they think is the culprit. <br /></td></tr>
+<tr class="separator:a3d649eec422e973af011ff55e29960ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad29c230fddbac5e5008cac3fb9eaa93c"><td class="memItemLeft" align="right" valign="top"><a id="ad29c230fddbac5e5008cac3fb9eaa93c" name="ad29c230fddbac5e5008cac3fb9eaa93c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>PopulateCharacters</b> ()</td></tr>
 <tr class="memdesc:ad29c230fddbac5e5008cac3fb9eaa93c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Makes a randomized selection of characters for this loop of the game, from the total database of all characters. Also makes sure they are all set to 'Active', and selects a random culprit. <br /></td></tr>
@@ -336,14 +339,14 @@ List&lt; <a class="el" href="classCharacterData.html">CharacterData</a> &gt;&#16
 
 </div>
 </div>
-<a id="a0ed399772f0694d6fee3e4658195b4f4" name="a0ed399772f0694d6fee3e4658195b4f4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ed399772f0694d6fee3e4658195b4f4">&#9670;&#160;</a></span>LoadGame()</h2>
+<a id="acbc023df6b5cf601f45144d98826471b" name="acbc023df6b5cf601f45144d98826471b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acbc023df6b5cf601f45144d98826471b">&#9670;&#160;</a></span>LoadGame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void GameManager.LoadGame </td>
+          <td class="memname">async void GameManager.LoadGame </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classSaveData.html">SaveData</a>&#160;</td>
           <td class="paramname"><em>saveData</em></td><td>)</td>
@@ -453,8 +456,8 @@ List&lt; <a class="el" href="classCharacterData.html">CharacterData</a> &gt;&#16
 
 </div>
 </div>
-<a id="a653be12e977020c8e72ed53c36c6e347" name="a653be12e977020c8e72ed53c36c6e347"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a653be12e977020c8e72ed53c36c6e347">&#9670;&#160;</a></span>StartHintDialogue()</h2>
+<a id="a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b" name="a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e5fcc1dd1fc5e3fd44472d5cb2c3f1b">&#9670;&#160;</a></span>StartHintDialogue()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -463,8 +466,18 @@ List&lt; <a class="el" href="classCharacterData.html">CharacterData</a> &gt;&#16
           <td class="memname">async void GameManager.StartHintDialogue </td>
           <td>(</td>
           <td class="paramtype">List&lt; string &gt;&#160;</td>
-          <td class="paramname"><em>dialogue</em></td><td>)</td>
+          <td class="paramname"><em>dialogue</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="classCharacterInstance.html">CharacterInstance</a>&#160;</td>
+          <td class="paramname"><em>recipient</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">

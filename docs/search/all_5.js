@@ -6,5 +6,5 @@ var searchData=
   ['fetchuserdata_3',['FetchUserData',['../classFetchUserData.html',1,'']]],
   ['filepathconstants_4',['FilePathConstants',['../classFilePathConstants.html',1,'']]],
   ['findlastpunctuation_5',['FindLastPunctuation',['../classDialogueContainer.html#a524a0788c05209719e29c14040c4519d',1,'DialogueContainer']]],
-  ['firstcycle_6',['FirstCycle',['../classGameManager.html#a8a9c87f9440395ce025bb3c2bf02eab5',1,'GameManager']]]
+  ['firstcycle_6',['FirstCycle',['../classGameManager.html#a097f2269b12481dd8a0073bef00b6d6f',1,'GameManager']]]
 ];

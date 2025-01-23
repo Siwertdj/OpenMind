@@ -2,7 +2,7 @@ var searchData=
 [
   ['enablenotebookbutton_0',['EnableNotebookButton',['../classTutorialManager.html#a65a4f07d9212305a2da995e8589664cb',1,'TutorialManager']]],
   ['enableselectionbutton_1',['EnableSelectionButton',['../classSelectionManager.html#aa89f4ed1ad95e270e93cc96d9226dcf7',1,'SelectionManager']]],
-  ['endcycle_2',['EndCycle',['../classGameManager.html#ae6086ba77a34c2b59da862919da1a8a6',1,'GameManager']]],
+  ['endcycle_2',['EndCycle',['../classGameManager.html#a4a4fe3aaf9901c64e29053ecb54fa919',1,'GameManager']]],
   ['endcycletest_3',['EndCycleTest',['../classGameManagerPlayTest.html#a0ce7f7c8b6b01100b5639e05da00ff0d',1,'GameManagerPlayTest']]],
   ['enddialogue_4',['EndDialogue',['../classDialogueAnimator.html#a5e12649c463fe330c654340db39399f2',1,'DialogueAnimator.EndDialogue()'],['../classGameManager.html#abd7444b7a79966c56af61de16ae3fd75',1,'GameManager.EndDialogue()']]],
   ['enddialogueepiloguetest_5',['EndDialogueEpilogueTest',['../classEpilogueManagerPlayTests.html#ae981aa837cc7792553a7a5414f9d1942',1,'EpilogueManagerPlayTests']]],
