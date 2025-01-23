@@ -313,6 +313,10 @@ public class Client : NetworkObject
     /// </summary>
     public override void Dispose()
     {
-        sender?.Dispose();
+        if (sender != null)
+        {
+            sender.StopListeningForResponses();
+            sender.Dispose();
+        }
     }
 }
