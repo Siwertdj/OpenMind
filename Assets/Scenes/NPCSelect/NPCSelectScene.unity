@@ -1757,6 +1757,7 @@ GameObject:
   - component: {fileID: 1885397428}
   - component: {fileID: 1885397429}
   - component: {fileID: 1885397430}
+  - component: {fileID: 1885397431}
   m_Layer: 5
   m_Name: Scroller
   m_TagString: Untagged
@@ -1820,6 +1821,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swipeThreshold: 200
+--- !u!114 &1885397431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885397423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695fe1054f3d05b48a694753bc4b62e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 994534eb95046b24a90579b35c9ac1a5, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1885397429}
+        m_TargetAssemblyTypeName: NPCSelectScroller, Scripts
+        m_MethodName: SetSelectedCharacter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1951431981
 GameObject:
   m_ObjectHideFlags: 0

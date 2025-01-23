@@ -317,13 +317,13 @@ public class SceneController : MonoBehaviour
     /// Function to be called when loading the first cycle
     /// </summary>
     /// <param name="start"></param>
-    public void StartScene(SceneName start)
+    public async Task StartScene(SceneName start)
     {
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
-        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+        await LoadScene(currentScene);
     }
 
     public SceneName? FindLoadedSceneOfSelection(params SceneName[] scenes)

@@ -86,7 +86,7 @@ public class TerminateDialogueObject : DialogueObject
     {
         // Invokes event, listener invokes CheckEndCycle, which loads NPCSelect.
         // Also pass along the currentObject, which is used for the Epilogue scene.
-        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject);
+        DialogueManager.dm.onEndDialogue.Raise(DialogueManager.dm, DialogueManager.dm.currentObject, DialogueManager.dm.currentRecipient);
     }
 }
 
