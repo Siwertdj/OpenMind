@@ -480,7 +480,10 @@ public class IntroductionManager : MonoBehaviour
             yield return null;
         }
         
-        onGameLoaded.Raise(this, story);
+        if(MultiplayerManager.mm)
+            onGameLoaded.Raise(this, MultiplayerManager.mm.init);
+        else
+            onGameLoaded.Raise(this, story);
         
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary

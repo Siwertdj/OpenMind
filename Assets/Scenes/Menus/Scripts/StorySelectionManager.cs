@@ -33,7 +33,29 @@ public class StorySelectionManager : MonoBehaviour
     
     private void Awake()
     {
-        UpdateButtons();
+        if(MultiplayerManager.mm)
+            StartIntroMultiplayer();
+        else
+            UpdateButtons();
+    }
+    
+    /// <summary>
+    /// Start the correct intro in multiplayer mode. The host has chosen the story already.
+    /// </summary>
+    private void StartIntroMultiplayer()
+    {
+        switch (MultiplayerManager.mm.init.story)
+        {
+            case 0:
+                StoryASelected();
+                break;
+            case 1:
+                StoryBSelected();
+                break;
+            case 2:
+                StoryCSelected();
+                break;
+        }
     }
 
     /// <summary>
