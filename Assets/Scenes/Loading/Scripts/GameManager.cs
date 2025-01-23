@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("Events")] 
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
-    public GameEvent onNPCSelectLoad;
+    public                    GameEvent   onNPCSelectLoad;
 
     // GAME VARIABLES
     /*private int numberOfCharacters; // How many characters each session should have
@@ -207,6 +207,7 @@ public class GameManager : MonoBehaviour
         //update gamestate
         gameState = GameState.NpcSelect;
 
+        // Set the selected character.
         onNPCSelectLoad.Raise(this);
     }
 
@@ -250,6 +251,7 @@ public class GameManager : MonoBehaviour
         // Change the gamestate
         gameState = GameState.NpcSelect;
         
+        // Set the selected character.
         onNPCSelectLoad.Raise(this);
     }
     
@@ -633,7 +635,7 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         if (!HasQuestionsLeft())
         {
-            // No questions left, so we end the cycle
+            // No questions left, so we end the cycle, and pass along the character which was last talked to.
             if (data[1] is CharacterInstance recipient)
                 EndCycle(recipient);
         }
