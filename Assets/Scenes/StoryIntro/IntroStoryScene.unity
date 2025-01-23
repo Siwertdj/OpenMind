@@ -174,11 +174,6 @@ MonoBehaviour:
   audioEnabled: 1
   overrideDefaultSpeed: 1
   inputDelay: 0.5
-  letterSounds:
-  - {fileID: 8300000, guid: a64e578d777954f47a31bb147c036507, type: 3}
-  - {fileID: 8300000, guid: 5637889a55b1b934b93c98dd941f0a13, type: 3}
-  - {fileID: 8300000, guid: ab38c26dab8de484aa1ef6e45e3a63b2, type: 3}
-  - {fileID: 8300000, guid: 240d21a4707f2514bb8f36e3ceb453b8, type: 3}
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!82 &21481128
 AudioSource:
@@ -502,11 +497,6 @@ MonoBehaviour:
   audioEnabled: 1
   overrideDefaultSpeed: 1
   inputDelay: 0.5
-  letterSounds:
-  - {fileID: 8300000, guid: a64e578d777954f47a31bb147c036507, type: 3}
-  - {fileID: 8300000, guid: 5637889a55b1b934b93c98dd941f0a13, type: 3}
-  - {fileID: 8300000, guid: ab38c26dab8de484aa1ef6e45e3a63b2, type: 3}
-  - {fileID: 8300000, guid: 240d21a4707f2514bb8f36e3ceb453b8, type: 3}
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!82 &228368351
 AudioSource:
@@ -2381,7 +2371,8 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: c58899cf9ae031c4b811933341c846da, type: 3}
 --- !u!95 &1464702361
 Animator:
   serializedVersion: 5

@@ -108,6 +108,7 @@ public class SavingLoadingTestValueReadAndWrite
         List<(int, List<Question>)> askedQuestions = new List<(int, List<Question>)>();
         List<(int, List<Question>)> remainingQuestions = new List<(int, List<Question>)>();
         List<(int, string)> characterNotes = new List<(int, string)>();
+        List<(int,bool)> charactersGreeted = new List<(int,bool)>();
         
         foreach (int characterId in currentCharacters)
         {
@@ -128,6 +129,7 @@ public class SavingLoadingTestValueReadAndWrite
             askedQuestions.Add((characterId, asked));
             remainingQuestions.Add((characterId, remaining));
             characterNotes.Add((characterId, RandS(128)));
+            charactersGreeted.Add((characterId, (asked.Count > 0)));
             
             numQuestionsAsked += asked.Count;
         }
@@ -141,7 +143,8 @@ public class SavingLoadingTestValueReadAndWrite
             remainingQuestions = remainingQuestions.ToArray(),
             personalNotes = RandS(128),
             numQuestionsAsked = numQuestionsAsked,
-            characterNotes = characterNotes.ToArray()
+            characterNotes = characterNotes.ToArray(),
+            charactersGreeted = charactersGreeted.ToArray()
         };
         
         return saveData;
@@ -174,6 +177,12 @@ public class SavingLoadingTestValueReadAndWrite
         Assert.AreEqual(item1.Item2, item2.Item2, msg + ": characterNotes");
     }
     
+    private void CompareBoolTuple((int, bool) item1, (int, bool) item2, string msg)
+    {
+        Assert.AreEqual(item1.Item1, item2.Item1, msg + ": characterID");
+        Assert.AreEqual(item1.Item2, item2.Item2, msg + ": talkedTo");
+    }
+    
     private void CompareSaveData(SaveData sd1, SaveData sd2, string msg)
     {
         Assert.AreEqual(sd1.storyId, sd2.storyId, msg + ":storyId");
@@ -185,6 +194,7 @@ public class SavingLoadingTestValueReadAndWrite
         Assert.AreEqual(sd1.personalNotes, sd2.personalNotes, msg + ":personalNotes");
         ListEquals(sd1.characterNotes, sd2.characterNotes, msg + ":characterNotes", CompareStringTuple);
         Assert.AreEqual(sd1.numQuestionsAsked, sd2.numQuestionsAsked, msg + ":numQuestionsAsked");
+        ListEquals(sd1.charactersGreeted, sd2.charactersGreeted, msg + ":charactersGreeted", CompareBoolTuple);
     }
     
     
