@@ -29,7 +29,7 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
         else
         {
             string message = "Searching for another player. Please wait.";
-            doPopup.Raise(this, message, false);
+            doPopup.Raise(this, message, "Notification", false);
         }
     }
     
@@ -40,7 +40,7 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
         else
         {
             string message = "You've received a notebook! Go take a look!";
-            doPopup.Raise(this, message, true);
+            doPopup.Raise(this, message, "Notification", true);
         }
     }
     

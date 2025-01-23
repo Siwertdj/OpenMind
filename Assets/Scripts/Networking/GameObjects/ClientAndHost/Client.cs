@@ -249,17 +249,15 @@ public class Client : NetworkObject
             Debug.LogError("No popup for error handling was initialised");
         else
         {
-            doPopup.Raise(this, error, true);
-            if(multiplayerState == MultiplayerState.Infant)
-                reactivateJoinButton();
+            doPopup.Raise(this, error, "Error", true);
+            reactivateJoinButton();
         }
     }
 
     private void DebugError(string error)
     {
         DebugLog(error);
-        if(multiplayerState == MultiplayerState.Infant)
-            reactivateJoinButton();
+        reactivateJoinButton();
     }
 
     private void DebugLog(string message)
