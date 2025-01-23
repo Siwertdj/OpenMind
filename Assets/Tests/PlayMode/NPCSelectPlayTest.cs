@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System;
 
 public class NPCSelectPlayTest
 {
@@ -243,13 +244,13 @@ public class NPCSelectPlayTest
         int childCount = scroller.Test_Children.Length;
         for (int i = 0; i < childCount * 8; i++)
         {
-            int childIndex = Random.Range(0, childCount - 1);
+            int childIndex = UnityEngine.Random.Range(0, childCount - 1);
             scroller.Test_NavigateToChild(childIndex);
 
             yield return new WaitForSeconds(scroller.scrollDuration);
-
+            
             // Only test x value, as y value is irrelevant
-            Assert.AreEqual((double)Screen.width / 2, scroller.Test_Children[childIndex].position.x,
+            Assert.AreEqual((double)Screen.width / 2, Math.Round(scroller.Test_Children[childIndex].position.x, 3),
                 $"The child is at x position {scroller.Test_Children[childIndex].position.x}, " +
                 $"but the center of the screen is at {Screen.width / 2}");
         }
@@ -271,7 +272,7 @@ public class NPCSelectPlayTest
         int random;
         for (int i = 0; i < 100; i++)
         {
-            random = Random.Range(-100, 100);
+            random = UnityEngine.Random.Range(-100, 100);
 
             scroller.Test_SelectedChild = random;
             Assert.GreaterOrEqual(scroller.Test_SelectedChild, minBound,

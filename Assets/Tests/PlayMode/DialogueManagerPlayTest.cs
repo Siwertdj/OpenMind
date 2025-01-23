@@ -31,9 +31,6 @@ public class DialogueManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
@@ -62,7 +59,7 @@ public class DialogueManagerPlayTest
         while (!SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
         {
             dm.OnDialogueComplete();
-            yield return new WaitForSeconds(1);
+            yield return null;
         }
         
         // Start dialogue scene.
@@ -86,8 +83,8 @@ public class DialogueManagerPlayTest
     public void TearDown()
     {
         // Move toolbox and DDOLs to Loading to unload
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneAt(1));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneAt(1));
 
         SceneController.sc.UnloadAdditiveScenes();
     }
@@ -204,7 +201,7 @@ public class DialogueManagerPlayTest
         while (GameObject.Find("backButton") == null)
         {
             dm.OnDialogueComplete();
-            yield return new WaitForSeconds(1);
+            yield return null;
         }
         
         // Check if we are currently in the gameState NpcDialogue

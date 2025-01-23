@@ -29,9 +29,6 @@ public class EpilogueManagerPlayTests
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -120,9 +117,13 @@ public class EpilogueManagerPlayTests
     /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
     /// gets removed before a new test starts.
     /// </summary>
-    [TearDown]
-    public void TearDown()
+    [UnityTearDown]
+    public IEnumerator TearDown()
     {
+        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+        yield return null;
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("EpilogueScene"));
+        
         // Move all toolboxes so that they can be unloaded.
         var toolBoxes = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
         foreach (GameObject obj in toolBoxes) 
@@ -132,7 +133,7 @@ public class EpilogueManagerPlayTests
         var DDOLs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "DDOLs");
         foreach (GameObject obj in DDOLs) 
             GameObject.Destroy(obj);
-
+        
         SceneController.sc.UnloadAdditiveScenes();
     }
     

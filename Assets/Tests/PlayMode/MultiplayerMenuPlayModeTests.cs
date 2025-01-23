@@ -2,10 +2,11 @@
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
+using Assert = UnityEngine.Assertions.Assert;
 
 public class MultiplayerMenuPlayTests : MonoBehaviour
 {
@@ -23,28 +24,41 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
         mm = GameObject.Find("MultiplayerMenuManager").GetComponent<MultiplayerMenuManager>();
     }
     
+    [TearDown]
+    public void Teardown()
+    {
+        SceneManager.MoveGameObjectToScene(GameObject.Find("MultiplayerManager"), 
+            SceneManager.GetSceneAt(0));
+        
+        Destroy(GameObject.Find("MultiplayerManager"));
+        Destroy(GameObject.Find("Canvas"));
+        Destroy(GameObject.Find("MultiplayerMenuManager"));
+        
+        if (SceneManager.GetSceneByName("SettingsScene").isLoaded)
+            SceneManager.UnloadSceneAsync("SettingsScene");
+    }
+    
     #endregion
 
 
     /// <summary>
     /// Tests if the menu starts up correctly.
     /// </summary>
-    [UnityTest]
-    public IEnumerator MultiplayerStartTest()
+    [Test]
+    public void MultiplayerStartTest()
     {
         // check if the correct canvas is active
         Assert.IsTrue(GameObject.Find("MultiplayerMenuOptions").activeSelf);
         Assert.IsNull(GameObject.Find("HostMenuOptions"));
         Assert.IsNull(GameObject.Find("JoinMenuOptions"));
         Assert.IsNull(GameObject.Find("ChooseStory"));
-        yield return null;
     }
 
     /// <summary>
     /// tests if the host menu is loaded correctly.
     /// </summary>
-    [UnityTest]
-    public IEnumerator HostGameTest()
+    [Test]
+    public void HostGameTest()
     {
         mm.OpenHostMenu();
         // check if the correct canvas is active
@@ -52,14 +66,13 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
         Assert.IsTrue(GameObject.Find("HostMenuOptions").activeSelf);
         Assert.IsNull(GameObject.Find("JoinMenuOptions"));
         Assert.IsNull(GameObject.Find("ChooseStory"));
-        yield return null;
     }
     
     /// <summary>
     /// tests if the join menu is loaded correctly
     /// </summary>
-    [UnityTest]
-    public IEnumerator JoinGameTest()
+    [Test]
+    public void JoinGameTest()
     {
         mm.OpenJoinMenu();
         // check if the correct canvas is active
@@ -67,14 +80,13 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
         Assert.IsNull(GameObject.Find("HostMenuOptions"));
         Assert.IsTrue(GameObject.Find("JoinMenuOptions").activeSelf);
         Assert.IsNull(GameObject.Find("ChooseStory"));
-        yield return null;
     }
     
     /// <summary>
     /// Tests if the choose story menu is loaded correctly.
     /// </summary>
-    [UnityTest]
-    public IEnumerator ChooseStoryTest()
+    [Test]
+    public void ChooseStoryTest()
     {
         mm.OpenHostMenu();
         mm.CreateAsHost();
@@ -83,7 +95,6 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
         Assert.IsNull(GameObject.Find("HostMenuOptions"));
         Assert.IsNull(GameObject.Find("JoinMenuOptions"));
         Assert.IsTrue(GameObject.Find("ChooseStory").activeSelf);
-        yield return null;
     }
 
     /// <summary>
@@ -94,7 +105,7 @@ public class MultiplayerMenuPlayTests : MonoBehaviour
     {
         mm.OpenSettings();
         yield return new WaitUntil(() => SceneManager.GetSceneByName("SettingsScene").isLoaded);
-        var s = SceneManager.GetActiveScene();
+        yield return null;
         
         Assert.IsTrue(SceneManager.GetSceneByName("SettingsScene").isLoaded);
         yield return null;

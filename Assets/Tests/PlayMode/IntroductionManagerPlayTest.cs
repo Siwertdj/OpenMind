@@ -28,9 +28,6 @@ public class IntroductionManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-        
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -39,7 +36,7 @@ public class IntroductionManagerPlayTest
        
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
         
-        SceneManager.LoadScene("IntroStoryScene");
+        SceneManager.LoadScene("IntroStoryScene", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
         
         im = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
@@ -53,7 +50,7 @@ public class IntroductionManagerPlayTest
             SceneManager.GetSceneByName("IntroStoryScene"));
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"),
             SceneManager.GetSceneByName("IntroStoryScene"));
-
+        
         SceneController.sc.UnloadAdditiveScenes();
     }
     
