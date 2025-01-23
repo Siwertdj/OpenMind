@@ -249,7 +249,7 @@ public class Client : NetworkObject
             Debug.LogError("No popup for error handling was initialised");
         else
         {
-            doPopup.Raise(this, error, new Color(0,0,0));
+            doPopup.Raise(this, error, true);
             if(multiplayerState == MultiplayerState.Infant)
                 reactivateJoinButton();
         }

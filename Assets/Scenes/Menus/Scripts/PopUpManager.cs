@@ -17,33 +17,36 @@ public class PopUpManager : MonoBehaviour
 
     public void OpenPopUp(Component sender, params object[] data)
     {
-        startTime = DateTime.Now;
-        
+        // set popup text
         string text = "no text found.";
         if (data[0] is string) 
             text = (string)data[0];
         popUpText.text = text;
-
-        if (data.Length > 1 && data[1] is Color)
-        {
-            Color color = (Color)data[1];
-            color.a = 0.75f; 
-            background.GetComponentInChildren<Image>().color = color;
-        }
         
-        if (data.Length > 2)
-        {
-            closeOnReceivedNotebook = true;
-            popUpButtonCanvas.SetActive(false);
-            popUpTitleText.text = "Notification";
-        }
-        else
-        {
-            closeOnReceivedNotebook = false;
-            popUpButtonCanvas.SetActive(true);
-            popUpTitleText.text = "Error";
-        }
+        // set background color and opacity
+        Color color = new Color(0,0,0, 0.9f);
+        background.GetComponentInChildren<Image>().color = color;
         
+        // set popup type
+        if (data.Length > 1)
+        {
+            if ((bool)data[1])
+            {
+                // popup with button
+                closeOnReceivedNotebook = false;
+                popUpButtonCanvas.SetActive(true);
+                popUpTitleText.text = "Error";
+                startTime = DateTime.Now;
+            }
+            else
+            {
+                // popup without button, closes when notebook is received
+                closeOnReceivedNotebook = true;
+                popUpButtonCanvas.SetActive(false);
+                popUpTitleText.text = "Notification";
+            }
+            
+        }
         popUpCanvas.enabled = true;
     }
 
