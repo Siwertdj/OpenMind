@@ -414,7 +414,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1 &213787016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1539,7 +1543,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1 &732030172
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,7 +1866,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1 &1107247795
 GameObject:
   m_ObjectHideFlags: 0
@@ -2144,7 +2156,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1 &1151966900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,7 +3073,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1001 &1634323372
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3567,7 +3587,11 @@ MonoBehaviour:
         m_CallState: 2
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1001 &1793050728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3786,7 +3810,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1 &1844896266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4348,7 +4376,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1001 &4358358068967190807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4567,7 +4599,11 @@ MonoBehaviour:
       m_Calls: []
   gameEvent: {fileID: 11400000, guid: 76b575bfff6770a4ba05d97387d687ca, type: 2}
   audioEnabled: 1
-  audioClips: []
+  audioClips:
+  - {fileID: 8300000, guid: ddde8c38b17c64248a2eb664480b2170, type: 3}
+  - {fileID: 8300000, guid: 5ca2f22537cfdeb4eaf22e995f1bde02, type: 3}
+  - {fileID: 8300000, guid: e454831426885be4495409c6f38bcf4e, type: 3}
+  - {fileID: 8300000, guid: 1928b200f2ae8054482ce0da5acfeae0, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
