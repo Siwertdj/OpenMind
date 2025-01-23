@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
             c.isCulprit = saveData.culpritId == c.id;
 
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            c.talkedTo = saveData.charactersGreeted.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
@@ -213,8 +214,9 @@ public class GameManager : MonoBehaviour
     {
         // Populate the list of characters, unless its empty and contains a culprit
         // (It could be instantiated if the game was restarted)
-        if (currentCharacters.Count == 0 || 
-            (currentCharacters.Count > 0 && currentCharacters.Any(c => c.isCulprit)))
+        if (!(currentCharacters.Count > 0 && 
+              currentCharacters.All(c => c.isActive) && 
+              currentCharacters.Any(c => c.isCulprit)))
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
