@@ -19,6 +19,10 @@ public class CreditManager : MonoBehaviour
         button.interactable = true;
     }
 
+
+    /// <summary>
+    /// Calls DoCredits to animate credits crolling through screen
+    /// </summary>
     public Task ScrollCredits()
     {
         var tcs = new TaskCompletionSource<bool>();
@@ -33,6 +37,9 @@ public class CreditManager : MonoBehaviour
         return tcs.Task;
     }
 
+    /// <summary>
+    /// Starts animation Coroutine by calling AnimateScroll
+    /// </summary>
     public void DoCredits(float creditStartY, float creditEndY, float thanksStartY, float thanksEndY, TaskCompletionSource<bool> tcs = null)
     {
         StartCoroutine(AnimateScroll(duration, creditStartY, creditEndY, thanksStartY, thanksEndY, tcs));
@@ -49,10 +56,12 @@ public class CreditManager : MonoBehaviour
         {
             time += Time.deltaTime;
 
+            // calc new y offset and set new credits position
             float y = (creditEndY - creditStartY) * (time / duration);
             creditTransform.position = new Vector2(creditTransform.position.x, creditStartY + y);
-
-            Debug.Log(thanksTransform.position.y < thanksEndY);
+            
+            // only giving offset to thanksTranform if it has not reached the middle of the screen
+            // so it stops in the middle of the screen while the rest of the credits continue
             if (thanksTransform.position.y < thanksEndY)
             {
                 thanksTransform.position = new Vector2(thanksTransform.position.x, thanksStartY + y);
