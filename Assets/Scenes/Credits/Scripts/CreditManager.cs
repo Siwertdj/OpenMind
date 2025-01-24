@@ -30,7 +30,7 @@ public class CreditManager : MonoBehaviour
         float creditStartY = creditTransform.position.y;
         float creditEndY = Screen.height + creditTransform.rect.height / 2;
         float thanksStartY = thanksTransform.position.y;
-        float thanksEndY = Screen.height / 2f;
+        float thanksEndY = Screen.height * 0.75f;
 
         DoCredits(creditStartY, creditEndY, thanksStartY, thanksEndY, tcs);
 
