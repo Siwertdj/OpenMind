@@ -268,7 +268,7 @@ public class DataSender : DataNetworker
     private void CheckForTimeouts()
     {
         List<AcknowledgementTime> timeouts =
-            acknowledgementTimes.FindAll(ackt => ackt.HasTimedOut());
+            acknowledgementTimes.FindAll(ackt => ackt is not null && ackt.HasTimedOut());
 
         foreach (var acknowledgementTime in timeouts)
         {
