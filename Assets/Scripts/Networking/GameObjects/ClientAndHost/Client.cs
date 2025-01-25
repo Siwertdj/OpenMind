@@ -112,7 +112,6 @@ public class Client : NetworkObject
         else
             DisplayError("You got disconnected from the host, please check whether you and the host are connected to the internet.");
         isConnected = false;
-            
     }
     
     private void ConnectionTimeoutError(object o)
@@ -125,6 +124,7 @@ public class Client : NetworkObject
             DebugLog("connection timeout");
             if (currentReconnectAttempt >= maxReconnectAttempts)
             {
+                isConnected = false;
                 if (settings.IsDebug)
                     DebugError($"(Client): No reconnects were made after attempt {currentReconnectAttempt}.");
                 else
@@ -191,9 +191,12 @@ public class Client : NetworkObject
     {
         if (!isConnected)
         {
+            DisplayError("Can't exchange notebook data because you are not connected.");
             resendNotebook = () => SendNotebookData(response, notebookData, currentCharacters);
             return;
         }
+        
+        DisplayWaitNotebook();
         
         this.response = response;
         activeCharacters = currentCharacters;
@@ -201,8 +204,6 @@ public class Client : NetworkObject
         
         if (settings.IsDebug)
             AddAdditionalDebugMessagesNotebook();
-        
-        DisplayWaitNotebook();
         
         sender.AddOnDataSentEvent(settings.NotebookDataSignature, ConfirmNotebookSent);
         sender.AddOnAckTimeoutEvent(settings.NotebookDataSignature, AcknowledgementTimeoutError);
@@ -240,7 +241,8 @@ public class Client : NetworkObject
     /// </summary>
     private void AcknowledgementTimeoutError(object o)
     {
-        DisplayError("Failed to sent a message to the host, please check whether you and the host are connected to the internet.");
+        DisplayError(
+            "Failed to sent a message to the host, please check whether you and the host are connected to the internet.");
     }
     
     private void DisplayError(string error)
@@ -249,17 +251,15 @@ public class Client : NetworkObject
             Debug.LogError("No popup for error handling was initialised");
         else
         {
-            doPopup.Raise(this, error, new Color(0,0,0));
-            if(multiplayerState == MultiplayerState.Infant)
-                reactivateJoinButton();
+            doPopup.Raise(this, error, "Error", true);
+            reactivateJoinButton();
         }
     }
 
     private void DebugError(string error)
     {
         DebugLog(error);
-        if(multiplayerState == MultiplayerState.Infant)
-            reactivateJoinButton();
+        reactivateJoinButton();
     }
 
     private void DebugLog(string message)
@@ -315,6 +315,10 @@ public class Client : NetworkObject
     /// </summary>
     public override void Dispose()
     {
-        sender?.Dispose();
+        if (sender != null)
+        {
+            sender.StopListeningForResponses();
+            sender.Dispose();
+        }
     }
 }

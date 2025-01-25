@@ -1,7 +1,6 @@
 // This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 
-
 using System;
 using System.Net;
 using UnityEngine;
@@ -29,7 +28,7 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
         else
         {
             string message = "Searching for another player. Please wait.";
-            doPopup.Raise(this, message, new Color(0,0,0), true);
+            doPopup.Raise(this, message, "Notification", false);
         }
     }
     
@@ -39,8 +38,8 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
             Debug.LogError("No popup for error handling was initialised");
         else
         {
-            string message = "You've received a notebook! Go take a look!";
-            doPopup.Raise(this, message, new Color(0,0,0));
+            string message = "You've received someone else's notebook! Go take a look. It might change your mind on who the culprit is...";
+            doPopup.Raise(this, message, "Notification", true);
         }
     }
     
@@ -50,4 +49,6 @@ public abstract class NetworkObject : MonoBehaviour//, IDisposable
     {
         Dispose();
     }
+    
+    
 }

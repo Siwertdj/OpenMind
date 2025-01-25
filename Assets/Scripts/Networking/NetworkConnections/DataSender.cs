@@ -204,6 +204,11 @@ public class DataSender : DataNetworker
                             foreach (var networkPackage in networkData)
                                 HandleReceivedData(networkPackage, clearResponseEvents);
                         }
+                        catch (AggregateException e)
+                        {
+                            Debug.Log("Client: " + e);
+                            onDisconnectedEvents.Raise("Disconnect", null, true, "onDisconnectedEvents");
+                        }
                         catch (Exception e)
                         {
                             logError = "Receiving message failed with error: " + e;
@@ -245,7 +250,7 @@ public class DataSender : DataNetworker
                 logError = onAckReceievedEvents.Raise(signature,
                     receivedTailPackages[0].GetData<string>(), clearResponseEvents, "onAckReceivedEvent");
                 
-                Debug.Log($"Received ack: {receivedTailPackages[0].GetData<string>()}");
+                //Debug.Log($"Received ack: {receivedTailPackages[0].GetData<string>()}");
                 
                 acknowledgementTimes.RemoveAll(ackt => ackt.Signature == receivedTailPackages[0].GetData<string>());
             }

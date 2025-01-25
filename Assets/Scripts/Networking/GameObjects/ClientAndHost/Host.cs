@@ -318,6 +318,11 @@ public class Host : NetworkObject
     /// </summary>
     public override void Dispose()
     {
-        listener?.Dispose();
+        if (listener != null)
+        {
+            listener.CancelListeningForConnections();
+            listener.CancelListeningForData();
+            listener.Dispose();
+        }
     }
 }
