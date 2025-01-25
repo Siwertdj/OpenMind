@@ -178,6 +178,7 @@ public class NPCSelectScroller : MonoBehaviour
 
         var startPos = scrollable.localPosition;
         var endPos = GetTargetPos(childIndex);
+        
 
         // This loop containts the actual movement code
         while (time < scrollDuration)
@@ -192,7 +193,7 @@ public class NPCSelectScroller : MonoBehaviour
 
             yield return null;
         }
-        
+
         OnCharacterSelected.Invoke();
         isNavigating = false;
     }
