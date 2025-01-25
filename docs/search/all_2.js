@@ -55,8 +55,9 @@ var searchData=
   ['createpage_52',['CreatePage',['../classNotebookManager.html#afb8246ce97eb02e0899ccb43f5ccf68a',1,'NotebookManager']]],
   ['createpersonalpage_53',['CreatePersonalPage',['../classNotebookManager.html#a43250010636097e631de81269abb1b75',1,'NotebookManager']]],
   ['createsavedata_54',['CreateSaveData',['../classSavingLoadingTestValueReadAndWrite.html#a36b1de7a5546eb22be16a4888b34507f',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['csetuptest_55',['CSetUpTest',['../classIntroductionManagerPlayTest.html#a158350597e5a383e445e300f7df7bf12',1,'IntroductionManagerPlayTest']]],
-  ['culpritselectepiloguetransition_56',['CulpritSelectEpilogueTransition',['../classEpilogueManagerPlayTests.html#ac14d1115dbf77f2a87289fceb0cf5f47',1,'EpilogueManagerPlayTests']]],
-  ['customgameevent_57',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
-  ['cycletransition_58',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
+  ['creditmanager_55',['CreditManager',['../classCreditManager.html',1,'']]],
+  ['csetuptest_56',['CSetUpTest',['../classIntroductionManagerPlayTest.html#a158350597e5a383e445e300f7df7bf12',1,'IntroductionManagerPlayTest']]],
+  ['culpritselectepiloguetransition_57',['CulpritSelectEpilogueTransition',['../classEpilogueManagerPlayTests.html#ac14d1115dbf77f2a87289fceb0cf5f47',1,'EpilogueManagerPlayTests']]],
+  ['customgameevent_58',['CustomGameEvent',['../classCustomGameEvent.html',1,'']]],
+  ['cycletransition_59',['CycleTransition',['../classGameManager.html#ae6fbb9d157a3cbd07f66219461650773',1,'GameManager']]]
 ];

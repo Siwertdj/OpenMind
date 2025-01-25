@@ -25,7 +25,8 @@ var searchData=
   ['disableselectionbutton_22',['DisableSelectionButton',['../classSelectionManager.html#aae52b59951a6abb7bcf6c1800a47edca',1,'SelectionManager']]],
   ['displayanydebugs_23',['DisplayAnyDebugs',['../classNetworkDebugger.html#ae55ba333f6a90ed337b6170a75bb1365',1,'NetworkDebugger']]],
   ['dispose_24',['Dispose',['../classClient.html#a3cbc8f7f974bdeb39824c410cae1c8d8',1,'Client.Dispose()'],['../classHost.html#a58ca82168a689363edbf030ceaaa739a',1,'Host.Dispose()'],['../classDataNetworker.html#ae0c6762cb554aa8f02f2940ef31e4aeb',1,'DataNetworker.Dispose()']]],
-  ['doescurrentsavefilework_25',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
-  ['doessavefilelocationexist_26',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]],
-  ['doesuserdatafilelocationexist_27',['DoesUserDataFileLocationExist',['../classFilePathConstants.html#abc6883a3f908b6ebfb501fb3e80288c5',1,'FilePathConstants']]]
+  ['docredits_25',['DoCredits',['../classCreditManager.html#a019d5a696192e8ffe8d9b5423e91df97',1,'CreditManager']]],
+  ['doescurrentsavefilework_26',['DoesCurrentSaveFileWork',['../classSavingLoadingTestValueReadAndWrite.html#a85793e180ee5659e60fc0b25adfffb66',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['doessavefilelocationexist_27',['DoesSaveFileLocationExist',['../classFilePathConstants.html#ac374beda3eb7f2656bc353d8bff9bf17',1,'FilePathConstants']]],
+  ['doesuserdatafilelocationexist_28',['DoesUserDataFileLocationExist',['../classFilePathConstants.html#abc6883a3f908b6ebfb501fb3e80288c5',1,'FilePathConstants']]]
 ];
