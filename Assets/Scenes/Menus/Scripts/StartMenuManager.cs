@@ -126,4 +126,9 @@ public class StartMenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("MultiplayerScreenScene", LoadSceneMode.Additive);
     }
+
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("CreditsScene", LoadSceneMode.Additive);
+    }
 }
