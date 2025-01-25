@@ -156,20 +156,14 @@ public class MultiplayerManager : MonoBehaviour
     
     /// <summary>
     /// Destroy the socket and host/client.
+    /// If
     /// </summary>
-    public void KillMultiplayer()
+    public void KillMultiplayer(bool destroyMultiplayerManager = false)
     {
-        if (client != null)
-        {
-            client.Dispose();
-            Destroy(client);
-        }
-
-        if (host != null)
-        {
-            host.Dispose();
-            Destroy(host);
-        }
+        client?.Dispose();
+        host?.Dispose();
         
+        if(destroyMultiplayerManager)
+            Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
     }
 }

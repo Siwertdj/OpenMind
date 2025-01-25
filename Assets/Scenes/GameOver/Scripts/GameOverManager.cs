@@ -90,10 +90,7 @@ public class GameOverManager : MonoBehaviour
         // TODO: All DDOL-objects should not duplicate
 
         if (MultiplayerManager.mm)
-        {
-            MultiplayerManager.mm.KillMultiplayer();
-            Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
-        }
+            MultiplayerManager.mm.KillMultiplayer(true);
     }
     
     /// <summary>

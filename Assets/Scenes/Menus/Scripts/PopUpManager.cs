@@ -7,36 +7,42 @@ using UnityEngine.UI;
 
 public class PopUpManager : MonoBehaviour
 {
-    public  Button          closePopUp;
     public  Canvas          popUpCanvas;
+    public  GameObject      popUpButtonCanvas;
+    public  TextMeshProUGUI popUpTitleText;
     public  TextMeshProUGUI popUpText;
+    public  Image           background;
     private DateTime        startTime;
-    private bool closeOnReceivedNotebook;
+    private bool            closeOnReceivedNotebook;
 
     public void OpenPopUp(Component sender, params object[] data)
     {
-        startTime = DateTime.Now;
-        
+        // set popup text
         string text = "no text found.";
         if (data[0] is string) 
             text = (string)data[0];
         popUpText.text = text;
-
-        if (data.Length > 1 && data[1] is Color)
+        
+        // set background color and opacity
+        Color color = new Color(0,0,0, 0.9f);
+        background.GetComponentInChildren<Image>().color = color;
+        
+        // set popup title
+        popUpTitleText.text = (string)data[1];
+        
+        // set popup type
+        if ((bool)data[2])
         {
-            Color color = (Color)data[1];
-            color.a = 0.8f;
-            closePopUp.GetComponentInChildren<Image>().color = color;
-        }
-        if (data.Length > 2)
-        {
-            closeOnReceivedNotebook = true;
-            closePopUp.interactable = false;
+            // popup with button
+            closeOnReceivedNotebook = false;
+            popUpButtonCanvas.SetActive(true);
+            startTime = DateTime.Now;
         }
         else
         {
-            closeOnReceivedNotebook = false;
-            closePopUp.interactable = true;
+            // popup without button, closes when another notebook has been received
+            closeOnReceivedNotebook = true;
+            popUpButtonCanvas.SetActive(false);
         }
         
         popUpCanvas.enabled = true;
@@ -44,12 +50,12 @@ public class PopUpManager : MonoBehaviour
 
     public void ClosePopUp() 
     {
-        // Make sure the player doesn't accidentally click the popup away before reading it.
-        if (!closeOnReceivedNotebook && DateTime.Now.Subtract(startTime).Seconds >= 2)
+        // make sure the player doesn't accidentally click the popup away before reading it.
+        if (!closeOnReceivedNotebook && DateTime.Now.Subtract(startTime).Seconds >= 1)
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;
-            closePopUp.interactable = false;
+            popUpButtonCanvas.SetActive(false);
         }
     }
 
@@ -59,7 +65,7 @@ public class PopUpManager : MonoBehaviour
         {
             popUpText.text = string.Empty;
             popUpCanvas.enabled = false;
-            closePopUp.interactable = false;
+            popUpButtonCanvas.SetActive(false);
         }
     }
 }

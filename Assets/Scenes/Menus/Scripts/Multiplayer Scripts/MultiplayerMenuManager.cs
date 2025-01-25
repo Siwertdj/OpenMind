@@ -41,8 +41,7 @@ public class MultiplayerMenuManager : MonoBehaviour
     public void ReturnMain()
     {
         SceneManager.UnloadSceneAsync("MultiplayerScreenScene");
-        MultiplayerManager.mm.KillMultiplayer();
-        Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
+        MultiplayerManager.mm.KillMultiplayer(true);
     }
     
     /// <summary>
@@ -165,7 +164,6 @@ public class MultiplayerMenuManager : MonoBehaviour
     
     public void Update()
     {
-        
         if (lobbyCanvas.activeInHierarchy)
         {
             code.text = classCode;
