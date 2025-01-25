@@ -28,16 +28,14 @@ public class SavingLoadingTestValueReadAndWrite
 
     /// <summary>
     /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
+    /// Note: the repeat attribute only calls SetUp and TearDown after every function, but not UnitySetUp nor UnityTearDown,
+    /// this is why this SetUp function is called in every test instead of having a [UnitySetUp] attribute
     /// </summary>
-    [UnitySetUp]
     private IEnumerator SetUp()
     {
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
 
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
@@ -63,6 +61,8 @@ public class SavingLoadingTestValueReadAndWrite
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
         SceneController.sc.UnloadAdditiveScenes();
+        GameObject.Destroy(GameObject.Find("DDOLs"));
+        GameObject.Destroy(GameObject.Find("Toolbox"));
     }
     
     private bool RandB() => RandI(2) == 0;
@@ -201,9 +201,10 @@ public class SavingLoadingTestValueReadAndWrite
     /// <summary>
     /// Tests whether saving and loading a SaveData object returns the same object
     /// </summary>
-    [Test]
-    public void SavingLoadingDoesNotChangeContents()
+    [UnityTest]
+    public IEnumerator SavingLoadingDoesNotChangeContents()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
         saving.SaveGame(saveData);
         SaveData loaded = loading.GetSaveData();
@@ -214,9 +215,10 @@ public class SavingLoadingTestValueReadAndWrite
     /// <summary>
     /// Tests whether loading a SaveData object into the gamemanager returns no errors
     /// </summary>
-    [Test]
-    public void LoadingIntoGamemanagerReturnsNoErrors()
+    [UnityTest]
+    public IEnumerator LoadingIntoGamemanagerReturnsNoErrors()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
         GameManager.gm.StartGame(null, saveData);
     }
@@ -224,23 +226,22 @@ public class SavingLoadingTestValueReadAndWrite
     /// <summary>
     /// Tests whether retrieving a SaveData object from the gamemanager returns no errors
     /// </summary>
-    [Test]
-    public void RetrievingFromGamemanagerReturnsNoErrors()
+    [UnityTest]
+    public IEnumerator RetrievingFromGamemanagerReturnsNoErrors()
     {
+        yield return SetUp();
         saving.CreateSaveData();
     }
     
     /// <summary>
     /// Tests whether saving and loading repeatedly does nothing to change the savedata or the gamestate
     /// </summary>
-    //TODO: THIS TEST FREEZES THE TEST RUNNER, WE NEED TO FIX THIS
-    //[UnityTest]
-    [Repeat(75)]
+    [UnityTest]
+    [Repeat(10)]
     public IEnumerator SavingLoadingDoesNotChangeGameState()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
-
-        
         
         for (int i = 0; i < 5; i++)
         {
@@ -268,6 +269,7 @@ public class SavingLoadingTestValueReadAndWrite
     [UnityTest]
     public IEnumerator DoesCurrentSaveFileWork()
     {
+        yield return SetUp();
         //if the file doesn't exist, we can't test it
         if (File.Exists(FilePathConstants.GetSaveFileLocation()))
         {

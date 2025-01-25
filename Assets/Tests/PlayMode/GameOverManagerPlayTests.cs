@@ -28,9 +28,6 @@ public class GameOverManagerPlayTests
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -76,12 +73,13 @@ public class GameOverManagerPlayTests
         // Move all toolboxes so that they can be unloaded.
         var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
         foreach (GameObject obj in objects)
-            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
+            SceneManager.MoveGameObjectToScene(obj, SceneManager.GetSceneAt(1));
 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneAt(1));
 
         // Unload the additive scenes.
         SceneController.sc.UnloadAdditiveScenes();
+
     }
     
     /// <summary>
@@ -98,6 +96,7 @@ public class GameOverManagerPlayTests
         gom.Restart();
 
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+        SceneManager.UnloadSceneAsync("Loading");
         
         // Get the new GameManager.
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -105,6 +104,9 @@ public class GameOverManagerPlayTests
         // Check if the new list has the same amount of characters as before.
         bool actual = gm.currentCharacters.Count(c => c.isActive) == charactersPrior.Count();
         Assert.IsTrue(actual);
+        
+        //wait until the scene is loaded, only after will the gamestate be updated
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         
         // Check if we are in the NpcSelect gameState and if the following 2 scenes exist,
         // namely NpcSelectScene and Loading.
@@ -129,6 +131,7 @@ public class GameOverManagerPlayTests
         gom.Retry();
         
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
+        SceneManager.UnloadSceneAsync("Loading");
         
         // Get the new GameManager.
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -148,12 +151,13 @@ public class GameOverManagerPlayTests
         // Check if the bool hasSameCharacters returns true.
         Assert.IsTrue(hasSameCharacters);
 
+        //wait until the scene is loaded, only after will the gamestate be updated
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+        
         // Check if we are in the NpcSelect gameState and if the following 2 scenes exist,
         // namely NpcSelectScene and Loading.
         Assert.AreEqual(GameManager.GameState.NpcSelect, gm.gameState);
         Assert.IsTrue(SceneManager.GetSceneByName("Loading").isLoaded);
         Assert.IsTrue(SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-        
-        yield return null;
     }
 }
