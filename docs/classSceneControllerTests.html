@@ -95,9 +95,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>TearDown</b> ()</td><
 IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>TestSceneGraphReading</b> ([ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController.SceneName</a> sceneName)</td></tr>
 <tr class="memdesc:a8f92423ef5a53f445e9feab489213934"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether the scene graph reading works and no errors are thrown. Also tests whether the right scene gets loaded from <a class="el" href="classSceneController.html#ab554d712d1d0331ca9687fe2140ea46c" title="Function to be called when loading the first cycle.">SceneController.StartScene</a>, since both properties are tested with this method. <br /></td></tr>
 <tr class="separator:a8f92423ef5a53f445e9feab489213934"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac55aadfc0f75ca314242cfbbf903012a"><td class="memItemLeft" align="right" valign="top"><a id="ac55aadfc0f75ca314242cfbbf903012a" name="ac55aadfc0f75ca314242cfbbf903012a"></a>
-IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><b>TestSceneTransitionValidity</b> ([ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController.SceneName</a> from, [ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController.SceneName</a> to, [ValueSource(nameof(transitionTypes))] <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">SceneController.TransitionType</a> tt)</td></tr>
-<tr class="memdesc:ac55aadfc0f75ca314242cfbbf903012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether an invalid scene transition throws an error. Tests whether transitioning from an unloaded scene throws an error. <br /></td></tr>
+<tr class="memitem:ac55aadfc0f75ca314242cfbbf903012a"><td class="memItemLeft" align="right" valign="top">IEnumerator&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classSceneControllerTests.html#ac55aadfc0f75ca314242cfbbf903012a">TestSceneTransitionValidity</a> ([ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController.SceneName</a> from, [ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController.SceneName</a> to, [ValueSource(nameof(transitionTypes))] <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">SceneController.TransitionType</a> tt)</td></tr>
+<tr class="memdesc:ac55aadfc0f75ca314242cfbbf903012a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests whether an invalid scene transition throws an error. Tests whether transitioning from an unloaded scene throws an error.  <br /></td></tr>
 <tr class="separator:ac55aadfc0f75ca314242cfbbf903012a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-methods" name="pri-methods"></a>
@@ -215,6 +214,43 @@ Static Private Attributes</h2></td></tr>
 <li>Initialises Gamemanager.gm.story (through reflection) so loading NPCSelectScene doesn't throw an error</li>
 <li>Initialises Gamemanager.gm.notebookData so loading NotebookScene doesn't throw an error </li>
 </ul>
+
+</div>
+</div>
+<a id="ac55aadfc0f75ca314242cfbbf903012a" name="ac55aadfc0f75ca314242cfbbf903012a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac55aadfc0f75ca314242cfbbf903012a">&#9670;&#160;</a></span>TestSceneTransitionValidity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">IEnumerator SceneControllerTests.TestSceneTransitionValidity </td>
+          <td>(</td>
+          <td class="paramtype">[ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController::SceneName</a>&#160;</td>
+          <td class="paramname"><em>from</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">[ValueSource(nameof(transitionSceneNames))] <a class="el" href="classSceneController.html#a106a2661ff7b984ba0626699ca733078">SceneController::SceneName</a>&#160;</td>
+          <td class="paramname"><em>to</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">[ValueSource(nameof(transitionTypes))] <a class="el" href="classSceneController.html#a54407d7caeef06ce864602241195e8d1">SceneController::TransitionType</a>&#160;</td>
+          <td class="paramname"><em>tt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tests whether an invalid scene transition throws an error. Tests whether transitioning from an unloaded scene throws an error. </p>
+<p>note: from loading to NPCSelect with additive transition and from loading to Notebook with additive transition both fail This is because Gamemanager.gm.currentCharacters is null, but this variable is initialised in the srtup The check where the tests checks if loading from an unloaded scene makes GameManager.gm.currentCharacters null, despite no scenes being loaded or unloaded A comment is placed with this specific piece of code </p>
 
 </div>
 </div>

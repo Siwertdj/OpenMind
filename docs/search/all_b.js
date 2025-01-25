@@ -6,7 +6,7 @@ var searchData=
   ['load_3',['Load',['../classLoad.html',1,'']]],
   ['loadbuttonpressed_4',['LoadButtonPressed',['../classLoad.html#a43525c254bb1c60a598c9ff9a3d78f14',1,'Load']]],
   ['loadgame_5',['LoadGame',['../classGameManager.html#acbc023df6b5cf601f45144d98826471b',1,'GameManager.LoadGame()'],['../classGameMenuManager.html#a20be28a0e0d2f6821e1d2953bccb1511',1,'GameMenuManager.LoadGame()'],['../classStartMenuManager.html#a1a85ab1931347314e6044264a52e8f52',1,'StartMenuManager.LoadGame()'],['../classIntroductionManager.html#a6ece83a30808b105473de643d17fda5b',1,'IntroductionManager.LoadGame()'],['../classSystemTests.html#a59e3b30c568e270147ef55aee6c526b5',1,'SystemTests.LoadGame()']]],
-  ['loadingintogamemanagerreturnsnoerrors_6',['LoadingIntoGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#aca6a42d44cb1a5631491c6850cf23f17',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['loadingintogamemanagerreturnsnoerrors_6',['LoadingIntoGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#a38ce4ea2853ef100d2494728563e66ea',1,'SavingLoadingTestValueReadAndWrite']]],
   ['loadingscreenmanager_7',['LoadingScreenManager',['../classLoadingScreenManager.html',1,'']]],
   ['loadintro_8',['LoadIntro',['../classStorySelectionManager.html#a9c02f89933a85deee1305ef026859ee2',1,'StorySelectionManager']]],
   ['loadscene_9',['LoadScene',['../classSceneController.html#a1886975d0e0ca40771807899dcbbaf3a',1,'SceneController']]],

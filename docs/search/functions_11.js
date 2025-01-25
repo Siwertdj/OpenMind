@@ -16,7 +16,7 @@ var searchData=
   ['responsedialogueobject_13',['ResponseDialogueObject',['../classResponseDialogueObject.html#a75773f64e447fa77ccbb5f82822a3e59',1,'ResponseDialogueObject']]],
   ['restart_14',['Restart',['../classGameOverManager.html#a16d38329b4e8fc2b32e15982b19d26f4',1,'GameOverManager']]],
   ['restartstorytest_15',['RestartStoryTest',['../classGameOverManagerPlayTests.html#a670d2fce37373c3014671d68f1006620',1,'GameOverManagerPlayTests']]],
-  ['retrievingfromgamemanagerreturnsnoerrors_16',['RetrievingFromGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#a2d947008f897b0524196735b2a6e7117',1,'SavingLoadingTestValueReadAndWrite']]],
+  ['retrievingfromgamemanagerreturnsnoerrors_16',['RetrievingFromGamemanagerReturnsNoErrors',['../classSavingLoadingTestValueReadAndWrite.html#ab3ee34e20c207b0d3fe1da8aa7c4760f',1,'SavingLoadingTestValueReadAndWrite']]],
   ['retry_17',['Retry',['../classGameOverManager.html#acfcfa4c551b5a51a99cbf3f7e021ebd7',1,'GameOverManager']]],
   ['retrystorytest_18',['RetryStoryTest',['../classGameOverManagerPlayTests.html#afc71f00dc7069fba85b4cb90c583f281',1,'GameOverManagerPlayTests']]],
   ['returnmain_19',['ReturnMain',['../classMultiplayerMenuManager.html#af1ad34990d7f342d52cbdbd32abeea8f',1,'MultiplayerMenuManager']]],

@@ -14,16 +14,16 @@ public class StorySelectionManagerPlayTest
     
     #region Setup and Teardown
     
+    /// <summary>
+    /// PreCondition: removes all other scenes. Does not allow for DontDestroyOnLoad objects to be active.
+    /// </summary>
     [UnitySetUp]
     public IEnumerator Setup()
     {
         // Load StartScreenScene
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
+        
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -36,37 +36,17 @@ public class StorySelectionManagerPlayTest
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StorySelectScene").isLoaded);
 
         sm = GameObject.Find("StorySelectionManager").GetComponent<StorySelectionManager>();
-
-        /*
-        // Start new test with clean slate. 
-        foreach (var obj in GameObject.FindObjectsOfType<GameObject>())
-        {
-            //Object.DestroyImmediate(obj);
-        }
-        
-        // Load StartScreenScene in order to put the SettingsManager into DDOL
-        SceneManager.LoadScene("StartScreenScene");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-        
-        // Load the "Loading" scene in order to get access to the toolbox in DDOL
-        SceneManager.LoadScene("Loading");
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-        
-        // Initialize GameManager and start the game. 
-        gm = GameObject.Find("GameManager").GetComponent<GameManager>();
-        
-        
-        */
     }
 
+    /// <summary>
+    /// PostCondition: no DDOL objects are active
+    /// </summary>
     [TearDown]
     public void TearDown()
     {
         // Move toolbox and DDOLs to Loading to unload
         GameObject.Destroy(GameObject.Find("Toolbox"));
         GameObject.Destroy(GameObject.Find("DDOLs"));
-
-        SceneController.sc.UnloadAdditiveScenes();
     }
     
     #endregion
@@ -88,16 +68,12 @@ public class StorySelectionManagerPlayTest
     [UnityTest, Order(2)]
     public IEnumerator ChooseStoryATest()
     {
-        Debug.Log("Choosing story A");
         sm.StoryASelected(); // This method also loads the introduction scene.
-        Debug.Log("Chose story A");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("IntroStoryScene").isLoaded);
         // In IntroductionManager the introduction is determined by the StorySelect scene.
         IntroductionManager im = GameObject.Find("IntroductionManager").GetComponent<IntroductionManager>();
         // We therefore check if the loaded introduction is indeed the correct one. 
         Assert.AreEqual(im.introStoryA,im.currentTimeline);
-        //Assert.AreEqual(sm.stories[0].storyID, gm.story.storyID);
-        yield return null;
     }
     
     /// <summary>
