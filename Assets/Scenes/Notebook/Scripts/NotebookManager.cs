@@ -268,6 +268,7 @@ public class NotebookManager : MonoBehaviour
 
         // Set the saved text to the notebook
         inputObjectField.text = notebookData.GetPersonalNotes();
+        inputObjectField.onSelect.AddListener(_ => inputObjectField.MoveTextEnd(false));
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = "Write down your thoughts!";
         
@@ -337,7 +338,8 @@ public class NotebookManager : MonoBehaviour
         
         // Set the notebook text
         inputObjectField.text = notebookData.GetCharacterNotes(currentCharacter);
-        inputObjectField.interactable = !GameManager.gm.multiplayerEpilogue;
+        inputObjectField.onSelect.AddListener(_ => inputObjectField.MoveTextEnd(false)); // On select, move caret to end of text
+        inputObjectField.interactable = !GameManager.gm.multiplayerEpilogue; // Disable editing in multiplayer epilogue
         inputObjectField.placeholder.GetComponentInChildren<TMP_Text>().text
             = notebookData.GetCharacterPlaceholder(currentCharacter);
         

@@ -84,7 +84,6 @@ public class DialogueManager : MonoBehaviour
     {        
         // Change the text size
         characterNameField.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
-        ChangeTextSize();
         
         // Retrieve and set the dialogue object
         if (data[0] is DialogueObject dialogueObject)
@@ -103,6 +102,9 @@ public class DialogueManager : MonoBehaviour
         {
             characterNameField.SetActive(false);
         }
+
+        // Set text size
+        OnTextSizeChanged();
 
         // Add event listener to check when dialogue is complete
         animator.OnDialogueComplete.AddListener(OnDialogueComplete);
@@ -395,7 +397,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     private void OnTextSizeChanged()
     {
-        if (phoneField.activeSelf)
+        if (phoneField.activeInHierarchy)
         {
             // Resize all message boxes
             foreach (var messageBox in phoneField.GetComponentsInChildren<ResizingTextBox>())
@@ -404,6 +406,17 @@ public class DialogueManager : MonoBehaviour
             // Rebuild layout
             foreach (var rectTransform in phoneField.GetComponentsInChildren<RectTransform>())
                 LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        }
+
+        if (dialogueField.activeInHierarchy)
+        {
+            foreach (var text in dialogueField.GetComponentsInChildren<TMP_Text>())
+                text.fontSizeMax = SettingsManager.sm.GetFontSize();
+        }
+
+        if (inputField.activeInHierarchy)
+        {
+            inputField.GetComponentInChildren<TMP_InputField>().pointSize = SettingsManager.sm.GetFontSize();
         }
     }
 
@@ -414,7 +427,9 @@ public class DialogueManager : MonoBehaviour
     {
         // Enable the input field.
         inputField.SetActive(true);
-        inputField.gameObject.GetComponentInChildren<TMP_InputField>().text = "";
+        var inputFieldComponent = inputField.GetComponentInChildren<TMP_InputField>();
+        inputFieldComponent.text = "";
+        inputFieldComponent.pointSize = SettingsManager.sm.GetFontSize();
 
         animator.InOpenQuestion = true;        
         WriteDialogue(dialogue);
@@ -546,18 +561,6 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
-    /// <summary>
-    /// Change the fontSize of the tmp_text components (excluding questions and return button)
-    /// </summary>
-    // TODO: could be made private.
-    public void ChangeTextSize()
-    {
-        // Set the fontSize.
-        int fontSize = SettingsManager.sm.GetFontSize();
-        characterNameField.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-    }
-
     #endregion
     
     /// <summary>
