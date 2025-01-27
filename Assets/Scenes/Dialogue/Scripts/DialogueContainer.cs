@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 
 using System;
@@ -133,10 +133,11 @@ public class DialogueContainer : ScriptableObject
                 // takes a substring of the full string containing the first X characters
                 // Then finds the index of the last punctuation-character in that string.
                 // Trim the remaining text, to the last found punctuation in the remainingText-string
+                // + 1 at the end to fix missing punctuation (otherwise it would remove the final punctuation)
                 int textLength = 
                     FindLastPunctuation(
                         remainingText.Substring(
-                            0, Mathf.Min(remainingText.Length, maxLineLength)));
+                            0, Mathf.Min(remainingText.Length, maxLineLength))) + 1;
                 
                 // We create two substrings;
                 // One for the first segment of dialogue that we will create a dialogueobject of.
