@@ -21,9 +21,6 @@ public class SelectionManagerTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -43,11 +40,14 @@ public class SelectionManagerTest
     /// <summary>
     /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
     /// gets removed before a new test starts.
+    ///
+    /// PostCondition: Loading scene without any gameobjects is loaded
     /// </summary>
     [TearDown]
     public void TearDown()
     {
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NPCSelectScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("NPCSelectScene"));
         SceneController.sc.UnloadAdditiveScenes();
     }
 

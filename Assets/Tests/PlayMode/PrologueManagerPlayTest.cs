@@ -9,7 +9,7 @@ using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using Assert = UnityEngine.Assertions.Assert;
 
-public class PrologueManagerPlayTest : MonoBehaviour
+public class PrologueManagerPlayTest
 {
     private PrologueManager   pm; 
     
@@ -21,14 +21,20 @@ public class PrologueManagerPlayTest : MonoBehaviour
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load prologue
         SceneManager.LoadScene("PrologueScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("PrologueScene").isLoaded);
         
         pm = GameObject.Find("PrologueManager").GetComponent<PrologueManager>();
+    }
+    
+    [TearDown]
+    public void TearDown()
+    {
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("PrologueScene"));
+        GameObject.Destroy(GameObject.Find("DDOLs"));
+        GameObject.Destroy(GameObject.Find("PrologueManager"));
     }
 
     #endregion

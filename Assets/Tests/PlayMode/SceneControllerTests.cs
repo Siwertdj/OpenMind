@@ -61,9 +61,6 @@ public class SceneControllerTests
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -80,23 +77,18 @@ public class SceneControllerTests
         GameManager.gm.notebookData = new NotebookData();
 
         sc = SceneController.sc;
-
-        //unload the loading scene now
-        SceneManager.UnloadSceneAsync("Loading");
-        
     }
     
     [TearDown]
     public void TearDown()
     {
-        Debug.Log("Teardown");
-        
+       
         // Move all toolboxes so that they can be unloaded.
         var objects = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
         foreach (GameObject obj in objects)
             SceneManager.MoveGameObjectToScene(obj, SceneManager.GetActiveScene());
         SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetActiveScene());
-
+        
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -139,6 +131,7 @@ public class SceneControllerTests
         if (sc == null) throw new ArgumentException("SceneController was null");
         //creates scene graph
         sc.StartScene(sceneName);
+
         int i = 0;
         const int timeout = 1000;
         bool finished = true;
@@ -158,13 +151,16 @@ public class SceneControllerTests
         
         Assert.IsTrue(finished);
     }
-
     
-
 
     /// <summary>
     /// Tests whether an invalid scene transition throws an error.
     /// Tests whether transitioning from an unloaded scene throws an error
+    ///
+    /// note: from loading to NPCSelect with additive transition and from loading to Notebook with additive transition both fail
+    /// This is because Gamemanager.gm.currentCharacters is null, but this variable is initialised in the srtup
+    /// The check where the tests checks if loading from an unloaded scene makes GameManager.gm.currentCharacters null, despite no scenes being loaded or unloaded
+    /// A comment is placed with this specific piece of code
     /// </summary>
     [UnityTest, Order(3)]
     public IEnumerator TestSceneTransitionValidity(
@@ -200,6 +196,7 @@ public class SceneControllerTests
             LogAssert.Expect(LogType.Error,
                 $"Cannot make a transition from the scene {to}, since it's not loaded.");
             
+            //this transition, which does nothing besides throw the error that is asserted above, causes Gamemanager.gm.CurrentCharacters to become null for some reason.
             Task task1 = sc.TransitionScene(to, from, tt, false);
             yield return new WaitUntil(() => task1.IsCompleted);
             
@@ -211,8 +208,6 @@ public class SceneControllerTests
         int toID = sceneToID[to.ToString()];
         if (sceneGraph[fromID].Contains((toID, tt)))
         {
-            Debug.Log(SceneManager.GetSceneByName(to.ToString()).isLoaded);
-            
             if (tt == SceneController.TransitionType.Unload)
             {
                 //if the transition is an unload, make sure the to is loaded
@@ -220,7 +215,6 @@ public class SceneControllerTests
                 yield return new WaitUntil(
                     () => SceneManager.GetSceneByName(to.ToString()).isLoaded);
             }
-            
             //do the transition
             Task task = sc.TransitionScene(from, to, tt, false);
             yield return new WaitUntil(() => task.IsCompleted);

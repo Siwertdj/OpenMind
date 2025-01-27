@@ -17,6 +17,7 @@ public class EpilogueManagerPlayTests
     private StoryObject     story;
     private GameManager     gm;
     private DialogueManager dm;
+    private EpilogueManager em;
 
     /// <summary>
     /// Set up the game so that each test starts at the Epilogue with the chosen story.
@@ -28,9 +29,6 @@ public class EpilogueManagerPlayTests
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -39,6 +37,9 @@ public class EpilogueManagerPlayTests
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
         story = stories[1];
 
+        // Waiting for the EpilogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("GameManager") != null);
+        
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         // Start the game with the chosen story.
@@ -46,6 +47,17 @@ public class EpilogueManagerPlayTests
 
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
         
+        SceneManager.LoadScene("EpilogueScene");
+        gm.gameState = GameManager.GameState.Epilogue;
+        
+        // Waiting for the EpilogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("EpilogueManager") != null);
+        
+        em = GameObject.Find("EpilogueManager").GetComponent<EpilogueManager>();
+        
+        em.StartEpilogue(gm, story, gm.currentCharacters, gm.GetCulprit().id);
+        
+        /*
         // Keep removing 1 character which is not the culprit, until there are not enough characters remaining.
         while (gm.EnoughCharactersRemaining())
         {
@@ -76,33 +88,52 @@ public class EpilogueManagerPlayTests
         // Waiting for the DialogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
         
-        // Get the DialogueManager.
+        // Get the DialogueManager from the regular dialogue.
         dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
         
         // End the dialogue.
         dm.currentObject = new TerminateDialogueObject();
         dm.currentObject.Execute();
         
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("DialogueScene").isLoaded); // Wait for scene to load.
+        
+        // Waiting for the DialogueManager to appear.
+        yield return new WaitUntil(() => GameObject.Find("DialogueManager") != null);
+        
+        // Get the DialogueManager from the HintDialogue.
+        dm = GameObject.Find("DialogueManager").GetComponent<DialogueManager>();
+        
+        // End the dialogue.
+        dm.currentObject = new TerminateDialogueObject();
+        dm.currentObject.Execute();*/
+        
         yield return new WaitUntil(() => SceneManager.GetSceneByName("EpilogueScene").isLoaded); // Wait for scene to load.
         
         // Waiting for the EpilogueManager to appear.
         yield return new WaitUntil(() => GameObject.Find("EpilogueManager") != null);
-        
     }
     
     /// <summary>
     /// Move the toolbox under loading as a child, then remove all scenes. This ensures that the toolbox
     /// gets removed before a new test starts.
     /// </summary>
-    [TearDown]
-    public void TearDown()
+    [UnityTearDown]
+    public IEnumerator TearDown()
     {
-        // Move toolbox and DDOLs to Loading to unload
-        if (GameObject.Find("Toolbox") != null)
-            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
-
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
-
+        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+        yield return null;
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("EpilogueScene"));
+        
+        // Move all toolboxes so that they can be unloaded.
+        var toolBoxes = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "Toolbox");
+        foreach (GameObject obj in toolBoxes) 
+            GameObject.Destroy(obj);
+        
+        // Move all DDOLs so that they can be unloaded.
+        var DDOLs = Resources.FindObjectsOfTypeAll<GameObject>().Where(obj => obj.name == "DDOLs");
+        foreach (GameObject obj in DDOLs) 
+            GameObject.Destroy(obj);
+        
         SceneController.sc.UnloadAdditiveScenes();
     }
     

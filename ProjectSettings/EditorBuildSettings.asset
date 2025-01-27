@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/StartScreenScene.unity
     guid: d8e697686f5ae364fb4b301ab6b4e63f
   - enabled: 1
+    path: Assets/Scenes/Credits/CreditsScene.unity
+    guid: b232403524375a1409508b2d9eb18ea8
+  - enabled: 1
     path: Assets/Scenes/Loading/Loading.unity
     guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   - enabled: 1
@@ -47,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameOver/GameOverScene.unity
     guid: d1ad6fbdd75f1094d93bc865345b8a1b
+  - enabled: 1
+    path: Assets/Scenes/Menus/MultiplayerScreenScene.unity
+    guid: 0a6ff42fbbb93d7419f1dc57401050aa
   m_configObjects: {}

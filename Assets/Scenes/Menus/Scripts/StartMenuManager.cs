@@ -12,12 +12,13 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
-    public GameObject PopUpManager;
+    public GameObject LoadingScreenManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
-    [SerializeField] private GameObject popUpCanvas;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject popUpScreen;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
@@ -39,11 +40,6 @@ public class StartMenuManager : MonoBehaviour
         
         // update user data; create a file if it didnt exist already
         SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
-        
-        // The game can't be paused while in the Main Menu, so reset pause-stack
-        while (SettingsManager.sm?.IsPaused == true)
-            SettingsManager.sm.UnpauseGame();
-        
     }
     
     /// <summary>
@@ -124,5 +120,15 @@ public class StartMenuManager : MonoBehaviour
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
+    }
+
+    public void OpenMultiplayer()
+    {
+        SceneManager.LoadScene("MultiplayerScreenScene", LoadSceneMode.Additive);
+    }
+
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("CreditsScene", LoadSceneMode.Additive);
     }
 }

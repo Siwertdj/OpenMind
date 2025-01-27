@@ -27,9 +27,6 @@ public class NotebookManagerPlayTest
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
         
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
-        
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
@@ -38,7 +35,7 @@ public class NotebookManagerPlayTest
 
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
-        SceneManager.LoadScene("NotebookScene");
+        SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NotebookScene").isLoaded);
         
         nm = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();

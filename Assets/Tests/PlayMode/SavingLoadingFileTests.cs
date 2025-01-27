@@ -25,13 +25,9 @@ public class SavingLoadingTestFilePaths
         
         if (layer > 0)
         {
-            Debug.Log("Setup for layer > 0");
             // Load StartScreenScene in order to put the SettingsManager into DDOL
             SceneManager.LoadScene("StartScreenScene");
             yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-            // Unload the StartScreenScene
-            SceneManager.UnloadSceneAsync("StartScreenScene");
 
             // Load the "Loading" scene in order to get access to the toolbox in DDOL
             SceneManager.LoadScene("Loading");
@@ -40,8 +36,6 @@ public class SavingLoadingTestFilePaths
         
         if (layer > 1)
         {
-            Debug.Log("Setup for layer > 1");
-
             // Put toolbox as parent of SettingsManager
             GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
 
@@ -57,7 +51,6 @@ public class SavingLoadingTestFilePaths
     [TearDown]
     public void RemoveGameManager()
     {
-        Debug.Log("Teardown");
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
 
         if (layer > 0)
@@ -67,6 +60,8 @@ public class SavingLoadingTestFilePaths
             SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
             SceneController.sc.UnloadAdditiveScenes();
+            GameObject.Destroy(GameObject.Find("DDOLs"));
+            GameObject.Destroy(GameObject.Find("Toolbox"));
         }
     }
     

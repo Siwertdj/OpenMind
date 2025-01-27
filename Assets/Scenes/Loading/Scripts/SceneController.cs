@@ -317,13 +317,13 @@ public class SceneController : MonoBehaviour
     /// Function to be called when loading the first cycle
     /// </summary>
     /// <param name="start"></param>
-    public void StartScene(SceneName start)
+    public async Task StartScene(SceneName start)
     {
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
-        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+        await LoadScene(currentScene);
     }
 
     public SceneName? FindLoadedSceneOfSelection(params SceneName[] scenes)
@@ -344,27 +344,38 @@ public class SceneController : MonoBehaviour
     /// Function to load the notebook.
     /// </summary>
     // this method is not tested
-    public void ToggleNotebookScene(Button button, GameObject menuButton)
+    public async void ToggleNotebookScene(Button button, GameObject menuButton)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
-            // If notebook is already open, close it
-            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-            {
-                menuButton.SetActive(true);
-                SettingsManager.sm.UnpauseGame();
-                crossOverlay.SetActive(false);
-                _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
-                    TransitionType.Unload, false);
-            }
-            else // Notebook is NOT loaded.. so open it
-            {
-                menuButton.SetActive(false);
-                SettingsManager.sm.PauseGame();
-                crossOverlay.SetActive(true);
-                _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
-                    TransitionType.Additive, false);
-            }
+        // If notebook is already open, close it
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            SettingsManager.sm.UnpauseGame();
+
+            // The button should not be clickable again while the notebook is closing
+            button.interactable = false;
+
+            // Find the NotebookManager & do the animation
+            var nm = FindObjectOfType<NotebookManager>();
+            await nm.ShoveOutNotebook();
+
+            // Make the button interactable again
+            button.interactable = true;
+
+            menuButton.SetActive(true);
+            crossOverlay.SetActive(false);
+            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
+                TransitionType.Unload, false);
+        }
+        else // Notebook is NOT loaded.. so open it
+        {
+            menuButton.SetActive(false);
+            crossOverlay.SetActive(true);
+            SettingsManager.sm.PauseGame();
+            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
+                TransitionType.Additive, false);
+        }
     }
     
     /// <summary>

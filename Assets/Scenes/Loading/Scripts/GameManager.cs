@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("Events")] 
     public                    GameEvent   onDialogueStart;
     public                    GameEvent   onEpilogueStart;
+    public                    GameEvent   onNPCSelectLoad;
 
     // GAME VARIABLES
     [NonSerialized] public int numQuestionsAsked;   // The amount of times  the player has talked, should be 0 at the start of each cycle
@@ -34,10 +35,12 @@ public class GameManager : MonoBehaviour
         story { get; private set; } // Contains information about the current game pertaining to the story
     
     // Instances
-    public Random random = new Random(); //random variable is made global so it can be reused
+    public        Random random = new Random(); //random variable is made global so it can be reused
     public static GameManager gm;       // static instance of the gamemanager
-    private SceneController sc;
+    private       SceneController sc;
     public NotebookData notebookData;
+    public  NotebookData multiplayerNotebookData;
+    public  bool         multiplayerEpilogue;
 
     // Enumerations
     #region Enumerations
@@ -98,6 +101,13 @@ public class GameManager : MonoBehaviour
                 Debug.LogError("SaveData incorrectly parsed.");
             }
         }
+        else if (data[0] is MultiplayerInit multiplayerInit)
+        {
+            story = Resources.LoadAll<StoryObject>("Stories")
+                .First(story => story.storyID == multiplayerInit.story);
+            random = new Random(multiplayerInit.seed);
+            NewGame();
+        }
         // Else, set the values passed to the correct variables below.
         else
         {
@@ -132,13 +142,14 @@ public class GameManager : MonoBehaviour
             
             NewGame();
         }
+        
     }
 
     /// <summary>
     /// Loads the game using savedata passed along.
     /// </summary>
     /// <param name="saveData">savedata that needs to be loaded.</param>
-    public void LoadGame(SaveData saveData)
+    public async void LoadGame(SaveData saveData)
     {
         // Fetch all storyobjects from the Resources/Stories-folder
         StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
@@ -147,6 +158,7 @@ public class GameManager : MonoBehaviour
         
         //assign numQuestionsAsked
         numQuestionsAsked = saveData.numQuestionsAsked;
+
         //clear all current characters
         currentCharacters.Clear();
         //create all current characters
@@ -167,6 +179,7 @@ public class GameManager : MonoBehaviour
             c.isCulprit = saveData.culpritId == c.id;
 
             c.RemainingQuestions = saveData.remainingQuestions.First(qs => qs.Item1 == c.id).Item2;
+            c.talkedTo = saveData.charactersGreeted.First(qs => qs.Item1 == c.id).Item2;
             return c;
         }).ToList();
         
@@ -185,10 +198,13 @@ public class GameManager : MonoBehaviour
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, 1, true);
         
         //load npcSelect scene
-        sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        await sc.StartScene(SceneController.SceneName.NPCSelectScene);
         
         //update gamestate
         gameState = GameState.NpcSelect;
+
+        // Set the selected character.
+        onNPCSelectLoad.Raise(this);
     }
 
     /// <summary>
@@ -198,8 +214,9 @@ public class GameManager : MonoBehaviour
     {
         // Populate the list of characters, unless its empty and contains a culprit
         // (It could be instantiated if the game was restarted)
-        if (currentCharacters.Count == 0 || 
-            (currentCharacters.Count > 0 && currentCharacters.Any(c => c.isCulprit)))
+        if (!(currentCharacters.Count > 0 && 
+              currentCharacters.All(c => c.isActive) && 
+              currentCharacters.Any(c => c.isCulprit)))
             PopulateCharacters();
         // Create new notebook
         notebookData = new NotebookData();
@@ -214,7 +231,7 @@ public class GameManager : MonoBehaviour
     /// Works like StartCycle, but can optionally skip the immediate victim.
     /// This method starts the game with a special SceneTransition-invocation for the first scene of the game.
     /// </summary>
-    private void FirstCycle()
+    private async void FirstCycle()
     {
         if (story.immediateVictim)
         {
@@ -223,10 +240,15 @@ public class GameManager : MonoBehaviour
         }
         // Reset number of times the player has talked
         numQuestionsAsked = 0;
+        
         // Start the game at the first scene; the NPC Selection scene
-        sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        await sc.StartScene(SceneController.SceneName.NPCSelectScene);
+        
         // Change the gamestate
         gameState = GameState.NpcSelect;
+        
+        // Set the selected character.
+        onNPCSelectLoad.Raise(this);
     }
     
     /// <summary>
@@ -234,7 +256,7 @@ public class GameManager : MonoBehaviour
     /// This should loop everytime the player speaks to an NPC until a certain number of NPCs have been spoken to,
     /// at that point the cycle ends and the player has to choose which NPC they think is the culprit
     /// </summary>
-    private void StartCycle()
+    private void StartCycle(CharacterInstance recipient)
     {
         // Choose a victim, make them inactive, and print the hints to the console.
         string victimName = ChooseVictim();
@@ -263,7 +285,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Creates Dialogue that says who disappeared and provides a new hint.
-        StartHintDialogue(dialogue);
+        StartHintDialogue(dialogue, recipient);
     }
 
     /// <summary>
@@ -299,19 +321,23 @@ public class GameManager : MonoBehaviour
     /// If we have too few characters remaining, we must select the culprit,
     /// otherwise we start a new cycle.
     /// </summary>
-    public void EndCycle() 
+    public void EndCycle(CharacterInstance recipient) 
     {
         // Start Cycle as normal
         if (EnoughCharactersRemaining())
-            StartCycle();
+            StartCycle(recipient);
         // Start the Epilogue
         else
         {
+            // Change the gamestate
+            gameState = GameState.CulpritSelect;
+            
             StartPreEpilogueDialogue();
             // Start the epilogue music
             SettingsManager.sm.SwitchMusic(story.storyEpilogueMusic, null, true);
         }
     }
+    
     #endregion
 
     #region InstantiateGameOrCycles
@@ -425,6 +451,12 @@ public class GameManager : MonoBehaviour
                 DialogueManager.dm.CreateDialogueBackground(story, null, 
                 story.hintBackground, story.additionalHintBackgroundObjects[0]));
         }
+        else if (story.storyID == 2) // AI story
+        {
+            dialogueObject = new ContentDialogueObject(story.preEpilogueDialogue.ToList(), null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
         else
         {
             dialogueObject = new ContentDialogueObject(
@@ -484,7 +516,7 @@ public class GameManager : MonoBehaviour
     /// Starts a new hint dialogue.
     /// </summary>
     /// <param name="dialogueObject">The object that needs to be passed along to the dialogue manager.</param>
-    public async void StartHintDialogue(List<string> dialogue)
+    public async void StartHintDialogue(List<string> dialogue, CharacterInstance recipient)
     {
         // Change the gamestate
         gameState = GameState.HintDialogue;
@@ -523,14 +555,24 @@ public class GameManager : MonoBehaviour
                 story.hintBackground, story.additionalHintBackgroundObjects[0]
                 )));
         }
+        else if (story.storyID == 2) // 2 corresponds to the AI story
+        {
+            dialogueObject = new ContentDialogueObject(
+                dialogue, null,
+                DialogueManager.dm.CreateDialogueBackground(story, null,
+                story.hintBackground, story.additionalHintBackgroundObjects[0]));
+        }
         else
         {
-            dialogueObject = new ContentDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+            dialogueObject = new ContentDialogueObject(
+                dialogue, null, 
+                DialogueManager.dm.CreateDialogueBackground(story, null, 
+                story.hintBackground));
         }
 
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        onDialogueStart.Raise(this, dialogueObject);
+        onDialogueStart.Raise(this, dialogueObject, recipient);
     }
 
     /// <summary>
@@ -578,15 +620,20 @@ public class GameManager : MonoBehaviour
         if (gameState == GameState.CulpritSelect)
         {
             StartEpilogue();
+            
+            // Start exchanging notebooks if in multiplayer mode  
+            if(MultiplayerManager.mm)  
+                MultiplayerNotebookExchange();
             return;
         }
-
+        
         // Start the game music
         SettingsManager.sm.SwitchMusic(story.storyGameMusic, null, true);
         if (!HasQuestionsLeft())
         {
-            // No questions left, so we end the cycle 
-            EndCycle();
+            // No questions left, so we end the cycle, and pass along the character which was last talked to.
+            if (data[1] is CharacterInstance recipient)
+                EndCycle(recipient);
         }
         else
         {
@@ -595,10 +642,21 @@ public class GameManager : MonoBehaviour
                 SceneController.SceneName.NPCSelectScene, 
                 SceneController.TransitionType.Transition,
                 true);
-    
+            
             gameState = GameState.NpcSelect;
+            
+            // Set the character which was last talked to.
+            if (data[1] is CharacterInstance recipient)
+                onNPCSelectLoad.Raise(this, recipient);
         }
     }    
+    
+    private void MultiplayerNotebookExchange()
+    {
+        // Send notebook
+        MultiplayerManager.mm.SendNotebook();
+        multiplayerEpilogue = true;
+    }
     #endregion
 
     // This region contains methods that check certain properties that affect the Game State.

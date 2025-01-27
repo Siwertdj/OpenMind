@@ -1,4 +1,4 @@
-﻿﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections;
@@ -334,6 +334,20 @@ public class IntroductionManager : MonoBehaviour
         changeSprite = !changeSprite; 
     }
     
+    public void ReceptionistEmotion()
+    {
+        if (changeSprite)
+        {
+            character.sprite = sprites[12];
+        }
+        else
+        {
+            character.sprite = sprites[7];
+        }
+        changeSprite = !changeSprite;
+        
+    }
+    
     /// <summary>
     /// This method changes and shows text the computer is saying. 
     /// </summary>
@@ -466,7 +480,10 @@ public class IntroductionManager : MonoBehaviour
             yield return null;
         }
         
-        onGameLoaded.Raise(this, story);
+        if(MultiplayerManager.mm)
+            onGameLoaded.Raise(this, MultiplayerManager.mm.init);
+        else
+            onGameLoaded.Raise(this, story);
         
         // Finally, when the data has been sent, we then unload our currentscene
         SceneManager.UnloadSceneAsync("IntroStoryScene");  // unload this scene; no longer necessary

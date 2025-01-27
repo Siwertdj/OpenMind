@@ -7,12 +7,12 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
-public class StartScreenPlayTest : MonoBehaviour
+public class StartScreenPlayTest
 {
     private StartMenuManager sm;
     
     #region Setup and TearDown
-
+    
     [UnitySetUp]
     public IEnumerator Setup()
     {
@@ -20,6 +20,13 @@ public class StartScreenPlayTest : MonoBehaviour
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
 
         sm = GameObject.Find("StartMenuManager").GetComponent<StartMenuManager>();
+    }
+    
+    [TearDown]
+    public void TearDown()
+    {
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneAt(0));
+        GameObject.Destroy(GameObject.Find("DDOLs"));
     }
 
     #endregion

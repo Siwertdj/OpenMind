@@ -45,6 +45,10 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void LoadGame()
     {
+        // make sure you can't load a single player save while in multiplayer
+        if (MultiplayerManager.mm)
+            MultiplayerManager.mm.KillMultiplayer(true);
+        
         // Call ReturnToGame(), so the menu closes, the buttons return, and the game is unpaused.
         ReturnToGame();
 
@@ -74,11 +78,16 @@ public class GameMenuManager : MonoBehaviour
     /// </summary>
     public void ReturnToMainMenu()
     {
+        SettingsManager.sm.UnpauseGame();
+
         // Initiate toolbox to be destroyed after transition
         var toolbox = GameObject.FindGameObjectWithTag("Toolbox");
         
         // Transition to start screen scene
         SceneManager.LoadScene("StartScreenScene");
+        
+        if (MultiplayerManager.mm)
+            MultiplayerManager.mm.KillMultiplayer(true);
 
         // TODO: Instead of using SceneManager, this should use the SceneController
         
