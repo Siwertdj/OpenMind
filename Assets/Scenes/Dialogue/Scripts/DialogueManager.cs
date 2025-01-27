@@ -58,6 +58,9 @@ public class DialogueManager : MonoBehaviour
     [NonSerialized] public static DialogueManager   dm;
     [NonSerialized] public        CharacterInstance currentRecipient;
     [NonSerialized] public        DialogueObject    currentObject;
+
+    private bool useRecipient = true;
+    private string alternateName;
     
     // In this awake, we initialize some components in case it is loaded in isolation.
     // It does not need to rely on GameManager to be active, but it needs an eventsystem
@@ -91,13 +94,17 @@ public class DialogueManager : MonoBehaviour
         {
             currentObject = dialogueObject;
         }
-
         // Retrieve and set the dialogue recipient (if given)
         if (data.Length > 1 && data[1] is CharacterInstance recipient)
         {
             currentRecipient = recipient;
             characterNameField.SetActive(true);
-        } 
+        }
+        if (data.Length > 2 && data[2] is (bool useRecipient, string alternateName))
+        {
+            this.useRecipient = useRecipient;
+            this.alternateName = alternateName;
+        }
         // No dialogue recipient given, so we remove the character name field
         else
         {
@@ -172,8 +179,8 @@ public class DialogueManager : MonoBehaviour
             if (currentRecipient != null)
             {
                 characterNameField.SetActive(true);
-                characterNameField.GetComponentInChildren<TMP_Text>().text =
-                    currentRecipient.characterName;
+                var text = characterNameField.GetComponentInChildren<TMP_Text>();
+                text.text = useRecipient ? currentRecipient.characterName : alternateName;
             }
 
             // Animator write dialogue to the screen.

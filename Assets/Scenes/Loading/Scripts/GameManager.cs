@@ -535,9 +535,11 @@ public class GameManager : MonoBehaviour
 
         // Create the appropriate DialogueObject
         DialogueObject dialogueObject;
+        string alternateName;
         if (story.storyID == 0) // 0 corresponds to the phone story
         {
             dialogueObject = new PhoneDialogueObject(dialogue, null, DialogueManager.dm.CreateDialogueBackground(story, null, story.hintBackground));
+            alternateName = "";
         }
         else if (story.storyID == 1) // 1 corresponds to the sidekick story
         {
@@ -558,6 +560,8 @@ public class GameManager : MonoBehaviour
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]
                 )));
+
+            alternateName = "Alex";
         }
         else if (story.storyID == 2) // 2 corresponds to the AI story
         {
@@ -565,6 +569,8 @@ public class GameManager : MonoBehaviour
                 dialogue, null,
                 DialogueManager.dm.CreateDialogueBackground(story, null,
                 story.hintBackground, story.additionalHintBackgroundObjects[0]));
+
+            alternateName = "Computer";
         }
         else
         {
@@ -572,11 +578,13 @@ public class GameManager : MonoBehaviour
                 dialogue, null, 
                 DialogueManager.dm.CreateDialogueBackground(story, null, 
                 story.hintBackground));
+
+            alternateName = "";
         }
 
         // The gameevent here should pass the information to Dialoguemanager
         // ..at which point dialoguemanager will start.
-        onDialogueStart.Raise(this, dialogueObject, recipient);
+        onDialogueStart.Raise(this, dialogueObject, recipient, (false, alternateName));
     }
 
     /// <summary>
