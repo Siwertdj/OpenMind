@@ -1152,11 +1152,6 @@ MonoBehaviour:
   audioEnabled: 1
   overrideDefaultSpeed: 0
   inputDelay: 0.5
-  letterSounds:
-  - {fileID: 8300000, guid: a64e578d777954f47a31bb147c036507, type: 3}
-  - {fileID: 8300000, guid: 5637889a55b1b934b93c98dd941f0a13, type: 3}
-  - {fileID: 8300000, guid: ab38c26dab8de484aa1ef6e45e3a63b2, type: 3}
-  - {fileID: 8300000, guid: 240d21a4707f2514bb8f36e3ceb453b8, type: 3}
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!114 &826756118
 MonoBehaviour:
@@ -2172,7 +2167,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 4d3523e6016271843ac4ba472fcb9a99, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2202,7 +2197,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 85
   m_fontStyle: 2
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -2236,7 +2231,7 @@ MonoBehaviour:
   m_margin: {x: 60, y: 40, z: 60, w: 40}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1566366249
