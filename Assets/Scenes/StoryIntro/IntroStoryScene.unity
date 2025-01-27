@@ -172,7 +172,7 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 1
-  overrideDefaultSpeed: 1
+  overrideDefaultSpeed: 0
   inputDelay: 0.5
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!82 &21481128
@@ -495,7 +495,7 @@ MonoBehaviour:
   delayInSeconds: 0.07
   delayAfterSentence: 1.5
   audioEnabled: 1
-  overrideDefaultSpeed: 1
+  overrideDefaultSpeed: 0
   inputDelay: 0.5
   popSound: {fileID: 8300000, guid: 875f46ee520adea4a88605adaf340455, type: 3}
 --- !u!82 &228368351
