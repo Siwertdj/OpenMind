@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,26 +26,16 @@ public class NotebookManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
-        
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
 
         gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
 
-        SceneManager.LoadScene("NotebookScene");
+        SceneManager.LoadScene("NotebookScene", LoadSceneMode.Additive);
         yield return new WaitUntil(() => SceneManager.GetSceneByName("NotebookScene").isLoaded);
         
         nm = GameObject.Find("NotebookManager").GetComponent<NotebookManager>();
@@ -52,7 +44,9 @@ public class NotebookManagerPlayTest
     [TearDown]
     public void TearDown()
     {
+        // Move toolbox and DDOLs to scene to unload after
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("NotebookScene"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("NotebookScene"));
         SceneController.sc.UnloadAdditiveScenes();
     }
     
@@ -65,11 +59,10 @@ public class NotebookManagerPlayTest
     public IEnumerator StartNotebookTest()
     {
         // Check if some basic properties hold
-        Assert.IsFalse(nm.characterInfo.activeSelf);
-        Assert.IsFalse(nm.inputFieldCharacters.activeSelf);
-        Assert.IsTrue(nm.inputField.activeSelf);
+        Assert.IsFalse(nm.Test_CharacterInfoField.activeSelf);
+        Assert.IsTrue(nm.Test_PersonalInputField.gameObject.activeSelf);
         Assert.AreEqual(nm.notebookData, gm.notebookData);
-        Assert.IsFalse(nm.personalButton.interactable);
+        Assert.IsFalse(nm.Test_GetPersonalButton().interactable);
         
         yield return null;
     }
@@ -81,22 +74,22 @@ public class NotebookManagerPlayTest
     public IEnumerator OpenPersonalNotesTest()
     {
         // Set up fields
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        string textBefore = nm.Test_PersonalInputField.text;
         
         string newText = "hello";
 
-        nm.inputField.GetComponent<TMP_InputField>().text = newText;
-        
         nm.OpenPersonalNotes();
-        
-        var textAfter = nm.inputField.GetComponent<TMP_InputField>().text;
+        nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
+
+        var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Check if SaveNotes works correctly
         
         // Check if text has changed
         Assert.AreNotEqual(textBefore, textAfter);
         
-        bool active = nm.inputField.activeInHierarchy;
+        bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
+        nm.SavePersonalData();
         
         // Check if the new text is equal to the dummy text
         if (active)
@@ -110,11 +103,8 @@ public class NotebookManagerPlayTest
             Assert.AreEqual(nm.notebookData.GetCharacterNotes(gm.currentCharacters[0]), newText);
         }
         
-        // InputField should not be active
-        Assert.IsFalse(nm.inputFieldCharacters.activeSelf);
-        
         // Personal notes should be printed on the screen
-        Assert.AreEqual(nm.notebookData.GetPersonalNotes(), nm.inputField.GetComponent<TMP_InputField>().text);
+        Assert.AreEqual(nm.notebookData.GetPersonalNotes(), nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text);
         
         yield return null;
     }
@@ -125,20 +115,20 @@ public class NotebookManagerPlayTest
     [UnityTest]
     public IEnumerator SaveNotesTest()
     {
-        string textBefore = nm.inputField.GetComponent<TMP_InputField>().text;
+        string textBefore = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Write dummy text to input field
         string newText = "hello";
-        nm.inputField.GetComponent<TMP_InputField>().text = newText;
+        nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text = newText;
         
-        nm.SaveNotes();
+        nm.SavePersonalData();
         
-        var textAfter = nm.inputField.GetComponent<TMP_InputField>().text;
+        var textAfter = nm.Test_PersonalInputField.GetComponent<TMP_InputField>().text;
         
         // Check if text has changed
         Assert.AreNotEqual(textBefore, textAfter);
 
-        bool active = nm.inputField.activeInHierarchy;
+        bool active = nm.Test_PersonalInputField.gameObject.activeInHierarchy;
         
         // Check if the new text is equal to the dummy text
         if (active)
@@ -152,6 +142,39 @@ public class NotebookManagerPlayTest
             Assert.AreEqual(nm.notebookData.GetCharacterNotes(gm.currentCharacters[0]), newText);
         }
         
+        yield return null;
+    }
+
+    [UnityTest]
+    public IEnumerator TabButtonsTest()
+    {
+        var bottomRow = GameObject.Find("Buttons Bottom Row").transform;
+        var topRow = GameObject.Find("Buttons Top Row").transform;
+
+        // Check for a CharacterIcon component on the first button
+        // It shouldn't have one, as this should be the Personal Notes button
+        int firstChildIcons = bottomRow.GetChild(0).GetComponentsInChildren<CharacterIcon>().Length;
+        Assert.AreEqual(0, firstChildIcons,
+            "The first button should not have any children with the CharacterIcon component, but " +
+            firstChildIcons + " was/were found.");
+
+        // Check if the rest of the bottom row is in the correct order
+        // (should contain the first characters)
+        for (int i = 1; i < bottomRow.childCount; i++)
+        {
+            var icon = bottomRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
+        // Check the top row as well (should contain the rest of the characters)
+        for (int i = 0; i < topRow.childCount; i++)
+        {
+            var icon = topRow.GetChild(i).GetComponentInChildren<CharacterIcon>();
+            Assert.AreEqual(gm.currentCharacters[i + bottomRow.childCount - 1].characterName, 
+                icon.Test_Character.characterName);
+        }
+
         yield return null;
     }
 }

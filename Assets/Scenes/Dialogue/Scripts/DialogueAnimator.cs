@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using UnityEngine.Serialization;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Handles putting dialogue on the screen
@@ -15,24 +16,34 @@ using UnityEngine.EventSystems;
 public class DialogueAnimator : MonoBehaviour
 {
     [Header("Component references")]
-    [SerializeField] private TMP_Text text;
+    [SerializeField] public TMP_Text text;
 
     [Header("Settings")]
     [SerializeField] private float delayInSeconds = 0.07f; // The delay between each letter being put on the screen
     [SerializeField] private float delayAfterSentence = 1.5f; // The delay to write a new sentence after the previous sentence is finished
     [SerializeField] private bool audioEnabled = true;
     [SerializeField] private bool overrideDefaultSpeed = true;
-    [SerializeField] public float inputDelay = 0.5f; // Time in seconds between accepted inputs
+    [SerializeField] public float inputDelay = 0.3f; // Time in seconds between accepted inputs
 
+    [Header("Speaking Audio")]
+    [SerializeField] private AudioClip popSound;
+
+    private readonly string soundlessSymbols = " !?.,";
     private Coroutine outputCoroutine;
     private AudioSource audioSource;
     private float recentInputTime;
+    private bool ignoreSkipDelay = false;
 
     /// <summary>
     /// Is there dialogue currently on the screen?
     /// </summary>
     public bool InDialogue { get; private set; } = false;
 
+    /// <summary>
+    /// Is there dialogue currently on the screen?
+    /// </summary>
+    public bool InOpenQuestion { private get;  set; } = false;
+    
     /// <summary>
     /// Is dialogue currently being written?
     /// </summary>
@@ -43,7 +54,7 @@ public class DialogueAnimator : MonoBehaviour
     private string currentSentence = "";
 
     [NonSerialized] public UnityEvent OnDialogueComplete = new();
-
+    
     /// <summary>
     /// Sets the properties of the text when loaded
     /// </summary>
@@ -51,19 +62,31 @@ public class DialogueAnimator : MonoBehaviour
     {
         if (text == null)
             return;
-        text.enableAutoSizing = false;
-        ChangeTextSize(SettingsManager.sm.GetFontSize());
-        audioSource = GetComponent<AudioSource>();
+
+        // Set text size & add listener
+        text.enableAutoSizing = true; // Set autosizing to true for the text-component.
+        UpdateTextSize();
+        SettingsManager.sm.OnTextSizeChanged.AddListener(UpdateTextSize);
+
+        // Set volume & add listener
+        audioSource = GetComponent<AudioSource>(); // Set audiosource reference, for the talking-sfx
+        UpdateVolume();
+        SettingsManager.sm.OnAudioSettingsChanged.AddListener(UpdateVolume);
     }
     
     /// <summary>
     /// Change the fontSize of the text
     /// </summary>
     /// <param name="fontSize"></param>
-    public void ChangeTextSize(int fontSize)
+    public void UpdateTextSize()
     {
-        // Set the fontSize.
-        text.fontSize = fontSize;
+        // set the max font size - so it shrinks if it would otherwise overflow (for robustness)
+        text.fontSizeMax = SettingsManager.sm.GetFontSize();
+    }
+
+    private void UpdateVolume()
+    {
+        audioSource.volume = SettingsManager.sm.sfxVolume;
     }
     
     /// <summary>
@@ -120,24 +143,21 @@ public class DialogueAnimator : MonoBehaviour
         {
             IsOutputting = true;
             currentSentence = output;
-            outputCoroutine = StartCoroutine(WritingAnimation(output, 0));
+            outputCoroutine = StartCoroutine(WritingAnimation(output));
         }
     }
 
     /// <summary>
-    /// Skips dialogue that is being written
+    /// Skips dialogue that is being written.
     /// </summary>
     public void SkipDialogue()
     {
-        // Don't do anything if the game is paused
-        if (GameManager.gm?.IsPaused == true)
-            return;
-
-        if (!InDialogue)
+        // Don't do anything if the game is paused, if we're outputting, OR if we're in an open question
+        if (SettingsManager.sm?.IsPaused == true || !InDialogue || InOpenQuestion)
             return;
 
         // Check if enough time has passed since previous skip dialogue
-        if (Time.time - recentInputTime > inputDelay)
+        if (Time.time - recentInputTime > inputDelay || ignoreSkipDelay)
         {
             if (IsOutputting)
             {
@@ -157,8 +177,7 @@ public class DialogueAnimator : MonoBehaviour
             }
 
             recentInputTime = Time.time;
-        }
-        
+        }        
     }
 
     /// <summary>
@@ -177,51 +196,42 @@ public class DialogueAnimator : MonoBehaviour
     /// <param name="output">The text that needs to be written</param>
     /// <param name="stringIndex">The index of the letter that is being written</param>
     /// <returns></returns>
-    private IEnumerator WritingAnimation(string output, int stringIndex)
+    private IEnumerator WritingAnimation(string output)
     {
-        // Don't write if the game is paused
-        // '?' is used to make sure there is already an instance of the GameManager
-        while (GameManager.gm?.IsPaused == true) 
-            yield return null;
+        int stringIndex = 0;
+        text.text = ""; // Clear the previous sentence
 
-        // If a new sentence is started, first clear the old sentence
-        if (stringIndex == 0)
-            text.text = "";
-
-        // Make sure the sentence is not finished
-        if (stringIndex < output.Length)
+        // Start writing sentence
+        while (stringIndex < output.Length)
         {
-            // Write the current letter
-            text.text += output[stringIndex];
-            if (output[stringIndex] != ' ' && stringIndex % 2 == 0 && audioEnabled && audioSource != null)
-                audioSource.Play();
+            // Don't write if the game is paused
+            // '?' is used to make sure there is already an instance of the GameManager
+            while (SettingsManager.sm?.IsPaused == true)
+                yield return null;
+
+            // Play sound for letter
+            if (!soundlessSymbols.Contains(output[stringIndex])
+                && stringIndex % 2 == 0 && audioEnabled
+                && audioSource != null)
+            {
+                audioSource.Stop(); // stop previous letter's audio
+                audioSource.PlayOneShot(popSound);
+            }
+
+            // Write letter to screen and increment stringIndex
+            text.text += output[stringIndex++];
 
             // Wait and continue with next letter
             float delay = overrideDefaultSpeed ? delayInSeconds : SettingsManager.sm.TalkingDelay;
             yield return new WaitForSeconds(delay);
-            outputCoroutine = StartCoroutine(WritingAnimation(output, stringIndex + 1));
         }
-        else
-        {
-            // If sentence is finished, stop outputting
-            IsOutputting = false;
-            dialogueIndex++;
 
-            // If there are more sentences, start writing the next sentence after s seconds
-            if (dialogueIndex < currentDialogue.Count)
-            {
-                yield return new WaitForSeconds(delayAfterSentence);
-
-                if (dialogueIndex >= currentDialogue.Count)
-                    Debug.LogError("dialogueIndex is greater than the amount of dialogue");
-
-                if (dialogueIndex < currentDialogue.Count)
-                    WriteSentence(currentDialogue[dialogueIndex]);
-            }
-        }
+        // If sentence is finished, stop outputting
+        IsOutputting = false;
+        dialogueIndex++;
     }
 
-#region Test Variables
+    #region Test Variables
 #if UNITY_INCLUDE_TESTS
     public float Test_DelayInSeconds
     { 
@@ -232,9 +242,15 @@ public class DialogueAnimator : MonoBehaviour
     public float Test_DelayAfterSentence
     {
         get { return delayAfterSentence; }
+        set { delayAfterSentence = value; }
     }
-
     public void Test_SetTextComponent(TMP_Text text) => this.text = text;
+
+    public bool Test_IgnoreSkipDelay
+    {
+        get { return ignoreSkipDelay; }
+        set { ignoreSkipDelay = value; }
+    }
 #endif
 #endregion
 }

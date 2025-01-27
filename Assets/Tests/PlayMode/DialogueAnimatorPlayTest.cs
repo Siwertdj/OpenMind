@@ -1,22 +1,20 @@
-﻿using System;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using WaitUntil = UnityEngine.WaitUntil;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class DialogueAnimatorPlayTest
 {
     private TMP_Text textField;
     private DialogueAnimator animator;
-    private float delayInSeconds;
 
     #region Setup & Teardown
     [UnitySetUp]
@@ -29,14 +27,18 @@ public class DialogueAnimatorPlayTest
         animator = textObject.AddComponent<DialogueAnimator>();
         animator.Test_SetTextComponent(textField);
 
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.05f;
+        animator.Test_IgnoreSkipDelay = true;
+
         yield return null;
     }
 
-    [UnityTearDown]
+    [TearDown]
     public void TearDown()
     {
         animator.CancelWriting();
-        textField.text = "";
+        GameObject.Destroy(textField.gameObject);
     }
     #endregion
 
@@ -69,11 +71,14 @@ public class DialogueAnimatorPlayTest
     }
 
     /// <summary>
-    /// Checks whether each letter is typed at the right moment when multiple lines are used.
+    /// Checks whether each letter is typed at the right moment when multiple segmentslines are used.
     /// </summary>
     [UnityTest]
     public IEnumerator MultiLineWritingDelayTest()
     {
+        animator.Test_DelayInSeconds = 0.01f;
+        animator.Test_DelayAfterSentence = 0.02f;
+
         List<string> lines = new List<string> { "Hello, World!", "foo", "bar" };
         animator.WriteDialogue(lines);
 
@@ -92,6 +97,7 @@ public class DialogueAnimatorPlayTest
 
             // Await next line start
             yield return new WaitForSeconds(animator.Test_DelayAfterSentence);
+            animator.SkipDialogue();
         }
     }
 
@@ -177,6 +183,9 @@ public class DialogueAnimatorPlayTest
         yield return new WaitForSeconds(animator.Test_DelayInSeconds * n);
 
         animator.CancelWriting();
+
+        yield return new WaitForSeconds(animator.Test_DelayInSeconds);
+
         Assert.AreEqual(expectedText, textField.text);
     }
 

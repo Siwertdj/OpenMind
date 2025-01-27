@@ -18,8 +18,8 @@ public class SaveData
     public (int, List<Question>)[] remainingQuestions;
     public string                  personalNotes;
     public (int, string)[]         characterNotes;
-    public (int, List<Question>)[] askedQuestionsPerCharacter;
     public int                     numQuestionsAsked;
+    public (int, bool)[]        charactersGreeted;
 }
 
 /// <summary>
@@ -32,11 +32,21 @@ public static class FilePathConstants
     /// The name of the save file of the player save data.
     /// </summary>
     private const string playerSaveDataFileName = "saveData.txt";
+    
+    /// <summary>
+    /// The name of the save file of the player save data.
+    /// </summary>
+    private const string playerUserDataFileName = "userData.txt";
 
     /// <summary>
     /// Gets the location of the folder where the save file should be stored. This is used for checking if this folder exists
     /// </summary>
     public static string GetSaveFolderLocation() => Path.Combine(Application.persistentDataPath, "SaveData");
+    
+    /// <summary>
+    /// Gets the location of the folder where the userdata file should be stored. This is used for checking if this folder exists
+    /// </summary>
+    public static string GetUserDataFolderLocation() => Path.Combine(Application.persistentDataPath, "UserData");
     
     /// <summary>
     /// Gets the location to the save file.
@@ -45,9 +55,20 @@ public static class FilePathConstants
     public static string GetSaveFileLocation() => Path.Combine(GetSaveFolderLocation(), playerSaveDataFileName);
 
     /// <summary>
+    /// Gets the location to the userdata file.
+    /// Uses "Application.persistentDataPath", which is the standard directory for save data.
+    /// </summary>
+    public static string GetUserDataFileLocation() => Path.Combine(GetUserDataFolderLocation(), playerUserDataFileName);
+
+    /// <summary>
     /// Checks if the save file exists.
     /// </summary>
     public static bool DoesSaveFileLocationExist() => File.Exists(GetSaveFileLocation());
+    
+    /// <summary>
+    /// Checks if the userdata file exists.
+    /// </summary>
+    public static bool DoesUserDataFileLocationExist() => File.Exists(GetUserDataFileLocation());
 
     /// <summary>
     /// A safe way to read files that handles a bunch of exceptions.
@@ -78,4 +99,6 @@ public static class FilePathConstants
 
         return fileContents;
     }
+    
+    
 }

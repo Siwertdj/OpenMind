@@ -19,6 +19,10 @@ using TMPro;
 /// </summary>
 public class SceneController : MonoBehaviour
 {
+    [Header("Game Events")]
+    [SerializeField] GameEvent onStartSceneTransition;
+    [SerializeField] GameEvent onEndSceneTransition;
+    
     /// <summary>
     /// All scenes in the project.
     /// </summary>
@@ -30,9 +34,11 @@ public class SceneController : MonoBehaviour
         NotebookScene,
         GameMenuScene,
         SettingsScene,
-        GameLossScene,
-        GameWinScene,
-        TutorialScene
+        GameOverScene,
+        TutorialScene,
+        EpilogueScene,
+        StartScreenScene,
+        StorySelectScene
     }
 
     /// <summary>
@@ -160,7 +166,7 @@ public class SceneController : MonoBehaviour
                 foreach (TransitionType enumValue in Enum.GetValues(typeof(TransitionType)))
                 {
                     if (enumValue.ToString()[0] == trans)
-                    {
+                    { 
                         sceneGraph[i].Add((sceneToID[toScene], enumValue));
                         found = true;
                         break;
@@ -189,16 +195,24 @@ public class SceneController : MonoBehaviour
     /// <param name="currentScene">The scene the game is currently in.</param>
     /// <param name="targetScene">The scene that needs to be loaded.</param>
     /// <param name="transitionType">The type of transition to use.</param>
-    private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType)
+    private async Task Transitioning(string currentScene, string targetScene, TransitionType transitionType, bool playAnimation)
     {
         switch (transitionType)
         {
             case TransitionType.Additive:
+                if (playAnimation) 
+                    await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 await LoadScene(targetScene);
+                if (playAnimation) 
+                    await TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 break;
             
             case TransitionType.Unload:
+                if (playAnimation) 
+                    await TransitionAnimator.i.PlayStartAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 SceneManager.UnloadSceneAsync(currentScene);
+                if (playAnimation) 
+                    await TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 3); // Fade out and wait for animation to complete
                 break;
             
             case TransitionType.Transition:
@@ -243,9 +257,6 @@ public class SceneController : MonoBehaviour
         while (!asyncLoad.isDone)
             yield return null;
 
-        // Set the ActiveScene to the newly loaded scene
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(targetScene));
-
         // Mark the TaskCompletionSource as completed
         tcs.SetResult(true);
     }
@@ -259,7 +270,7 @@ public class SceneController : MonoBehaviour
     /// <param name="to">The scene that needs to be loaded.</param>
     /// <param name="transitionType">The type of transition.</param>
     /// <param name="loadCode"></param>
-    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, Func<string, string, TransitionType, Task> loadCode)
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, bool playAnimation, Func<string, string, TransitionType, bool, Task> loadCode)
     {
         string currentScene = from.ToString();
         string targetScene = to.ToString();
@@ -295,23 +306,24 @@ public class SceneController : MonoBehaviour
             return;
         }
 
-        await loadCode(currentScene, targetScene, transitionType);
+        await loadCode(currentScene, targetScene, transitionType, playAnimation);
     }
     
     //args is the data to transfer
-    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType) => await TransitionScene(from, to, transitionType, Transitioning);
+    public async Task TransitionScene(SceneName from, SceneName to, TransitionType transitionType, bool playAnimation) 
+        => await TransitionScene(from, to, transitionType, playAnimation, Transitioning);
         
     /// <summary>
     /// Function to be called when loading the first cycle
     /// </summary>
     /// <param name="start"></param>
-    public void StartScene(SceneName start)
+    public async Task StartScene(SceneName start)
     {
         TransitionAnimator.i.PlayEndAnimation(TransitionAnimator.AnimationType.Fade, 0.75f);
         ReadSceneGraph();
 
         string currentScene = start.ToString();
-        SceneManager.LoadScene(currentScene, LoadSceneMode.Additive);
+        await LoadScene(currentScene);
     }
 
     public SceneName? FindLoadedSceneOfSelection(params SceneName[] scenes)
@@ -332,25 +344,38 @@ public class SceneController : MonoBehaviour
     /// Function to load the notebook.
     /// </summary>
     // this method is not tested
-    public void ToggleNotebookScene(Button button)
+    public async void ToggleNotebookScene(Button button, GameObject menuButton)
     {
         var crossOverlay = button.transform.GetChild(0).gameObject;
         
-            // If notebook is already open, close it
-            if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
-            {
-                GameManager.gm.IsPaused = false;
-                crossOverlay.SetActive(false);
-                _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
-                    TransitionType.Unload);
-            }
-            else // Notebook is NOT loaded.. so open it
-            {
-                GameManager.gm.IsPaused = true;
-                crossOverlay.SetActive(true);
-                _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
-                    TransitionType.Additive);
-            }
+        // If notebook is already open, close it
+        if (SceneManager.GetSceneByName("NotebookScene").isLoaded)
+        {
+            SettingsManager.sm.UnpauseGame();
+
+            // The button should not be clickable again while the notebook is closing
+            button.interactable = false;
+
+            // Find the NotebookManager & do the animation
+            var nm = FindObjectOfType<NotebookManager>();
+            await nm.ShoveOutNotebook();
+
+            // Make the button interactable again
+            button.interactable = true;
+
+            menuButton.SetActive(true);
+            crossOverlay.SetActive(false);
+            _ = TransitionScene(SceneName.NotebookScene, SceneName.Loading,
+                TransitionType.Unload, false);
+        }
+        else // Notebook is NOT loaded.. so open it
+        {
+            menuButton.SetActive(false);
+            crossOverlay.SetActive(true);
+            SettingsManager.sm.PauseGame();
+            _ = TransitionScene(SceneName.Loading, SceneName.NotebookScene,
+                TransitionType.Additive, false);
+        }
     }
     
     /// <summary>
@@ -362,14 +387,41 @@ public class SceneController : MonoBehaviour
        // If tutorial is already open, close it
        if (SceneManager.GetSceneByName("TutorialScene").isLoaded)
        {
-           GameManager.gm.IsPaused = false;
-           _ = TransitionScene(SceneName.TutorialScene, SceneName.Loading, TransitionType.Unload);
+           Scene activeScene;
+           // Check which scene is currently loaded.
+           if (SceneManager.GetSceneByName("DialogueScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("DialogueScene");
+           }
+           else if (SceneManager.GetSceneByName("NPCSelectScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("NPCSelectScene");
+           }
+           else if (SceneManager.GetSceneByName("GameLossScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameLossScene");
+           }
+           else if (SceneManager.GetSceneByName("GameWinScene").isLoaded)
+           {
+               activeScene = SceneManager.GetSceneByName("GameWinScene");
+           }
+           else
+           {
+               activeScene = SceneManager.GetSceneByName("Loading");
+           }
+           
+           // Get the SceneName enum from the activeScene.
+           SceneName baseScene = SceneName.Loading;
+           
+           SettingsManager.sm.UnpauseGame();
+           _ = TransitionScene(SceneName.TutorialScene, baseScene, TransitionType.Unload, false);
        }
        else
        {
-           GameManager.gm.IsPaused = true;
-           _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive);
+           SettingsManager.sm.PauseGame();
+           _ = TransitionScene(SceneName.Loading, SceneName.TutorialScene, TransitionType.Additive, false);
        }
+       
     }
 
     /// <summary>

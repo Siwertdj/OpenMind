@@ -14,63 +14,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Youssef
   id: 5
-  avatar: {fileID: 21300000, guid: 21c39cf450f816b4c8f34c68d76e3670, type: 3}
-  voicePitch: 1.2
+  neutralAvatar: {fileID: 21300000, guid: 21c39cf450f816b4c8f34c68d76e3670, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 71804c3b980b40147817dd6251341d5c, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: fc87cb4682908d54ea097de219ba63f6, type: 3}
+  voicePitch: 1
+  facePivot: {x: 0.5081, y: 0.7914}
+  firstGreeting: {fileID: 11400000, guid: 2b78164a45c888946ab259c0b22a5a5f, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 3
-    answer:
-    - I love the old rapper Rakim.
-    - The lyrics he writes are always so beautiful and they really
-    - 'helped me to expand my view of the world. '
+    answer: {fileID: 11400000, guid: 6a0df3d8b0062ca4ba67238432120b07, type: 2}
     trait:
     - I love the rapper Rakim, his lyrics really helped me.
   - question: 6
-    answer:
-    - I think social equality is very important.
-    - 'I went to a very white primary school '
-    - "and that\u2019s when I first started noticing that I didn\u2019t really look
-      like anyone."
-    - I was always dismissed as some kind of criminal
-    - 'even though that was not the case at all. '
+    answer: {fileID: 11400000, guid: 146b90e7e91fcc04ca757e752d44c4d1, type: 2}
     trait:
     - Politically, social equality is one of the most important thing to me.
   - question: 7
-    answer:
-    - I love arts and crafts and just making things in general.
-    - I also like reading scientific papers,
-    - I like to look into how things work and try to think of a better solution.
+    answer: {fileID: 11400000, guid: ba1935c2da80476498562f02c85e8f40, type: 2}
     trait:
     - Arts and crafts, and learning how things work are my biggest hobbies.
   - question: 8
-    answer:
-    - My father is of Moroccan descent and muslim and he also wanted me to be muslim.
-    - He really had a vision of who and what he wanted me to be,
-    - "but it didn\u2019t stick."
-    - Now I think that freedom is very important,
-    - 'to be who you want to be. '
+    answer: {fileID: 11400000, guid: abdf49a93d42005448e855757c5e7952, type: 2}
     trait:
     - Politically, social equality is one of the most important thing to me.
   - question: 9
-    answer:
-    - I am not religious, and I never really have been
-    - My dad did not like that, haha.
-    - He wanted me to be muslim, like him.
+    answer: {fileID: 11400000, guid: 6ef31a434ed75f44b80832af6a81628e, type: 2}
     trait:
     - I am not religious.
   - question: 10
-    answer:
-    - I went to barber school and I'm currently employed as a barber.
+    answer: {fileID: 11400000, guid: 2dd7cbee0cdd4404eb015f54fc4d7cb6, type: 2}
     trait:
     - I am a barber.
   - question: 20
-    answer:
-    - I don't eat pork, but because of any religious reasons.
-    - I just don't like the taste.
+    answer: {fileID: 11400000, guid: 2ef90e217900bff4b940e4567a74a713, type: 2}
     trait:
     - I don't eat pork.
   - question: 15
-    answer:
-    - I'm very impatient.
+    answer: {fileID: 11400000, guid: 8615d7bd209064444969a25c58150680, type: 2}
     trait:
     - I am impatient.
   greetings:

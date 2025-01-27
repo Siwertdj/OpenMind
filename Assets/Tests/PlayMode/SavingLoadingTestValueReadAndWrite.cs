@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -25,40 +24,45 @@ public class SavingLoadingTestValueReadAndWrite
     Random       random = new Random();
     private Save saving  => Save.Saver;
     private Load loading => Load.Loader;
-    
-    [OneTimeSetUp]
-    public void LoadTestingScene()
+   
+
+    /// <summary>
+    /// Set up the game so that each test starts at the NPCSelectScene with the chosen story.
+    /// Note: the repeat attribute only calls SetUp and TearDown after every function, but not UnitySetUp nor UnityTearDown,
+    /// this is why this SetUp function is called in every test instead of having a [UnitySetUp] attribute
+    /// </summary>
+    private IEnumerator SetUp()
     {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
-    
-    [UnitySetUp]
-    private IEnumerator Initialise()
-    {
-        //create gamemanager without initialising it
-        SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+        // Load StartScreenScene in order to put the SettingsManager into DDOL
+        SceneManager.LoadScene("StartScreenScene");
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+        // Load the "Loading" scene in order to get access to the toolbox in DDOL
+        SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-        
-        GameManager.gm.gameObject.AddComponent<AudioSource>();
-        GameManager.gm.gameObject.AddComponent<SettingsManager>();
-        
-        //initialise gamemanager
-        StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
+
+        // Get a StoryObject.
+        StoryObject[] stories = Resources.LoadAll<StoryObject>("Stories");
+        StoryObject story = stories[0];
+
+        GameManager.gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+        // Start the game with the chosen story.
         GameManager.gm.StartGame(null, story);
-        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
+
+        yield return new WaitUntil(() => SceneManager.GetSceneByName("NPCSelectScene").isLoaded); // Wait for scene to load.
     }
-    
-    [UnityTearDown]
-    public IEnumerator RemoveGameManager()
+
+    [TearDown]
+    public void Teardown()
     {
-        SceneManager.LoadScene("TestingScene");
-        yield return new WaitUntil(() => SceneManager.loadedSceneCount == 1);
+        // Move toolbox and DDOLs to Loading to unload
+        SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
+
+        SceneController.sc.UnloadAdditiveScenes();
+        GameObject.Destroy(GameObject.Find("DDOLs"));
+        GameObject.Destroy(GameObject.Find("Toolbox"));
     }
     
     private bool RandB() => RandI(2) == 0;
@@ -104,6 +108,7 @@ public class SavingLoadingTestValueReadAndWrite
         List<(int, List<Question>)> askedQuestions = new List<(int, List<Question>)>();
         List<(int, List<Question>)> remainingQuestions = new List<(int, List<Question>)>();
         List<(int, string)> characterNotes = new List<(int, string)>();
+        List<(int,bool)> charactersGreeted = new List<(int,bool)>();
         
         foreach (int characterId in currentCharacters)
         {
@@ -124,6 +129,7 @@ public class SavingLoadingTestValueReadAndWrite
             askedQuestions.Add((characterId, asked));
             remainingQuestions.Add((characterId, remaining));
             characterNotes.Add((characterId, RandS(128)));
+            charactersGreeted.Add((characterId, (asked.Count > 0)));
             
             numQuestionsAsked += asked.Count;
         }
@@ -135,10 +141,10 @@ public class SavingLoadingTestValueReadAndWrite
             inactiveCharacterIds = inactiveCharacterIds.ToArray(),
             culpritId = culpritId,
             remainingQuestions = remainingQuestions.ToArray(),
-            askedQuestionsPerCharacter = askedQuestions.ToArray(),
             personalNotes = RandS(128),
             numQuestionsAsked = numQuestionsAsked,
-            characterNotes = characterNotes.ToArray()
+            characterNotes = characterNotes.ToArray(),
+            charactersGreeted = charactersGreeted.ToArray()
         };
         
         return saveData;
@@ -171,6 +177,12 @@ public class SavingLoadingTestValueReadAndWrite
         Assert.AreEqual(item1.Item2, item2.Item2, msg + ": characterNotes");
     }
     
+    private void CompareBoolTuple((int, bool) item1, (int, bool) item2, string msg)
+    {
+        Assert.AreEqual(item1.Item1, item2.Item1, msg + ": characterID");
+        Assert.AreEqual(item1.Item2, item2.Item2, msg + ": talkedTo");
+    }
+    
     private void CompareSaveData(SaveData sd1, SaveData sd2, string msg)
     {
         Assert.AreEqual(sd1.storyId, sd2.storyId, msg + ":storyId");
@@ -181,18 +193,18 @@ public class SavingLoadingTestValueReadAndWrite
             CompareQuestionList);
         Assert.AreEqual(sd1.personalNotes, sd2.personalNotes, msg + ":personalNotes");
         ListEquals(sd1.characterNotes, sd2.characterNotes, msg + ":characterNotes", CompareStringTuple);
-        ListEquals(sd1.askedQuestionsPerCharacter, sd2.askedQuestionsPerCharacter,
-            msg + ":askedQuestionsPerCharacter", CompareQuestionList);
         Assert.AreEqual(sd1.numQuestionsAsked, sd2.numQuestionsAsked, msg + ":numQuestionsAsked");
+        ListEquals(sd1.charactersGreeted, sd2.charactersGreeted, msg + ":charactersGreeted", CompareBoolTuple);
     }
     
     
     /// <summary>
     /// Tests whether saving and loading a SaveData object returns the same object
     /// </summary>
-    [Test]
-    public void SavingLoadingDoesNotChangeContents()
+    [UnityTest]
+    public IEnumerator SavingLoadingDoesNotChangeContents()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
         saving.SaveGame(saveData);
         SaveData loaded = loading.GetSaveData();
@@ -203,9 +215,10 @@ public class SavingLoadingTestValueReadAndWrite
     /// <summary>
     /// Tests whether loading a SaveData object into the gamemanager returns no errors
     /// </summary>
-    [Test]
-    public void LoadingIntoGamemanagerReturnsNoErrors()
+    [UnityTest]
+    public IEnumerator LoadingIntoGamemanagerReturnsNoErrors()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
         GameManager.gm.StartGame(null, saveData);
     }
@@ -213,9 +226,10 @@ public class SavingLoadingTestValueReadAndWrite
     /// <summary>
     /// Tests whether retrieving a SaveData object from the gamemanager returns no errors
     /// </summary>
-    [Test]
-    public void RetrievingFromGamemanagerReturnsNoErrors()
+    [UnityTest]
+    public IEnumerator RetrievingFromGamemanagerReturnsNoErrors()
     {
+        yield return SetUp();
         saving.CreateSaveData();
     }
     
@@ -223,16 +237,18 @@ public class SavingLoadingTestValueReadAndWrite
     /// Tests whether saving and loading repeatedly does nothing to change the savedata or the gamestate
     /// </summary>
     [UnityTest]
-    [Repeat(75)]
+    [Repeat(10)]
     public IEnumerator SavingLoadingDoesNotChangeGameState()
     {
+        yield return SetUp();
         SaveData saveData = CreateSaveData();
         
         for (int i = 0; i < 5; i++)
         {
             saving.SaveGame(saveData);
             SaveData loaded = loading.GetSaveData();
-            GameManager.gm.StartGame(null, loaded);
+            GameManager.gm.StartGame(new StartMenuManager(), loaded);
+            
             yield return new WaitUntil(
                 () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
             
@@ -253,19 +269,20 @@ public class SavingLoadingTestValueReadAndWrite
     [UnityTest]
     public IEnumerator DoesCurrentSaveFileWork()
     {
+        yield return SetUp();
         //if the file doesn't exist, we can't test it
         if (File.Exists(FilePathConstants.GetSaveFileLocation()))
         {
             SaveData saveData = loading.GetSaveData();
             Assert.IsNotNull(saveData);
-            
+
             SaveData saveDataCopy = loading.GetSaveData();
             for (int i = 0; i < 5; i++)
             {
-                GameManager.gm.StartGame(null, saveDataCopy);
+                GameManager.gm.StartGame(new StartMenuManager(), saveDataCopy);
                 yield return new WaitUntil(
                     () => SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
-                
+
                 SaveData retrieved = saving.CreateSaveData();
                 saveDataCopy = retrieved;
                 

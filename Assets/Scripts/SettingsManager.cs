@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -12,16 +13,40 @@ public class SettingsManager : MonoBehaviour
 {
     // SettingsManager has a static instance, so that we can fetch its settings from anywhere.
     public static SettingsManager sm;
-    
-    // the audiomixer that contains all soundchannels
-    public AudioMixer audioMixer;
 
-    public float TalkingDelay {  get; private set; }
+    [Header("Component References")]
+    public AudioMixer audioMixer; // The audiomixer that contains all soundchannels
+    public AudioSource musicSource;
+    public AudioSource sfxSource;
+
+    [Header("Settings (?)")]
+    [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    [SerializeField] AudioClip defaultButtonClickSound;
     
-    private AudioSource musicSource;
+    #region Pausing
+    private int  pauseStack = 0;
+    public  bool IsPaused { get { return pauseStack > 0; } }
+    public void PauseGame() => pauseStack++;
+    public void UnpauseGame() => pauseStack--;
+    #endregion
     
+    #region Text Size Variables
     // Text size to be used for the text components
-    public TextSize textSize;
+    [NonSerialized] public TextSize textSize;
+    
+    public int maxLineLength
+    {
+        get
+        {
+            return textSize == TextSize.Small ? smallTextLineLength
+                : textSize == TextSize.Medium ? mediumextLineLength 
+                : largeTextLineLength;
+        }
+    }
+    
+    private int smallTextLineLength = 90;
+    private int mediumextLineLength = 70;
+    private int largeTextLineLength = 50;
     
     public enum TextSize
     {
@@ -29,28 +54,36 @@ public class SettingsManager : MonoBehaviour
         Medium,
         Large
     }
-    
 
-    #region Settings Variables
-    [NonSerialized] public float musicVolume = 0;
-    [NonSerialized] public float sfxVolume = 0;
-    [NonSerialized] public float talkingSpeed = 1;
-    [NonSerialized] public bool ttsEnabled = false;
+    // Multipliers for different text sizes
+    public const float M_SMALL_TEXT = 0.8f;
+    public const float M_LARGE_TEXT = 1.4f;
+
+    public UnityEvent OnTextSizeChanged;
     #endregion
 
-    [FormerlySerializedAs("musicFadeInTime")] [SerializeField] float defaultMusicFadeInTime = 0.5f;
+    #region Settings Variables
+
+    private                float defaultTalkingDelay = 0.05f;
+    [NonSerialized] public float musicVolume         = 0;
+    [NonSerialized] public float sfxVolume           = 0;
+    [NonSerialized] public float talkingSpeed        = 1;
+
+    public UnityEvent OnAudioSettingsChanged;
+    #endregion
+    
+    public float TalkingDelay {  get; private set; }
+
+    private Coroutine musicFadeCoroutine;
+    private bool musicIsFading = false;
     
     private void Awake()
     {
         // create static instance of settingsmanager and make it DDOL
         sm = this;
-        DontDestroyOnLoad(this.gameObject);
         
         // Set the default textSize to medium.
         textSize = TextSize.Medium;
-        
-        // Set reference to music-audiosource by component
-        musicSource = GetComponents<AudioSource>()[0];
     }
     
     private void Start()
@@ -62,10 +95,10 @@ public class SettingsManager : MonoBehaviour
     private void ApplySavedSettings()
     {
         // Get the saved values
-        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 0);
-        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 0);
+        musicVolume = PlayerPrefs.GetFloat(nameof(musicVolume), 80);
+        sfxVolume = PlayerPrefs.GetFloat(nameof(sfxVolume), 80);
         talkingSpeed = PlayerPrefs.GetFloat(nameof(talkingSpeed), 1);
-        ttsEnabled = PlayerPrefs.GetInt(nameof(ttsEnabled), 0) == 1;
+        textSize = (TextSize)PlayerPrefs.GetInt(nameof(textSize), 1);
 
         // Apply the saved values
         SetMusicVolume(musicVolume);
@@ -78,28 +111,25 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetFloat(nameof(musicVolume), musicVolume);
         PlayerPrefs.SetFloat(nameof(sfxVolume), sfxVolume);
         PlayerPrefs.SetFloat(nameof(talkingSpeed), talkingSpeed);
-        PlayerPrefs.SetInt(nameof(ttsEnabled), ttsEnabled ? 1 : 0);
+        PlayerPrefs.SetInt(nameof(textSize), (int)textSize);
     }
-    
-    #region TextSize
 
-    /// <summary>
-    /// Get the fontSize of the dialogue text.
-    /// </summary>
-    public int GetFontSize()
+    public void OnClick(Component sender, params object[] data)
     {
-        switch (textSize)
-        {
-            case TextSize.Small:
-                return 35;
-            case TextSize.Medium:
-                return 45;
-            default:
-                return 55;
-        }
+        AudioClip clip;
+        if (data[0] is AudioClip audioClip)
+            clip = audioClip;
+        else
+            clip = defaultButtonClickSound;
+
+        PlaySfxClip(clip);
     }
 
-    #endregion
+    public void PlaySfxClip(AudioClip clip)
+    {
+        sfxSource.clip = clip;
+        sfxSource.Play();
+    }
 
     #region Audio
     /// <summary>
@@ -117,8 +147,18 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(musicVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+
+        audioMixer.SetFloat(nameof(musicVolume), adjustedVolume);
         musicVolume = volume;
+
+        OnAudioSettingsChanged.Invoke();
     }
 
     /// <summary>
@@ -127,24 +167,38 @@ public class SettingsManager : MonoBehaviour
     /// <param name="volume"></param>
     public void SetSfxVolume(float volume)
     {
-        audioMixer.SetFloat(nameof(sfxVolume), volume);
+        float adjustedVolume;
+
+        if (volume <= 0)
+            adjustedVolume = -80;
+        else
+            adjustedVolume = (volume - 100) * 0.5f;
+
+        audioMixer.SetFloat(nameof(sfxVolume), adjustedVolume);
         sfxVolume = volume;
+
+        OnAudioSettingsChanged.Invoke();
     }
     
     /// <summary>
     /// this method should fade-out the previous track, then fade-in the new track
     /// </summary>
-    public void SwitchMusic(AudioClip newClip, float? fadeTime)
+    public void SwitchMusic(AudioClip newClip, float? fadeTime, bool loop)
     {
+        // checks if newclip passed has a value
         if (newClip != null)
         {
             // If the passed fadeTime is null, we use the default music fade-in time
             float _fadeTime = fadeTime ?? defaultMusicFadeInTime;
 
-            // If the newclip is different than the current clip, we fade the new one in.
-            if (newClip != musicSource.clip)
-                StartCoroutine(FadeOutMusic(newClip, _fadeTime));
+            if (musicIsFading)
+                StopCoroutine(musicFadeCoroutine);
+
+            musicFadeCoroutine = StartCoroutine(FadeOutMusic(newClip, _fadeTime));
         }
+        
+        // Set the music loop to the given parameter.
+        musicSource.loop = loop;
     }
 
     /// <summary>
@@ -156,27 +210,79 @@ public class SettingsManager : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FadeOutMusic(AudioClip newClip, float fadeTime)
     {
-        float startVolume = musicSource.volume;
-        while (musicSource.volume > 0)
+        musicIsFading = true;
+
+        // Don't fade out if it's the same clip
+        if (newClip != musicSource.clip)
         {
-            musicSource.volume -= startVolume * Time.deltaTime / fadeTime;
-            yield return null;
+            // Start loading the new clip
+            // In the clip settings, "Load in Background" should be enabled,
+            // otherwise the game could freeze until loading is done
+            if (!newClip.loadInBackground)
+                Debug.LogWarning(
+                    $"{newClip.name} has {nameof(newClip.loadInBackground)} " +
+                    $"set to {newClip.loadInBackground}. " +
+                    $"This could cause freezes while the clip is loading.");
+            newClip.LoadAudioData();
+
+            while (musicSource.volume > 0)
+            {
+                musicSource.volume -= Time.deltaTime / fadeTime;
+                yield return null;
+            }
+            musicSource.Stop();
+
+            // Unload the old clip (Unity does not do this automatically)
+            if (musicSource.clip != null)
+                musicSource.clip.UnloadAudioData();
+
+            // Wait for the new clip to finish loading
+            while (!newClip.loadState.Equals(AudioDataLoadState.Loaded))
+                yield return null;
+
+            musicSource.clip = newClip;
         }
-        musicSource.Stop();
-        musicSource.clip = newClip;
-        musicSource.Play();
+
+        // Ensure the clip is playing
+        if (!musicSource.isPlaying)
+            musicSource.Play();
+
+        // Fade in the clip
         while (musicSource.volume < 1)
         {
-            musicSource.volume += startVolume * Time.deltaTime / fadeTime;
+            musicSource.volume += Time.deltaTime / fadeTime;
             yield return null;
         }
+
+        musicIsFading = false;
     }
     #endregion
 
     #region Accessibility
+    /// <summary>
+    /// Get the fontSize of the dialogue text.
+    /// </summary>
+    public int GetFontSize()
+    {
+        switch (textSize)
+        {
+            case TextSize.Small:
+                return 55;
+            case TextSize.Medium:
+                return 70;
+            default:
+                return 85;
+        }
+    }
+    
+    /// <summary>
+    /// Takes a multiplier that changes the talking speed.
+    /// If the multiplier is '3', it should be 3 times as fast.
+    /// </summary>
+    /// <param name="multiplier"></param>
     public void SetTalkingSpeed(float multiplier) 
     { 
-        TalkingDelay = 0.05f * multiplier;
+        TalkingDelay = defaultTalkingDelay / multiplier;
         talkingSpeed = multiplier;
     }
     #endregion

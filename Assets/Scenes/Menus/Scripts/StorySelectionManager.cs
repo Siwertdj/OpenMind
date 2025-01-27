@@ -1,6 +1,11 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
+
+using System;
 using System.Collections;
+using System.Linq;
+using TMPro;
+using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,6 +20,70 @@ public class StorySelectionManager : MonoBehaviour
     // Game Events
     [Header("Events")]
     public GameEvent onIntroLoaded;
+
+    [Header("Buttons")] 
+    [SerializeField] private GameButton storyButtonA;
+    [SerializeField] private GameButton storyButtonB;
+    [SerializeField] private GameButton storyButtonC;
+
+    [Header("Text Objects")] 
+    [SerializeField] private Image storyAComplete;
+    [SerializeField] private Image storyBComplete;
+    [SerializeField] private Image storyCComplete;
+    
+    private void Awake()
+    {
+        if(MultiplayerManager.mm)
+            StartIntroMultiplayer();
+        else
+            UpdateButtons();
+    }
+    
+    /// <summary>
+    /// Start the correct intro in multiplayer mode. The host has chosen the story already.
+    /// </summary>
+    private void StartIntroMultiplayer()
+    {
+        switch (MultiplayerManager.mm.init.story)
+        {
+            case 0:
+                StoryASelected();
+                break;
+            case 1:
+                StoryBSelected();
+                break;
+            case 2:
+                StoryCSelected();
+                break;
+        }
+    }
+
+    /// <summary>
+    /// Prepares buttons in StorySelect-scene based on UserData.
+    /// </summary>
+    public void UpdateButtons()
+    {
+        // TODO: Preferably find a way to do this without 'GameObject.Find'
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyAWon))
+        {
+            // story b unlocked
+            storyButtonB.interactable = true;
+            // enable 'complete'-text
+            storyAComplete.gameObject.SetActive(true);
+        }
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyBWon))
+        {
+            // story c unlocked
+            storyButtonC.interactable = true;
+            // enable 'complete'-text
+            storyBComplete.gameObject.SetActive(true);
+        }
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.storyCWon))
+        {
+            // enable 'complete'-text
+            storyCComplete.gameObject.SetActive(true);
+        }
+    }
     
     /// <summary>
     /// Starts Story A
@@ -38,6 +107,14 @@ public class StorySelectionManager : MonoBehaviour
     public void StoryCSelected()
     {
         StartIntro(2);
+    }
+
+    /// <summary>
+    /// Back to main menu (Start Screen)
+    /// </summary>
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene("StartScreenScene", LoadSceneMode.Single);
     }
 
     /// <summary>

@@ -14,109 +14,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Daan
   id: 21
-  avatar: {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
-  voicePitch: 2
+  neutralAvatar: {fileID: 21300000, guid: 7e136370613de414c877a6300c8f5018, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 9a542da39b4b39f4bb8e4b9bb9a8a9ca, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: e97f72101b6aeb2499e372bbcc97f0ce, type: 3}
+  voicePitch: 1
+  facePivot: {x: 0.4992, y: 0.8364}
+  firstGreeting: {fileID: 11400000, guid: 26822ec966f5f98438f9826dfeb52148, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 1
-    answer:
-    - I am 35.
+    answer: {fileID: 11400000, guid: 2829c8a8d1ce57e4d8775cbcc6c45e75, type: 2}
     trait:
     - I am 35 years old.
   - question: 2
-    answer:
-    - I'm having a good time.
-    - I live in an apartment on my own.
-    - I have stability and a decent income.
-    - At the same time I have enough freedom and time to use the money on doing fun
-      things with my friends.
+    answer: {fileID: 11400000, guid: b2c3e68ace9da904fb1d58b44cd2ed72, type: 2}
     trait:
     - I live in an apartment on my own.
   - question: 6
-    answer:
-    - I'm left wing.
-    - In general, I'd rather not participate in political discussions.
-    - Especially when someone says something important I don't agree with at all.
-    - I think there live a lot stupid people here that believe anything without thinking
-      or looking for the truth.
-    - I think a lot of sectors and groups of people are going to suffer.
-    - I see that we are going to the right side and for things like culture there
-      will be less money.
+    answer: {fileID: 11400000, guid: 25c540ecd28ab764db0f46c338b192a8, type: 2}
     trait:
     - I'd rather not participate in political discussions.
   - question: 7
-    answer:
-    - I still like gaming and I like watching movies, tv shows and YouTube videos.
-    - I love losing myself in the algorithm and an hour later you're still watching
-      stupid videos.
-    - I enjoy going out for dinner too.
-    - My favourite cuisine in Italian.
-    - And I have a black belt in a martial art!
+    answer: {fileID: 11400000, guid: 8b2e6335f1d1a2d4a81945a7b75d93ec, type: 2}
     trait:
     - I have a black belt in a martial art.
   - question: 9
-    answer:
-    - I am not religious although I am spiritual sometimes.
-    - I pray occasionally.
+    answer: {fileID: 11400000, guid: 2d007914c4c94734ea990b755b57ebf5, type: 2}
     trait:
     - I am not religious, but I am spiritual sometimes.
   - question: 10
-    answer:
-    - I did the HBO PABO, the teachers' college for primary edication.
+    answer: {fileID: 11400000, guid: f49d4cf55f709904da5ba9e9fb84d9c9, type: 2}
     trait:
     - My education level is HBO.
   - question: 11
-    answer:
-    - It is really important to me to really try to do something good for other people.
+    answer: {fileID: 11400000, guid: 5513f1a773faf58458716757a842f4cd, type: 2}
     trait:
     - It's important to me that I try to do something good for other people.
   - question: 13
-    answer:
-    - My girlfriend is the most important person in my life.
-    - I speak to my parents, sister and my best friend on a regular basis.
-    - And I have a large group of friends.
+    answer: {fileID: 11400000, guid: defd369c7aa2bd04f9b8d273ca86388e, type: 2}
     trait:
     - My girlfriend is the most important person in my life.
   - question: 14
-    answer:
-    - I'm very patient.
-    - I think other people would say I'm a social and kind person.
+    answer: {fileID: 11400000, guid: 42c9feebf9f68884f91b04138abe2f5f, type: 2}
     trait:
     - I'm a patient person.
   - question: 15
-    answer:
-    - I'm a control freak.
+    answer: {fileID: 11400000, guid: 959769c48aed635428704d52d49005e3, type: 2}
     trait:
     - I'm a control freak.
   - question: 16
-    answer:
-    - I don't drink alcohol.
-    - That seems to be an issue for some people.
+    answer: {fileID: 11400000, guid: 5383cb118dc3e844db21a41756200f85, type: 2}
     trait:
     - I don't drink alcohol.
   - question: 18
-    answer:
-    - I like that it's possible to stack diploma's.
-    - Someone that starts at vmbo will be able to go to MBO, HBO or even to university
-      eventually.
-    - That being said, I'm absolute not a fan of standardized tests.
-    - That way you are not testing someone's actual skill.
-    - The only thing you are testing is how good someone is at reading from a book
-      and remembering the information.
+    answer: {fileID: 11400000, guid: 9d2b224f14575b44c98570d358144410, type: 2}
     trait:
     - I don't like the use of standardized tests in the current education system.
   - question: 20
-    answer:
-    - No, but my girlfriend is a vegetarian.
-    - Because of that I have been eating less meat for the last couple of years.
-    - I have to admit that because of environmental issues I think it's not that
-      bad to eat less meat.
+    answer: {fileID: 11400000, guid: b19bb4c917ec61147a8bea7447c5b66a, type: 2}
     trait:
     - Because of environmental issues I think it's not that bad to eat less meat.
   - question: 17
-    answer:
-    - I care about inequality of opportunity.
-    - It bothers me that other people don't understand or can't see that I and a
-      lot of people around me have had a lot of luck with where they are born.
+    answer: {fileID: 11400000, guid: 6bc5fd9aa6e7d304481b4a99919ae78f, type: 2}
     trait:
     - A social issue I care about is inequality of opportunity.
   greetings:

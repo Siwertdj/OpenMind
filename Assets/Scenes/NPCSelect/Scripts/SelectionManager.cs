@@ -36,11 +36,9 @@ public class SelectionManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        SetSceneType();
-        
         // Change the text size
-        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
-        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = false;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
+        headerText.GetComponentInChildren<TMP_Text>().enableAutoSizing = true;
         ChangeTextSize();
         
         // stop loading animation (if it is playing)
@@ -71,9 +69,9 @@ public class SelectionManager : MonoBehaviour
         if (data[0] is int fontSize)
         {
             // Change the fontSize of the confirmSelectionButton
-            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
             // Change the fontSize of the headerText
-            headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+            headerText.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         }
     }
     
@@ -85,34 +83,25 @@ public class SelectionManager : MonoBehaviour
     {
         int fontSize = SettingsManager.sm.GetFontSize();
         // Change the fontSize of the confirmSelectionButton
-        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        confirmSelectionButton.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
         
         // Change the fontSize of the headerText
-        headerText.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        headerText.GetComponentInChildren<TMP_Text>().fontSizeMax = fontSize;
     }
 
     #endregion
-    
-    /// <summary>
-    /// Set the selectionType variable.
-    /// If the number of characters has reached the minimum amount, and the player has no more questions left,
-    /// set the selectionType variable to decidecriminal.
-    /// </summary>
-    private void SetSceneType()
-    {
-        if (!GameManager.gm.EnoughCharactersRemaining())
-            GameManager.gm.gameState = GameManager.GameState.CulpritSelect;
-    }
 
+  
     /// <summary>
     /// Change the Header text if the culprit needs to be chosen.
     /// </summary>
     /// <param name="sceneType"> Can take "dialogue" or "decidecriminal" as value. </param>
     private void SetHeaderText()
     {
-        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
-            headerText.text = "Who do you think it was?";
-        else
+        // TODO: There must be a more efficient way to do this, using a 'NPCIntroduction'-gamestate
+        if (GameManager.gm.AmountCharactersGreeted() < GameManager.gm.currentCharacters.Count)
+            UpdatePeopleGreeted();
+        else 
             headerText.text = "Who do you want to talk to?";
     }
     
@@ -136,6 +125,24 @@ public class SelectionManager : MonoBehaviour
         }
     }
 
+
+    #region Greetings
+    /// <summary>
+    /// Called every time NPCSelectScene opens (and this script awakens).
+    /// It updates the header text with the amount of NPCs that have been greeted.
+    /// If all NPCs have been greeted, change gamestate.
+    /// </summary>
+    public void UpdatePeopleGreeted()
+    {
+        int currentGreeted = GameManager.gm.AmountCharactersGreeted();
+        int total = GameManager.gm.currentCharacters.Count;
+        headerText.text = $"People greeted: {currentGreeted}/{total}";
+        if (currentGreeted == total)
+            GameManager.gm.gameState = GameManager.GameState.NpcSelect;
+    }
+
+    #endregion
+
     #region Selection Button Logic
     /// <summary>
     /// Event for when a character is selected.
@@ -148,24 +155,10 @@ public class SelectionManager : MonoBehaviour
         if (!character.isActive)
             return;
 
-        // Start the epilogue scene if CulpritSelect is active
-        if (GameManager.gm.gameState == GameManager.GameState.CulpritSelect)
-        {
-            // Set the FinalChosenCulprit variable to the chosen character in GameManager.
-            GameManager.gm.FinalChosenCuplrit = character;
-
-            // Set the hasWon variable to true if the correct character has been chosen, else set it to false.
-            GameManager.gm.hasWon = GameManager.gm.GetCulprit().characterName == character.characterName;
-
-            // Load the epilogue scene.
-            GameManager.gm.StartEpilogueDialogue(character);
-        }
-        else
-        {
-            // No special gamestate, so we start dialogue with the given character
-            GameManager.gm.StartDialogue(character);
-        }
+        // No special gamestate, so we start dialogue with the given character
+        GameManager.gm.StartDialogue(character);
     }
+
     /// <summary>
     /// Enables the character selection button & sets it to the selected character.
     /// </summary>
@@ -191,7 +184,7 @@ public class SelectionManager : MonoBehaviour
             button.interactable = false;
             text.text = $"{characterName} {GameManager.gm.story.victimDialogue}";
         }
-
+        
         // Add appropriate "start dialogue" button for selected character
         button.onClick.AddListener(() => SelectionButtonClicked(scroller.SelectedCharacter));
 
@@ -280,6 +273,6 @@ public class SelectionManager : MonoBehaviour
 
     public GameButton Test_GetSelectionButtonRef() => confirmSelectionButton;
 
-#endif
+    #endif
     #endregion
 }

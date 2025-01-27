@@ -13,7 +13,7 @@ public class SettingsEditTest
     public void Setup()
     {
         EditorSceneManager.OpenScene("Assets/Scenes/Menus/StartScreenScene.unity");
-        sm = GameObject.Find("SettingsManager").GetComponent<SettingsManager>();
+        sm = GameObject.FindObjectOfType<SettingsManager>(true);
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public class SettingsEditTest
     public void SetTalkingSpeedTest(float multiplier)
     {
         sm.SetTalkingSpeed(multiplier);
-        Assert.AreEqual(multiplier * 0.05f, sm.TalkingDelay);
+        Assert.AreEqual(0.05f / multiplier, sm.TalkingDelay);
     }
 
     // TODO: Make it so that the audio settings are 0-100, where 0 means there is no sound at all

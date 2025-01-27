@@ -1,7 +1,8 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Class that stores the data written in the notebook
@@ -20,7 +21,7 @@ public class NotebookData
     {
         // Empty all pages when we create new notebookdata
         _pages = new Dictionary<CharacterInstance, NotebookPage>();
-        
+
         // TODO: create a method that lets us fill it up based on the characters, instead of hiding it in the constructor
         // TODO: Or create checks for this, in case there are no characters yet
         foreach (CharacterInstance character in GameManager.gm.currentCharacters)
@@ -28,8 +29,6 @@ public class NotebookData
             NotebookPage page = new NotebookPage(character);
             _pages[character] = page;
         }
-        
-        _personalNotes = "Write down your thoughts.";
     }
 
     /// <summary>
@@ -44,19 +43,20 @@ public class NotebookData
     }
 
     /// <summary>
+    /// Gets placeholder text from character
+    /// </summary>
+    public string GetCharacterPlaceholder(CharacterInstance character)
+    {
+        return _pages[character].GetPlaceholder();
+    }
+
+
+    /// <summary>
     /// Get the notes the player has written about a character.
     /// </summary>
     public string GetCharacterNotes(CharacterInstance character)
     {
         return _pages[character].GetNotes();
-    }
-    
-    /// <summary>
-    /// Get the answers the player has obtained from a character.
-    /// </summary>
-    public string GetAnswers(CharacterInstance character)
-    {
-        return _pages[character].Intro() + _pages[character].QuestionText();
     }
     
     /// <summary>
@@ -81,5 +81,17 @@ public class NotebookData
     public string GetPersonalNotes()
     {
         return _personalNotes;
+    }
+
+    public override string ToString()
+    {
+        string output = $"personal: {_personalNotes}, characterNotes:[";
+        foreach (var kv in _pages)
+        {
+            output += $"{kv.Key.characterName}: {kv.Value.GetNotes()}, ";
+        }
+        output = output.Substring(0, output.Length - 2);
+        output += "]";
+        return output;
     }
 }

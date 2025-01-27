@@ -16,55 +16,53 @@ using Property = NUnit.Framework.PropertyAttribute;
 /// </summary>
 public class SavingLoadingTestFilePaths
 {
-    [OneTimeSetUp]
-    public void LoadTestingScene()
-    {
-        SceneManager.LoadScene("TestingScene");
-    }
-    
-    [OneTimeTearDown]
-    public void UnloadTestingScene()
-    {
-        SceneManager.UnloadSceneAsync("TestingScene");
-    }
+    private GameManager gm;
     
     [UnitySetUp]
     public IEnumerator Initialise()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
+        
         if (layer > 0)
         {
-            Debug.Log("hi");
-            //create gamemanager without initialising it
-            SceneManager.LoadScene("Loading", LoadSceneMode.Additive);
+            // Load StartScreenScene in order to put the SettingsManager into DDOL
+            SceneManager.LoadScene("StartScreenScene");
+            yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
+
+            // Load the "Loading" scene in order to get access to the toolbox in DDOL
+            SceneManager.LoadScene("Loading");
             yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
         }
         
         if (layer > 1)
         {
-            GameManager.gm.gameObject.AddComponent<AudioSource>();
-            GameManager.gm.gameObject.AddComponent<SettingsManager>();
+            // Put toolbox as parent of SettingsManager
+            GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
 
-            //initialise gamemanager
-            StoryObject story = Resources.LoadAll<StoryObject>("Stories")[0];
-            GameManager.gm.StartGame(null, story);
+            // Initialize GameManager and start the game. 
+            gm = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gm.StartGame(null, Resources.LoadAll<StoryObject>("Stories")[0]);
+
             yield return new WaitUntil(() =>
                 SceneManager.GetSceneByName("NPCSelectScene").isLoaded);
         }
     }
     
-    [UnityTearDown]
-    public IEnumerator RemoveGameManager()
+    [TearDown]
+    public void RemoveGameManager()
     {
         int layer = (int)TestContext.CurrentContext.Test.Properties.Get("layer");
-        
+
         if (layer > 0)
         {
-            SceneManager.UnloadSceneAsync("Loading");
-            yield return new WaitUntil(() => !SceneManager.GetSceneByName("Loading").isLoaded);
-        }
+            // Move toolbox and DDOLs to Loading to unload
+            SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("Loading"));
+            SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("Loading"));
 
-        GameManager.gm = null;
+            SceneController.sc.UnloadAdditiveScenes();
+            GameObject.Destroy(GameObject.Find("DDOLs"));
+            GameObject.Destroy(GameObject.Find("Toolbox"));
+        }
     }
     
     private Save saving  => Save.Saver;
@@ -79,6 +77,7 @@ public class SavingLoadingTestFilePaths
     {
         //create a saving instance to test the function on.
         //note: afaik there is no way to attach this saving instance to the testing scene, so it has to be created with new
+        GameManager.gm = null;
         Save saving = new Save();
         LogAssert.Expect(LogType.Error, "Cannot save data when the gamemanger is not loaded.\nSaving failed");
         saving.SaveGame();

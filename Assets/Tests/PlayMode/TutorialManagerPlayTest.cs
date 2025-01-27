@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+// © Copyright Utrecht University (Department of Information and Computing Sciences)
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -28,20 +30,10 @@ public class TutorialManagerPlayTest
         // Load StartScreenScene in order to put the SettingsManager into DDOL
         SceneManager.LoadScene("StartScreenScene");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("StartScreenScene").isLoaded);
-
-        // Move debugmanager and copyright back to startscreenscene so that 
-        SceneManager.MoveGameObjectToScene(GameObject.Find("DebugManager"), SceneManager.GetSceneByName("StartScreenScene"));
-        SceneManager.MoveGameObjectToScene(GameObject.Find("Copyright"), SceneManager.GetSceneByName("StartScreenScene"));
-        
-        // Unload the StartScreenScene
-        SceneManager.UnloadSceneAsync("StartScreenScene");
         
         // Load the "Loading" scene in order to get access to the toolbox in DDOL
         SceneManager.LoadScene("Loading");
         yield return new WaitUntil(() => SceneManager.GetSceneByName("Loading").isLoaded);
-
-        // Put toolbox as parent of SettingsManager
-        GameObject.Find("SettingsManager").transform.SetParent(GameObject.Find("Toolbox").transform);
         
         // Initialize GameManager and start the game. 
         gm = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -53,7 +45,7 @@ public class TutorialManagerPlayTest
         tm = GameObject.Find("TutorialManager").GetComponent<TutorialManager>();
         
         // Initialize required buttons
-        GameObject notebook = GameObject.Find("NotebookButton");
+        GameObject notebook = GameObject.Find("Notebook Button");
         notebookButton = notebook.GetComponentInChildren<Button>();
         
         GameObject tutorial = GameObject.Find("HelpButton");
@@ -64,7 +56,10 @@ public class TutorialManagerPlayTest
     public void TearDown()
     {
         SceneManager.MoveGameObjectToScene(GameObject.Find("Toolbox"), SceneManager.GetSceneByName("TutorialScene"));
-        SceneController.sc.UnloadAdditiveScenes();
+        SceneManager.MoveGameObjectToScene(GameObject.Find("DDOLs"), SceneManager.GetSceneByName("TutorialScene"));
+        
+        GameObject.Destroy(GameObject.Find("Toolbox"));
+        GameObject.Destroy(GameObject.Find("DDOLs"));
     }
     
     #endregion
@@ -86,6 +81,8 @@ public class TutorialManagerPlayTest
         Assert.AreEqual(PlayState.Playing,tm.TutorialTimeline.state);
         // Check that notebook button is disabled at the start of the tutorial.
         Assert.IsFalse(notebookButton.enabled);
+        // Check that Notebook is closed when the tutorial is started. 
+        Assert.IsFalse(SceneManager.GetSceneByName("NotebookScene").isLoaded);
         yield return null;
     }
     

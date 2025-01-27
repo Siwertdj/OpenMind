@@ -14,71 +14,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Hidde
   id: 20
-  avatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: b658754ffb5fd2f439fd22366863f62d, type: 3}
+  happyAvatar: {fileID: 21300000, guid: b64f405cd687c1740b7f6349110730f3, type: 3}
+  unhappyAvatar: {fileID: 21300000, guid: 0b28ca71bda9c4346a08af2f8181e69a, type: 3}
   voicePitch: 1
+  facePivot: {x: 0.4999, y: 0.7849}
+  firstGreeting: {fileID: 11400000, guid: daf57514ee70f41428000b24408f83cf, type: 2}
+  greeting: {fileID: 0}
   answers:
   - question: 2
-    answer:
-    - "I\u2019m doing well. I still live with my parents and my dog."
-    - "The bachelor degree I\u2019m doing is also very interesting"
-    - and I have a friend group that I hang out with a lot and
-    - 'I always go to them if I have any problems. '
+    answer: {fileID: 11400000, guid: 35c5e1d7c7f686a489db0eec429f3374, type: 2}
     trait:
     - I live with my parents and I have friends I hang out with a lot.
   - question: 6
-    answer:
-    - I think people are often too passive aggressive when they lose.
-    - "I get they\u2019re not happy but they don\u2019t have to go into the streets
-      and yell. "
+    answer: {fileID: 11400000, guid: 29a021d00cd6e8141b59f255386481e7, type: 2}
     trait:
     - I think people get too angry when they lose elections.
   - question: 7
-    answer:
-    - "I know it\u2019s general but I would have to say just learning new things."
-    - Specifically learning to understand things I find interesting.
+    answer: {fileID: 11400000, guid: b2328a22eb00cc74787160fc515df9fd, type: 2}
     trait:
     - I like learning things about things I find interesting.
-  - question: 7
-    answer:
-    - I am agnostic. I do wonder sometimes what comes after death,
-    - "but I don\u2019t think we\u2019ll ever know."
+  - question: 9
+    answer: {fileID: 11400000, guid: 521859026a062bc44a95636aa1f0c402, type: 2}
     trait:
     - I am agnostic.
   - question: 13
-    answer:
-    - If I had to choose one person, it would be my dad.
-    - "It\u2019s like he always has a good answer for everything."
+    answer: {fileID: 11400000, guid: f7a5bbeb168ffe441bb508ea3dbe390a, type: 2}
     trait:
     - My dad is the most important person in my life.
   - question: 14
-    answer:
-    - "I think I\u2019m caring and a great listener."
-    - My parents would also say I often think things through well.
+    answer: {fileID: 11400000, guid: 4a4c5f1676e82a24195f66c1e2433541, type: 2}
     trait:
     - I'm caring and a good listener.
-  - question: 14
-    answer:
-    - "Sometimes it\u2019s hard for me to be social with other people."
+  - question: 15
+    answer: {fileID: 11400000, guid: f7f506d202669504f9f49607d4ec70e1, type: 2}
     trait:
     - It's hard for me to be social.
   - question: 16
-    answer:
-    - People are often surprised when they find out I do theater.
+    answer: {fileID: 11400000, guid: 6cd6b223798987f429babfaff0168917, type: 2}
     trait:
     - People are surprised when they find out I do theater.
-  - question: 16
-    answer:
-    - "I wouldn\u2019t do something like the people from Extinction Rebellion, just
-      blocking roads,"
-    - ' that has nothing to do with the goal of the demonstration.'
-    - I would look for the source of the problem and protest there.
+  - question: 17
+    answer: {fileID: 11400000, guid: eb6adf21473465547b8287cda34e6109, type: 2}
     trait:
     - I rather go protest the source of the problem than block roads like Extinction
       Rebellion.
   - question: 18
-    answer:
-    - I think the different levels of education are important.
-    - Not everyone is smart, but everyone is smart in their own way.
+    answer: {fileID: 11400000, guid: 68e774be42976d242b0d6728403d2bf3, type: 2}
     trait:
     - I think everyone is smart in their own way.
   greetings:

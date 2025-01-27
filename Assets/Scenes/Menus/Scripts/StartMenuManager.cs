@@ -12,23 +12,20 @@ public class StartMenuManager : MonoBehaviour
     //TODO: The name of this script is too generic. It only applies to the Start-menu.
     //TODO: Rename, or rewrite for it to be generic (e.g. through GameEvents)
     public GameObject ContinueButton;
-    public GameObject PopUpManager;
+    public GameObject LoadingScreenManager;
     
     [Header("Canvases")] 
     [SerializeField] private GameObject mainMenuCanvas;
     [SerializeField] private GameObject skipPrologueCanvas;
-    [SerializeField] private GameObject popUpCanvas;
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private GameObject popUpScreen;
     
     [Header("Events")]
     public GameEvent onGameLoaded;
     public GameEvent startLoadIcon;
-
-    [Header("Copyright canvas")]
-    public Canvas copyright;
     
     [Header("Resources")]
     [SerializeField] AudioClip startMenuMusic;
-    private float startMenuMusicFadeInSpeed = 0f;
     
     /// <summary>
     /// Makes sure the continuebutton is only clickable when a save exists.
@@ -39,24 +36,38 @@ public class StartMenuManager : MonoBehaviour
         if (!FilePathConstants.DoesSaveFileLocationExist()) ContinueButton.SetActive(false);
         mainMenuCanvas.SetActive(true);
         
-        // Keep the copyright text on the screen in all scenes
-        DontDestroyOnLoad(copyright);
-
-        // Make popup available at any point in the game
-        DontDestroyOnLoad(popUpCanvas);
+        SettingsManager.sm.SwitchMusic(startMenuMusic, 1, true);
         
-        SettingsManager.sm.SwitchMusic(startMenuMusic, startMenuMusicFadeInSpeed);
+        // update user data; create a file if it didnt exist already
+        SaveUserData.Saver.UpdateUserData(FetchUserData.Loader.GetUserData());
     }
     
     /// <summary>
-    /// Activates the prompt which asks the player to skip the prologue
+    /// If the player has seen the prologue before, activates the prompt which asks the player to skip the prologue.
+    /// Otherwise, start the prologue.
     /// </summary>
-    public void OpenSkipProloguePrompt()
+    public void StartPrologueOrPrompt()
     {
-        // Change menu's
-        mainMenuCanvas.SetActive(false);
-        skipPrologueCanvas.SetActive(true);
-        
+        if (FetchUserData.Loader.GetUserDataValue(FetchUserData.UserDataQuery.prologueSeen))
+        {
+            // Change menu's
+            mainMenuCanvas.SetActive(false);
+            skipPrologueCanvas.SetActive(true);
+        }
+        else
+        {
+            StartPrologue();
+        }
+    }
+
+
+    /// <summary>
+    /// Close prologue prompt
+    /// </summary>
+    public void CloseProloguePrompt()
+    {
+        mainMenuCanvas.SetActive(true);
+        skipPrologueCanvas.SetActive(false);
     }
 
     /// <summary>
@@ -109,5 +120,15 @@ public class StartMenuManager : MonoBehaviour
     public void OpenSettings()
     {
         SceneManager.LoadScene("SettingsScene", LoadSceneMode.Additive);
+    }
+
+    public void OpenMultiplayer()
+    {
+        SceneManager.LoadScene("MultiplayerScreenScene", LoadSceneMode.Additive);
+    }
+
+    public void OpenCredits()
+    {
+        SceneManager.LoadScene("CreditsScene", LoadSceneMode.Additive);
     }
 }

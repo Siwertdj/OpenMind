@@ -1,4 +1,4 @@
-// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
+﻿// This program has been developed by students from the bachelor Computer Science at Utrecht University within the Software Project course.
 // © Copyright Utrecht University (Department of Information and Computing Sciences)
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +10,7 @@ public class NotebookPage
 {
     private readonly CharacterInstance _character;
     private string _notes;
+    private string _placeholder;
 
     /// <summary>
     /// Constructor for making a new empty page.
@@ -18,7 +19,7 @@ public class NotebookPage
     public NotebookPage(CharacterInstance character)
     {
         _character = character;
-        _notes = "Notes on " + character.characterName + ".\n";
+        _notes = string.Empty;
     }
 
     /// <summary>
@@ -32,6 +33,17 @@ public class NotebookPage
         _notes = notes;
     }
     
+    /// <summary>
+    /// Method that fetches placeholder text in case player hasn't written any notes yet.
+    /// </summary>
+    /// <returns></returns>
+    public string GetPlaceholder()
+    {
+        _placeholder = "Notes on " + _character.characterName + ".\n";
+        return _placeholder;
+    }
+
+
     /// <summary>
     /// Method which gets the notes contained on this page.
     /// For external use.
@@ -50,74 +62,5 @@ public class NotebookPage
     public void SetNotes(string input)
     {
         _notes = input;
-    }
-    
-    /// <summary>
-    /// Add the title and question text together for each questions that has been asked.
-    /// </summary>
-    public string QuestionText()
-    {
-        string output = "\n";
-
-        foreach (Question q in _character.AskedQuestions)
-        {
-            output += GetQuestionText(q).ToUpper() + "\n";
-            foreach (string s in _character.Answers[q])
-            {
-                output += s + " ";
-            }
-            output += "\n \n";
-        }
-        return output;
-    }
-    
-    /// <summary>
-    /// Starting text for the character log.
-    /// </summary>
-    public string Intro()
-    {
-        if (_character.AskedQuestions.Count > 0)
-        {
-            return "Your info on " + _character.characterName + ".\n";
-        }
-        else
-        {
-            return "You have not asked " + _character.characterName + "\nany questions.\n";
-        }
-    }
-    
-    /// <summary>
-    /// Method which gives a string based on the type of question that was asked.
-    /// To use as a prefix to the answer.
-    /// </summary>
-    /// <param name="questionType">The type of question.</param>
-    /// <returns>String relating to the questiontype.</returns>
-    private string GetQuestionText(Question questionType)
-    {
-        return questionType switch
-        {
-            Question.Name => "Name",
-            Question.Age => "Age",
-            Question.LifeGeneral => "Life",
-            Question.Inspiration => "Inspiration",
-            Question.Sexuality => "Sexuality",
-            Question.Wellbeing => "Wellbeing",
-            Question.Political => "Political ideology",
-            Question.Personality => "Personality",
-            Question.Hobby => "Hobbies",
-            Question.CulturalBackground => "Cultural background",
-            Question.Religion => "Religion",
-            Question.Education => "Education level",
-            Question.CoreValues => "Core values",
-            Question.ImportantPeople => "Most important people",
-            Question.PositiveTrait => "Positive trait",
-            Question.NegativeTrait => "Bad trait",
-            Question.OddTrait => "Odd trait",
-            Question.SocialIssues => "Social Issues",
-            Question.EducationSystem => "Dutch education system",
-            Question.Lottery => "Lottery",
-            Question.Diet => "Diet",
-            _ => "",
-        };
     }
 }
