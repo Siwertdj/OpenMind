@@ -51,8 +51,6 @@ The project is made using Unity version 2022.3.45f1. To install and edit the pro
 
 [Sander](https://github.com/Aquatic-Trident)
 
-[Ahmet](https://github.com/Shikasi)
-
 Leanne (Artist)
 
 Xerabi (Artist)
