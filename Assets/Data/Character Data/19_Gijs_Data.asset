@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Gijs
   id: 19
-  neutralAvatar: {fileID: 21300000, guid: 17ec7191dde9b4e4d927574a2f227588, type: 3}
-  happyAvatar: {fileID: 21300000, guid: e5fa235587c5c5248ba693cf82efe3ba, type: 3}
+  neutralAvatar: {fileID: 21300000, guid: c0de7e98428660f41bfd332522665424, type: 3}
+  happyAvatar: {fileID: 21300000, guid: 4c97a92e5d9fa2b47b32eca482db531b, type: 3}
   unhappyAvatar: {fileID: 21300000, guid: 4d0d960529e92554182c77757958bb95, type: 3}
   voicePitch: 1
   facePivot: {x: 0.4978, y: 0.8044}
