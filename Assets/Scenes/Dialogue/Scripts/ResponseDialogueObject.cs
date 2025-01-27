@@ -41,20 +41,11 @@ public class ResponseDialogueObject : DialogueObject
             DialogueContainer.AddLeaf(answer,
                 new QuestionDialogueObject(background));
         }
-        // If there are no more questions remaining give a TerminateDialogueObject as a response
-        else
-        {
-            // This is already the case
-            
-        }
-
-        /*Debug.Log( $"Answer line-length: {DialogueContainer.TreeLength(answer)}");
-        DialogueContainer.PrintDialogue(answer);*/
 
         
         dm.ReplaceBackground(background);
         
-        // TODO: We dont want to try and write empty dialogue. This is a work around that breaks image-only dialogye segments.
+        // TODO: We dont want to try and write empty dialogue. This is a work around that breaks image-only dialogue segments.
         Responses.Add(answer);
         dm.WriteDialogue(null, 1);
     }

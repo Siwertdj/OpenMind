@@ -44,10 +44,11 @@ var searchData=
   ['getsavefilelocation_41',['GetSaveFileLocation',['../classFilePathConstants.html#a611df204858ffba6c786af6c89126cda',1,'FilePathConstants']]],
   ['getsavefolderlocation_42',['GetSaveFolderLocation',['../classFilePathConstants.html#a15fb1698f35e008699e5af53d6c44e16',1,'FilePathConstants']]],
   ['getscenename_43',['GetSceneName',['../classSceneController.html#aa06a91bf01b99e2c4e1c8a19c1bdffd5',1,'SceneController']]],
-  ['gettargetpos_44',['GetTargetPos',['../classNPCSelectScroller.html#afa52ee14117b0e1c114c69478d527ef0',1,'NPCSelectScroller']]],
-  ['gettextsize_45',['GetTextSize',['../classSettingsMenuManager.html#ad59c66c8508135bf9c6f92a4affe3e31',1,'SettingsMenuManager']]],
-  ['getuserdatafilelocation_46',['GetUserDataFileLocation',['../classFilePathConstants.html#ad062c61404c6df99edd666133ff4c1e9',1,'FilePathConstants']]],
-  ['getuserdatafolderlocation_47',['GetUserDataFolderLocation',['../classFilePathConstants.html#a802cbdbd129db15e1f3e45a80b8cb29c',1,'FilePathConstants']]],
-  ['getuserdatavalue_48',['GetUserDataValue',['../classFetchUserData.html#a0938af0c85902fa0f3984062d7a80efa',1,'FetchUserData']]],
-  ['givedisplaywarning_49',['GiveDisplayWarning',['../classNetworkDebugger.html#a1037c96b60fa1b3fce3b349b9cc2598d',1,'NetworkDebugger']]]
+  ['getstrings_44',['GetStrings',['../classDialogueContainer.html#ae4b6a716a0b8014923780e14c6f2241c',1,'DialogueContainer']]],
+  ['gettargetpos_45',['GetTargetPos',['../classNPCSelectScroller.html#afa52ee14117b0e1c114c69478d527ef0',1,'NPCSelectScroller']]],
+  ['gettextsize_46',['GetTextSize',['../classSettingsMenuManager.html#ad59c66c8508135bf9c6f92a4affe3e31',1,'SettingsMenuManager']]],
+  ['getuserdatafilelocation_47',['GetUserDataFileLocation',['../classFilePathConstants.html#ad062c61404c6df99edd666133ff4c1e9',1,'FilePathConstants']]],
+  ['getuserdatafolderlocation_48',['GetUserDataFolderLocation',['../classFilePathConstants.html#a802cbdbd129db15e1f3e45a80b8cb29c',1,'FilePathConstants']]],
+  ['getuserdatavalue_49',['GetUserDataValue',['../classFetchUserData.html#a0938af0c85902fa0f3984062d7a80efa',1,'FetchUserData']]],
+  ['givedisplaywarning_50',['GiveDisplayWarning',['../classNetworkDebugger.html#a1037c96b60fa1b3fce3b349b9cc2598d',1,'NetworkDebugger']]]
 ];

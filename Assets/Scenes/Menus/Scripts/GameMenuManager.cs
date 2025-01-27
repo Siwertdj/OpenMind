@@ -90,10 +90,6 @@ public class GameMenuManager : MonoBehaviour
             MultiplayerManager.mm.KillMultiplayer(true);
 
         // TODO: Instead of using SceneManager, this should use the SceneController
-        // _ = SceneController.sc.TransitionScene(
-        //    SceneController.SceneName.Loading,
-        //    SceneController.SceneName.StartScreenScene,
-        //    SceneController.TransitionType.Transition, true);
         
         // Destroy toolbox
         Destroy(toolbox);

@@ -140,7 +140,7 @@ public class IntroductionManager : MonoBehaviour
         }
         
         // Do behavior based on query result.
-        // In this casse, set skipButton active ONLY if query returns true.
+        // In this case, set skipButton active ONLY if query returns true.
         if (FetchUserData.Loader.GetUserDataValue(query))
         {
             skipButton.SetActive(true);
